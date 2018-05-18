@@ -236,13 +236,10 @@ class RevenueKPIsDashboard(http.Controller):
         template_ids = request.env['sale.subscription.template'].search(domain)
 
         for template in template_ids:
-            sale_subscriptions = request.env['sale.subscription'].search([('template_id', '=', template.id)])
-            analytic_account_ids = [sub.analytic_account_id.id for sub in sale_subscriptions]
-
             lines_domain = [
                 ('asset_start_date', '<=', end_date),
                 ('asset_end_date', '>=', end_date),
-                ('account_analytic_id', 'in', analytic_account_ids),
+                ('subscription_id.template_id', '=', template.id),
             ]
             if filters.get('company_ids'):
                 lines_domain.append(('company_id', 'in', filters.get('company_ids')))
@@ -252,7 +249,7 @@ class RevenueKPIsDashboard(http.Controller):
             value = self.compute_stat(stat_type, start_date, end_date, specific_filters)
             results.append({
                 'name': template.name,
-                'nb_customers': len(recurring_invoice_line_ids.mapped('account_analytic_id')),
+                'nb_customers': len(recurring_invoice_line_ids.mapped('subscription_id')),
                 'value': value,
             })
 

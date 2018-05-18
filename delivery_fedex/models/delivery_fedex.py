@@ -250,9 +250,6 @@ class ProviderFedex(models.Model):
 
             srm.transaction_detail(picking.id)
 
-            # FedEx forbids the use of different packagings in the same shippign
-            picking.check_packages_are_identical()
-
             package_type = picking.package_ids and picking.package_ids[0].packaging_id.shipper_package_code or self.fedex_default_packaging_id.shipper_package_code
             srm.shipment_request(self.fedex_droppoff_type, self.fedex_service_type, package_type, self.fedex_weight_unit, self.fedex_saturday_delivery)
             srm.set_currency(_convert_curr_iso_fdx(picking.company_id.currency_id.name))

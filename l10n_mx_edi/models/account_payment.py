@@ -53,7 +53,7 @@ class AccountPayment(models.Model):
         help='The attachment name of the CFDI.')
     l10n_mx_edi_payment_method_id = fields.Many2one(
         'l10n_mx_edi.payment.method',
-        string='Payment Method',
+        string='Payment Way',
         readonly=True,
         states={'draft': [('readonly', False)]},
         help='Indicates the way the payment was/will be received, where the '
@@ -688,7 +688,7 @@ class AccountRegisterPayments(models.TransientModel):
 
     l10n_mx_edi_payment_method_id = fields.Many2one(
         'l10n_mx_edi.payment.method',
-        string='Payment Method',
+        string='Payment Way',
         help='Indicates the way the payment was/will be received, where the '
         'options could be: Cash, Nominal Check, Credit Card, etc.')
 

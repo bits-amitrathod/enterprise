@@ -91,7 +91,7 @@ class AccountInvoice(models.Model):
         help='The bank account the client will pay from. Leave empty if '
         'unkown and the XML will show "Unidentified".')
     l10n_mx_edi_payment_method_id = fields.Many2one('l10n_mx_edi.payment.method',
-        string='Payment Method',
+        string='Payment Way',
         readonly=True,
         states={'draft': [('readonly', False)]},
         help='Indicates the way the invoice was/will be paid, where the '
@@ -283,7 +283,7 @@ class AccountInvoice(models.Model):
         # Split integer and decimal part
         amount_i, amount_d = divmod(self.amount_total, 1)
         amount_d = round(amount_d, 2)
-        amount_d = int(amount_d * 100)
+        amount_d = int(round(amount_d * 100, 2))
         words = self.currency_id.with_context(lang=self.partner_id.lang or 'es_ES').amount_to_text(amount_i).upper()
         invoice_words = '%(words)s %(amount_d)02d/100 %(curr_t)s' % dict(
             words=words, amount_d=amount_d, curr_t=currency_type)
@@ -656,7 +656,7 @@ class AccountInvoice(models.Model):
         }
         taxes = {}
         for line in self.invoice_line_ids.filtered('price_subtotal'):
-            for tax in line.invoice_line_tax_ids:
+            for tax in line.invoice_line_tax_ids.filtered(lambda r: r.l10n_mx_cfdi_tax_type != 'Exento'):
                 amount = round(abs(tax.amount / 100 * float("%.2f" % line.price_subtotal)), 2)
                 if tax.amount not in taxes:
                     taxes.update({tax.amount: {

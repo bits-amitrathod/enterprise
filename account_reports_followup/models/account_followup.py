@@ -7,12 +7,6 @@ from odoo.exceptions import Warning
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
-class ResCompany(models.Model):
-    _inherit = "res.company"
-
-    min_days_between_followup = fields.Integer('Minimum days between two follow-ups', help="Use this if you want to be sure than a minimum number of days occurs between two follow-ups.", default=6)
-
-
 class Followup(models.Model):
     _name = 'account_followup.followup'
     _description = 'Account Follow-up'

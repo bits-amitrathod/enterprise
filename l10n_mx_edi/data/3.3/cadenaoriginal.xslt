@@ -12,6 +12,7 @@
         la generación de las cadenas originales de los complementos fiscales 
     -->
   <xsl:include href="ecc11.xslt"/>
+  <xsl:include href="ecc12.xslt"/>
   <xsl:include href="donat11.xslt"/>
   <xsl:include href="divisas.xslt"/>
   <xsl:include href="implocal.xslt"/>
@@ -24,6 +25,7 @@
   <xsl:include href="aerolineas.xslt"/>
   <xsl:include href="valesdedespensa.xslt"/>
   <xsl:include href="consumodecombustibles.xslt"/>
+  <xsl:include href="consumodeCombustibles11.xslt"/>
   <xsl:include href="notariospublicos.xslt"/>
   <xsl:include href="vehiculousado.xslt"/>
   <xsl:include href="servicioparcialconstruccion.xslt"/>

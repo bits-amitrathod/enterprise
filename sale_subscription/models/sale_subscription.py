@@ -241,7 +241,7 @@ class SaleSubscription(models.Model):
         res = []
         for sub in self:
             name = '%s - %s' % (sub.code, sub.partner_id.sudo().name) if sub.code else sub.partner_id.name
-            res.append((sub.id, '%s/%s' % (sub.template_id.code, name) if sub.template_id.code else name))
+            res.append((sub.id, '%s/%s' % (sub.template_id.sudo().code, name) if sub.template_id.sudo().code else name))
         return res
 
     def action_subscription_invoice(self):
@@ -535,6 +535,7 @@ class SaleSubscription(models.Model):
                 subs = self.with_context(company_id=company_id, force_company=company_id).browse(sub_ids)
                 context_company = dict(self.env.context, company_id=company_id, force_company=company_id)
                 for subscription in subs:
+                    subscription = subscription[0]  # Trick to not prefetch other subscriptions, as the cache is currently invalidated at each iteration
                     if automatic and auto_commit:
                         cr.commit()
                     # payment + invoice (only by cron)
@@ -548,7 +549,6 @@ class SaleSubscription(models.Model):
                                 new_invoice.message_post_with_view('mail.message_origin_link',
                                     values = {'self': new_invoice, 'origin': subscription},
                                     subtype_id = self.env.ref('mail.mt_note').id)
-                                new_invoice.with_context(context_company).compute_taxes()
                                 tx = subscription._do_payment(payment_token, new_invoice, two_steps_sec=False)[0]
                                 # commit change as soon as we try the payment so we have a trace somewhere
                                 if auto_commit:

@@ -122,10 +122,11 @@ class sale_order(models.Model):
             po = self.env["purchase.order"].sudo(company.intercompany_user_id).browse(purchase_id)
             company_taxes = po.fiscal_position_id.map_tax(company_taxes, so_line.product_id, po.partner_id)
 
+        quantity = so_line.product_id and so_line.product_uom._compute_quantity(so_line.product_uom_qty, so_line.product_id.uom_po_id) or so_line.product_uom_qty
         return {
             'name': so_line.name,
             'order_id': purchase_id,
-            'product_qty': so_line.product_uom_qty,
+            'product_qty': quantity,
             'product_id': so_line.product_id and so_line.product_id.id or False,
             'product_uom': so_line.product_id and so_line.product_id.uom_po_id.id or so_line.product_uom.id,
             'price_unit': price or 0.0,

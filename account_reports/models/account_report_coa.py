@@ -56,7 +56,8 @@ class report_account_coa(models.AbstractModel):
             #skip accounts with all periods = 0 and no initial balance
             non_zero = False
             for p in range(len(comparison_table)):
-                if not company_id.currency_id.is_zero(grouped_accounts[account][p]['balance']) or not company_id.currency_id.is_zero(initial_balances.get(account, 0)):
+                if (grouped_accounts[account][p]['debit'] or grouped_accounts[account][p]['credit']) or\
+                    not company_id.currency_id.is_zero(initial_balances.get(account, 0)):
                     non_zero = True
             if not non_zero:
                 continue
@@ -71,13 +72,15 @@ class report_account_coa(models.AbstractModel):
             total_periods = 0
             for period in range(len(comparison_table)):
                 amount = grouped_accounts[account][period]['balance']
+                debit = grouped_accounts[account][period]['debit']
+                credit = grouped_accounts[account][period]['credit']
                 total_periods += amount
-                cols += [{'name': amount > 0 and self.format_value(amount) or zero_value, 'no_format_name': amount > 0 and amount or 0},
-                         {'name': amount < 0 and self.format_value(-amount) or zero_value, 'no_format_name': amount < 0 and abs(amount) or 0}]
+                cols += [{'name': debit > 0 and self.format_value(debit) or zero_value, 'no_format_name': debit > 0 and debit or 0},
+                         {'name': credit > 0 and self.format_value(credit) or zero_value, 'no_format_name': credit > 0 and abs(credit) or 0}]
                 p_indice = period * 2 if period > 1 else 3
                 p_indice = 1 if period == 0 else p_indice
-                sum_columns[(p_indice) + 1] += amount if amount > 0 else 0
-                sum_columns[(p_indice) + 2] += -amount if amount < 0 else 0
+                sum_columns[(p_indice) + 1] += debit if debit > 0 else 0
+                sum_columns[(p_indice) + 2] += credit if credit > 0 else 0
 
             total_amount = initial_balance + total_periods
             sum_columns[-2] += total_amount if total_amount > 0 else 0

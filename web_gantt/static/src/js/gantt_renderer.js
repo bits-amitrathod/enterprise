@@ -149,7 +149,9 @@ return AbstractRenderer.extend({
                 if (task.is_group) {
                     text = self._consolidationChildren(task);
                 } else if (self.state.fields[mapping.consolidation]) {
-                    text = task.consolidation + "<span class=\"half_opacity\"> " + self.state.fields[mapping.consolidation].string + "</span>";
+                    var field = self.state.fields[mapping.consolidation];
+                    var consolidation = field_utils.format[field.type](task.consolidation, field);
+                    text = consolidation + "<span class=\"half_opacity\"> " + self.state.fields[mapping.consolidation].string + "</span>";
                 }
             }
             return text;
@@ -420,8 +422,10 @@ return AbstractRenderer.extend({
                 //content
                 var content;
                 if (self.type === 'consolidate') {
-                    var label = self.string || self.state.fields[mapping.consolidation].string;
-                    content = acc + "<span class=\"half_opacity\"> " + label + "</span>";
+                    var field = self.state.fields[mapping.consolidation];
+                    var label = self.string || field.string;
+                    var acc_format = field_utils.format[field.type](acc, field);
+                    content = acc_format + "<span class=\"half_opacity\"> " + label + "</span>";
                     if (acc === 0 || width < 15 || (consolidation_max && acc === consolidation_max)) content = "";
                 } else {
                     if (exclude.length + not_exclude > 1) {
@@ -456,6 +460,8 @@ return AbstractRenderer.extend({
                     ids.join(" ") + "\" style=\"pointer-events: "+pointer+"; padding-left: "+ padding_left + 
                     "px; left:"+(last_left )+"px; width:"+width+"px;\">"+content+"</div>";
             }
+            // since the forwardport of 9fe5006bb, 2240e7d50 is probably not
+            // necessary anymore, so it could be removed in master
             acc = Math.round((acc + el.consolidation) * 100) / 100;
             last_left = el.left;
             if(el.type === "start"){

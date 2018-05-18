@@ -25,17 +25,24 @@
         </xpath>
         <xpath expr="//div[@name='invoice_address']" position="inside">
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
-                <span t-if="o.partner_id.vat != o.l10n_mx_edi_cfdi_supplier_rfc">XML VAT: <span t-esc="o.l10n_mx_edi_cfdi_supplier_rfc"></span></span>
+                <span t-if="o.company_id.vat != o.l10n_mx_edi_cfdi_supplier_rfc">XML VAT: <span t-esc="o.l10n_mx_edi_cfdi_supplier_rfc"></span></span>
             </t>
         </xpath>
         <xpath expr="//div[@name='reference']" position="after">
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
+                <t t-if="xml.Receptor.get('UsoCFDI', False)">
+                    <t t-set="usage" t-value="xml.Receptor.get('UsoCFDI')"/>
+                    <div name="usage" class="col-xs-2">
+                        <strong>Usage:</strong>
+                        <p><span t-esc="usage"/> - <span t-field="o.l10n_mx_edi_usage"/></p>
+                    </div>
+                </t>
                 <div class="col-xs-2">
-                    <strong>Payment Method:</strong>
+                    <strong>Payment Way:</strong>
                     <p t-esc="' - '.join([o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name])"/>
                 </div>
                 <div class="col-xs-2">
-                    <strong>Payment Type:</strong>
+                    <strong>Payment Method:</strong>
                     <p t-esc="xml.get('formaDePago', xml.get('MetodoPago'))"/>
                 </div>
                 <div class="col-xs-2" t-if="xml.get('NumCtaPago')">
@@ -44,6 +51,26 @@
                 </div>
             </t>
         </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[1]" position="before">
+            <th t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')">Product code</th>
+        </xpath>
+        <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[4]" position="after">
+            <th class="text-right" t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')">Unit code</th>
+        </xpath>
+        <xpath expr="//table[@name='invoice_line_table']/tbody/tr[1]/td[1]" position="before">
+            <td t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')"><span t-field="l.product_id.l10n_mx_edi_code_sat_id.code"/></td>
+        </xpath>
+        <xpath expr="//table[@name='invoice_line_table']/tbody/tr[1]/td[4]" position="after">
+            <td class="text-right" t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')"><span t-field="l.uom_id.l10n_mx_edi_code_sat_id.code"/></td>
+        </xpath>
+        <xpath expr="//table[@name='invoice_line_table']/tbody/tr[2]" position="inside">
+            <t t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')">
+                <td></td>
+                <td></td>
+            </t>
+        </xpath>
+
         <xpath expr="//p[@t-if='o.comment']" position="before">
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <p>

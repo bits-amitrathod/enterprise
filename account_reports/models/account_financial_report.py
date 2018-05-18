@@ -7,7 +7,7 @@ from odoo.tools.misc import formatLang
 from odoo.tools import float_is_zero, ustr
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
 from odoo.tools.pycompat import izip
 

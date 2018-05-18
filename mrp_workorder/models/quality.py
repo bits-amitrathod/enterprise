@@ -35,12 +35,13 @@ class QualityPoint(models.Model):
 
     @api.onchange('product_id')
     def _onchange_product(self):
-        bom_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=', self.product_id.product_tmpl_id.id)])
+        bom_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=', self.product_tmpl_id.id)])
         component_ids = set([])
+        product = self.product_id or self.product_tmpl_id.product_variant_ids[:1]
         for bom in bom_ids:
-            boms_done, lines_done = bom.explode(self.product_id, 1.0)
-            component_ids |= {l[1]['product']['id'] for l in lines_done}
-        component_ids.discard(self.product_id.id)
+            boms_done, lines_done = bom.explode(product, 1.0)
+            component_ids |= {l[0]['product_id']['id'] for l in lines_done}
+        component_ids.discard(product.id)
         component_ids = list(component_ids)
         routing_ids = bom_ids.mapped('routing_id.id')
         return {'domain': {'operation_id': [('routing_id', 'in', routing_ids)], 'component_id': [('id', 'in', component_ids)]}}

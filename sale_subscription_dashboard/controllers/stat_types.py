@@ -27,21 +27,17 @@ def _build_sql_query(fields, tables, conditions, query_args, filters, groupby=No
     # The conditions should use named arguments and these arguments are in query_args.
 
     if filters.get('template_ids'):
-        tables.append("account_analytic_account")
         tables.append("sale_subscription")
-        conditions.append("account_invoice_line.account_analytic_id = account_analytic_account.id")
+        conditions.append("account_invoice_line.subscription_id = sale_subscription.id")
         conditions.append("sale_subscription.template_id IN %(template_ids)s")
-        conditions.append("sale_subscription.analytic_account_id = account_analytic_account.id")
         query_args['template_ids'] = tuple(filters.get('template_ids'))
 
     if filters.get('tag_ids'):
-        tables.append("account_analytic_account")
         tables.append("sale_subscription")
-        tables.append("account_analytic_account_tag_rel")
-        conditions.append("account_invoice_line.account_analytic_id = account_analytic_account.id")
-        conditions.append("sale_subscription.analytic_account_id = account_analytic_account.id")
-        conditions.append("account_analytic_account.id = account_analytic_account_tag_rel.account_id")
-        conditions.append("account_analytic_account_tag_rel.tag_id IN %(tag_ids)s")
+        tables.append("account_analytic_tag_sale_subscription_rel")
+        conditions.append("account_invoice_line.subscription_id = sale_subscription.id")
+        conditions.append("sale_subscription.id = account_analytic_tag_sale_subscription_rel.sale_subscription_id")
+        conditions.append("account_analytic_tag_sale_subscription_rel.account_analytic_tag_id IN %(tag_ids)s")
         query_args['tag_ids'] = tuple(filters.get('tag_ids'))
 
     if filters.get('company_ids'):
@@ -121,14 +117,14 @@ def compute_nrr(start_date, end_date, filters):
 
 
 def compute_nb_contracts(start_date, end_date, filters):
-    fields = ['COUNT(DISTINCT account_invoice_line.account_analytic_id) AS sum']
+    fields = ['COUNT(DISTINCT account_invoice_line.subscription_id) AS sum']
     tables = ['account_invoice_line', 'account_invoice']
     conditions = [
         "date %(date)s BETWEEN account_invoice_line.asset_start_date AND account_invoice_line.asset_end_date",
         "account_invoice.id = account_invoice_line.invoice_id",
         "account_invoice.type IN ('out_invoice', 'out_refund')",
         "account_invoice.state NOT IN ('draft', 'cancel')",
-        "account_invoice_line.account_analytic_id IS NOT NULL"
+        "account_invoice_line.subscription_id IS NOT NULL"
     ]
 
     sql_results = _execute_sql_query(fields, tables, conditions, {
@@ -157,14 +153,14 @@ def compute_mrr(start_date, end_date, filters):
 
 def compute_logo_churn(start_date, end_date, filters):
 
-    fields = ['COUNT(DISTINCT account_invoice_line.account_analytic_id) AS sum']
+    fields = ['COUNT(DISTINCT account_invoice_line.subscription_id) AS sum']
     tables = ['account_invoice_line', 'account_invoice']
     conditions = [
         "date %(date)s - interval '1 months' BETWEEN account_invoice_line.asset_start_date AND account_invoice_line.asset_end_date",
         "account_invoice.id = account_invoice_line.invoice_id",
         "account_invoice.type IN ('out_invoice', 'out_refund')",
         "account_invoice.state NOT IN ('draft', 'cancel')",
-        "account_invoice_line.account_analytic_id IS NOT NULL"
+        "account_invoice_line.subscription_id IS NOT NULL"
     ]
 
     sql_results = _execute_sql_query(fields, tables, conditions, {
@@ -173,17 +169,17 @@ def compute_logo_churn(start_date, end_date, filters):
 
     active_customers_1_month_ago = 0 if not sql_results or not sql_results[0]['sum'] else sql_results[0]['sum']
 
-    fields = ['COUNT(DISTINCT account_invoice_line.account_analytic_id) AS sum']
+    fields = ['COUNT(DISTINCT account_invoice_line.subscription_id) AS sum']
     tables = ['account_invoice_line', 'account_invoice']
     conditions = [
         "date %(date)s - interval '1 months' BETWEEN account_invoice_line.asset_start_date AND account_invoice_line.asset_end_date",
         "account_invoice.id = account_invoice_line.invoice_id",
         "account_invoice.type IN ('out_invoice', 'out_refund')",
         "account_invoice.state NOT IN ('draft', 'cancel')",
-        "account_invoice_line.account_analytic_id IS NOT NULL",
+        "account_invoice_line.subscription_id IS NOT NULL",
         """NOT exists (
                     SELECT 1 from account_invoice_line ail
-                    WHERE ail.account_analytic_id = account_invoice_line.account_analytic_id
+                    WHERE ail.subscription_id = account_invoice_line.subscription_id
                     AND (date %(date)s BETWEEN ail.asset_start_date AND ail.asset_end_date)
                 )
         """,
@@ -207,10 +203,10 @@ def compute_revenue_churn(start_date, end_date, filters):
         "account_invoice.id = account_invoice_line.invoice_id",
         "account_invoice.type IN ('out_invoice', 'out_refund')",
         "account_invoice.state NOT IN ('draft', 'cancel')",
-        "account_invoice_line.account_analytic_id IS NOT NULL",
+        "account_invoice_line.subscription_id IS NOT NULL",
         """NOT exists (
                     SELECT 1 from account_invoice_line ail
-                    WHERE ail.account_analytic_id = account_invoice_line.account_analytic_id
+                    WHERE ail.subscription_id = account_invoice_line.subscription_id
                     AND (date %(date)s BETWEEN ail.asset_start_date AND ail.asset_end_date)
                 )
         """
@@ -240,10 +236,10 @@ def compute_mrr_growth_values(start_date, end_date, filters):
         "account_invoice.id = account_invoice_line.invoice_id",
         "account_invoice.type IN ('out_invoice', 'out_refund')",
         "account_invoice.state NOT IN ('draft', 'cancel')",
-        "account_invoice_line.account_analytic_id IS NOT NULL",
+        "account_invoice_line.subscription_id IS NOT NULL",
         """NOT exists (
                     SELECT 1 from account_invoice_line ail
-                    WHERE ail.account_analytic_id = account_invoice_line.account_analytic_id
+                    WHERE ail.subscription_id = account_invoice_line.subscription_id
                     AND (date %(date)s - interval '1 months' BETWEEN ail.asset_start_date AND ail.asset_end_date)
                 )
         """
@@ -256,14 +252,14 @@ def compute_mrr_growth_values(start_date, end_date, filters):
     new_mrr = 0 if not sql_results or not sql_results[0]['sum'] else sql_results[0]['sum']
 
     # 2. DOWN & EXPANSION
-    fields = ['account_invoice_line.account_analytic_id', 'SUM(account_invoice_line.asset_mrr) AS sum']
+    fields = ['account_invoice_line.subscription_id', 'SUM(account_invoice_line.asset_mrr) AS sum']
     tables = ['account_invoice_line', 'account_invoice']
     conditions = [
         "account_invoice.id = account_invoice_line.invoice_id",
         "account_invoice.type IN ('out_invoice', 'out_refund')",
         "account_invoice.state NOT IN ('draft', 'cancel')",
     ]
-    groupby = "account_invoice_line.account_analytic_id"
+    groupby = "account_invoice_line.subscription_id"
 
     subquery_1 = _build_sql_query(fields, tables, [
         "account_invoice.id = account_invoice_line.invoice_id",
@@ -280,11 +276,11 @@ def compute_mrr_growth_values(start_date, end_date, filters):
     ], {'date': end_date}, filters, groupby=groupby)
 
     computed_query = """
-        SELECT old_line.account_analytic_id, old_line.sum AS old_sum, new_line.sum AS new_sum, (new_line.sum - old_line.sum) AS diff
+        SELECT old_line.subscription_id, old_line.sum AS old_sum, new_line.sum AS new_sum, (new_line.sum - old_line.sum) AS diff
         FROM ( """ + subquery_1[0] + """ ) AS new_line, ( """ + subquery_2[0] + """ ) AS old_line
         WHERE
-            new_line.account_analytic_id IS NOT NULL AND
-            old_line.account_analytic_id = new_line.account_analytic_id
+            new_line.subscription_id IS NOT NULL AND
+            old_line.subscription_id = new_line.subscription_id
     """
     request.cr.execute(computed_query, subquery_1[1])
 
@@ -303,10 +299,10 @@ def compute_mrr_growth_values(start_date, end_date, filters):
         "account_invoice.id = account_invoice_line.invoice_id",
         "account_invoice.type IN ('out_invoice', 'out_refund')",
         "account_invoice.state NOT IN ('draft', 'cancel')",
-        "account_invoice_line.account_analytic_id IS NOT NULL",
+        "account_invoice_line.subscription_id IS NOT NULL",
         """NOT exists (
                     SELECT 1 from account_invoice_line ail
-                    WHERE ail.account_analytic_id = account_invoice_line.account_analytic_id
+                    WHERE ail.subscription_id = account_invoice_line.subscription_id
                     AND (date %(date)s BETWEEN ail.asset_start_date AND ail.asset_end_date)
                 )
         """,
