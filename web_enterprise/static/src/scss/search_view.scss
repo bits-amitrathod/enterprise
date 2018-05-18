@@ -1,5 +1,7 @@
 .o_searchview {
-    border-bottom: 1px solid $o-brand-secondary;
+    @media (min-width: $screen-sm-min) {
+        border-bottom: 1px solid $o-brand-secondary;
+    }
 
     .o_searchview_facet {
         @media (max-width: $screen-xs-max) {

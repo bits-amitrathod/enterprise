@@ -23,24 +23,6 @@ ControlPanel.include({
         if (config.device.isMobile) {
             this.$el.addClass('o_breadcrumb_full');
         }
-
-        if(this.$enable_searchview === undefined) {
-            var self = this;
-            this.$enable_searchview = $('<button/>', {type: 'button'})
-                .addClass('o_enable_searchview btn btn-sm btn-default fa fa-search')
-                .on('click', function() {
-                    self.searchview_displayed = !self.searchview_displayed;
-                    self.$el.toggleClass('o_breadcrumb_full', !self.searchview_displayed);
-                    self.nodes.$searchview_buttons.toggle(self.searchview_displayed);
-                });
-        }
-        if(searchview && !is_hidden && config.device.isMobile) {
-            this.$enable_searchview.insertAfter(this.nodes.$searchview);
-            this.searchview_displayed = false;
-            this.nodes.$searchview_buttons.hide();
-        } else {
-            this.$enable_searchview.detach();
-        }
     },
 });
 

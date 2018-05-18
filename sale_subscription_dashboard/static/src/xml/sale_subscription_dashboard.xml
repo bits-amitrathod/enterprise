@@ -278,7 +278,8 @@
     </div>
 
     <!-- Common top bar -->
-    <div t-name="sale_subscription_dashboard.dashboard_option_pickers" class="o_datepickers_searchview">
+    <!-- TODO: Applied hidden-xs class as it is going to push in control panel and it breaks UI, maybe we will improve it in future -->
+    <div t-name="sale_subscription_dashboard.dashboard_option_pickers" class="o_datepickers_searchview hidden-xs">
         <span class="o_datepicker_separator"> to </span><button class="btn btn-sm btn-primary o_update_options">Update</button>
     </div>
     <t t-name="sale_subscription_dashboard.dashboard_option_filters">
