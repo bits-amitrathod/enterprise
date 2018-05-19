@@ -3,8 +3,8 @@
 # * mrp_workorder
 # 
 # Translators:
-# Bohdan Lisnenko <lem8r.ka11a@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Bohdan Lisnenko, 2016
+# Martin Trigaux, 2016
 # ТАрас <tratatuta@i.ua>, 2016
 # Alina Semeniuk <alinasemeniuk1@gmail.com>, 2018
 msgid ""
@@ -19,12 +19,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "<span class=\"o_stat_text\">Scraps</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Записки</span>"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -34,12 +34,12 @@ msgstr "Блок"
 #. module: mrp_workorder
 #: model:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
 msgid "Click to start a new work order."
-msgstr ""
+msgstr "Натисніть, щоб почати нове робоче замовлення."
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Continue Production"
-msgstr ""
+msgstr "Продовжити виробництво"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_traceability_report_create_uid
@@ -59,7 +59,7 @@ msgstr "Поточне виробництво"
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Current Qty"
-msgstr ""
+msgstr "Поточна кількість"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_traceability_report_display_name
@@ -77,7 +77,7 @@ msgstr "Виконано"
 #: model:ir.ui.view,arch_db:mrp_workorder.report_mrp_line
 #, python-format
 msgid "Downstream Traceability"
-msgstr ""
+msgstr "Сценарій відстеження"
 
 #. module: mrp_workorder
 #. openerp-web
@@ -100,13 +100,13 @@ msgstr "ІД"
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_body_print
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_inventory
 msgid "LOCATION DESTINATION"
-msgstr ""
+msgstr "МІСЦЕ ПРИЗНАЧЕННЯ"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_body_print
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_inventory
 msgid "LOCATION SOURCE"
-msgstr ""
+msgstr "МІСЦЕЗНАХОДЖЕННЯ ДЖЕРЕЛА"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_traceability_report___last_update
@@ -137,25 +137,25 @@ msgstr "Замовлення на виробництво"
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_inventory
 msgid "No operation made on this lot."
-msgstr ""
+msgstr "Ніякого операційного режиму на цій партії."
 
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_production_plan
 msgid "Orders to Plan"
-msgstr ""
+msgstr "Замовлення до плану"
 
 #. module: mrp_workorder
 #. openerp-web
 #: code:addons/mrp_workorder/static/src/xml/stock_traceability_report_backend.xml:6
 #, python-format
 msgid "PRINT"
-msgstr ""
+msgstr "ДРУК"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_body_print
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_inventory
 msgid "PRODUCT"
-msgstr ""
+msgstr "ТОВАР"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -180,23 +180,23 @@ msgstr "Планування"
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_workorder_production
 msgid "Planning by Production"
-msgstr ""
+msgstr "Планування виробництва"
 
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_workorder_workcenter
 msgid "Planning by Workcenter"
-msgstr ""
+msgstr "Планування робочого центру"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Production Workcenter"
-msgstr ""
+msgstr "Робочий центр виробництва"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_body_print
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_inventory
 msgid "QUANTITY"
-msgstr ""
+msgstr "КІЛЬКІСТЬ"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_tree_view_planning
@@ -211,12 +211,12 @@ msgstr "Вироблена кількість"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_date_planned_finished_wo
 msgid "Scheduled End Date"
-msgstr ""
+msgstr "Запланована дата закінчення"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_date_planned_start_wo
 msgid "Scheduled Start Date"
-msgstr ""
+msgstr "Запланована дата початку"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -231,12 +231,12 @@ msgstr "Початок роботи"
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workcenter_view_kanban_inherit_panel
 msgid "Tablet view to process work orders at the work center"
-msgstr ""
+msgstr "Перегляд планшета для обробки замовлень на робочому місці"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "To Produce"
-msgstr ""
+msgstr "Виготовити"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_tree_view_planning
@@ -246,12 +246,12 @@ msgstr "Загальна кількість"
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_body_print
 msgid "Traceability Report"
-msgstr ""
+msgstr "Звіт про відстеження"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Unblock"
-msgstr ""
+msgstr "Розблокувати"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_tree_view_planning
@@ -261,19 +261,19 @@ msgstr "Одиниця виміру"
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_view_form_inherit_planning
 msgid "Unplan"
-msgstr ""
+msgstr "Не планувати"
 
 #. module: mrp_workorder
 #: model:ir.actions.server,name:mrp_workorder.production_order_unplan_server_action
 msgid "Unplan Orders"
-msgstr ""
+msgstr "Незаплановані замовлення"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_form_view_inherit_mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.view_picking_form_inherit_mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.view_production_lot_form_inherit_mrp_workorder
 msgid "Up/Down Traceability"
-msgstr ""
+msgstr "Відстеження вгору/вниз"
 
 #. module: mrp_workorder
 #. openerp-web
@@ -283,17 +283,17 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_workorder.report_stock_inventory
 #, python-format
 msgid "Upstream Traceability"
-msgstr ""
+msgstr "Зростаюче відстеження "
 
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_production_pending
 msgid "Waiting for Material Availability"
-msgstr ""
+msgstr "Очікування наявності матеріалів"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Work Instruction"
-msgstr ""
+msgstr "Робоча інструкція"
 
 #. module: mrp_workorder
 #: model:ir.actions.act_window,name:mrp_workorder.mrp_workorder_action_tablet
@@ -311,11 +311,17 @@ msgid ""
 "                manufacturing order, the MO is automatically done and the related\n"
 "                products are produced."
 msgstr ""
+"Work Orders - це перелік операцій, які потрібно виконати для кожного\n"
+"                 замовлення на виробництво. Як тільки ви запустите перший робочий порядок\n"
+"                 замовлення на виробництво, воно автоматично\n"
+"                 позначено як розпочато. Як тільки ви закінчите останню операцію\n"
+"                 замовлення на виробництво, ЗНВ виконується автоматично і пов'язані з ним\n"
+"                 товари виробляються."
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_stock_traceability_report
 msgid "stock.traceability.report"
-msgstr ""
+msgstr "stock.traceability.report"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_view_form_inherit_planning
