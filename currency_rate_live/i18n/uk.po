@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #. module: currency_rate_live
 #: model:ir.model,name:currency_rate_live.model_res_company
@@ -32,7 +32,7 @@ msgstr "Компанії"
 #: model:ir.cron,cron_name:currency_rate_live.ir_cron_currency_update
 #: model:ir.cron,name:currency_rate_live.ir_cron_currency_update
 msgid "Currency: rate update"
-msgstr ""
+msgstr "Валюта: оновлення ставки"
 
 #. module: currency_rate_live
 #: selection:res.company,currency_interval_unit:0
@@ -47,7 +47,7 @@ msgstr "Центральний европейський банк"
 #. module: currency_rate_live
 #: selection:res.company,currency_provider:0
 msgid "Federal Tax Administration (Switzerland)"
-msgstr ""
+msgstr "Федеральна податкова адміністрація (Швейцарія)"
 
 #. module: currency_rate_live
 #: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
@@ -65,7 +65,7 @@ msgstr "Одиниця інтервалу"
 #: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings_last_currency_sync_date
 #: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
 msgid "Last Sync Date"
-msgstr ""
+msgstr "Остання дата синхронізації"
 
 #. module: currency_rate_live
 #: selection:res.company,currency_interval_unit:0
@@ -75,7 +75,7 @@ msgstr "Вручну"
 #. module: currency_rate_live
 #: selection:res.company,currency_provider:0
 msgid "Mexican Bank"
-msgstr ""
+msgstr "Мексиканський банк"
 
 #. module: currency_rate_live
 #: selection:res.company,currency_interval_unit:0
@@ -91,7 +91,7 @@ msgstr "Наступна дата виконання"
 #. module: currency_rate_live
 #: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
 msgid "Next Run"
-msgstr ""
+msgstr "Наступний запуск"
 
 #. module: currency_rate_live
 #: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
@@ -111,6 +111,8 @@ msgid ""
 "The Yahoo currency rate web service has been discontinued. Please select "
 "another currency rate provider."
 msgstr ""
+"Інтернет-сервіс обміну валют Yahoo було припинено. Будь ласка, виберіть "
+"іншого постачальника валютної ставки."
 
 #. module: currency_rate_live
 #: code:addons/currency_rate_live/models/res_config_settings.py:79
@@ -130,7 +132,7 @@ msgstr "Щотижня"
 #. module: currency_rate_live
 #: selection:res.company,currency_provider:0
 msgid "Yahoo (DISCONTINUED)"
-msgstr ""
+msgstr "Yahoo (ПОВЕРНЕНО)"
 
 #. module: currency_rate_live
 #: model:ir.model,name:currency_rate_live.model_res_config_settings

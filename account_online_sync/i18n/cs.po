@@ -3,20 +3,21 @@
 # * account_online_sync
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
+# trendspotter, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"Last-Translator: trendspotter, 2018\n"
 "Language-Team: Czech (https://www.transifex.com/odoo/teams/41243/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -35,7 +36,7 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_account_number
 msgid "Account Number"
-msgstr ""
+msgstr "Číslo účtu"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_account_online_journal_ids
@@ -84,12 +85,12 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Bankovní účet"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_bank_statement
 msgid "Bank Statement"
-msgstr ""
+msgstr "Výpis z bankovního účtu"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_bank_statement_line
@@ -104,7 +105,7 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "Close"
-msgstr ""
+msgstr "Zavřít"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_status_code
@@ -205,14 +206,14 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_journal
 msgid "Interface for online account journal"
-msgstr ""
+msgstr "Rozhraní pro online účetní deník"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_journal
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_journal_ids
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Deník"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal___last_update
@@ -253,14 +254,14 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_message
 msgid "Message"
-msgstr ""
+msgstr "Zpráva"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_name
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_provider_name
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_name
 msgid "Name"
-msgstr ""
+msgstr "Název"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
@@ -346,7 +347,7 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_provider
 msgid "Provider for online account synchronization"
-msgstr ""
+msgstr "Poskytovatel pro synchronizaci online účtů"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_status_code

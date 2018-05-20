@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
@@ -63,7 +63,7 @@ msgstr "Перевірка"
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_check_ids
 msgid "Checks"
-msgstr ""
+msgstr "Перевірки"
 
 #. module: quality_mrp
 #. openerp-web
@@ -75,7 +75,7 @@ msgstr "Очистити"
 #. module: quality_mrp
 #: model:ir.actions.act_window,help:quality_mrp.mrp_workorder_action_tablet
 msgid "Click to start a new work order."
-msgstr ""
+msgstr "Натисніть, щоб почати нове робоче замовлення."
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_component_id
@@ -350,7 +350,7 @@ msgstr "Заявка на виробництво"
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Production Workcenter"
-msgstr ""
+msgstr "Робочий центр виробництва"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_alert
@@ -536,7 +536,7 @@ msgstr "Тип операції"
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet_menu
 msgid "Unblock"
-msgstr ""
+msgstr "Розблокувати"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_component_uom_id

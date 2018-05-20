@@ -3,20 +3,22 @@
 # * account_batch_deposit
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
+# Michal Veselý <michal@veselyberanek.net>, 2018
+# trendspotter, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"Last-Translator: trendspotter, 2018\n"
 "Language-Team: Czech (https://www.transifex.com/odoo/teams/41243/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_payment.py:42
@@ -29,7 +31,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_amount
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
 msgid "Amount"
-msgstr ""
+msgstr "Částka"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,help:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
@@ -39,7 +41,7 @@ msgstr ""
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_journal_id
 msgid "Bank"
-msgstr ""
+msgstr "Banka"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
@@ -49,7 +51,7 @@ msgstr ""
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement
 msgid "Bank Statement"
-msgstr ""
+msgstr "Výpis z bankovního účtu"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement_line
@@ -64,7 +66,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Batch Deposit"
-msgstr ""
+msgstr "Dávkový vklad"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
@@ -128,7 +130,7 @@ msgstr "Zákazník"
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_date
 #: model:ir.ui.view,arch_db:account_batch_deposit.print_batch_deposit
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_display_name
@@ -157,7 +159,7 @@ msgstr ""
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Deník"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit___last_update
@@ -183,7 +185,7 @@ msgstr ""
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "New"
-msgstr ""
+msgstr "Nové"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_payment

@@ -8,6 +8,7 @@
 # Gary Wei <Gary.wei@elico-corp.com>, 2017
 # e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2017
 # fausthuang, 2017
 # 钟小华 <mackz@sina.com>, 2017
 # Martin Trigaux, 2017
@@ -19,7 +20,6 @@
 # Talway <9010446@qq.com>, 2017
 # 苏州远鼎 <tiexinliu@126.com>, 2017
 # Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017
-# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
@@ -176,7 +176,7 @@ msgstr ""
 "                %endif\n"
 "                <br/>\n"
 "                <p>如果您有任何疑问，请直接联系我们。</p>\n"
-"                <p>感谢您选择 ${object.company_id.name or 'us'}！</p>\n"
+"                <p>感谢您选择 ${object.company_id.name or '我们'}！</p>\n"
 "            </td>\n"
 "        </tr><tr>\n"
 "            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
@@ -184,10 +184,10 @@ msgstr ""
 "                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
 "                </p>\n"
 "                % endif\n"
-"                <p style=\"font-size: 11px;\"><strong>发送者\n"
+"                <p style=\"font-size: 11px;\"><strong>发送人\n"
 "                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
 "                    <strong>${user.company_id.name}</strong>\n"
-"                </a> 使用 <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </a> 发送方式为 <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
 "                </strong></p>\n"
 "            </td>\n"
 "        </tr></tbody>\n"
@@ -577,7 +577,7 @@ msgstr "(错误地址?)"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "). After this date, you can reopen your account up to"
-msgstr ").在此日期之后，你可以重新打开你的帐户直至"
+msgstr "）。在此日期之后，你可以重新打开你的帐户直至"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
