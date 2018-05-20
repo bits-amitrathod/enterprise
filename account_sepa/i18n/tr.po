@@ -3,19 +3,15 @@
 # * account_sepa
 # 
 # Translators:
-# Levent Karakaş <levent@mektup.at>, 2017
-# Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2017
 # Murat Kaplan <muratk@projetgrup.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Ediz Duman <neps1192@gmail.com>, 2017
-# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
+# Umur Akın <umura@projetgrup.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server saas~11.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 09:23+0000\n"
-"PO-Revision-Date: 2017-10-24 09:23+0000\n"
-"Last-Translator: Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017\n"
+"POT-Creation-Date: 2018-03-22 14:21+0000\n"
+"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"Last-Translator: Umur Akın <umura@projetgrup.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +26,7 @@ msgid "A SEPA communication cannot exceed 140 characters"
 msgstr "Bir SEPA iletişimi 140 karakteri geçemez"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_bank_account_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__bank_account_id
 msgid "Bank Account"
 msgstr "Banka Hesabı"
 
@@ -56,7 +52,7 @@ msgstr ""
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_res_company
 msgid "Companies"
-msgstr "Şirketler"
+msgstr "Firmalar"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_sepa_credit_transfer
@@ -64,17 +60,17 @@ msgid "Create SEPA credit transfer files"
 msgstr "SEPA alacak aktarma dosyaları oluşturun"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_create_uid
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__create_uid
 msgid "Created by"
 msgstr "Oluşturan"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_create_date
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__create_date
 msgid "Created on"
-msgstr "Oluşturulma"
+msgstr "Oluşturulma zamanı"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_display_name
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__display_name
 msgid "Display Name"
 msgstr "Görünüm Adı"
 
@@ -84,21 +80,21 @@ msgid "Download SEPA Credit Transfer File"
 msgstr "SEPA Alacak Transfer Dosyasını İndirin"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_company_sepa_orgid_issr
+#: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_issr
 msgid ""
 "Entity that assigns the identification (eg. KBE-BCO or Finanzamt Muenchen "
 "IV)."
 msgstr "Kimliği tayin eden kurum (örn. KBE-BCO veya Finanzamt Muenchen IV)."
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_filename
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__filename
 msgid "Filename"
 msgstr "Dosya Adı"
 
 #. module: account_sepa
 #: model:ir.actions.server,name:account_sepa.action_account_download_sepa_sct_file
 msgid "Generate SEPA Credit Transfer XML"
-msgstr ""
+msgstr "SEPA Kredi Transfer XML oluştur"
 
 #. module: account_sepa
 #: selection:res.company,sepa_pain_version:0
@@ -111,19 +107,19 @@ msgid "German Version"
 msgstr "Almanca Versiyonu"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__id
 msgid "ID"
 msgstr "ID"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
-#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_orgid_id
+#: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_id
+#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_orgid_id
 msgid "Identification"
 msgstr "Tanımlama"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_company_sepa_orgid_id
-#: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_orgid_id
+#: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_id
+#: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_id
 msgid "Identification assigned by an institution (eg. VAT number)."
 msgstr "Bir kurum tarafından atanan kimliği (Örn.Vergi numarası)."
 
@@ -138,39 +134,39 @@ msgstr ""
 " günlüğüne ait ödemeleri seçin."
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__is_generic
 msgid "Is Generic"
 msgstr "Genel Mi"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
-#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_orgid_issr
+#: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_issr
+#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_orgid_issr
 msgid "Issuer"
 msgstr "Düzenleyen"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_journal
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_journal_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__journal_id
 msgid "Journal"
 msgstr "Yevmiye"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer___last_update
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer____last_update
 msgid "Last Modified on"
 msgstr "Son Güncelleme"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_write_uid
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__write_uid
 msgid "Last Updated by"
 msgstr "Son Güncelleyen"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_write_date
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__write_date
 msgid "Last Updated on"
 msgstr "Son Güncelleme"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_initiating_party_name
+#: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_initiating_party_name
 msgid ""
 "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
 "in length."
@@ -200,8 +196,8 @@ msgid ""
 "Payments to export as SEPA Credit Transfer must have 'SEPA Credit Transfer' "
 "selected as payment method and be posted"
 msgstr ""
-"SEPA Alacak Transferi olarak dışa aktarılacak ödeme kayıtları 'SEPA Alacak "
-"Transferi' metodu sahip olmalı ve işlenmiş olmalıdır"
+"SEPA Alacak Transferi olarak dışa aktarılacak ödeme kayıtları SEPA Alacak "
+"Transferi metoduna sahip olmalı ve işlenmiş olmalıdır"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
@@ -209,8 +205,8 @@ msgid "Payments to send via SEPA"
 msgstr "SEPA yoluyla göndermek için yapılan ödemeler"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_payment_partner_bank_account_id
-#: model:ir.model.fields,field_description:account_sepa.field_account_register_payments_partner_bank_account_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_payment__partner_bank_account_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_register_payments__partner_bank_account_id
 msgid "Recipient Bank Account"
 msgstr "Alıcı Banka Hesabı"
 
@@ -227,7 +223,7 @@ msgstr "SEPA Alacak Transferi"
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_search
 msgid "SEPA Credit Transfer Payments To Send"
-msgstr ""
+msgstr "SEPA Kredi Transfer Ödemeleri Gönderimi"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_journal_dashboard.py:23
@@ -236,19 +232,19 @@ msgid "SEPA Credit Transfers to Send"
 msgstr "SEPA Gönderilecek Alacak Transferleri"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
-#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_pain_version
+#: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_pain_version
+#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_pain_version
 msgid "SEPA Pain Version"
 msgstr "SEPA Pain Sürümü"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_file
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__file
 msgid "SEPA XML File"
 msgstr "SEPA XML Dosyası"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_company_sepa_pain_version
-#: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_pain_version
+#: model:ir.model.fields,help:account_sepa.field_res_company__sepa_pain_version
+#: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_pain_version
 msgid ""
 "SEPA may be a generic format, some countries differ from the SEPA "
 "recommandations made by the EPC (European Payment Councile) and thus the XML"
@@ -264,7 +260,7 @@ msgid "Swiss Version"
 msgstr "İsviçre Versiyonu"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_account_sepa_credit_transfer_is_generic
+#: model:ir.model.fields,help:account_sepa.field_account_sepa_credit_transfer__is_generic
 msgid ""
 "Technical feature used during the file creation. A SEPA message is said to "
 "be 'generic' if it cannot be considered as a standard european credit "
@@ -340,6 +336,9 @@ msgid ""
 "In particular, the reason why this payment file is not generic is the following:\n"
 "   "
 msgstr ""
+"Oluşturulan ödeme dosyası genel bir SEPA alacak aktarımı değildir. Bazı bankalar tarafında uygulanmadığı için reddedeceğini unutmayın.\n"
+"\n"
+"Özellikle, bu ödeme dosyasının jenerik olmasının nedeni şudur:"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_payment.py:50
@@ -413,13 +412,13 @@ msgid "Too many transactions for a single file."
 msgstr "Tek bir dosya için çok fazla işlem."
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_warning_message
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__warning_message
 msgid "Warning"
 msgstr "Uyarı"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_company_sepa_initiating_party_name
-#: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_orgid_issr
+#: model:ir.model.fields,help:account_sepa.field_res_company__sepa_initiating_party_name
+#: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_issr
 msgid ""
 "Will appear in SEPA payments as the name of the party initiating the "
 "payment. Limited to 70 characters."
@@ -428,10 +427,10 @@ msgstr ""
 "karakterle sınırlandırılmıştır."
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_initiating_party_name
-#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_initiating_party_name
+#: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_initiating_party_name
+#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_initiating_party_name
 msgid "Your Company Name"
-msgstr "Şirketinizin Adı"
+msgstr "Firmanızın Adı"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:117
