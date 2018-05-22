@@ -23,9 +23,9 @@
     </div>
 
     <!-- Signing part -->
-    <div t-name="sign.signature_dialog" class="form-horizontal">
-        <div class="o_sign_signer_info form-group">
-            <label class="col-lg-2 control-label" for="name">Full Name</label>
+    <div t-name="sign.signature_dialog">
+        <div class="o_sign_signer_info form-group row">
+            <label class="col-lg-2 col-form-label" for="name">Full Name</label>
             <div class="col-lg-10">
                 <input class="o_sign_signer_name form-control" name="signer" t-att-value="widget.signerName" type="text"/>
             </div>
@@ -65,22 +65,22 @@
         </svg>
     </t>
 
-    <div t-name="sign.public_signer_dialog" class="form-horizontal">
-        <div class="form-group">
-            <label for="o_sign_public_signer_name_input" class="col-lg-3 control-label">Your name</label>
+    <div t-name="sign.public_signer_dialog">
+        <div class="form-group row">
+            <label for="o_sign_public_signer_name_input" class="col-lg-3 col-form-label">Your name</label>
             <div class="col-lg-9">
                 <input type="text" id="o_sign_public_signer_name_input" placeholder="Your name" class="form-control"/>
             </div>
         </div>
-        <div class="form-group">
-            <label for="o_sign_public_signer_mail_input" class="col-lg-3 control-label">Your email</label>
+        <div class="form-group row">
+            <label for="o_sign_public_signer_mail_input" class="col-lg-3 col-form-label">Your email</label>
             <div class="col-lg-9">
                 <input type="email" id="o_sign_public_signer_mail_input" placeholder="Your email" class="form-control"/>
             </div>
         </div>
     </div>
 
-    <div t-name="sign.public_sms_signer" class="form-horizontal">
+    <div t-name="sign.public_sms_signer">
         <div class="form-group">
             <span>A SMS will be sent to the following phone number. Please update it if it's not relevant.</span>
             <div>

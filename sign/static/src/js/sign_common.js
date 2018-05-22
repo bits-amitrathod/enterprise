@@ -739,8 +739,8 @@ odoo.define('sign.document_signing', function(require) {
                     var name = this.$inputs.eq(0).val();
                     var mail = this.$inputs.eq(1).val();
                     if(!name || !mail || mail.indexOf('@') < 0) {
-                        this.$inputs.eq(0).closest('.form-group').toggleClass('has-error', !name);
-                        this.$inputs.eq(1).closest('.form-group').toggleClass('has-error', !mail || mail.indexOf('@') < 0);
+                        this.$inputs.eq(0).closest('.form-group').toggleClass('o_has_error', !name).find('.form-control, .custom-select').toggleClass('is-invalid', !name);
+                        this.$inputs.eq(1).closest('.form-group').toggleClass('o_has_error', !mail || mail.indexOf('@') < 0).find('.form-control, .custom-select').toggleClass('is-invalid', !mail || mail.indexOf('@') < 0);
                         return false;
                     }
 
@@ -798,7 +798,7 @@ odoo.define('sign.document_signing', function(require) {
         _onValidateSMS: function () {
             var input = this.$('#o_sign_public_signer_sms_input')
             if(!input.val()) {
-                input.closest('.form-group').toggleClass('has-error');
+                input.closest('.form-group').toggleClass('o_has_error').find('.form-control, .custom-select').toggleClass('is-invalid');
                 return false;
             }
             var route = '/sign/sign/' + this.requestID + '/' + this.requestToken + '/' + input.val();
@@ -1118,7 +1118,7 @@ odoo.define('sign.document_signing', function(require) {
             signDialog.open().onConfirm(function(name, signature) {
                 var isEmpty = ((signature)? (signDialog.emptySignature === signature) : true);
 
-                signDialog.$('.o_sign_signer_info').toggleClass('has-error', !name);
+                signDialog.$('.o_sign_signer_info').toggleClass('o_has_error', !name).find('.form-control, .custom-select').toggleClass('is-invalid', !name);
                 signDialog.$('.o_sign_signature_draw').toggleClass('bg-danger text-white', isEmpty);
                 if(isEmpty || !name) {
                     return false;

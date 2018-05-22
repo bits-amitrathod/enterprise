@@ -1252,7 +1252,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                 });
             } else {
                 this.$('.pt_settings_alert').show(0).delay(5000).hide(0);
-                this.$("div.pt_duration_fg").addClass('has-error');
+                this.$("div.pt_duration_fg").addClass('o_has_error').find('.form-control, .custom-select').addClass('is-invalid');
                 this.$("input.pt_minimal_duration").val('').focus();
             }
         },
@@ -1266,7 +1266,7 @@ odoo.define('project_timeshee.ui', function (require ) {
                 });
             } else {
                 this.$('.pt_settings_alert').show(0).delay(5000).hide(0);
-                this.$("div.pt_time_unit_fg").addClass('has-error');
+                this.$("div.pt_time_unit_fg").addClass('o_has_error').find('.form-control, .custom-select').addClass('is-invalid');
                 this.$("input.pt_time_unit").val('').focus();
             }
         },

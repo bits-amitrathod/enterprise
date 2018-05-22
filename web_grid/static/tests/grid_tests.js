@@ -605,7 +605,7 @@ QUnit.module('Views', {
         return concurrency.delay(0).then(function () {
             var $input = grid.$('.o_grid_cell_container:eq(0) div.o_grid_input');
 
-            assert.notOk($input.hasClass('has-error'),
+            assert.notOk($input.hasClass('o_has_error'),
                 "input should not show any error at start");
             $input.click();
             $input.focus();
@@ -640,13 +640,13 @@ QUnit.module('Views', {
             $input.text('abc');
             $input.focusout();
 
-            assert.ok($input.hasClass('has-error'),
+            assert.ok($input.hasClass('o_has_error'),
                 "input should be formatted to show that there was an error");
 
             $input.text('8.5');
             $input.focusout();
 
-            assert.notOk($input.hasClass('has-error'),
+            assert.notOk($input.hasClass('o_has_error'),
                 "input should not be formatted like there is an error");
 
             assert.strictEqual($input.text(), "08:30",

@@ -55,17 +55,16 @@
               </header>
                 <main class="modal-body">
                     <t t-if="versions.length != 0 and config == 1">
-                        <form id="productForm" class="form-horizontal" role="form">
-                            <div class="form-group form-group">
-                                <label class="col-md-3 control-label">Experiment Name</label>
+                        <form id="productForm" role="form">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Experiment Name</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control form-field-label o_name o_required_field"/>
                                 </div>
-
                             </div>
 
-                            <div class="form-group form-group">
-                                <label class="col-md-3 control-label">Objective: </label>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Objective: </label>
                                 <div class="col-md-8 ">
                                     <select class="form-control col-md-2 box">
                                         <t t-foreach="goals" t-as="item">
@@ -75,7 +74,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group form-group">
+                            <div class="form-group row">
                                 <div class="col-md-3"></div>
                                 <div class="checkbox col-md-8">
                                     <label>
@@ -86,7 +85,7 @@
 
                             <div class="o_versions">
                                 <t t-foreach="versions" t-as="item">
-                                    <div class="form-group form-group-lg">
+                                    <div class="form-group row">
                                         <div class="col-md-3"></div>
                                         <div class="checkbox col-md-8">
                                             <label>
@@ -111,7 +110,7 @@
                         <div class="o_configure_ab">
                             <p>Odoo uses Google Analytics to track the performances of an A/B testing experiment comparing several versions.</p>
                         </div>
-                        <form id="productForm" class="form-horizontal" role="form">
+                        <form id="productForm" role="form">
                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                               <div class="card">
                                 <h4 class="card-header" role="tab" id="headingOne">
@@ -154,15 +153,15 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-md-3 control-label">GA Key</label>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">GA Key</label>
                                 <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_ga_key o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_ga_key o_required_field" disabled="disabled"/>
                                 </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-md-3 control-label">View ID</label>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">View ID</label>
                                 <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_view_id o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_view_id o_required_field" disabled="disabled"/>
@@ -219,15 +218,15 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-md-3 control-label">Client ID</label>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Client ID</label>
                                 <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_client_id o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_client_id o_required_field" disabled="disabled"/>
                                 </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-md-3 control-label">Client Secret</label>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Client Secret</label>
                                 <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_client_secret o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_client_secret o_required_field" disabled="disabled"/>
@@ -240,15 +239,15 @@
                         <div class="o_configure_ab">
                             <p>Odoo uses Google Analytics to track the performances of an A/B testing experiment comparing several versions.</p>
                         </div>
-                        <form id="productForm" class="form-horizontal" role="form">
-                            <div class="form-group form-group">
-                                <label class="col-md-3 control-label">GA Key</label>
+                        <form id="productForm" role="form">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">GA Key</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control form-field-label o_ga_key o_required_field"/>
                                 </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-md-3 control-label">View ID</label>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">View ID</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control form-field-label o_view_id o_required_field"/>
                                 </div>
@@ -404,7 +403,7 @@
                 <t t-if="list.length == 0">
                     <p>There is no difference with Master</p>
                 </t>
-                <form id="productForm" class="form-horizontal" role="form">
+                <form id="productForm" role="form">
 
                     <div class="radio">
                         <label>
@@ -442,9 +441,9 @@
                     A version allows to modify several pages, without publishing the changes directly.
                     You can also launch A/B tests to analyse the performance of different versions.
                 </p>
-                <form id="productForm" class="form-horizontal" role="form">
-                    <div class="form-group form-group">
-                        <label class="col-md-3 control-label">New Version</label>
+                <form id="productForm" role="form">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">New Version</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control form-field-label o_version_name o_required_field" t-attf-value="{{default_name}}"/>
                         </div>

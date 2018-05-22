@@ -419,9 +419,9 @@ return AbstractRenderer.extend({
 
         try {
             value = this._parse(e.target.textContent.trim());
-            $target.removeClass('has-error');
+            $target.removeClass('o_has_error').find('.form-control, .custom-select').removeClass('is-invalid');
         } catch (_) {
-            $target.addClass('has-error');
+            $target.addClass('o_has_error').find('.form-control, .custom-select').addClass('is-invalid');
             return;
         }
 
