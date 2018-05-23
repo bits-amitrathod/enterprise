@@ -13,17 +13,21 @@ API_BASE_URL = 'https://api.easypost.com/v2/'
 class EasypostRequest():
     "Implementation of Easypost API"
 
-    def __init__(self, api_key):
+    def __init__(self, api_key, debug_logger):
         self.api_key = api_key
+        self.debug_logger = debug_logger
 
     def _make_api_request(self, endpoint, request_type='get', data=None):
         """make an api call, return response"""
         access_url = url_join(API_BASE_URL, endpoint)
         try:
+            self.debug_logger("%s\n%s\n%s" % (access_url, request_type, data if data else None), 'easypost_request_%s' % endpoint)
             if request_type == 'get':
-                response = requests.get(access_url, auth=(self.api_key, ''), data=data).json()
+                response = requests.get(access_url, auth=(self.api_key, ''), data=data)
             else:
-                response = requests.post(access_url, auth=(self.api_key, ''), data=data).json()
+                response = requests.post(access_url, auth=(self.api_key, ''), data=data)
+            self.debug_logger("%s\n%s" % (response.status_code, response.text), 'easypost_response_%s' % endpoint)
+            response = response.json()
             # check for any error in response
             if 'error' in response:
                 raise UserError(_('Easypost returned an error: ') + response['error'].get('message'))
@@ -310,6 +314,7 @@ class EasypostRequest():
             rate = self._sort_rates(rates)[0]
             # Complete service level on the delivery carrier.
             carrier._generate_services(rates)
+        # If the user ask for a specific service level on its carrier.
         elif rates and carrier.easypost_default_service_id:
             rate = [rate for rate in rates if rate['service'] == carrier.easypost_default_service_id.name][0]
             if not rate:
