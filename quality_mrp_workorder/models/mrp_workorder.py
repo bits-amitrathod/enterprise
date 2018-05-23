@@ -10,7 +10,6 @@ class MrpProductionWorkcenterLine(models.Model):
 
     measure = fields.Float(related='current_quality_check_id.measure')
     measure_success = fields.Selection(related='current_quality_check_id.measure_success')
-    picture = fields.Binary(related='current_quality_check_id.picture')
     norm_unit = fields.Char(related='current_quality_check_id.norm_unit')
 
     def do_pass(self):
@@ -31,9 +30,6 @@ class MrpProductionWorkcenterLine(models.Model):
 
     def _next(self, state='pass'):
         self.ensure_one()
-        if self.test_type == 'picture' and not self.picture:
-            raise UserError(_('Please upload a picture.'))
-        old_check_id = self.current_quality_check_id
         result = super(MrpProductionWorkcenterLine, self)._next(state)
         if state == 'fail' and old_check_id.failure_message:
             return {

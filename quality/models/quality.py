@@ -161,6 +161,7 @@ class QualityCheck(models.Model):
     alert_count = fields.Integer('# Quality Alerts', compute="_compute_alert_count")
     note = fields.Html(related='point_id.note', readonly=True)
     test_type = fields.Char(related="point_id.test_type", readonly=True)
+    picture = fields.Binary('Picture', attachment=True)
 
     @api.multi
     def _compute_alert_count(self):

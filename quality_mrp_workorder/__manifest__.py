@@ -12,7 +12,6 @@
     Adds Quality Control to workorders.
 """,
     "data": [
-        'data/mrp_workorder_data.xml',
         'views/quality_views.xml',
         'views/mrp_workorder_views.xml',
     ],

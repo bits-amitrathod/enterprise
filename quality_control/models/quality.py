@@ -121,7 +121,6 @@ class QualityAlertTeam(models.Model):
 class QualityCheck(models.Model):
     _inherit = "quality.check"
 
-    picture = fields.Binary('Picture', attachment=True)
     failure_message = fields.Html(related='point_id.failure_message', readonly=True)
     measure = fields.Float('Measure', default=0.0, digits=dp.get_precision('Quality Tests'), track_visibility='onchange')
     measure_success = fields.Selection([

@@ -254,6 +254,9 @@
                             <field name="user_id" string="Control Person" invisible="1"/>
                         </group>
                     </group>
+                    <group attrs="{'invisible': [('test_type', '!=', 'picture')]}">
+                        <field name="picture" widget="image"/>
+                    </group>
                     <notebook>
                         <page string="Notes">
                             <field name="note"/>

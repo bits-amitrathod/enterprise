@@ -41,6 +41,7 @@ class MrpProductionWorkcenterLine(models.Model):
     test_type = fields.Char('Test Type', compute='_compute_component_id', readonly=True)
     user_id = fields.Many2one(related='current_quality_check_id.user_id')
     worksheet_page = fields.Integer('Worksheet page')
+    picture = fields.Binary(related='current_quality_check_id.picture')
 
     @api.depends('qty_producing', 'qty_remaining')
     def _compute_is_last_lot(self):
@@ -186,6 +187,10 @@ class MrpProductionWorkcenterLine(models.Model):
             self._update_active_move_line()
 
             self._create_subsequent_checks()
+
+        if self.test_type == 'picture' and not self.picture:
+            raise UserError(_('Please upload a picture.'))
+        old_check_id = self.current_quality_check_id
 
         self.current_quality_check_id.write({
             'quality_state': state,
