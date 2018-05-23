@@ -119,6 +119,7 @@ class website_hr_contract_salary(http.Controller):
         contract_type = False
         employee_contract_id = False
         job_title = False
+        freeze = False
 
         final_yearly_costs = contract.final_yearly_costs
 
@@ -150,6 +151,8 @@ class website_hr_contract_salary(http.Controller):
                 contract_type = value
             elif field_name == 'job_title':
                 job_title = value
+            elif field_name == 'freeze':
+                freeze = value
             elif field_name == 'debug':
                 pass
             elif field_name in old_value:
@@ -180,6 +183,7 @@ class website_hr_contract_salary(http.Controller):
             'new_car': new_car,
             'contract_type': contract_type,
             'job_title': job_title,
+            'freeze': freeze,
             'original_link': get_current_url(request.httprequest.environ)})
 
         response = request.render("hr_contract_salary.salary_package", values)
