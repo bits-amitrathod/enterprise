@@ -480,7 +480,7 @@ class SaleSubscription(models.Model):
             'payment_token_id': payment_token.id,
             'partner_id': self.partner_id.id,
             'partner_country_id': self.partner_id.country_id.id,
-            'invoice_id': invoice.id,
+            'invoice_ids': [(6, 0, [invoice.id])],
             'callback_model_id': self.env['ir.model'].sudo().search([('model', '=', self._name)], limit=1).id,
             'callback_res_id': self.id,
             'callback_method': 'reconcile_pending_transaction',
@@ -501,7 +501,7 @@ class SaleSubscription(models.Model):
     def reconcile_pending_transaction(self, tx, invoice=False):
         self.ensure_one()
         if not invoice:
-            invoice = tx.invoice_id
+            invoice = tx.invoice_ids and tx.invoice_ids[0]
         if tx.state in ['done', 'authorized']:
             invoice.write({'reference': tx.reference, 'name': tx.reference})
             if tx.acquirer_id.journal_id and tx.state == 'done':

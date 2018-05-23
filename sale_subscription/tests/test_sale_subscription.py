@@ -62,7 +62,7 @@ class TestSubscription(TestSubscriptionCommon):
             'payment_token_id': payment_method.id,
             'partner_id': invoice.partner_id.id,
             'partner_country_id': invoice.partner_id.country_id.id,
-            'invoice_id': invoice.id,
+            'invoice_ids': [(6, 0, [invoice.id])],
             'state': 'done',
         }
         tx = tx_obj.create(values)
