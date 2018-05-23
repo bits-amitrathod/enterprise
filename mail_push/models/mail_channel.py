@@ -23,7 +23,7 @@ class MailChannel(models.Model):
             # of a mention in a chat. In this case the previously created Cloud message is enough.
             receiver_ids |= message.partner_ids
             receiver_ids |= message.needaction_partner_ids
-            identities = receiver_ids.mapped('device_identity_ids')
+            identities = receiver_ids.sudo().mapped('device_identity_ids')
             if identities:
                 for service, service_str in self.env['mail_push.device']._default_service_type():
                     method_name = "_push_notify_%s" % (service)

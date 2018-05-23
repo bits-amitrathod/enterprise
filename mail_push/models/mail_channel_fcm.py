@@ -160,7 +160,7 @@ class MailChannel(models.Model):
         invalid_subscriptions = []
         for e in ["InvalidRegistration", "MismatchSenderId", "NotRegistered"]:
             invalid_subscriptions += errors.get(e, [])
-        subscription_to_remove = env['mail_push.device'].search([('subscription_id', 'in', invalid_subscriptions)])
+        subscription_to_remove = env['mail_push.device'].sudo().search([('subscription_id', 'in', invalid_subscriptions)])
         subscription_to_remove.unlink()
 
     @api.model
@@ -171,7 +171,7 @@ class MailChannel(models.Model):
         Response Format: {'new_token': 'old_token'}
         """
         all_subsciptions = canonical.keys() + canonical.values()
-        subscription_exists = env['mail_push.device'].search([('subscription_id', 'in', all_subsciptions)])
+        subscription_exists = env['mail_push.device'].sudo().search([('subscription_id', 'in', all_subsciptions)])
         token_exists = subscription_exists.mapped("subscription_id")
         for old, new in canonical.items():
             if old in token_exists and new in token_exists:
