@@ -13,16 +13,20 @@ MockServer.include({
         } else if (args.method === 'read_grid_domain') {
             return this._mockReadGridDomain(args.model, args.kwargs);
         } else if (args.method === 'adjust_grid') {
-            var adjust = args.kwargs.context.grid_adjust;
+            var domain = args.args[1];
+            var columnField = args.args[2];
+            var columnValue = args.args[3];
+            var cellField = args.args[4];
+            var change = args.args[5];
             var lines = this._mockSearchReadController({
                 model: args.model,
-                domain: adjust.row_domain,
+                domain: domain,
                 fields: [],
             });
             var newID = this._mockCopy(args.model, lines.records[0].id);
             var newRecord = _.findWhere(this.data[args.model].records, {id: newID});
-            newRecord[adjust.cell_field] = adjust.change;
-            newRecord[adjust.column_field] = adjust.column_value.split('/')[0];
+            newRecord[cellField] = change;
+            newRecord[columnField] = columnValue.split('/')[0];
             return $.when({});
         } else {
             return this._super(route, args);

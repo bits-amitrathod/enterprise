@@ -79,33 +79,26 @@ var GridController = AbstractController.extend({
         var state = this.model.get();
         var domain = this.model.domain.concat(cell.row.domain);
 
-        var actionData = {
-            type: this.adjustment,
-            name: this.adjustName,
-            args: JSON.stringify([ // args for type=object
+        var self = this;
+        this._rpc({
+            model: this.modelName,
+            method: this.adjustName,
+            args: [ // args for type=object
+                [],
                 domain,
                 state.colField,
                 cell.col.values[state.colField][0],
                 state.cellField,
                 difference
-            ]),
-            context: this.model.getContext({
-                grid_adjust: { // context for type=action
-                    row_domain: domain,
-                    column_field: state.colField,
-                    column_value: cell.col.values[state.colField][0],
-                    cell_field: state.cellField,
-                    change: difference,
-                },
-            }),
-        };
-        this.trigger_up('execute_action', {
-            action_data: actionData,
-            env: {
-                context: this.model.getContext(),
-                model: this.modelName
-            },
-            on_success: this.reload.bind(this),
+            ],
+            context: this.model.getContext()
+        }).then(function () {
+            return self.model.reload();
+        }).then(function () {
+            var state = self.model.get();
+            return self.renderer.updateState(state, {});
+        }).then(function () {
+            self._updateButtons(state);
         });
     },
     /**
