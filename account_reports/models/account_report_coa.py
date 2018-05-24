@@ -42,6 +42,16 @@ class report_account_coa(models.AbstractModel):
             {'name': _('Credit'), 'class': 'number'},
         ]
 
+    def _get_super_columns(self, options):
+        date_cols = options.get('date') and [options['date']] or []
+        date_cols += options.get('comparison', {}).get('periods', [])
+
+        columns = [{'string': _('Initial Balance')}]
+        columns += reversed(date_cols)
+        columns += [{'string': _('Total')}]
+
+        return {'columns': columns, 'x_offset': 1, 'merge': 2}
+
     def _post_process(self, grouped_accounts, initial_balances, options, comparison_table):
         lines = []
         context = self.env.context
