@@ -235,6 +235,15 @@
             </tree>
         </field>
     </record>
+    <record id="view_routing_steps_search" model="ir.ui.view">
+        <field name="name">view.routing.steps.search</field>
+        <field name="model">quality.point</field>
+        <field name="arch" type="xml">
+            <search string="Quality Point Steps">
+                <field name="routing_id" domain="[('routing_id', '=', active_id)]" string="Routing"/>
+            </search>
+        </field>
+    </record>
     <record id="action_mrp_workorder_show_steps" model="ir.actions.act_window">
         <field name="name">Steps</field>
         <field name="type">ir.actions.act_window</field>
@@ -244,7 +253,7 @@
             (0, 0, {'view_mode': 'tree'}),
             (0, 0, {'view_mode': 'kanban'}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('step_view_form')})]"/>
-        <field name="domain">[('routing_id', '=', active_id)]</field>
+        <field name="search_view_id" ref="view_routing_steps_search"/>
     </record>
     <record id="mrp_routing_view_form_inherit_quality" model="ir.ui.view">
         <field name="name">mrp.routing.form.inherit.quality</field>
@@ -252,7 +261,7 @@
         <field name="model">mrp.routing</field>
         <field name="arch" type="xml">
             <xpath expr="//button" position="before">
-                <button name="action_mrp_workorder_show_steps" type="object" icon="fa-list-ul">
+                <button name="action_mrp_workorder_show_steps" type="object" icon="fa-list-ul" context="{'search_default_routing_id': [active_id]}">
                     Steps
                 </button>
             </xpath>
