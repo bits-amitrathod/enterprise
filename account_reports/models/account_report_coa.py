@@ -77,8 +77,9 @@ class report_account_coa(models.AbstractModel):
                 total_periods += amount
                 cols += [{'name': debit > 0 and self.format_value(debit) or zero_value, 'no_format_name': debit > 0 and debit or 0},
                          {'name': credit > 0 and self.format_value(credit) or zero_value, 'no_format_name': credit > 0 and abs(credit) or 0}]
-                p_indice = period * 2 if period > 1 else 3
-                p_indice = 1 if period == 0 else p_indice
+                # In sum_columns, the first 2 elements are the initial balance's Debit and Credit
+                # index of the credit of previous column generally is:
+                p_indice = period * 2 + 1
                 sum_columns[(p_indice) + 1] += debit if debit > 0 else 0
                 sum_columns[(p_indice) + 2] += credit if credit > 0 else 0
 
