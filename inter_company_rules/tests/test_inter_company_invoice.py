@@ -20,11 +20,11 @@ class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
             'chart_template_id': 1,
             'company_id': self.company_a.id,
             'currency_id': self.env.ref('base.EUR').id,
-            'transfer_account_id': self.ref("l10n_generic_coa.transfer_account_id"),
             'code_digits': 6,
             'purchase_tax_id': False,
             'bank_account_code_prefix': 'COMP_A',
             'cash_account_code_prefix': 'TANGO',
+            'transfer_account_code_prefix': '100',
             'sale_tax_id': False
         }
 
