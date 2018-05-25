@@ -30,6 +30,7 @@ class MrpProductionWorkcenterLine(models.Model):
 
     def _next(self, state='pass'):
         self.ensure_one()
+        old_check_id = self.current_quality_check_id
         result = super(MrpProductionWorkcenterLine, self)._next(state)
         if state == 'fail' and old_check_id.failure_message:
             return {

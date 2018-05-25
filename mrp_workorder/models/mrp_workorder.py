@@ -190,7 +190,6 @@ class MrpProductionWorkcenterLine(models.Model):
 
         if self.test_type == 'picture' and not self.picture:
             raise UserError(_('Please upload a picture.'))
-        old_check_id = self.current_quality_check_id
 
         self.current_quality_check_id.write({
             'quality_state': state,

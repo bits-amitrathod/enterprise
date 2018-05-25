@@ -74,7 +74,7 @@ class QualityPoint(models.Model):
     def check_execute_now(self):
         # TDE FIXME: make true multi
         self.ensure_one()
-        return False
+        return True
 
     def _get_type_default_domain(self):
         return []
