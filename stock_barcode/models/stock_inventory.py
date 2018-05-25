@@ -15,16 +15,67 @@ class StockInventory(models.Model):
 
     scan_location_id = fields.Many2one('stock.location', 'Scanned Location', store=False)
 
+    def action_client_action(self):
+        """ Open the mobile view specialized in handling barcodes on mobile devices.
+        """
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'stock_barcode_inventory_client_action',
+            'target': 'fullscreen',
+            'params': {
+                'model': 'stock.inventory',
+                'inventory_id': self.id,
+            }
+        }
+
+    def get_barcode_view_state(self):
+        """ Return the initial state of the barcode view as a dict.
+        blablabla.
+        """
+        inventories = self.read()
+        for inventory in inventories:
+            inventory['line_ids'] = self.env['stock.inventory.line'].browse(inventory.pop('line_ids')).read()
+            for line_id in inventory['line_ids']:
+                line_id['product_id'] = self.env['product.product'].browse(line_id.pop('product_id')[0]).read()[0]
+                line_id['location_id'] = self.env['stock.location'].browse(line_id.pop('location_id')[0]).read()[0]
+            inventory['location_id'] = self.env['stock.location'].browse(inventory.pop('location_id')[0]).read()[0]
+            inventory['group_stock_multi_locations'] = self.env.user.has_group('stock.group_stock_multi_locations')
+            inventory['group_tracking_owner'] = self.env.user.has_group('stock.group_tracking_owner')
+            inventory['group_tracking_lot'] = self.env.user.has_group('stock.group_tracking_lot')
+            inventory['group_production_lot'] = self.env.user.has_group('stock.group_production_lot')
+            inventory['group_uom'] = self.env.user.has_group('uom.group_uom')
+            inventory['actionReportInventory'] = self.env.ref('stock.action_report_inventory').id
+        return inventories
+
     @api.model
     def open_new_inventory(self):
-        action = self.env.ref('stock_barcode.stock_inventory_action_new_inventory').read()[0]
-        if self.env.ref('stock.warehouse0', raise_if_not_found=False):
-            new_inv = self.env['stock.inventory'].create({
-                'filter': 'partial',
-                'name': fields.Date.context_today(self),
-            })
-            new_inv.action_start()
-            action['res_id'] = new_inv.id
+        use_form_handler = self.env['ir.config_parameter'].sudo().get_param('stock_barcode.use_form_handler')
+        if use_form_handler:
+            action = self.env.ref('stock_barcode.stock_inventory_action_new_inventory').read()[0]
+            if self.env.ref('stock.warehouse0', raise_if_not_found=False):
+                new_inv = self.env['stock.inventory'].create({
+                    'filter': 'partial',
+                    'name': fields.Date.context_today(self),
+                })
+                new_inv.action_start()
+                action['res_id'] = new_inv.id
+        else:
+            action = self.env.ref('stock_barcode.stock_barcode_inventory_client_action').read()[0]
+            if self.env.ref('stock.warehouse0', raise_if_not_found=False):
+                new_inv = self.env['stock.inventory'].create({
+                    'filter': 'partial',
+                    'name': fields.Date.context_today(self),
+                })
+                new_inv.action_start()
+                action['res_id'] = new_inv.id
+
+                params = {
+                    'model': 'stock.inventory',
+                    'inventory_id': new_inv.id,
+                }
+                action = dict(action, target='fullscreen', params=params)
+
         return action
 
     def _add_product(self, product, qty=1.0):

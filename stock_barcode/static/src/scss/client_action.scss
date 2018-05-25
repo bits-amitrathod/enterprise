@@ -1,0 +1,153 @@
+.barcode_client_action {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .o_invisible {
+        visibility: hidden;
+    }
+
+    .o_strong {
+        font-weight: bold;
+    }
+
+    .o_highlight {
+        background-color: $o-brand-optional;
+        color: white;
+
+        .o_edit {
+            color: white;
+        }
+    }
+    .o_button_barcode_standard {
+        border: 1px solid $o-main-text-color;
+        background-color: transparent;
+    }
+
+    .o_button_barcode_highlight {
+        border: 1px solid $o-brand-optional;
+        background-color: $o-brand-optional;
+        color: white;
+    }
+
+    .o_add_line {
+        color: $o-brand-optional;
+    }
+
+    .o_button_barcode_primary {
+        padding: 3em;
+        width: 90%;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+
+    .barcode_header {
+        flex: 0 0 46px;
+    }
+    .barcode_lines_header {
+        border-bottom: 1px solid #9c9c9c;
+    }
+
+    .barcode_summary {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2em;
+        font-size: 16px;
+    }
+
+    .barcode_page_summary {
+        background-color: #e1e1e1;
+        padding: 0.5em;
+
+        .barcode_product_line {
+            display: flex;
+            justify-content: space-between;
+
+            .barcode_locations {
+                font-size: 16px;
+            }
+        }
+    }
+
+    .barcode_lines {
+        clear: both;
+        flex: auto;
+        overflow: auto;
+    }
+
+    .barcode_form_view {
+        flex: auto;
+        overflow: auto;
+    }
+
+    .barcode_lines_add {
+        flex: auto;
+        overflow: auto;
+        color: #9c9c9c,
+    }
+
+    .barcode_settings {
+        flex: auto;
+
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        > button {
+            flex: 1 0 auto;
+            border-top: none;
+        }
+    }
+
+    .barcode_control {
+        flex: 0 0 46px;
+
+        display: flex;
+
+        > button {
+            flex: 1;
+        }
+    }
+
+    .barcode_control.disabled {
+        display: none;
+    }
+}
+
+.barcode_header {
+    position: relative;
+    height: $o-navbar-height;
+    border-bottom: 1px solid $o-navbar-inverse-link-hover-bg;
+    background-color: $o-brand-primary;
+    color: white;
+
+    > a, > button, > .o_title {
+        float: left;
+        height: $o-navbar-height;
+        border: none;
+        padding: 0 $o-horizontal-padding - 4px 0 $o-horizontal-padding;
+        line-height: $o-navbar-height;
+        background-color: transparent;
+        text-align: center;
+        color: inherit;
+        font-size: 18px;
+    }
+
+}
+
+.barcode_lines {
+    > .line {
+        padding: 1em;
+        border: 1px solid #9c9c9c;
+        border-top: 0px;
+
+        p:last-child { 
+            margin: 0;
+        }
+    }
+}
+
+.barcode_settings > button, .barcode_control > button, .barcode_summary > button {
+    text-transform: uppercase;
+}

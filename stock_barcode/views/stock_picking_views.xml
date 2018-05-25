@@ -63,6 +63,26 @@
         </field>
     </record>
     
+    <record id="stock_picking_barcode" model="ir.ui.view">
+        <field name="name">stock.picking.form.view.barcode</field>
+        <field name="model">stock.picking</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form string="Picking Details">
+                <group>
+                    <group>
+                        <field name="partner_id" attrs="{'invisible': [('partner_id', '=', False)]}" />
+                        <field name="scheduled_date" attrs="{'invisible': [('scheduled_date', '=', False)]}" />
+                        <field name="origin" attrs="{'invisible': [('origin', '=', False)]}" />
+                        <field name="state" attrs="{'invisible': [('state', '=', False)]}" />
+                        <field name="priority" attrs="{'invisible': [('priority', '=', False)]}" />
+                        <field name="owner_id" attrs="{'invisible': [('owner_id', '=', False)]}" groups="stock.group_tracking_owner" />
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
     <record id="open_picking" model="ir.actions.act_window">
         <field name="name">Open a picking</field>
         <field name="res_model">stock.picking</field>
@@ -82,12 +102,12 @@
             
             <!-- Use the form view -->
             <xpath expr="//div[hasclass('o_kanban_record_headings')]" position="after">
-                <button class="btn btn-default fa fa-desktop" name="open_picking" type="object"/>
+                <button style="padding: 0px 10px;" class="btn btn-link fa fa-desktop" name="open_picking" type="object"/>
             </xpath>
             
             <!-- Use mobile view-->
             <xpath expr="//strong[hasclass('o_kanban_record_title')]" position="replace">
-                <button class="btn btn-default o_kanban_record_title" name="open_picking_client_action"
+                <button style="padding: 0px 0px;" class="btn btn-link o_kanban_record_title" name="open_picking_client_action"
                   type="object">
                   <span><t t-esc="record.name.value"/></span>
                 </button>

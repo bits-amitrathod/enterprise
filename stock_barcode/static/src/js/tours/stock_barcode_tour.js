@@ -1,7 +1,7 @@
 odoo.define('stock_barcode.tours', function(require) {
 'use strict';
 
-var Tour = require('web.Tour');
+var Tour = require('web_tour.tour');
 
 function scan_barcode(barcode) {
     odoo.__DEBUG__.services["web.core"].bus.trigger("barcode_scanned", barcode);

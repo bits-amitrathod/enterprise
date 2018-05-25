@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="stock_barcode_header_widget">
+        <div class="barcode_header">
+            <button class="fa fa-chevron-left o_exit"/>
+            <span class="o_title"><t t-esc="widget.title"></t></span>
+            <button class="fa fa-info-circle o_show_information"></button>
+            <button class="fa fa-bars pull-right o_show_settings" type="button"/>
+            <button class="fa fa-times pull-right o_close o_hidden" type="button"/>
+        </div>
+    </t>
+
+    <t t-name="stock_barcode_settings_widget">
+        <div class="barcode_settings">
+            <button t-if="widget.model == 'stock.picking'" class="o_button_barcode_standard o_print_picking">Print Picking Operations</button>
+            <button t-if="widget.model == 'stock.picking'" class="o_button_barcode_standard o_print_delivery_slip">Print Delivery Slip</button>
+            <button t-if="widget.model == 'stock.picking'" class="o_button_barcode_standard o_scrap">Scrap</button>
+            <button t-if="widget.model == 'stock.inventory'" class="o_button_barcode_standard o_print_inventory">Print Inventory</button>
+            <button class="o_button_barcode_standard o_validate">Validate</button>
+            <button class="o_button_barcode_standard o_cancel">Cancel</button>
+        </div>
+    </t>
+
+    <t t-name="stock_barcode_lines_widget">
+        <div class="barcode_lines_header"></div>
+        <div class="barcode_lines">
+            <div class="barcode_lines_add text-center">
+                <span class="fa fa-plus fa-3x mt16 o_add_line"></span>
+                <br/>
+                <span class="o_hidden o_scan_message o_scan_message_scan_products">Scan products</span>
+                <span class="o_hidden o_scan_message o_scan_message_scan_more_dest">Scan more products, or scan the destination location</span>
+                <span class="o_hidden o_scan_message o_scan_message_scan_more_src">Scan more products, or scan a new source location</span>
+                <span class="o_hidden o_scan_message o_scan_message_scan_lot">Scan the serial or lot number of the product</span>
+                <span class="o_hidden o_scan_message o_scan_message_scan_src">Scan the source location</span>
+            </div>
+        </div>
+        <div class="barcode_control">
+            <button class="o_button_barcode_standard o_previous_page"><span class="fa fa-angle-left" style='padding-right: 1em'></span>Previous</button>
+            <button class="o_button_barcode_standard o_next_page">Next<span class="fa fa-angle-right" style='padding-left: 1em'></span></button>
+            <button class="o_button_barcode_standard o_validate_page">Validate</button>
+        </div>
+    </t>
+
+    <t t-name="stock_barcode_summary_template">
+        <div class="barcode_page_summary" t-if="mode !== 'no_multi_locations'">
+            <div class="barcode_product_line">
+                <span t-if="model == 'stock.picking'" class="barcode_locations"><t t-if="mode !== 'receipt'"><span class="o_strong">From</span> <span class="o_barcode_summary_location_src"><t t-esc="locationName"></t></span></t> <t t-if="mode !== 'delivery'"><span class="o_strong">To</span> <span class="o_barcode_summary_location_dest"><t t-esc="locationDestName"></t></span></t></span>
+                <span t-if="model == 'stock.inventory'" class="barcode_locations"><span class="o_barcode_summary_location_src"><t t-esc="locationName"></t></span></span>
+                <t t-if="nbPages">
+                    <span class="barcode_move_number"><t t-esc="pageIndex"></t>/<t t-esc="nbPages"></t></span>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="stock_barcode_lines_template">
+        <t t-if="lines">
+            <t t-foreach="lines" t-as="line">
+                <div class="line" t-if="model == 'stock.picking'" t-att-data-id="line.virtual_id || line.id" t-att-data-barcode="line.product_barcode">
+                    <p t-if="state != 'done' and state != 'cancel'"><a class="fa fa-edit fa-2x pull-right o_edit"></a></p>
+                    <p><span class="fa fa-tags"></span> <span class="product-label"><t t-esc="line.display_name"></t></span></p>
+                    <p>
+                        <span class="fa fa-cubes"></span> <span class="qty-done"><t t-esc="line.qty_done"></t></span> / <t t-esc="line.product_uom_qty"></t>
+                        <span t-if="groups.group_uom" t-esc="line.product_uom_id[1]"/>
+                    </p>
+                    <p t-if="line.package_id">
+                        <span class="fa fa-truck"></span> <t t-esc="line.package_id[1]"></t> <span class="fa fa-long-arrow-right"></span> <t t-esc="line.result_package_id[1]"></t>
+                    </p>
+                    <p t-if="line.owner_id">
+                        <span class="fa fa-user-o"></span> <t t-esc="line.owner_id[1]"></t>
+                    </p>
+                    <p t-if="line.lot_name">
+                        <span class="o_line_lot_name"><t t-esc="line.lot_name"></t></span>
+                    </p>
+                    <p t-if="line.lot_id &amp;&amp; !line.lot_name">
+                        <span class="o_line_lot_id"><t t-esc="line.lot_id[1]"></t></span>
+                    </p>
+                </div>
+                <div class="line" t-if="model == 'stock.inventory'" t-att-data-id="line.virtual_id || line.id" t-att-data-barcode="line.product_barcode">
+                    <p><a class="fa fa-edit fa-2x pull-right o_edit"></a></p>
+                    <p><span class="fa fa-tags"></span> <span class="product-label"><t t-esc="line.product_id.display_name"></t></span></p>
+                    <p>
+                        <span class="fa fa-cubes"></span> <span class="product_qty"><t t-esc="line.product_qty"></t></span> / <t t-esc="line.theoretical_qty"></t>
+                        <span t-if="groups.group_uom" t-esc="line.product_uom_id[1]"/>
+                    </p>
+                    <p t-if="line.prod_lot_id">
+                        <span class="o_line_lot_name"><t t-esc="line.prod_lot_id[1]"></t></span>
+                    </p>
+                    <p t-if="line.partner_id">
+                        <span class="fa fa-user-o"></span> <t t-esc="line.partner_id.name"></t>
+                    </p>
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <!-- Form Widget templates -->
+
+    <t t-name="stock_barcode_form_widget">
+        <div class="barcode_form_view"></div>
+        <div t-if="widget.mode == 'edit'" class="barcode_control">
+            <button class="o_button_barcode_standard o_discard">Discard</button>
+            <button class="o_button_barcode_standard o_save o_button_barcode_highlight">Confirm</button>
+        </div>
+    </t>
+
+</templates>

@@ -49,11 +49,7 @@ class StockBarcodeController(http.Controller):
                 'immediate_transfer': True,
             })
 
-            # Open its form view
-            action_picking_form = request.env.ref('stock_barcode.stock_picking_action_form')
-            action_picking_form = action_picking_form.read()[0]
-            action_picking_form.update(res_id=picking.id)
-            return {'action': action_picking_form}
+            return self.get_action(picking.id)
         return False
 
     def try_open_picking(self, barcode):
@@ -64,10 +60,7 @@ class StockBarcodeController(http.Controller):
             ('state', 'in', ('partially_available', 'assigned'))
         ], limit=1)
         if corresponding_picking:
-            action_picking_form = request.env.ref('stock_barcode.stock_picking_action_form')
-            action_picking_form = action_picking_form.read()[0]
-            action_picking_form['res_id'] = corresponding_picking.id
-            return {'action': action_picking_form}
+            return self.get_action(corresponding_picking.id)
         return False
 
     def try_new_internal_picking(self, barcode):
@@ -95,14 +88,40 @@ class StockBarcodeController(http.Controller):
                 })
                 picking.action_confirm()
 
-                # Open its form view
-                action_picking_form = request.env.ref('stock_barcode.stock_picking_action_form')
-                action_picking_form = action_picking_form.read()[0]
-                action_picking_form.update(res_id=picking.id)
-                return {'action': action_picking_form}
+                return self.get_action(picking.id)
             else:
                 return {'warning': _('No internal operation type. Please configure one in warehouse settings.')}
         return False
+
+    def get_action(self, picking_id):
+        """
+        return the action to display the picking. We choose between the traditionnal
+        form view and the new client action
+        """
+        use_form_handler = request.env['ir.config_parameter'].sudo().get_param('stock_barcode.use_form_handler')
+        if use_form_handler:
+            view_id = request.env.ref('stock.view_picking_form').id
+            return {
+                'action': {
+                    'name': _('Open picking form'),
+                    'res_model': 'stock.picking',
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'view_id': view_id,
+                    'views': [(view_id, 'form')],
+                    'type': 'ir.actions.act_window',
+                    'res_id': picking_id,
+                }
+            }
+        else:
+            action = request.env.ref('stock_barcode.stock_barcode_picking_client_action').read()[0]
+            params = {
+                'model': 'stock.picking',
+                'picking_id': picking_id,
+            }
+            action = dict(action, target='fullscreen', params=params)
+            action = {'action': action}
+            return action
 
     @http.route('/stock_barcode/rid_of_message_demo_barcodes', type='json', auth='user')
     def rid_of_message_demo_barcodes(self, **kw):
