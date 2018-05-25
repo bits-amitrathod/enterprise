@@ -4,7 +4,7 @@
     <t t-name="website_version.all_versions">
         <t t-foreach="versions" t-as="item">
             <li class="o_version_choice" t-att-data-version_id="item.id">
-                <a href="#" data-action="delete_version" style="position: absolute; right: 0px;" class="pull-right" aria-label="Delete version" title="Delete version"><i class="fa fa-trash-o fa-fw"></i></a>
+                <a href="#" data-action="delete_version" style="position: absolute; right: 0px;" class="float-right" aria-label="Delete version" title="Delete version"><i class="fa fa-trash-o fa-fw"></i></a>
                 <a href="#" data-action="change_version">
                     <t t-if="item.bold == 0 "><t t-esc="item.name"></t></t>
                     <t t-if="item.bold == 1 "><b><t t-esc="item.name"></t></b></t>

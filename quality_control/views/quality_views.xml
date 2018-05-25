@@ -46,7 +46,7 @@
                                 <field name="display_name"/>
                             </div>
                             <div class="oe_kanban_bottom_right">
-                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
+                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar float-right"/>
                             </div>
                             <div class="oe_kanban_bottom_left">
                                  <field name="priority" widget="priority"/>
@@ -343,7 +343,7 @@
                                     <strong><span><t t-esc="record.name.value"/></span></strong>
                                 </div>
                                 <div class="col-6">
-                                    <strong><span t-attf-class="pull-right text-right label #{['none'].indexOf(record.quality_state.raw_value) > -1 ? 'label-default' : ['fail'].indexOf(record.quality_state.raw_value) > -1 ? 'label-danger' : ['done'].indexOf(record.quality_state.raw_value) > -1 ? 'label-primary' : 'label-success'}"><t t-esc="record.quality_state.value"/></span></strong>
+                                    <strong><span t-attf-class="float-right text-right label #{['none'].indexOf(record.quality_state.raw_value) > -1 ? 'label-default' : ['fail'].indexOf(record.quality_state.raw_value) > -1 ? 'label-danger' : ['done'].indexOf(record.quality_state.raw_value) > -1 ? 'label-primary' : 'label-success'}"><t t-esc="record.quality_state.value"/></span></strong>
                                 </div>
                             </div>
                             <div class="row text-muted">
@@ -355,7 +355,7 @@
                                 </div>
                             </div>
                             <div class="oe_kanban_bottom_right">
-                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
+                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar float-right"/>
                             </div>
                         </div>
                     </t>

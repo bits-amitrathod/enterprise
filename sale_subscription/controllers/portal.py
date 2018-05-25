@@ -134,7 +134,7 @@ class sale_subscription(http.Controller):
             'message_class': message_class,
             'change_pm': kw.get('change_pm') != None,
             'pricelist': account.pricelist_id.sudo(),
-            'submit_class':'btn btn-primary mb8 mt8 pull-right',
+            'submit_class':'btn btn-primary mb8 mt8 float-right',
             'submit_txt':'Pay Subscription',
             'bootstrap_formatting':True,
             'return_url':'/my/subscription/' + str(account_id) + '/' + str(uuid),

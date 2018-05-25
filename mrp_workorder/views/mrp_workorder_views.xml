@@ -92,8 +92,8 @@
                         <button name="button_unblock" type="object" context="{'default_workcenter_id': workcenter_id}" attrs="{'invisible': [('working_state', '!=', 'blocked')]}" string="Unblock" class="btn-danger"/>
                         <button name="action_previous" type="object" class="btn-secondary" string="Previous" icon="fa-chevron-left o_workorder_btn_icon_small" attrs="{'invisible': [('is_first_step', '=', True)]}" barcode_trigger="prev"/>
                         <button disabled="1" class="btn-secondary" string="Previous" icon="fa-chevron-left o_workorder_btn_icon_small" attrs="{'invisible': [('is_first_step', '=', False)]}"/>
-                        <button name="action_skip" type="object" class="btn-secondary" string="Skip" icon="fa-chevron-right pull-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', True)]}" barcode_trigger="skip"/>
-                        <button disabled="1" class="btn-secondary" string="Skip" icon="fa-chevron-right pull-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', False)]}"/>
+                        <button name="action_skip" type="object" class="btn-secondary" string="Skip" icon="fa-chevron-right float-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', True)]}" barcode_trigger="skip"/>
+                        <button disabled="1" class="btn-secondary" string="Skip" icon="fa-chevron-right float-right o_workorder_btn_icon_small" attrs="{'invisible': [('is_last_step', '=', False)]}"/>
                     </div>
                     <div class="o_workorder_bar_content o_workorder_bar_content_right">
                         <div attrs="{'invisible': [('working_state', '=', 'blocked')]}">

@@ -406,7 +406,7 @@
             <div class="pt_footer">
                 <a href="#" role="button" class="btn btn-md btn-primary pt_validate_edit_btn">Save</a>
                 <a href="#" role="button" class="btn btn-md pt_discard_changes">Discard</a>
-                <a role="button" class="fa fa-trash pt_trash btn pull-right" data-toggle="modal" data-target=".pt_deletion_modal" href="#" aria-label="Discard" title="Discard"></a>
+                <a role="button" class="fa fa-trash pt_trash btn float-right" data-toggle="modal" data-target=".pt_deletion_modal" href="#" aria-label="Discard" title="Discard"></a>
             </div>
             <!-- Modal to confirm deletion of an activity -->
             <div role="dialog" class="modal pt_deletion_modal" aria-hidden="true">
@@ -495,8 +495,8 @@
                 </div>
             </div>
             <div t-if="!widget.session || !widget.session.uid" class="pt_footer pt_sync_footer container-fluid">
-                <a href="#" class="pt_odoo_login_link pull-left">Use an Odoo.com account</a>
-                <a class="pt_reset pull-right" href="#" data-toggle="modal" data-target=".pt_reset_modal">Reset</a>
+                <a href="#" class="pt_odoo_login_link float-left">Use an Odoo.com account</a>
+                <a class="pt_reset float-right" href="#" data-toggle="modal" data-target=".pt_reset_modal">Reset</a>
             </div>
         </div>
     </t>
@@ -554,7 +554,7 @@
             <div class="form-group">
                 <label for="pt_premise_password">Password</label>
                 <input type="password" class="pt_premise_password form-control" placeholder="******" name="pt_premise_password"></input>
-                <a href="#" class="show_password fa fa-eye pull-right" aria-label="Show password" title="Show password"/>
+                <a href="#" class="show_password fa fa-eye float-right" aria-label="Show password" title="Show password"/>
             </div>
             <a href="#" role="button" class="btn btn-primary pt_send_premise_login">Login</a>
         </form>

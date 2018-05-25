@@ -6,8 +6,8 @@
             <button class="fa fa-chevron-left o_exit"/>
             <span class="o_title"><t t-esc="widget.title"></t></span>
             <button class="fa fa-info-circle o_show_information"></button>
-            <button class="fa fa-bars pull-right o_show_settings" type="button"/>
-            <button class="fa fa-times pull-right o_close o_hidden" type="button"/>
+            <button class="fa fa-bars float-right o_show_settings" type="button"/>
+            <button class="fa fa-times float-right o_close o_hidden" type="button"/>
         </div>
     </t>
 
@@ -58,7 +58,7 @@
         <t t-if="lines">
             <t t-foreach="lines" t-as="line">
                 <div class="line" t-if="model == 'stock.picking'" t-att-data-id="line.virtual_id || line.id" t-att-data-barcode="line.product_barcode">
-                    <p t-if="state != 'done' and state != 'cancel'"><a class="fa fa-edit fa-2x pull-right o_edit"></a></p>
+                    <p t-if="state != 'done' and state != 'cancel'"><a class="fa fa-edit fa-2x float-right o_edit"></a></p>
                     <p><span class="fa fa-tags"></span> <span class="product-label"><t t-esc="line.display_name"></t></span></p>
                     <p>
                         <span class="fa fa-cubes"></span> <span class="qty-done"><t t-esc="line.qty_done"></t></span> / <t t-esc="line.product_uom_qty"></t>
@@ -78,7 +78,7 @@
                     </p>
                 </div>
                 <div class="line" t-if="model == 'stock.inventory'" t-att-data-id="line.virtual_id || line.id" t-att-data-barcode="line.product_barcode">
-                    <p><a class="fa fa-edit fa-2x pull-right o_edit"></a></p>
+                    <p><a class="fa fa-edit fa-2x float-right o_edit"></a></p>
                     <p><span class="fa fa-tags"></span> <span class="product-label"><t t-esc="line.product_id.display_name"></t></span></p>
                     <p>
                         <span class="fa fa-cubes"></span> <span class="product_qty"><t t-esc="line.product_qty"></t></span> / <t t-esc="line.theoretical_qty"></t>

@@ -63,7 +63,7 @@
                             <h4>
                                 #<span t-field="ticket.id"/> - <span t-field="ticket.name"/>
                                 <a role="button" class="btn btn-info" t-att-href="'/web#return_label=Website&amp;model=helpdesk.ticket&amp;id=%s&amp;view_type=form' % (ticket.id)" groups="helpdesk.group_helpdesk_user">Edit Ticket</a>
-                                <span t-field="ticket.stage_id.name" class="pull-right label label-info" title="Current stage of this ticket"/>
+                                <span t-field="ticket.stage_id.name" class="float-right label label-info" title="Current stage of this ticket"/>
                             </h4>
                         </div>
                     </div>

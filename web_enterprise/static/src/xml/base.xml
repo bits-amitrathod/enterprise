@@ -54,7 +54,7 @@
 <t t-name="WebClient.database_expiration_panel">
     <div class="database_expiration_panel" id="announcement_bar_table">
         <div t-attf-class="alert alert-#{diffDays&lt;6?'danger':(diffDays&lt;16?'warning':'info')}" role="alert">
-            <a href="#" class="oe_instance_hide_panel pull-right" t-translation="off" aria-label="Dismiss">&amp;times;</a>
+            <a href="#" class="oe_instance_hide_panel float-right" t-translation="off" aria-label="Dismiss">&amp;times;</a>
             <span>
                 <span class="oe_instance_expires"></span>
                 <span class="oe_instance_register">
@@ -126,7 +126,7 @@
 <header t-name="Menu">
     <nav class="o_main_navbar">
         <a href="#" class="fa o_menu_toggle" title="Applications" aria-label="Applications"/>
-        <button type="button" class="fa fa-bars pull-right d-block d-lg-none o_mobile_menu_toggle" title="Toggle menu" aria-label="Toggle menu"/>
+        <button type="button" class="fa fa-bars float-right d-block d-lg-none o_mobile_menu_toggle" title="Toggle menu" aria-label="Toggle menu"/>
 
         <a href="#" class="o_menu_brand" role="button" />
         <ul class="o_menu_sections" role="menu"/>
@@ -170,7 +170,7 @@
         <li t-else="" class="o_burger_menu_section">
             <a href="#" t-attf-class="o_menu_entry_lvl_#{depth}" t-att-data-menu-xmlid="menu.xmlid" data-toggle="dropdown" role="button" aria-expanded="false">
                 <t t-esc="menu.name"/>
-                <span class="fa fa-chevron-right toggle_icon pull-right"/>
+                <span class="fa fa-chevron-right toggle_icon float-right"/>
             </a>
             <div>
                 <t t-foreach="menu.children" t-as="menu">

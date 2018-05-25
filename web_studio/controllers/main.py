@@ -1202,7 +1202,7 @@ class WebStudioController(http.Controller):
                     <img
                         t-att-src="kanban_image('%(model)s', 'image_small', record.%(field)s.raw_value)"
                         t-att-title="record.%(field)s.value"
-                        width="24" height="24" class="oe_kanban_avatar pull-right"
+                        width="24" height="24" class="oe_kanban_avatar float-right"
                     />
                 </div>
             """ % {'model': field_id.relation, 'field': field_id.name})

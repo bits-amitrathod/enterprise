@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="col-3">
                                     <t t-set="state_colors" t-value="{'draft': 'label-primary', 'running': 'o_ma_processed', 'stopped': 'label-danger'}"/>
-                                    <span t-attf-class="label #{state_colors[record.state.raw_value]} pull-right" t-att-title="record.state.value">
+                                    <span t-attf-class="label #{state_colors[record.state.raw_value]} float-right" t-att-title="record.state.value">
                                         <t t-esc="record.state.value"/>
                                     </span>
                                 </div>
@@ -148,7 +148,7 @@
                                                         <div class="o_ma_desc"><t t-esc="record.activity_type.value" /></div>
                                                     </div>
                                                     <div class="o_ma_switch">
-                                                        <div t-if="!read_only_mode" class="pull-left mt4 mr4">
+                                                        <div t-if="!read_only_mode" class="float-left mt4 mr4">
                                                             <a type="edit" role="button" class="btn btn-primary btn-xs">Edit</a><a type="delete" role="button" class="btn btn-link btn-xs">Delete</a>
                                                         </div>
                                                         <span data-mode="graph" class="active" role="img" title="Graph" aria-label="Graph"><i class="fa fa-pie-chart" /></span><span data-mode="filter" title="Filter" role="img" aria-label="Filter"><i class="fa fa-filter" /></span>
