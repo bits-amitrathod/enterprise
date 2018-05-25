@@ -4,6 +4,7 @@ odoo.define('web_grid.GridRenderer', function (require) {
 var AbstractRenderer = require('web.AbstractRenderer');
 var core = require('web.core');
 var fieldUtils = require('web.field_utils');
+var field_registry = require('web.field_registry');
 
 var patch = require('snabbdom.patch');
 var h = require('snabbdom.h');
@@ -36,6 +37,21 @@ return AbstractRenderer.extend({
         this.noContentHelper = params.noContentHelper;
         this.editableCells = params.editableCells;
         this.cellWidget = params.cellWidget;
+        this.cellWidgetOptions = params.cellWidgetOptions;
+
+        // formatType is used to determine which format (and parse) functions
+        // to call to format the field's value to insert into the DOM (typically
+        // put into a span or an input), and to parse the value from the input
+        // to send it to the server. These functions are chosen according to
+        // the 'widget' attrs if is is given, and if it is a valid key, with a
+        // fallback on the field type, ensuring that the value is formatted and
+        // displayed according to the choosen widget, if any.
+        var formatType = this.fields[this.state.cellField].type;
+        var WidgetClass = field_registry.get(this.cellWidget);
+        if (WidgetClass) {
+            formatType = WidgetClass.prototype.formatType;
+        }
+        this.formatType = formatType;
     },
     /**
      * @override
@@ -93,11 +109,8 @@ return AbstractRenderer.extend({
         if (value === undefined) {
             return '';
         }
-        if (this.cellWidget) {
-            return fieldUtils.format[this.cellWidget](value);
-        }
         var cellField = this.fields[this.state.cellField];
-        return fieldUtils.format[cellField.type](value, cellField);
+        return fieldUtils.format[this.formatType](value, cellField, this.cellWidgetOptions);
     },
     /**
      * @private
@@ -114,11 +127,8 @@ return AbstractRenderer.extend({
      * @returns {*}
      */
     _parse: function (value) {
-        if (this.cellWidget) {
-            return fieldUtils.parse[this.cellWidget](value);
-        }
         var cellField = this.fields[this.state.cellField];
-        return fieldUtils.parse[cellField.type](value, cellField);
+        return fieldUtils.parse[this.formatType](value, cellField, this.cellWidgetOptions);
     },
     /**
      * @private
