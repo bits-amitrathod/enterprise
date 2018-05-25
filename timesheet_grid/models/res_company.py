@@ -83,12 +83,14 @@ class Company(models.Model):
 
             # calculate the period
             if company.timesheet_mail_employee_interval == 'months':
-                date_start = date.today() + relativedelta(day=1, days=-1)
+                date_start = (date.today() - timedelta(days=company.timesheet_mail_employee_delay)) + relativedelta(day=1)
+                date_stop = date_start + relativedelta(months=1, days=-1)
             else:
-                date_start = date.today() - timedelta(days=datetime.now().weekday()+1)
+                date_start = date.today() - timedelta(weeks=1, days=company.timesheet_mail_employee_delay - 1)
+                date_stop = date_start + timedelta(days=6)
 
             date_start = fields.Date.to_string(date_start)
-            date_stop = fields.Date.to_string(fields.Datetime.from_string(company.timesheet_mail_employee_nextdate).date())
+            date_stop = fields.Date.to_string(date_stop)
 
             # get the related employees timesheet status for the cron period
             employees = self.env['hr.employee'].search([('user_id', 'in', users.ids)])
@@ -115,12 +117,14 @@ class Company(models.Model):
         for company in companies:
             # calculate the period
             if company.timesheet_mail_manager_interval == 'months':
-                date_start = date.today() + relativedelta(day=1, days=-1)
+                date_start = (date.today() - timedelta(days=company.timesheet_mail_manager_delay)) + relativedelta(day=1)
+                date_stop = date_start + relativedelta(months=1, days=-1)
             else:
-                date_start = date.today() - timedelta(days=datetime.now().weekday()+1)
+                date_start = date.today() - timedelta(weeks=1, days=company.timesheet_mail_manager_delay - 1)
+                date_stop = date_start + timedelta(days=6)
 
             date_start = fields.Date.to_string(date_start)
-            date_stop = fields.Date.to_string(fields.Datetime.from_string(company.timesheet_mail_employee_nextdate).date())
+            date_stop = fields.Date.to_string(date_stop)
 
             values = {
                 'date_start': date_start,
