@@ -65,7 +65,7 @@ return AbstractRenderer.extend({
         gantt.config.drag_progress = false;
         gantt.config.grid_width = 250;
         gantt.config.row_height = 30;
-        gantt.config.duration_unit = "hour";
+        gantt.config.duration_unit = "minute";
         gantt.config.initial_scroll = false;
         gantt.config.preserve_scroll = true;
         gantt.config.columns = [{
@@ -714,7 +714,7 @@ return AbstractRenderer.extend({
                 });
             }
             else {
-                var duration = (task.task_stop - task.task_start) / 3600000;
+                var duration = (task.task_stop - task.task_start) / 60000;
                 // Consolidation
                 gantt_tasks.push({
                     'id': "gantt_task_" + task.id,
