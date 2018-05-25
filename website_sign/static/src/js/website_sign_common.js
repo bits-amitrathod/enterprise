@@ -97,7 +97,11 @@ odoo.define('website_sign.PDFIframe', function (require) {
                 type: "text/javascript",
                 src: "/web/static/lib/jquery.ui/jquery-ui.js"
             });
-            this.$('head').append($cssLink, $faLink, $jqueryLink, $jqueryScript);
+            // use Node.appendChild to add resources and not jQuery that load script in top frame
+            this.$('head')[0].appendChild($cssLink[0]);
+            this.$('head')[0].appendChild($faLink[0]);
+            this.$('head')[0].appendChild($jqueryLink[0]);
+            this.$('head')[0].appendChild($jqueryScript[0]);
 
             var waitFor = [];
 

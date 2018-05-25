@@ -42,7 +42,7 @@ class MailChannel(models.Model):
             # of a mention in a chat. In this case the previously created Cloud message is enough.
             receiver_ids |= message.partner_ids
             receiver_ids |= message.needaction_partner_ids
-            identities = receiver_ids.mapped('device_identity_ids')
+            identities = receiver_ids.sudo().mapped('device_identity_ids')
             if identities:
                 for service, service_str in self.env['mail_push.device']._default_service_type():
                     method_name = "_push_notify_%s" % (service)
@@ -203,7 +203,7 @@ class MailChannel(models.Model):
         invalid_subscriptions = []
         for e in ["InvalidRegistration", "MismatchSenderId", "NotRegistered"]:
             invalid_subscriptions += errors.get(e, [])
-        subscription_to_remove = env['mail_push.device'].search([('subscription_id', 'in', invalid_subscriptions)])
+        subscription_to_remove = env['mail_push.device'].sudo().search([('subscription_id', 'in', invalid_subscriptions)])
         subscription_to_remove.unlink()
 
     @api.model
@@ -214,7 +214,7 @@ class MailChannel(models.Model):
         Response Format: {'new_token': 'old_token'}
         """
         all_subsciptions = list(itertools.chain(canonical, canonical.values()))
-        subscription_exists = env['mail_push.device'].search([('subscription_id', 'in', all_subsciptions)])
+        subscription_exists = env['mail_push.device'].sudo().search([('subscription_id', 'in', all_subsciptions)])
         token_exists = subscription_exists.mapped("subscription_id")
         for old, new in canonical.items():
             if old in token_exists and new in token_exists:
