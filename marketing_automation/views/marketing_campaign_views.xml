@@ -22,8 +22,8 @@
                                     </span>
                                 </div>
                                 <div class="col-3">
-                                    <t t-set="state_colors" t-value="{'draft': 'label-primary', 'running': 'o_ma_processed', 'stopped': 'label-danger'}"/>
-                                    <span t-attf-class="label #{state_colors[record.state.raw_value]} float-right" t-att-title="record.state.value">
+                                    <t t-set="state_colors" t-value="{'draft': 'badge-primary', 'running': 'o_ma_processed', 'stopped': 'badge-danger'}"/>
+                                    <span t-attf-class="badge #{state_colors[record.state.raw_value]} float-right" t-att-title="record.state.value">
                                         <t t-esc="record.state.value"/>
                                     </span>
                                 </div>

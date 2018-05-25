@@ -84,11 +84,11 @@ var Filters = AbstractField.extend({
         var label = '';
         var op = '';
         if (val[i] === '|') {
-            label = 'label-success';
+            label = 'badge-success';
             op = ' or ';
         }
         else if (val[i] === '&') {
-            label = 'label-primary';
+            label = 'badge-primary';
             op = ' and ';
         }
         var span = resA[1] + resB[1];

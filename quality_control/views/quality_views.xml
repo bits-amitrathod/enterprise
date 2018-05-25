@@ -343,7 +343,7 @@
                                     <strong><span><t t-esc="record.name.value"/></span></strong>
                                 </div>
                                 <div class="col-6">
-                                    <strong><span t-attf-class="float-right text-right label #{['none'].indexOf(record.quality_state.raw_value) > -1 ? 'label-default' : ['fail'].indexOf(record.quality_state.raw_value) > -1 ? 'label-danger' : ['done'].indexOf(record.quality_state.raw_value) > -1 ? 'label-primary' : 'label-success'}"><t t-esc="record.quality_state.value"/></span></strong>
+                                    <strong><span t-attf-class="float-right text-right badge #{['none'].indexOf(record.quality_state.raw_value) > -1 ? 'badge-secondary' : ['fail'].indexOf(record.quality_state.raw_value) > -1 ? 'badge-danger' : ['done'].indexOf(record.quality_state.raw_value) > -1 ? 'badge-primary' : 'badge-success'}"><t t-esc="record.quality_state.value"/></span></strong>
                                 </div>
                             </div>
                             <div class="row text-muted">
