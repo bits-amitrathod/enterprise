@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #. module: print_docsaway
 #: model:ir.ui.view,arch_db:print_docsaway.print_provider_view_form_inherit_print_docsaway
@@ -166,6 +166,10 @@ msgid ""
 "environment. This can help you to test your account. Be careful to correctly"
 " select the environment in your postal provider in Odoo."
 msgstr ""
+"В Історії ви можете знайти документи, які були відправлені як в середовищі "
+"TEST, так і в LIVE. Це може допомогти вам протестувати свій обліковий запис."
+" Будьте обережні, щоби правильно вибрати середовище у своєму поштовому "
+"провайдері в Odoo."
 
 #. module: print_docsaway
 #: model:ir.model.fields,help:print_docsaway.field_print_provider_docsaway_name
@@ -248,3 +252,6 @@ msgid ""
 "Settings > Print Provider), and put some credit on your account, since you "
 "are in Production Mode."
 msgstr ""
+"Ваш кредитний постачальник замалий. Будь-ласка, налаштуйте свій обліковий "
+"запис (> Налаштування> Постачальник друку), і вкладіть певний кредит у свій "
+"обліковий запис, оскільки ви працюєте в режимі виробництва."

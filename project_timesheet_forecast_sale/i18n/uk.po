@@ -19,13 +19,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #. module: project_timesheet_forecast_sale
 #: code:addons/project_timesheet_forecast_sale/models/project.py:26
 #, python-format
 msgid "%s (%s remaining hours)"
-msgstr ""
+msgstr "%s (%s залишилися години)"
 
 #. module: project_timesheet_forecast_sale
 #: code:addons/project_timesheet_forecast_sale/controllers/project.py:67
@@ -49,7 +49,7 @@ msgstr "Прогноз"
 #: code:addons/project_timesheet_forecast_sale/controllers/project.py:67
 #, python-format
 msgid "Forecasted"
-msgstr ""
+msgstr "Прогнозований"
 
 #. module: project_timesheet_forecast_sale
 #: code:addons/project_timesheet_forecast_sale/controllers/project.py:67
@@ -61,7 +61,7 @@ msgstr "Назва"
 #: code:addons/project_timesheet_forecast_sale/controllers/project.py:67
 #, python-format
 msgid "Planned"
-msgstr ""
+msgstr "Заплановано"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_forecast_percentage_hours
@@ -93,7 +93,7 @@ msgstr "Завдання"
 #. module: project_timesheet_forecast_sale
 #: model:ir.ui.view,arch_db:project_timesheet_forecast_sale.timesheet_plan
 msgid "Timesheet/Forecast"
-msgstr ""
+msgstr "Табель/Прогноз"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_project_forecast

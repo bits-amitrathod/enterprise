@@ -7,7 +7,6 @@
 # Martin Trigaux, 2017
 # Bohdan Lisnenko, 2017
 # ТАрас <tratatuta@i.ua>, 2017
-# LoganDowns <k0mna80@gmail.com>, 2017
 # Alina Semeniuk <alinasemeniuk1@gmail.com>, 2017
 msgid ""
 msgstr ""
@@ -21,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #. module: website_calendar
 #: code:addons/website_calendar/models/calendar_appointment.py:63
@@ -155,7 +154,7 @@ msgstr ""
 #. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_event_access_token
 msgid "Access Token"
-msgstr "Доступ до знак"
+msgstr "Доступ Token"
 
 #. module: website_calendar
 #: model:ir.actions.act_window,name:website_calendar.website_calendar_report
@@ -424,7 +423,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_slot_id
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type_id
 msgid "ID"
-msgstr "ІД"
+msgstr "ID"
 
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.setup
