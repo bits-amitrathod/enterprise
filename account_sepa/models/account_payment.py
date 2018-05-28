@@ -62,6 +62,7 @@ class AccountPayment(models.Model):
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
+        res = {}
         if hasattr(super(AccountPayment, self), '_onchange_partner_id'):
             res = super(AccountPayment, self)._onchange_partner_id()
         if self.partner_id and len(self.partner_id.bank_ids) > 0:
