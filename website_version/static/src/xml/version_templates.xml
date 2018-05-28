@@ -404,20 +404,15 @@
                     <p>There is no difference with Master</p>
                 </t>
                 <form id="productForm" role="form">
-
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="checked"/>
-                            Publish version
-                        </label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="checked"/>
+                        <label for="optionsRadios1" class="custom-control-label">Publish version</label>
                     </div>
-                    <div class="radio">
-                        <label>
-                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" class="o_check"/>
-                          Publish and copy the current version
-                          <input type="text" class="form-control o_name o_required_field" style="display: none;"/>
-                        </label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input o_check" name="optionsRadios" id="optionsRadios2" value="option2"/>
+                        <label for="optionsRadios2" class="custom-control-label">Publish and copy the current version</label>
                     </div>
+                    <input type="text" class="form-control o_name o_required_field" style="display: none;"/>
                 </form>
               </main>
               <footer class="modal-footer">

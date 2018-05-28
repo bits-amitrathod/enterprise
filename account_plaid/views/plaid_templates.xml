@@ -33,10 +33,9 @@
             <div class="form-group row">
             <label class="col-md-4 col-form-label">Select a method of verification</label>
               <t t-foreach="mfa.mfa" t-as="choice">
-                <div class="radio col-md-12">
-                  <label>
-                    <input type="radio" name="mfa-selection" t-att-mask="choice.mask" t-att-value="choice.type"><t t-esc="choice.type"/> (<t t-esc="choice.mask"/>)</input>
-                  </label>
+                <div class="custom-control custom-radio">
+                    <input type="radio" t-attf-id="mfa-selection-#{choice_index}" name="mfa-selection" class="custom-control-input" t-att-mask="choice.mask" t-att-value="choice.type"/>
+                    <label t-attf-for="mfa-selection-#{choice_index}" class="custom-control-label"><t t-esc="choice.type"/> (<t t-esc="choice.mask"/>)</label>
                 </div>
               </t>
             </div>
