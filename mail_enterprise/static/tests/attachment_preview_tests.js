@@ -138,7 +138,7 @@ QUnit.module('MailAttachmentOnSide', {
 
         // send a message with attached PDF file
         form.$('.o_chatter_button_new_message').click();
-        form.$('.oe_chatter .o_composer_text_field:first()').text("Attached the pdf file");
+        form.$('.oe_chatter .o_composer_text_field:first()').val("Attached the pdf file");
         form.$('.oe_chatter .o_composer_button_send').click();
 
         assert.strictEqual(form.$('.o_attachment_preview_img > img').length, 0, "Preview image should be removed");
