@@ -15,7 +15,6 @@ class CustomerPortal(CustomerPortal):
     def _get_subscription_domain(self, partner):
         return [
             ('partner_id.id', 'in', [partner.id, partner.commercial_partner_id.id]),
-            ('state', '!=', 'cancel'),
         ]
 
     def _prepare_portal_layout_values(self):
@@ -43,9 +42,9 @@ class CustomerPortal(CustomerPortal):
         }
         searchbar_filters = {
             'all': {'label': _('All'), 'domain': []},
-            'open': {'label': _('In Progress'), 'domain': [('state', '=', 'open')]},
-            'pending': {'label': _('To Renew'), 'domain': [('state', '=', 'pending')]},
-            'close': {'label': _('Closed'), 'domain': [('state', '=', 'close')]},
+            'open': {'label': _('In Progress'), 'domain': [('in_progress', '=', True)]},
+            'pending': {'label': _('To Renew'), 'domain': [('to_renew', '=', True)]},
+            'close': {'label': _('Closed'), 'domain': [('in_progress', '=', False)]},
         }
 
         # default sort by value
@@ -92,7 +91,7 @@ class sale_subscription(http.Controller):
         account_res = request.env['sale.subscription']
         if uuid:
             account = account_res.sudo().browse(account_id)
-            if uuid != account.uuid or account.state == 'cancelled':
+            if uuid != account.uuid or not account.in_progress:
                 raise NotFound()
             if request.uid == account.partner_id.user_id.id:
                 account = account_res.browse(account_id)
@@ -105,7 +104,7 @@ class sale_subscription(http.Controller):
             ('token_implemented', '=', True)]))
         acc_pm = account.payment_token_id
         part_pms = account.partner_id.payment_token_ids
-        display_close = account.template_id.sudo().user_closable and account.state != 'close'
+        display_close = account.template_id.sudo().user_closable and not account.in_progress
         is_follower = request.env.user.partner_id.id in [follower.partner_id.id for follower in account.message_follower_ids]
         active_plan = account.template_id.sudo()
         periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
@@ -123,7 +122,7 @@ class sale_subscription(http.Controller):
             'is_follower': is_follower,
             'close_reasons': request.env['sale.subscription.close.reason'].search([]),
             'missing_periods': missing_periods,
-            'payment_mandatory': active_plan.payment_mandatory,
+            'payment_mode': active_plan.payment_mode,
             'user': request.env.user,
             'acquirers': acquirers,
             'acc_pm': acc_pm,

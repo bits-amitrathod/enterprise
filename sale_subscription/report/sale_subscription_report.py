@@ -12,16 +12,13 @@ class sale_subscription_report(models.Model):
     date_end = fields.Date('Date End', readonly=True)
     product_id = fields.Many2one('product.product', 'Product', readonly=True)
     product_uom = fields.Many2one('uom.uom', 'Unit of Measure', readonly=True)
-    recurring_price = fields.Float('Recurring price(per period)', readonly=True)
+    recurring_monthly = fields.Float('Monthly Recurring Revenue', readonly=True)
+    recurring_yearly = fields.Float('Yearly Recurring Revenue', readonly=True)
+    recurring_total = fields.Float('Total Price', readonly=True)
     quantity = fields.Float('Quantity', readonly=True)
     partner_id = fields.Many2one('res.partner', 'Customer', readonly=True)
     user_id = fields.Many2one('res.users', 'Sales Rep', readonly=True)
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
-    state = fields.Selection([('draft', 'New'),
-                              ('open', 'In Progress'),
-                              ('pending', 'To Renew'),
-                              ('close', 'Closed'),
-                              ('cancelled', 'Cancelled')], readonly=True)
     categ_id = fields.Many2one('product.category', 'Product Category', readonly=True)
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', readonly=True)
     template_id = fields.Many2one('sale.subscription.template', 'Subscription Template', readonly=True)
@@ -31,6 +28,7 @@ class sale_subscription_report(models.Model):
     industry_id = fields.Many2one('res.partner.industry', 'Industry', readonly=True)
     analytic_account_id = fields.Many2one('account.analytic.account', 'Analytic Account', readonly=True)
     close_reason_id = fields.Many2one('sale.subscription.close.reason', 'Close Reason', readonly=True)
+    to_renew = fields.Boolean('Pending', readonly=True)
 
     def _select(self):
         select_str = """
@@ -39,14 +37,16 @@ class sale_subscription_report(models.Model):
                     l.product_id as product_id,
                     l.uom_id as product_uom,
                     sub.analytic_account_id as analytic_account_id,
-                    (l.price_unit * l.quantity) - (0.01 * COALESCE(l.discount, 0.0) * (l.price_unit * l.quantity)) as recurring_price,
+                    sub.recurring_monthly as recurring_monthly,
+                    (sub.recurring_monthly * 12) as recurring_yearly,
+                    sub.recurring_total as recurring_total,
                     sum(l.quantity) as quantity,
                     sub.date_start as date_start,
                     sub.date as date_end,
                     sub.partner_id as partner_id,
                     sub.user_id as user_id,
                     sub.company_id as company_id,
-                    sub.state,
+                    sub.to_renew,
                     sub.template_id as template_id,
                     t.categ_id as categ_id,
                     sub.pricelist_id as pricelist_id,
@@ -76,14 +76,16 @@ class sale_subscription_report(models.Model):
                     l.uom_id,
                     t.categ_id,
                     sub.analytic_account_id,
+                    sub.recurring_monthly,
+                    recurring_yearly,
+                    sub.recurring_total,
                     sub.date_start,
                     sub.date,
                     sub.partner_id,
                     sub.user_id,
-                    recurring_price,
                     quantity,
                     sub.company_id,
-                    sub.state,
+                    sub.to_renew,
                     sub.name,
                     sub.template_id,
                     sub.pricelist_id,

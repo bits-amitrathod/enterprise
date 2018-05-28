@@ -24,7 +24,6 @@ class TestSubscription(TestSubscriptionCommon):
 
         # on_change_template on cached record (NOT present in the db)
         temp = Subscription.new({'name': 'CachedSubscription',
-                                 'state': 'open',
                                  'partner_id': self.user_portal.partner_id.id})
         temp.update({'template_id': self.subscription_tmpl.id})
         temp.on_change_template()
@@ -39,14 +38,14 @@ class TestSubscription(TestSubscriptionCommon):
 
     def test_auto_close(self):
         """Ensure a 15 days old 'online payment' subscription gets closed if no token is set."""
-        self.subscription_tmpl.payment_mandatory = True
+        self.subscription_tmpl.payment_mode = 'success_payment'
         self.subscription.write({
             'recurring_next_date': fields.Date.to_string(datetime.date.today() - relativedelta(days=17)),
             'recurring_total': 42,
             'template_id': self.subscription_tmpl.id,
         })
         self.subscription.with_context(auto_commit=False)._recurring_create_invoice(automatic=True)
-        self.assertEqual(self.subscription.state, 'close', 'website_contrect: subscription with online payment and no payment method set should get closed after 15 days')
+        self.assertEqual(self.subscription.in_progress, False, 'website_contrect: subscription with online payment and no payment method set should get closed after 15 days')
 
     # Mocking for 'test_auto_payment_with_token'
     # Necessary to have a valid and done transaction when the cron on subscription passes through
@@ -149,7 +148,7 @@ class TestSubscription(TestSubscriptionCommon):
         for patcher in patchers:
             patcher.start()
 
-        self.subscription_tmpl.payment_mandatory = True
+        self.subscription_tmpl.payment_mode = 'success_payment'
 
         self.subscription.write({
             'partner_id': self.partner.id,
@@ -163,7 +162,7 @@ class TestSubscription(TestSubscriptionCommon):
         # __import__('pudb').set_trace()
         self.subscription.with_context(auto_commit=False)._recurring_create_invoice(automatic=True)
         self.assertEqual(self.mock_send_success_count, 1, 'a mail to the invoice recipient should have been sent')
-        self.assertEqual(self.subscription.state, 'open', 'subscription with online payment and a payment method set should stay opened when transaction succeeds')
+        self.assertEqual(self.subscription.in_progress, True, 'subscription with online payment and a payment method set should stay opened when transaction succeeds')
 
         invoice_id = self.subscription.action_subscription_invoice()['res_id']
         invoice = self.env['account.invoice'].browse(invoice_id)
@@ -272,3 +271,41 @@ class TestSubscription(TestSubscriptionCommon):
             # even if changed after the fact
             inv = subscription._recurring_create_invoice()
             self.assertEqual(inv.invoice_line_ids[0].account_analytic_id, subscription.analytic_account_id)
+
+    def test_take_snapshot(self):
+        Snapshot = self.env['sale.subscription.snapshot']
+        before_count = Snapshot.search_count([('subscription_id', '=', self.subscription.id)])
+        self.subscription._take_snapshot(datetime.date.today() - relativedelta(weeks=1))
+        after_count = Snapshot.search_count([('subscription_id', '=', self.subscription.id)])
+        self.assertEqual(after_count, before_count + 1)
+
+    def test_compute_kpi(self):
+        self.subscription.template_id.write({
+            'good_health_domain': "[('recurring_monthly', '>=', 120.0)]",
+            'bad_health_domain': "[('recurring_monthly', '<=', 80.0)]",
+        })
+        self.subscription.recurring_monthly = 80.0
+        self.subscription._take_snapshot(datetime.date.today() - relativedelta(weeks=16))
+        self.subscription._compute_kpi()
+        sub = self.subscription.browse(self.subscription.id)
+        self.assertEqual(sub.health, 'bad')
+        self.subscription.recurring_monthly = 100.0
+        self.subscription._take_snapshot(datetime.date.today() - relativedelta(weeks=6))
+        self.subscription.recurring_monthly = 100.0
+        self.subscription._take_snapshot(datetime.date.today() - relativedelta(weeks=4))
+        self.subscription.recurring_monthly = 120.0
+        self.subscription._take_snapshot(datetime.date.today() - relativedelta(weeks=2))
+        self.subscription._compute_kpi()
+        self.assertEqual(self.subscription.kpi_1month_mrr_delta, 20.0)
+        self.assertEqual(self.subscription.kpi_1month_mrr_percentage, 0.2)
+        self.assertEqual(self.subscription.kpi_3months_mrr_delta, 40.0)
+        self.assertEqual(self.subscription.kpi_3months_mrr_percentage, 0.5)
+        self.assertEqual(self.subscription.health, 'done')
+
+    def test_cron_update_kpi(self):
+        Snapshot = self.env['sale.subscription.snapshot']
+        subscriptions_count = self.env['sale.subscription'].search_count([])
+        before_count = Snapshot.search_count([])
+        self.env['sale.subscription']._cron_update_kpi()
+        after_count = Snapshot.search_count([])
+        self.assertEqual(after_count, before_count + subscriptions_count)

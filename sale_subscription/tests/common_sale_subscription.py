@@ -94,7 +94,6 @@ class TestSubscriptionCommon(AccountingTestCase):
         # Test Subscription
         self.subscription = Subscription.create({
             'name': 'TestSubscription',
-            'state': 'open',
             'partner_id': self.user_portal.partner_id.id,
             'pricelist_id': self.ref('product.list0'),
             'template_id': self.subscription_tmpl.id,

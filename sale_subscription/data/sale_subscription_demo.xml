@@ -28,7 +28,7 @@
             <field name="recurring_interval">1</field>
             <field name="recurring_rule_type">monthly</field>
             <field name="user_closable">True</field>
-            <field name="payment_mandatory">True</field>
+            <field name="payment_mode">success_payment</field>
             <field name="tag_ids" eval="[(6,0, (ref('sale_subscription.cleaning_tag'),))]"/>
             <field name="description">
         Payment
@@ -85,7 +85,7 @@
             <field name="uom_id" ref="subscription_uom_month"/>
             <field name="uom_po_id" ref="subscription_uom_month"/>
         </record>
-         
+
         <record id="product_office_cleaning_yearly" model="product.product">
             <field name="name">Office Cleaning Subscription (Yearly)</field>
             <field name="default_code">SERV_89137</field>
@@ -101,13 +101,13 @@
         <!-- Demo Subscription -->
         <record id="subscription_portal_21" model="sale.subscription">
             <field name="name">Office Cleaning Service</field>
-            <field name="state">open</field>
             <field name="partner_id" ref="base.partner_demo_portal"/>
             <field name="template_id" ref="sale_subscription.cleaning_monthly"/>
             <field name="pricelist_id" ref="product.list0"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="date_start" eval="(DateTime.now() - timedelta(days=9))"/>
             <field name="recurring_next_date" eval="(DateTime.now() - timedelta(days=9))"/>
+            <field name="stage_id" ref="sale_subscription.sale_subscription_stage_in_progress"/>
             <field name="description">
         Payment
         All payments are due upon receipt. If a payment is not received or payment method is declined, the buyer forfeits the ownership of any items purchased. If no payment is received, no items will be shipped.
@@ -136,6 +136,10 @@
             <field name="price_unit">20.0</field>
             <field name="uom_id" ref="sale_subscription.subscription_uom_month"/>
         </record>
- 
+
+        <record id="sale_subscription_stage_training" model="sale.subscription.stage">
+            <field name="name">Training</field>
+            <field name="sequence">15</field>
+        </record>
     </data>
 </odoo>

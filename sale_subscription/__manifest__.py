@@ -22,6 +22,8 @@ Features:
         'portal',
         'web_cohort',
         'sale_payment',
+        'rating',
+        'base_automation',
     ],
     'data': [
         'security/sale_subscription_security.xml',

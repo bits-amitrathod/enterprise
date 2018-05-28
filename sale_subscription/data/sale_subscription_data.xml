@@ -20,7 +20,17 @@
         <field name="interval_type">days</field>
         <field name="numbercall">-1</field>
     </record>
-    
+
+    <record id="ir_cron_sale_subscription_update_kpi" model="ir.cron">
+        <field name="name">Sale Subscription: Update KPI</field>
+        <field name="model_id" ref="sale_subscription.model_sale_subscription"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_update_kpi()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">weeks</field>
+        <field name="numbercall">-1</field>
+    </record>
+
     <!-- Standard Closing Reason -->
     <record id="close_reason_1" model="sale.subscription.close.reason">
         <field name="name">Subscription is too expensive</field>
@@ -39,12 +49,12 @@
     </record>
 
     <!-- Subtypes -->
-    <record id="subtype_state_change" model="mail.message.subtype">
-        <field name="name">State Change</field>
+    <record id="subtype_stage_change" model="mail.message.subtype">
+        <field name="name">Stage Change</field>
         <field name="res_model">sale.subscription</field>
         <field name="default" eval="True"/>
         <field name="internal" eval="True"/>
-        <field name="description">Subscription state has changed</field>
+        <field name="description">Subscription stage has changed</field>
     </record>
 
     <!-- enable discount in sales config -->
@@ -61,4 +71,24 @@
             <field name="company_id" eval="False"/>
         </record>
     </data>
+
+    <!-- Standard Stages -->
+    <record id="sale_subscription_state_new" model="sale.subscription.stage">
+        <field name="name">New</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="sale_subscription_stage_in_progress" model="sale.subscription.stage">
+        <field name="name">In Progress</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="sale_subscription_stage_upsell" model="sale.subscription.stage">
+        <field name="name">To Upsell</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="sale_subscription_stage_closed" model="sale.subscription.stage">
+        <field name="name">Closed</field>
+        <field name="sequence">40</field>
+        <field name="in_progress" eval="False"/>
+        <field name="fold">True</field>
+    </record>
 </odoo>

@@ -43,7 +43,6 @@ class SaleOrder(models.Model):
         self.ensure_one()
         values = {
             'name': template.name,
-            'state': 'open',
             'template_id': template.id,
             'partner_id': self.partner_invoice_id.id,
             'user_id': self.user_id.id,
@@ -52,7 +51,7 @@ class SaleOrder(models.Model):
             'pricelist_id': self.pricelist_id.id,
             'company_id': self.company_id.id,
             'analytic_account_id': self.analytic_account_id.id,
-            'payment_token_id': self.transaction_ids.get_last_transaction().payment_token_id.id if template.payment_mandatory else False
+            'payment_token_id': self.transaction_ids.get_last_transaction().payment_token_id.id if template.payment_mode not in ['validate_send_payment', 'success_payment'] else False
         }
         # compute the next date
         today = datetime.date.today()
@@ -78,7 +77,8 @@ class SaleOrder(models.Model):
             if order.subscription_management == 'renew':
                 subscriptions.wipe()
                 subscriptions.increment_period()
-                subscriptions.write({'state': 'open', 'date': False})
+                subscriptions.unset_to_renew()
+                subscriptions.clear_date()
             for subscription in subscriptions:
                 subscription_lines = order.order_line.filtered(lambda l: l.subscription_id == subscription and l.product_id.recurring_invoice)
                 line_values = subscription_lines._update_subscription_line_data(subscription)
