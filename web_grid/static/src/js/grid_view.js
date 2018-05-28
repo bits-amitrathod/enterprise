@@ -26,7 +26,7 @@ var GridView = AbstractView.extend({
         var arch = this.arch;
         var fields = this.fields;
         var rowFields = [];
-        var sectionField, colField, cellField, ranges, cellWidget, cellWidgetOptions;
+        var sectionField, colField, cellField, ranges, cellWidget, cellWidgetOptions, measureLabel;
         _.each(arch.children, function (child) {
             if (child.tag === 'field') {
                 if (child.attrs.type === 'row') {
@@ -45,6 +45,7 @@ var GridView = AbstractView.extend({
                     if (child.attrs.options) {
                         cellWidgetOptions = JSON.parse(child.attrs.options.replace(/'/g, '"'));
                     }
+                    measureLabel = child.attrs.string;
                 }
             }
         });
@@ -62,6 +63,7 @@ var GridView = AbstractView.extend({
         // renderer
         this.rendererParams.canCreate = this.controllerParams.activeActions.create;
         this.rendererParams.fields = fields;
+        this.rendererParams.measureLabel = measureLabel;
         this.rendererParams.noContentHelper = _.find(arch.children, function (c) {
             return c.tag === 'empty';
         });

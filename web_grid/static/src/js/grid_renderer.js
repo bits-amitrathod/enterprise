@@ -36,6 +36,7 @@ return AbstractRenderer.extend({
         this.fields = params.fields;
         this.noContentHelper = params.noContentHelper;
         this.editableCells = params.editableCells;
+        this.measureLabel = params.measureLabel;
         this.cellWidget = params.cellWidget;
         this.cellWidgetOptions = params.cellWidgetOptions;
 
@@ -349,6 +350,14 @@ return AbstractRenderer.extend({
     _renderTable: function (columns, totals, super_total, empty) {
         var self = this;
         var col_field = this.state.colField;
+
+        var total_label;
+        if (this.measureLabel) {
+            total_label= _.str.sprintf(_t("Total (%s)"), this.measureLabel);
+        } else {
+            total_label= _t("Total");
+        }
+
         return h('div.o_view_grid.table-responsive', [
             h('table.table.table-sm.table-striped', [
                 h('thead', [
@@ -360,12 +369,12 @@ return AbstractRenderer.extend({
                                 column.values[col_field][1]
                             );
                         }),
-                        [h('th.o_grid_total', _t("Total"))]
+                        [h('th.o_grid_total', total_label)]
                     ))
                 ]),
                 h('tfoot', [
                     h('tr', [
-                        h('td', totals ? _t("Total") : [])
+                        h('td', totals ? total_label : [])
                     ].concat(
                         _.map(columns, function (column, column_index) {
                             var cell_content = !totals ? []
