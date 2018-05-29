@@ -16,12 +16,12 @@
     <t t-extend="web_editor.editorbar">
         <t t-jquery="form button:last" t-operation="replace">
             <div class="btn-group">
-                <button type="button" data-action="save" class="btn btn-primary btn-xs">Save</button>
-                <button type="button" class="btn btn-primary btn-xs dropdown-toggle option_choice" data-toggle="dropdown">
+                <button type="button" data-action="save" class="btn btn-primary btn-sm">Save</button>
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle option_choice" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu" role="menu">
-                    <a href="#" id="save_as_new_version" data-action="save_as_new_version" class="btn btn-link btn-xs dropdown-item o_first_choice o_version" role="menuitem">Save as New Version</a>
+                    <a href="#" id="save_as_new_version" data-action="save_as_new_version" class="btn btn-link btn-sm dropdown-item o_first_choice o_version" role="menuitem">Save as New Version</a>
                 </div>
             </div>
         </t>
@@ -30,7 +30,7 @@
     <t t-name="website_version.all_options">
         <li class="o_second_choice">
             <a href="#" id="save_and_publish" role="button" data-action="save_and_publish"
-                class="btn btn-link btn-xs o_version"><t t-esc="version"></t></a>
+                class="btn btn-link btn-sm o_version"><t t-esc="version"></t></a>
         </li>
     </t>
 
@@ -275,7 +275,7 @@
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu" role="menu">
-                            <a role="menuitem" href="#" class="btn btn-link btn-xs o_configure dropdown-item">Configure</a>
+                            <a role="menuitem" href="#" class="btn btn-link btn-sm o_configure dropdown-item">Configure</a>
                         </div>
                     </div>
                 </t>
