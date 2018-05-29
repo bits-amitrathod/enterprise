@@ -3,10 +3,10 @@ import base64
 import io
 import time
 import uuid
-import urlparse
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
+from werkzeug.urls import url_join
 
 from odoo import api, fields, models, _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
@@ -219,7 +219,7 @@ class SignatureRequest(models.Model):
                 email_from_mail = email_from_mail,
                 email_from = email_from,
                 email_to = follower.email,
-                link = urlparse.urljoin(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}),
+                link = url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}),
                 subject = subject or ("Signature request - " + self.reference),
                 msgbody = (message or "").replace("\n", "<br/>")
             )
