@@ -71,6 +71,7 @@ class TestL10nMxEdiInvoice33(common.InvoiceTransactionCase):
         # -----------------------
         invoice = self.create_invoice()
         invoice.move_name = 'INV/2017/999'
+        invoice.compute_taxes()
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
@@ -135,6 +136,7 @@ class TestL10nMxEdiInvoice33(common.InvoiceTransactionCase):
         # Testing invoice refund to verify CFDI related section
         # -----------------------
         invoice = self.create_invoice()
+        invoice.compute_taxes()
         invoice.action_invoice_open()
         refund = self.refund_model.with_context(
             active_ids=invoice.ids).create({
@@ -168,6 +170,7 @@ class TestL10nMxEdiInvoice33(common.InvoiceTransactionCase):
         invoice.date_invoice = today - datetime.timedelta(days=1)
         invoice.move_name = 'INV/2017/999'
 
+        invoice.compute_taxes()
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
@@ -208,6 +211,7 @@ class TestL10nMxEdiInvoice33(common.InvoiceTransactionCase):
         invoice = self.create_invoice()
         invoice.sudo().journal_id.l10n_mx_address_issued_id = self.company_partner.id
         invoice.move_name = 'INV/2017/999'
+        invoice.compute_taxes()
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
@@ -275,6 +279,7 @@ class TestL10nMxEdiInvoice33(common.InvoiceTransactionCase):
         addenda_autozone = self.ref('l10n_mx_edi.l10n_mx_edi_addenda_autozone')
         invoice.sudo().partner_id.l10n_mx_edi_addenda = addenda_autozone
         invoice.message_ids.unlink()
+        invoice.compute_taxes()
         invoice.action_invoice_open()
         self.assertEqual(invoice.state, "open")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
