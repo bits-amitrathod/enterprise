@@ -6,6 +6,7 @@ import uuid
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
+from werkzeug.urls import url_join
 
 from odoo import api, fields, models, _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
@@ -197,6 +198,7 @@ class SignatureRequest(models.Model):
     @api.one
     def send_follower_accesses(self, followers, subject=None, message=None):
         base_context = self.env.context
+        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
         template_id = self.env.ref('website_sign.website_sign_mail_template').id
         mail_template = self.env['mail.template'].browse(template_id)
 
@@ -212,7 +214,7 @@ class SignatureRequest(models.Model):
                 email_from_mail = email_from_mail,
                 email_from = email_from,
                 email_to = follower.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token},
+                link = url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}),
                 subject = subject or ("Signature request - " + self.reference),
                 msgbody = (message or "").replace("\n", "<br/>")
             )
