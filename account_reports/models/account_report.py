@@ -6,6 +6,9 @@ import json
 import io
 import logging
 import lxml.html
+import datetime
+
+from dateutil.relativedelta import relativedelta
 
 try:
     from odoo.tools.misc import xlsxwriter
@@ -14,13 +17,12 @@ except ImportError:
     import xlsxwriter
 
 from odoo import models, fields, api, _
-from datetime import timedelta, datetime, date
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat, config, date_utils
 from babel.dates import get_quarter_names
 from odoo.tools.misc import formatLang, format_date
-from odoo.tools import config
 from odoo.addons.web.controllers.main import clean_action
 from odoo.tools.safe_eval import safe_eval
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -60,6 +62,15 @@ class AccountReport(models.AbstractModel):
     filter_hierarchy = None
     filter_partner = None
 
+    def has_single_date_filter(self, options):
+        '''Determine if we are dealing with options having a single date (options['date']['date']) or
+        a date range options['date']['date_from'] -> options['date']['date_to'].
+
+        :param options: The report options.
+        :return:        True if False -> date, False otherwise (date_from -> date_to).
+        '''
+        return options['date'].get('date_from') is None
+
     def _build_options(self, previous_options=None):
         if not previous_options:
             previous_options = {}
@@ -89,7 +100,8 @@ class AccountReport(models.AbstractModel):
                         # just copy filter and let the system compute the correct date from it
                         options[key]['filter'] = previous_options[key]['filter']
                     elif value.get('date_from') is not None and not previous_options[key].get('date_from'):
-                        company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.strptime(previous_options[key]['date'], DEFAULT_SERVER_DATE_FORMAT))
+                        date = datetime.datetime.strptime(previous_options[key]['date'], DEFAULT_SERVER_DATE_FORMAT).date()
+                        company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(date)
                         options[key]['date_from'] = company_fiscalyear_dates['date_from'].strftime(DEFAULT_SERVER_DATE_FORMAT)
                         options[key]['date_to'] = previous_options[key]['date']
                     elif value.get('date') is not None and not previous_options[key].get('date'):
@@ -310,8 +322,7 @@ class AccountReport(models.AbstractModel):
         '''
         options = self.get_options(options)
         # apply date and date_comparison filter
-        options = self.apply_date_filter(options)
-        options = self.apply_cmp_filter(options)
+        self.apply_date_filter(options)
 
         searchview_dict = {'options': options, 'context': self.env.context}
         # Check if report needs analytic
@@ -496,6 +507,128 @@ class AccountReport(models.AbstractModel):
             journals.append({'id': c.id, 'name': c.name, 'code': c.code, 'type': c.type, 'selected': False})
         return journals
 
+    def _get_dates_period(self, options, date_from, date_to, period_type=None):
+        '''Compute some information about the period:
+        * The name to display on the report.
+        * The period type (e.g. quarter) if not specified explicitly.
+
+        :param options:     The report options.
+        :param date_from:   The starting date of the period.
+        :param date_to:     The ending date of the period.
+        :param period_type: The type of the interval date_from -> date_to.
+        :return:            A dictionary containing:
+            * date_from * date_to * string * period_type *
+        '''
+        def match(dt_from, dt_to):
+            if self.has_single_date_filter(options):
+                return (date_to or date_from) == dt_to
+            else:
+                return (dt_from, dt_to) == (date_from, date_to)
+
+        string = None
+        # If no date_from or not date_to, we are unable to determine a period
+        if not period_type:
+            date = date_to or date_from
+            company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(date)
+            if match(company_fiscalyear_dates['date_from'], company_fiscalyear_dates['date_to']):
+                period_type = 'fiscalyear'
+                if company_fiscalyear_dates.get('record'):
+                    string = company_fiscalyear_dates['record'].name
+            elif match(*date_utils.get_month(date)):
+                period_type = 'month'
+            elif match(*date_utils.get_quarter(date)):
+                period_type = 'quarter'
+            elif match(*date_utils.get_fiscal_year(date)):
+                period_type = 'year'
+            else:
+                period_type = 'custom'
+
+        if not string:
+            fy_day = self.env.user.company_id.fiscalyear_last_day
+            fy_month = self.env.user.company_id.fiscalyear_last_month
+            if self.has_single_date_filter(options):
+                string = _('As of %s') % (format_date(self.env, date_to.strftime(DEFAULT_SERVER_DATE_FORMAT)))
+            elif period_type == 'year' or (period_type == 'fiscalyear' and (date_from, date_to) == date_utils.get_fiscal_year(date_to)):
+                string = date_to.strftime('%Y')
+            elif period_type == 'fiscalyear' and (date_from, date_to) == date_utils.get_fiscal_year(date_to, day=fy_day, month=fy_month):
+                string = '%s - %s' % (date_to.year - 1, date_to.year)
+            elif period_type == 'month':
+                string = format_date(self.env, date_to.strftime(DEFAULT_SERVER_DATE_FORMAT), date_format='MMM YYYY')
+            elif period_type == 'quarter':
+                quarter_names = get_quarter_names('abbreviated', locale=self.env.context.get('lang') or 'en_US')
+                string = u'%s\N{NO-BREAK SPACE}%s' % (quarter_names[date_utils.get_quarter_number(date_to)], date_to.year)
+            else:
+                dt_from_str = format_date(self.env, date_from.strftime(DEFAULT_SERVER_DATE_FORMAT))
+                dt_to_str = format_date(self.env, date_to.strftime(DEFAULT_SERVER_DATE_FORMAT))
+                string = _('From %s \n to  %s') % (dt_from_str, dt_to_str)
+
+        return {
+            'string': string,
+            'period_type': period_type,
+            'date_from': date_from,
+            'date_to': date_to,
+        }
+
+    def _get_dates_previous_period(self, options, period_vals):
+        '''Shift the period to the previous one.
+
+        :param options:     The report options.
+        :param period_vals: A dictionary generated by the _get_dates_period method.
+        :return:            A dictionary containing:
+            * date_from * date_to * string * period_type *
+        '''
+        period_type = period_vals['period_type']
+        date_from = period_vals['date_from']
+        date_to = period_vals['date_to']
+
+        if not date_from or not date_to:
+            date = (date_from or date_to).replace(day=1) - datetime.timedelta(days=1)
+            # Propagate the period_type to avoid bad behavior.
+            # E.g. custom single date 2018-01-30 with previous period will produce 2017-12-31 that
+            # must not be interpreted as a fiscal year.
+            return self._get_dates_period(options, None, date, period_type=period_type)
+
+        date_to = date_from - datetime.timedelta(days=1)
+        if period_type == 'fiscalyear':
+            # Don't pass the period_type to _get_dates_period to be able to retrieve the account.fiscal.year record if
+            # necessary.
+            company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(date_to)
+            return self._get_dates_period(options, company_fiscalyear_dates['date_from'], company_fiscalyear_dates['date_to'])
+        if period_type == 'month':
+            return self._get_dates_period(options, *date_utils.get_month(date_to), period_type='month')
+        if period_type == 'quarter':
+            return self._get_dates_period(options, *date_utils.get_quarter(date_to), period_type='quarter')
+        if period_type == 'year':
+            return self._get_dates_period(options, *date_utils.get_fiscal_year(date_to), period_type='year')
+        date_from = date_to - datetime.timedelta(days=(date_to - date_from).days)
+        return self._get_dates_period(options, date_from, date_to)
+
+    def _get_dates_previous_year(self, options, period_vals):
+        '''Shift the period to the previous year.
+
+        :param options:     The report options.
+        :param period_vals: A dictionary generated by the _get_dates_period method.
+        :return:            A dictionary containing:
+            * date_from * date_to * string * period_type *
+        '''
+        period_type = period_vals['period_type']
+        date_from = period_vals['date_from']
+        date_to = period_vals['date_to']
+
+        # Note: Use relativedelta to avoid moving from 2016-02-29 -> 2015-02-29 and then, have a day out of range.
+        if not date_from or not date_to:
+            date_to = date_from or date_to
+            date_from = None
+
+        date_to = date_to - relativedelta(years=1)
+        # Take care about the 29th february.
+        # Moving from 2017-02-28 -> 2016-02-28 is wrong! It must be 2016-02-29.
+        if period_type == 'month':
+            date_from, date_to = date_utils.get_month(date_to)
+        elif date_from:
+            date_from = date_from - relativedelta(years=1)
+        return self._get_dates_period(options, date_from, date_to, period_type=period_type)
+
     def format_value(self, value, currency=False):
         if self.env.context.get('no_format'):
             return value
@@ -506,141 +639,99 @@ class AccountReport(models.AbstractModel):
         res = formatLang(self.env, value, currency_obj=currency_id)
         return res
 
-    def format_date(self, dt_to, dt_from, options, dt_filter='date'):
+    def format_date(self, options, dt_filter='date'):
         # previously get_full_date_names
-        options_filter = options[dt_filter].get('filter', '')
-        if isinstance(dt_to, pycompat.string_types):
-            dt_to = datetime.strptime(dt_to, DEFAULT_SERVER_DATE_FORMAT)
-        if dt_from and isinstance(dt_from, pycompat.string_types):
-            dt_from = datetime.strptime(dt_from, DEFAULT_SERVER_DATE_FORMAT)
-        if 'month' in options_filter:
-            return format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), date_format='MMM YYYY')
-        if 'quarter' in options_filter:
-            quarter = (dt_to.month - 1) // 3 + 1
-            return (u'%s\N{NO-BREAK SPACE}%s') % (get_quarter_names('abbreviated', locale=self._context.get('lang') or 'en_US')[quarter], dt_to.year)
-        if 'year' in options_filter:
-            if self.env.user.company_id.fiscalyear_last_day == 31 and self.env.user.company_id.fiscalyear_last_month == 12:
-                return dt_to.strftime('%Y')
-            else:
-                return '%s - %s' % ((dt_to.year - 1), dt_to.year)
-        if not dt_from:
-            return _('As of %s') % (format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)),)
-        return _('From %s <br/> to  %s').replace('<br/>', '\n') % (format_date(self.env, dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT)), format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)))
+        if self.has_single_date_filter(options):
+            dt_from = None
+            dt_to = datetime.datetime.strptime(options[dt_filter]['date'], DEFAULT_SERVER_DATE_FORMAT).date()
+        else:
+            dt_from = datetime.datetime.strptime(options[dt_filter]['date_from'], DEFAULT_SERVER_DATE_FORMAT).date()
+            dt_to = datetime.datetime.strptime(options[dt_filter]['date_to'], DEFAULT_SERVER_DATE_FORMAT).date()
+
+        return self._get_dates_period(options, dt_from, dt_to)['string']
 
     def apply_date_filter(self, options):
-        if not options.get('date'):
-            return options
-        options_filter = options['date'].get('filter')
-        if not options_filter:
-            return options
-        today = date.today()
-        dt_from = options['date'].get('date_from') is not None and today or False
-        if options_filter == 'custom':
-            dt_from = options['date'].get('date_from', False)
-            dt_to = options['date'].get('date_to', False) or options['date'].get('date', False)
-            options['date']['string'] = self.format_date(dt_to, dt_from, options)
-            return options
-        if options_filter == 'today':
-            company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.now())
-            dt_from = dt_from and company_fiscalyear_dates['date_from'] or False
-            dt_to = today
-        elif options_filter == 'this_month':
-            dt_from = dt_from and today.replace(day=1) or False
-            dt_to = (today.replace(day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
-        elif options_filter == 'this_quarter':
-            quarter = (today.month - 1) // 3 + 1
-            dt_to = (today.replace(month=quarter * 3, day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
-            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 2, year=dt_to.year) or False
-        elif options_filter == 'this_year':
-            company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.now())
-            dt_from = dt_from and company_fiscalyear_dates['date_from'] or False
-            dt_to = company_fiscalyear_dates['date_to']
-        elif options_filter == 'last_month':
-            dt_to = today.replace(day=1) - timedelta(days=1)
-            dt_from = dt_from and dt_to.replace(day=1) or False
-        elif options_filter == 'last_quarter':
-            quarter = (today.month - 1) // 3 + 1
-            quarter = quarter - 1 if quarter > 1 else 4
-            dt_to = (today.replace(month=quarter * 3, day=1, year=today.year if quarter != 4 else today.year - 1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
-            dt_from = dt_from and dt_to.replace(day=1, month=dt_to.month - 2, year=dt_to.year) or False
-        elif options_filter == 'last_year':
-            company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(datetime.now().replace(year=today.year - 1))
-            dt_from = dt_from and company_fiscalyear_dates['date_from'] or False
-            dt_to = company_fiscalyear_dates['date_to']
-        if dt_from:
-            options['date']['date_from'] = dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT)
-            options['date']['date_to'] = dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)
-        else:
-            options['date']['date'] = dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)
-        options['date']['string'] = self.format_date(dt_to, dt_from, options)
-        return options
+        def create_vals(period_vals):
+            vals = {'string': period_vals['string']}
+            if self.has_single_date_filter(options):
+                vals['date'] = (period_vals['date_to'] or period_vals['date_from']).strftime(DEFAULT_SERVER_DATE_FORMAT)
+            else:
+                vals['date_from'] = period_vals['date_from'].strftime(DEFAULT_SERVER_DATE_FORMAT)
+                vals['date_to'] = period_vals['date_to'].strftime(DEFAULT_SERVER_DATE_FORMAT)
+            return vals
 
-    def apply_cmp_filter(self, options):
-        if not options.get('comparison'):
-            return options
-        options['comparison']['periods'] = []
-        cmp_filter = options['comparison'].get('filter')
-        if not cmp_filter:
-            return options
+        # ===== Date Filter =====
+        if not options.get('date') or not options['date'].get('filter'):
+            return
+        options_filter = options['date']['filter']
+
+        date_from = None
+        date_to = datetime.date.today()
+        if options_filter == 'custom':
+            if self.has_single_date_filter(options):
+                date_from = None
+                date_to = datetime.datetime.strptime(options['date']['date'], DEFAULT_SERVER_DATE_FORMAT).date()
+            else:
+                date_from = datetime.datetime.strptime(options['date']['date_from'], DEFAULT_SERVER_DATE_FORMAT).date()
+                date_to = datetime.datetime.strptime(options['date']['date_to'], DEFAULT_SERVER_DATE_FORMAT).date()
+        elif 'today' in options_filter:
+            if not self.has_single_date_filter(options):
+                date_from = self.env.user.company_id.compute_fiscalyear_dates(date_to)['date_from']
+        elif 'month' in options_filter:
+            date_from, date_to = date_utils.get_month(date_to)
+        elif 'quarter' in options_filter:
+            date_from, date_to = date_utils.get_quarter(date_to)
+        elif 'year' in options_filter:
+            company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(date_to)
+            date_from = company_fiscalyear_dates['date_from']
+            date_to = company_fiscalyear_dates['date_to']
+        else:
+            raise UserError('Programmation Error: Unrecognized parameter %s in date filter!' % str(options_filter))
+
+        period_vals = self._get_dates_period(options, date_from, date_to)
+        if 'last' in options_filter:
+            period_vals = self._get_dates_previous_period(options, period_vals)
+
+        options['date'].update(create_vals(period_vals))
+
+        # ===== Comparison Filter =====
+        if not options.get('comparison') or not options['comparison'].get('filter'):
+            return
+        cmp_filter = options['comparison']['filter']
+
         if cmp_filter == 'no_comparison':
-            if options['comparison'].get('date_from') != None:
+            options['comparison']['string'] = _('No comparison')
+            options['comparison']['periods'] = []
+            if self.has_single_date_filter(options):
+                options['comparison']['date'] = ""
+            else:
                 options['comparison']['date_from'] = ""
                 options['comparison']['date_to'] = ""
-            else:
-                options['comparison']['date'] = ""
-            options['comparison']['string'] = _('No comparison')
-            return options
-        elif cmp_filter == 'custom':
-            date_from = options['comparison'].get('date_from')
-            date_to = options['comparison'].get('date_to') or options['comparison'].get('date')
-            display_value = self.format_date(date_to, date_from, options, dt_filter='comparison')
-            if date_from:
-                vals = {'date_from': date_from, 'date_to': date_to, 'string': display_value}
-            else:
-                vals = {'date': date_to, 'string': display_value}
-            options['comparison']['periods'] = [vals]
-            return options
-        else:
-            dt_from = False
-            options_filter = options['date'].get('filter','')
-            if options['date'].get('date_from'):
-                dt_from = datetime.strptime(options['date'].get('date_from'), "%Y-%m-%d")
-            dt_to = options['date'].get('date_to') or options['date'].get('date')
-            dt_to = datetime.strptime(dt_to, "%Y-%m-%d")
-            display_value = False
-            number_period = options['comparison'].get('number_period', 1) or 0
-            for index in range(0, number_period):
-                if cmp_filter == 'same_last_year' or options_filter in ('this_year', 'last_year'):
-                    ly = lambda d: d - timedelta(days=366 if calendar.isleap(d.year) else 365)
-                    if dt_from:
-                        dt_from = ly(dt_from)
-                    dt_to = ly(dt_to)
-                elif cmp_filter == 'previous_period':
-                    if options_filter in ('this_month', 'last_month', 'today'):
-                        dt_from = dt_from and (dt_from - timedelta(days=1)).replace(day=1) or dt_from
-                        dt_to = dt_to.replace(day=1) - timedelta(days=1)
-                    elif options_filter in ('this_quarter', 'last_quarter'):
-                        dt_to = dt_to.replace(month=(dt_to.month + 10) % 12, day=1) - timedelta(days=1)
-                        dt_from = dt_from and dt_from.replace(month=dt_to.month - 2, year=dt_to.year) or dt_from
-                    elif options_filter == 'custom':
-                        if not dt_from:
-                            dt_to = dt_to.replace(day=1) - timedelta(days=1)
-                        else:
-                            previous_dt_to = dt_to
-                            dt_to = dt_from - timedelta(days=1)
-                            dt_from = dt_from - timedelta(days=(previous_dt_to - dt_from).days + 1)
-                display_value = self.format_date(dt_to, dt_from, options)
+            return
 
-                if dt_from:
-                    vals = {'date_from': dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT), 'date_to': dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), 'string': display_value}
-                else:
-                    vals = {'date': dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT), 'string': display_value}
-                options['comparison']['periods'].append(vals)
-        if len(options['comparison'].get('periods', [])) > 0:
-            for k, v in options['comparison']['periods'][0].items():
-                if k in ('date', 'date_from', 'date_to', 'string'):
-                    options['comparison'][k] = v
-        return options
+        if cmp_filter == 'custom':
+            if self.has_single_date_filter(options):
+                date_from = None
+                date_to = datetime.datetime.strptime(options['comparison']['date'], DEFAULT_SERVER_DATE_FORMAT).date()
+            else:
+                date_from = datetime.datetime.strptime(options['comparison']['date_from'], DEFAULT_SERVER_DATE_FORMAT).date()
+                date_to = datetime.datetime.strptime(options['comparison']['date_to'], DEFAULT_SERVER_DATE_FORMAT).date()
+            vals = create_vals(self._get_dates_period(options, date_from, date_to))
+            options['comparison']['periods'] = [vals]
+            return
+
+        periods = []
+        number_period = options['comparison'].get('number_period', 1) or 0
+        for index in range(0, number_period):
+            if cmp_filter == 'previous_period':
+                period_vals = self._get_dates_previous_period(options, period_vals)
+            else:
+                period_vals = self._get_dates_previous_year(options, period_vals)
+            periods.append(create_vals(period_vals))
+
+        if len(periods) > 0:
+            options['comparison'].update(periods[0])
+        options['comparison']['periods'] = periods
 
     def print_pdf(self, options):
         return {

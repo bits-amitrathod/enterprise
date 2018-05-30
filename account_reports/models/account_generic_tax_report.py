@@ -16,9 +16,7 @@ class generic_tax_report(models.AbstractModel):
     filter_comparison = {'date_from': '', 'date_to': '', 'filter': 'no_comparison', 'number_period': 1}
 
     def get_columns_name(self, options):
-        dt_to = options['date'].get('date_to') or options['date'].get('date')
-        dt_from = options['date'].get('date_from', False)
-        columns_header = [{}, {'name': '%s \n %s' % (_('NET'), self.format_date(dt_to, dt_from, options)), 'class': 'number', 'style': 'white-space: pre;'}, {'name': _('TAX'), 'class': 'number'}]
+        columns_header = [{}, {'name': '%s \n %s' % (_('NET'), self.format_date(options)), 'class': 'number', 'style': 'white-space: pre;'}, {'name': _('TAX'), 'class': 'number'}]
         if options.get('comparison') and options['comparison'].get('periods'):
             for p in options['comparison']['periods']:
                 columns_header += [{'name': '%s \n %s' % (_('NET'), p.get('string')), 'class': 'number', 'style': 'white-space: pre;'}, {'name': _('TAX'), 'class': 'number'}]

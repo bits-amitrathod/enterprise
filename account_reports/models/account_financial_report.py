@@ -134,10 +134,7 @@ class ReportAccountFinancialReport(models.Model):
         columns = [{'name': ''}]
         if self.debit_credit and not options.get('comparison', {}).get('periods', False):
             columns += [{'name': _('Debit'), 'class': 'number'}, {'name': _('Credit'), 'class': 'number'}]
-
-        dt_to = options['date'].get('date_to') or options['date'].get('date')
-        columns += [{'name': self.format_date(dt_to, options['date'].get('date_from', False), options), 'class': 'number'}]
-
+        columns += [{'name': self.format_date(options), 'class': 'number'}]
         if options.get('comparison') and options['comparison'].get('periods'):
             for period in options['comparison']['periods']:
                 columns += [{'name': period.get('string'), 'class': 'number'}]
