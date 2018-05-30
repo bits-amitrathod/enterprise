@@ -44,5 +44,8 @@
             <field name="params" eval="{'message_demo_barcodes': True}" />
         </record>
 
+        <function model="stock.picking.type" name="_add_barcode">
+          <value eval="[ref('stock.picking_type_out')]"/>
+        </function>
     </data>
 </odoo>

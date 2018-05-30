@@ -12,6 +12,10 @@ class StockBarcodeController(http.Controller):
         if ret_open_picking:
             return ret_open_picking
 
+        ret_open_picking_type = self.try_open_picking_type(barcode)
+        if ret_open_picking_type:
+            return ret_open_picking_type
+
         if request.env.user.has_group('stock.group_stock_multi_locations'):
             ret_new_internal_picking = self.try_new_internal_picking(barcode)
             if ret_new_internal_picking:
@@ -21,6 +25,36 @@ class StockBarcodeController(http.Controller):
             return {'warning': _('No picking or location corresponding to barcode %(barcode)s') % {'barcode': barcode}}
         else:
             return {'warning': _('No picking corresponding to barcode %(barcode)s') % {'barcode': barcode}}
+
+    def try_open_picking_type(self, barcode):
+        """ If barcode represent a picking type, open a new
+        picking with this type
+        """
+        picking_type = request.env['stock.picking.type'].search([
+            ('barcode', '=', barcode),
+        ], limit=1)
+        if picking_type:
+            # Find source and destination Locations
+            location_dest_id, location_id = picking_type.warehouse_id._get_partner_locations()
+            if picking_type.default_location_src_id:
+                location_id = picking_type.default_location_src_id
+            if picking_type.default_location_dest_id:
+                location_dest_id = picking_type.default_location_dest_id
+
+            # Create and confirm the picking
+            picking = request.env['stock.picking'].create({
+                'picking_type_id': picking_type.id,
+                'location_id': location_id.id,
+                'location_dest_id': location_dest_id.id,
+                'immediate_transfer': True,
+            })
+
+            # Open its form view
+            action_picking_form = request.env.ref('stock_barcode.stock_picking_action_form')
+            action_picking_form = action_picking_form.read()[0]
+            action_picking_form.update(res_id=picking.id)
+            return {'action': action_picking_form}
+        return False
 
     def try_open_picking(self, barcode):
         """ If barcode represents a picking, open it
