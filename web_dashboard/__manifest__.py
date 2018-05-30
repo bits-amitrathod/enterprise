@@ -11,7 +11,7 @@ Odoo Dashboard View.
 This module defines the Dashboard view, a new type of reporting view. This view
 can embed graph and/or pivot views, and displays aggregate values.
         """,
-    'depends': ['base'],
+    'depends': ['web'],
     'data': [
         'views/assets.xml',
     ],
