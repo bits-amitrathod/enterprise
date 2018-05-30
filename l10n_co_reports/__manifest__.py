@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-# Copyright (C) David Arnold (devCO).
-# Author        David Arnold (devCO), dar@devco.co
+# Copyright (C) David Arnold (XOE Solutions).
+# Author        David Arnold (XOE Solutions), dar@xoe.solutions
 # Co-Authors    Juan Pablo Aries (devCO), jpa@devco.co
 #               Hector Ivan Valencia Muñoz (TIX SAS)
 #               Nhomar Hernandez (Vauxoo)
@@ -15,7 +15,7 @@
 Accounting reports for Colombia
 ================================
     """,
-    'author': ['David Arnold BA HSG (devCO)'],
+    'author': ['David Arnold (XOE Solutions)'],
     'category': 'Localization',
     'depends': ['l10n_co', 'account_reports'],
     'data': [
@@ -26,5 +26,6 @@ Accounting reports for Colombia
     'demo': [],
     'auto_install': True,
     'installable': True,
+    'website': 'https://xoe.solutions',
     'license': 'OEEL-1',
 }

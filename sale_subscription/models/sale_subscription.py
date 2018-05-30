@@ -688,7 +688,7 @@ class SaleSubscriptionLine(models.Model):
         product = self.product_id
         partner = self.analytic_account_id.partner_id
         if partner.lang:
-            self.product_id.with_context(lang=partner.lang)
+            product = product.with_context(lang=partner.lang)
 
         name = product.display_name
         if product.description_sale:

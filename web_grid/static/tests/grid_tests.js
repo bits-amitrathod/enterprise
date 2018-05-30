@@ -494,32 +494,25 @@ QUnit.module('Views', {
                 if (args.method === 'search') {
                     return $.when([1, 2, 3, 4, 5]);
                 }
+                if (args.method === 'adjust_grid') {
+                    assert.strictEqual(args.model, 'analytic.line',
+                        'should call with correct model in env');
+                    assert.deepEqual(args.kwargs.context, {some_value: 2},
+                        'should call with correct context');
+                    assert.strictEqual(args.args[0].length, 0,
+                        'should call method with no specific res ids');
+
+                }
                 return this._super.apply(this, arguments);
             },
             intercepts: {
                 execute_action: function (event) {
-                    if (event.data.action_data.type === 'action') {
-                        assert.strictEqual(event.data.env.model, 'analytic.line',
-                            'should call with correct model in env');
-                        assert.deepEqual(event.data.env.context, {some_value: 2},
-                            'should call with correct context in env');
-                        assert.deepEqual(event.data.env.resIDs, [1, 2, 3, 4, 5],
-                            'should call with correct resIDs in env');
-                    } else if (event.data.action_data.type === 'object') {
-                        assert.strictEqual(event.data.env.model, 'analytic.line',
-                            'should call with correct model in env');
-                        assert.deepEqual(event.data.env.context, {some_value: 2},
-                            'should call with correct context in env');
-                        assert.notOk('resIDs' in event.data.env,
-                            'should not have set resIDs in env');
-                        grid._rpc({
-                                model: 'analytic.line',
-                                method: 'adjust_grid',
-                                kwargs: event.data.action_data,
-                            })
-                            .then(event.data.on_success)
-                            .fail(event.data.on_fail);
-                    }
+                    assert.strictEqual(event.data.env.model, 'analytic.line',
+                        'should call with correct model in env');
+                    assert.deepEqual(event.data.env.context, {some_value: 2},
+                        'should call with correct context in env');
+                    assert.deepEqual(event.data.env.resIDs, [1, 2, 3, 4, 5],
+                        'should call with correct resIDs in env');
                 },
             },
         });
@@ -553,6 +546,8 @@ QUnit.module('Views', {
              * greater than 1 (checking that something is selected), but this
              * problem was worth mentioning and the test is maybe more correct
              * and explicit this way.
+             *
+             * TODO(?) use mock getSelection (there are some support code somewhere)
              */
             assert.strictEqual(selection.focusOffset, selection.focusNode === $input[0] ? 1 : 5,
                 "selection ends at the text end (so the 00:00 text is selected)");
@@ -603,6 +598,45 @@ QUnit.module('Views', {
             return concurrency.delay(0);
         });
 
+    });
+
+    QUnit.test('grid_anchor is properly transferred in context', function (assert) {
+        assert.expect(1);
+        var done = assert.async();
+
+        var grid = createView({
+            View: GridView,
+            model: 'analytic.line',
+            data: this.data,
+            arch: '<grid string="Timesheet" adjustment="object" adjust_name="adjust_grid">' +
+                    '<field name="project_id" type="row"/>' +
+                    '<field name="task_id" type="row"/>' +
+                    '<field name="date" type="col">' +
+                        '<range name="week" string="Week" span="week" step="day"/>' +
+                        '<range name="month" string="Month" span="month" step="day" invisible="context.get(\'hide_second_button\')"/>' +
+                        '<range name="year" string="Year" span="year" step="month"/>' +
+                    '</field>'+
+                    '<field name="unit_amount" type="measure" widget="float_time"/>' +
+                '</grid>',
+            currentDate: "2017-01-31",
+            mockRPC: function (route, args) {
+                if (args.method === 'adjust_grid') {
+                    assert.strictEqual(args.kwargs.context.grid_anchor, '2017-01-24',
+                        "proper grid_anchor is sent to server");
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        return concurrency.delay(0).then(function () {
+            // go back to previous week, to be able to check if grid_anchor is
+            // properly updated and sent to the server
+            grid.$buttons.find('.grid_arrow_previous').click();
+            grid.$('.o_grid_input').first().text('2').focusout();
+
+            grid.destroy();
+            done();
+        });
     });
 
 });

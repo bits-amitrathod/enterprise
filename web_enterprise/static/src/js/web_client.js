@@ -156,7 +156,7 @@ return AbstractWebClient.extend({
      */
     do_action: function () {
         var self = this;
-        return this._super.apply(this, arguments).then(function(action) {
+        return this._super.apply(this, arguments).done(function(action) {
             if (self.menu.home_menu_displayed && action.target !== 'new' &&
                 action.type !== 'ir.actions.act_window_close') {
                     self.toggle_home_menu(false);

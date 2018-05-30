@@ -38,7 +38,7 @@ class ResPartner(models.Model):
             # Following Question 4 in legal Document.
             return 'XAXX010101000'
         # otherwise it returns what customer says and if False xml validation will be solving other cases.
-        return self.vat
+        return self.vat.strip()
 
 
 class AccountFiscalPosition(models.Model):

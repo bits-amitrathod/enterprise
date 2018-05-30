@@ -53,13 +53,21 @@ WebClient.include({
             this.do_warn("Studio", _t("Wizards are not editable with Studio."));
             return $.Deferred().reject();
         }
-        if (this.studioMode && !action.studioNavigation) {
+
+        var blockPushState = this.studioMode && !action.studioNavigation;
+        if (blockPushState) {
             // we are doing action inside Studio but as the currently edited
             // action in Studio does not change, the state cannot change
             options = options || {};
             options.pushState = false;
         }
-        return this._super(action, options);
+        return this._super(action, options).done(function (action) {
+            if (blockPushState) {
+                // pushState is reset to true in action_manager (see @doAction)
+                // but we never want the state to be updated in Studio
+                action.pushState = false;
+            }
+        });
     },
     /**
      * @override
