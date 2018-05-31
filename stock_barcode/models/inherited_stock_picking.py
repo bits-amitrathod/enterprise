@@ -238,6 +238,42 @@ class StockPicking(models.Model):
             'message': _('The barcode "%(barcode)s" doesn\'t correspond to a proper product, package or location.') % {'barcode': barcode}
         }}
 
+    def open_picking(self):
+        """ method to open the form view of the current record
+        from a button on the kanban view
+        """
+        self.ensure_one()
+        view_id = self.env.ref('stock.view_picking_form').id
+        return {
+            'name': _('Open picking form'),
+            'res_model': 'stock.picking',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': view_id,
+            'type': 'ir.actions.act_window',
+            'res_id': self.id,
+        }
+            
+    def open_picking_client_action(self):
+        """ method to open the form view of the current record
+        from a button on the kanban view
+        """
+        self.ensure_one()
+        use_form_handler = self.env['ir.config_parameter'].sudo().get_param('stock_barcode.use_form_handler')
+        if use_form_handler:
+            view_id = self.env.ref('stock.view_picking_form').id
+            return {
+                'name': _('Open picking form'),
+                'res_model': 'stock.picking',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'view_id': view_id,
+                'type': 'ir.actions.act_window',
+                'res_id': self.id,
+            }
+        else:
+            #PUT client action
+            pass
 
 class StockPickingType(models.Model):
 
