@@ -13,7 +13,6 @@ from odoo.osv import expression
 class AnalyticLine(models.Model):
     _inherit = 'account.analytic.line'
 
-    name = fields.Char(required=False)
     # reset amount on copy
     amount = fields.Monetary(copy=False)
     validated = fields.Boolean("Validated line", compute='_compute_timesheet_validated', store=True, compute_sudo=True)
@@ -129,7 +128,7 @@ class AnalyticLine(models.Model):
         else:  # create new one
             day = column_value.split('/')[0]
             self.search(row_domain, limit=1).copy({
-                'name': False,
+                'name': _('Timesheet Ajustment'),
                 column_field: day,
                 cell_field: change
             })
