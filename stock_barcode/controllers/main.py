@@ -91,6 +91,7 @@ class StockBarcodeController(http.Controller):
                     'picking_type_id': internal_picking_type[0].id,
                     'location_id': corresponding_location.id,
                     'location_dest_id': dest_loc.id,
+                    'immediate_transfer': True,
                 })
                 picking.action_confirm()
 
