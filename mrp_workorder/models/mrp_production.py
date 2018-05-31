@@ -56,11 +56,11 @@ class MrpProduction(models.Model):
                                         ('state', 'in', ('ready', 'pending', 'progress')),
                                         ('date_planned_finished', '>=', start_date.strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT))], order='date_planned_start')
                 from_date = start_date
-                intervals = workcenter.resource_calendar_id.attendance_ids and workcenter.resource_calendar_id._schedule_hours(workorder.duration_expected / 60.0, from_date)
-                if intervals:
-                    to_date = intervals[-1][1]
+                to_date = workcenter.resource_calendar_id.attendance_ids and workcenter.resource_calendar_id.plan_hours(workorder.duration_expected / 60.0, from_date)
+                if to_date:
                     if not from_date_set:
-                        from_date = intervals[0][0]
+                        # planning 0 hours gives the start of the next attendance
+                        from_date = workcenter.resource_calendar_id.plan_hours(0, from_date)
                         from_date_set = True
                 else:
                     to_date = from_date + relativedelta(minutes=workorder.duration_expected)

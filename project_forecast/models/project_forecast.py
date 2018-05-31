@@ -131,7 +131,7 @@ class ProjectForecast(models.Model):
         tz_warning = _('The employee (%s) doesn\'t have a timezone, this might cause errors in the time computation. It is configurable on the user linked to the employee') % self.employee_id.name
         if not employee_tz:
             _logger.warning(tz_warning)
-        hours = self.employee_id.with_context(tz=self.employee_id.user_id.tz).resource_calendar_id.get_work_hours_count(start, stop, False, compute_leaves=False)
+        hours = self.employee_id.get_work_days_data(start, stop, compute_leaves=False)['hours']
         if hours > 0:
             self.time = self.resource_hours * 100.0 / hours
         else:

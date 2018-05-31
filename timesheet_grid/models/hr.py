@@ -54,10 +54,6 @@ class Employee(models.Model):
         datetime_max = datetime.combine(fields.Date.from_string(date_stop), time.max)
 
         for employee in employees:
-            working_hours = employee.resource_calendar_id.get_work_hours_count(
-                datetime_min,
-                datetime_max,
-                compute_leaves=False, resource_id=employee.resource_id.id
-            )
+            working_hours = employee.get_work_days_data(datetime_min, datetime_max, compute_leaves=False)['hours']
             result[employee.id]['working_hours'] = float_round(working_hours, 2)
         return result

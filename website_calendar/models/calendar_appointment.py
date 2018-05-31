@@ -195,11 +195,13 @@ class CalendarAppointmentType(models.Model):
         for slot in slots:
             for emp_pos, emp in enumerate(available_employees):
                 if emp_pos not in workhours:
-                    # get all work intervals in a single list, ignoring day sorting
-                    workhours[emp_pos] = [interval for interval_list in emp.resource_calendar_id._iter_work_intervals(
-                        start_dt=first_day,
-                        end_dt=last_day,
-                        resource_id=emp.resource_id.id) for interval in interval_list]
+                    workhours[emp_pos] = [
+                        (interval[0].astimezone(pytz.UTC).replace(tzinfo=None),
+                         interval[1].astimezone(pytz.UTC).replace(tzinfo=None))
+                        for interval in emp.resource_calendar_id._work_intervals(
+                            first_day, last_day, resource=emp.resource_id,
+                        )
+                    ]
 
                 if is_work_available(slot['UTC'][0], slot['UTC'][1], workhours[emp_pos]):
                     if emp_pos not in meetings:
