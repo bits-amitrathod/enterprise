@@ -232,6 +232,7 @@ var DashboardRenderer = FormRenderer.extend({
             modelName: this.state.model,
             withControlPanel: false,
             hasSwitchButton: true,
+            isEmbedded: true,
             additionalMeasures: this.additionalMeasures,
         };
         var SubView = viewRegistry.get(viewType);
