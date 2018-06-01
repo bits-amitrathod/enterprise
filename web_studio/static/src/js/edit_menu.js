@@ -180,7 +180,9 @@ var EditMenuDialog = Dialog.extend({
         new NewMenuDialog(this, {
             parent_id: this.current_primary_menu,
             on_saved: function () {
-                self._reloadMenuData(true);
+                self._saveChanges().then(function () {
+                    self._reloadMenuData(true);
+                });
             },
         }).open();
     },
@@ -207,7 +209,9 @@ var EditMenuDialog = Dialog.extend({
             res_model: 'ir.ui.menu',
             res_id: menu_id,
             on_saved: function () {
-                self._reloadMenuData(true);
+                self._saveChanges().then(function () {
+                    self._reloadMenuData(true);
+                });
             },
         }).open();
     },
@@ -218,15 +222,26 @@ var EditMenuDialog = Dialog.extend({
      */
     _onSave: function () {
         var self = this;
-        this._rpc({
-                model: 'ir.ui.menu',
-                method: 'customize',
-                kwargs: {to_move: this.to_move, to_delete: this.to_delete},
-            })
-            .then(function (){
-                self._reloadMenuData();
-                self.close();
-            });
+        this._saveChanges().then(function () {
+            self._reloadMenuData();
+            self.close();
+        });
+    },
+    /**
+     * Save the current changes (in `to_move` and `to_delete`).
+     *
+     * @private
+     * @returns {Deferred}
+     */
+    _saveChanges: function () {
+        return this._rpc({
+            model: 'ir.ui.menu',
+            method: 'customize',
+            kwargs: {
+                to_move: this.to_move,
+                to_delete: this.to_delete,
+            },
+        });
     },
 });
 
