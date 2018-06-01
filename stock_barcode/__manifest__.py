@@ -10,12 +10,12 @@
     'version': '1.0',
     'depends': ['barcodes', 'stock'],
     'data': [
-        'views/inherited_stock_inventory_views.xml',
-        'views/inherited_stock_picking_views.xml',
+        'views/stock_inventory_views.xml',
+        'views/stock_picking_views.xml',
         'views/stock_barcode_templates.xml',
         'views/stock_barcode_views.xml',
         'views/res_config_settings_views.xml',
-        'views/inherited_stock_scrap_views.xml',
+        'views/stock_scrap_views.xml',
         'wizard/stock_barcode_lot_view.xml',
     ],
     'qweb': [
