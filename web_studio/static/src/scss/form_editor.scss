@@ -97,7 +97,11 @@
                         }
                     }
                 }
-
+            }
+            // drag&drop
+            td.ui-draggable-helper-ready {
+                // border doesn't work because of border-collapse
+                outline: 2px solid $o-brand-optional;
             }
         }
         .o_field_image img {

@@ -46,5 +46,29 @@
         .o_ace_view_editor {
             @include o-flex(0, 0, auto);
         }
+
+        // drag & drop
+        .ui-draggable-handle, .ui-draggable-handle label {
+            cursor: move;
+        }
+        .ui-draggable-helper {
+            background-color: white;
+            box-shadow: none;
+            border: 1px solid black;
+            z-index: $zindex-modal;
+            .o_web_studio_component_description {
+                display: none;
+            }
+            &.ui-draggable-dragging {
+                @include o-transform(rotate(-5deg));
+                box-shadow: 0 5px 25px -10px black;
+                @include transition(transform 0.6s, box-shadow 0.3s);
+            }
+            &.ui-draggable-helper-ready {
+                opacity: 1!important;
+                line-height: 2;
+                border: 2px solid $o-brand-optional;
+            }
+        }
     }
 }

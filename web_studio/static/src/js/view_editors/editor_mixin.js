@@ -3,6 +3,44 @@ odoo.define('web_studio.EditorMixin', function() {
 
 return {
     /**
+     * Handles the drag and drop of a jQuery UI element.
+     *
+     * @param {JQuery} $drag
+     * @param {Object} node
+     * @param {string} position
+     */
+    handleDrop: function ($drag, node, position) {
+        var isNew = $drag.hasClass('o_web_studio_component');
+        var values;
+        if (isNew) {
+            values = {
+                type: 'add',
+                structure: $drag.data('structure'),
+                field_description: $drag.data('field_description'),
+                node: node,
+                new_attrs: $drag.data('new_attrs'),
+                position: position,
+            };
+        } else {
+            var movedFieldName = $drag.data('name');
+            if (node.attrs.name === movedFieldName) {
+                // the field is dropped on itself
+                return;
+            }
+            values = {
+                type: 'move',
+                node: node,
+                position: position,
+                structure: 'field',
+                new_attrs: {
+                    name: movedFieldName,
+                },
+            };
+        }
+        this.trigger_up('on_hook_selected');
+        this.trigger_up('view_change', values);
+    },
+    /**
      * Highlight the nearest hook regarding the position and remove the
      * highlighto on other elements.
      *

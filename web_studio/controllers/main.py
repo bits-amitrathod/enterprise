@@ -623,7 +623,7 @@ class WebStudioController(http.Controller):
             filename = op['node']['field_description']['name'] + '_filename'
 
             # Create an operation adding an additional char field
-            char_op = deepcopy(op);
+            char_op = deepcopy(op)
             char_op['node']['field_description'].update({
                 'name': filename,
                 'ttype': 'char',
@@ -1001,8 +1001,12 @@ class WebStudioController(http.Controller):
         return button_count_field, button_action
 
     def _operation_move(self, arch, operation, model=None):
-        self._operation_remove(arch, dict(operation, target=operation['node']))
-        self._operation_add(arch, operation)
+        xpath_node = self._get_xpath_node(arch, operation)
+        xml_node = etree.Element('xpath', {
+            'expr': self._node_to_expr(operation['node']),
+            'position': 'move',
+        })
+        xpath_node.append(xml_node)
 
     # Create or update node for each attribute
     def _operation_attributes(self, arch, operation, model=None):

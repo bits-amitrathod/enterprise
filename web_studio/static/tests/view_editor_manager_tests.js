@@ -258,6 +258,65 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('move a field in list', function (assert) {
+        assert.expect(3);
+        var arch = "<tree>" +
+            "<field name='display_name'/>" +
+            "<field name='char_field'/>" +
+            "<field name='m2o'/>" +
+        "</tree>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.deepEqual(args.operations[0], {
+                        node: {
+                            tag: 'field',
+                            attrs: {name: 'm2o'},
+                        },
+                        position: 'before',
+                        target: {
+                            tag: 'field',
+                            attrs: {name: 'display_name'},
+                        },
+                        type: 'move',
+                    }, "the move operation should be correct");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = "<tree>" +
+                        "<field name='m2o'/>" +
+                        "<field name='display_name'/>" +
+                        "<field name='char_field'/>" +
+                    "</tree>";
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            list: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        var fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor th').text(), "Display NameA charM2O",
+            "the columns should be in the correct order");
+
+        // move the m2o at index 0
+        testUtils.dragAndDrop(vem.$('.o_web_studio_list_view_editor th:contains(M2O)'),
+            vem.$('th.o_web_studio_hook:first'));
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor th').text(), "M2ODisplay NameA char",
+            "the moved field should be the first column");
+
+        vem.destroy();
+    });
+
     QUnit.module('Form');
 
     QUnit.test('empty form editor', function(assert) {
@@ -791,6 +850,73 @@ QUnit.module('ViewEditorManager', {
         assert.deepEqual($('.o_web_studio_selection_editor li').length, 3,
             "there should be 3 pre-filled values for the selection field");
         $('.modal-footer .btn-primary:first').click(); // confirm
+
+        vem.destroy();
+    });
+
+    QUnit.test('move a field in form', function (assert) {
+        assert.expect(3);
+        var arch = "<form>" +
+            "<sheet>" +
+                "<group>" +
+                    "<field name='display_name'/>" +
+                    "<field name='char_field'/>" +
+                    "<field name='m2o'/>" +
+                "</group>" +
+            "</sheet>" +
+        "</form>";
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.deepEqual(args.operations[0], {
+                        node: {
+                            tag: 'field',
+                            attrs: {name: 'm2o'},
+                        },
+                        position: 'before',
+                        target: {
+                            tag: 'field',
+                            attrs: {name: 'display_name'},
+                        },
+                        type: 'move',
+                    }, "the move operation should be correct");
+                    // the server sends the arch in string but it's post-processed
+                    // by the ViewEditorManager
+                    fieldsView.arch = "<form>" +
+                        "<sheet>" +
+                            "<group>" +
+                                "<field name='m2o'/>" +
+                                "<field name='display_name'/>" +
+                                "<field name='char_field'/>" +
+                            "</group>" +
+                        "</sheet>" +
+                    "</form>";
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            form: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        var fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_form_sheet').text(), "Display NameA charM2O",
+            "the moved field should be the first column");
+
+        // move m2o before display_name
+        testUtils.dragAndDrop(vem.$('.o_web_studio_form_view_editor .ui-draggable:eq(2)'),
+            vem.$('.o_web_studio_hook:first'));
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_form_sheet').text(), "M2ODisplay NameA char",
+            "the moved field should be the first column");
 
         vem.destroy();
     });
@@ -2653,6 +2779,101 @@ QUnit.module('ViewEditorManager', {
         vem.$('.o_web_studio_sidebar_content input[name="domain"]').trigger('focusin');
         assert.strictEqual($('.modal .o_domain_selector').length, 1,
             "the domain selector should be correctly opened");
+
+        vem.destroy();
+    });
+
+    QUnit.test('move a field in one2many list', function (assert) {
+        assert.expect(2);
+
+        this.data.coucou.records = [{
+            id: 11,
+            display_name: 'Coucou 11',
+            product_ids: [37],
+        }];
+
+        var arch = "<form>" +
+                "<sheet>" +
+                    "<field name='display_name'/>" +
+                    "<field name='product_ids'>" +
+                        "<tree>" +
+                            "<field name='m2o'/>" +
+                            "<field name='coucou_id'/>" +
+                        "</tree>" +
+                    "</field>" +
+                "</sheet>" +
+            "</form>";
+        var vem = createViewEditorManager({
+            arch: arch,
+            data: this.data,
+            model: 'coucou',
+            res_id: 11,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                } else if (route === '/web_studio/edit_view') {
+                    assert.deepEqual(args.operations[0], {
+                        node: {
+                            tag: 'field',
+                            attrs: {name: 'coucou_id'},
+                            subview_xpath: "//field[@name='product_ids']//tree",
+                        },
+                        position: 'before',
+                        target: {
+                            tag: 'field',
+                            attrs: {name: 'm2o'},
+                            subview_xpath: "//field[@name='product_ids']//tree",
+                        },
+                        type: 'move',
+                    }, "the move operation should be correct");
+
+                    // We need to create the fieldsView here because the
+                    // fieldsViewGet in studio has a specific behaviour so
+                    // cannot use the mock server fieldsViewGet
+                    fieldsView.arch = arch;
+                    fieldsView.fields.product_ids.views = {
+                        list: {
+                            arch: "<tree>" +
+                                "<field name='m2o'/>" +
+                                "<field name='coucou_id'/>" +
+                            "</tree>",
+                            fields: {
+                                m2o: {
+                                    type: "many2one",
+                                    relation: "coucou",
+                                },
+                                coucou_id: {
+                                    type: "many2one",
+                                    relation: "coucou",
+                                },
+                            },
+                        },
+                    };
+
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            form: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        var fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // edit the x2m form view
+        vem.$('.o_web_studio_form_view_editor .o_field_one2many').click();
+        vem.$('.o_web_studio_form_view_editor .o_field_one2many .o_web_studio_editX2Many[data-type="list"]').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor th').text(), "M2Ocoucou",
+            "the columns should be in the correct order");
+
+        // move coucou at index 0
+        testUtils.dragAndDrop(vem.$('.o_web_studio_list_view_editor th:contains(coucou)'),
+            vem.$('th.o_web_studio_hook:first'));
 
         vem.destroy();
     });

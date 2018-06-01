@@ -10,6 +10,9 @@ return ListRenderer.extend(EditorMixin, {
     events: _.extend({}, ListRenderer.prototype.events, {
         'click th:not(.o_web_studio_hook), td:not(.o_web_studio_hook)': '_onExistingColumn',
     }),
+    custom_events: _.extend({}, ListRenderer.prototype.custom_events, {
+        'on_hook_selected': '_onSelectedHook',
+    }),
     /**
      * @constructor
      */
@@ -123,15 +126,15 @@ return ListRenderer.extend(EditorMixin, {
         var def = this._super.apply(this, arguments);
 
         this.$el.droppable({
-            accept: ".o_web_studio_component",
-            drop: function (event, ui) {
+            accept: ".o_web_studio_component, th[data-node-id]",
+            drop: function (ev, ui) {
                 var $hook = self.$('.o_web_studio_nearest_hook');
                 if ($hook.length) {
                     var position = $hook.closest('table').find('th').eq($hook.index()).data('position') || 'after';
-                    var hooked_field_index = position === 'before' && $hook.index() + 1 || $hook.index() - 1;
-                    var field_name = $hook.closest('table').find('th').eq(hooked_field_index).data('name');
+                    var hookedFieldIndex = position === 'before' && $hook.index() + 1 || $hook.index() - 1;
+                    var fieldName = $hook.closest('table').find('th').eq(hookedFieldIndex).data('name');
                     var node = _.find(self.columns, function (column) {
-                        return column.attrs.name === field_name;
+                        return column.attrs.name === fieldName;
                     });
                     // When there is no column in the list view, the only possible hook is inside <tree>
                     if (!self.columns.length) {
@@ -140,19 +143,8 @@ return ListRenderer.extend(EditorMixin, {
                        };
                        position = 'inside';
                     }
-                    self.selected_node_id = false;
-
-                    var values = {
-                        type: 'add',
-                        structure: ui.draggable.data('structure'),
-                        field_description: ui.draggable.data('field_description'),
-                        node: node,
-                        new_attrs: ui.draggable.data('new_attrs'),
-                        position: position,
-                    };
+                    EditorMixin.handleDrop.call(self, ui.draggable, node, position);
                     ui.helper.removeClass('ui-draggable-helper-ready');
-                    self.trigger_up('on_hook_selected');
-                    self.trigger_up('view_change', values);
                 }
             },
         });
@@ -177,6 +169,8 @@ return ListRenderer.extend(EditorMixin, {
             );
             $new_th.insertAfter($(th));
             $(th).attr('data-node-id', self.node_id++);
+
+            self._setDraggable($(th));
         });
 
         // Insert a hook before the first column
@@ -270,7 +264,51 @@ return ListRenderer.extend(EditorMixin, {
             .prependTo($footer.find('tr'));
 
         return $footer;
+    },
+    /**
+     * Set a jQuery element as draggable.
+     * Note that we only set fields as draggable for now.
+     *
+     * @param {jQuery} $el
+     */
+    _setDraggable: function ($el) {
+        var self = this;
 
+        $el.draggable({
+            axis: 'x',
+            scroll: false,
+            revertDuration: 200,
+            refreshPositions: true,
+            start: function (e, ui) {
+                self.$('.o_web_studio_hovered').removeClass('o_web_studio_hovered');
+                self.$('.o_web_studio_clicked').removeClass('o_web_studio_clicked');
+                ui.helper.addClass('ui-draggable-helper');
+            },
+            revert: function () {
+                // a field cannot be dropped on the same place
+                var $hook = self.$('.o_web_studio_nearest_hook');
+                if ($hook.length) {
+                    var position = $hook.closest('table').find('th').eq($hook.index()).data('position') || 'after';
+                    var hookedFieldIndex = position === 'before' && $hook.index() + 1 || $hook.index() - 1;
+                    var fieldName = $hook.closest('table').find('th').eq(hookedFieldIndex).data('name');
+                    if (fieldName !== self.$('.ui-draggable-helper').data('name')) {
+                        return false;
+                    }
+                }
+                self.$('.ui-draggable-helper').removeClass('ui-draggable-helper');
+                self.$('.ui-draggable-helper-ready').removeClass('ui-draggable-helper-ready');
+                self.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
+                return true;
+            },
+        });
+
+        // display nearest hook (handled by the ViewEditorManager)
+        $el.on('drag', _.throttle(function (event, ui) {
+            self.trigger_up('drag_component', {
+                position: {pageX: event.pageX, pageY: event.pageY},
+                $helper: ui.helper,
+            });
+        }, 200));
     },
 
     //--------------------------------------------------------------------------
@@ -291,6 +329,12 @@ return ListRenderer.extend(EditorMixin, {
         });
         this.selected_node_id = $selected_column.data('node-id');
         this.trigger_up('node_clicked', {node: node});
+    },
+    /**
+     * @private
+     */
+    _onSelectedHook: function () {
+        this.selected_node_id = false;
     },
 });
 

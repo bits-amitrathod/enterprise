@@ -194,24 +194,15 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         this.has_message_field = false;
 
         this.$el.droppable({
-            accept: ".o_web_studio_component",
+            accept: ".o_web_studio_component, .ui-draggable-helper-ready",
             drop: function (event, ui) {
                 var $hook = self.$('.o_web_studio_nearest_hook');
                 if ($hook.length) {
                     var hook_id = $hook.data('hook_id');
                     var hook = self.hook_nodes[hook_id];
 
-                    var values = {
-                        type: 'add',
-                        structure: ui.draggable.data('structure'),
-                        field_description: ui.draggable.data('field_description'),
-                        node: hook.node,
-                        new_attrs: ui.draggable.data('new_attrs'),
-                        position: hook.position,
-                    };
+                    EditorMixin.handleDrop.call(self, ui.draggable, hook.node, hook.position);
                     ui.helper.removeClass('ui-draggable-helper-ready');
-                    self.trigger_up('on_hook_selected');
-                    self.trigger_up('view_change', values);
                 }
             },
         });
@@ -391,6 +382,12 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                         $tr.find('label[for="' + $widget.attr('id') + '"]').removeClass('o_web_studio_show_invisible');
                         $tr.addClass('o_web_studio_show_invisible');
                     }
+                }
+                if (child.has_label) {
+                    // as it's not possible to move the label, we only allow to
+                    // move fields with a default label (otherwise the field
+                    // will be moved but the label will stay)
+                    self._setDraggable(child, $tr);
                 }
                 self._processField(child, $tr);
             }
@@ -581,6 +578,58 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             type: type,
         };
         return new FormEditorHook(this, position, hook_id, tagName);
+    },
+    /**
+     * Set a jQuery element as draggable.
+     * Note that we only set fields as draggable for now.
+     *
+     * @param {Object} node
+     * @param {jQuery} $el
+     */
+    _setDraggable: function (node, $el) {
+        var self = this;
+
+        if ($el.is('tr')) {
+            // *** HACK ***
+            // jQuery.ui draggable cannot be set on a <tr> in Chrome because
+            // position: relative has just no effect on a <tr> so we keep the
+            // first <td> instead
+            $el = $el.find('td:first');
+        }
+
+        $el.draggable({
+            revertDuration: 200,
+            refreshPositions: true,
+            start: function (e, ui) {
+                self.$('.o_web_studio_hovered').removeClass('o_web_studio_hovered');
+                self.$('.o_web_studio_clicked').removeClass('o_web_studio_clicked');
+                ui.helper.addClass('ui-draggable-helper');
+                ui.helper.data('name', node.attrs.name);
+            },
+            revert: function () {
+                // a field cannot be dropped on the same place
+                var $hook = self.$('.o_web_studio_nearest_hook');
+                if ($hook.length) {
+                    var hook_id = $hook.data('hook_id');
+                    var hook = self.hook_nodes[hook_id];
+                    if (hook.node.attrs.name !== node.attrs.name) {
+                        return false;
+                    }
+                }
+                self.$('.ui-draggable-helper').removeClass('ui-draggable-helper');
+                self.$('.ui-draggable-helper-ready').removeClass('ui-draggable-helper-ready');
+                self.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
+                return true;
+            },
+        });
+
+        // display nearest hook (handled by the ViewEditorManager)
+        $el.on('drag', _.throttle(function (event, ui) {
+            self.trigger_up('drag_component', {
+                position: {pageX: event.pageX, pageY: event.pageY},
+                $helper: ui.helper,
+            });
+        }, 200));
     },
 
     //--------------------------------------------------------------------------

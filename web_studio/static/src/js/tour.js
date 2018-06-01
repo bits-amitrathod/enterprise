@@ -210,7 +210,13 @@ tour.register('web_studio_tests_tour', {
     run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
 }, {
     // verify that the monetary field is in the view
-    extra_trigger: '.o_web_studio_form_view_editor td.o_td_label:contains("New Monetary")',
+    extra_trigger: '.o_web_studio_form_view_editor td.o_td_label:eq(1):contains("New Monetary")',
+    // switch the two first fields
+    trigger: '.o_web_studio_form_view_editor .o_group:first .ui-draggable:eq(1)',
+    run: 'drag_and_drop .o_group:first .o_web_studio_hook:first',
+}, {
+    // verify that the fields have been switched
+    extra_trigger: '.o_web_studio_form_view_editor td.o_td_label:eq(0):contains("New Monetary")',
     // add a statusbar
     trigger: '.o_web_studio_statusbar_hook',
 }, {

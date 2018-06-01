@@ -1341,6 +1341,11 @@ var ViewEditorManager = Widget.extend({
             op.target.xpath_info.shift();
         }
         op.target.subview_xpath = subviewXpath;
+
+        if (op.type === 'move') {
+            // the node also comes from the subview in 'move' operations
+            op.node.subview_xpath = subviewXpath;
+        }
     },
     /**
      * Changes the widget variables to match the x2m field data.
