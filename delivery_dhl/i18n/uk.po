@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-30 12:49+0000\n"
-"PO-Revision-Date: 2018-03-30 14:43+0000\n"
+"PO-Revision-Date: 2018-05-15 15:37+0000\n"
 "Last-Translator: Alina Semeniuk <alinasemeniuk1@gmail.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/odoo/odoo-9/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_region_code:0
@@ -46,17 +46,17 @@ msgstr "Сантиметри"
 #. module: delivery_dhl
 #: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier_dhl_dutiable
 msgid "Check this if your package is dutiable."
-msgstr ""
+msgstr "Перевірте це, якщо ваша упаковка підлягає сплаті мита."
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "D - Express Worldwide"
-msgstr ""
+msgstr "D - Експрес по всьому світу"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_account_number
 msgid "DHL Account Number"
-msgstr ""
+msgstr "Номер рахунку DHL"
 
 #. module: delivery_dhl
 #: model:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
@@ -78,7 +78,7 @@ msgstr ""
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_password
 msgid "DHL Password"
-msgstr ""
+msgstr "Пароль DHL"
 
 #. module: delivery_dhl
 #: code:addons/delivery_dhl/models/dhl_request.py:303
@@ -96,7 +96,7 @@ msgstr ""
 #, python-format
 msgid ""
 "DHL account number is missing, please modify your delivery method settings."
-msgstr ""
+msgstr "Номер рахунку DHL відсутній, будь ласка, змініть налаштування способу доставки."
 
 #. module: delivery_dhl
 #: code:addons/delivery_dhl/models/dhl_request.py:305
@@ -112,7 +112,7 @@ msgstr ""
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_dutiable
 msgid "Dutiable Material"
-msgstr ""
+msgstr "Матеріал, який підлягає сплаті мита"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_region_code:0
@@ -127,22 +127,22 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_package_dimension_unit:0
 msgid "Inches"
-msgstr ""
+msgstr "Дюйми"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "K - Express 9:00"
-msgstr ""
+msgstr "K - Express 9:00"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_package_weight_unit:0
 msgid "Kilograms"
-msgstr ""
+msgstr "Кілограми"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "N - Domestic Express"
-msgstr ""
+msgstr "N - Вітчизняний експерс"
 
 #. module: delivery_dhl
 #: code:addons/delivery_dhl/models/dhl_request.py:128
@@ -205,12 +205,12 @@ msgstr ""
 #: code:addons/delivery_dhl/models/dhl_request.py:325
 #, python-format
 msgid "Please provide at least one item to ship."
-msgstr ""
+msgstr "Будь ласка, надішліть щонайменше один товар для доставки."
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_package_weight_unit:0
 msgid "Pounds"
-msgstr ""
+msgstr "Фунти"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_product_code
@@ -236,7 +236,7 @@ msgstr ""
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_test_mode
 msgid "Test Mode"
-msgstr ""
+msgstr "Режим перевірки"
 
 #. module: delivery_dhl
 #: code:addons/delivery_dhl/models/dhl_request.py:313
@@ -244,7 +244,7 @@ msgstr ""
 msgid ""
 "The address of the custommer is missing or wrong (Missing field(s) :\n"
 " %s)"
-msgstr ""
+msgstr "Немає адреси клієнта або вона неправильна (відсутнє поле(я) :\n %s)"
 
 #. module: delivery_dhl
 #: code:addons/delivery_dhl/models/dhl_request.py:321
@@ -260,7 +260,7 @@ msgstr ""
 msgid ""
 "The estimated price cannot be computed because the weight of your product is"
 " missing."
-msgstr ""
+msgstr "Оцінювана вартість не може бути обчислена, оскільки вага вашого товару відсутня."
 
 #. module: delivery_dhl
 #: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier_dhl_test_mode
