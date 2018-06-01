@@ -91,7 +91,7 @@
 
                             </a>
                         </td>
-                        <td t-if="success_rate_enable" title="Performance Report" t-att-class="(values and values['helpdesk_target_success'] and values['helpdesk_target_success'] &lt;= values['today']['success'])?'o_main':'o_secondary'">
+                        <td t-if="success_rate_enable" title="The success rate is based on the tickets which passed the SLA policies successfully." t-att-class="(values and values['helpdesk_target_success'] and values['helpdesk_target_success'] &lt;= values['today']['success'])?'o_main':'o_secondary'">
                             <a href="#" class="o_dashboard_action" name="helpdesk.helpdesk_ticket_action_success">
                                 <span class="o_highlight">
                                     <t t-esc="values['today']['success']"/>%
