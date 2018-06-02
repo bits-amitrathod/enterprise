@@ -7,20 +7,20 @@
 # Rytis Štreimikis <r.streimikis@hotmail.lt>, 2016
 # Naglis Jonaitis, 2016
 # digitouch UAB <digitouchagencyeur@gmail.com>, 2017
-# SButko <silvija.butko@gmail.com>, 2018
+# Silvija Butko <silvija.butko@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
 "PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: SButko <silvija.butko@gmail.com>, 2018\n"
+"Last-Translator: Silvija Butko <silvija.butko@gmail.com>, 2018\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: lt\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/account_invoice.py:84
@@ -36,7 +36,7 @@ msgstr "Automatiškai sugeneruotas dokumentas"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_purchase_order_auto_generated
 msgid "Auto Generated Purchase Order"
-msgstr ""
+msgstr "Automatinis pirkimo užsakymų generavimas"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_sale_order_auto_generated
@@ -56,6 +56,8 @@ msgid ""
 "Configure correct warehouse for company(%s) from Menu: "
 "Settings/Users/Companies"
 msgstr ""
+"Parinkite tinkamą sandėlį įmonei (%s) per meniu nuėję į: "
+"Nustatymai/Naudotojai/Įmonės"
 
 #. module: inter_company_rules
 #: selection:base.config.settings,rule_type:0
@@ -72,7 +74,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_po_from_so
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_po_from_so
 msgid "Create Purchase Orders when selling to this company"
-msgstr ""
+msgstr "Kurti pirkimo užsakymus, kai parduodama šiai įmonei"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_so_from_po
@@ -195,7 +197,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_auto_validation
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_auto_validation
 msgid "Sale/Purchase Orders Auto Validation"
-msgstr ""
+msgstr "Automatinis pardavimo/pirkimo užsakymų patvirtinimas"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_sale_order
@@ -215,7 +217,7 @@ msgstr "Pagrindinė sąskaita"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_sale_order_auto_purchase_order_id
 msgid "Source Purchase Order"
-msgstr ""
+msgstr "Pirminis pirkimo užsakymas"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_purchase_order_auto_sale_order_id
@@ -230,7 +232,7 @@ msgstr "Sandėlis"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_warehouse_id
 msgid "Warehouse For Purchase Orders"
-msgstr ""
+msgstr "Pirkimo užsakymų sandėlis"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_auto_validation

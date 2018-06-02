@@ -7,13 +7,14 @@
 # Martin Trigaux, 2016
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2016
 # Albena Mincheva <albena_vicheva@abv.bg>, 2018
+# Boris Stefanov <borkata@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
 "PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Albena Mincheva <albena_vicheva@abv.bg>, 2018\n"
+"Last-Translator: Boris Stefanov <borkata@gmail.com>, 2018\n"
 "Language-Team: Bulgarian (https://www.transifex.com/odoo/teams/41243/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,6 +28,8 @@ msgid ""
 "<b> Credit error :</b> Your Provider Credit account is negative. Please "
 "refill your provider account to send documents."
 msgstr ""
+"<b> Кредитна грешка :</b> Кредитният Ви лимит при този доставчик е "
+"надхвълен/изчерпан. Моля, допълнете сметката за да изпращате документи."
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
@@ -41,7 +44,7 @@ msgstr ""
 #. module: print_sale
 #: selection:print.document.partner.wizard,ink:0
 msgid "Black & White"
-msgstr ""
+msgstr "Черно и Бяло"
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
@@ -217,6 +220,10 @@ msgid ""
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
+"Тази фактура Ви беше изпратена от доставчик %(provider_name)s на следният "
+"адрес.                     <br/><br/> %(partner_name)s <br/> "
+"%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
+"                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 
 #. module: print_sale
 #: code:addons/print_sale/wizard/print_document_partner_wizard.py:73
@@ -225,6 +232,8 @@ msgid ""
 "Your credit provider is too small. Please, configure your account (> "
 "Settings > Print Provider), and put some credit on your account."
 msgstr ""
+"Вашият кредитен е твърде малък. Моля, конфигурирайте (> Settings > Print "
+"Provider), и сложете кредити по сметката си."
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
@@ -234,12 +243,12 @@ msgstr "или"
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_document_partner_line_wizard
 msgid "print.document.partner.line.wizard"
-msgstr ""
+msgstr "print.document.partner.line.wizard"
 
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_document_partner_wizard
 msgid "print.document.partner.wizard"
-msgstr ""
+msgstr "print.document.partner.wizard"
 
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_order_line_wizard
