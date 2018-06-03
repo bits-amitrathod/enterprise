@@ -5,19 +5,22 @@
 # Translators:
 # Martin Trigaux, 2017
 # gebri <gebri@inmail.sk>, 2018
+# Matus Krnac <matus.krnac@gmail.com>, 2018
+# Pavol Krnáč <pavol.krnac@ekoenergo.sk>, 2018
+# Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: gebri <gebri@inmail.sk>, 2018\n"
+"Last-Translator: Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2018\n"
 "Language-Team: Slovak (https://www.transifex.com/odoo/teams/41243/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: sk\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: print
 #: model:mail.template,body_html:print.print_user_notify_failed_email_template
@@ -42,6 +45,23 @@ msgid ""
 "              \n"
 "            "
 msgstr ""
+"\n"
+"<body>\n"
+"<p>Vážený ${object.partner_id.name},</p>\n"
+"\n"
+"<p>Počas posledného procesu \"vytlačiť a odoslať\" dokumentov sa objavili nejaké chyby. Tu je zoznam neúspešných Vami napísaných Tlačových objednávok.</p>\n"
+"<p>Prosím, niektoré chyby boli objavené. Môžete ich nájsť v <i>Nastavenia > Tlačové objednávky</i>.</p>\n"
+"\n"
+"% if ctx.get('print_errors'):\n"
+"<p>\n"
+"ID tlačovej objednávky | Chybová správa <br/>\n"
+"-------------------------------------- <br/>\n"
+"% pre print_order_id, error_text in ctx.get('print_errors'):\n"
+"${print_order_id} | ${error_text} <br/>\n"
+"% endfor\n"
+"</p>\n"
+"% endif\n"
+"</body>"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
@@ -49,6 +69,8 @@ msgid ""
 "<b> Credit error :</b> Your Provider Credit account is negative. Please "
 "refill your provider account to send documents."
 msgstr ""
+"<b> Kreditná chyba :</b> Váš účet poskytovateľa kreditu je záporný. Prosím, "
+"doplňte Váš účet poskytovateľa pre poslanie dokumentov."
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
@@ -58,7 +80,7 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
 msgid "<strong>Name</strong>"
-msgstr ""
+msgstr "<strong>Meno</strong> "
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
@@ -69,7 +91,7 @@ msgstr ""
 #: code:addons/print/wizard/print_order_wizard.py:70
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
-msgstr ""
+msgstr "Aspoň jeden z dokumentov ktoré chcete poslať obsahuje chybu."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_user_id
@@ -79,7 +101,7 @@ msgstr "Autor"
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Black & White"
-msgstr ""
+msgstr "Čierna & Biela"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
@@ -95,12 +117,12 @@ msgstr "Mesto"
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Colour"
-msgstr ""
+msgstr "Farba"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Compute price"
-msgstr ""
+msgstr "Vypočítať cenu"
 
 #. module: print
 #: model:ir.model,name:print.model_res_partner
@@ -110,7 +132,7 @@ msgstr "Kontakt"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_price
 msgid "Cost to Deliver"
-msgstr ""
+msgstr "Náklady na doručenie"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_country_id
@@ -142,7 +164,7 @@ msgstr "Dátum vytvorenia"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_provider_balance
 msgid "Credit"
-msgstr ""
+msgstr "Credit"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_currency_id
@@ -169,7 +191,7 @@ msgstr "Dokument"
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Document Detail"
-msgstr ""
+msgstr "Detail dokumentu"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_sendable
@@ -179,38 +201,38 @@ msgstr ""
 #. module: print
 #: selection:print.order,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Návrh"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_environment
 #: model:ir.model.fields,field_description:print.field_print_provider_environment
 msgid "Environment"
-msgstr ""
+msgstr "Prostredie"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_error_message
 msgid "Error"
-msgstr ""
+msgstr "Chyba"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_error_message
 msgid "Error Message"
-msgstr ""
+msgstr "Chybová správa"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Failed"
-msgstr ""
+msgstr "Zlyhané"
 
 #. module: print
 #: model:mail.template,subject:print.print_user_notify_failed_email_template
 msgid "Failed Print Orders"
-msgstr ""
+msgstr "Neúspešné objednávky tlače"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Group By..."
-msgstr ""
+msgstr "Zoskupiť podľa..."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin_id
@@ -226,7 +248,7 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:print.field_print_order_ink
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_ink
 msgid "Ink"
-msgstr ""
+msgstr "Tuš"
 
 #. module: print
 #: model:ir.model,name:print.model_account_invoice
@@ -237,14 +259,14 @@ msgstr "Faktúra"
 #: model:ir.model.fields,field_description:print.field_res_partner_has_address
 #: model:ir.model.fields,field_description:print.field_res_users_has_address
 msgid "Is address valid"
-msgstr ""
+msgstr "Je adresa platná"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_account_invoice_print_is_sendable
 #: model:ir.model.fields,field_description:print.field_print_mixin_print_is_sendable
 #: model:ir.model.fields,field_description:print.field_sale_order_print_is_sendable
 msgid "Is sendable"
-msgstr ""
+msgstr "Je poslatelné"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin___last_update
@@ -261,12 +283,12 @@ msgstr "Posledná modifikácia"
 #: model:ir.model.fields,field_description:print.field_print_mixin_print_sent_date
 #: model:ir.model.fields,field_description:print.field_sale_order_print_sent_date
 msgid "Last Postal Sent Date"
-msgstr ""
+msgstr "Posledný dátum pośtového odoslania"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_last_send_date
 msgid "Last Send Date"
-msgstr ""
+msgstr "Dátum posledného poslania"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_write_uid
@@ -289,64 +311,64 @@ msgstr "Naposledy upravované"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_print_order_line_wizard_ids
 msgid "Lines"
-msgstr ""
+msgstr "Riadky"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_res_model
 msgid "Model Name"
-msgstr ""
+msgstr "Názov modelu"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "My Print Orders"
-msgstr ""
+msgstr "Moje objednávky tlače"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_name
 #: model:ir.model.fields,field_description:print.field_print_provider_name
 msgid "Name"
-msgstr ""
+msgstr "Meno"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_nbr_pages
 msgid "Number of Pages"
-msgstr ""
+msgstr "Počet strán"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_res_id
 msgid "Object ID"
-msgstr ""
+msgstr "ID objektu"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Order Information"
-msgstr ""
+msgstr "Informácia objednávky"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 msgid "Orders"
-msgstr ""
+msgstr "Objednávky"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Orders Failed"
-msgstr ""
+msgstr "Neúspešné objednávky"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Orders Waiting"
-msgstr ""
+msgstr "Čakajúce objednávky"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_attachment_id
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_paper_weight
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_paper_weight
 msgid "Paper Weight"
-msgstr ""
+msgstr "Hmotnosť papiera"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
@@ -369,52 +391,52 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Postal Order"
-msgstr ""
+msgstr "Poštová objednávka"
 
 #. module: print
 #: model:ir.ui.menu,name:print.root_print_menu
 msgid "Postal Printings"
-msgstr ""
+msgstr "Poštové tlačoviny"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 #: model:ir.ui.view,arch_db:print.print_provider_view_tree
 msgid "Postal Provider"
-msgstr ""
+msgstr "Poštový poskytovateľ"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Postal Wizard Order"
-msgstr ""
+msgstr "Poštový sprievodca objednávkou"
 
 #. module: print
 #: model:ir.model,name:print.model_print_mixin
 msgid "Print Mixin (Printable Object)"
-msgstr ""
+msgstr "Miešanie tlače (tlačitelný objekt)"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order
 #: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard_print_order_ids
 msgid "Print Order"
-msgstr ""
+msgstr "Objednávka tlače"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_line_wizard_view_tree
 msgid "Print Order Lines"
-msgstr ""
+msgstr "Riadky objednávky tlače"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_wizard
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_print_order_wizard_id
 msgid "Print Order Wizard"
-msgstr ""
+msgstr "Sprievodca tlačou objednávok"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_action
 #: model:ir.ui.menu,name:print.print_order_menu
 #: model:ir.ui.view,arch_db:print.print_order_view_tree
 msgid "Print Orders"
-msgstr ""
+msgstr "Objednávky tlače"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_provider_action
@@ -423,7 +445,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_id
 #: model:ir.ui.menu,name:print.print_provider_menu
 msgid "Print Provider"
-msgstr ""
+msgstr "Poskytovateľ tlače"
 
 #. module: print
 #: model:ir.actions.server,name:print.ir_cron_print_scheduler_action_ir_actions_server
@@ -435,116 +457,116 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Printing Detail"
-msgstr ""
+msgstr "Detail tlače"
 
 #. module: print
 #: selection:print.provider,environment:0
 msgid "Production"
-msgstr ""
+msgstr "Výroba"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_provider_provider
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Provider"
-msgstr ""
+msgstr "Poskytovateľ"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_provider_balance
 msgid "Provider Credit"
-msgstr ""
+msgstr "Poskytovateľ kreditu"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 msgid "Provider Information"
-msgstr ""
+msgstr "Informácia poskytovateľa"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Ready"
-msgstr ""
+msgstr "Pripravené"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Recipient Address"
-msgstr ""
+msgstr "Adresa príjmateľa"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_partner_id
 #: model:ir.model.fields,field_description:print.field_print_order_partner_id
 msgid "Recipient partner"
-msgstr ""
+msgstr "Príjemca partnera"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_report_id
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_report_id
 msgid "Report"
-msgstr ""
+msgstr "Report"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Reset to Draft"
-msgstr ""
+msgstr "Resetovať na koncept"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_res_id
 msgid "Resource ID"
-msgstr ""
+msgstr "ID prostriedku"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_res_model
 msgid "Resource Model"
-msgstr ""
+msgstr "Model prostriedku"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Send"
-msgstr ""
+msgstr "Poslať"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action_multi_print
 msgid "Send Invoices by post"
-msgstr ""
+msgstr "Poslať faktúru poštou"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.account_invoice_view_form_inherit_print
 msgid "Send Letter"
-msgstr ""
+msgstr "Poslať dopis"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Send Now"
-msgstr ""
+msgstr "Odoslať teraz"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 msgid "Send Now Postal Wizard Order"
-msgstr ""
+msgstr "Poštový sprievodca objednávkou Odoslať ihneď"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_sendnow_action_multi
 msgid "Send Now by post"
-msgstr ""
+msgstr "Odoslať ihneď poštou"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action
 msgid "Send by Post"
-msgstr ""
+msgstr "Poslať poštou"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_sent_date
 msgid "Sending Date"
-msgstr ""
+msgstr "Dátum posielania"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Sent"
-msgstr ""
+msgstr "Poslané"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_state_id
 msgid "State"
-msgstr ""
+msgstr "Stav"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_state
@@ -555,22 +577,22 @@ msgstr "Stav"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_street
 msgid "Street"
-msgstr ""
+msgstr "Ulica"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_street2
 msgid "Street2"
-msgstr ""
+msgstr "Ulica2"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Technical Informations"
-msgstr ""
+msgstr "Technické informácie"
 
 #. module: print
 #: selection:print.provider,environment:0
 msgid "Test"
-msgstr ""
+msgstr "Test"
 
 #. module: print
 #: model:ir.model.fields,help:print.field_print_order_wizard_provider_currency_id
@@ -587,6 +609,8 @@ msgid ""
 "The document has no associated PDF : you have to give select an Attachment "
 "file, or set up the Object ID and Model Name fields."
 msgstr ""
+"Tento dokument nemá pridružené PDF: musíte vybrať súbor prílohy, alebo "
+"nastaviť polia ID objektu a názov modelu."
 
 #. module: print
 #: code:addons/print/models/print_provider.py:221
@@ -611,28 +635,32 @@ msgid ""
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
+"Táto faktúra bola zaslaná poštou poskytovateľom %(provider_name)s na "
+"nasledujúcu adresu. <br/><br/> %(partner_name)s <br/> %(partner_street)s "
+"<br/> %(partner_city)s %(partner_zip)s "
+"<br/>%(partner_country)sprovider_name<i>%s</i>"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 msgid "Update"
-msgstr ""
+msgstr "Aktualizácia"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "When the error is resolved, please click on 'Reset to draft'."
-msgstr ""
+msgstr "Keď je chyba vyriešená, kliknite na \"Obnoviť koncept\"."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_zip
 msgid "Zip"
-msgstr ""
+msgstr "PSČ"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_line_wizard
 msgid "print.order.line.wizard"
-msgstr ""
+msgstr "print.order.line.wizard"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_sendnow_wizard
 msgid "print.order.sendnow.wizard"
-msgstr ""
+msgstr "print.order.sendnow.wizard"

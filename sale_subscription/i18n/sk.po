@@ -6,19 +6,22 @@
 # Martin Trigaux, 2017
 # Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2018
 # gebri <gebri@inmail.sk>, 2018
+# Matus Krnac <matus.krnac@gmail.com>, 2018
+# Pavol Krnáč <pavol.krnac@ekoenergo.sk>, 2018
+# Miroslav Fic <mirko.fic@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-30 08:43+0000\n"
 "PO-Revision-Date: 2018-01-30 08:43+0000\n"
-"Last-Translator: gebri <gebri@inmail.sk>, 2018\n"
+"Last-Translator: Miroslav Fic <mirko.fic@gmail.com>, 2018\n"
 "Language-Team: Slovak (https://www.transifex.com/odoo/teams/41243/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: sk\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: sale_subscription
 #: model:sale.subscription.template,description:sale_subscription.odoo_monthly
@@ -298,22 +301,22 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "&amp;nbsp;"
-msgstr ""
+msgstr "&amp;nbsp;"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "(Not in"
-msgstr ""
+msgstr "(Nie v"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "(Wrong address?)"
-msgstr ""
+msgstr "(Nesprávna adresa?)"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "). After this date, you can reopen your account up to"
-msgstr ""
+msgstr "). Po tomto dátume, môžete znovuotvoriť svoj účet až do"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -339,6 +342,8 @@ msgid ""
 "<span class=\"label label-default\"><i class=\"fa fa-fw fa-remove\"/> "
 "Closed</span>"
 msgstr ""
+"<span class=\"label label-default\"><i class=\"fa fa-fw fa-remove\"/> "
+"Zavreté</span>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
@@ -347,6 +352,8 @@ msgid ""
 "<span class=\"label label-success\"><i class=\"fa fa-fw fa-check\"/> In "
 "Progress</span>"
 msgstr ""
+"<span class=\"label label-success\"><i class=\"fa fa-fw fa-check\"/> "
+"Prebieha</span>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
@@ -355,6 +362,8 @@ msgid ""
 "<span class=\"label label-warning\"><i class=\"fa fa-fw fa-refresh\"/> To "
 "Renew</span>"
 msgstr ""
+"<span class=\"label label-warning\"><i class=\"fa fa-fw fa-refresh\"/> Na "
+"obnovenie</span>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
@@ -369,12 +378,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Account Manager"
-msgstr ""
+msgstr "Manažér účtu"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_uuid
 msgid "Account UUID"
-msgstr ""
+msgstr "UUID účtu"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
@@ -384,7 +393,7 @@ msgstr "Účtovníctvo"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_journal_id
 msgid "Accounting Journal"
-msgstr ""
+msgstr "Účtovný denník"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_active
@@ -395,12 +404,12 @@ msgstr "Aktívne"
 #: model:ir.actions.act_window,name:sale_subscription.wizard_action
 #: model:ir.ui.view,arch_db:sale_subscription.wizard_form_view
 msgid "Add Options"
-msgstr ""
+msgstr "Pridať možnosti"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.wizard_form_view
 msgid "Add in Subscription"
-msgstr ""
+msgstr "Pridať odber"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -434,12 +443,12 @@ msgstr "Archivovaný"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_payment_mandatory
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_payment_mandatory
 msgid "Automatic Payment"
-msgstr ""
+msgstr "Automatická platba"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Back"
-msgstr ""
+msgstr "Späť"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -458,7 +467,7 @@ msgstr "Zrušiť"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Cancel Subscription"
-msgstr ""
+msgstr "Zrušiť odber"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -490,7 +499,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Change plan"
-msgstr ""
+msgstr "Zmeniť plán"
 
 #. module: sale_subscription
 #. openerp-web
@@ -517,7 +526,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_template_action
 msgid "Click here to create a template of subscription."
-msgstr ""
+msgstr "Kliknite sem pre vytvorenie šablóny odberu."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
@@ -528,7 +537,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
 msgid "Click to define a new product."
-msgstr ""
+msgstr "Kliknite pre definovanie nového produktu."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -538,14 +547,14 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_user_closable
 msgid "Closable by customer"
-msgstr ""
+msgstr "Zatvoriteľné zákazníkom"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_close_reason_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_close_reason_id
 msgid "Close Reason"
-msgstr ""
+msgstr "Dôvod zavretia"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_close_reason_action
@@ -553,17 +562,17 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_tree
 msgid "Close Reasons"
-msgstr ""
+msgstr "Dôvody zavretia"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Close Subscription"
-msgstr ""
+msgstr "Zavrieť odber"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Close your account"
-msgstr ""
+msgstr "Zavrieť váš účet"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -582,7 +591,7 @@ msgstr ""
 #: selection:sale.subscription.report,state:0
 #, python-format
 msgid "Closed"
-msgstr ""
+msgstr "Uzavreté"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -593,7 +602,7 @@ msgstr ""
 #: code:addons/sale_subscription/controllers/portal.py:224
 #, python-format
 msgid "Closing text : "
-msgstr ""
+msgstr "Zatvárací text :"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_code
@@ -603,7 +612,7 @@ msgstr "Kód"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_color
 msgid "Color"
-msgstr ""
+msgstr "Farba"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_commercial_partner_id
@@ -648,7 +657,7 @@ msgstr "Štát"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.wizard_form_view
 msgid "Create & View Quotation"
-msgstr ""
+msgstr "Vytvoriť a zobraziť ponuku"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -715,13 +724,13 @@ msgstr "Mena"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Current plan:"
-msgstr ""
+msgstr "Aktuálny plán:"
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_custom_domain
 #: model:product.template,name:sale_subscription.odoo_custom_domain_product_template
 msgid "Custom Domain"
-msgstr ""
+msgstr "Prispôsobená doména"
 
 #. module: sale_subscription
 #: model:product.product,description_sale:sale_subscription.odoo_custom_domain
@@ -749,7 +758,7 @@ msgstr "Zákazník"
 #: model:product.product,name:sale_subscription.odoo_custom_module
 #: model:product.template,name:sale_subscription.odoo_custom_module_product_template
 msgid "Customized Module"
-msgstr ""
+msgstr "Prispôsobený modul"
 
 #. module: sale_subscription
 #: model:product.product,description_sale:sale_subscription.odoo_custom_module
@@ -792,28 +801,28 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 msgid "Dashboard"
-msgstr ""
+msgstr "Nástenka"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_date_end
 msgid "Date End"
-msgstr ""
+msgstr "Dátum ukončenia"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_date_start
 msgid "Date Start"
-msgstr ""
+msgstr "Dátum začatia"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_next_date
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Date of Next Invoice"
-msgstr ""
+msgstr "Dátum ďalšej faktúry"
 
 #. module: sale_subscription
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Day(s)"
-msgstr ""
+msgstr "Dní"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
@@ -857,22 +866,22 @@ msgstr "Zobraziť meno"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_date
 msgid "End Date"
-msgstr ""
+msgstr "Dátum ukončenia"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "End Month"
-msgstr ""
+msgstr "Mesiac ukončenia"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "End date is in the next month"
-msgstr ""
+msgstr "Dátum ukončenia je budúci mesiac"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "End date passed"
-msgstr ""
+msgstr "Dátum ukončenia prešiel"
 
 #. module: sale_subscription
 #. openerp-web
@@ -884,12 +893,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Expired"
-msgstr ""
+msgstr "Vypršané"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Expiring soon"
-msgstr ""
+msgstr "Čoskoro vyprší"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -911,12 +920,12 @@ msgstr "Zoskupiť podľa"
 #. module: sale_subscription
 #: model:ir.module.category,description:sale_subscription.module_category_subscription_management
 msgid "Helps you handle subscriptions and recurring invoicing."
-msgstr ""
+msgstr "Pomáha vám iadiť odbery a opakujúcu sa fakturáciu."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "History"
-msgstr ""
+msgstr "História"
 
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_4
@@ -940,6 +949,7 @@ msgstr "ID"
 msgid ""
 "If checked, the user will be able to close his account from the frontend"
 msgstr ""
+"Pokiaľ zaškrtnuté, používateľ bude schopný zavrieť svoj účet z frontend-u"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_payment_token_id
@@ -959,6 +969,7 @@ msgstr ""
 msgid ""
 "If set, confirming a sale order with this product will create a subscription"
 msgstr ""
+"Ak nastavené, potvrdenie objednávky predaja týmto produktom vytvorí odber"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_payment_mandatory
@@ -967,6 +978,8 @@ msgid ""
 "If set, payments will be made automatically and invoices will not be "
 "generated if payment attempts are unsuccessful."
 msgstr ""
+"Ak nastavené, platby budú vykonané automaticky a faktúry nebudú generované "
+"ak platobné pokusy nebudú úspešné."
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_journal_id
@@ -981,6 +994,7 @@ msgid ""
 "If you close your account, it will remain active until your next invoice "
 "date ("
 msgstr ""
+"Ak zavriete váš účet, ostane aktívny do nasledujúceho fakturačného dátumu ("
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1008,7 +1022,7 @@ msgstr ""
 #: selection:sale.subscription.report,state:0
 #, python-format
 msgid "In Progress"
-msgstr ""
+msgstr "Spracováva sa"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_industry_id
@@ -1022,6 +1036,7 @@ msgstr "Priemysel"
 msgid ""
 "Insert the options directly, they will be invoiced on the next invoice date."
 msgstr ""
+"Vložte možnosti priamo, budu vyfaktúrované pri ďalšom fakturačnom termíne."
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_payment_transaction_invoice_id
@@ -1047,17 +1062,17 @@ msgstr "Položky faktúry"
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_recurring_rule_type
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_recurring_rule_type
 msgid "Invoice automatically repeat at specified interval"
-msgstr ""
+msgstr "Faktúru automaticky opakovať v špecifikovanom intervale"
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_success
 msgid "Invoice for subscription ${ctx.get('code')}"
-msgstr ""
+msgstr "Faktúra za odber ${ctx.get('code')}"
 
 #. module: sale_subscription
 #: model:mail.template,report_name:sale_subscription.email_payment_success
 msgid "Invoice_${ctx.get('code')}_${ctx.get('previous_date')}"
-msgstr ""
+msgstr "Invoice_${ctx.get('code')}_${ctx.get('previous_date')}"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1143,18 +1158,18 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Manage your payment methods"
-msgstr ""
+msgstr "Spravujte svoje platobné metódy"
 
 #. module: sale_subscription
 #: model:product.uom,name:sale_subscription.subscription_uom_month
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Month(s)"
-msgstr ""
+msgstr "Mesiac(e)"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_monthly
 msgid "Monthly Recurring Revenue"
-msgstr ""
+msgstr "Opakovaný mesačný príjem"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -1170,7 +1185,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
 #, python-format
 msgid "Name"
-msgstr ""
+msgstr "Meno"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -1188,12 +1203,12 @@ msgstr ""
 #: code:addons/sale_subscription/controllers/portal.py:41
 #, python-format
 msgid "Newest"
-msgstr ""
+msgstr "Najnovšie"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Next invoice:"
-msgstr ""
+msgstr "Ďalšia faktúra:"
 
 #. module: sale_subscription
 #: model:product.product,description_sale:sale_subscription.odoo_saas
@@ -1239,7 +1254,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_lines
 #: model:ir.ui.view,arch_db:sale_subscription.wizard_form_view
 msgid "Options"
-msgstr ""
+msgstr "Možnosti"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_order_view_tree_subscription
@@ -1269,7 +1284,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_payment_transaction
 msgid "Payment Transaction"
-msgstr ""
+msgstr "Platobná transakcia"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1279,7 +1294,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_reminder
 msgid "Payment reminder for subscription ${object.code}"
-msgstr ""
+msgstr "Pripomienka platby za odber ${object.code}"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -1296,7 +1311,7 @@ msgstr ""
 #: code:addons/sale_subscription/models/sale_subscription.py:290
 #, python-format
 msgid "Please define a sale journal for the company \"%s\"."
-msgstr ""
+msgstr "Prosím definujte predajnú účtovnú knihu pre spoločnosť \"%s\"."
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_pricelist_id
@@ -1362,7 +1377,7 @@ msgstr "Cenová ponuka"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_form
 msgid "Reason"
-msgstr ""
+msgstr "Dôvod "
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_rule_type
@@ -1379,17 +1394,17 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_total
 msgid "Recurring Price"
-msgstr ""
+msgstr "Opakovaná cena"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_recurring_price
 msgid "Recurring price(per period)"
-msgstr ""
+msgstr "Opakovaná cena (za obdobie)"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_code
 msgid "Reference"
-msgstr ""
+msgstr "Referencia"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1415,13 +1430,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_interval
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_recurring_interval
 msgid "Repeat Every"
-msgstr ""
+msgstr "Opakovať každé"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_recurring_interval
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_recurring_interval
 msgid "Repeat every (Days/Week/Month/Year)"
-msgstr ""
+msgstr "Opakovať každý (deň/týždeň/mesiac/rok)"
 
 #. module: sale_subscription
 #: model:ir.ui.menu,name:sale_subscription.menu_report_product_all
@@ -1437,7 +1452,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription
 msgid "Sale Subscription"
-msgstr ""
+msgstr "Odber predaja"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings_module_sale_subscription_dashboard
@@ -1466,7 +1481,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_list
 msgid "Sale Subscriptions"
-msgstr ""
+msgstr "Odbery predaja"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1488,7 +1503,7 @@ msgstr "Objednávky predaja"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_user_id
 msgid "Sales Rep"
-msgstr ""
+msgstr "Obchodný zástupca"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_user_id
@@ -1536,7 +1551,7 @@ msgstr "Postupnosť"
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Settings"
-msgstr ""
+msgstr "Nastavenia"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -1546,12 +1561,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_date_start
 msgid "Start Date"
-msgstr ""
+msgstr "Počiatočný dátum"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Start Month"
-msgstr ""
+msgstr "Mesiac začatia"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1561,12 +1576,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Start date:"
-msgstr ""
+msgstr "Dátum začiatku"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_state
 msgid "State"
-msgstr ""
+msgstr "Stav"
 
 #. module: sale_subscription
 #: model:mail.message.subtype,name:sale_subscription.subtype_state_change
@@ -1582,12 +1597,12 @@ msgstr "Stav"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_price_subtotal
 msgid "Sub Total"
-msgstr ""
+msgstr "Medzisúčet"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_form
 msgid "Submit"
-msgstr ""
+msgstr "Zaslať"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_account_invoice_line_subscription_id
@@ -1599,14 +1614,14 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Subscription"
-msgstr ""
+msgstr "Predplatné"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.action_subscription_report_all
 #: model:ir.ui.view,arch_db:sale_subscription.view_subcription_report_graph
 #: model:ir.ui.view,arch_db:sale_subscription.view_subcription_report_pivot
 msgid "Subscription Analysis"
-msgstr ""
+msgstr "Analýza odberu"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_close_reason
@@ -1628,12 +1643,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Subscription Lines"
-msgstr ""
+msgstr "Riadky odberu"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order_subscription_management
 msgid "Subscription Management"
-msgstr ""
+msgstr "Spravovanie predplatného"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1644,18 +1659,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product_recurring_invoice
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template_recurring_invoice
 msgid "Subscription Product"
-msgstr ""
+msgstr "Produkt odberu"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.product_action_subscription
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_product
 msgid "Subscription Products"
-msgstr ""
+msgstr "Produkty odberu"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_report
 msgid "Subscription Statistics"
-msgstr ""
+msgstr "Štatistiky odberu"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product_subscription_template_id
@@ -1663,7 +1678,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_template_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id
 msgid "Subscription Template"
-msgstr ""
+msgstr "Šablóna odberu"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_template_action
@@ -1671,7 +1686,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_list
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_search
 msgid "Subscription Templates"
-msgstr ""
+msgstr "Šablóny odberu"
 
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_2
@@ -1686,7 +1701,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.product_template_search_view_inherit_sale_subscription
 msgid "Subscription products"
-msgstr ""
+msgstr "Produkty odberu"
 
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_3
@@ -1722,7 +1737,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 #: model:ir.ui.view,arch_db:sale_subscription.view_sale_subscription_order_line
 msgid "Subscriptions"
-msgstr ""
+msgstr "Odbery"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
@@ -1760,13 +1775,13 @@ msgstr "Medzisúčet"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Subtotal:"
-msgstr ""
+msgstr "Medzisúčet:"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_tag_ids
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_tag_ids
 msgid "Tags"
-msgstr ""
+msgstr "Popisky"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_amount_tax
@@ -1776,18 +1791,18 @@ msgstr "Dane"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Taxes:"
-msgstr ""
+msgstr "Dane :"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_search
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Template"
-msgstr ""
+msgstr "Šablóna"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "Template Name"
-msgstr ""
+msgstr "Názov šablóny"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_template_action
@@ -1800,13 +1815,13 @@ msgstr ""
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_close
 msgid "Termination of subscription ${object.code}"
-msgstr ""
+msgstr "Ukončenie odberu ${object.code}"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_description
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "Terms and Conditions"
-msgstr ""
+msgstr "Pojmy a podmienky"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1824,7 +1839,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_website_url
 msgid "The full URL to access the document through the website."
-msgstr ""
+msgstr "Úplná URL na prístup k dokumentu cez webové stránky."
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_recurring_next_date
@@ -1840,6 +1855,9 @@ msgid ""
 "            process: price, notes in the quotation, accounting data,\n"
 "            procurement methods, etc."
 msgstr ""
+"Formulár produktu obsahuje informácie pre zjednodušenie predajného\n"
+"procesu: ceny, poznámky v cenovej ponuke, účtovné údaje,\n"
+"metódy obstáravania, atď."
 
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_view
@@ -1855,12 +1873,12 @@ msgstr ""
 #: code:addons/sale_subscription/models/sale_subscription.py:311
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
-msgstr ""
+msgstr "Táto faktúra pokrýva následovné obdobie: %s - %s"
 
 #. module: sale_subscription
 #: model:product.uom.categ,name:sale_subscription.uom_categ_time
 msgid "Time"
-msgstr ""
+msgstr "Čas"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:47
@@ -1870,12 +1888,12 @@ msgstr ""
 #: selection:sale.subscription.report,state:0
 #, python-format
 msgid "To Renew"
-msgstr ""
+msgstr "Na obnovenie"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Today Activities"
-msgstr ""
+msgstr "Dnešné aktivity"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_amount_total
@@ -1893,6 +1911,8 @@ msgid ""
 "UUIDs (Universally Unique IDentifier) for Sale Subscriptions should be "
 "unique!"
 msgstr ""
+"UUID (Universally Unique IDentifier) pre Predajné odbery my mal byť "
+"unikátny!"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_price_unit
@@ -1928,7 +1948,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Valid until:"
-msgstr ""
+msgstr "Platné do:"
 
 #. module: sale_subscription
 #. openerp-web
@@ -1945,27 +1965,29 @@ msgid ""
 "We always listen to our customer. Could you specify the reason for "
 "cancelling your subscription?"
 msgstr ""
+"Vždy načúvame nášmu zákazníkovi. Mohli by ste upresniť dôvod zrušenia vášho "
+"oberu?"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_website_url
 msgid "Website URL"
-msgstr ""
+msgstr "URL Webových stránok"
 
 #. module: sale_subscription
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Week(s)"
-msgstr ""
+msgstr "Týždeň(ne)"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Sprievodca"
 
 #. module: sale_subscription
 #: model:product.uom,name:sale_subscription.subscription_uom_year
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Year(s)"
-msgstr ""
+msgstr "Rok(y)"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.wizard_form_view
@@ -1975,11 +1997,14 @@ msgid ""
 " or directly insert them in the subscription to invoice it on the next "
 "invoice date."
 msgstr ""
+"Môžete buď vytvoriť ponuku, ktorá bude zľavnená pre aktuálne fakturačné "
+"obdobie (možnosti budú pridané , keď sa potvrdí ponuka) alebo ich priamo "
+"vložiť dnao odberu vyfaktúrovanie v ďalšiom termíne vystavenia faktúry."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
 msgid "You don't have any subscriptions yet."
-msgstr ""
+msgstr "Nemáte zatiaľ žiadne odbery."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
@@ -1988,12 +2013,15 @@ msgid ""
 "            a physical product, a consumable or a service you offer to\n"
 "            customers."
 msgstr ""
+"Musíte definovať produkt pre všetko čo predávate, či je to\n"
+"fyzický produkt, niečo spotrebné alebo služba čo ponúkate\n"
+"zákazníkom."
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:279
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
-msgstr ""
+msgstr "Najskôr musíte zvoliť zákazníka pre odber %s!"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_template_action_subscription
@@ -2012,7 +2040,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Your Plan"
-msgstr ""
+msgstr "Váš plán"
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_subscription_open
@@ -2027,12 +2055,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "by paying your invoice."
-msgstr ""
+msgstr "zaplatením vašej faktúry."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "day(s)"
-msgstr ""
+msgstr "dni"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2042,7 +2070,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "month(s)"
-msgstr ""
+msgstr "mesiac(e)"
 
 #. module: sale_subscription
 #: model:product.product,name:sale_subscription.odoo_saas
@@ -2058,7 +2086,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_res_config_settings
 msgid "res.config.settings"
-msgstr ""
+msgstr "res.config.settings"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_close_reason_wizard
@@ -2068,12 +2096,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_wizard
 msgid "sale.subscription.wizard"
-msgstr ""
+msgstr "sale.subscription.line.option"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_wizard_option
 msgid "sale.subscription.wizard.option"
-msgstr ""
+msgstr "sale.subscription.wizard.option"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2083,14 +2111,14 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "week(s)"
-msgstr ""
+msgstr "týžden(e)"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "year(s)"
-msgstr ""
+msgstr "rok(y)"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "⇒ Generate Invoice"
-msgstr ""
+msgstr "⇒ Generovať faktúru"

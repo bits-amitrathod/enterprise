@@ -7,13 +7,15 @@
 # Manuela Silva <manuela.silva@sky.com>, 2017
 # Joao Felix <jrmfelix@gmail.com>, 2018
 # Nuno Silva <nuno.silva@arxi.pt>, 2018
+# Ricardo Martins <ricardo.nbs.martins@gmail.com>, 2018
+# José Gomes <jg@opencloud.pro>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Nuno Silva <nuno.silva@arxi.pt>, 2018\n"
+"Last-Translator: José Gomes <jg@opencloud.pro>, 2018\n"
 "Language-Team: Portuguese (https://www.transifex.com/odoo/teams/41243/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,22 +27,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alert_count
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_count
 msgid "# Quality Alerts"
-msgstr ""
+msgstr "# Alertas de Qualidade"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_check_count
 msgid "# Quality Checks"
-msgstr ""
+msgstr "# Verificações de Qualidade"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "% of the operation"
-msgstr ""
+msgstr "% da operação"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
-msgstr ""
+msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -48,6 +50,8 @@ msgid ""
 "<span attrs=\"{'invisible': [('measure_frequency_type', '=', "
 "'all')]}\">Every </span>"
 msgstr ""
+"<span attrs=\"{'invisible': [('measure_frequency_type', '=', 'all')]}\">Cada"
+" </span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
@@ -55,6 +59,8 @@ msgid ""
 "<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Quality Checks</span>\n"
 "                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Quality Checks</span>"
 msgstr ""
+"<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Verificações de Qualidade</span>\n"
+"                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Verificações de Qualidade</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -66,17 +72,17 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
 msgid "<span class=\"o_stat_text\">Quality Alert</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Alerta de Qualidade</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "<span class=\"o_stat_text\">Quality Check</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Verificação de Qualidade</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "<span>from </span>"
-msgstr ""
+msgstr "<span>de </span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -120,19 +126,19 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 msgid "Alert(s)"
-msgstr ""
+msgstr "Alerta(s)"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_ids
 #: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_ids
 #: model:ir.ui.menu,name:quality.menu_quality_alerts
 msgid "Alerts"
-msgstr ""
+msgstr "Alertas"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_id
 msgid "Alias"
-msgstr ""
+msgstr "Nome alternativo"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_contact
@@ -178,7 +184,7 @@ msgstr "Cancelar"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_check_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_check_ids
 msgid "Check"
-msgstr ""
+msgstr "Cheque"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_check_count
@@ -198,7 +204,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_check_ids
 msgid "Checks"
-msgstr ""
+msgstr "Cheques"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
@@ -281,7 +287,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_action_corrective
 msgid "Corrective Action"
-msgstr ""
+msgstr "Ação corretiva"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
@@ -335,7 +341,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_date_close
 msgid "Date Closed"
-msgstr ""
+msgstr "Data do Fecho"
 
 #. module: quality
 #: selection:quality.point,measure_frequency_unit:0
@@ -411,7 +417,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 #: selection:quality.check,quality_state:0
 msgid "Failed"
-msgstr ""
+msgstr "Falhou"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_failure_message
@@ -422,7 +428,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_folded
 msgid "Folded"
-msgstr ""
+msgstr "Dobrado"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_type
@@ -548,7 +554,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure
 msgid "Measure"
-msgstr ""
+msgstr "Medida"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
@@ -635,7 +641,7 @@ msgstr ""
 #. module: quality
 #: selection:quality.alert,priority:0
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_note
@@ -655,7 +661,7 @@ msgstr "Notas"
 #: model:ir.model.fields,field_description:quality.field_quality_check_picking_id
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Operation"
-msgstr ""
+msgstr "Operação"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_picking_type_id
@@ -720,12 +726,12 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_value
 msgid "Percentage"
-msgstr ""
+msgstr "Percentagem"
 
 #. module: quality
 #: selection:quality.point,measure_frequency_type:0
 msgid "Periodically"
-msgstr ""
+msgstr "Periodicamente"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_contact
@@ -743,12 +749,12 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_action_preventive
 msgid "Preventive Action"
-msgstr ""
+msgstr "Ação Preventiva"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Preventive Actions"
-msgstr ""
+msgstr "Ações Preventivas"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_priority
@@ -777,7 +783,7 @@ msgstr "Nome do Projeto"
 #: model:ir.module.category,name:quality.module_category_quality
 #: model:ir.ui.menu,name:quality.menu_quality_root
 msgid "Quality"
-msgstr ""
+msgstr "Qualidade"
 
 #. module: quality
 #: code:addons/quality/models/quality.py:360
@@ -787,7 +793,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
 #, python-format
 msgid "Quality Alert"
-msgstr ""
+msgstr "Alerta de Qualidade"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_graph
@@ -836,20 +842,20 @@ msgstr ""
 #: model:ir.ui.menu,name:quality.menu_quality_alert_report
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_dashboard_view_kanban
 msgid "Quality Alerts"
-msgstr ""
+msgstr "Alertas de Qualidade"
 
 #. module: quality
 #: code:addons/quality/models/quality.py:455
 #: model:ir.model,name:quality.model_quality_check
 #, python-format
 msgid "Quality Check"
-msgstr ""
+msgstr "Verificação de Qualidade"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_graph
 #: model:ir.ui.view,arch_db:quality.quality_check_view_pivot
 msgid "Quality Check Analysis"
-msgstr ""
+msgstr "Análise da Verificação de Qualidade"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_quality_check_fail
@@ -883,12 +889,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
 #, python-format
 msgid "Quality Checks"
-msgstr ""
+msgstr "Verificações de Qualidade"
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_check_action_spc
 msgid "Quality Checks SPC"
-msgstr ""
+msgstr "Verificações de Qualidade SPC"
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_control
@@ -898,7 +904,7 @@ msgstr "Controlo de Qualidade"
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_point_action
 msgid "Quality Control Points"
-msgstr ""
+msgstr "Pontos de Controlo de Qualidade"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_point_action
@@ -910,7 +916,7 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_controls
 msgid "Quality Controls"
-msgstr ""
+msgstr "Controlos de Qualidade"
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_alert_team_action
@@ -920,17 +926,17 @@ msgstr "Painel de Qualidade"
 #. module: quality
 #: model:ir.model,name:quality.model_quality_point
 msgid "Quality Point"
-msgstr ""
+msgstr "Ponto de Qualidade"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_reason
 msgid "Quality Reason"
-msgstr ""
+msgstr "Motivo de Qualidade"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_tag
 msgid "Quality Tag"
-msgstr ""
+msgstr "Etiqueta de Qualidade"
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_tag_action
@@ -982,7 +988,7 @@ msgstr "Responsável"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_reason_id
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Root Cause"
-msgstr ""
+msgstr "Causa"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_sequence
@@ -1034,12 +1040,12 @@ msgstr "Etiquetas"
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
-msgstr ""
+msgstr "Equipa"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_tree
 msgid "Teams"
-msgstr ""
+msgstr "Equipas"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_test_type
@@ -1105,7 +1111,7 @@ msgstr "Título"
 #. module: quality
 #: selection:quality.check,quality_state:0
 msgid "To do"
-msgstr ""
+msgstr " A Fazer"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -1146,7 +1152,7 @@ msgstr "Fornecedor"
 #. module: quality
 #: selection:quality.alert,priority:0
 msgid "Very High"
-msgstr ""
+msgstr "Muito Elevada"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_warning_message

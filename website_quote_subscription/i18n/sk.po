@@ -17,18 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: sk\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: website_quote_subscription
 #: model:ir.ui.view,arch_db:website_quote_subscription.order_line_row
 msgid "% discount"
-msgstr ""
+msgstr "% zľava"
 
 #. module: website_quote_subscription
 #: model:ir.model.fields,help:website_quote_subscription.field_sale_order_line_recurring_product
 msgid ""
 "If set, confirming a sale order with this product will create a subscription"
 msgstr ""
+"Ak nastavené, potvrdenie objednávky predaja týmto produktom vytvorí odber"
 
 #. module: website_quote_subscription
 #: model:ir.ui.view,arch_db:website_quote_subscription.subscription_pricing
@@ -45,7 +46,7 @@ msgstr "Cenová ponuka"
 #. module: website_quote_subscription
 #: model:ir.model.fields,field_description:website_quote_subscription.field_sale_order_line_recurring_product
 msgid "Recurring Product"
-msgstr ""
+msgstr "Opakovaný produkt"
 
 #. module: website_quote_subscription
 #: model:ir.model,name:website_quote_subscription.model_sale_order_line

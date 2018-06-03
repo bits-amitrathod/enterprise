@@ -5,19 +5,20 @@
 # Translators:
 # Martin Trigaux, 2017
 # gebri <gebri@inmail.sk>, 2018
+# Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: gebri <gebri@inmail.sk>, 2018\n"
+"Last-Translator: Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2018\n"
 "Language-Team: Slovak (https://www.transifex.com/odoo/teams/41243/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: sk\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -80,7 +81,7 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_balance
 msgid "Balance"
-msgstr ""
+msgstr "Bilancia"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
@@ -90,12 +91,12 @@ msgstr "Bankové Účty"
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_bank_statement
 msgid "Bank Statement"
-msgstr ""
+msgstr "Bankový výpis"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Riadok bankového výpisu"
 
 #. module: account_online_sync
 #: model:ir.actions.act_window,help:account_online_sync.action_online_provider_account
@@ -121,7 +122,7 @@ msgstr "Spoločnost"
 #: model:ir.ui.view,arch_db:account_online_sync.account_bank_journal_form_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_form_inherit_online_sync
 msgid "Configure"
-msgstr ""
+msgstr "Nakonfigurovať"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_count_account_online_journal
@@ -213,7 +214,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_journal_ids
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Účtovná kniha"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal___last_update
@@ -244,7 +245,7 @@ msgstr "Naposledy upravované"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_last_sync
 msgid "Last synchronization"
-msgstr ""
+msgstr "Posledná synchronizácia"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
@@ -254,25 +255,25 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_message
 msgid "Message"
-msgstr ""
+msgstr "Správa"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_name
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_provider_name
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_name
 msgid "Name"
-msgstr ""
+msgstr "Meno"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 msgid "Next sync:"
-msgstr ""
+msgstr "Ďalšia synchronizácia:"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_next_synchronization
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_next_refresh
 msgid "Next synchronization"
-msgstr ""
+msgstr "Ďalšia synchronizácia:"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_number_added
@@ -282,13 +283,13 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_account_online_journal_id
 msgid "Online Account"
-msgstr ""
+msgstr "Online účet"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_bank_statement_line_online_identifier
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_online_identifier
 msgid "Online Identifier"
-msgstr ""
+msgstr "Online identifikátor"
 
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_online_provider_account
@@ -298,7 +299,7 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "Online Sync configuration"
-msgstr ""
+msgstr "Konfigurácia online synchronizácie"
 
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_account_online_wizard_form
@@ -306,7 +307,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_form_inherit_online_sync
 msgid "Online Synchronization"
-msgstr ""
+msgstr "Online synchronizácia"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_account_online_journal_id
@@ -322,7 +323,7 @@ msgstr ""
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
 msgid "Plaid"
-msgstr ""
+msgstr "Plaid"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
@@ -419,7 +420,7 @@ msgstr ""
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
 msgid "Yodlee"
-msgstr ""
+msgstr "Yodlee"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_balance

@@ -43,6 +43,21 @@ msgid ""
 "                \n"
 "            "
 msgstr ""
+"\n"
+"                \n"
+"                <div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); \">\n"
+"                    <p>Шановний ${ctx.get('employee').name},</p>\n"
+"                    % if ctx.get('employee').id == object.employee_id.id:\n"
+"                        <p>Будь ласка, заповніть наступне опитування, пов'язане з вашою оцінкою.</p>\n"
+"                    % else:\n"
+"                        <p>Please fill out the following survey related to ${object.employee_id.name}'s appraisal.</p>\n"
+"                    % endif\n"
+"                    <p><a href=\"__URL__\">Натисніть тут, щоб отримати доступ до опитування.</a></p>\n"
+"                    <p>Опублікуйте свою відповідь на оцінку до: ${object.date_close}</p>\n"
+"                    <p>Дякуємо за вашу участь.</p>\n"
+"                </div>\n"
+"                \n"
+"            "
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -62,7 +77,7 @@ msgstr "<strong><span>Фінальне інтерв'ю: </span></strong>"
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_1
 msgid "Ability to cope with multidisciplinarity of team"
-msgstr ""
+msgstr "Можливість справлятися з мультидисциплінарністю команди"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_6
@@ -111,7 +126,7 @@ msgstr "Додаткові коментарі"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_7
 msgid "Additional comments"
-msgstr ""
+msgstr "Додаткові коментарі"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_11
@@ -163,7 +178,7 @@ msgstr "Оцінку створено"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_date_close
 msgid "Appraisal Deadline"
-msgstr ""
+msgstr "Дедлайн оцінювання"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
@@ -185,7 +200,7 @@ msgstr ""
 #: code:addons/hr_appraisal/models/hr_appraisal.py:118
 #, python-format
 msgid "Appraisal Meeting For %s"
-msgstr ""
+msgstr "Оціночна зустріч для %s"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.opinion_1
@@ -219,7 +234,7 @@ msgstr "Статиситика оцінювання"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_3
 msgid "Appraisal for Period"
-msgstr ""
+msgstr "Оцінка за період"
 
 #. module: hr_appraisal
 #: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_sent
@@ -229,7 +244,7 @@ msgstr "Оцінку надіслано"
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.hr_appraisal_action_from_department
 msgid "Appraisal to start"
-msgstr ""
+msgstr "Оцінювання для початку"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_department_view_kanban
@@ -273,7 +288,7 @@ msgstr "Заархівовано"
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid "At the conclusion of the appraisal time period"
-msgstr ""
+msgstr "Після закінчення терміну оцінки"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -455,7 +470,7 @@ msgstr "Відділ"
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "Did not meet standards and expectations"
-msgstr ""
+msgstr "Не відповідав стандартам та очікуванням"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_display_name
@@ -644,6 +659,8 @@ msgid ""
 "I consistently acquire new knowledge, skills or understanding through "
 "contact with my supervisor. He helps me growing my compete"
 msgstr ""
+"Я постійно набуваю нових знань, вмінь та розуміння через контакт з моїм "
+"керівником. Він допомагає мені збільшувати свою конкуренцію"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_3_2
@@ -817,7 +834,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_4
 msgid "Leadership: sustain subordinates in their professional growth"
-msgstr ""
+msgstr "Лідерство: підтримуйте підлеглих у своєму професійному рості"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_2_3
@@ -850,7 +867,7 @@ msgstr "Керівники"
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "Meet standards and expectations"
-msgstr ""
+msgstr "Відповідайте стандартам та очікуванням"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_meeting_id
@@ -885,6 +902,7 @@ msgid ""
 "My best achievements have been communicated to the community, internally or "
 "to customers"
 msgstr ""
+"Мої найкращі досягнення були доведені до відома спільноти або до клієнтів"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_2
@@ -929,7 +947,7 @@ msgstr "Кількість надісланих форм"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_2_1
 msgid "Objectives"
-msgstr ""
+msgstr "Цілі"
 
 #. module: hr_appraisal
 #: model:res.groups,name:hr_appraisal.group_hr_appraisal_user
@@ -960,6 +978,8 @@ msgid ""
 "Overall, I believe the quality of products and/or services my workgroup "
 "delivers is improving"
 msgstr ""
+"В цілому, я вважаю, що якість товарів та/або послуг, які надає моя робоча "
+"група, покращується"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_periodic_appraisal
@@ -1030,7 +1050,7 @@ msgstr "Звітування"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_2_2
 msgid "Results"
-msgstr ""
+msgstr "Рзультати"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_1
@@ -1094,7 +1114,7 @@ msgstr "Значно перевищує стандарти та очікуван
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Start Appraisal and Send Forms"
-msgstr ""
+msgstr "Розпочніть оцінювання та надішліть форми"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report_state
@@ -1195,6 +1215,8 @@ msgid ""
 "The date of the next appraisal is computed by the appraisal plan's dates "
 "(first appraisal + periodicity)."
 msgstr ""
+"Дата наступної оцінки обчислюється датами оцінювання (перша оцінка + "
+"періодичність)."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1231,7 +1253,7 @@ msgstr ""
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid ""
 "The supervisor send the form to the HR department in India and in Belgium"
-msgstr ""
+msgstr "Наглядач надсилає цю форму до відділу кадрів в Індії та Бельгії"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1305,7 +1327,7 @@ msgstr "Управління часом: проекти/завдання вик�
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #, python-format
 msgid "To Start"
-msgstr ""
+msgstr "Почати"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1367,6 +1389,9 @@ msgid ""
 "            to whom and the evaluation deadline. Once you have defined it,\n"
 "            change the stage to send it and view the results."
 msgstr ""
+"Ви зможете вибрати, які форми будуть відправлені (працівники, менеджери, співробітники або колеги),\n"
+"для кого і термін оцінки. Як тільки ви це визначите,\n"
+"змініть етап, щоби відправити його та переглянути результати."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_collaborators_survey_id

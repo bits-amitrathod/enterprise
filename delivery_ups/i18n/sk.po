@@ -3,20 +3,21 @@
 # * delivery_ups
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
+# Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"Last-Translator: Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2018\n"
 "Language-Team: Slovak (https://www.transifex.com/odoo/teams/41243/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: sk\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_bill_my_account
@@ -32,7 +33,7 @@ msgstr ""
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_delivery_carrier
 msgid "Carrier"
-msgstr ""
+msgstr "Prepavca"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order_ups_carrier_account
@@ -48,7 +49,7 @@ msgstr ""
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_package_dimension_unit:0
 msgid "Centimeters"
-msgstr ""
+msgstr "Centimetre"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_cod_funds_code:0
@@ -84,33 +85,33 @@ msgstr ""
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_package_dimension_unit:0
 msgid "Inches"
-msgstr ""
+msgstr "Palce"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_package_weight_unit:0
 msgid "Kilograms"
-msgstr ""
+msgstr "Kilogramy"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_product_packaging
 msgid "Packaging"
-msgstr ""
+msgstr "Balenie"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:221
 #, python-format
 msgid "Please provide at least one item to ship."
-msgstr ""
+msgstr "Prosím poskytnite aspoň jednu položku na poslanie."
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_package_weight_unit:0
 msgid "Pounds"
-msgstr ""
+msgstr "Libry"
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_sale_order
@@ -131,7 +132,7 @@ msgstr ""
 #: code:addons/delivery_ups/models/delivery_ups.py:226
 #, python-format
 msgid "Shipment N° %s has been cancelled"
-msgstr ""
+msgstr "Zásielka N° %s bola zrušená"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/delivery_ups.py:197
@@ -148,6 +149,8 @@ msgid ""
 "The address of your company is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"Adresa vašej spoločnosti chýba alebo je nesprávna.\n"
+"(Chýbajúce pole(polia) : %s)"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:206
@@ -156,13 +159,15 @@ msgid ""
 "The address of your warehouse is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"Adresa vášho skladiska chýba alebo je nesprávna.\n"
+"(Chýbajúce pole(polia) : %s)"
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:226
 #, python-format
 msgid ""
 "The delivery cannot be done because the weight of your product is missing."
-msgstr ""
+msgstr "Doručenie nemožno vykonať, pretože chýba váha vášho produktu."
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:223
@@ -171,6 +176,7 @@ msgid ""
 "The estimated price cannot be computed because the weight of your product is"
 " missing."
 msgstr ""
+"Odhadovaná cena nemôže by vypočítaná, pretože chýba váha vášho produktu."
 
 #. module: delivery_ups
 #: code:addons/delivery_ups/models/ups_request.py:216
@@ -179,6 +185,8 @@ msgid ""
 "The recipient address is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"Adresa príjemcu chýba alebo je nesprávna.\n"
+"(Chýbajúce pole(polia) : %s)"
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier_ups_cod
@@ -197,23 +205,23 @@ msgstr ""
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Prevod"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_access_number
 msgid "UPS AccessLicenseNumber"
-msgstr ""
+msgstr "UPS AccessLicenseNumber"
 
 #. module: delivery_ups
 #: model:product.product,name:delivery_ups.product_product_delivery_ups_be
 #: model:product.template,name:delivery_ups.product_product_delivery_ups_be_product_template
 msgid "UPS BE"
-msgstr ""
+msgstr "UPS BE"
 
 #. module: delivery_ups
 #: model:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
 msgid "UPS Configuration"
-msgstr ""
+msgstr "UPS konfigurácia"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_default_packaging_id
@@ -234,35 +242,35 @@ msgstr ""
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_passwd
 msgid "UPS Password"
-msgstr ""
+msgstr "UPS heslo"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_default_service_type
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order_ups_service_type
 #: model:ir.model.fields,field_description:delivery_ups.field_stock_picking_ups_service_type
 msgid "UPS Service Type"
-msgstr ""
+msgstr "UPS typ služby"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_shipper_number
 msgid "UPS Shipper Number"
-msgstr ""
+msgstr "UPS číslo odosielateľa"
 
 #. module: delivery_ups
 #: model:product.product,name:delivery_ups.product_product_delivery_ups_us
 #: model:product.template,name:delivery_ups.product_product_delivery_ups_us_product_template
 msgid "UPS US"
-msgstr ""
+msgstr "UPS US"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_username
 msgid "UPS Username"
-msgstr ""
+msgstr "UPS pouźívateľské meno"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_package_dimension_unit
 msgid "Units for UPS Package Size"
-msgstr ""
+msgstr "Jednotky pre veľkosť UPS balíčka "
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier_ups_package_weight_unit

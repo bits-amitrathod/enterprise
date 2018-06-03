@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: he\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:103
@@ -150,7 +150,7 @@ msgstr ""
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_account_online_journal
 msgid "Interface for online account journal"
-msgstr ""
+msgstr "ממשק עבור חשבון יומן מקוון"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:401
@@ -435,7 +435,7 @@ msgstr ""
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_account_online_provider
 msgid "Provider for online account synchronization"
-msgstr ""
+msgstr "ספק עבור סנכרון חשבון מקוון"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:405
@@ -564,7 +564,7 @@ msgstr ""
 #: code:addons/account_yodlee/models/yodlee.py:133
 #, python-format
 msgid "Timeout: the server did not reply within 30s"
-msgstr ""
+msgstr "תם הזמן המוקצב לפעולה: השרת לא ענה תוך 30 שניות"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:395

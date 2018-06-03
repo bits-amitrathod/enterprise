@@ -6,20 +6,20 @@
 # Audrius Palenskis <audrius.palenskis@gmail.com>, 2017
 # Martin Trigaux, 2017
 # Anatolij, 2017
-# SButko <silvija.butko@gmail.com>, 2018
+# Silvija Butko <silvija.butko@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: SButko <silvija.butko@gmail.com>, 2018\n"
+"Last-Translator: Silvija Butko <silvija.butko@gmail.com>, 2018\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: lt\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -34,12 +34,12 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "2 - B2C"
-msgstr ""
+msgstr "2 - B2C"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "3 - B2C"
-msgstr ""
+msgstr "3 - B2C"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -59,17 +59,17 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "6X4_A4_PDF"
-msgstr ""
+msgstr "6X4_A4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "6X4_PDF"
-msgstr ""
+msgstr "6X4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "6X4_thermal"
-msgstr ""
+msgstr "6X4_thermal"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -84,37 +84,37 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_A4_PDF"
-msgstr ""
+msgstr "8X4_A4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_A4_TC_PDF"
-msgstr ""
+msgstr "8X4_A4_TC_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_CI_PDF"
-msgstr ""
+msgstr "8X4_CI_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_CI_thermal"
-msgstr ""
+msgstr "8X4_CI_thermal"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_PDF"
-msgstr ""
+msgstr "8X4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_RU_A4_PDF"
-msgstr ""
+msgstr "8X4_RU_A4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_thermal"
-msgstr ""
+msgstr "8X4_thermal"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -179,13 +179,13 @@ msgstr "DHL nustatymai"
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_default_packaging_id
 msgid "DHL Default Packaging Type"
-msgstr ""
+msgstr "DHL numatytasis pakuotės tipas"
 
 #. module: delivery_dhl
 #: model:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_sale
 #: model:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_stock
 msgid "DHL Delivery Methods"
-msgstr ""
+msgstr "DHL pristatymo metodai"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_password
@@ -242,7 +242,7 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_image_format:0
 msgid "EPL2"
-msgstr ""
+msgstr "EPL2"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_region_code:0
@@ -297,12 +297,12 @@ msgstr ""
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_label_image_format
 msgid "Label Image Format"
-msgstr ""
+msgstr "Etiketės ikonėlės formatas"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_label_template
 msgid "Label Template"
-msgstr ""
+msgstr "Etiketės šablonas"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -410,6 +410,8 @@ msgid ""
 "The address of the customer is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
+"Kliento adreso nėra arba jis neteisingas (neužpildytas laukas(-ai) :\n"
+" %s)"
 
 #. module: delivery_dhl
 #: code:addons/delivery_dhl/models/dhl_request.py:400
@@ -469,4 +471,4 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_image_format:0
 msgid "ZPL2"
-msgstr ""
+msgstr "ZPL2"

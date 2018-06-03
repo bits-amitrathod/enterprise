@@ -5,19 +5,21 @@
 # Translators:
 # Yihya Hugirat <hugirat@gmail.com>, 2017
 # שהאב חוסיין <shhab89@gmail.com>, 2018
+# Moshe Flam <pashute@gmail.com>, 2018
+# ExcaliberX <excaliberx@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: שהאב חוסיין <shhab89@gmail.com>, 2018\n"
+"Last-Translator: ExcaliberX <excaliberx@gmail.com>, 2018\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: he\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
 #. module: pos_loyalty
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_kanban
@@ -37,27 +39,27 @@ msgstr ""
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_program_name
 msgid "An internal identification for the loyalty program configuration"
-msgstr ""
+msgstr "זיהוי פנימי להתאמת תכנית הנאמנות"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_rule_name
 msgid "An internal identification for this loyalty program rule"
-msgstr ""
+msgstr "זיהוי פנימי עבור כלל זה של תכנית הנאמנות"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_reward_name
 msgid "An internal identification for this loyalty reward"
-msgstr ""
+msgstr "זיהוי פנימי לפרס נאמנות זה"
 
 #. module: pos_loyalty
 #: selection:loyalty.rule,rule_type:0
 msgid "Category"
-msgstr ""
+msgstr "קטגוריה"
 
 #. module: pos_loyalty
 #: model:ir.actions.act_window,help:pos_loyalty.action_loyalty_program_form
 msgid "Click to create a Loyalty Program."
-msgstr ""
+msgstr "לחץ כדי ליצור תוכנית נאמנות"
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_res_partner
@@ -81,18 +83,18 @@ msgstr "נוצר ב-"
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_cumulative
 msgid "Cumulative"
-msgstr ""
+msgstr "מצטבר"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_discount
 #: selection:loyalty.reward,reward_type:0
 msgid "Discount"
-msgstr ""
+msgstr "הנחה"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_discount_product_id
 msgid "Discount Product"
-msgstr ""
+msgstr "מוצר בהנחה"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_display_name
@@ -104,17 +106,17 @@ msgstr "השם המוצג"
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_rule_rule_type
 msgid "Does this rule affects products, or a category of products ?"
-msgstr ""
+msgstr "האם כלל זה משפיע על מוצרים או על סוג של מוצרים?"
 
 #. module: pos_loyalty
 #: selection:loyalty.reward,reward_type:0
 msgid "Gift"
-msgstr ""
+msgstr "מתנה"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_gift_product_id
 msgid "Gift Product"
-msgstr ""
+msgstr "מוצר מתנה"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_program_pp_product
@@ -124,23 +126,23 @@ msgstr ""
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_program_pp_currency
 msgid "How many loyalty points are given to the customer by sold currency"
-msgstr ""
+msgstr "כמה נקודות נאמנות יקבל הלקוח לפי סוג המטבע שנמכר"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_program_pp_order
 msgid ""
 "How many loyalty points are given to the customer for each sale or order"
-msgstr ""
+msgstr "כמה נקודות נאמנות יקבל הלקוח על כל מבצע או הזמנה"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_rule_pp_product
 msgid "How many points the product will earn per product ordered"
-msgstr ""
+msgstr "מספר הנקודות שירוויח המוצר, לכל מוצר שהוזמן"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_rule_pp_currency
 msgid "How many points the product will earn per value sold"
-msgstr ""
+msgstr "מספר הנקודות שירוויח המוצר, לפי ערך המכירות"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_id
@@ -175,7 +177,7 @@ msgstr "תאריך עדכון אחרון"
 #: model:ir.model.fields,field_description:pos_loyalty.field_res_partner_loyalty_points
 #: model:ir.model.fields,field_description:pos_loyalty.field_res_users_loyalty_points
 msgid "Loyalty Points"
-msgstr ""
+msgstr "נקודות נאמנות"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_loyalty_program_id
@@ -189,14 +191,14 @@ msgstr "תכנית נאמנות"
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_name
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_form
 msgid "Loyalty Program Name"
-msgstr ""
+msgstr "שם תוכנית הנאמנות"
 
 #. module: pos_loyalty
 #: model:ir.actions.act_window,name:pos_loyalty.action_loyalty_program_form
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_tree
 #: model:ir.ui.view,arch_db:pos_loyalty.view_pos_pos_form
 msgid "Loyalty Programs"
-msgstr ""
+msgstr "תוכניות מועדון חברים"
 
 #. module: pos_loyalty
 #: model:ir.actions.act_window,help:pos_loyalty.action_loyalty_program_form
@@ -204,21 +206,23 @@ msgid ""
 "Loyalty Programs allows you customer to earn points\n"
 "                    and rewards when doing business at your shops."
 msgstr ""
+"תכניות נאמנות מאפשרות ללקוח שלכם לצבור נקודות ולזכות בפרסים בעת הקניה "
+"בחנויותיכם."
 
 #. module: pos_loyalty
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_reward_form
 msgid "Loyalty Reward"
-msgstr ""
+msgstr "פרס נאמנות"
 
 #. module: pos_loyalty
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_rule_form
 msgid "Loyalty Rule"
-msgstr ""
+msgstr "חוק נאמנות"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_minimum_points
 msgid "Minimum Points"
-msgstr ""
+msgstr "מינימום נקודות"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_name
@@ -243,12 +247,12 @@ msgstr ""
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_point_cost
 msgid "Point Cost"
-msgstr ""
+msgstr "ערך נקודה"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_point_product_id
 msgid "Point Product"
-msgstr ""
+msgstr "ניקוד המוצר"
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_pos_order
@@ -262,57 +266,57 @@ msgstr "הזמנות נקודת מכירה"
 #: code:addons/pos_loyalty/static/src/xml/loyalty.xml:81
 #, python-format
 msgid "Points"
-msgstr ""
+msgstr "נקודות"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_rounding
 msgid "Points Rounding"
-msgstr ""
+msgstr "עיגול נקודות"
 
 #. module: pos_loyalty
 #. openerp-web
 #: code:addons/pos_loyalty/static/src/xml/loyalty.xml:57
 #, python-format
 msgid "Points Spent"
-msgstr ""
+msgstr "נקודות שנוצלו"
 
 #. module: pos_loyalty
 #. openerp-web
 #: code:addons/pos_loyalty/static/src/xml/loyalty.xml:111
 #, python-format
 msgid "Points Spent:"
-msgstr ""
+msgstr "נקודות שנוצלו:"
 
 #. module: pos_loyalty
 #. openerp-web
 #: code:addons/pos_loyalty/static/src/xml/loyalty.xml:54
 #, python-format
 msgid "Points Won"
-msgstr ""
+msgstr "נקודות שנצברו:"
 
 #. module: pos_loyalty
 #. openerp-web
 #: code:addons/pos_loyalty/static/src/xml/loyalty.xml:100
 #, python-format
 msgid "Points Won:"
-msgstr ""
+msgstr "נקודות שנצברו:"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_pp_currency
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_pp_currency
 msgid "Points per currency"
-msgstr ""
+msgstr "נקודות עבור מטבע"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_pp_order
 msgid "Points per order"
-msgstr ""
+msgstr "נקודות עבור הזמנה"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_program_pp_product
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_pp_product
 msgid "Points per product"
-msgstr ""
+msgstr "נקודות עבור מוצר"
 
 #. module: pos_loyalty
 #: selection:loyalty.rule,rule_type:0
@@ -322,12 +326,12 @@ msgstr "פריט"
 #. module: pos_loyalty
 #: selection:loyalty.reward,reward_type:0
 msgid "Resale"
-msgstr ""
+msgstr "מכירה מחדש"
 
 #. module: pos_loyalty
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_reward_form
 msgid "Reward Name"
-msgstr ""
+msgstr "שם הפרס"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_reward_reward_type
@@ -346,7 +350,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_program_form
 #, python-format
 msgid "Rewards"
-msgstr ""
+msgstr "פרסים"
 
 #. module: pos_loyalty
 #: model:ir.ui.view,arch_db:pos_loyalty.view_loyalty_rule_form
@@ -374,12 +378,12 @@ msgstr ""
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_category_id
 msgid "Target Category"
-msgstr ""
+msgstr "קטגורית יעד"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,field_description:pos_loyalty.field_loyalty_rule_product_id
 msgid "Target Product"
-msgstr ""
+msgstr "מוצר יעד"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_rule_loyalty_program_id
@@ -399,17 +403,17 @@ msgstr ""
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_rule_category_id
 msgid "The category affected by the rule"
-msgstr ""
+msgstr "הקטגוריה מושפעת על ידי החוק"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_reward_point_cost
 msgid "The cost of the reward"
-msgstr ""
+msgstr "עלות הפרס"
 
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_reward_discount
 msgid "The discount percentage"
-msgstr ""
+msgstr "אחוז ההנחה"
 
 #. module: pos_loyalty
 #: code:addons/pos_loyalty/models/pos_loyalty.py:56
@@ -480,7 +484,7 @@ msgstr ""
 #. module: pos_loyalty
 #: model:ir.model.fields,help:pos_loyalty.field_loyalty_reward_reward_type
 msgid "The type of the reward"
-msgstr ""
+msgstr "סוג הפרס"
 
 #. module: pos_loyalty
 #. openerp-web
@@ -496,29 +500,29 @@ msgstr ""
 #: code:addons/pos_loyalty/static/src/xml/loyalty.xml:60
 #, python-format
 msgid "Total Points"
-msgstr ""
+msgstr "סך הכל נקודות"
 
 #. module: pos_loyalty
 #. openerp-web
 #: code:addons/pos_loyalty/static/src/xml/loyalty.xml:122
 #, python-format
 msgid "Total Points:"
-msgstr ""
+msgstr "סך הכל נקודות:"
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_loyalty_program
 msgid "loyalty.program"
-msgstr ""
+msgstr "loyalty.program"
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_loyalty_reward
 msgid "loyalty.reward"
-msgstr ""
+msgstr "loyalty.reward"
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_loyalty_rule
 msgid "loyalty.rule"
-msgstr ""
+msgstr "loyalty.rule"
 
 #. module: pos_loyalty
 #: model:ir.model,name:pos_loyalty.model_pos_config

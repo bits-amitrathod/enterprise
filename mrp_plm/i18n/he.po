@@ -6,19 +6,22 @@
 # Yihya Hugirat <hugirat@gmail.com>, 2017
 # שהאב חוסיין <shhab89@gmail.com>, 2018
 # Moshe Flam <pashute@gmail.com>, 2018
+# Martin Trigaux, 2018
+# ExcaliberX <excaliberx@gmail.com>, 2018
+# Leandro Noijovich <eliel.sorcerer@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 13:29+0000\n"
 "PO-Revision-Date: 2018-02-19 13:29+0000\n"
-"Last-Translator: Moshe Flam <pashute@gmail.com>, 2018\n"
+"Last-Translator: Leandro Noijovich <eliel.sorcerer@gmail.com>, 2018\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: he\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_mrp_document_count
@@ -50,7 +53,7 @@ msgstr ""
 #: code:addons/mrp_plm/static/src/xml/mrp_plm_templates.xml:8
 #, python-format
 msgid "&times;"
-msgstr ""
+msgstr "&פעמים;"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
@@ -219,7 +222,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Approve"
-msgstr ""
+msgstr "אשר"
 
 #. module: mrp_plm
 #: selection:mrp.eco,kanban_state:0 selection:mrp.eco.approval,status:0
@@ -250,7 +253,7 @@ msgstr ""
 #. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
 msgid "At Date"
-msgstr ""
+msgstr "בתאריך"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:631
@@ -260,7 +263,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 #, python-format
 msgid "Attachments"
-msgstr ""
+msgstr "קבצים מצורפים"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom
@@ -280,7 +283,7 @@ msgstr ""
 #. module: mrp_plm
 #: selection:mrp.eco,kanban_state:0
 msgid "Blocked"
-msgstr ""
+msgstr "חסומה"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage_is_blocking
@@ -370,7 +373,7 @@ msgstr "סגור"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_color
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_color
 msgid "Color"
-msgstr ""
+msgstr "צבע"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_color
@@ -734,7 +737,7 @@ msgstr ""
 #. module: mrp_plm
 #: selection:mrp.eco,priority:0
 msgid "High"
-msgstr ""
+msgstr "גבוה"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_id
@@ -935,7 +938,7 @@ msgstr ""
 #. module: mrp_plm
 #: selection:mrp.eco,priority:0
 msgid "Normal"
-msgstr ""
+msgstr "רגיל"
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval,status:0
@@ -946,7 +949,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_note
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Note"
-msgstr ""
+msgstr "הערה"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_old_time_cycle_manual
@@ -1119,7 +1122,7 @@ msgstr ""
 #: selection:mrp.eco.bom.change,change_type:0
 #: selection:mrp.eco.routing.change,change_type:0
 msgid "Remove"
-msgstr ""
+msgstr "הסר"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_reporting
@@ -1151,7 +1154,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template_name
 msgid "Role"
-msgstr ""
+msgstr "תפקיד"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:152
@@ -1309,7 +1312,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_approval_template_id
 msgid "Template"
-msgstr ""
+msgstr "תבנית"
 
 #. module: mrp_plm
 #: model:res.groups,comment:mrp_plm.group_plm_manager
@@ -1364,7 +1367,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search selection:mrp.eco,state:0
 msgid "To Do"
-msgstr ""
+msgstr "מטלה לביצוע"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -1382,7 +1385,7 @@ msgstr "סוג"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_uom_change
 msgid "Unit of Measure"
-msgstr ""
+msgstr "יחידת מידה"
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -1412,7 +1415,7 @@ msgstr "תקין"
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template_version
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "Version"
-msgstr ""
+msgstr "גירסה"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
