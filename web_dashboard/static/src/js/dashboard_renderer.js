@@ -26,6 +26,7 @@ var DashboardRenderer = FormRenderer.extend({
         this.additionalMeasures = params.additionalMeasures;
         this.subControllers = {};
         this.subControllersContext = _.pick(state.context || {}, 'pivot', 'graph');
+        this.subcontrollersNextMeasures = {pivot: {}, graph: {}};
         this.formatOptions = {
             // in the dashboard view, all monetary values are displayed in the
             // currency of the current company of the user
@@ -46,11 +47,6 @@ var DashboardRenderer = FormRenderer.extend({
     on_detach_callback: function () {
         this._super.apply(this, arguments);
         this.isInDOM = false;
-        // store the subviews' context to restore them properly if we come back
-        // to the dashboard later
-        for (var viewType in this.subControllers) {
-            this.subControllersContext[viewType] = this.subControllers[viewType].getContext();
-        }
     },
 
     //--------------------------------------------------------------------------
@@ -73,8 +69,16 @@ var DashboardRenderer = FormRenderer.extend({
      * @override
      */
     updateState: function (state, params) {
+        var viewType;
+        for (viewType in this.subControllers) {
+            this.subControllersContext[viewType] = this.subControllers[viewType].getContext();
+        }
         var subControllersContext = _.pick(params.context || {}, 'pivot', 'graph');
         _.extend(this.subControllersContext, subControllersContext);
+        for (viewType in this.subControllers) {
+            _.extend(this.subControllersContext[viewType], this.subcontrollersNextMeasures[viewType]);
+            this.subcontrollersNextMeasures[viewType] = {};
+        }
         return this._super.apply(this, arguments);
     },
 
@@ -269,14 +273,10 @@ var DashboardRenderer = FormRenderer.extend({
         var aggregateInfo = this.state.fieldsInfo.dashboard[aggregate];
         var measure = aggregateInfo.field;
         if (this.subControllers.pivot) {
-            this.subControllersContext.pivot = _.extend(this.subControllers.pivot.getContext(), {
-                pivot_measures: [measure],
-            });
+            this.subcontrollersNextMeasures.pivot.pivot_measures = [measure];
         }
         if (this.subControllers.graph) {
-            this.subControllersContext.graph = _.extend(this.subControllers.graph.getContext(), {
-                graph_measure: measure,
-            });
+            this.subcontrollersNextMeasures.graph.graph_measure = measure;
         }
 
         // update the domain and trigger a reload

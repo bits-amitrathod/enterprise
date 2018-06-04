@@ -1349,6 +1349,45 @@ QUnit.module('Views', {
 
         dashboard.destroy();
     });
+
+    QUnit.test('changes in search view do not affect measure selection in graph subview', function (assert) {
+        assert.expect(2);
+
+        // create an action manager to test the interactions with the search view
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'test_report,false,dashboard': '<dashboard>' +
+                        '<view type="graph" ref="some_xmlid"/>' +
+                        '</dashboard>',
+                'test_report,some_xmlid,graph': '<graph>' +
+                        '<field name="categ_id"/>' +
+                        '<field name="sold" type="measure"/>' +
+                    '</graph>',
+                    'test_report,1,search': '<search>'+
+                        '<field name="categ_id" string="Label"/>' +
+                        '<filter string="categ" name="positive" domain="[(\'categ_id\', \'>=\', 0)]"/>' +
+                    '</search>',
+            },
+        });
+
+        actionManager.doAction({
+            res_model: 'test_report',
+            type: 'ir.actions.act_window',
+            views: [[false, 'dashboard']],
+            search_view_id: [1, 'search'],
+        });
+
+        $('.o_graph_buttons button:first').click();
+        $('.o_graph_buttons .o_graph_measures_list li a').eq(1).click();
+        assert.ok($('.o_graph_buttons .o_graph_measures_list li').eq(1).hasClass('selected'),
+            'groupby should be unselected');
+        $('.o_search_options button span.fa-filter').click();
+        $('.o_filters_menu li a').eq(0).click();
+        assert.ok($('.o_graph_buttons .o_graph_measures_list li').eq(1).hasClass('selected'),
+            'groupby should be unselected');
+        actionManager.destroy();
+    });
 });
 
 });
