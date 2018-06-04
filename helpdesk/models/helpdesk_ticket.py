@@ -329,7 +329,7 @@ class HelpdeskTicket(models.Model):
         recipients = super(HelpdeskTicket, self).message_get_suggested_recipients()
         try:
             for ticket in self:
-                if ticket.partner_id:
+                if ticket.partner_id and ticket.partner_id.email:
                     ticket._message_add_suggested_recipient(recipients, partner=ticket.partner_id, reason=_('Customer'))
                 elif ticket.partner_email:
                     ticket._message_add_suggested_recipient(recipients, email=ticket.partner_email, reason=_('Customer Email'))
@@ -363,6 +363,9 @@ class HelpdeskTicket(models.Model):
         return super(HelpdeskTicket, self).message_update(msg, update_vals=update_vals)
 
     def _message_post_after_hook(self, message):
+        if self.partner_email and self.partner_id and not self.partner_id.email:
+            self.partner_id.email = self.partner_email
+
         if self.partner_email and not self.partner_id:
             # we consider that posting a message with a specified recipient (not a follower, a specific one)
             # on a document without customer means that it was created through the chatter using
