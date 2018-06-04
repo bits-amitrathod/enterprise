@@ -2,7 +2,7 @@
     $o-wo-tablet-padding: $o-horizontal-padding;
     $o-wo-tablet-btn-margin: 2px;
     $o-wo-tablet-bg: #404040; // emulate the pdf reader
-    $o-wo-tablet-text: contrast($o-wo-tablet-bg);
+    $o-wo-tablet-text: o-get-most-contrast($o-wo-tablet-bg, $text-color, #FFF);
 
     .o_form_view.o_workorder_tablet {
         @include o-flex-display;
