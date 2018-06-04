@@ -93,7 +93,9 @@ var EditMenuDialog = Dialog.extend({
         var self = this;
         var form = new NewMenuDialog(this, this.current_primary_menu).open();
         form.on('record_saved', self, function() {
-            self._reload_menu_data(true);
+            self._saveChanges().then(function () {
+                self._reload_menu_data(true);
+            });
         });
     },
 
@@ -107,6 +109,7 @@ var EditMenuDialog = Dialog.extend({
     },
 
     edit_menu: function (ev) {
+        var self = this;
         var menu_id = $(ev.currentTarget).closest('[data-menu-id]').data('menu-id');
         var form = new form_common.FormViewDialog(this, {
             res_model: 'ir.ui.menu',
@@ -114,7 +117,9 @@ var EditMenuDialog = Dialog.extend({
         }).open();
 
         form.on('record_saved', this, function() {
-            this._reload_menu_data(true);
+            self._saveChanges().then(function () {
+                self._reload_menu_data(true);
+            });
         });
     },
 
@@ -143,11 +148,23 @@ var EditMenuDialog = Dialog.extend({
     save: function () {
         var self = this;
 
-        return new Model('ir.ui.menu').call('customize', [], {to_move: this.to_move, to_delete: this.to_delete})
-            .then(function(){
-                self._reload_menu_data();
-                self.close();
-            });
+        return this._saveChanges().then(function(){
+            self._reload_menu_data();
+            self.close();
+        });
+    },
+
+    /**
+     * Save the current changes (in `to_move` and `to_delete`).
+     *
+     * @private
+     * @returns {Deferred}
+     */
+    _saveChanges: function () {
+        return new Model('ir.ui.menu').call('customize', [], {
+            to_move: this.to_move,
+            to_delete: this.to_delete,
+        });
     },
 
     _reload_menu_data: function(keep_open) {
