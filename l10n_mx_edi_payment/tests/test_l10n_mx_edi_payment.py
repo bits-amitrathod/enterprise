@@ -8,6 +8,7 @@ class TestL10nMxEdiPayment(common.InvoiceTransactionCase):
 
     def setUp(self):
         super(TestL10nMxEdiPayment, self).setUp()
+        self.fiscal_position.l10n_mx_edi_code = '601'
         self.config_parameter = self.env.ref(
             'l10n_mx_edi_cfdi_33.l10n_mx_edi_version_cfdi')
         self.config_parameter.value = '3.3'
@@ -24,6 +25,7 @@ class TestL10nMxEdiPayment(common.InvoiceTransactionCase):
     def test_l10n_mx_edi_payment(self):
         journal = self.env['account.journal'].search(
             [('type', '=', 'bank')], limit=1)
+        self.company.partner_id.property_account_position_id = self.fiscal_position.id # noqa
         invoice = self.create_invoice()
         invoice.move_name = 'INV/2017/999'
         today = self.env['l10n_mx_edi.certificate'].sudo().get_mx_current_datetime() # noqa
