@@ -7,7 +7,7 @@
     'category': 'Manufacturing',
     'sequence': 50,
     'summary': 'Quality Management with MRP',
-    'depends': ['quality_control', 'mrp_workorder'],
+    'depends': ['quality_control', 'mrp_workorder', 'barcodes'],
     'description': """
     Adds Quality Control to workorders.
 """,

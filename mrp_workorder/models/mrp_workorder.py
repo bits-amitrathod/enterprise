@@ -9,7 +9,8 @@ from odoo.addons import decimal_precision as dp
 
 
 class MrpProductionWorkcenterLine(models.Model):
-    _inherit = "mrp.workorder"
+    _name = 'mrp.workorder'
+    _inherit = ['mrp.workorder', 'barcodes.barcode_events_mixin']
 
     check_ids = fields.One2many('quality.check', 'workorder_id')
     skipped_check_ids = fields.One2many('quality.check', 'workorder_id', domain=[('quality_state', '=', 'none')])
@@ -460,3 +461,39 @@ class MrpProductionWorkcenterLine(models.Model):
         action = self.env.ref('mrp_workorder.mrp_workorder_action_tablet').read()[0]
         action['domain'] = [('state', 'not in', ['done', 'cancel', 'pending']), ('workcenter_id', '=', self.workcenter_id.id)]
         return action
+
+    def on_barcode_scanned(self, barcode):
+        # qty_done field for serial numbers is fixed
+        if self.component_tracking != 'serial':
+            if not self.lot_id:
+                # not scanned yet
+                self.qty_done = 1
+            elif self.lot_id.name == barcode:
+                self.qty_done += 1
+            else:
+                return {
+                    'warning': {
+                        'title': _("Warning"),
+                        'message': _("You are using components from another lot. \nPlease validate the components from the first lot before using another lot.")
+                    }
+                }
+
+        lot = self.env['stock.production.lot'].search([('name', '=', barcode)])
+
+        if self.component_tracking:
+            if not lot:
+                # create a new lot
+                # create in an onchange is necessary here ("new" cannot work here)
+                lot = self.env['stock.production.lot'].create({
+                    'name': barcode,
+                    'product_id': self.component_id.id,
+                })
+            self.lot_id = lot
+        elif self.production_id.product_id.tracking and self.production_id.product_id.tracking != 'none':
+            if not lot:
+                lot = self.env['stock.production.lot'].create({
+                    'name': barcode,
+                    'product_id': self.product_id.id,
+                })
+            self.final_lot_id = lot
+

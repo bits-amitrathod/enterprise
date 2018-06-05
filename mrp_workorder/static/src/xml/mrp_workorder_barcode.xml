@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+<!-- main_menu is a template in module stock_barcode --> 
+<t t-extend="main_menu"> 
+    <t t-jquery="p" t-operation="append"> 
+        <br/>Print the barcode commands for Manufacturing.  
+        <a href="/mrp_workorder/static/src/pdf/barcodes_actions_Manufacturing.pdf" class="fa fa-download" target="_blank"/> 
+    </t> 
+</t> 
+
+</templates>
