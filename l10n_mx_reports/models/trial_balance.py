@@ -153,6 +153,10 @@ class MxReportAccountTrial(models.AbstractModel):
         lines = []
         domain = safe_eval(line.domain or '[]')
         domain.append((('deprecated', '=', False)))
+        basis_account_ids = self.env['account.tax'].search_read(
+            [('cash_basis_base_account_id', '!=', False)], ['cash_basis_base_account_id'])
+        basis_account_ids = [account['cash_basis_base_account_id'][0] for account in basis_account_ids]
+        domain.append((('id', 'not in', basis_account_ids)))
         account_ids = self.env['account.account'].search(domain, order='code')
         tags = account_ids.mapped('tag_ids').filtered(
             lambda r: r.color == 4).sorted(key=lambda a: a.name)

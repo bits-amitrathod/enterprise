@@ -33,7 +33,7 @@ class Employee(models.Model):
                 given period.
         """
         employees = self.filtered(lambda emp: emp.resource_calendar_id)
-        result = dict.fromkeys(self.ids, dict(timesheet_hours=0.0, working_hours=0.0, date_start=date_start, date_stop=date_stop))
+        result = {i: dict(timesheet_hours=0.0, working_hours=0.0, date_start=date_start, date_stop=date_stop) for i in self.ids}
         if not employees:
             return result
 
