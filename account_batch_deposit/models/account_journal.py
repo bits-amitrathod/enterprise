@@ -54,7 +54,7 @@ class AccountJournal(models.Model):
     def _enable_batch_deposit_on_bank_journals(self):
         """ Enables batch deposit payment method on bank journals. Called upon module installation via data file."""
         batch_deposit = self.env.ref('account_batch_deposit.account_payment_method_batch_deposit')
-        for bank_journal in self.search([('type', '=', 'bank')]):
+        for bank_journal in self.search([('type', 'in', ['bank', 'cash'])]):
             batch_deposit_sequence = self._create_batch_deposit_sequence({'name': bank_journal.name, 'company_id': bank_journal.company_id.id})
             bank_journal.write({
                 'inbound_payment_method_ids': [(4, batch_deposit.id, None)],

@@ -123,6 +123,7 @@ class sale_order(models.Model):
             company_taxes = po.fiscal_position_id.map_tax(company_taxes, so_line.product_id, po.partner_id)
 
         quantity = so_line.product_id and so_line.product_uom._compute_quantity(so_line.product_uom_qty, so_line.product_id.uom_po_id) or so_line.product_uom_qty
+        price = so_line.product_id and so_line.product_uom._compute_price(price, so_line.product_id.uom_po_id) or price
         return {
             'name': so_line.name,
             'order_id': purchase_id,

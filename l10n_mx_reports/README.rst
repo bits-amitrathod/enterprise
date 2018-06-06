@@ -16,6 +16,14 @@ Known leak of features:
 - Save the generated xml in order to make available an history of Fiscal declared documents.
 - Unit tests to increase the coverage of this module and avoid regressions in the future.
 
+Notes:
+------
+
+  - In the taxes could be set the account `Base Tax Received Account` that is the
+    account that will be set on lines created in cash basis journal entry and
+    used to keep track of the tax base amount, this account is not considered in
+    the Mexican reports.
+
 Configuration
 =============
 

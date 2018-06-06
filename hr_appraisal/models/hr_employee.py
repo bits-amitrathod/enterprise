@@ -77,6 +77,15 @@ class HrEmployee(models.Model):
         else:
             return super(HrEmployee, self).write(vals)
 
+    def _get_employees_to_appraise(self):
+        current_date = datetime.date.today()
+        return self.search([
+            ('periodic_appraisal', '=', True),
+            ('periodic_appraisal_created', '=', False),
+            ('appraisal_date', '<=', current_date + relativedelta(days=8)),
+            ('appraisal_date', '>=', current_date),
+        ])
+
     @api.model
     def run_employee_appraisal(self, automatic=False, use_new_cursor=False):  # cronjob
         current_date = datetime.date.today()
@@ -88,13 +97,7 @@ class HrEmployee(models.Model):
                 'periodic_appraisal_created': False
             })
         # Create perdiodic appraisal if appraisal date is in less than a week adn the appraisal for this perdiod has not been created yet:
-        for employee in self.search([
-            ('periodic_appraisal', '=', True),
-            ('periodic_appraisal_created', '=', False),
-            ('appraisal_date', '<=', current_date + relativedelta(days=8)),
-            ('appraisal_date', '>=', current_date),
-        ]):
-
+        for employee in self._get_employees_to_appraise():
             vals = {'employee_id': employee.id,
                     'date_close': employee.appraisal_date,
                     'manager_appraisal': employee.appraisal_by_manager,

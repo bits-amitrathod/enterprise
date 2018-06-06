@@ -42,6 +42,16 @@ class report_account_coa(models.AbstractModel):
             {'name': _('Credit'), 'class': 'number'},
         ]
 
+    def _get_super_columns(self, options):
+        date_cols = options.get('date') and [options['date']] or []
+        date_cols += options.get('comparison', {}).get('periods', [])
+
+        columns = [{'string': _('Initial Balance')}]
+        columns += reversed(date_cols)
+        columns += [{'string': _('Total')}]
+
+        return {'columns': columns, 'x_offset': 1, 'merge': 2}
+
     def _post_process(self, grouped_accounts, initial_balances, options, comparison_table):
         lines = []
         context = self.env.context
@@ -77,8 +87,9 @@ class report_account_coa(models.AbstractModel):
                 total_periods += amount
                 cols += [{'name': debit > 0 and self.format_value(debit) or zero_value, 'no_format_name': debit > 0 and debit or 0},
                          {'name': credit > 0 and self.format_value(credit) or zero_value, 'no_format_name': credit > 0 and abs(credit) or 0}]
-                p_indice = period * 2 if period > 1 else 3
-                p_indice = 1 if period == 0 else p_indice
+                # In sum_columns, the first 2 elements are the initial balance's Debit and Credit
+                # index of the credit of previous column generally is:
+                p_indice = period * 2 + 1
                 sum_columns[(p_indice) + 1] += debit if debit > 0 else 0
                 sum_columns[(p_indice) + 2] += credit if credit > 0 else 0
 
