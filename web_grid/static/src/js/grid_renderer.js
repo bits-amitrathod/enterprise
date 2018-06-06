@@ -122,6 +122,22 @@ return AbstractRenderer.extend({
     },
     /**
      * @private
+     * @param {Array[id, value] or value}
+     * @returns value
+     */
+    _field2label: function (value_to_display, field_type) {
+        if (!value_to_display){
+            return _t('Unknown');
+        }
+        if (["many2one", "many2many", "one2many"].indexOf(field_type) > -1) {
+            return value_to_display[1];
+        }
+        else {
+            return value_to_display;
+        }
+    },
+    /**
+     * @private
      * @returns {Deferred}
      */
     _render: function () {
@@ -246,7 +262,8 @@ return AbstractRenderer.extend({
             for (var i = 0; i < groupFields.length; i++) {
                 var row_field = groupFields[i];
                 var value = rows[rowIndex].values[row_field];
-                rowValues.push(value);
+                var field_type = self.fields[row_field].type;
+                rowValues.push(self._field2label(value, field_type));
             }
             var rowKey = _.map(rowValues, function (v) {
                 return v[0];
@@ -254,9 +271,8 @@ return AbstractRenderer.extend({
 
             return h('tr', {key: rowKey}, [
                 h('th', {}, [
-                    h('div', _.map(rowValues, function (v) {
-                        var label = v ? v[1] : _t('Unknown');
-                        var klass = v ? '' : 'o_grid_text_muted';
+                    h('div', _.map(rowValues, function (label) {
+                        var klass = label !== _t('Unknown') ? '' : 'o_grid_text_muted';
                         return h('div', {attrs: {title: label, class: klass}}, label);
                     }))
                 ])

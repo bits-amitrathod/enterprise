@@ -263,6 +263,37 @@ QUnit.module('Views', {
         });
     });
 
+    QUnit.test('group by non-relational field', function (assert) {
+        assert.expect(1);
+        var done = assert.async();
+        var nbReadGridDomain = 0;
+        var nbReadGroup = 0;
+        var nbReadGrid = 0;
+
+        var grid = createView({
+            View: GridView,
+            model: 'analytic.line',
+            data: this.data,
+            arch: this.arch,
+            currentDate: "2017-01-25",
+            mockRPC: function (route, args) {
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        return concurrency.delay(0).then(function () {
+            grid.update({groupBy: ["date"]});
+            debugger;
+            assert.strictEqual(grid.$('tbody th:first').text(),
+                               "January 2017",
+                               "Should be equal.");
+            return concurrency.delay(0);
+        }).then(function () {
+            grid.destroy();
+            done();
+        });
+    });
+
     QUnit.test('create analytic lines', function (assert) {
         assert.expect(7);
         var done = assert.async();
