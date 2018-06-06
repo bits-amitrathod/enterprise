@@ -31,7 +31,7 @@ tour.register('web_studio_new_app_tour', {
     trigger: '.o_web_studio_new_app',
     auto: true,
     position: 'bottom',
-},{
+}, {
     trigger: '.o_web_studio_app_creator_next',
     content: _t('I bet you can <b>build an app</b> in 5 minutes. Ready for the challenge?'),
     position: 'top',
@@ -115,7 +115,7 @@ tour.register('web_studio_new_app_tour', {
     trigger: '.o_control_panel .o_cp_buttons .o_form_button_save',
     content: _t("Save."),
     position: 'right',
-},  {
+}, {
     trigger: '.o_web_studio_navbar_item',
     extra_trigger: '.o_form_view.o_form_readonly',
     content: _t("Wow, nice! And I’m sure you can make it even better! Use this icon to open <b>Odoo Studio</b> and customize any screen."),
@@ -139,7 +139,7 @@ tour.register('web_studio_tests_tour', {
     url: "/web?studio=app_creator&debug=",
 }, [{
     trigger: '.o_web_studio_new_app',
-},{
+}, {
     // the next 6 steps are here to create a new app
     trigger: '.o_web_studio_app_creator_next',
 }, {
@@ -155,6 +155,34 @@ tour.register('web_studio_tests_tour', {
 }, {
     trigger: '.o_web_studio_app_creator_next.is_ready',
 }, {
+    // toggle the home menu
+    trigger: '.o_menu_toggle',
+}, {
+    // a invisible element cannot be used as a trigger so this small hack is
+    // mandatory for the next step
+    trigger: '.o_app[data-menu-xmlid*="studio"]:last',
+    run: function () {
+        this.$anchor.find('.o_web_studio_edit_icon').css('visibility', 'visible');
+    },
+}, {
+    // edit an app
+    trigger: '.o_app[data-menu-xmlid*="studio"]:last .o_web_studio_edit_icon',
+}, {
+    // design the icon
+    trigger: '.o_web_studio_selector[data-type="background_color"]',
+}, {
+    trigger: '.o_web_studio_palette > .o_web_studio_selector:first',
+}, {
+    trigger: '.modal-footer .btn.btn-primary',
+}, {
+    // click on the created app
+    trigger: '.o_app[data-menu-xmlid*="studio"]:last',
+}, {
+    // switch to form view
+    trigger: '.o_web_studio_views_icons > a[data-name="form"]',
+}, {
+    // wait for the form editor to be rendered because the sidebar is the same
+    extra_trigger: '.o_web_studio_form_view_editor',
     // add an existing field (display_name)
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_char',
     run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
@@ -227,26 +255,13 @@ tour.register('web_studio_tests_tour', {
 }, {
     // enable stages
     trigger: '.o_web_studio_sidebar input[name=enable_stage]',
-}, {
-    // toggle the home menu
-    trigger: '.o_menu_toggle',
-}, {
-    // a invisible element cannot be used as a trigger so this small hack is
-    // mandatory for the next step
-    trigger: '.o_app[data-menu-xmlid*="studio"]:first',
-    run: function () {
-        this.$anchor.find('.o_web_studio_edit_icon').css('visibility', 'visible');
-    },
-}, {
-    // edit an app
-    trigger: '.o_app[data-menu-xmlid*="studio"]:first .o_web_studio_edit_icon',
-}, {
-    // design the icon
-    trigger: '.o_web_studio_selector[data-type="background_color"]',
-}, {
-    trigger: '.o_web_studio_palette > .o_web_studio_selector:first',
-}, {
-    trigger: '.modal-footer .btn.btn-primary',
+
+// TODO: we would like to test this (change an app icon) here but a
+// long-standing bug (KeyError: ir.ui.menu.display_name, caused by a registry
+// issue with multiple workers) on runbot prevent us from doing it. It thus have
+// been moved at the beginning of this test to avoid the registry to be reloaded
+// before the write on ir.ui.menu.
+
 }]);
 
 });
