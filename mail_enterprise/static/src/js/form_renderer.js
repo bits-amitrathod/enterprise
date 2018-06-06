@@ -143,8 +143,13 @@ FormRenderer.include({
             attachments.reverse();
         }
         var attachment = _.find(attachments, function (attachment) {
-            return _.contains(options.types, attachment.type);
+            return options.preview_priority_type == attachment.type;
         });
+         if (!attachment) {
+            attachment = _.find(attachments, function (attachment) {
+                return _.contains(options.types, attachment.type);
+            });
+        }
         if (attachment && attachment.id !== this.attachmentPreviewID) {
             this.attachmentPreviewID = attachment.id;
             this.attachmentPreviewResID = this.state.res_id;
