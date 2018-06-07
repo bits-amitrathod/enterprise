@@ -197,7 +197,7 @@
 
         </div>
         <h5 class="page-header">Latest Feedbacks</h5>
-        <t t-foreach="ratings" t-as="rating" class="media">
+        <t t-foreach="ratings" t-as="rating">
             <img t-attf-src='/rating/static/src/img/rating_#{int(rating.rating)}.png' t-att-alt="rating.res_name" t-att-title="rating.res_name"/>
         </t>
     </template>
