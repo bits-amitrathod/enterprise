@@ -66,10 +66,11 @@
                         t-att-CertPago="pay_certificate"
                         t-att-CadPago="pay_string"
                         t-att-SelloPago="pay_stamp">
-                        <t t-set="write_off" t-value="record.move_line_ids.filtered(lambda l: l.account_id == record.writeoff_account_id and l.name == record.writeoff_label).debit"/>
+                        <t t-set="write_off" t-value="record.move_line_ids.filtered(lambda l: l.account_id == record.writeoff_account_id and l.name == record.writeoff_label)"/>
                         <t t-foreach="record.invoice_ids" t-as="invoice">
                             <t t-set="amount" t-value="[p for p in invoice._get_payments_vals() if p.get('account_payment_id', False) == record.id]"/>
                             <t t-set="amount" t-value="amount[0].get('amount', 0.0) if amount else 0.0"/>
+                            <t t-set="write_off" t-value="write_off.amount_currency if invoice.currency_id.name != 'MXN' else write_off.debit"/>
                             <t t-set="balance" t-value="invoice.residual + amount"/>
                             <t t-set="amount" t-value="amount - write_off"/>
                             <t t-set="residual" t-value="balance - amount if balance - amount &gt; 0 else 0"/>

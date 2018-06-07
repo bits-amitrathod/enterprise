@@ -115,6 +115,7 @@ class purchase_order(models.Model):
             so = self.env["sale.order"].sudo(company.intercompany_user_id).browse(sale_id)
             company_taxes = so.fiscal_position_id.map_tax(company_taxes, line.product_id, so.partner_id)
         quantity = line.product_id and line.product_uom._compute_quantity(line.product_qty, line.product_id.uom_id) or line.product_qty
+        price = line.product_id and line.product_uom._compute_price(price, line.product_id.uom_id) or price
         return {
             'name': line.name,
             'order_id': sale_id,

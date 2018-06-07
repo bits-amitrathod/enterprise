@@ -828,6 +828,28 @@ class AccountReport(models.AbstractModel):
                          }
                 }
 
+    def _get_super_columns(self, options):
+        """
+        Essentially used when getting the xlsx of a report
+        Some reports may need super title cells on top of regular
+        columns title, This methods retrieve the formers.
+        e.g. in Trial Balance, you can compare periods (super cells)
+            and each have debit/credit columns
+
+
+        @params {dict} options: options for computing the report
+        @return {dict}:
+            {list(dict)} columns: the dict of the super columns of the xlsx report,
+                the columns' string is contained into the 'string' key
+            {int} merge: optional parameter. Indicates to xlsxwriter
+                that it should put the contents of each column into the resulting
+                cell of the merge of this [merge] number of cells
+                -- only merging on one line is supported
+            {int} x_offset: tells xlsxwriter it should start writing the columns from
+                [x_offset] cells on the left
+        """
+        return {}
+
     def get_xlsx(self, options, response):
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
@@ -835,6 +857,7 @@ class AccountReport(models.AbstractModel):
 
         def_style = workbook.add_format({'font_name': 'Arial'})
         title_style = workbook.add_format({'font_name': 'Arial', 'bold': True, 'bottom': 2})
+        super_col_style = workbook.add_format({'font_name': 'Arial', 'bold': True, 'align': 'center'})
         level_0_style = workbook.add_format({'font_name': 'Arial', 'bold': True, 'bottom': 2, 'top': 2, 'pattern': 1, 'font_color': '#FFFFFF'})
         level_0_style_left = workbook.add_format({'font_name': 'Arial', 'bold': True, 'bottom': 2, 'top': 2, 'left': 2, 'pattern': 1, 'font_color': '#FFFFFF'})
         level_0_style_right = workbook.add_format({'font_name': 'Arial', 'bold': True, 'bottom': 2, 'top': 2, 'right': 2, 'pattern': 1, 'font_color': '#FFFFFF'})
@@ -854,19 +877,22 @@ class AccountReport(models.AbstractModel):
 
         sheet.set_column(0, 0, 15) #  Set the first column width to 15
 
-        sheet.write(0, 0, '', title_style)
+        super_columns = self._get_super_columns(options)
+        y_offset = bool(super_columns.get('columns')) and 1 or 0
 
-        y_offset = 0
-        # if self.get_report_obj().get_name() == 'coa' and self.get_special_date_line_names():
-        #     sheet.write(y_offset, 0, '', title_style)
-        #     sheet.write(y_offset, 1, '', title_style)
-        #     x = 2
-        #     for column in self.with_context(is_xls=True).get_special_date_line_names():
-        #         sheet.write(y_offset, x, column, title_style)
-        #         sheet.write(y_offset, x+1, '', title_style)
-        #         x += 2
-        #     sheet.write(y_offset, x, '', title_style)
-        #     y_offset += 1
+        sheet.write(y_offset, 0, '', title_style)
+
+        # Todo in master: Try to put this logic elsewhere
+        x = super_columns.get('x_offset', 0)
+        for super_col in super_columns.get('columns', []):
+            cell_content = super_col.get('string', '').replace('<br/>', ' ').replace('&nbsp;', ' ')
+            x_merge = super_columns.get('merge')
+            if x_merge and x_merge > 1:
+                sheet.merge_range(0, x, 0, x + (x_merge - 1), cell_content, super_col_style)
+                x += x_merge
+            else:
+                sheet.write(0, x, cell_content, super_col_style)
+                x += 1
 
         for row in self.get_header(options):
             x = 0

@@ -37,10 +37,12 @@
                         <p><span t-esc="usage"/> - <span t-field="o.l10n_mx_edi_usage"/></p>
                     </div>
                 </t>
-                <div class="col-xs-2">
-                    <strong>Payment Way:</strong>
-                    <p t-esc="' - '.join([o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name])"/>
-                </div>
+                <t t-if="o.l10n_mx_edi_payment_method_id">
+                    <div class="col-xs-2">
+                        <strong>Payment Way:</strong>
+                        <p t-esc="' - '.join([o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name])"/>
+                    </div>
+                </t>
                 <div class="col-xs-2">
                     <strong>Payment Method:</strong>
                     <p t-esc="xml.get('formaDePago', xml.get('MetodoPago'))"/>
