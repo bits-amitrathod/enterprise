@@ -124,9 +124,9 @@ class SaleOrder(models.Model):
         return res
 
     @api.multi
-    def action_confirm(self):
+    def _action_confirm(self):
         """Update and/or create subscriptions on order confirmation."""
-        res = super(SaleOrder, self).action_confirm()
+        res = super(SaleOrder, self)._action_confirm()
         self.update_existing_subscriptions()
         self.create_subscriptions()
         return res
@@ -167,7 +167,7 @@ class SaleOrderLine(models.Model):
             if order.origin and order.subscription_management in ('upsell', 'renew') and Product.browse(vals['product_id']).recurring_invoice:
                 vals['subscription_id'] = self.env['sale.subscription'].search([('code', '=', order.origin)], limit=1).id
         return super(SaleOrderLine, self).create(vals)
-    
+
     def _prepare_subscription_line_data(self):
         """Prepare a dictionnary of values to add lines to a subscription."""
         values = list()
