@@ -3,6 +3,8 @@ import base64
 import io
 import time
 import uuid
+
+from email.utils import formataddr
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
@@ -197,29 +199,24 @@ class SignatureRequest(models.Model):
 
     @api.one
     def send_follower_accesses(self, followers, subject=None, message=None):
-        base_context = self.env.context
-        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
-        template_id = self.env.ref('website_sign.website_sign_mail_template').id
-        mail_template = self.env['mail.template'].browse(template_id)
-
-        email_from_usr = self.create_uid.partner_id.name
-        email_from_mail = self.create_uid.partner_id.email
-        email_from = "%(email_from_usr)s <%(email_from_mail)s>" % {'email_from_usr': email_from_usr, 'email_from_mail': email_from_mail}
-
+        tpl = self.env.ref('website_sign.sign_template_mail_follower')
+        body = tpl.render({
+            'record': self,
+            'link': '/sign/document/%s/%s' % (self.id, self.access_token),
+            'subject': subject,
+            'body': message,
+        }, engine='ir.qweb', minimal_qcontext=True)
         for follower in followers:
-            template = mail_template.sudo().with_context(base_context,
-                lang = follower.lang,
-                template_type = "follower",
-                email_from_usr = email_from_usr,
-                email_from_mail = email_from_mail,
-                email_from = email_from,
-                email_to = follower.email,
-                link = url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}),
-                subject = subject or ("Signature request - " + self.reference),
-                msgbody = (message or "").replace("\n", "<br/>")
+            if not follower.email:
+                continue
+            self.env['signature.request']._message_send_mail(
+                body, 'mail.mail_notification_light',
+                {'record_name': self.reference},
+                {'model_description': 'signature', 'company': self.create_uid.company_id},
+                {'email_from': formataddr((self.create_uid.name, self.create_uid.email)),
+                 'email_to': formataddr((follower.name, follower.email)),
+                 'subject': subject or _('%s : Signature request') % self.reference}
             )
-            template.send_mail(self.id, force_send=True)
-        return True
 
     @api.multi
     def send_completed_document(self):
@@ -230,55 +227,67 @@ class SignatureRequest(models.Model):
         if not self.completed_document:
             self.generate_completed_document()
 
-        base_context = self.env.context
-        template_id = self.env.ref('website_sign.website_sign_mail_template').id
-        mail_template = self.env['mail.template'].browse(template_id)
-
-        email_from_usr = self.create_uid.partner_id.name
-        email_from_mail = self.create_uid.partner_id.email
-        email_from = "%(email_from_usr)s <%(email_from_mail)s>" % {'email_from_usr': email_from_usr, 'email_from_mail': email_from_mail}
-
-        mail_template = mail_template.sudo().with_context(base_context,
-            template_type = "completed",
-            email_from_usr = email_from_usr,
-            email_from_mail = email_from_mail,
-            email_from = email_from,
-            subject = "Signed Document - " + self.reference
-        )
-
         for signer in self.request_item_ids:
-            if not signer.partner_id:
+            if not signer.partner_id or not signer.partner_id.email:
                 continue
-            template = mail_template.with_context(
-                lang = signer.partner_id.lang,
-                email_to = signer.partner_id.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': signer.access_token}
-            )
-            mail_id = template.send_mail(self.id, force_send=False)
-            mail = self.env['mail.mail'].browse(mail_id)
+
+            tpl = self.env.ref('website_sign.sign_template_mail_completed')
+            body = tpl.render({
+                'record': self,
+                'link': '/sign/document/%s/%s' % (self.id, signer.access_token),
+                'subject': '%s signed' % self.reference,
+                'body': False,
+            }, engine='ir.qweb', minimal_qcontext=True)
+
             attachment = self.env['ir.attachment'].create({
                 'name': self.reference,
                 'datas_fname': "%s.pdf" % self.reference,
                 'datas': self.completed_document,
                 'type': 'binary',
-                'res_model': 'mail.message',
-                'res_id': mail.mail_message_id.id,
+                'res_model': self._name,
+                'res_id': self.id,
             })
-            mail.attachment_ids |= attachment
-            mail.send()
+
+            self.env['signature.request']._message_send_mail(
+                body, 'mail.mail_notification_light',
+                {'record_name': self.reference},
+                {'model_description': 'signature', 'company': self.create_uid.company_id},
+                {'email_from': formataddr((self.create_uid.name, self.create_uid.email)),
+                 'email_to': formataddr((signer.partner_id.name, signer.partner_id.email)),
+                 'subject': '%s signed' % self.reference,
+                 'attachment_ids': [(4, attachment.id)]}
+            )
+
+
+        tpl = self.env.ref('website_sign.sign_template_mail_completed')
+        body = tpl.render({
+            'record': self,
+            'link': '/sign/document/%s/%s' % (self.id, self.access_token),
+            'subject': '%s signed' % self.reference,
+            'body': '',
+        }, engine='ir.qweb', minimal_qcontext=True)
 
         for follower in self.follower_ids:
-            template = mail_template.with_context(
-                lang = follower.lang,
-                email_to = follower.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}
+            if not follower.email:
+                continue
+            self.env['signature.request']._message_send_mail(
+                body, 'mail.mail_notification_light',
+                {'record_name': self.reference},
+                {'model_description': 'signature', 'company': self.create_uid.company_id},
+                {'email_from': formataddr((self.create_uid.name, self.create_uid.email)),
+                 'email_to': formataddr((follower.name, follower.email)),
+                 'subject': _('%s has been signed') % self.reference}
             )
-            template.send_mail(self.id, force_send=True)
 
-        mail_template.with_context( # Send copy to request creator
-            email_to = email_from_mail,
-            link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}
-        ).send_mail(self.id, force_send=True)
+        # Send copy to request creator
+        self.env['signature.request']._message_send_mail(
+            body, 'mail.mail_notification_light',
+            {'record_name': self.reference},
+            {'model_description': 'signature', 'company': self.create_uid.company_id},
+            {'email_from': formataddr((self.create_uid.name, self.create_uid.email)),
+             'email_to': formataddr((self.create_uid.name, self.create_uid.email)),
+             'subject': _('%s has been signed') % self.reference}
+        )
 
         return True
 
@@ -368,6 +377,17 @@ class SignatureRequest(models.Model):
         )
 
     @api.model
+    def _message_send_mail(self, body, notif_template_xmlid, message_values, notif_values, mail_values, **kwargs):
+        """ Shortcut to send an email. """
+        msg = self.env['mail.message'].sudo().new(dict(body=body, **message_values))
+
+        notif_layout = self.env.ref(notif_template_xmlid)
+        body_html = notif_layout.render(dict(message=msg, **notif_values), engine='ir.qweb', minimal_qcontext=True)
+        body_html = self.env['mail.thread']._replace_local_links(body_html)
+
+        return self.env['mail.mail'].create(dict(body_html=body_html, state='outgoing', **mail_values))
+
+    @api.model
     def initialize_new(self, id, signers, followers, reference, subject, message, send=True):
         signature_request = self.create({'template_id': id, 'reference': reference, 'follower_ids': [(6, 0, followers)], 'favorited_ids': [(4, self.env.user.id)]})
         signature_request.set_signers(signers)
@@ -447,29 +467,27 @@ class SignatureRequestItem(models.Model):
 
     @api.multi
     def send_signature_accesses(self, subject=None, message=None):
-        base_context = self.env.context
-        template_id = self.env.ref('website_sign.website_sign_mail_template').id
-        mail_template = self.env['mail.template'].browse(template_id)
-
-        email_from_usr = self[0].create_uid.partner_id.name
-        email_from_mail = self[0].create_uid.partner_id.email
-        email_from = "%(email_from_usr)s <%(email_from_mail)s>" % {'email_from_usr': email_from_usr, 'email_from_mail': email_from_mail}
-
         for signer in self:
-            if not signer.partner_id:
+            if not signer.partner_id or not signer.partner_id.email:
                 continue
-            template = mail_template.sudo().with_context(base_context,
-                lang = signer.partner_id.lang,
-                template_type = "request",
-                email_from_usr = email_from_usr,
-                email_from_mail = email_from_mail,
-                email_from = email_from,
-                email_to = signer.partner_id.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token},
-                subject = subject or ("Signature request - " + signer.signature_request_id.reference),
-                msgbody = (message or "").replace("\n", "<br/>")
+            if not signer.create_uid.email:
+                continue
+            tpl = self.env.ref('website_sign.sign_template_mail_request')
+            body = tpl.render({
+                'record': self,
+                'link': "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token},
+                'subject': subject,
+                'body': message,
+            }, engine='ir.qweb', minimal_qcontext=True)
+
+            self.env['signature.request']._message_send_mail(
+                body, 'mail.mail_notification_light',
+                {'record_name': signer.signature_request_id.reference},
+                {'model_description': 'signature', 'company': signer.create_uid.company_id},
+                {'email_from': formataddr((signer.create_uid.name, signer.create_uid.email)),
+                 'email_to': formataddr((signer.partner_id.name, signer.partner_id.email)),
+                 'subject': subject}
             )
-            template.send_mail(signer.signature_request_id.id, force_send=True)
 
     @api.multi
     def sign(self, signature):
