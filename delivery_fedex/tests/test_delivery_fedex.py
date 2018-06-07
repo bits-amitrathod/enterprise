@@ -35,6 +35,8 @@ class TestDeliveryFedex(TransactionCase):
         self.agrolait = self.env.ref('base.res_partner_2')
         self.agrolait.write({'country_id': self.env.ref('base.be').id})
         self.delta_pc = self.env.ref('base.res_partner_4')
+        self.stock_location = self.env.ref('stock.stock_location_stock')
+        self.customer_location = self.env.ref('stock.stock_location_customers')
 
     def test_01_fedex_basic_us_domestic_flow(self):
         try:
@@ -192,3 +194,42 @@ class TestDeliveryFedex(TransactionCase):
                 raise unittest.SkipTest(SKIP_MSG)
             else:
                 raise e
+
+    def test_04_fedex_international_delivery_from_delivery_order(self):
+
+        inventory = self.env['stock.inventory'].create({
+            'name': '[A1232] iPad Mini',
+            'filter': 'product',
+            'location_id': self.stock_location.id,
+            'product_id': self.iPadMini.id,
+        })
+
+        StockPicking = self.env['stock.picking']
+
+        order1_vals = {
+                    'product_id': self.iPadMini.id,
+                    'name': "[A1232] iPad Mini",
+                    'product_uom': self.uom_unit.id,
+                    'product_uom_qty': 1.0,
+                    'location_id': self.stock_location.id,
+                    'location_dest_id': self.customer_location.id}
+
+        do_vals = { 'partner_id': self.agrolait.id,
+                    'carrier_id': self.env.ref('delivery_fedex.delivery_carrier_fedex_inter').id,
+                    'location_id': self.stock_location.id,
+                    'location_dest_id': self.customer_location.id,
+                    'picking_type_id': self.env.ref('stock.picking_type_out').id,
+                    'move_ids_without_package': [(0, None, order1_vals)]}
+
+        delivery_order = StockPicking.create(do_vals)
+        self.assertEqual(delivery_order.state, 'draft', 'Shipment state should be draft.')
+
+        delivery_order.action_confirm()
+        self.assertEqual(delivery_order.state, 'confirmed', 'Shipment state should be waiting(confirmed).')
+
+        delivery_order.action_assign()
+        self.assertEqual(delivery_order.state, 'assigned', 'Shipment state should be ready(assigned).')
+        delivery_order.move_ids_without_package.quantity_done = 1.0
+
+        delivery_order.button_validate()
+        self.assertEqual(delivery_order.state, 'done', 'Shipment state should be done.')
