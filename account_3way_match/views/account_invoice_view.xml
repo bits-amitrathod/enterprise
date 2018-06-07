@@ -37,7 +37,7 @@
      created in order to only display 'bills_to_pay' and 'exception' filters
      in the view related to vendor bills, as it makes no sense to propose them
      in the view related to sales invoices, which share the same model.-->
-     <record id="account.action_invoice_tree2" model="ir.actions.act_window">
+     <record id="account.action_vendor_bill_template" model="ir.actions.act_window">
         <field name="name">Vendor Bills</field>
         <field name="res_model">account.invoice</field>
         <field name="search_view_id" ref="account_invoice_filter_inherit_account_3way_match"/>
