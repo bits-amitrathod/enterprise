@@ -18,4 +18,5 @@ Yodlee interface.
         'views/yodlee_templates.xml',
     ],
     'license': 'OEEL-1',
+    'auto_install': True,
 }

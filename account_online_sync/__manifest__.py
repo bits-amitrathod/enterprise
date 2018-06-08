@@ -20,4 +20,5 @@
         'views/online_sync_templates.xml',
     ],
     'license': 'OEEL-1',
+    'auto_install': True,
 }

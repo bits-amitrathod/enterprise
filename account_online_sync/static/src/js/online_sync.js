@@ -12,32 +12,32 @@ var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
         this._super(parent, context);
         this.search_allowed = true;
         this.starred_inst = context.starred_inst;
+        this.sync_error_message = context.sync_error_message;
+        this.results = this.starred_inst; // First shown results are the starred institutions
         if (context.context !== undefined) {
             this.context = context.context;
             this.country = context.context.country;
         }
-        this.state = 'dashboard';
+        this.state = (this.sync_error_message !== '') ? 'error' : 'dashboard';
+    },
+
+    start: function() {
+        this.displayState();
     },
 
     displayState: function() {
         var self = this;
-        if (this.state === 'dashboard') {
-            self.$('.favorite_institutions').removeClass('hidden');
+        if (this.state === 'error') {
+            self.$('.sync_error').removeClass('hidden');
+            self.renderSyncError();
+        }
+        else if (this.state === 'dashboard' && this.country === 'worldwide') {
+            self.$('.favorite_institutions_no_result').removeClass('hidden');
             self.$('.institutions_search').addClass('hidden');
-            self.$buttons.find('.js_select_institution').addClass('hidden');
-            if (this.country !== 'worldwide') {
-                self.$('.favorite_institutions_no_result').addClass('hidden');
-                self.$('.favorite_institutions_result').removeClass('hidden');
-            }
-            else {
-                self.$('.favorite_institutions_no_result').removeClass('hidden');
-                self.$('.favorite_institutions_result').addClass('hidden');
-            }
         }
         else {
-            self.$('.favorite_institutions').addClass('hidden');
-            self.$('.institutions_search').removeClass('hidden');
-            self.$buttons.find('.js_select_institution').removeClass('hidden');
+            self.$('.institution_search').removeClass('hidden');
+            self.$('.favorite_institutions_no_result').addClass('hidden');
             if (self.results.length > 0) {
                 // Display results
                 self.$('.institution_no_result').addClass('hidden');
@@ -83,7 +83,29 @@ var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
                 self.openInstitution(self.$('.js_institution[data-inst-id='+self.selected+']'));
             }
         });
+        this.$buttons.find('.js_configure_manually').click(function(){
+            return self.configure_manually()
+        });
+        this.$('.institution_no_result').find('.js_configure_manually').click(function(){
+            return self.configure_manually()
+        });
         this.$buttons.appendTo($node);
+    },
+
+    configure_manually: function(){
+        var self = this;
+        return self._rpc({
+            model: 'account.online.provider',
+            method: 'get_manual_configuration_form',
+            args: [self.context]
+        })
+        .then(function(action) {
+            self.do_action(action, {
+                  on_close: function () {
+                      core.bus.trigger("refresh_account_dashboard");
+                  },
+            });
+        });
     },
 
     renderElement: function() {
@@ -111,6 +133,16 @@ var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
                 self.switchCountry();
             }
         });
+    },
+
+    renderSyncError: function() {
+        var self = this
+        self.$('.sync_error').html('');
+        var $errorMessage = $(QWeb.render('OnlineSyncErrorMessage', {sync_error_message: self.sync_error_message}));
+        $errorMessage.find('.js_configure_manually').click(function(){
+            return self.configure_manually()
+        });
+        $errorMessage.appendTo(self.$('.sync_error'));
     },
 
     renderSearchResult: function() {
@@ -157,6 +189,7 @@ var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
             self.state = 'search';
             self.$buttons.find('.js_select_institution').prop('disabled', true);
             framework.blockUI();
+
             return this._rpc({
                     model: 'account.online.provider',
                     method: 'get_institutions',

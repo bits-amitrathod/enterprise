@@ -22,5 +22,6 @@ Whenever possible, you should use a more appropriate file format like OFX.
         'wizard/account_bank_statement_import_views.xml',
     ],
     'installable': True,
+    'auto_install': False,
     'license': 'OEEL-1',
 }

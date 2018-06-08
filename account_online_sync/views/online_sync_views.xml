@@ -95,7 +95,7 @@
                 <!-- Failed synchronization message -->
                 <div attrs="{'invisible': [('status', '!=', 'failed')]}">
                   <div class="alert alert-danger" role="alert">
-                    <p><strong>Ooops</strong> We could not <field name="method"/> your account because of the following 
+                    <p><strong>Ooops</strong> We could not <field name="method"/> your account because of the following
                     error during the process:</p>
                     <br/>
                     <h4><field name="message"/></h4>
@@ -104,7 +104,7 @@
                 <!-- Action abandonned message -->
                 <div attrs="{'invisible': [('status', '!=', 'cancelled')]}">
                   <div class="alert alert-warning" role="alert">
-                    <p><strong>Ooops</strong> It would seems that the process to <field name="method"/> your account was not 
+                    <p><strong>Ooops</strong> It would seems that the process to <field name="method"/> your account was not
                     thoroughly completed. You can try to manually update your account by clicking the refresh button on the dashboard
                     or in the online synchronization menu.</p>
                   </div>
@@ -112,7 +112,7 @@
                 <!-- Action success message -->
                 <div attrs="{'invisible': [('status', '!=', 'success')]}">
                   <div class="alert alert-success" role="alert">
-                    <p attrs="{'invisible': [('method', '!=', 'add')]}"><strong>Well done!</strong> Your banking institution is now synchronized with Odoo.</p>
+                    <p attrs="{'invisible': [('method', '!=', 'add')]}"><strong>Well done!</strong> Your banking institution is now connected to Odoo.</p>
                     <p attrs="{'invisible': [('method', '!=', 'edit')]}"><strong>Success!</strong> Your account has been succesfully updated.</p>
                     <p attrs="{'invisible': [('method', '!=', 'refresh')]}"><strong>Success!</strong> Your account has been succesfully refreshed.</p>
                     <p attrs="{'invisible': [('number_added', '=', 0)]}">A total of "<strong><field name="number_added"/></strong>" bank accounts have been retrieved.</p>
@@ -135,8 +135,9 @@
                         <field name="account_number"/>
                         <field name="name"/>
                         <field name="balance"/>
-                        <field name="action"/>
+                        <field name="action" required="1"/>
                         <field name="journal_id" attrs="{'readonly': [('action', '!=', 'link')], 'required': [('action', '=', 'link')]}"/>
+                        <field name="journal_statements_creation" attrs="{'readonly': [('action', '=', 'drop')]}"/>
                       </tree>
                     </field>
                   </div>
@@ -169,20 +170,17 @@
           <field name="account_online_journal_id"/>
           <field name="synchronization_status"/>
         </field>
-        <xpath expr='//div[@name="bank_journal_default_cta"]/button' position='after'>
-          <br t-if="dashboard.number_to_reconcile == 0"/><button t-if="dashboard.number_to_reconcile == 0" type="object" name="action_choose_institution" class="btn btn-primary btn-sm">Online Synchronization</button>
-          <a t-if="dashboard.number_to_reconcile > 0" type="object" name="action_choose_institution" class="oe_inline">Online Synchronization</a>
-        </xpath>
+
         <xpath expr='//div[@name="bank_journal_cta"]' position='inside'>
           <t t-if="dashboard.bank_statements_source == 'online_sync'">
             <t t-if="record.synchronization_status.value != 'FAILED'">
-              <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="btn btn-primary btn-sm">Synchronize now</button>
-              <a t-if="dashboard.number_to_reconcile > 0" attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="oe_inline">Synchronize now</a>
+              <a attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="oe_inline">Synchronize now</a>
             </t>
             <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="object" name="action_choose_institution" class="btn btn-primary btn-sm">Online Synchronization</button>
             <a t-if="dashboard.number_to_reconcile > 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="object" name="action_choose_institution" class="oe_inline">Online Synchronization</a>
           </t>
         </xpath>
+
         <xpath expr="//div[hasclass('o_kanban_primary_left')]" position="inside">
           <t t-if="record.synchronization_status.value == 'SUCCESS'">
             <span class="text-muted" t-if="(record.account_online_journal_id.value != '')" t-att-title="record.next_synchronization.value">Next sync: <t t-esc="record.next_synchronization.value"/></span>

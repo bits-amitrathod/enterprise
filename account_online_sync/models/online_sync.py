@@ -2,7 +2,7 @@
 import requests
 import json
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.tools.translate import _
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero, DEFAULT_SERVER_DATE_FORMAT
@@ -154,6 +154,18 @@ class ProviderAccount(models.Model):
     def cron_fetch_online_transactions(self):
         return False
 
+    @api.model
+    def get_manual_configuration_form(self):
+        view_id = self.env.ref('account.setup_bank_account_wizard').id
+        return {'type': 'ir.actions.act_window',
+                'name': _('Create a Bank Account'),
+                'res_model': 'account.setup.bank.manual.config',
+                'target': 'new',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'views': [[view_id, 'form']],
+        }
+
 
 class OnlineAccount(models.Model):
     """
@@ -199,6 +211,8 @@ class OnlineAccountLinkWizard(models.TransientModel):
     balance = fields.Float(related='online_account_id.balance', readonly=True)
     account_online_wizard_id = fields.Many2one('account.online.wizard')
     account_number = fields.Char(related='online_account_id.account_number', readonly=True)
+    journal_statements_creation = fields.Selection(selection=lambda x: x.env['account.journal'].get_statement_creation_possible_values())
+
 
 class OnlineAccountWizard(models.TransientModel):
     _name = 'account.online.wizard'
@@ -213,6 +227,16 @@ class OnlineAccountWizard(models.TransientModel):
     account_ids = fields.One2many('account.online.link.wizard', 'account_online_wizard_id', 'Synchronized accounts')
     hide_table = fields.Boolean(help='Technical field to hide table in view')
 
+    @api.onchange('account_ids')
+    def _onchange_account_ids(self):
+        for account in self.account_ids:
+            if account.journal_id:
+                account.journal_statements_creation = account.journal_id.bank_statement_creation
+
+            if account.action == 'drop':
+                account.journal_id = None
+                account.journal_statements_creation = None
+
     def sync_now(self):
         # Link account to journal
         journal_already_linked = []
@@ -226,14 +250,16 @@ class OnlineAccountWizard(models.TransientModel):
                 journal_already_linked.append(account.journal_id.id)
                 account.journal_id.write({
                     'account_online_journal_id': account.online_account_id.id,
-                    'bank_statements_source': 'online_sync'
+                    'bank_statements_source': 'online_sync',
+                    'bank_statement_creation': account.journal_statements_creation,
                 })
             elif account.action == 'create':
                 vals = {
                     'name': account.name,
                     'type': 'bank',
                     'account_online_journal_id': account.online_account_id.id,
-                    'bank_statements_source': 'online_sync'
+                    'bank_statements_source': 'online_sync',
+                    'bank_statement_creation': account.journal_statements_creation,
                 }
                 self.env['account.journal'].create(vals)
         # call to synchronize
@@ -248,21 +274,29 @@ class OnlineAccountWizard(models.TransientModel):
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
-    bank_statements_source = fields.Selection(selection_add=[("online_sync", "Bank Synchronization")])
+    def __get_bank_statements_available_sources(self):
+        rslt = super(AccountJournal, self).__get_bank_statements_available_sources()
+        rslt.append(("online_sync", _("Automated Bank Synchronization")))
+        return rslt
+
+    @api.model
+    def get_statement_creation_possible_values(self):
+        return [('none', 'Create one statement per synchronization'),
+                ('day', 'Create daily statements'),
+                ('week', 'Create weekly statements'),
+                ('bimonthly', 'Create bi-monthly statements'),
+                ('month', 'Create monthly statements')]
+
     next_synchronization = fields.Datetime("Next synchronization", compute='_compute_next_synchronization')
     account_online_journal_id = fields.Many2one('account.online.journal', string='Online Account')
     account_online_provider_id = fields.Many2one('account.online.provider', related='account_online_journal_id.account_online_provider_id')
     synchronization_status = fields.Char(related='account_online_provider_id.status')
-    bank_statement_creation = fields.Selection([('none', 'Create one statement per synchronization'),
-                                                ('day', 'Create daily statements'),
-                                                ('week', 'Create weekly statements'),
-                                                ('bimonthly', 'Create bi-monthly statements'),
-                                                ('month', 'Create monthly statements')],
-                                               help="""This field is used for the online synchronization:
-                                                    depending on the option selected, newly fetched transactions
-                                                    will be put inside previous statement or in a new one""",
+    bank_statement_creation = fields.Selection(selection=get_statement_creation_possible_values,
+                                               help="""Defines when a new bank statement
+                                               will be created when fetching new transactions
+                                               from your bank account.""",
                                                default='none',
-                                               string='Creation of bank statement')
+                                               string='Creation of Bank Statements')
 
     @api.one
     def _compute_next_synchronization(self):
@@ -270,24 +304,43 @@ class AccountJournal(models.Model):
 
     @api.multi
     def action_choose_institution(self):
+        sync_error_message = ''
         ctx = self.env.context.copy()
         country = self.company_id.country_id
         ctx.update({'dialog_size': 'medium', 'country': country.code, 'country_name': country.name, 'journal_id': self.id})
-        # Get starred institutions
-        starred_inst = self.env['account.online.provider']._get_favorite_institutions(country.code).get('result', [])
+        starred_inst = []
+        try:
+            # Get starred institutions
+            starred_inst = self.env['account.online.provider']._get_favorite_institutions(country.code).get('result', [])
+
+        except UserError as err:
+            sync_error_message = err.name
+
         return {
-                'type': 'ir.actions.client',
-                'tag': 'online_sync_institution_selector',
-                'name': _('Select your institution'),
-                'starred_inst': starred_inst,
-                'target': 'new',
-                'context': ctx,
-                }
+            'type': 'ir.actions.client',
+            'tag': 'online_sync_institution_selector',
+            'name': _('Add a Bank Account'),
+            'starred_inst': starred_inst,
+            'sync_error_message': sync_error_message,
+            'target': 'new',
+            'context': ctx,
+            }
 
     @api.multi
     def manual_sync(self):
         if self.account_online_journal_id:
             return self.account_online_journal_id.account_online_provider_id.manual_sync()
+
+    def open_online_sync_form(self):
+        return {
+                'type': 'ir.actions.act_window',
+                'name': _('Online Synchronization'),
+                'res_model': 'account.online.wizard',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'view_id': self.env.ref("view_account_online_wizard_form").id,
+                'target': 'new',
+               }
 
     @api.model
     def cron_fetch_online_transactions(self):
