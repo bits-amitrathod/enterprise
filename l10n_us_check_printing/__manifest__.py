@@ -11,9 +11,11 @@ checks numbering (if you use pre-printed checks without numbers) in journal sett
 
 Supported formats
 -----------------
-- Check on top : Quicken / QuickBooks standard
-- Check on middle: Peachtree standard
-- Check on bottom: ADP standard
+This module supports the three most common check formats and will work out of the box with the linked checks from checkdepot.net.
+
+- Check on top: Quicken / QuickBooks standard (https://www.checkdepot.net/checks/checkorder/59209.htm)
+- Check on middle: Peachtree standard (https://www.checkdepot.net/checks/checkorder/513791.htm)
+- Check on bottom: ADP standard (https://www.checkdepot.net/checks/checkorder/laser_bottomcheck.htm)
     """,
     'website': 'https://www.odoo.com/page/accounting',
     'depends' : ['account_check_printing', 'l10n_us'],
