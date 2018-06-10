@@ -52,6 +52,12 @@ msgid ""
 " or contact its customer support to resolve this issue.  Once done, please "
 "update your account credentials in case they are changed."
 msgstr ""
+"Обліковий запис заблоковано (407): ми не можемо оновити ваш обліковий запис,"
+" оскільки ваш обліковий запис заблоковано. Це зазвичай виникає через занадто"
+" велику кількість невдалих спроб входу за короткий проміжок часу. Будь "
+"ласка, відвідайте веб-сайт або зв'яжіться зі службою підтримки клієнтів, "
+"щоби вирішити цю проблему. Після завершення оновлення, будь ласка, оновіть "
+"облікові дані свого облікового запису, якщо вони змінені."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:424
@@ -61,6 +67,9 @@ msgid ""
 "at the site. Please log in at the site and confirm that your account is set "
 "up, then try again."
 msgstr ""
+"Обліковий запис не знайдено (408). На жаль, ми не змогли знайти на вашому "
+"сайті жодних облікових записів. Будь ласка, увійдіть на сайт та підтвердьте,"
+" що налаштовано ваш обліковий запис, а потім повторіть спробу."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:402
@@ -71,6 +80,10 @@ msgid ""
 "been closed.  Please deactivate or delete the relevant account and try "
 "again."
 msgstr ""
+"Звіт рахунку закритий (422): нам не вдалося оновити дані вашого облікового "
+"запису, оскільки з'являється, що один або кілька ваших пов'язаних облікових "
+"записів закриті. Вимкніть або видаліть відповідний обліковий запис і "
+"повторіть спробу."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:399
@@ -79,6 +92,9 @@ msgid ""
 "Account Type Not Supported(417):The type of account we found is not "
 "currently supported.  Please remove this site and add as a  manual account."
 msgstr ""
+"Тип облікового запису не підтримується (417): тип облікового запису, який ми"
+" знайшли, наразі не підтримується. Будь ласка, вилучіть цей сайт і додайте "
+"як обліковий запис вручну."
 
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_journal_yodlee_account_status
@@ -88,13 +104,13 @@ msgstr "Активний/Неактивний в системі Yodlee"
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_provider_yodlee_additional_status
 msgid "Additional information on status"
-msgstr ""
+msgstr "Додаткова інформація про статус"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:432
 #, python-format
 msgid "An Error has occurred (code %s)"
-msgstr ""
+msgstr "Сталася помилка (код %s)"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:317
@@ -103,6 +119,8 @@ msgstr ""
 msgid ""
 "An error has occurred while trying to refresh accounts (type not supported)"
 msgstr ""
+"Під час спроби оновити облікові записи сталася помилка (тип не "
+"підтримується)."
 
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_res_company
@@ -113,7 +131,7 @@ msgstr "Компанії"
 #: code:addons/account_yodlee/models/yodlee.py:160
 #, python-format
 msgid "Could not retrieve login form for siteId: %s (%s)"
-msgstr ""
+msgstr "Не вдалося отримати форму для входу для siteid:%s (%s)"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:394
@@ -123,6 +141,10 @@ msgid ""
 "because your username and/or password were reported to be incorrect.  Please"
 " re-verify your username and password."
 msgstr ""
+"Необхідна повторна перевірка облікових записів (402): ми не можемо оновити "
+"ваш обліковий запис, оскільки ваше ім'я користувача та/або пароль були "
+"помилковими. Будь ласка, повторно підтвердіть своє ім'я користувача та "
+"пароль."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:400
@@ -131,6 +153,9 @@ msgid ""
 "Credential Re-Verification Required (420):The site has merged with another. "
 "Please re-verify your credentials at the site and update the same."
 msgstr ""
+"Обов'язкове повторне підтвердження облікових записів (420): сайт залито з "
+"іншим. Будь ласка, повторно підтвердіть свої облікові дані на сайті та "
+"оновіть їх."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:311
@@ -138,13 +163,13 @@ msgstr ""
 msgid ""
 "Different error have occurred on different accounts, see provider account "
 "message for details"
-msgstr ""
+msgstr "В різних бухобліках виникла різна помилка, докладніше див"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:102
 #, python-format
 msgid "Error %s, message: %s, reference code: %s"
-msgstr ""
+msgstr "Помилка %s, повідомлення: %s, довідковий код: %s"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:393
@@ -153,6 +178,8 @@ msgid ""
 "Home Value Not Found (511): The site is unable to provide home value for "
 "your property. We suggest you to delete this site."
 msgstr ""
+"Початкове значення не знайдене (511): сайт не може забезпечити домашнє "
+"значення для вашої власності. Ми радимо вам видалити цей сайт."
 
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_account_online_journal
@@ -167,6 +194,9 @@ msgid ""
 "is not English. Please visit the site and change the language setting to "
 "English."
 msgstr ""
+"Неправильне налаштування мови (421): налаштування мови для вашого сайту "
+"бухобліку не є англійською. Будь ласка, відвідайте сайт і змініть "
+"налаштування мови на англійську мову."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:416
@@ -177,6 +207,10 @@ msgid ""
 "introduced. Ensure your account settings in <Cobrand> are updated with this "
 "information."
 msgstr ""
+"Помилка MFA: необхідна додаткова перевірка автентичності (521): Будь ласка, "
+"зареєструйтесь у новій системі перевірки автентичності <Account Name> "
+"введено. Переконайтеся, що налаштування бухобліку ввімкнено<Cobrand> "
+"оновлюються з цією інформацією."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:419
@@ -185,6 +219,9 @@ msgid ""
 "MFA error: Authentication Information Expired (524):We're sorry, the "
 "authentication information you provided has expired. Please try again."
 msgstr ""
+"Помилка MFA: інформація про автентифікацію закінчилася (524). На жаль, "
+"термін дії наданої вами ідентифікації закінчився. Будь ласка спробуйте ще "
+"раз."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:415
@@ -194,6 +231,9 @@ msgid ""
 "indicates that the additional authentication information you provided is "
 "incorrect. Please try updating your account again."
 msgstr ""
+"Помилка MFA: інформація про автентифікацію невірна (520): Вибачте, сайт "
+"показує, що надана вами додаткова інформація про автентифікацію невірна. "
+"Спробуйте знову оновити свій бухоблік."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:418
@@ -202,6 +242,9 @@ msgid ""
 "MFA error: Authentication Information Incorrect (523):We're sorry, the "
 "authentication information you  provided is incorrect. Please try again."
 msgstr ""
+"Помилка MFA: інформація про автентифікацію невірна (523): Вибачте, "
+"інформація про вашу автентифікацію, яку ви вказали, невірна. Будь ласка "
+"спробуйте ще раз."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:414
@@ -211,6 +254,10 @@ msgid ""
 "updated as your authentication information like security question and answer"
 " was unavailable or incomplete. Please update your account settings."
 msgstr ""
+"Помилка MFA: Необхідна інформація про аутентифікацію (519): Ваш облік не "
+"оновлювався, оскільки ваша інформація про автентифікацію, таке як таємне "
+"запитання, а відповідь була недоступною або неповною. Оновіть налаштування "
+"свого обліку."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:413
@@ -220,6 +267,9 @@ msgid ""
 " updated as the required additional authentication information was "
 "unavailable. Please try now."
 msgstr ""
+"Помилка MFA: інформація про аутентифікацію недоступна (518): ваш облік не "
+"оновлено, оскільки потрібна додаткова інформація про автентифікацію була "
+"недоступною. Будь ласка, спробуйте зараз."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:420
@@ -229,6 +279,9 @@ msgid ""
 "your account because your username/password or additional security "
 "credentials are incorrect. Please try again."
 msgstr ""
+"Помилка MFA: Необхідна повторна перевірка облікових записів (526): ми не "
+"можемо оновити ваш облік, оскільки ваш логін та пароль або додаткові "
+"облікові дані безпеки невірні. Будь ласка спробуйте ще раз."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:431
@@ -238,6 +291,10 @@ msgid ""
 "for technical reasons. This type of error is usually resolved in a few days."
 " We apologize for the inconvenience. Please try again later."
 msgstr ""
+"Помилка MFA: проблема оновлення облікового запису (525): ми не можемо "
+"оновити ваш обліковий запис з технічних причин. Цей тип помилки зазвичай "
+"вирішується через кілька днів. Ми просимо вибачення за незручності. Будь-"
+"ласка спробуйте пізніше."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:417
@@ -247,6 +304,9 @@ msgid ""
 "required security information was unavailable or was not provided within the"
 " expected time. Please try again."
 msgstr ""
+"Помилка MFA: запит на тайм-аут (522): ваш запит закінчився, оскільки "
+"потрібна інформація про безпеку була недоступною або не була надана протягом"
+" очікуваного часу. Будь ласка спробуйте ще раз."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:429
@@ -256,6 +316,10 @@ msgid ""
 "update your account because your token is no longer valid at the site. "
 "Please update your information and try again, or contact customer support."
 msgstr ""
+"Помилка MFA: інформація про Site Device закінчилася (509). На жаль, ми не "
+"можемо оновити ваш обліковий запис, оскільки ваш токен більше не дійсний на "
+"сайті. Будь ласка, оновіть свою інформацію та повторіть спробу, або "
+"зверніться до служби підтримки клієнтів."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:385
@@ -265,6 +329,10 @@ msgid ""
 "session was already established at the same time.  If you are currently "
 "logged on to this account directly, please log off and try after some time"
 msgstr ""
+"Кілька вхідних користувачів (416): ми намагалися оновити ваш обліковий "
+"запис, але інший сеанс вже був встановлений одночасно. Якщо ви зараз "
+"безпосередньо ввійшли в цей обліковий запис, вийдіть із системи та спробуйте"
+" через деякий час"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:411
@@ -274,6 +342,9 @@ msgid ""
 " need to provide additional information. Please update your account and try "
 "again."
 msgstr ""
+"Необхідна нова інформація для входу (506): Вибачте, щоб увійти на цей сайт, "
+"вам потрібно надати додаткову інформацію. Оновіть свій обліковий запис і "
+"повторіть спробу."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:387
@@ -284,6 +355,10 @@ msgid ""
 "persists, please contact customer support at online@odoo.com for further "
 "assistance."
 msgstr ""
+"Не знайдено обліковий запис (423): ми не змогли виявити обліковий запис. "
+"Будь-ласка, переконайтесь, що в даний момент інформація про ваш обліковий "
+"запис доступна, і якщо проблема не зникне, зверніться в службу підтримки "
+"користувачів на сайті online@odoo.com для подальшої допомоги."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:412
@@ -292,24 +367,26 @@ msgid ""
 "No Payees Found(512):Your request cannot be completed as no payees were "
 "found in your account."
 msgstr ""
+"Не знайдено одержувачів платежів (512): Ваш запит не може бути завершений, "
+"оскільки в вашому обліковому записі не знайдено жодного отримувача платежу."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:48
 #, python-format
 msgid "Please configure an email in the company settings."
-msgstr ""
+msgstr "Будь ласка, налаштуйте електронну пошту у налаштуваннях компанії."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:145
 #, python-format
 msgid "Please enter at least 3 characters for the search"
-msgstr ""
+msgstr "Введіть не менше 3 символів для пошуку"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:198
 #, python-format
 msgid "Please fill all required fields"
-msgstr ""
+msgstr "Будь ласка, заповніть усі необхідні поля"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:396
@@ -320,6 +397,11 @@ msgid ""
 "or contact its customer support to resolve this issue. Once done, please "
 "update your account credentials in case they are changed else try again."
 msgstr ""
+"Проблема оновлення обліку (406): ми не змогли оновити ваш обліковий запис, "
+"оскільки на сайті потрібні додаткові дії. Будь ласка, відвідайте веб-сайт "
+"або зв'яжіться зі службою підтримки клієнтів, щоби вирішити цю проблему. "
+"Після завершення, будь ласка, оновіть облікові дані свого облікового запису,"
+" якщо вони будуть змінені, ще раз повторіть спробу."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:430
@@ -328,6 +410,8 @@ msgid ""
 "Problem Updating Account (517) :We'resorry, there was a technical problem "
 "updating your account. Please try again."
 msgstr ""
+"Проблема оновлення облікового запису (517): На жаль, виникла технічна "
+"проблема з оновленням облікового запису. Будь ласка спробуйте ще раз."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:421
@@ -336,6 +420,8 @@ msgid ""
 "Problem Updating Account(401):We're sorry, your request timed out. Please "
 "try again."
 msgstr ""
+"Проблема оновлення облікового запису (401): На жаль, ваш запит закінчився. "
+"Будь ласка спробуйте ще раз."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:422
@@ -345,6 +431,9 @@ msgid ""
 "updating your account. This kind of error is usually resolved in a few days."
 " Please try again later."
 msgstr ""
+"Проблема оновлення облікового запису (403). На жаль, виникла технічна "
+"проблема з оновленням облікового запису. Така помилка зазвичай вирішується "
+"через кілька днів. Будь-ласка спробуйте пізніше."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:423
@@ -353,6 +442,8 @@ msgid ""
 "Problem Updating Account(404):We're sorry, there was a technical problem "
 "updating your account. Please try again later."
 msgstr ""
+"Проблема оновлення облікового запису (404): На жаль, виникла технічна "
+"проблема з оновленням облікового запису. Будь-ласка спробуйте пізніше."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:381
@@ -361,6 +452,8 @@ msgid ""
 "Problem Updating Account(409): We could not update your account because the "
 "end site is experiencing technical difficulties."
 msgstr ""
+"Проблема оновлення облікового запису (409): ми не змогли оновити ваш "
+"обліковий запис, оскільки кінець сайту зазнає технічних труднощів."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:383
@@ -369,6 +462,8 @@ msgid ""
 "Problem Updating Account(412): We could not update your account because the "
 "site is experiencing technical difficulties."
 msgstr ""
+"Проблема оновлення облікового запису (412): ми не можемо оновити ваш "
+"обліковий запис, оскільки на сайті виникають технічні труднощі."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:425
@@ -378,6 +473,9 @@ msgid ""
 "at the site because of a technical issue. This type of problem is usually "
 "resolved in a few days. Please try again later."
 msgstr ""
+"Проблема оновлення облікового запису (413). На жаль, ми не змогли оновити "
+"ваш обліковий запис на сайті через технічну проблему. Цей тип проблеми "
+"зазвичай вирішується через кілька днів. Будь-ласка спробуйте пізніше."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:384
@@ -386,6 +484,8 @@ msgid ""
 "Problem Updating Account(415): We could not update your account because the "
 "site is experiencing technical difficulties."
 msgstr ""
+"Проблема оновлення облікового запису (415): ми не можемо оновити ваш "
+"обліковий запис, оскільки на сайті виникають технічні труднощі."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:386
@@ -394,6 +494,9 @@ msgid ""
 "Problem Updating Account(418): We could not update your account because the "
 "site is experiencing technical difficulties. Please try later."
 msgstr ""
+"Проблема оновлення облікового запису (418): ми не можемо оновити ваш "
+"обліковий запис, оскільки на сайті виникають технічні труднощі. Будь ласка, "
+"спробуйте пізніше."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:426
@@ -403,6 +506,9 @@ msgid ""
 "because of unexpected variations at the site. This kind of problem is "
 "usually resolved in a few days. Please try again later."
 msgstr ""
+"Проблема оновлення облікового запису (419): На жаль, ми не можемо оновити "
+"ваш обліковий запис через непередбачені варіанти на сайті. Цей тип проблеми "
+"зазвичай вирішується через кілька днів. Будь-ласка спробуйте пізніше."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:389
@@ -411,6 +517,9 @@ msgid ""
 "Problem Updating Account(425): We could not update your account because the "
 "site is experiencing technical difficulties. Please try later."
 msgstr ""
+"Проблема оновлення облікового запису (425): ми не можемо оновити ваш "
+"обліковий запис, оскільки на сайті виникають технічні труднощі. Будь ласка, "
+"спробуйте пізніше."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:390
@@ -420,6 +529,9 @@ msgid ""
 "technical reasons. This type of error is usually resolved in a few days. We "
 "apologize for the inconvenience."
 msgstr ""
+"Проблема оновлення облікового запису (426): ми не можемо оновити ваш "
+"обліковий запис з технічних причин. Цей тип помилки зазвичай вирішується "
+"через кілька днів. Ми просимо вибачення за незручності."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:427
@@ -429,6 +541,9 @@ msgid ""
 " data updates for this site, and it may take a few days to be successful as "
 "we get started. Please try again later."
 msgstr ""
+"Проблема оновлення облікового запису (507): На жаль, Yodlee тільки що почав "
+"надавати оновлення даних для цього сайту, і це може зайняти кілька днів, "
+"щоби бути успішними, як ми почали. Будь-ласка спробуйте пізніше."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:392
@@ -438,6 +553,9 @@ msgid ""
 "information for your address. Please verify if the property address you have"
 " provided is correct."
 msgstr ""
+"Власний запис не знайдено (510): на сайті не вдається знайти інформацію про "
+"власність для вашої адреси. Перевірте правильність вказаної вами адреси "
+"ресурсу."
 
 #. module: account_yodlee
 #: model:ir.model,name:account_yodlee.model_account_online_provider
@@ -452,6 +570,9 @@ msgid ""
 "site requiring you to verify your personal information. Please log in to the"
 " site and update the fields required."
 msgstr ""
+"Обов'язкове повторне підтвердження (429): ми не можемо оновити ваш обліковий"
+" запис через сайт, де потрібно підтвердити вашу особисту інформацію. Будь "
+"ласка, ввійдіть на сайт та оновіть потрібні поля."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:403
@@ -462,6 +583,10 @@ msgid ""
 "click through to your account overview page to update the account.  We "
 "apologize for the inconvenience."
 msgstr ""
+"Обов'язкове повторне підтвердження (427): ми не можемо оновити ваш обліковий"
+" запис через сайт, який вимагає перегляду нової рекламної кампанії. Будь "
+"ласка, увійдіть на сайт та перейдіть на сторінку перегляду свого облікового "
+"запису, щоб оновити обліковий запис. Ми просимо вибачення за незручності."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:404
@@ -471,6 +596,9 @@ msgid ""
 "site requiring you to accept a new Terms & Conditions. Please log in to the "
 "site and read and accept the T&C."
 msgstr ""
+"Обов'язкове повторне підтвердження (428): ми не можемо оновити ваш обліковий"
+" запис через сайт, який вимагає прийняття нових загальних положень та умов. "
+"Будь ласка, увійдіть на сайт і прочитайте та прийміть T & C."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:407
@@ -480,6 +608,9 @@ msgid ""
 "Please complete your registration at the end site. Once completed, please "
 "complete adding this account."
 msgstr ""
+"Реєстрація вимагає уваги (433): Автозаповнення не є повним. Будь ласка, "
+"заповніть реєстрацію на сайті до кінця. Після завершення заповніть цей "
+"обліковий запис."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:408
@@ -489,6 +620,9 @@ msgid ""
 "completed and requires further input from you.  Please re-verify your "
 "registration information to complete the process."
 msgstr ""
+"Реєстрація вимагає уваги (435): Ваша автоматична реєстрація не може бути "
+"завершена і вимагає подальшого введення від вас. Будь ласка, повторно "
+"підтвердіть свою реєстраційну інформацію, щоби завершити процес."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:409
@@ -498,6 +632,9 @@ msgid ""
 "completed and requires further input from you.  Please re-verify your "
 "registration information to complete the process."
 msgstr ""
+"Реєстрація вимагає уваги (435): Ваша автоматична реєстрація не може бути "
+"завершена і вимагає подальшого введення від вас. Будь ласка, повторно "
+"підтвердіть свою реєстраційну інформацію, щоби завершити процес."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:428
@@ -506,6 +643,8 @@ msgid ""
 "Request Timed Out (508): We are sorry, your request timed out due to "
 "technical reasons. Please try again."
 msgstr ""
+"Запит на вичерпаний час (508): Вибачте, ваш запит закінчився через технічні "
+"причини. Будь ласка спробуйте ще раз."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:398
@@ -515,6 +654,9 @@ msgid ""
 "account. You may have selected a similar site under a different category by "
 "accident in which case you should select the correct site."
 msgstr ""
+"Запитаний тип облікового запису не знайдено (414): ми не змогли знайти "
+"потрібний вам обліковий запис. Ви, можливо, вибрали подібний сайт під іншою "
+"категорією випадково, у такому випадку ви повинні вибрати правильний сайт."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:388
@@ -525,6 +667,10 @@ msgid ""
 "inconvenience.  This problem is typically resolved in a few hours. Please "
 "try later."
 msgstr ""
+"Site Down for Maintenance (424): ми не змогли оновити ваш обліковий запис, "
+"оскільки сайт тимчасово не працює для обслуговування. Ми просимо вибачення "
+"за незручності. Ця проблема зазвичай вирішується через кілька годин. Будь "
+"ласка, спробуйте пізніше."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:382
@@ -533,6 +679,8 @@ msgid ""
 "Site No Longer Available (411):The site no longer provides online services "
 "to its customers.  Please delete this account."
 msgstr ""
+"Сайт більше не доступний (411): сайт більше не надає онлайн-послуг своїм "
+"клієнтам. Видаліть цей обліковий запис."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:406
@@ -542,6 +690,9 @@ msgid ""
 "updates. Please deactivate or delete your account. We apologize for the "
 "inconvenience."
 msgstr ""
+"Сайт більше не підтримується (430): цей сайт більше не підтримується для "
+"оновлення даних. Будь ласка, вимкніть або видаліть свій облік. Ми просимо "
+"вибачення за незручності."
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:391
@@ -551,18 +702,21 @@ msgid ""
 "used by this site. We apologize for any inconvenience. Check back "
 "periodically if this situation has changed."
 msgstr ""
+"Сайт не підтримується (505): наразі ми не підтримуємо систему безпеки, що "
+"використовується цим сайтом. Вибачте за будь-які незручності. Періодично "
+"перевіряйте, якщо ця ситуація змінилася."
 
 #. module: account_yodlee
 #: model:ir.model.fields,help:account_yodlee.field_account_online_provider_yodlee_next_schedule_refresh
 msgid "Technical field: scheduled time for yodlee to perform an update"
-msgstr ""
+msgstr "Технічне поле: запланований час для yodlee для виконання оновлення"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:273
 #: code:addons/account_yodlee/models/yodlee.py:274
 #, python-format
 msgid "Timeout: Could not retrieve accounts informations"
-msgstr ""
+msgstr "Час вийшов: не вдалось отримати інформацію про обліки"
 
 #. module: account_yodlee
 #: code:addons/account_yodlee/models/yodlee.py:60
@@ -580,6 +734,8 @@ msgid ""
 "Update Request Canceled(405):Your account was not updated because you "
 "canceled the request."
 msgstr ""
+"Запит на оновлення скасовано (405): ваш обліковий запис не оновлено, "
+"оскільки ви скасували запит."
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_account_online_journal_yodlee_account_status
@@ -609,19 +765,19 @@ msgstr ""
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_access_token
 msgid "Yodlee access token"
-msgstr ""
+msgstr "Доступний токен Yodlee "
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_login
 msgid "Yodlee login"
-msgstr ""
+msgstr "Вхід Yodlee"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_user_password
 msgid "Yodlee password"
-msgstr ""
+msgstr "Пароль Yodlee"
 
 #. module: account_yodlee
 #: model:ir.model.fields,field_description:account_yodlee.field_res_company_yodlee_access_token
 msgid "access_token"
-msgstr ""
+msgstr "access_token"

@@ -35,7 +35,7 @@ msgstr "Теги рахунків"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Account used when transferring between banks"
-msgstr ""
+msgstr "Рахунок використовується при передачі між банками"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_partner_view_form
@@ -45,7 +45,7 @@ msgstr "Бухоблік"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_use_anglo_saxon
 msgid "Anglo-Saxon Accounting"
-msgstr ""
+msgstr "Англо-Саксонський бухоблік"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -55,7 +55,7 @@ msgstr "Скасувати"
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_change_lock_date
 msgid "Change lock date"
-msgstr ""
+msgstr "Змінити дату блокування"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_create_uid
@@ -80,7 +80,7 @@ msgstr "Фінансові звіти"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Fiscal Period Closing"
-msgstr ""
+msgstr "Закриття фінансового періоду"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -90,12 +90,12 @@ msgstr "Фіскальний рік"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_day
 msgid "Fiscalyear Last Day"
-msgstr ""
+msgstr "Останній день фінансового року"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid "Fiscalyear Last Month"
-msgstr ""
+msgstr "Останній місяць минулого року"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_id
@@ -105,7 +105,7 @@ msgstr "ID"
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Inter-Banks Transfers"
-msgstr ""
+msgstr "Міжбанківські перекази"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_transfer_account_id
@@ -119,7 +119,7 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Last Day"
-msgstr ""
+msgstr "Останній день"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date___last_update
@@ -140,6 +140,7 @@ msgstr "Останнє оновлення"
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Last day of your fiscal year, for automatic opening entries"
 msgstr ""
+"Останній день вашого фінансового року для автоматичного відкриття записів"
 
 #. module: account_accountant
 #. openerp-web
@@ -152,7 +153,7 @@ msgstr "Почнемо з нового рахунка-фактури для по
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_fiscalyear_lock_date
 msgid "Lock Date for All Users"
-msgstr ""
+msgstr "Дата блокування для всіх користувачів"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date_period_lock_date
@@ -163,24 +164,24 @@ msgstr "Дата блокування для користувачів"
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_action_change_lock_date
 msgid "Lock Dates"
-msgstr ""
+msgstr "Дати блокування"
 
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_view_account_change_lock_date
 msgid "Lock your Fiscal Period"
-msgstr ""
+msgstr "Заблокуйте ваш фінансовий період"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Lock your fiscal period"
-msgstr ""
+msgstr "Заблокуйте ваш фінансовий період"
 
 #. module: account_accountant
 #. openerp-web
 #: code:addons/account_accountant/static/src/js/tour.js:17
 #, python-format
 msgid "Make your system ready to invoice in a few steps."
-msgstr ""
+msgstr "Зробіть вашу систему готову до виставлення рахунків у кілька кроків."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date_fiscalyear_lock_date
@@ -210,6 +211,9 @@ msgid ""
 " this date. Use it for period locking inside an open fiscal year, for "
 "example."
 msgstr ""
+"Лише користувачі з роллю \"Консультант\" можуть редагувати облікові записи з"
+" урахуванням цієї дати. Використовуйте його для фінансовго періоду всередині"
+" відкритого фінансового року, наприклад."
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_product_product_categories
@@ -230,7 +234,7 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Record cost of goods sold in your journal entries"
-msgstr ""
+msgstr "Запишіть вартість товарів, проданих у ваших журнальних записах"
 
 #. module: account_accountant
 #: model:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -242,7 +246,7 @@ msgstr "Зберегти"
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings_fiscalyear_last_month
 msgid ""
 "The last day of the month will be taken if the chosen day doesn't exist."
-msgstr ""
+msgstr "Останній день місяця буде прийнятий, якщо обраного дня не існує."
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings_transfer_account_id
@@ -266,6 +270,7 @@ msgstr ""
 #, python-format
 msgid "When you're ready, close this planner to continue the tour."
 msgstr ""
+"Коли ви будете готові, закрийте цей планувальник, щоби продовжити екскурсію."
 
 #. module: account_accountant
 #. openerp-web

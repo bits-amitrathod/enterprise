@@ -47,25 +47,25 @@ msgstr "Номер рахунку"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_account_online_journal_ids
 msgid "Account Online Journal"
-msgstr ""
+msgstr "Бухгалтерський онлайн-журнал"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_account_online_provider_id
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_account_online_provider_id
 msgid "Account Online Provider"
-msgstr ""
+msgstr "Бухгалтерський онлайн-провайдер"
 
 #. module: account_online_sync
 #: model:ir.actions.server,name:account_online_sync.online_sync_cron_ir_actions_server
 #: model:ir.cron,cron_name:account_online_sync.online_sync_cron
 #: model:ir.cron,name:account_online_sync.online_sync_cron
 msgid "Account: Journal online sync"
-msgstr ""
+msgstr "Обліковий запис: онлайн-синхронізація журналу"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_action_required
 msgid "Action Required"
-msgstr ""
+msgstr "Потрібна дія"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
@@ -132,32 +132,32 @@ msgstr "Налаштування"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_count_account_online_journal
 msgid "Count Account Online Journal"
-msgstr ""
+msgstr "Бухгалтерський онлайн-журнал"
 
 #. module: account_online_sync
 #: selection:account.journal,bank_statement_creation:0
 msgid "Create bi-monthly statements"
-msgstr ""
+msgstr "Створіть щомісячні виписки"
 
 #. module: account_online_sync
 #: selection:account.journal,bank_statement_creation:0
 msgid "Create daily statements"
-msgstr ""
+msgstr "Створіть щомісячні виписки"
 
 #. module: account_online_sync
 #: selection:account.journal,bank_statement_creation:0
 msgid "Create monthly statements"
-msgstr ""
+msgstr "Створіть щомісячні виписки"
 
 #. module: account_online_sync
 #: selection:account.journal,bank_statement_creation:0
 msgid "Create one statement per synchronization"
-msgstr ""
+msgstr "Створіть одне твердження для синхронізації"
 
 #. module: account_online_sync
 #: selection:account.journal,bank_statement_creation:0
 msgid "Create weekly statements"
-msgstr ""
+msgstr "Створіть щотижневі виписки"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_create_uid
@@ -176,7 +176,7 @@ msgstr "Дата створення"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_bank_statement_creation
 msgid "Creation of bank statement"
-msgstr ""
+msgstr "Створення банківської виписки"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_display_name
@@ -235,7 +235,7 @@ msgstr "Остання модифікація"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_last_refresh
 msgid "Last Refresh"
-msgstr ""
+msgstr "Останнє оновлення"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_write_uid
@@ -287,7 +287,7 @@ msgstr "Наступна синхронізація"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_number_added
 msgid "Number Added"
-msgstr ""
+msgstr "Номер додано"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_account_online_journal_id
@@ -327,7 +327,7 @@ msgstr "Онлайн рахунок"
 #: code:addons/account_online_sync/models/online_sync.py:269
 #, python-format
 msgid "Opening statement: first synchronization"
-msgstr ""
+msgstr "Відкриття виписки: перша синхронізація"
 
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
@@ -342,17 +342,17 @@ msgstr "Проблема під час синхронізації"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_account_identifier
 msgid "Provider Account Identifier"
-msgstr ""
+msgstr "Ідентифікатор рахунку постачальника"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_identifier
 msgid "Provider Identifier"
-msgstr ""
+msgstr "Ідентифікатор постачальника"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_type
 msgid "Provider Type"
-msgstr ""
+msgstr "Тип постачальника"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_provider
@@ -362,7 +362,7 @@ msgstr "Провайдер для синхронізації онлайн рах
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_status_code
 msgid "Status Code"
-msgstr ""
+msgstr "Код статусу"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_synchronization_status
@@ -395,6 +395,9 @@ msgid ""
 "                                                    depending on the option selected, newly fetched transactions\n"
 "                                                    will be put inside previous statement or in a new one"
 msgstr ""
+"Це поле використовується для онлайн-синхронізації:\n"
+"                                                     залежно від вибраної опції, щойно отримані транзакції\n"
+"                                                     буде поміщено всередину попереднього виразу або в новий"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_action_required
@@ -470,7 +473,7 @@ msgstr "кількість рахунків, доданих від виклик�
 #: code:addons/account_online_sync/models/online_sync.py:315
 #, python-format
 msgid "online sync"
-msgstr ""
+msgstr "онлайн синхронізація"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard_count_account_online_journal
