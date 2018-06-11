@@ -46,9 +46,9 @@
                     <filter string="Revenue Recognition" name="revenue" context="{'group_by':'asset_id'}"/>
                     <filter string="Category" name="category" context="{'group_by':'asset_category_id'}"/>
                     <filter string="Company" name="company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
-                    <filter string="Sales Month" name="sale_month" domain="[('date','=',time.strftime('%%Y-%%m-%%d'))]" context="{'group_by':'date'}" help="Date of Revenue Sales"/>
-                    <filter string="Revenue Month" name='rev_month'
-                            context="{'group_by':'depreciation_date'}" help="Revenue Month"/>
+                    <filter string="Sales Date" name="sale_month" domain="[('date','=',time.strftime('%%Y-%%m-%%d'))]" context="{'group_by':'date'}" help="Date of Revenue Sales"/>
+                    <filter string="Revenue Date" name='rev_month'
+                            context="{'group_by':'depreciation_date'}"/>
                 </group>
             </search>
         </field>
