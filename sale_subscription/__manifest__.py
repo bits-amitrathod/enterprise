@@ -20,6 +20,7 @@ Features:
     'depends': [
         'sale_management',
         'portal',
+        'web_cohort',
         'sale_payment',
     ],
     'data': [

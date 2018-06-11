@@ -22,12 +22,20 @@
              </graph>
          </field>
     </record>
+    <record id="sale_subscription_report_view_cohort" model="ir.ui.view">
+        <field name="name">sale.subscription.report.cohort</field>
+        <field name="model">sale.subscription.report</field>
+        <field name="arch" type="xml">
+            <cohort string="Subscription" date_start="date_start" date_stop="date_end" interval="month" />
+        </field>
+    </record>
+
 
     <record id="action_subscription_report_all" model="ir.actions.act_window">
         <field name="name">Subscription Analysis</field>
         <field name="res_model">sale.subscription.report</field>
         <field name="view_type">form</field>
-        <field name="view_mode">graph,pivot</field>
+        <field name="view_mode">cohort,graph,pivot</field>
     </record>
 
     <menuitem name="Reporting" action="action_subscription_report_all" id="menu_report_product_all" parent="menu_sale_subscription_root" sequence="5"/>
