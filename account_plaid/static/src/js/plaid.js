@@ -9,7 +9,7 @@ var Widget = require('web.Widget');
 
 var PlaidAccountConfigurationWidget = Widget.extend({
 
-    call: function(params, mfa) {
+    rpcCall: function(params, mfa) {
         var self = this;
         if (this.in_rpc_call === false){
             this.blockUI(true);
@@ -43,7 +43,7 @@ var PlaidAccountConfigurationWidget = Widget.extend({
         if (pin !== '') {
             params.pin = pin;
         }
-        return this.call(params, false);
+        return this.rpcCall(params, false);
     },
 
     blockUI: function(state) {
@@ -142,7 +142,7 @@ var PlaidAccountConfigurationWidget = Widget.extend({
                 params['mfa'] = JSON.stringify(user_reply);
             }
         }
-        return this.call(params, true);
+        return this.rpcCall(params, true);
     },
 });
 
