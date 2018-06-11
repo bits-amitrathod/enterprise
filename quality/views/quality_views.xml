@@ -711,6 +711,9 @@
         <field name="model">quality.point</field>
         <field name="arch" type="xml">
             <search>
+                <field name="name"/>
+                <field name="title"/>
+                <field name="product_tmpl_id"/>
                 <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
             </search>
         </field>
