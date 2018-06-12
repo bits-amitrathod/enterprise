@@ -40,7 +40,7 @@
                 <cfdi:Receptor
                     t-att-Rfc="record.l10n_mx_edi_get_customer_rfc()"
                     t-att-Nombre="record._get_string_cfdi(customer.commercial_partner_id.name, 254)"
-                    t-att-ResidenciaFiscal="customer.country_id.l10n_mx_edi_code if customer.country_id.l10n_mx_edi_code != 'MEX' else False"
+                    t-att-ResidenciaFiscal="customer.country_id.l10n_mx_edi_code if customer.country_id.l10n_mx_edi_code != 'MEX' and record.l10n_mx_edi_get_customer_rfc() not in ['XEXX010101000', 'XAXX010101000'] else False"
                     t-att-NumRegIdTrib="receiver_reg_trib"
                     t-att-UsoCFDI="use_cfdi"/>
                 <cfdi:Conceptos>

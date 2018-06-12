@@ -71,9 +71,14 @@ html {
 }
 
 @media print {
-    html .o_web_client .o_content {
-        position: static;
-        overflow: visible;
-        height: auto;
+    html .o_web_client {
+        .o_main_navbar {
+            display: none;
+        }
+        .o_content {
+            position: static;
+            overflow: visible;
+            height: auto;
+        }
     }
 }
