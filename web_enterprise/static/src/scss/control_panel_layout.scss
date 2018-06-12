@@ -47,8 +47,16 @@
             @include o-flex(1, 1, auto);
         }
 
-        .o_cp_sidebar, .o_cp_switch_buttons {
+        .o_cp_sidebar {
             display: none;
+        }
+
+        .o_cp_switch_buttons {
+            margin-right: 10px;
+            &.open > ul.dropdown-menu {
+                min-width: 0px;
+                @include o-inline-flex-display;
+            }
         }
 
         &.o_breadcrumb_full {
