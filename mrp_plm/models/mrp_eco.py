@@ -451,9 +451,9 @@ class MrpEco(models.Model):
                     'previous_routing_id': eco.routing_id.id
                 }).id
                 attachments = IrAttachment.search([('res_model', '=', 'mrp.routing'),
-                                                   ('res_id', '=', eco.bom_id.id)])
+                                                   ('res_id', '=', eco.routing_id.id)])
                 for attachment in attachments:
-                    attachment.copy(default={'res_id':eco.new_bom_id.id})
+                    attachment.copy(default={'res_id':eco.new_routing_id.id})
             if eco.type == 'both':
                 eco.new_bom_id.routing_id = eco.new_routing_id.id
                 for line in eco.new_bom_id.bom_line_ids:
