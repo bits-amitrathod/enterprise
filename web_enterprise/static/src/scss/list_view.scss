@@ -58,7 +58,9 @@
 
 // Common style for list views (also inside form views)
 .o_list_view {
-    border-collapse: initial;
+    // We need this to be collapse because we want to add a border on the rows
+    // for sale order/invoice lines of type section.
+    border-collapse: collapse;
     @include o-list-view-sortable-caret-padding;
 
     // ------- Force empty cells' padding -------
@@ -93,12 +95,14 @@
         }
     }
 
+    > tfoot {
+        border-bottom: none;
+        border-top: none;
+    }
+
     // ------- Decrease table's inner content "visual depth" -------
     tbody:first-of-type > tr:first-child:not(.o_group_header) {
         box-shadow: inset 0px 5px 10px -4px rgba(black, 0.1);
-    }
-    tfoot > tr > td {
-        border-top: 2px solid $gray-lighter-darker;
     }
 
     // ------- Force progress bars to respect table's layout -------
