@@ -197,7 +197,7 @@ class MxReportAccountTrial(models.AbstractModel):
                 non_zero = False
                 for period in range(len(comparison_table)):
                     if account in grouped_accounts and (
-                        not is_zero(initial_balances.get(account, )) or
+                        not is_zero(initial_balances.get(account, 0)) or
                         not is_zero(grouped_accounts[account][period]['debit']) or
                         not is_zero(grouped_accounts[account][period]['credit'])
                     ):
