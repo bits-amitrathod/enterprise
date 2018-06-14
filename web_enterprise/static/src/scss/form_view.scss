@@ -413,7 +413,10 @@
     @media (max-width: $screen-xs-max) {
         .o_notebook {
             position: relative;
-            padding-top:30px;
+            // We need this to be 39px and not only 30px because when there is a table
+            // inside the tab, the tabs are overlapping the table if only 30px.
+            // Issue only on mobile small screen.
+            padding-top: 39px;
             ul.nav-tabs {
                 min-width: 100%;
                 max-width:  calc(100% + #{$o-horizontal-padding});
