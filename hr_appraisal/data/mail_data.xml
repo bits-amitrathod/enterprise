@@ -10,24 +10,30 @@
         <record id="send_appraisal_template" model="mail.template">
             <field name="name">Appraisal Survey - Send by Email</field>
             <field name="model_id" ref="hr_appraisal.model_hr_appraisal" />
-            <field name="auto_delete" eval="True" />
             <field name="subject">Appraisal Regarding</field>
             <field name="email_to">${ctx['email']}</field>
-            <field name="body_html">
-                <![CDATA[
-                <div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); ">
-                    <p>Dear ${ctx.get('employee').name},</p>
-                    % if ctx.get('employee').id == object.employee_id.id:
-                        <p>Please fill out the following survey related to your appraisal.</p>
-                    % else:
-                        <p>Please fill out the following survey related to ${object.employee_id.name}'s appraisal.</p>
-                    % endif
-                    <p><a href="__URL__">Click here to access the survey.</a></p>
-                    <p>Post your response for the appraisal till : ${object.date_close}</p>
-                    <p>Thank you for your participation.</p>
-                </div>
-                ]]>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 13px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello ${ctx.get('employee').name}<br /><br />
+        % if ctx.get('employee').id == object.employee_id.id:
+            Please fill out the following survey related to your appraisal.
+        % else:
+            Please fill out the following survey related to ${object.employee_id.name}'s appraisal.
+        % endif
+        <div style="margin: 16px 0px 16px 0px;">
+            <a href="__URL__"
+                style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                Start Survey
+            </a>
+        </div>
+        Please answer the appraisal for ${format_date(object.date_close)}.<br />
+        Thank you for your participation.
+    </p>
+</div>
             </field>
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
         </record>
     </data>
 </odoo>
