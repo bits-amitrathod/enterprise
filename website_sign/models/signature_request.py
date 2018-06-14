@@ -252,7 +252,7 @@ class SignatureRequest(models.Model):
             template = mail_template.with_context(
                 lang = signer.partner_id.lang,
                 email_to = signer.partner_id.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': signer.access_token}
+                link = "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': signer.access_token}
             )
             mail_id = template.send_mail(self.id, force_send=False)
             mail = self.env['mail.mail'].browse(mail_id)
@@ -271,13 +271,13 @@ class SignatureRequest(models.Model):
             template = mail_template.with_context(
                 lang = follower.lang,
                 email_to = follower.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}
+                link = "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}
             )
             template.send_mail(self.id, force_send=True)
 
         mail_template.with_context( # Send copy to request creator
             email_to = email_from_mail,
-            link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}
+            link = "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}
         ).send_mail(self.id, force_send=True)
 
         return True
@@ -465,7 +465,7 @@ class SignatureRequestItem(models.Model):
                 email_from_mail = email_from_mail,
                 email_from = email_from,
                 email_to = signer.partner_id.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token},
+                link = "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token},
                 subject = subject or ("Signature request - " + signer.signature_request_id.reference),
                 msgbody = (message or "").replace("\n", "<br/>")
             )
