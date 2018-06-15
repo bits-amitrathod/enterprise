@@ -7,6 +7,8 @@ var KanbanController = require('web.KanbanController');
 var KanbanRecord = require('web.KanbanRecord');
 var KanbanView = require('web.KanbanView');
 var view_registry = require('web.view_registry');
+var ListController = require('web.ListController');
+var ListView = require('web.ListView');
 
 var FieldInteger = basic_fields.FieldInteger;
 var FieldBinaryImage = basic_fields.FieldBinaryImage;
@@ -55,8 +57,7 @@ var TabletImage = FieldBinaryImage.extend({
     template: 'FieldBinaryTabletImage',
 });
 
-var TabletKanbanController = KanbanController.extend({
-    renderButtons: function ($node) {
+function tabletRenderButtons ($node) {
         var self = this;
         this.$buttons = $('<div/>');
         this.$buttons.html('<button class="btn btn-default back-button"><i class="fa fa-arrow-left"/></button>');
@@ -64,6 +65,11 @@ var TabletKanbanController = KanbanController.extend({
             self.do_action('mrp.mrp_workcenter_kanban_action', {clear_breadcrumbs: true});
         });
         this.$buttons.appendTo($node);
+};
+
+var TabletKanbanController = KanbanController.extend({
+    renderButtons: function ($node) {
+        return tabletRenderButtons.apply(this, arguments);
     },
 });
 
@@ -73,8 +79,20 @@ var TabletKanbanView = KanbanView.extend({
     }),
 });
 
+var TabletListController = ListController.extend({
+    renderButtons: function ($node) {
+        return tabletRenderButtons.apply(this, arguments);
+    },
+});
+
+var TabletListView = ListView.extend({
+    config: _.extend({}, ListView.prototype.config, {
+        Controller: TabletListController,
+    }),
+});
+
 field_registry.add('back_arrow', BackArrow);
 field_registry.add('tablet_image', TabletImage);
 view_registry.add('tablet_kanban_view', TabletKanbanView);
-
+view_registry.add('tablet_list_view', TabletListView);
 });

@@ -108,10 +108,10 @@ class account_bank_reconciliation_report(models.AbstractModel):
                     #'type': 'move_line_id',
                     #'action': line.get_model_id_and_name(),
                     'name': line.name,
-                    'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(line.balance, line_currency)]],
+                    'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(-line.balance, line_currency)]],
                     'level': 1,
                 })
-                unrec_tot += line.amount_currency if use_foreign_currency else line.balance
+                unrec_tot -= line.amount_currency if use_foreign_currency else line.balance
             if unrec_tot > 0:
                 title = _("Plus Unreconciled Payments")
             else:
