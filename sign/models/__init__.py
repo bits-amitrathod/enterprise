@@ -2,5 +2,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from . import res_users
-from . import signature_request
-from . import signature_request_template
+from . import sign_request
+from . import sign_template

@@ -117,7 +117,7 @@ odoo.define('sign.PDFIframe', function (require) {
                         return (a.posX - b.posX);
                     }
                 }).each(function(i, el) {
-                    var $signatureItem = self.createSignatureItem(
+                    var $signatureItem = self.createSignItem(
                         self.types[parseInt(el.type || el.type_id[0])],
                         !!el.required,
                         parseInt(el.responsible || el.responsible_id[0]) || 0,
@@ -136,8 +136,8 @@ odoo.define('sign.PDFIframe', function (require) {
             $.when.apply($, waitFor).then(function() {
                 refresh_interval();
 
-                self.$('.o_sign_signature_item').each(function(i, el) {
-                    self.updateSignatureItem($(el));
+                self.$('.o_sign_sign_item').each(function(i, el) {
+                    self.updateSignItem($(el));
                 });
                 self.updateFontSize();
 
@@ -153,14 +153,14 @@ odoo.define('sign.PDFIframe', function (require) {
                  */
                 function refresh_interval() {
                     try { // if an error occurs it means the iframe has been detach and will be reinitialized anyway (so the interval must stop)
-                        self.refreshSignatureItems();
+                        self.refreshSignItems();
                         self.refresh_timer = setTimeout(refresh_interval, 2000);
                     } catch (e) {}
                 }
             });
         },
 
-        refreshSignatureItems: function() {
+        refreshSignItems: function() {
             for(var page in this.configuration) {
                 var $pageContainer = this.$('body #pageContainer' + page);
                 for(var i = 0 ; i < this.configuration[page].length ; i++) {
@@ -175,7 +175,7 @@ odoo.define('sign.PDFIframe', function (require) {
         updateFontSize: function() {
             var self = this;
             var normalSize = this.$('.page').first().innerHeight() * 0.015;
-            this.$('.o_sign_signature_item').each(function(i, el) {
+            this.$('.o_sign_sign_item').each(function(i, el) {
                 var $elem = $(el);
                 var size = parseFloat($elem.css('height'));
                 if($.inArray(self.types[$elem.data('type')].type, ['signature', 'initial', 'textarea']) > -1) {
@@ -186,11 +186,11 @@ odoo.define('sign.PDFIframe', function (require) {
             });
         },
 
-        createSignatureItem: function(type, required, responsible, posX, posY, width, height, value, name) {
+        createSignItem: function(type, required, responsible, posX, posY, width, height, value, name) {
             var self = this;
             var readonly = this.readonlyFields || (responsible > 0 && responsible !== this.role) || !!value;
 
-            var $signatureItem = $(core.qweb.render('sign.signature_item', {
+            var $signatureItem = $(core.qweb.render('sign.sign_item', {
                 editMode: this.editMode,
                 readonly: readonly,
                 type: type['type'],
@@ -202,7 +202,7 @@ odoo.define('sign.PDFIframe', function (require) {
                                  .data('hasValue', !!value);
         },
 
-        deleteSignatureItem: function($item) {
+        deleteSignItem: function($item) {
             var pageNo = parseInt($item.parent().prop('id').substr('pageContainer'.length));
             $item.remove();
             for(var i = 0 ; i < this.configuration[pageNo].length ; i++) {
@@ -212,7 +212,7 @@ odoo.define('sign.PDFIframe', function (require) {
             }
         },
 
-        updateSignatureItem: function($signatureItem) {
+        updateSignItem: function($signatureItem) {
             var posX = $signatureItem.data('posx'), posY = $signatureItem.data('posy');
             var width = $signatureItem.data('width'), height = $signatureItem.data('height');
 
@@ -231,12 +231,12 @@ odoo.define('sign.PDFIframe', function (require) {
                           .css({left: posX*100 + '%', top: posY*100 + '%', width: width*100 + '%', height: height*100 + '%'});
 
             var resp = $signatureItem.data('responsible');
-            $signatureItem.toggleClass('o_sign_signature_item_required', ($signatureItem.data('required') && (this.editMode || resp <= 0 || resp === this.role)))
-                          .toggleClass('o_sign_signature_item_pdfview', (this.pdfView || !!$signatureItem.data('hasValue') || (resp !== this.role && resp > 0 && !this.editMode)));
+            $signatureItem.toggleClass('o_sign_sign_item_required', ($signatureItem.data('required') && (this.editMode || resp <= 0 || resp === this.role)))
+                          .toggleClass('o_sign_sign_item_pdfview', (this.pdfView || !!$signatureItem.data('hasValue') || (resp !== this.role && resp > 0 && !this.editMode)));
         },
 
         disableItems: function() {
-            this.$('.o_sign_signature_item').addClass('o_sign_signature_item_pdfview').removeClass('ui-selected');
+            this.$('.o_sign_sign_item').addClass('o_sign_sign_item_pdfview').removeClass('ui-selected');
         },
 
         destroy: function() {
@@ -305,8 +305,8 @@ odoo.define('sign.Document', function (require) {
     var Document = Widget.extend({
         start: function() {
             this.attachmentLocation = this.$('#o_sign_input_attachment_location').val();
-            this.requestID = parseInt(this.$('#o_sign_input_signature_request_id').val());
-            this.requestToken = this.$('#o_sign_input_signature_request_token').val();
+            this.requestID = parseInt(this.$('#o_sign_input_sign_request_id').val());
+            this.requestToken = this.$('#o_sign_input_sign_request_token').val();
             this.accessToken = this.$('#o_sign_input_access_token').val();
             this.signerName = this.$('#o_sign_signer_name_input_info').val();
             this.sendAccess = this.$('#o_sign_chatter_send_access').val();
@@ -394,8 +394,8 @@ odoo.define('sign.utils', function (require) {
                     return false;
                 }
 
-                ajax.rpc('/web/dataset/call_kw/signature.item.party/add', {
-                    model: 'signature.item.party',
+                ajax.rpc('/web/dataset/call_kw/sign.item.role/add', {
+                    model: 'sign.item.role',
                     method: 'add',
                     args: [name],
                     kwargs: {}
@@ -794,8 +794,8 @@ odoo.define('sign.document_signing', function(require) {
         },
     });
 
-    var SignatureItemNavigator = Widget.extend({
-        className: 'o_sign_signature_item_navigator',
+    var SignItemNavigator = Widget.extend({
+        className: 'o_sign_sign_item_navigator',
 
         events: {
             'click': 'onClick'
@@ -810,7 +810,7 @@ odoo.define('sign.document_signing', function(require) {
         },
 
         start: function() {
-            this.$signatureItemNavLine = $('<div/>').addClass("o_sign_signature_item_navline").insertBefore(this.$el);
+            this.$signatureItemNavLine = $('<div/>').addClass("o_sign_sign_item_navline").insertBefore(this.$el);
             this.setTip(_t('Click to start'));
             this.$el.focus();
 
@@ -831,7 +831,7 @@ odoo.define('sign.document_signing', function(require) {
                     duration: 750,
                     complete: function() {
                         self.getParent().$iframe.prev().hide();
-                        self.getParent().refreshSignatureItems();
+                        self.getParent().refreshSignItems();
 
                         self.onClick();
                     }
@@ -840,7 +840,7 @@ odoo.define('sign.document_signing', function(require) {
                 return false;
             }
 
-            var $toComplete = self.getParent().checkSignatureItemsCompletion().sort(function(a, b) {
+            var $toComplete = self.getParent().checkSignItemsCompletion().sort(function(a, b) {
                 return ($(a).data('order') || 0) - ($(b).data('order') || 0);
             });
             if($toComplete.length > 0) {
@@ -887,7 +887,7 @@ odoo.define('sign.document_signing', function(require) {
                     self.setTip(self.types[$item.data('type')].tip);
                 }
 
-                self.getParent().refreshSignatureItems();
+                self.getParent().refreshSignItems();
                 $item.focus();
                 self.isScrolling = false;
             });
@@ -992,10 +992,10 @@ odoo.define('sign.document_signing', function(require) {
         doPDFPostLoad: function() {
             var self = this;
             this.fullyLoaded.then(function() {
-                self.signatureItemNav = new SignatureItemNavigator(self, self.types);
+                self.signatureItemNav = new SignItemNavigator(self, self.types);
                 var def = self.signatureItemNav.prependTo(self.$('#viewerContainer'));
 
-                self.checkSignatureItemsCompletion();
+                self.checkSignItemsCompletion();
 
                 self.$('#viewerContainer').on('scroll', function(e) {
                     if(!self.signatureItemNav.isScrolling && self.signatureItemNav.started) {
@@ -1009,7 +1009,7 @@ odoo.define('sign.document_signing', function(require) {
             this._super.apply(this, arguments);
         },
 
-        createSignatureItem: function(type, required, responsible, posX, posY, width, height, value, name) {
+        createSignItem: function(type, required, responsible, posX, posY, width, height, value, name) {
             var self = this;
             var $signatureItem = this._super.apply(this, arguments);
             var readonly = this.readonlyFields || (responsible > 0 && responsible !== this.role) || !!value;
@@ -1017,8 +1017,8 @@ odoo.define('sign.document_signing', function(require) {
             if(!readonly) {
                 if(type['type'] === "signature" || type['type'] === "initial") {
                     $signatureItem.on('click', function(e) {
-                        self.refreshSignatureItems();
-                        var $signedItems = self.$('.o_sign_signature_item').filter(function(i) {
+                        self.refreshSignItems();
+                        var $signedItems = self.$('.o_sign_sign_item').filter(function(i) {
                             var $item = $(this);
                             return ($item.data('type') === type['id']
                                         && $item.data('signature') && $item.data('signature') !== $signatureItem.data('signature')
@@ -1063,7 +1063,7 @@ odoo.define('sign.document_signing', function(require) {
                 }
 
                 $signatureItem.on('input', function(e) {
-                    self.checkSignatureItemsCompletion(self.role);
+                    self.checkSignItemsCompletion(self.role);
                     self.signatureItemNav.setTip('next');
                 });
             } else {
@@ -1073,9 +1073,9 @@ odoo.define('sign.document_signing', function(require) {
             return $signatureItem;
         },
 
-        checkSignatureItemsCompletion: function() {
-            this.refreshSignatureItems();
-            var $toComplete = this.$('.o_sign_signature_item.o_sign_signature_item_required:not(.o_sign_signature_item_pdfview)').filter(function(i, el) {
+        checkSignItemsCompletion: function() {
+            this.refreshSignItems();
+            var $toComplete = this.$('.o_sign_sign_item.o_sign_sign_item_required:not(.o_sign_sign_item_pdfview)').filter(function(i, el) {
                 var $elem = $(el);
                 return !(($elem.val() && $elem.val().trim()) || $elem.data('signature'));
             });
@@ -1124,7 +1124,7 @@ odoo.define('sign.document_signing', function(require) {
 
         signItemDocument: function(e) {
             var mail = "";
-            this.iframeWidget.$('.o_sign_signature_item').each(function(i, el) {
+            this.iframeWidget.$('.o_sign_sign_item').each(function(i, el) {
                 var value = $(el).val();
                 if(value && value.indexOf('@') >= 0) {
                     mail = value;
@@ -1153,7 +1153,7 @@ odoo.define('sign.document_signing', function(require) {
                         }
                         if(!value) {
                             if($elem.data('required')) {
-                                this.iframeWidget.checkSignatureItemsCompletion();
+                                this.iframeWidget.checkSignItemsCompletion();
                                 Dialog.alert(this, _t("Some fields have still to be completed !"), {title: _t("Warning")});
                                 return;
                             }

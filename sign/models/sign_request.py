@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 import base64
 import io
 import time
@@ -8,14 +10,13 @@ from email.utils import formataddr
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
-from werkzeug.urls import url_join
 
 from odoo import api, fields, models, _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
-class SignatureRequest(models.Model):
-    _name = "signature.request"
+class SignRequest(models.Model):
+    _name = "sign.request"
     _description = "Document To Sign"
     _rec_name = 'reference'
     _inherit = 'mail.thread'
@@ -24,12 +25,12 @@ class SignatureRequest(models.Model):
     def _default_access_token(self):
         return str(uuid.uuid4())
 
-    template_id = fields.Many2one('signature.request.template', string="Template", required=True)
+    template_id = fields.Many2one('sign.template', string="Template", required=True)
     reference = fields.Char(required=True, string="Filename")
 
     access_token = fields.Char('Security Token', required=True, default=_default_access_token, readonly=True)
 
-    request_item_ids = fields.One2many('signature.request.item', 'signature_request_id', string="Signers")
+    request_item_ids = fields.One2many('sign.request.item', 'sign_request_id', string="Signers")
     state = fields.Selection([
         ("draft", "Draft"),
         ("sent", "Signatures in Progress"),
@@ -141,18 +142,18 @@ class SignatureRequest(models.Model):
     @api.multi
     def action_sent(self, subject=None, message=None):
         self.write({'state': 'sent'})
-        for signature_request in self:
+        for sign_request in self:
             ignored_partners = []
-            for request_item in signature_request.request_item_ids:
+            for request_item in sign_request.request_item_ids:
                 if request_item.state != 'draft':
                     ignored_partners.append(request_item.partner_id.id)
-            included_request_items = signature_request.request_item_ids.filtered(lambda r: not r.partner_id or r.partner_id.id not in ignored_partners)
+            included_request_items = sign_request.request_item_ids.filtered(lambda r: not r.partner_id or r.partner_id.id not in ignored_partners)
 
-            if signature_request.send_signature_accesses(subject, message, ignored_partners=ignored_partners):
-                signature_request.send_follower_accesses(self.follower_ids, subject, message)
+            if sign_request.send_signature_accesses(subject, message, ignored_partners=ignored_partners):
+                sign_request.send_follower_accesses(self.follower_ids, subject, message)
                 included_request_items.action_sent()
             else:
-                signature_request.action_draft()
+                sign_request.action_draft()
 
     @api.multi
     def action_signed(self):
@@ -163,8 +164,8 @@ class SignatureRequest(models.Model):
     @api.multi
     def action_canceled(self):
         self.write({'completed_document': None, 'access_token': self._default_access_token(), 'state': 'canceled'})
-        for signature_request in self:
-            signature_request.request_item_ids.action_draft()
+        for sign_request in self:
+            sign_request.request_item_ids.action_draft()
 
     @api.one
     def set_signers(self, signers):
@@ -179,19 +180,19 @@ class SignatureRequest(models.Model):
             else:
                 ids_to_remove.append(request_item.id)
 
-        SignatureRequestItem = self.env['signature.request.item']
-        SignatureRequestItem.browse(ids_to_remove).unlink()
+        SignRequestItem = self.env['sign.request.item']
+        SignRequestItem.browse(ids_to_remove).unlink()
         for signer in signers:
-            SignatureRequestItem.create({
+            SignRequestItem.create({
                 'partner_id': signer['partner_id'],
-                'signature_request_id': self.id,
+                'sign_request_id': self.id,
                 'role_id': signer['role']
             })
 
     @api.multi
     def send_signature_accesses(self, subject=None, message=None, ignored_partners=[]):
         self.ensure_one()
-        if len(self.request_item_ids) <= 0 or (set(self.request_item_ids.mapped('role_id')) != set(self.template_id.signature_item_ids.mapped('responsible_id'))):
+        if len(self.request_item_ids) <= 0 or (set(self.request_item_ids.mapped('role_id')) != set(self.template_id.sign_item_ids.mapped('responsible_id'))):
             return False
 
         self.request_item_ids.filtered(lambda r: not r.partner_id or r.partner_id.id not in ignored_partners).send_signature_accesses(subject, message)
@@ -209,7 +210,7 @@ class SignatureRequest(models.Model):
         for follower in followers:
             if not follower.email:
                 continue
-            self.env['signature.request']._message_send_mail(
+            self.env['sign.request']._message_send_mail(
                 body, 'mail.mail_notification_light',
                 {'record_name': self.reference},
                 {'model_description': 'signature', 'company': self.create_uid.company_id},
@@ -248,7 +249,7 @@ class SignatureRequest(models.Model):
                 'res_id': self.id,
             })
 
-            self.env['signature.request']._message_send_mail(
+            self.env['sign.request']._message_send_mail(
                 body, 'mail.mail_notification_light',
                 {'record_name': self.reference},
                 {'model_description': 'signature', 'company': self.create_uid.company_id},
@@ -257,7 +258,6 @@ class SignatureRequest(models.Model):
                  'subject': '%s signed' % self.reference,
                  'attachment_ids': [(4, attachment.id)]}
             )
-
 
         tpl = self.env.ref('sign.sign_template_mail_completed')
         body = tpl.render({
@@ -270,7 +270,7 @@ class SignatureRequest(models.Model):
         for follower in self.follower_ids:
             if not follower.email:
                 continue
-            self.env['signature.request']._message_send_mail(
+            self.env['sign.request']._message_send_mail(
                 body, 'mail.mail_notification_light',
                 {'record_name': self.reference},
                 {'model_description': 'signature', 'company': self.create_uid.company_id},
@@ -280,7 +280,7 @@ class SignatureRequest(models.Model):
             )
 
         # Send copy to request creator
-        self.env['signature.request']._message_send_mail(
+        self.env['sign.request']._message_send_mail(
             body, 'mail.mail_notification_light',
             {'record_name': self.reference},
             {'model_description': 'signature', 'company': self.create_uid.company_id},
@@ -293,7 +293,7 @@ class SignatureRequest(models.Model):
 
     @api.one
     def generate_completed_document(self):
-        if len(self.template_id.signature_item_ids) <= 0:
+        if len(self.template_id.sign_item_ids) <= 0:
             self.completed_document = self.template_id.attachment_id.datas
             return
 
@@ -303,8 +303,8 @@ class SignatureRequest(models.Model):
 
         packet = io.BytesIO()
         can = canvas.Canvas(packet)
-        itemsByPage = self.template_id.signature_item_ids.getByPage()
-        SignatureItemValue = self.env['signature.item.value']
+        itemsByPage = self.template_id.sign_item_ids.getByPage()
+        SignItemValue = self.env['sign.item.value']
         for p in range(0, old_pdf.getNumPages()):
             page = old_pdf.getPage(p)
             width = float(page.mediaBox.getUpperRight_x())
@@ -327,7 +327,7 @@ class SignatureRequest(models.Model):
 
             items = itemsByPage[p + 1] if p + 1 in itemsByPage else []
             for item in items:
-                value = SignatureItemValue.search([('signature_item_id', '=', item.id), ('signature_request_id', '=', self.id)], limit=1)
+                value = SignItemValue.search([('sign_item_id', '=', item.id), ('sign_request_id', '=', self.id)], limit=1)
                 if not value or not value.value:
                     continue
 
@@ -389,33 +389,34 @@ class SignatureRequest(models.Model):
 
     @api.model
     def initialize_new(self, id, signers, followers, reference, subject, message, send=True):
-        signature_request = self.create({'template_id': id, 'reference': reference, 'follower_ids': [(6, 0, followers)], 'favorited_ids': [(4, self.env.user.id)]})
-        signature_request.set_signers(signers)
+        sign_request = self.create({'template_id': id, 'reference': reference, 'follower_ids': [(6, 0, followers)], 'favorited_ids': [(4, self.env.user.id)]})
+        sign_request.set_signers(signers)
         if send:
-            signature_request.action_sent(subject, message)
-            signature_request._message_post_as_creator(_('Waiting for signatures.'), type='comment', subtype='mt_comment')
+            sign_request.action_sent(subject, message)
+            sign_request._message_post_as_creator(_('Waiting for signatures.'), type='comment', subtype='mt_comment')
         return {
-            'id': signature_request.id,
-            'token': signature_request.access_token,
-            'sign_token': signature_request.request_item_ids.filtered(lambda r: r.partner_id == self.env.user.partner_id)[:1].access_token,
+            'id': sign_request.id,
+            'token': sign_request.access_token,
+            'sign_token': sign_request.request_item_ids.filtered(lambda r: r.partner_id == self.env.user.partner_id)[:1].access_token,
         }
 
     @api.model
     def cancel(self, id):
-        signature_request = self.browse(id)
-        signature_request._message_post_as_creator(_('Canceled.'), type='comment', subtype='mt_comment')
-        return signature_request.action_canceled()
+        sign_request = self.browse(id)
+        sign_request._message_post_as_creator(_('Canceled.'), type='comment', subtype='mt_comment')
+        return sign_request.action_canceled()
 
     @api.model
     def add_followers(self, id, followers):
-        signature_request = self.browse(id)
-        old_followers = set(signature_request.follower_ids.mapped('id'))
-        signature_request.write({'follower_ids': [(6, 0, set(followers) | old_followers)]})
-        signature_request.send_follower_accesses(self.env['res.partner'].browse(followers))
-        return signature_request.id
+        sign_request = self.browse(id)
+        old_followers = set(sign_request.follower_ids.mapped('id'))
+        sign_request.write({'follower_ids': [(6, 0, set(followers) | old_followers)]})
+        sign_request.send_follower_accesses(self.env['res.partner'].browse(followers))
+        return sign_request.id
 
-class SignatureRequestItem(models.Model):
-    _name = "signature.request.item"
+
+class SignRequestItem(models.Model):
+    _name = "sign.request.item"
     _description = "Signature Request"
     _rec_name = 'partner_id'
 
@@ -424,10 +425,10 @@ class SignatureRequestItem(models.Model):
         return str(uuid.uuid4())
 
     partner_id = fields.Many2one('res.partner', string="Partner", ondelete='cascade')
-    signature_request_id = fields.Many2one('signature.request', string="Signature Request", ondelete='cascade', required=True)
+    sign_request_id = fields.Many2one('sign.request', string="Signature Request", ondelete='cascade', required=True)
 
     access_token = fields.Char('Security Token', required=True, default=_default_access_token, readonly=True)
-    role_id = fields.Many2one('signature.item.party', string="Role")
+    role_id = fields.Many2one('sign.item.role', string="Role")
 
     signature = fields.Binary(attachment=True)
     signing_date = fields.Date('Signed on', readonly=True)
@@ -451,19 +452,19 @@ class SignatureRequestItem(models.Model):
             'state': 'draft'
         })
         for request_item in self:
-            itemsToClean = request_item.signature_request_id.template_id.signature_item_ids.filtered(lambda r: r.responsible_id == request_item.role_id or not r.responsible_id)
-            self.env['signature.item.value'].search([('signature_item_id', 'in', itemsToClean.mapped('id')), ('signature_request_id', '=', request_item.signature_request_id.id)]).unlink()
-        self.mapped('signature_request_id')._check_after_compute()
+            itemsToClean = request_item.sign_request_id.template_id.sign_item_ids.filtered(lambda r: r.responsible_id == request_item.role_id or not r.responsible_id)
+            self.env['sign.item.value'].search([('sign_item_id', 'in', itemsToClean.mapped('id')), ('sign_request_id', '=', request_item.sign_request_id.id)]).unlink()
+        self.mapped('sign_request_id')._check_after_compute()
 
     @api.multi
     def action_sent(self):
         self.write({'state': 'sent'})
-        self.mapped('signature_request_id')._check_after_compute()
+        self.mapped('sign_request_id')._check_after_compute()
 
     @api.multi
     def action_completed(self):
         self.write({'signing_date': time.strftime(DEFAULT_SERVER_DATE_FORMAT), 'state': 'completed'})
-        self.mapped('signature_request_id')._check_after_compute()
+        self.mapped('sign_request_id')._check_after_compute()
 
     @api.multi
     def send_signature_accesses(self, subject=None, message=None):
@@ -475,14 +476,14 @@ class SignatureRequestItem(models.Model):
             tpl = self.env.ref('sign.sign_template_mail_request')
             body = tpl.render({
                 'record': self,
-                'link': "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token},
+                'link': "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.sign_request_id.id, 'access_token': signer.access_token},
                 'subject': subject,
                 'body': message,
             }, engine='ir.qweb', minimal_qcontext=True)
 
-            self.env['signature.request']._message_send_mail(
+            self.env['sign.request']._message_send_mail(
                 body, 'mail.mail_notification_light',
-                {'record_name': signer.signature_request_id.reference},
+                {'record_name': signer.sign_request_id.reference},
                 {'model_description': 'signature', 'company': signer.create_uid.company_id},
                 {'email_from': formataddr((signer.create_uid.name, signer.create_uid.email)),
                  'email_to': formataddr((signer.partner_id.name, signer.partner_id.email)),
@@ -495,10 +496,10 @@ class SignatureRequestItem(models.Model):
         if not isinstance(signature, dict):
             self.signature = signature
         else:
-            SignatureItemValue = self.env['signature.item.value']
-            request = self.signature_request_id
+            SignItemValue = self.env['sign.item.value']
+            request = self.sign_request_id
 
-            signerItems = request.template_id.signature_item_ids.filtered(lambda r: not r.responsible_id or r.responsible_id.id == self.role_id.id)
+            signerItems = request.template_id.sign_item_ids.filtered(lambda r: not r.responsible_id or r.responsible_id.id == self.role_id.id)
             autorizedIDs = set(signerItems.mapped('id'))
             requiredIDs = set(signerItems.filtered('required').mapped('id'))
 
@@ -507,10 +508,10 @@ class SignatureRequestItem(models.Model):
                 return False
 
             for itemId in signature:
-                item_value = SignatureItemValue.search([('signature_item_id', '=', int(itemId)), ('signature_request_id', '=', request.id)])
+                item_value = SignItemValue.search([('sign_item_id', '=', int(itemId)), ('sign_request_id', '=', request.id)])
                 if not item_value:
-                    item_value = SignatureItemValue.create({'signature_item_id': int(itemId), 'signature_request_id': request.id, 'value': signature[itemId]})
-                    if item_value.signature_item_id.type_id.type == 'signature':
+                    item_value = SignItemValue.create({'sign_item_id': int(itemId), 'sign_request_id': request.id, 'value': signature[itemId]})
+                    if item_value.sign_item_id.type_id.type == 'signature':
                         self.signature = signature[itemId][signature[itemId].find(',')+1:]
         return True
 

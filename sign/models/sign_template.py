@@ -1,25 +1,27 @@
 # -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 import re
 import uuid
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from odoo.tools import pycompat
 
 
-class SignatureRequestTemplate(models.Model):
-    _name = "signature.request.template"
-    _description = "Signature Request Template"
+class SignTemplate(models.Model):
+    _name = "sign.template"
+    _description = "Signature Template"
     _rec_name = "attachment_id"
 
     attachment_id = fields.Many2one('ir.attachment', string="Attachment", required=True, ondelete='cascade')
-    signature_item_ids = fields.One2many('signature.item', 'template_id', string="Signature Items")
+    sign_item_ids = fields.One2many('sign.item', 'template_id', string="Signature Items")
 
     active = fields.Boolean(default=True, string="Active", oldname='archived')
     favorited_ids = fields.Many2many('res.users', string="Favorite of")
 
     share_link = fields.Char(string="Share Link")
 
-    signature_request_ids = fields.One2many('signature.request', 'template_id', string="Signature Requests")
+    sign_request_ids = fields.One2many('sign.request', 'template_id', string="Signature Requests")
 
     color = fields.Integer()
 
@@ -49,9 +51,9 @@ class SignatureRequestTemplate(models.Model):
         return {'template': template.id, 'attachment': attachment.id}
 
     @api.model
-    def update_from_pdfviewer(self, template_id=None, duplicate=None, signature_items=None, name=None):
+    def update_from_pdfviewer(self, template_id=None, duplicate=None, sign_items=None, name=None):
         template = self.browse(template_id)
-        if not duplicate and len(template.signature_request_ids) > 0:
+        if not duplicate and len(template.sign_request_ids) > 0:
             return False
 
         if duplicate:
@@ -71,41 +73,42 @@ class SignatureRequestTemplate(models.Model):
 
         item_ids = {
             it
-            for it in pycompat.imap(int, signature_items)
+            for it in pycompat.imap(int, sign_items)
             if it > 0
         }
-        template.signature_item_ids.filtered(lambda r: r.id not in item_ids).unlink()
-        for item in template.signature_item_ids:
-            item.write(signature_items.pop(str(item.id)))
-        SignatureItem = self.env['signature.item']
-        for item in signature_items.values():
+        template.sign_item_ids.filtered(lambda r: r.id not in item_ids).unlink()
+        for item in template.sign_item_ids:
+            item.write(sign_items.pop(str(item.id)))
+        SignItem = self.env['sign.item']
+        for item in sign_items.values():
             item['template_id'] = template.id
-            SignatureItem.create(item)
+            SignItem.create(item)
 
-        if len(template.signature_item_ids.mapped('responsible_id')) > 1:
+        if len(template.sign_item_ids.mapped('responsible_id')) > 1:
             template.share_link = None
         return template.id
 
     @api.model
     def share(self, id, **post):
         template = self.browse(id)
-        if len(template.signature_item_ids.mapped('responsible_id')) > 1:
+        if len(template.sign_item_ids.mapped('responsible_id')) > 1:
             return False
 
         if not template.share_link:
             template.share_link = str(uuid.uuid4())
         return template.share_link
 
-class SignatureItem(models.Model):
-    _name = "signature.item"
+
+class SignItem(models.Model):
+    _name = "sign.item"
     _description = "Signature Field For Document To Sign"
 
-    template_id = fields.Many2one('signature.request.template', string="Document Template", required=True, ondelete='cascade')
+    template_id = fields.Many2one('sign.template', string="Document Template", required=True, ondelete='cascade')
 
-    type_id = fields.Many2one('signature.item.type', string="Type", required=True, ondelete='cascade')
+    type_id = fields.Many2one('sign.item.type', string="Type", required=True, ondelete='cascade')
 
     required = fields.Boolean(default=True)
-    responsible_id = fields.Many2one("signature.item.party", string="Responsible")
+    responsible_id = fields.Many2one("sign.item.role", string="Responsible")
 
     name = fields.Char(string="Field Name")
     page = fields.Integer(string="Document Page", required=True, default=1)
@@ -123,8 +126,9 @@ class SignatureItem(models.Model):
             items[item.page].append(item)
         return items
 
-class SignatureItemType(models.Model):
-    _name = "signature.item.type"
+
+class SignItemType(models.Model):
+    _name = "sign.item.type"
     _description = "Specialized type for signature fields"
 
     name = fields.Char(string="Field Name", required=True, translate=True)
@@ -142,17 +146,19 @@ class SignatureItemType(models.Model):
     default_height = fields.Float(string="Default Height", digits=(4, 3), required=True, default=0.015)
     auto_field = fields.Char(string="Automatic Partner Field", help="Partner field to use to auto-complete the fields of this type")
 
-class SignatureItemValue(models.Model):
-    _name = "signature.item.value"
+
+class SignItemValue(models.Model):
+    _name = "sign.item.value"
     _description = "Signature Field Value For Document To Sign"
 
-    signature_item_id = fields.Many2one('signature.item', string="Signature Item", required=True, ondelete='cascade')
-    signature_request_id = fields.Many2one('signature.request', string="Signature Request", required=True, ondelete='cascade')
+    sign_item_id = fields.Many2one('sign.item', string="Signature Item", required=True, ondelete='cascade')
+    sign_request_id = fields.Many2one('sign.request', string="Signature Request", required=True, ondelete='cascade')
 
     value = fields.Text()
 
-class SignatureItemParty(models.Model):
-    _name = "signature.item.party"
+
+class SignItemParty(models.Model):
+    _name = "sign.item.role"
     _description = "Type of partner which can access a particular signature field"
 
     name = fields.Char(required=True, translate=True)

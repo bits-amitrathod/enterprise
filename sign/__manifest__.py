@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Sign',
     'version': '1.0',
@@ -14,21 +15,19 @@ Let your customers follow the signature process easily.
         'security/security.xml',
         'security/ir.model.access.csv',
 
-        'views/signature_request_templates.xml',
-        'views/signature_request_template_templates.xml',
+        'views/sign_request_templates.xml',
+        'views/sign_template_templates.xml',
 
-        'views/signature_request_views.xml',
-        'views/signature_request_template_views.xml',
+        'views/sign_request_views.xml',
+        'views/sign_template_views.xml',
 
         'views/res_users_views.xml',
 
-        'data/signature_request_data.xml',
-        'data/signature_request_template_data.xml',
-
+        'data/sign_data.xml',
     ],
     'qweb': ['static/src/xml/*.xml'],
     'demo': [
-        'data/signature_request_template_demo.xml',
+        'data/sign_demo.xml',
     ],
     'application': True,
     'installable': True,

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Signature Request Views -->
-    <record id="signature_request_view_kanban" model="ir.ui.view">
-        <field name="name">signature.request.kanban</field>
-        <field name="model">signature.request</field>
+    <record id="sign_request_view_kanban" model="ir.ui.view">
+        <field name="name">sign.request.kanban</field>
+        <field name="model">sign.request</field>
         <field name="arch" type="xml">
             <kanban default_group_by="state" quick_create="false">
                 <field name="active"/>
@@ -54,9 +54,9 @@
         </field>
     </record>
 
-    <record id="signature_request_view_tree" model="ir.ui.view">
-        <field name="name">signature.request.tree</field>
-        <field name="model">signature.request</field>
+    <record id="sign_request_view_tree" model="ir.ui.view">
+        <field name="name">sign.request.tree</field>
+        <field name="model">sign.request</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="reference"/>
@@ -67,9 +67,9 @@
         </field>
     </record>
 
-    <record id="signature_request_view_form" model="ir.ui.view">
-        <field name="name">signature.request.form</field>
-        <field name="model">signature.request</field>
+    <record id="sign_request_view_form" model="ir.ui.view">
+        <field name="name">sign.request.form</field>
+        <field name="model">sign.request</field>
         <field name="arch" type="xml">
             <form create="false" edit="false">
                 <header>
@@ -94,7 +94,7 @@
                     </div>
 
                     <label for="request_item_ids"/>
-                    <field name="request_item_ids" context="{'default_signature_request_id': id}" nolabel="1"/>
+                    <field name="request_item_ids" context="{'default_sign_request_id': id}" nolabel="1"/>
 
                     <group>
                         <group>
@@ -113,9 +113,9 @@
         </field>
     </record>
 
-    <record id="signature_request_view_search" model="ir.ui.view">
-        <field name="name">signature.request.search</field>
-        <field name="model">signature.request</field>
+    <record id="sign_request_view_search" model="ir.ui.view">
+        <field name="name">sign.request.search</field>
+        <field name="model">sign.request</field>
         <field name="arch" type="xml">
             <search>
                 <field name="reference"/>
@@ -133,11 +133,11 @@
         </field>
     </record>
 
-    <record id="signature_request_action" model="ir.actions.act_window">
+    <record id="sign_request_action" model="ir.actions.act_window">
         <field name="name">Documents</field>
-        <field name="res_model">signature.request</field>
+        <field name="res_model">sign.request</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="search_view_id" ref="signature_request_view_search"/>
+        <field name="search_view_id" ref="sign_request_view_search"/>
         <field name="context" eval="{'search_default_active': 1}"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_empty_folder">
@@ -150,9 +150,9 @@
     </record>
 
     <!-- Signature Request Item Views -->
-    <record id="signature_request_item_view_tree" model="ir.ui.view">
-        <field name="name">signature.request.item.tree</field>
-        <field name="model">signature.request.item</field>
+    <record id="sign_request_item_view_tree" model="ir.ui.view">
+        <field name="name">sign.request.item.tree</field>
+        <field name="model">sign.request.item</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="partner_id"/>
@@ -163,9 +163,9 @@
         </field>
     </record>
 
-    <record id="signature_request_item_view_form" model="ir.ui.view">
-        <field name="name">signature.request.item.form</field>
-        <field name="model">signature.request.item</field>
+    <record id="sign_request_item_view_form" model="ir.ui.view">
+        <field name="name">sign.request.item.form</field>
+        <field name="model">sign.request.item</field>
         <field name="arch" type="xml">
             <form>
                 <header>
@@ -197,7 +197,7 @@
     <menuitem id="menu_document" name="Sign" web_icon="sign,static/description/icon.png" groups="sign.group_sign_user"/>
 
     <menuitem id="digital_signatures_menu" sequence="-5" name="Documents" parent="menu_document"/>
-    <menuitem id="signature_request_menu" name="Signature Requests" parent="digital_signatures_menu" action="signature_request_action" groups="sign.group_sign_user"/>
+    <menuitem id="sign_request_menu" name="Signature Requests" parent="digital_signatures_menu" action="sign_request_action" groups="sign.group_sign_user"/>
 
     <!-- After installation of the module, open the related menu -->
     <record id="base.open_menu" model="ir.actions.todo">

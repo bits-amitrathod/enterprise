@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 import base64
 import mimetypes
 import os
@@ -7,11 +9,12 @@ import re
 from odoo import http, _
 from odoo.addons.web.controllers.main import content_disposition
 
-class WebsiteSign(http.Controller):
+
+class Sign(http.Controller):
 
     def get_document_qweb_context(self, id, token):
-        signature_request = http.request.env['signature.request'].sudo().search([('id', '=', id)])
-        if not signature_request:
+        sign_request = http.request.env['sign.request'].sudo().search([('id', '=', id)])
+        if not sign_request:
             if token:
                 return http.request.render('sign.deleted_sign_request')
             else:
@@ -19,15 +22,15 @@ class WebsiteSign(http.Controller):
 
         current_request_item = None
         if token:
-            current_request_item = signature_request.request_item_ids.filtered(lambda r: r.access_token == token)
-            if not current_request_item and signature_request.access_token != token and http.request.env.user.id != signature_request.create_uid.id:
+            current_request_item = sign_request.request_item_ids.filtered(lambda r: r.access_token == token)
+            if not current_request_item and sign_request.access_token != token and http.request.env.user.id != sign_request.create_uid.id:
                 return http.request.render('sign.deleted_sign_request')
-        elif signature_request.create_uid.id != http.request.env.user.id:
+        elif sign_request.create_uid.id != http.request.env.user.id:
             return http.request.not_found()
 
-        signature_item_types = http.request.env['signature.item.type'].sudo().search_read([])
+        sign_item_types = http.request.env['sign.item.type'].sudo().search_read([])
         if current_request_item:
-            for item_type in signature_item_types:
+            for item_type in sign_item_types:
                 if item_type['auto_field']:
                     fields = item_type['auto_field'].split('.')
                     auto_field = current_request_item.partner_id
@@ -39,24 +42,24 @@ class WebsiteSign(http.Controller):
                             break
                     item_type['auto_field'] = auto_field
 
-        sr_values = http.request.env['signature.item.value'].sudo().search([('signature_request_id', '=', signature_request.id)])
+        sr_values = http.request.env['sign.item.value'].sudo().search([('sign_request_id', '=', sign_request.id)])
         item_values = {}
         for value in sr_values:
-            item_values[value.signature_item_id.id] = value.value
+            item_values[value.sign_item_id.id] = value.value
 
         return {
-            'signature_request': signature_request,
+            'sign_request': sign_request,
             'current_request_item': current_request_item,
             'token': token,
-            'nbComments': len(signature_request.message_ids.filtered(lambda m: m.message_type == 'comment')),
-            'isPDF': (signature_request.template_id.attachment_id.mimetype.find('pdf') > -1),
-            'webimage': re.match('image.*(gif|jpe|jpg|png)', signature_request.template_id.attachment_id.mimetype),
-            'hasItems': len(signature_request.template_id.signature_item_ids) > 0,
-            'signature_items': signature_request.template_id.signature_item_ids,
+            'nbComments': len(sign_request.message_ids.filtered(lambda m: m.message_type == 'comment')),
+            'isPDF': (sign_request.template_id.attachment_id.mimetype.find('pdf') > -1),
+            'webimage': re.match('image.*(gif|jpe|jpg|png)', sign_request.template_id.attachment_id.mimetype),
+            'hasItems': len(sign_request.template_id.sign_item_ids) > 0,
+            'sign_items': sign_request.template_id.sign_item_ids,
             'item_values': item_values,
             'role': current_request_item.role_id.id if current_request_item else 0,
             'readonly': not (current_request_item and current_request_item.state == 'sent'),
-            'signature_item_types': signature_item_types,
+            'sign_item_types': sign_item_types,
         }
 
     # -------------
@@ -76,22 +79,22 @@ class WebsiteSign(http.Controller):
 
     @http.route(['/sign/download/<int:id>/<token>/<type>'], type='http', auth='public')
     def download_document(self, id, token, type, **post):
-        signature_request = http.request.env['signature.request'].sudo().search([('id', '=', id), ('access_token', '=', token)])
-        if not signature_request:
+        sign_request = http.request.env['sign.request'].sudo().search([('id', '=', id), ('access_token', '=', token)])
+        if not sign_request:
             return http.request.not_found()
 
         document = None
         if type == "origin":
-            document = signature_request.template_id.attachment_id.datas
+            document = sign_request.template_id.attachment_id.datas
         elif type == "completed":
-            document = signature_request.completed_document
+            document = sign_request.completed_document
 
         if not document:
             return http.redirect_with_hash("/sign/document/%(request_id)s/%(access_token)s" % {'request_id': id, 'access_token': token})
 
-        filename = signature_request.reference
-        if filename != signature_request.template_id.attachment_id.datas_fname:
-            filename += signature_request.template_id.attachment_id.datas_fname[signature_request.template_id.attachment_id.datas_fname.rfind('.'):]
+        filename = sign_request.reference
+        if filename != sign_request.template_id.attachment_id.datas_fname:
+            filename += sign_request.template_id.attachment_id.datas_fname[sign_request.template_id.attachment_id.datas_fname.rfind('.'):]
 
         return http.request.make_response(
             base64.b64decode(document),
@@ -103,19 +106,19 @@ class WebsiteSign(http.Controller):
 
     @http.route(['/sign/<link>'], type='http', auth='public')
     def share_link(self, link, **post):
-        template = http.request.env['signature.request.template'].sudo().search([('share_link', '=', link)], limit=1)
+        template = http.request.env['sign.template'].sudo().search([('share_link', '=', link)], limit=1)
         if not template:
             return http.request.not_found()
 
-        signature_request = http.request.env['signature.request'].sudo().create({
+        sign_request = http.request.env['sign.request'].sudo().create({
             'template_id': template.id,
             'reference': "%(template_name)s-public" % {'template_name': template.attachment_id.name}
         })
 
-        request_item = http.request.env['signature.request.item'].sudo().create({'signature_request_id': signature_request.id, 'role_id': template.signature_item_ids.mapped('responsible_id').id})
-        signature_request.action_sent()
+        request_item = http.request.env['sign.request.item'].sudo().create({'sign_request_id': sign_request.id, 'role_id': template.sign_item_ids.mapped('responsible_id').id})
+        sign_request.action_sent()
 
-        return http.redirect_with_hash('/sign/document/%(request_id)s/%(access_token)s' % {'request_id': signature_request.id, 'access_token': request_item.access_token})
+        return http.redirect_with_hash('/sign/document/%(request_id)s/%(access_token)s' % {'request_id': sign_request.id, 'access_token': request_item.access_token})
 
     # -------------
     #  JSON Routes
@@ -147,24 +150,24 @@ class WebsiteSign(http.Controller):
 
     @http.route(['/sign/send_public/<int:id>/<token>'], type='json', auth='public')
     def make_public_user(self, id, token, name=None, mail=None):
-        signature_request = http.request.env['signature.request'].sudo().search([('id', '=', id), ('access_token', '=', token)])
-        if not signature_request or len(signature_request.request_item_ids) != 1 or signature_request.request_item_ids.partner_id:
+        sign_request = http.request.env['sign.request'].sudo().search([('id', '=', id), ('access_token', '=', token)])
+        if not sign_request or len(sign_request.request_item_ids) != 1 or sign_request.request_item_ids.partner_id:
             return False
 
         ResPartner = http.request.env['res.partner'].sudo()
         partner = ResPartner.search([('email', '=', mail)], limit=1)
         if not partner:
             partner = ResPartner.create({'name': name, 'email': mail})
-        signature_request.request_item_ids[0].write({'partner_id': partner.id})
+        sign_request.request_item_ids[0].write({'partner_id': partner.id})
 
     @http.route(['/sign/sign/<int:id>/<token>'], type='json', auth='public')
     def sign(self, id, token, signature=None):
-        request_item = http.request.env['signature.request.item'].sudo().search([('signature_request_id', '=', id), ('access_token', '=', token), ('state', '=', 'sent')], limit=1)
+        request_item = http.request.env['sign.request.item'].sudo().search([('sign_request_id', '=', id), ('access_token', '=', token), ('state', '=', 'sent')], limit=1)
         if not (request_item and request_item.sign(signature)):
             return False
 
         request_item.action_completed()
-        request = request_item.signature_request_id
+        request = request_item.sign_request_id
         request._message_post_as_creator(_('Signed.'), author=request_item.partner_id, type='comment', subtype='mt_comment')
         if request.state == 'signed':
             request._message_post_as_creator(_('Everybody Signed.'), type='comment', subtype='mt_comment')
@@ -172,7 +175,7 @@ class WebsiteSign(http.Controller):
 
     @http.route(['/sign/get_notes/<int:id>/<token>'], type='json', auth='public')
     def get_notes(self, id, token):
-        request = http.request.env['signature.request'].sudo().search([('id', '=', id), ('access_token', '=', token)], limit=1)
+        request = http.request.env['sign.request'].sudo().search([('id', '=', id), ('access_token', '=', token)], limit=1)
         if not request:
             return []
 
@@ -189,7 +192,7 @@ class WebsiteSign(http.Controller):
 
     @http.route(['/sign/send_note/<int:id>/<token>'], type='json', auth='public')
     def send_note(self, id, token, access_token=None, message=None):
-        request = http.request.env['signature.request'].sudo().search([('id', '=', id), ('access_token', '=', token)], limit=1)
+        request = http.request.env['sign.request'].sudo().search([('id', '=', id), ('access_token', '=', token)], limit=1)
         if not request:
             return
 
@@ -200,5 +203,5 @@ class WebsiteSign(http.Controller):
 
     @http.route(['/sign/save_location/<int:id>/<token>'], type='json', auth='public')
     def save_location(self, id, token, latitude=0, longitude=0):
-        signature_request_item = http.request.env['signature.request.item'].sudo().search([('signature_request_id', '=', id), ('access_token', '=', token)], limit=1)
-        signature_request_item.write({'latitude': latitude, 'longitude': longitude})
+        sign_request_item = http.request.env['sign.request.item'].sudo().search([('sign_request_id', '=', id), ('access_token', '=', token)], limit=1)
+        sign_request_item.write({'latitude': latitude, 'longitude': longitude})

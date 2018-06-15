@@ -48,42 +48,42 @@
 
             <div class="row o_sign_page_info">
                 <div class="col-md-4">
-                    <h4 class="o_sign_request_reference_title"><t t-esc="signature_request.reference"/></h4>
+                    <h4 class="o_sign_request_reference_title"><t t-esc="sign_request.reference"/></h4>
 
-                    <a role="button" t-if="signature_request.state == 'signed'" t-attf-href="/sign/download/{{signature_request.id}}/{{signature_request.access_token}}/completed" class="btn btn-primary o_sign_download_document_button">Download Document</a>
+                    <a role="button" t-if="sign_request.state == 'signed'" t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/completed" class="btn btn-primary o_sign_download_document_button">Download Document</a>
                     <button type="button" class="btn btn-default o_sign_view_history">View History<t t-if="nbComments > 0"> (<t t-esc="nbComments"/> comment<t t-if="nbComments > 1">s</t>)</t></button>
                 </div>
 
                 <div class="col-md-4">
                     <h5 class="page-header">Sender</h5>
                     <div class="clearfix">
-                        <img class="media-object pull-right" t-attf-src="/web/image/res.partner/#{signature_request.create_uid.partner_id.id}/image_small" alt="Signature"/>
-                        <t t-if="signature_request.create_uid.partner_id.name"><t t-esc="signature_request.create_uid.partner_id.name"/><br/></t>
-                        <t t-if="signature_request.create_uid.partner_id.email"><a t-attf-href="mailto:{{signature_request.create_uid.partner_id.email}}"><t t-esc="signature_request.create_uid.partner_id.email"/></a><br/></t>
-                        <t t-if="signature_request.create_uid.partner_id.phone"><t t-esc="signature_request.create_uid.partner_id.phone"/><br/></t>
+                        <img class="media-object pull-right" t-attf-src="/web/image/res.partner/#{sign_request.create_uid.partner_id.id}/image_small" alt="Signature"/>
+                        <t t-if="sign_request.create_uid.partner_id.name"><t t-esc="sign_request.create_uid.partner_id.name"/><br/></t>
+                        <t t-if="sign_request.create_uid.partner_id.email"><a t-attf-href="mailto:{{sign_request.create_uid.partner_id.email}}"><t t-esc="sign_request.create_uid.partner_id.email"/></a><br/></t>
+                        <t t-if="sign_request.create_uid.partner_id.phone"><t t-esc="sign_request.create_uid.partner_id.phone"/><br/></t>
                     </div>
 
-                    <t t-if="len(signature_request.follower_ids) &gt; 0">
-                        <h5 class="page-header">Followers (<t t-esc="len(signature_request.follower_ids)"/>)</h5>
+                    <t t-if="len(sign_request.follower_ids) &gt; 0">
+                        <h5 class="page-header">Followers (<t t-esc="len(sign_request.follower_ids)"/>)</h5>
                         <div>
-                            <span t-foreach="signature_request.follower_ids" t-as="follower" class="o_sign_request_follower_name"><t t-esc="follower.name"/></span>
+                            <span t-foreach="sign_request.follower_ids" t-as="follower" class="o_sign_request_follower_name"><t t-esc="follower.name"/></span>
                         </div>
                     </t>
                 </div>
 
                 <div class="col-md-4">
-                    <t t-if="signature_request.state != 'signed'">
-                        <h5 class="page-header">Waiting Signatures (<t t-esc="str(len(signature_request.request_item_ids)-signature_request.nb_closed)"/>)</h5>
-                        <t t-foreach="signature_request.request_item_ids" t-as="sign">
+                    <t t-if="sign_request.state != 'signed'">
+                        <h5 class="page-header">Waiting Signatures (<t t-esc="str(len(sign_request.request_item_ids)-sign_request.nb_closed)"/>)</h5>
+                        <t t-foreach="sign_request.request_item_ids" t-as="sign">
                             <div t-if="sign.state != 'completed'" class="o_sign_signer_status clearfix" t-att-data-id="sign.id">
                                 <b><t t-esc="sign.partner_id.name if sign.partner_id else 'Public user'"/></b><t t-if="sign.role_id"><t t-esc="' - ' + sign.role_id.name"/></t><em t-if="sign.state != 'sent'"><br/>(the email access has not been sent)</em>
                             </div>
                         </t>
                     </t>
-                    <t t-if="signature_request.nb_closed > 0">
-                        <h5 class="page-header">Signed (<t t-esc="str(signature_request.nb_closed) +'/'+ str(len(signature_request.request_item_ids))"/>)</h5>
-                        <t t-foreach="signature_request.request_item_ids" t-as="sign">
-                            <div t-if="sign.state == 'completed'" class="o_sign_signer_status clearfix"><img t-if="sign.signature" class="pull-right" t-attf-src="/web/image/signature.request.item/{{sign.id}}/signature" alt="Signature"/><b><t t-esc="sign.partner_id.name"/></b><t t-if="sign.role_id"><t t-esc="' - ' + sign.role_id.name"/></t><br/><em>Signed on <span t-field="sign.signing_date"></span></em></div>
+                    <t t-if="sign_request.nb_closed > 0">
+                        <h5 class="page-header">Signed (<t t-esc="str(sign_request.nb_closed) +'/'+ str(len(sign_request.request_item_ids))"/>)</h5>
+                        <t t-foreach="sign_request.request_item_ids" t-as="sign">
+                            <div t-if="sign.state == 'completed'" class="o_sign_signer_status clearfix"><img t-if="sign.signature" class="pull-right" t-attf-src="/web/image/sign.request.item/{{sign.id}}/signature" alt="Signature"/><b><t t-esc="sign.partner_id.name"/></b><t t-if="sign.role_id"><t t-esc="' - ' + sign.role_id.name"/></t><br/><em>Signed on <span t-field="sign.signing_date"></span></em></div>
                         </t>
                     </t>
                 </div>
@@ -91,9 +91,9 @@
 
             <div t-if="not hasItems and not isPDF" class="row">
                 <div class="col-md-12">
-                    <a class="o_sign_image_document" t-attf-href="/sign/download/{{signature_request.id}}/{{signature_request.access_token}}/origin" target="_blank">
-                        <img t-if="webimage" class="img img-responsive" t-attf-src="/sign/download/{{signature_request.id}}/{{signature_request.access_token}}/origin" alt="Signature"/>
-                        <div t-if="not webimage" class="o_image" t-att-data-mimetype="signature_request.template_id.attachment_id.mimetype"/>
+                    <a class="o_sign_image_document" t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/origin" target="_blank">
+                        <img t-if="webimage" class="img img-responsive" t-attf-src="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/origin" alt="Signature"/>
+                        <div t-if="not webimage" class="o_image" t-att-data-mimetype="sign_request.template_id.attachment_id.mimetype"/>
                     </a>
                 </div>
             </div>
@@ -103,14 +103,14 @@
             <t t-call="sign.items_view"/>
         </t>
 
-        <input id="o_sign_input_signature_request_id" type="hidden" t-att-value="signature_request.id"/>
-        <input id="o_sign_input_signature_request_token" type="hidden" t-att-value="signature_request.access_token"/>
+        <input id="o_sign_input_sign_request_id" type="hidden" t-att-value="sign_request.id"/>
+        <input id="o_sign_input_sign_request_token" type="hidden" t-att-value="sign_request.access_token"/>
         <input id="o_sign_input_access_token" type="hidden" t-att-value="token"/>
         <input id="o_sign_signer_name_input_info" type="hidden" t-att-value="current_request_item.partner_id.name if current_request_item and current_request_item.partner_id else None"/>
-        <input id="o_sign_chatter_send_access" type="hidden" t-att-value="(current_request_item and current_request_item.partner_id) or signature_request.create_uid.id == uid"/>
+        <input id="o_sign_chatter_send_access" type="hidden" t-att-value="(current_request_item and current_request_item.partner_id) or sign_request.create_uid.id == uid"/>
         <input t-if="current_request_item and current_request_item.state == 'sent'" id="o_sign_ask_location_input" type="hidden"/>
 
-        <t t-if="len(signature_request.request_item_ids) == 1 and not signature_request.request_item_ids[0].partner_id">
+        <t t-if="len(sign_request.request_item_ids) == 1 and not sign_request.request_item_ids[0].partner_id">
             <input id="o_sign_is_public_user" type="hidden"/>
         </t>
     </template>
@@ -139,7 +139,7 @@
                 <header>
                     <div class="container text-center">
                         <a href="/"><img src="/logo.png" alt="Logo"/></a>
-                        <div t-if="signature_request" class="o_sign_header_instruction">
+                        <div t-if="sign_request" class="o_sign_header_instruction">
                             <t t-if="not current_request_item">Need to sign? Check your inbox to get your secure access</t>
                             <t t-if="current_request_item and current_request_item.state == 'draft'">This document cannot be filled right now</t>
                             <t t-if="current_request_item and current_request_item.state == 'sent'">Please Review And Act On This Document</t>

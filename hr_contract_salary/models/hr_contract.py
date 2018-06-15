@@ -21,8 +21,8 @@ class HrContract(models.Model):
     access_token = fields.Char('Security Token', copy=False)
     access_token_consumed = fields.Boolean('Consumed Access Token')
     access_token_end_date = fields.Date('Access Token Validity Date', copy=False)
-    signature_request_ids = fields.Many2many('signature.request', string="Requested Signatures")
-    signature_request_count = fields.Integer(compute='_compute_signature_request_count')
+    sign_request_ids = fields.Many2many('sign.request', string="Requested Signatures")
+    sign_request_count = fields.Integer(compute='_compute_sign_request_count')
     active_employee = fields.Boolean(related='employee_id.active', string="Active Employee")
     applicant_id = fields.Many2one('hr.applicant')
     contract_reviews_count = fields.Integer(compute="_compute_contract_reviews_count", string="Proposed Contracts Count")
@@ -34,25 +34,25 @@ class HrContract(models.Model):
         help="Person responsible of validating the employee's contracts.")
     default_contract_id = fields.Many2one('hr.contract', string="Contract Template",
         help="Default contract used when making an offer to an applicant.")
-    signature_request_template_id = fields.Many2one('signature.request.template', string="New Contract Document Template",
+    sign_template_id = fields.Many2one('sign.template', string="New Contract Document Template",
         help="Default document that the applicant will have to sign to accept a contract offer.")
-    contract_update_template_id = fields.Many2one('signature.request.template', string="Contract Update Document Template",
+    contract_update_template_id = fields.Many2one('sign.template', string="Contract Update Document Template",
         help="Default document that the employee will have to sign to update his contract.")
     signatures_count = fields.Integer(compute='_compute_signatures_count', string='# Signatures',
         help="The number of signatures on the mostly signed pdf contract.")
 
-    @api.depends('signature_request_ids.nb_closed')
+    @api.depends('sign_request_ids.nb_closed')
     def _compute_signatures_count(self):
         for contract in self:
-            if not contract.signature_request_ids:
-                contract.signature_request_count = 0.0
+            if not contract.sign_request_ids:
+                contract.sign_request_count = 0.0
             else:
-                contract.signatures_count = max(contract.signature_request_ids.mapped('nb_closed'))
+                contract.signatures_count = max(contract.sign_request_ids.mapped('nb_closed'))
 
-    @api.depends('signature_request_ids')
-    def _compute_signature_request_count(self):
+    @api.depends('sign_request_ids')
+    def _compute_sign_request_count(self):
         for contract in self:
-            contract.signature_request_count = len(contract.signature_request_ids)
+            contract.sign_request_count = len(contract.sign_request_ids)
 
     @api.depends('origin_contract_id')
     def _compute_contract_reviews_count(self):
@@ -67,7 +67,7 @@ class HrContract(models.Model):
         contracts = self.search([
             ('state', '=', 'draft'),
             ('active', '=', False),
-            ('signature_request_ids', '!=', False),
+            ('sign_request_ids', '!=', False),
             ('create_date', '<=', Date.to_string(seven_days_ago))])
         employees = contracts.mapped('employee_id').filtered(lambda employee: not employee.active)
         partners = employees.mapped('address_home_id').filtered(
@@ -131,17 +131,17 @@ class HrContract(models.Model):
     def action_refuse_package(self):
         self.state = 'close'
 
-    def open_signature_requests(self):
+    def open_sign_requests(self):
         self.ensure_one()
-        if len(self.signature_request_ids.ids) == 1:
-            return self.signature_request_ids.go_to_document()
+        if len(self.sign_request_ids.ids) == 1:
+            return self.sign_request_ids.go_to_document()
         else:
             return {
                 'type': 'ir.actions.act_window',
                 'name': 'Signature Requests',
                 'view_mode': 'tree,form',
-                'res_model': 'signature.request',
-                'domain': [('id', 'in', self.signature_request_ids.ids)]
+                'res_model': 'sign.request',
+                'domain': [('id', 'in', self.sign_request_ids.ids)]
             }
 
     def action_show_contract_reviews(self):

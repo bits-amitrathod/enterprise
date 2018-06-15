@@ -3,7 +3,7 @@
     <template id="sign.items_view" name="Digital Signatures - Items View">
         <iframe class="o_sign_pdf_iframe" t-att-readonly="'readonly' if readonly else None"/>
 
-        <input id="o_sign_input_attachment_location" type="hidden" t-attf-value="/sign/download/{{signature_request.id}}/{{signature_request.access_token}}/origin"/>
+        <input id="o_sign_input_attachment_location" type="hidden" t-attf-value="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/origin"/>
         <input id="o_sign_input_current_role" type="hidden" t-att-value="role"/>
 
         <t t-call="sign.items_input_info"/>
@@ -11,8 +11,8 @@
     </template>
 
     <template id="sign.items_input_info" name="Items input info">
-        <t t-if="signature_items">
-            <t t-foreach="signature_items" t-as="item">
+        <t t-if="sign_items">
+            <t t-foreach="sign_items" t-as="item">
                 <input type="hidden" class="o_sign_item_input_info"
                     t-att-data-id="item.id"
                     t-att-data-type="item.type_id.id"
@@ -30,7 +30,7 @@
     </template>
 
     <template id="sign.item_types_input_info" name="Item types input info">
-        <t t-foreach="signature_item_types" t-as="item_type">
+        <t t-foreach="sign_item_types" t-as="item_type">
             <input type="hidden" class="o_sign_field_type_input_info" 
                 t-att-data-id="item_type['id']"
                 t-att-data-name="item_type['name']"
