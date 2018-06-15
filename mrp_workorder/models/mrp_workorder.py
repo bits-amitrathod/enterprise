@@ -27,7 +27,7 @@ class MrpProductionWorkcenterLine(models.Model):
     component_id = fields.Many2one('product.product', compute='_compute_component_id', readonly=True)
     component_tracking = fields.Selection(related='component_id.tracking', string="Is Component Tracked")
     component_remaining_qty = fields.Float('Remaining Quantity for Component', compute='_compute_component_id', readonly=True,digits=dp.get_precision('Product Unit of Measure'))
-    component_uom_id = fields.Many2one(related='component_id.uom_id', string="Component UoM")
+    component_uom_id = fields.Many2one('uom.uom', compute='_compute_component_id', string="Component UoM")
     control_date = fields.Datetime(related='current_quality_check_id.control_date')
     is_first_step = fields.Boolean('Is First Step')
     is_last_step = fields.Boolean('Is Last Step')
@@ -72,6 +72,7 @@ class MrpProductionWorkcenterLine(models.Model):
                 lines = wo.active_move_line_ids.filtered(lambda l: l.move_id in moves)
                 completed_lines = lines.filtered(lambda l: l.lot_id) if wo.component_tracking != 'none' else lines
                 wo.component_remaining_qty = float_round(sum(moves.mapped('unit_factor')) * wo.qty_producing - sum(completed_lines.mapped('qty_done')), precision_rounding=move.product_uom.rounding)
+                wo.component_uom_id = move.product_uom
 
     def action_back(self):
         self.ensure_one()
