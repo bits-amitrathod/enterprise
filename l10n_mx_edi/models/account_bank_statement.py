@@ -14,6 +14,10 @@ class AccountBankStatementLine(models.Model):
 
     def process_reconciliation(self, counterpart_aml_dicts=None,
                                payment_aml_rec=None, new_aml_dicts=None):
+        invoice_ids = []
+        for aml_dict in counterpart_aml_dicts:
+            if aml_dict['move_line'].invoice_id:
+                invoice_ids.append(aml_dict['move_line'].invoice_id.id)
         res = super(AccountBankStatementLine, self).process_reconciliation(
             counterpart_aml_dicts=counterpart_aml_dicts,
             payment_aml_rec=payment_aml_rec, new_aml_dicts=new_aml_dicts)
@@ -23,6 +27,7 @@ class AccountBankStatementLine(models.Model):
         payment_method = self.l10n_mx_edi_payment_method_id.id or self.journal_id.l10n_mx_edi_payment_method_id.id
         payments.write({
             'l10n_mx_edi_payment_method_id': payment_method,
+            'invoice_ids': [(6, 0, invoice_ids)]
         })
         payments._l10n_mx_edi_retry()
         return res

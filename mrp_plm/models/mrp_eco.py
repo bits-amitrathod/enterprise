@@ -575,19 +575,28 @@ class MrpEco(models.Model):
 
     @api.multi
     def action_new_revision(self):
+        IrAttachment = self.env['ir.attachment']  # FORWARDPORT UP TO SAAS-15
         for eco in self:
             if eco.type in ('bom', 'both'):
                 eco.new_bom_id = eco.bom_id.copy(default={
                     'version': eco.bom_id.version + 1,
                     'active': False,
                     'previous_bom_id': eco.bom_id.id,
-                }).id
+                })
+                attachments = IrAttachment.search([('res_model', '=', 'mrp.bom'),
+                                                   ('res_id', '=', eco.bom_id.id)])
+                for attachment in attachments:
+                    attachment.copy(default={'res_id':eco.new_bom_id.id})
             if eco.type in ('routing', 'both'):
                 eco.new_routing_id = eco.routing_id.copy(default={
                     'version': eco.routing_id.version + 1,
                     'active': False,
                     'previous_routing_id': eco.routing_id.id
                 }).id
+                attachments = IrAttachment.search([('res_model', '=', 'mrp.routing'),
+                                                   ('res_id', '=', eco.routing_id.id)])
+                for attachment in attachments:
+                    attachment.copy(default={'res_id':eco.new_routing_id.id})
             if eco.type == 'both':
                 eco.new_bom_id.routing_id = eco.new_routing_id.id
                 for line in eco.new_bom_id.bom_line_ids:

@@ -198,7 +198,7 @@ class SignatureRequest(models.Model):
     @api.one
     def send_follower_accesses(self, followers, subject=None, message=None):
         base_context = self.env.context
-        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         template_id = self.env.ref('website_sign.website_sign_mail_template').id
         mail_template = self.env['mail.template'].browse(template_id)
 
