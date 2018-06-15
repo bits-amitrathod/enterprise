@@ -2,18 +2,18 @@
 
 <templates xml:space="preserve">
 
-    <t t-name="batch_deposits_selector">
-        <div t-if="batchDeposits.length > 0" class="dropdown batch_deposits_selector">
+    <t t-name="batch_payments_selector">
+        <div t-if="batchPayments.length > 0" class="dropdown batch_payments_selector">
             <a data-toggle="dropdown" href="javascript:void(0)">
-                <i class="fa fa-bookmark"></i> Select a Batch Deposit
+                <i class="fa fa-bookmark"></i> Select a Batch Payment
             </a>
             <ul class="dropdown-menu" role="menu">
-                <t t-foreach="batchDeposits" t-as="deposit">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)" class="batch_deposit" t-att-data-batch_deposit_id="deposit.id">
-                        <t t-esc="deposit.name"/> :
-                        <t t-esc="deposit.amount_str"/>
-                        <t t-if="deposit.amount_currency_str">
-                            (<t t-esc="deposit.amount_currency_str"/>)
+                <t t-foreach="batchPayments" t-as="batch">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0)" class="batch_payment" t-att-data-batch_payment_id="batch.id">
+                        <t t-esc="batch.name"/> :
+                        <t t-esc="batch.amount_str"/>
+                        <t t-if="batch.amount_currency_str">
+                            (<t t-esc="batch.amount_currency_str"/>)
                         </t>
                     </a></li>
                 </t>

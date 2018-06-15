@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Batch Deposit',
+    'name': 'Batch Payment',
     'version': '1.0',
     'category': 'Accounting',
     'description': """
-Batch Deposit
-=============
-Batch deposits allows you to group received checks before you deposit them to the bank.
-The amount deposited to your bank will then appear as a single transaction on your bank statement.
-When you proceed with the reconciliation, simply select the corresponding batch deposit to reconcile the payments.
+Batch Payments
+=======================================
+Batch payments allow grouping payments.
+
+They are for example used to regroup serveral received checks before you deposit them in a single batch to the bank.
+The total amount deposited will then appear as a single transaction on your bank statement.
+When you proceed with the reconciliation, simply select the corresponding batch payment to reconcile all the payments within.
     """,
     'website': 'https://www.odoo.com/page/accounting',
     'depends' : ['account_accountant'],

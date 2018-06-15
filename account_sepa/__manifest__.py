@@ -11,13 +11,14 @@
     """,
     'category': 'Accounting',
     'version': '1.0',
-    'depends': ['account', 'base_iban'],
+    'depends': ['account_batch_payment', 'base_iban'],
     'data': [
         'data/sepa.xml',
         'views/account_journal_dashboard_view.xml',
         'views/res_config_settings_views.xml',
         'views/sepa_credit_transfer_view.xml',
         'views/account_payment.xml',
+        'views/account_batch_payment_views.xml',
     ],
     'license': 'OEEL-1',
 }

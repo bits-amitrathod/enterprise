@@ -31,12 +31,20 @@ class AccountPayment(models.Model):
         """ returns the first mandate found that can be used for this payment,
         or none if there is no such mandate.
         """
-        sdd_mandate_obj = self.env['sdd.mandate']
         for payment in self:
-            payment.sdd_mandate_usable = bool(sdd_mandate_obj._get_usable_mandate(
-                payment.company_id.id or self.env.user.company_id.id,
-                payment.partner_id.commercial_partner_id.id,
-                payment.payment_date))
+            payment.sdd_mandate_usable = bool(payment.get_usable_mandate())
+
+    def post(self):
+        """ Overridden to register SDD payments on mandates.
+        """
+        for record in self:
+            if record.payment_method_code == 'sdd':
+                usable_mandate = record.get_usable_mandate()
+                if not usable_mandate:
+                    raise UserError(_("Unable to post payment '%s' due to no usable mandate being available at date %s for partner '%s'. Please create one before encoding a SEPA Direct Debit payment." % (record.name, str(record.payment_date), record.partner_id.name)))
+                record._register_on_mandate(usable_mandate)
+
+        super(AccountPayment, self).post()
 
     def generate_xml(self, company_id, required_collection_date):
         """ Generates a SDD XML file containing the payments corresponding to this recordset,
@@ -55,6 +63,15 @@ class AccountPayment(models.Model):
             payment_info_counter += 1
 
         return etree.tostring(document, pretty_print=True, xml_declaration=True, encoding='utf-8')
+
+    def get_usable_mandate(self):
+        """ Returns the sdd mandate that can be used to generate this payment, or
+        None if there is none.
+        """
+        return self.env['sdd.mandate']._get_usable_mandate(
+            self.company_id.id or self.env.user.company_id.id,
+            self.partner_id.commercial_partner_id.id,
+            self.payment_date)
 
     def _sdd_xml_gen_header(self, company_id, CstmrDrctDbtInitn):
         """ Generates the header of the SDD XML file.
@@ -176,7 +193,6 @@ class AccountPayment(models.Model):
                 mandate = record.invoice_ids._get_usable_mandate() # Call to super() ensures there is only one invoice in the set
                 if not mandate:
                     raise UserError(_("This invoice cannot be paid via SEPA Direct Debit, as there is no valid mandate available for its customer at its creation date."))
-                record._register_on_mandate(mandate)
 
 
 class AccountRegisterPaymentsWizard(models.TransientModel):

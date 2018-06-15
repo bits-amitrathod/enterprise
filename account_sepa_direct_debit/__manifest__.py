@@ -39,7 +39,7 @@
 
     'category': 'Accounting',
 
-    'depends': ['account','base_iban'],
+    'depends': ['base_iban','account_batch_payment'],
 
     'data': [
         'security/ir.model.access.csv',
@@ -54,8 +54,8 @@
         'views/report_invoice.xml',
         'views/res_config_settings_views.xml',
         'views/res_partner_view.xml',
-        'views/sdd_xml_archive_views.xml',
         'views/sdd_mandate_views.xml',
+        'views/account_batch_payment_views.xml',
         'wizard/sdd_xml_wizards.xml',
     ],
 }

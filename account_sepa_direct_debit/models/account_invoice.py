@@ -47,8 +47,6 @@ class AccountInvoice(models.Model):
                                                       'partner_id': mandate.partner_id.commercial_partner_id.id,
                                                       'payment_date': self.date_due or self.date_invoice})
         payment.post()
-        payment._register_on_mandate(mandate)
-
         return payment
 
     def _get_usable_mandate(self):

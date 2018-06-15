@@ -78,9 +78,16 @@ class TestSEPACreditTransfer(AccountingTestCase):
         })
 
     def testStandardSEPA(self):
-        model_credit_transfer = self.env['account.sepa.credit.transfer']
-        model_credit_transfer.create_sepa_credit_transfer(self.payment_1 | self.payment_2)
-        credit_transfer = model_credit_transfer.search([], limit=1, order="id desc")
+        batch = self.env['account.batch.payment'].create({
+            'journal_id': self.bank_journal.id,
+            'payment_ids': [(4, payment.id, None) for payment in (self.payment_1 | self.payment_2)],
+            'payment_method_id': self.sepa_ct.id,
+            'batch_type': 'outbound',
+        })
+
+        batch.validate_batch()
+        credit_transfer = self.env['account.sepa.credit.transfer'].browse(batch.generate_sct_xml()['res_id'])
+
         self.assertFalse(credit_transfer.is_generic)
         sct_doc = etree.fromstring(base64.b64decode(credit_transfer.file))
         self.assertTrue(self.xmlschema.validate(sct_doc), self.xmlschema.error_log.last_error)
@@ -88,9 +95,16 @@ class TestSEPACreditTransfer(AccountingTestCase):
         self.assertEqual(self.payment_2.state, 'sent')
 
     def testGenericSEPA(self):
-        model_credit_transfer = self.env['account.sepa.credit.transfer']
-        model_credit_transfer.create_sepa_credit_transfer(self.payment_1 | self.payment_3)
-        credit_transfer = model_credit_transfer.search([], limit=1, order="id desc")
+        batch = self.env['account.batch.payment'].create({
+            'journal_id': self.bank_journal.id,
+            'payment_ids': [(4, payment.id, None) for payment in (self.payment_1 | self.payment_3)],
+            'payment_method_id': self.sepa_ct.id,
+            'batch_type': 'outbound',
+        })
+
+        batch.validate_batch()
+        credit_transfer = self.env['account.sepa.credit.transfer'].browse(batch.generate_sct_xml()['res_id'])
+
         self.assertTrue(credit_transfer.is_generic)
         sct_doc = etree.fromstring(base64.b64decode(credit_transfer.file))
         self.assertTrue(self.xmlschema.validate(sct_doc), self.xmlschema.error_log.last_error)

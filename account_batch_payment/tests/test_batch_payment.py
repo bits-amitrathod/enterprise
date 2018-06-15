@@ -58,6 +58,7 @@ class TestBatchPayment(AccountingTestCase):
             'payment_ids': [(4, payment.id, None) for payment in self.payments],
             'payment_method_id': self.batch_deposit.id,
         })
+        batch.validate_batch()
         batch.print_batch_payment()
         self.assertTrue(all(payment.state == 'sent' for payment in self.payments))
         self.assertTrue(batch.state == 'sent')

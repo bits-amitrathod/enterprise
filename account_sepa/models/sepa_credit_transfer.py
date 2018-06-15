@@ -3,7 +3,6 @@
 import re
 import time
 import random
-import base64
 
 from lxml import etree
 
@@ -47,83 +46,14 @@ class AccountSepaCreditTransfer(models.TransientModel):
             if warning_message:
                 wiz.warning_message = _('The generated payment file is not a generic SEPA credit transfer. Be aware that some banks may reject it because it is not implemented on their side.\n\nIn particular, the reason why this payment file is not generic is the following:\n   ') + warning_message
 
-    journal_id = fields.Many2one('account.journal', string="Journal", readonly=True)
-    bank_account_id = fields.Many2one('res.partner.bank', string="Bank Account", readonly=True)
+    batch_payment_id = fields.Many2one(comodel_name='account.batch.payment')
     is_generic = fields.Boolean(readonly=True,
         help=u"Technical feature used during the file creation. A SEPA message is said to be 'generic' if it cannot be considered as "
              u"a standard european credit transfer. That is if the bank journal is not in €, a transaction is not in € or a payee is "
              u"not identified by an IBAN account number and a bank BIC.")
     warning_message = fields.Text(string='Warning', compute=_get_warning_message, store=False)
-    file = fields.Binary('SEPA XML File', readonly=True)
-    filename = fields.Char(string='Filename', size=256, readonly=True)
-
-    @api.model
-    def create_sepa_credit_transfer(self, payments):
-        """ Create a new instance of this model then open a wizard allowing to download the file
-        """
-        # Since this method is called via a client_action_multi, we need to make sure the received records are what we expect
-        payments = payments.filtered(lambda r: r.payment_method_id.code == 'sepa_ct' and r.state in ('posted', 'sent')).sorted(key=lambda r: r.id)
-
-        if len(payments) == 0:
-            raise UserError(_("Payments to export as SEPA Credit Transfer must have 'SEPA Credit Transfer' selected as payment method and be posted"))
-        if any(payment.journal_id != payments[0].journal_id for payment in payments):
-            raise UserError(_("In order to export a SEPA Credit Transfer file, please only select payments belonging to the same bank journal."))
-
-        journal = payments[0].journal_id
-        bank_account = journal.bank_account_id
-        if not bank_account.acc_type == 'iban':
-            raise UserError(_("The account %s, of journal '%s', is not of type IBAN.\nA valid IBAN account is required to use SEPA features.") % (bank_account.acc_number, journal.name))
-        for payment in payments:
-            if not payment.partner_bank_account_id:
-                raise UserError(_("There is no bank account selected for payment '%s'") % payment.name)
-
-        is_generic, warning_msg = self._require_generic_message(journal, payments)
-        res = self.create({
-            'journal_id': journal.id,
-            'bank_account_id': bank_account.id,
-            'filename': "SCT-" + journal.code + "-" + time.strftime("%Y%m%d") + ".xml",
-            'is_generic': is_generic,
-        })
-
-        if journal.company_id.sepa_pain_version == 'pain.001.001.03.ch.02':
-            xml_doc = res._create_pain_001_001_03_ch_document(payments)
-        elif journal.company_id.sepa_pain_version == 'pain.001.003.03':
-            xml_doc = res._create_pain_001_003_03_document(payments)
-        else:
-            xml_doc = res._create_pain_001_001_03_document(payments)
-        res.file = base64.encodestring(xml_doc)
-
-        payments.write({'state': 'sent'})
-        payments.write({'payment_reference': res.filename})
-
-        # Alternatively, return the id of the transient and use a controller to download the file
-        return {
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'res_model': 'account.sepa.credit.transfer',
-            'target': 'new',
-            'res_id': res.id,
-            'context': {'warning_message': warning_msg}
-        }
-
-    @api.model
-    def _require_generic_message(self, journal, payments):
-        """ Find out if generating a credit transfer initiation message for payments requires to use the generic rules, as opposed to the standard ones.
-            The generic rules are used for payments which are not considered to be standard european credit transfers.
-        """
-        # A message is generic if :
-        debtor_currency = journal.currency_id and journal.currency_id.name or journal.company_id.currency_id.name
-        if debtor_currency != 'EUR':
-            return True, _('Your bank account is not labelled in EUR')
-        for payment in payments:
-            bank_account = payment.partner_bank_account_id
-            if payment.currency_id.name != 'EUR':
-                return True, _('The transaction %s is instructed in another currency than EUR') % payment.name
-            if not bank_account.bank_bic:
-                return True, _('The creditor bank account %s used in payment %s is not identified by a BIC') % (payment.partner_bank_account_id.acc_number, payment.name)
-            if not bank_account.acc_type == 'iban':
-                return True, _('The creditor bank account %s used in payment %s is not identified by an IBAN') % (payment.partner_bank_account_id.acc_number, payment.name)
-        return False, ''
+    file = fields.Binary('SEPA XML File', related="batch_payment_id.sct_xml_file", readonly=True)
+    filename = fields.Char(string='Filename', related="batch_payment_id.sct_xml_filename", size=256, readonly=True)
 
     def _create_pain_001_001_03_document(self, doc_payments):
         """ Create a sepa credit transfer file that follows the European Payment Councile generic guidelines (pain.001.001.03)
@@ -162,11 +92,13 @@ class AccountSepaCreditTransfer(models.TransientModel):
     def _create_iso20022_credit_transfer(self, Document, doc_payments):
         CstmrCdtTrfInitn = etree.SubElement(Document, "CstmrCdtTrfInitn")
 
+        journal = self.batch_payment_id.journal_id
+
         # Create the GrpHdr XML block
         GrpHdr = etree.SubElement(CstmrCdtTrfInitn, "GrpHdr")
         MsgId = etree.SubElement(GrpHdr, "MsgId")
         val_MsgId = str(int(time.time() * 100))[-10:]
-        val_MsgId = prepare_SEPA_string(self.journal_id.company_id.name[-15:]) + val_MsgId
+        val_MsgId = prepare_SEPA_string(journal.company_id.name[-15:]) + val_MsgId
         val_MsgId = str(random.random()) + val_MsgId
         val_MsgId = val_MsgId[-30:]
         MsgId.text = val_MsgId
@@ -176,8 +108,8 @@ class AccountSepaCreditTransfer(models.TransientModel):
         val_NbOfTxs = str(len(doc_payments))
         if len(val_NbOfTxs) > 15:
             raise ValidationError(_("Too many transactions for a single file."))
-        if not self.bank_account_id.bank_bic:
-            raise UserError(_("There is no Bank Identifier Code recorded for bank account '%s' of journal '%s'") % (self.bank_account_id.acc_number, self.journal_id.name))
+        if not journal.bank_account_id.bank_bic:
+            raise UserError(_("There is no Bank Identifier Code recorded for bank account '%s' of journal '%s'") % (journal.bank_account_id.acc_number, journal.name))
         NbOfTxs.text = val_NbOfTxs
         CtrlSum = etree.SubElement(GrpHdr, "CtrlSum")
         CtrlSum.text = self._get_CtrlSum(doc_payments)
@@ -194,7 +126,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
             count += 1
             PmtInf = etree.SubElement(CstmrCdtTrfInitn, "PmtInf")
             PmtInfId = etree.SubElement(PmtInf, "PmtInfId")
-            PmtInfId.text = (val_MsgId + str(self.journal_id.id) + str(count))[-30:]
+            PmtInfId.text = (val_MsgId + str(journal.id) + str(count))[-30:]
             PmtMtd = etree.SubElement(PmtInf, "PmtMtd")
             PmtMtd.text = 'TRF'
             BtchBookg = etree.SubElement(PmtInf, "BtchBookg")
@@ -211,7 +143,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
             DbtrAgt = etree.SubElement(PmtInf, "DbtrAgt")
             FinInstnId = etree.SubElement(DbtrAgt, "FinInstnId")
             BIC = etree.SubElement(FinInstnId, "BIC")
-            BIC.text = self.bank_account_id.bank_bic
+            BIC.text = journal.bank_account_id.bank_bic
 
             # One CdtTrfTxInf per transaction
             for payment in payments_list:
@@ -226,7 +158,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
         """ Returns a PartyIdentification32 element identifying the current journal's company
         """
         ret = []
-        company = self.journal_id.company_id
+        company = self.batch_payment_id.journal_id.company_id
         name_length = self.is_generic and 35 or 70
 
         Nm = etree.Element("Nm")
@@ -284,9 +216,10 @@ class AccountSepaCreditTransfer(models.TransientModel):
         DbtrAcct = etree.Element("DbtrAcct")
         Id = etree.SubElement(DbtrAcct, "Id")
         IBAN = etree.SubElement(Id, "IBAN")
-        IBAN.text = self.bank_account_id.sanitized_acc_number
+        journal = self.batch_payment_id.journal_id
+        IBAN.text = journal.bank_account_id.sanitized_acc_number
         Ccy = etree.SubElement(DbtrAcct, "Ccy")
-        Ccy.text = self.journal_id.currency_id and self.journal_id.currency_id.name or self.journal_id.company_id.currency_id.name
+        Ccy.text = journal.currency_id and journal.currency_id.name or journal.company_id.currency_id.name
 
         return DbtrAcct
 
