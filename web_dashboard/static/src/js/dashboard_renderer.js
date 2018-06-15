@@ -1,10 +1,14 @@
 odoo.define('web_dashboard.DashboardRenderer', function (require) {
 "use strict";
 
+var config = require('web.config');
+var core = require('web.core');
 var Domain = require('web.Domain');
 var fieldUtils = require('web.field_utils');
 var FormRenderer = require('web.FormRenderer');
 var viewRegistry = require('web.view_registry');
+
+var QWeb = core.qweb;
 
 var DashboardRenderer = FormRenderer.extend({
     className: "o_dashboard_view",
@@ -26,6 +30,7 @@ var DashboardRenderer = FormRenderer.extend({
         this.additionalMeasures = params.additionalMeasures;
         this.subControllers = {};
         this.subControllersContext = _.pick(state.context || {}, 'pivot', 'graph');
+        this.subcontrollersNextMeasures = {pivot: {}, graph: {}};
         this.formatOptions = {
             // in the dashboard view, all monetary values are displayed in the
             // currency of the current company of the user
@@ -46,11 +51,6 @@ var DashboardRenderer = FormRenderer.extend({
     on_detach_callback: function () {
         this._super.apply(this, arguments);
         this.isInDOM = false;
-        // store the subviews' context to restore them properly if we come back
-        // to the dashboard later
-        for (var viewType in this.subControllers) {
-            this.subControllersContext[viewType] = this.subControllers[viewType].getContext();
-        }
     },
 
     //--------------------------------------------------------------------------
@@ -73,14 +73,41 @@ var DashboardRenderer = FormRenderer.extend({
      * @override
      */
     updateState: function (state, params) {
+        var viewType;
+        for (viewType in this.subControllers) {
+            this.subControllersContext[viewType] = this.subControllers[viewType].getContext();
+        }
         var subControllersContext = _.pick(params.context || {}, 'pivot', 'graph');
         _.extend(this.subControllersContext, subControllersContext);
+        for (viewType in this.subControllers) {
+            _.extend(this.subControllersContext[viewType], this.subcontrollersNextMeasures[viewType]);
+            this.subcontrollersNextMeasures[viewType] = {};
+        }
         return this._super.apply(this, arguments);
     },
 
     //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
+
+    /**
+     * Add a tooltip on a $node.
+     * The message can be customize using the tooltip attribute
+     *
+     * @param {FieldWidget} widget
+     * @param {$node} $node
+     */
+    _addStatisticTooltip: function ($el, node) {
+        $el.tooltip({
+            delay: { show: 1000, hide: 0 },
+            title: function () {
+                return QWeb.render('web_dashboard.StatisticTooltip', {
+                    debug: config.debug,
+                    node: node,
+                });
+            }
+        });
+    },
 
     /**
      * Renders an aggregate (or formula)'s label.
@@ -133,6 +160,9 @@ var DashboardRenderer = FormRenderer.extend({
             .append($label)
             .append($value);
         this._registerModifiers(node, this.state, $el);
+        if (config.debug || node.attrs.help) {
+            this._addStatisticTooltip($el, node);
+        }
         return $el;
     },
     /**
@@ -206,6 +236,7 @@ var DashboardRenderer = FormRenderer.extend({
             modelName: this.state.model,
             withControlPanel: false,
             hasSwitchButton: true,
+            isEmbedded: true,
             additionalMeasures: this.additionalMeasures,
         };
         var SubView = viewRegistry.get(viewType);
@@ -269,14 +300,10 @@ var DashboardRenderer = FormRenderer.extend({
         var aggregateInfo = this.state.fieldsInfo.dashboard[aggregate];
         var measure = aggregateInfo.field;
         if (this.subControllers.pivot) {
-            this.subControllersContext.pivot = _.extend(this.subControllers.pivot.getContext(), {
-                pivot_measures: [measure],
-            });
+            this.subcontrollersNextMeasures.pivot.pivot_measures = [measure];
         }
         if (this.subControllers.graph) {
-            this.subControllersContext.graph = _.extend(this.subControllers.graph.getContext(), {
-                graph_measure: measure,
-            });
+            this.subcontrollersNextMeasures.graph.graph_measure = measure;
         }
 
         // update the domain and trigger a reload

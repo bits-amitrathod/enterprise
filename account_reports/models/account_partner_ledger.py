@@ -93,7 +93,7 @@ class ReportPartnerLedger(models.AbstractModel):
 
         # Add partners with an initial balance != 0 but without any AML in the selected period.
         prec = self.env.user.company_id.currency_id.rounding
-        missing_partner_ids = initial_bal_results.keys() - results.keys()
+        missing_partner_ids = set(initial_bal_results.keys()) - set(results.keys())
         for partner_id in missing_partner_ids:
             if not float_is_zero(initial_bal_results[partner_id]['balance'], precision_rounding=prec):
                 partner = self.env['res.partner'].browse(partner_id)

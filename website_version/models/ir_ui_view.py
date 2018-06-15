@@ -49,7 +49,7 @@ class view(models.Model):
             version_view_ids = self.env['ir.ui.view']
             for current in self:
                 #check if current is in version
-                if current.version_id.id == version_id:
+                if current.version_id.id == version_id or self.env.context.get('from_copy_translation'):
                     version_view_ids += current
                 else:
                     new_v = self.search([('website_id', '=', website_id), ('version_id', '=', version_id), ('key', '=', current.key)])

@@ -590,7 +590,7 @@ class AccountInvoice(models.Model):
                                not r.company_id.l10n_mx_edi_pac_test_env and
                                r.l10n_mx_edi_cfdi_uuid)
         signed.l10n_mx_edi_update_sat_status()
-        not_allow = signed.filtered(lambda r: r.l10n_mx_edi_sat_status != 'cancelled')
+        not_allow = signed.filtered(lambda r: r.l10n_mx_edi_sat_status != 'cancelled' or r.l10n_mx_edi_pac_status == 'to_cancel')
         not_allow.message_post(
             subject=_('An error occurred while setting to draft.'),
             message_type='comment',
