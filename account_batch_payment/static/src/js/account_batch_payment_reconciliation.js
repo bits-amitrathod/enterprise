@@ -13,7 +13,7 @@ var QWeb = core.qweb;
 
 var Action = {
     custom_events: _.defaults({
-        select_deposit: '_onAction',
+        select_batch: '_onAction',
     }, ReconciliationClientAction.StatementAction.prototype.custom_events),
 };
 
@@ -28,7 +28,7 @@ var Model = {
      */
     init: function () {
         this._super.apply(this, arguments);
-        this.batchDeposits = [];
+        this.batchPayments = [];
     },
 
     //--------------------------------------------------------------------------
@@ -45,22 +45,22 @@ var Model = {
     load: function (context) {
         var self = this;
         return this._super(context).then(function () {
-            self.batchDeposits = self.statement && self.statement.batch_deposits || [];
+            self.batchPayments = self.statement && self.statement.batch_payments || [];
         });
     },
     /**
      *
      * @param {string} handle
-     * @param {number} depositId
+     * @param {number} batchId
      * @returns {Deferred}
      */
-    selectDeposit: function(handle, depositId) {
+    selectBatch: function(handle, batchId) {
         return this._rpc({
                 model: 'account.reconciliation.widget',
-                method: 'get_move_lines_by_batch_deposit',
-                args: [this.getLine(handle).id, depositId],
+                method: 'get_move_lines_by_batch_payment',
+                args: [this.getLine(handle).id, batchId],
             })
-            .then(this._addSelectedDepositLines.bind(this, handle, depositId));
+            .then(this._addSelectedBatchLines.bind(this, handle, batchId));
     },
 
     /**
@@ -74,9 +74,9 @@ var Model = {
         var self = this;
         return this._super(handle).then(function (data) {
             if (_.any(data.handles, function (handle) {
-                    return !!self.getLine(handle).batch_deposit_id;
+                    return !!self.getLine(handle).batch_payment_id;
                 })) {
-                return self._updateBatchDeposits().then(function () {
+                return self._updateBatchPayments().then(function () {
                     return data;
                 });
             }
@@ -97,10 +97,10 @@ var Model = {
      */
     _computeLine: function (line) {
         if (line.st_line.partner_id) {
-            line.relevant_deposits = [];
+            line.relevant_payments = [];
         } else {
-            // Batch Deposits can only be used when thereis no partner selected
-            line.relevant_deposits = this.batchDeposits;
+            // Batch Payments can only be used when there is no partner selected
+            line.relevant_payments = this.batchPayments;
         }
         return this._super.apply(this, arguments);
     },
@@ -108,10 +108,10 @@ var Model = {
      *
      * @private
      * @param {string} handle
-     * @param {number} depositId
+     * @param {number} batchId
      * @returns {Deferred}
      */
-    _addSelectedDepositLines: function (handle, depositId, depositLines) {
+    _addSelectedBatchLines: function (handle, batchId, batchLines) {
         var line = this.getLine(handle);
         // Check if some lines are already selected in another reconciliation
         var selectedIds = [];
@@ -126,11 +126,11 @@ var Model = {
                 }
             }
         }
-        selectedIds = _.filter(depositLines, function (deposit_line) {
-            return selectedIds.indexOf(deposit_line.id) !== -1;
+        selectedIds = _.filter(batchLines, function (batch_line) {
+            return selectedIds.indexOf(batch_line.id) !== -1;
         });
         if (selectedIds.length > 0) {
-            var message = _t("Some journal items from the selected batch deposit are already selected in another reconciliation : ");
+            var message = _t("Some journal items from the selected batch payment are already selected in another reconciliation : ");
             message += _.map(selectedIds, function(l) { return l.name; }).join(', ');
             this.do_warn(_t("Incorrect Operation"), message, true);
             return;
@@ -138,37 +138,37 @@ var Model = {
 
         // remove double
         if (line.reconciliation_proposition) {
-            depositLines = _.filter(depositLines, function (deposit_line) {
+            batchLines = _.filter(batchLines, function (batch_line) {
                 return !_.any(line.reconciliation_proposition, function (prop) {
-                    return prop.id === deposit_line.id;
+                    return prop.id === batch_line.id;
                 });
             });
         }
 
-        // add deposit lines as proposition
-        this._formatLineProposition(line, depositLines);
-        for (var k in depositLines) {
-            this._addProposition(line, depositLines[k]);
+        // add batch lines as proposition
+        this._formatLineProposition(line, batchLines);
+        for (var k in batchLines) {
+            this._addProposition(line, batchLines[k]);
         }
-        line.batch_deposit_id = depositId;
+        line.batch_payment_id = batchId;
         return $.when(this._computeLine(line), this._performMoveLine(handle));
     },
     /**
      * load data from
-     * - 'account.bank.statement' fetch the batch deposits data
+     * - 'account.bank.statement' fetch the batch payments data
      *
      * @param {number[]} statement_ids
      * @returns {Deferred}
      */
-    _updateBatchDeposits: function(statement_ids) {
+    _updateBatchPayments: function(statement_ids) {
         var self = this;
         return this._rpc({
                 model: 'account.reconciliation.widget',
-                method: 'get_batch_deposits_data',
+                method: 'get_batch_payments_data',
                 args: [statement_ids],
             })
             .then(function (data) {
-                self.batchDeposits = data;
+                self.batchPayments = data;
             });
     },
 };
@@ -180,7 +180,7 @@ ReconciliationModel.ManualModel.include(Model);
 
 var Renderer = {
     events: _.defaults({
-        "click .batch_deposit": "_onDeposit",
+        "click .batch_payment": "_onBatch",
     }, ReconciliationRenderer.LineRenderer.prototype.events),
 
     //--------------------------------------------------------------------------
@@ -194,10 +194,10 @@ var Renderer = {
      */
     update: function (state) {
         this._super(state);
-        this.$(".match_controls .batch_deposits_selector").remove();
-        if (state.relevant_deposits.length) {
-            this.$(".match_controls .filter").after(QWeb.render("batch_deposits_selector", {
-                batchDeposits: state.relevant_deposits,
+        this.$(".match_controls .batch_payments_selector").remove();
+        if (state.relevant_payments.length) {
+            this.$(".match_controls .filter").after(QWeb.render("batch_payments_selector", {
+                batchPayments: state.relevant_payments,
             }));
         }
     },
@@ -211,10 +211,10 @@ var Renderer = {
      *
      * @param {MouseEvent} event
      */
-    _onDeposit: function(e) {
+    _onBatch: function(e) {
         e.preventDefault();
-        var depositId = parseInt(e.currentTarget.dataset.batch_deposit_id);
-        this.trigger_up('select_deposit', {'data': depositId});
+        var batchId = parseInt(e.currentTarget.dataset.batch_payment_id);
+        this.trigger_up('select_batch', {'data': batchId});
     },
 };
 

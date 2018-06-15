@@ -7,13 +7,13 @@
     </xpath>
 </template>
 
-<template id="print_batch_deposit">
+<template id="print_batch_payment">
     <t t-call="web.basic_layout">
         <t t-foreach="docs" t-as="o">
-            <div t-foreach="pages(o)" t-as="page" class="page page_batch_deposit">
-                <div class="row deposit_details">
+            <div t-foreach="pages(o)" t-as="page" class="page page_batch_payment">
+                <div class="row batch_details">
                     <div class="col-xs-6"><t t-esc="page['date']"/></div>
-                    <div class="col-xs-6 text-right"><t t-esc="page['journal_name']"/> : <t t-esc="page['deposit_name']"/></div>
+                    <div class="col-xs-6 text-right"><t t-esc="page['journal_name']"/> : <t t-esc="page['batch_name']"/></div>
                 </div>
                 <table class="table table-bordered table-condensed">
                     <thead><tr>

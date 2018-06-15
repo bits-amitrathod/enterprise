@@ -8,10 +8,10 @@ from odoo.tests import tagged
 
 
 @tagged('post_install', '-at_install')
-class TestBatchDeposit(AccountingTestCase):
+class TestBatchPayment(AccountingTestCase):
 
     def setUp(self):
-        super(TestBatchDeposit, self).setUp()
+        super(TestBatchPayment, self).setUp()
 
         # Get some records
         self.customers = self.env['res.partner'].search([('customer', '=', True)])
@@ -51,15 +51,16 @@ class TestBatchDeposit(AccountingTestCase):
             'partner_type': 'customer',
         })
 
-    def test_DepositLifeCycle(self):
-        # Create and "print" a deposit
-        deposit = self.env['account.batch.deposit'].create({
+    def test_BatchLifeCycle(self):
+        # Create and "print" a batch payment
+        batch = self.env['account.batch.payment'].create({
             'journal_id': self.journal.id,
             'payment_ids': [(4, payment.id, None) for payment in self.payments],
+            'payment_method_id': self.batch_deposit.id,
         })
-        deposit.print_batch_deposit()
+        batch.print_batch_payment()
         self.assertTrue(all(payment.state == 'sent' for payment in self.payments))
-        self.assertTrue(deposit.state == 'sent')
+        self.assertTrue(batch.state == 'sent')
         # Create a bank statement
         bank_statement = self.env['account.bank.statement'].create({
             'name': 'test deposit life cycle',
@@ -76,12 +77,12 @@ class TestBatchDeposit(AccountingTestCase):
             'statement_id': bank_statement.id,
         })
         # Simulate the process of reconciling the statement line using the batch deposit
-        deposits_reconciliation_data = self.env['account.reconciliation.widget'].get_batch_deposits_data(bank_statement.ids)
+        deposits_reconciliation_data = self.env['account.reconciliation.widget'].get_batch_payments_data(bank_statement.ids)
         self.assertTrue(len(deposits_reconciliation_data), 1)
-        self.assertTrue(deposits_reconciliation_data[0]['id'], deposit.id)
-        deposit_reconciliation_lines = self.env['account.reconciliation.widget'].get_move_lines_by_batch_deposit(bank_statement_line.id, deposit.id)
+        self.assertTrue(deposits_reconciliation_data[0]['id'], batch.id)
+        deposit_reconciliation_lines = self.env['account.reconciliation.widget'].get_move_lines_by_batch_payment(bank_statement_line.id, batch.id)
         self.assertTrue(len(deposit_reconciliation_lines), 3)
         move_line_ids = [line['id'] for line in deposit_reconciliation_lines]
         self.env['account.reconciliation.widget'].process_bank_statement_line(bank_statement_line.ids, [{"payment_aml_ids": move_line_ids}])
         self.assertTrue(all(payment.state == 'reconciled' for payment in self.payments))
-        self.assertTrue(deposit.state == 'reconciled')
+        self.assertTrue(batch.state == 'reconciled')

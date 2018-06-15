@@ -5,9 +5,9 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
 
-class AccountBatchDeposit(models.Model):
-    _name = "account.batch.deposit"
-    _description = "Batch Deposit"
+class AccountBatchPayment(models.Model):
+    _name = "account.batch.payment"
+    _description = "Batch Payment"
     _order = "date desc, id desc"
 
     name = fields.Char(required=True, copy=False, string='Reference', readonly=True, states={'draft': [('readonly', False)]})
