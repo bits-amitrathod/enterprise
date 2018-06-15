@@ -2,41 +2,41 @@
 <odoo>
     <template id="assets_common" inherit_id="web.assets_common">
         <xpath expr="script[last()]" position="after">
-            <script type="text/javascript" src="/website_sign/static/src/js/website_sign_common.js"></script>
+            <script type="text/javascript" src="/sign/static/src/js/sign_common.js"></script>
         </xpath>
         <xpath expr="link[last()]" position="after">
-            <link rel="stylesheet" type="text/scss" href="/website_sign/static/src/scss/website_sign_common.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/sign/static/src/scss/sign_common.scss"/>
         </xpath>
     </template>
 
     <template id="assets_backend" inherit_id="web.assets_backend">
         <xpath expr="script[last()]" position="after">
-            <script type="text/javascript" src="/website_sign/static/src/js/website_sign_backend.js"></script>
+            <script type="text/javascript" src="/sign/static/src/js/sign_backend.js"></script>
         </xpath>
         <xpath expr="link[last()]" position="after">
-            <link rel="stylesheet" type="text/scss" href="/website_sign/static/src/scss/website_sign_backend.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/sign/static/src/scss/sign_backend.scss"/>
         </xpath>
     </template>
 
     <template id="assets_frontend" inherit_id="web.assets_frontend">
         <xpath expr="link[last()]" position="after">
-            <link rel="stylesheet" type="text/scss" href="/website_sign/static/src/scss/website_sign_frontend.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/sign/static/src/scss/sign_frontend.scss"/>
         </xpath>
     </template>
 
-    <template id="qunit_suite" name="website_sign_tests" inherit_id="web.qunit_suite">
+    <template id="qunit_suite" name="sign_tests" inherit_id="web.qunit_suite">
         <xpath expr="//t[@t-set='head']" position="inside">
-            <script type="text/javascript" src="/website_sign/static/tests/document_backend_tests.js"></script>
+            <script type="text/javascript" src="/sign/static/tests/document_backend_tests.js"></script>
         </xpath>
     </template>
 
-    <template id="qunit_suite" name="website_sign_tests" inherit_id="web.qunit_suite">
+    <template id="qunit_suite" name="sign_tests" inherit_id="web.qunit_suite">
         <xpath expr="//t[@t-set='head']" position="inside">
-            <script type="text/javascript" src="/website_sign/static/tests/document_backend_tests.js"></script>
+            <script type="text/javascript" src="/sign/static/tests/document_backend_tests.js"></script>
         </xpath>
     </template>
 
-    <template id="website_sign._doc_sign" name="Document Sign">
+    <template id="sign._doc_sign" name="Document Sign">
         <div t-if="current_request_item and current_request_item.state == 'sent' and hasItems" class="o_sign_validate_banner">
             <button type="button" class="btn btn-primary">Validate &amp; Send Completed Document</button>
         </div>
@@ -100,7 +100,7 @@
         </div>
 
         <t t-if="hasItems or isPDF">
-            <t t-call="website_sign.items_view"/>
+            <t t-call="sign.items_view"/>
         </t>
 
         <input id="o_sign_input_signature_request_id" type="hidden" t-att-value="signature_request.id"/>
@@ -115,7 +115,7 @@
         </t>
     </template>
 
-    <template id="website_sign.doc_sign" name="Document Sign">
+    <template id="sign.doc_sign" name="Document Sign">
         <t t-call="web.layout">
             <t t-set="head">
                 <t t-call-assets="web.assets_common" t-js="false"/>
@@ -124,12 +124,12 @@
                 <t t-call-assets="web.assets_frontend" t-css="false"/>
 
                 <script type="text/javascript">
-                    odoo.define("website_sign.document_custom_page", function (require) {
+                    odoo.define("sign.document_custom_page", function (require) {
                         var ajax = require("web.ajax");
                         var core = require("web.core");
-                        var document_signing = require("website_sign.document_signing");
+                        var document_signing = require("sign.document_signing");
 
-                        ajax.loadXML("/website_sign/static/src/xml/website_sign_common.xml", core.qweb).then(function () {
+                        ajax.loadXML("/sign/static/src/xml/sign_common.xml", core.qweb).then(function () {
                             document_signing.initDocumentToSign();
                         });
                     });
@@ -145,15 +145,15 @@
                             <t t-if="current_request_item and current_request_item.state == 'sent'">Please Review And Act On This Document</t>
                             <t t-if="current_request_item and current_request_item.state == 'completed'">You have completed the document</t>
                         </div>
-                        <a href="https://www.odoo.com/page/sign"><img src="/website_sign/static/img/odoo_signed.png" alt="Signed"/></a>
+                        <a href="https://www.odoo.com/page/sign"><img src="/sign/static/img/odoo_signed.png" alt="Signed"/></a>
                     </div>
                 </header>
-                <t t-call="website_sign._doc_sign"/>
+                <t t-call="sign._doc_sign"/>
             </div>
         </t>
     </template>
 
-    <template id="website_sign.deleted_sign_request" name="Missing Signature Request">
+    <template id="sign.deleted_sign_request" name="Missing Signature Request">
         <t t-call="web.layout">
             <t t-set="head">
                 <t t-call-assets="web.assets_common" t-js="false"/>

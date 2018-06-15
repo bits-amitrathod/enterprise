@@ -1,4 +1,4 @@
-odoo.define('website_sign.document_backend_tests', function (require) {
+odoo.define('sign.document_backend_tests', function (require) {
 "use strict";
 
 var testUtils = require('web.test_utils');
@@ -12,7 +12,7 @@ QUnit.module('document_backend_tests', function () {
             actions: [{
                 id: 9,
                 name: 'A Client Action',
-                tag: 'website_sign.Document',
+                tag: 'sign.Document',
                 type: 'ir.actions.client',
                 context: {id: 5, token: 'abc'},
             }],
@@ -40,7 +40,7 @@ QUnit.module('document_backend_tests', function () {
             actions: [{
                 id: 9,
                 name: 'A Client Action',
-                tag: 'website_sign.Document',
+                tag: 'sign.Document',
                 type: 'ir.actions.client',
                 context: {id: 5, token: 'abc'},
             }],

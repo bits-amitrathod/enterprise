@@ -107,7 +107,7 @@ class SignatureRequest(models.Model):
         return {
             'name': "Document \"%(name)s\"" % {'name': self.reference},
             'type': 'ir.actions.client',
-            'tag': 'website_sign.Document',
+            'tag': 'sign.Document',
             'context': {
                 'id': self.id,
                 'token': self.access_token,
@@ -199,7 +199,7 @@ class SignatureRequest(models.Model):
 
     @api.one
     def send_follower_accesses(self, followers, subject=None, message=None):
-        tpl = self.env.ref('website_sign.sign_template_mail_follower')
+        tpl = self.env.ref('sign.sign_template_mail_follower')
         body = tpl.render({
             'record': self,
             'link': '/sign/document/%s/%s' % (self.id, self.access_token),
@@ -231,7 +231,7 @@ class SignatureRequest(models.Model):
             if not signer.partner_id or not signer.partner_id.email:
                 continue
 
-            tpl = self.env.ref('website_sign.sign_template_mail_completed')
+            tpl = self.env.ref('sign.sign_template_mail_completed')
             body = tpl.render({
                 'record': self,
                 'link': '/sign/document/%s/%s' % (self.id, signer.access_token),
@@ -259,7 +259,7 @@ class SignatureRequest(models.Model):
             )
 
 
-        tpl = self.env.ref('website_sign.sign_template_mail_completed')
+        tpl = self.env.ref('sign.sign_template_mail_completed')
         body = tpl.render({
             'record': self,
             'link': '/sign/document/%s/%s' % (self.id, self.access_token),
@@ -472,7 +472,7 @@ class SignatureRequestItem(models.Model):
                 continue
             if not signer.create_uid.email:
                 continue
-            tpl = self.env.ref('website_sign.sign_template_mail_request')
+            tpl = self.env.ref('sign.sign_template_mail_request')
             body = tpl.render({
                 'record': self,
                 'link': "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token},

@@ -13,7 +13,7 @@ class WebsiteSign(http.Controller):
         signature_request = http.request.env['signature.request'].sudo().search([('id', '=', id)])
         if not signature_request:
             if token:
-                return http.request.render('website_sign.deleted_sign_request')
+                return http.request.render('sign.deleted_sign_request')
             else:
                 return http.request.not_found()
 
@@ -21,7 +21,7 @@ class WebsiteSign(http.Controller):
         if token:
             current_request_item = signature_request.request_item_ids.filtered(lambda r: r.access_token == token)
             if not current_request_item and signature_request.access_token != token and http.request.env.user.id != signature_request.create_uid.id:
-                return http.request.render('website_sign.deleted_sign_request')
+                return http.request.render('sign.deleted_sign_request')
         elif signature_request.create_uid.id != http.request.env.user.id:
             return http.request.not_found()
 
@@ -72,7 +72,7 @@ class WebsiteSign(http.Controller):
         if not isinstance(document_context, dict):
             return document_context
 
-        return http.request.render('website_sign.doc_sign', document_context)
+        return http.request.render('sign.doc_sign', document_context)
 
     @http.route(['/sign/download/<int:id>/<token>/<type>'], type='http', auth='public')
     def download_document(self, id, token, type, **post):
@@ -122,7 +122,7 @@ class WebsiteSign(http.Controller):
     # -------------
     @http.route(["/sign/get_document/<int:id>/<token>"], type='json', auth='user')
     def get_document(self, id, token):
-        return http.Response(template='website_sign._doc_sign', qcontext=self.get_document_qweb_context(id, token)).render()
+        return http.Response(template='sign._doc_sign', qcontext=self.get_document_qweb_context(id, token)).render()
 
     @http.route(['/sign/get_fonts'], type='json', auth='public')
     def get_fonts(self):

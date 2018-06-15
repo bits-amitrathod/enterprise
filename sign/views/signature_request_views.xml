@@ -194,10 +194,10 @@
     </record>
 
     <!-- Menus -->
-    <menuitem id="menu_document" name="Sign" web_icon="website_sign,static/description/icon.png" groups="website_sign.group_website_sign_user"/>
+    <menuitem id="menu_document" name="Sign" web_icon="sign,static/description/icon.png" groups="sign.group_sign_user"/>
 
     <menuitem id="digital_signatures_menu" sequence="-5" name="Documents" parent="menu_document"/>
-    <menuitem id="signature_request_menu" name="Signature Requests" parent="digital_signatures_menu" action="signature_request_action" groups="website_sign.group_website_sign_user"/>
+    <menuitem id="signature_request_menu" name="Signature Requests" parent="digital_signatures_menu" action="signature_request_action" groups="sign.group_sign_user"/>
 
     <!-- After installation of the module, open the related menu -->
     <record id="base.open_menu" model="ir.actions.todo">

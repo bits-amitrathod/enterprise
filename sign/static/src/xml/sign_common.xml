@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="website_sign.signature_item" name="Signature Item">
+    <t t-name="sign.signature_item" name="Signature Item">
         <t t-if="readonly">
-            <div t-if="type == 'signature' || type == 'initial'" class="o_sign_signature_item text-center" style="text-align: center;" t-att-data-signature="value"><span class="o_sign_helper"/><img t-if="value" t-att-src="value" alt="Signature"/><t t-if="!value"><t t-esc="placeholder"/></t><t t-if="editMode" t-call="website_sign.signature_item_configuration"/></div>
+            <div t-if="type == 'signature' || type == 'initial'" class="o_sign_signature_item text-center" style="text-align: center;" t-att-data-signature="value"><span class="o_sign_helper"/><img t-if="value" t-att-src="value" alt="Signature"/><t t-if="!value"><t t-esc="placeholder"/></t><t t-if="editMode" t-call="sign.signature_item_configuration"/></div>
 
-            <div t-if="type == 'text' || type == 'textarea'" class="o_sign_signature_item"><t t-esc="value"/><t t-if="editMode" t-call="website_sign.signature_item_configuration"/></div>
+            <div t-if="type == 'text' || type == 'textarea'" class="o_sign_signature_item"><t t-esc="value"/><t t-if="editMode" t-call="sign.signature_item_configuration"/></div>
         </t>
 
         <t t-if="!readonly">
@@ -14,12 +14,12 @@
         </t>
     </t>
 
-    <div t-name="website_sign.signature_item_configuration" class="o_sign_config_area">
+    <div t-name="sign.signature_item_configuration" class="o_sign_config_area">
         <span class="fa fa-arrows" role="img" aria-label="Signature configuration" title="Signature configuration"/>
         <span class="o_sign_responsible_display"/>
     </div>
 
-    <div t-name="website_sign.chatter" class="o_sign_chatter">
+    <div t-name="sign.chatter" class="o_sign_chatter">
         <div t-if="widget.sendAccess" class="form-group">
             <textarea rows="3" name="comment" class="form-control" placeholder="Send a note..."/>
             <hr/>
@@ -40,7 +40,7 @@
     </div>
 
     <!-- Signing part -->
-    <div t-name="website_sign.signature_dialog" class="form-horizontal">
+    <div t-name="sign.signature_dialog" class="form-horizontal">
         <div class="o_sign_signer_info form-group">
             <label class="col-md-3 control-label" for="name">Full Name</label>
             <div class="col-md-9">
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <t t-name="website_sign.svg_text" name="SVG Signature Text">
+    <t t-name="sign.svg_text" name="SVG Signature Text">
         <svg t-att-width="width" t-att-height="height">
             <defs>
                 <style type="text/css">
@@ -82,7 +82,7 @@
         </svg>
     </t>
 
-    <div t-name="website_sign.public_signer_dialog" class="form-horizontal">
+    <div t-name="sign.public_signer_dialog" class="form-horizontal">
         <div class="form-group">
             <label for="o_sign_public_signer_name_input" class="col-md-3 control-label">Your name</label>
             <div class="col-md-9">
@@ -97,13 +97,13 @@
         </div>
     </div>
 
-    <div t-name="website_sign.thank_you_dialog">
+    <div t-name="sign.thank_you_dialog">
         <div class="o_thankyou_message">We will let you know by email once everyone has signed.<br/>
         So you can close the window and come back later.</div>
 
         <div class="row o_promote_esign">
             <div class="col-md-2">
-                <img src="/website_sign/static/description/icon.png" alt="Document Sign" class="img img-responsive"/>
+                <img src="/sign/static/description/icon.png" alt="Document Sign" class="img img-responsive"/>
             </div>
             <div class="col-md-10">
                 <h4>Do you also send documents to sign?</h4>
@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <div t-name="website_sign.no_pub_thank_you_dialog" t-extend="website_sign.thank_you_dialog">
+    <div t-name="sign.no_pub_thank_you_dialog" t-extend="sign.thank_you_dialog">
         <t t-jquery=".o_promote_esign" t-operation="replace"/>
     </div>
 </templates>

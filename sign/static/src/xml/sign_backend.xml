@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="website_sign.signature_item_custom_dialog">
+    <t t-name="sign.signature_item_custom_dialog">
         <div>
             <div class="form-group clearfix" groups="base.group_no_one">
                 <label for="o_sign_name" class="col-md-2">Field Name</label>
@@ -26,7 +26,7 @@
         </div>
     </t>
 
-    <t t-name="website_sign.initial_all_pages_dialog">
+    <t t-name="sign.initial_all_pages_dialog">
         <div class="form-group">
             <label for="responsible_select_initials_input" class="col-md-2">Responsible</label>
             <div class="o_sign_responsible_select_initials col-md-10">
@@ -35,7 +35,7 @@
         </div>
     </t>
 
-    <t t-name="website_sign.create_signature_request_dialog">
+    <t t-name="sign.create_signature_request_dialog">
         <div class="form-horizontal">
             <p class="o_sign_warning_message_no_field">
                 <em>If you leave your document without any fields, the signers will be requested for an unique signature alongside the document</em>
@@ -76,7 +76,7 @@
         </div>
     </t>
 
-    <t t-name="website_sign.share_template_dialog">
+    <t t-name="sign.share_template_dialog">
         <div>
             <p>Share this link and Odoo will create a new document per person who clicks on the link. The link is private, only those that receive the link will be able to sign it.</p>
 
@@ -89,7 +89,7 @@
         </div>
     </t>
 
-    <div t-name="website_sign.add_followers_dialog" class="form-horizontal">
+    <div t-name="sign.add_followers_dialog" class="form-horizontal">
         <div class="form-group">
             <label for="o_sign_followers_select" class="col-md-3">Send a copy</label>
             <div class="col-md-9">
@@ -98,7 +98,7 @@
         </div>
     </div>
 
-    <t t-name="website_sign.template">
+    <t t-name="sign.template">
         <div class="text-center clearfix">
             <div class="o_sign_template_saved_info alert alert-success pull-right" role="status"><span class="fa fa-check"> Saved</span></div>
             <span t-if="!widget.has_signature_requests" class="fa fa-pencil" title="Edit template name" role="img" aria-label="Edit template name"/>
@@ -119,7 +119,7 @@
         <iframe t-if="widget.isPDF" class="o_sign_pdf_iframe"/>
     </t>
 
-    <t t-name="website_sign.type_buttons">
+    <t t-name="sign.type_buttons">
         <t t-foreach="signature_item_types" t-as="item_type">
             <button type="button" class="o_sign_field_type_button" t-att-data-item-type-id="item_type.id" title="Drag &amp; Drop a field in the PDF"><t t-esc="item_type.name"/></button>
         </t>

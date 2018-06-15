@@ -29,7 +29,7 @@ class SignatureRequestTemplate(models.Model):
         return {
             'name': "Template \"%(name)s\"" % {'name': self.attachment_id.name},
             'type': 'ir.actions.client',
-            'tag': 'website_sign.Template',
+            'tag': 'sign.Template',
             'context': {
                 'id': self.id,
             },

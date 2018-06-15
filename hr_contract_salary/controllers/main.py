@@ -3,7 +3,7 @@
 
 from odoo import fields, http, models, _
 
-from odoo.addons.website_sign.controllers.main import WebsiteSign
+from odoo.addons.sign.controllers.main import WebsiteSign
 from odoo.exceptions import AccessError
 from odoo.http import request
 
@@ -563,7 +563,7 @@ class website_hr_contract_salary(http.Controller):
         res = request.env['signature.request'].sudo().initialize_new(
             signature_request_template.id,
             [
-                {'role': request.env.ref('website_sign.signature_item_party_employee').id, 'partner_id': new_contract.employee_id.address_home_id.id},
+                {'role': request.env.ref('sign.signature_item_party_employee').id, 'partner_id': new_contract.employee_id.address_home_id.id},
                 {'role': request.env.ref('hr_contract_salary.signature_item_party_job_responsible').id, 'partner_id': new_contract.hr_responsible_id.partner_id.id}
             ],
             [new_contract.hr_responsible_id.partner_id.id],
@@ -610,7 +610,7 @@ class website_hr_contract_salary(http.Controller):
 
         access_token = request.env['signature.request.item'].sudo().search([
             ('signature_request_id', '=', res['id']),
-            ('role_id', '=', request.env.ref('website_sign.signature_item_party_employee').id)
+            ('role_id', '=', request.env.ref('sign.signature_item_party_employee').id)
         ]).access_token
 
         new_contract.signature_request_ids += signature_request
