@@ -26,16 +26,18 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "<i class=\"fa fa-fw fa-arrow-right\"/>Create Account &amp; Get Credentials"
 msgstr ""
+"<i class=\"fa fa-fw fa-arrow-right\"/>Створіть облік та отримайте "
+"поноваження"
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "API ID"
-msgstr ""
+msgstr "API ID"
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "API KEY"
-msgstr ""
+msgstr "КЛЮЧ API "
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_res_company
@@ -55,7 +57,7 @@ msgstr "Дата створення"
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "Default Category"
-msgstr ""
+msgstr "Категорія за замовчуванням "
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_res_company_tic_category_id
@@ -70,11 +72,13 @@ msgid ""
 "Default TICs(Taxability information codes) code to get sales tax from "
 "TaxCloud by product category."
 msgstr ""
+"Код TIC (Коди інформації щодо оподаткування), щоб отримати податок з продажу"
+" TaxCloud за категоріями товарів."
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "Default TaxCloud category for new products"
-msgstr ""
+msgstr "Категорія TaxCloud за замовчуванням для нових товарів"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_tic_category_display_name
@@ -168,19 +172,19 @@ msgstr "TaxCloud API KEY"
 #: model:ir.actions.act_window,name:account_taxcloud.account_taxcloud_tic_category_action
 #: model:ir.ui.menu,name:account_taxcloud.menu_taxcloud_tic_category_action
 msgid "TaxCloud Categories"
-msgstr ""
+msgstr "Категорії TaxCloud"
 
 #. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.res_config_settings_view_form
 msgid "TaxCloud Categories (TIC)"
-msgstr ""
+msgstr "Категорії TaxCloud (TIC)"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_product_tic_category_id
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_template_tic_category_id
 #: model:ir.ui.view,arch_db:account_taxcloud.product_template_taxcloud_inherit_form
 msgid "TaxCloud Category"
-msgstr ""
+msgstr "Категорія TaxCloud"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,help:account_taxcloud.field_product_product_tic_category_id
@@ -194,6 +198,15 @@ msgid ""
 "automatically assigns products to this TIC as a default, so unless you've "
 "changed an item's TIC in the past, it should already be set to 00000."
 msgstr ""
+"TaxCloud використовує Інформаційні кодекси з оподатковування (TIC), щоб "
+"переконатись, що кожен предмет у вашому каталозі оподатковується за "
+"правильною ставкою (або для предметів звільнення від оподаткування взагалі "
+"не оподатковується), тому важливо переконатися, що кожному товару призначено"
+" TIC . Якщо ви не можете знайти потрібну категорію податку для товару у "
+"своєму каталозі, ви можете призначити його для TIC \"Загальні товари та "
+"послуги\", 00000. TaxCloud автоматично призначає товари для цього TIC як за "
+"замовчуванням, тому, якщо ви не змінили в минулому - TIC, то його вже слід "
+"встановити на 00000."
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_account_fiscal_position_tax
@@ -227,6 +240,8 @@ msgid ""
 "The source document on the refund is not valid and thus the refunded cart "
 "won't be logged on your taxcloud account"
 msgstr ""
+"Початковий документ про повернення коштів недійсний, і тому відшкодований "
+"кошик не буде входити до вашого обліку taxcloud"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_invoice.py:89
@@ -234,6 +249,8 @@ msgstr ""
 msgid ""
 "The tax rates have been updated, you may want to check it before validation"
 msgstr ""
+"Ставки податку було оновлено, можливо, ви захочете перевірити його перед "
+"перевіркою"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_fiscal_position.py:99
