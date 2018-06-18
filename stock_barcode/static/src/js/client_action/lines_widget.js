@@ -147,10 +147,9 @@ var LinesWidget = Widget.extend({
         var $line = this.$("[data-id='" + id_or_virtual_id + "']");
         var $lotName = $line.find('.o_line_lot_name');
         var $lotId = $line.find('.o_line_lot_id');
-        if (! $lotName.length && !$lotId.length) {
-            var $p = $('<p>');
+        if (! $lotName.text() && !$lotId.text()) {
             var $span = $('<span>', {class: 'o_line_lot_name', text: lotName});
-            $span.appendTo($p).appendTo($line);
+            $lotName.replaceWith($span);
         }
     },
 

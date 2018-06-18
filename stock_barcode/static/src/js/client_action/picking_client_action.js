@@ -84,7 +84,8 @@ var PickingClientAction = ClientAction.extend({
             'product_id': {
                 'id': product.id,
                 'display_name': product.display_name,
-                'barcode': barcode
+                'barcode': barcode,
+                'tracking': product.tracking,
             },
             'product_barcode': barcode,
             'display_name': product.display_name,

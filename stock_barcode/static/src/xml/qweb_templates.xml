@@ -70,11 +70,11 @@
                     <p t-if="line.owner_id">
                         <span class="fa fa-user-o"></span> <t t-esc="line.owner_id[1]"></t>
                     </p>
-                    <p t-if="line.lot_name">
-                        <span class="o_line_lot_name"><t t-esc="line.lot_name"></t></span>
-                    </p>
-                    <p t-if="line.lot_id &amp;&amp; !line.lot_name">
-                        <span class="o_line_lot_id"><t t-esc="line.lot_id[1]"></t></span>
+
+                    <p t-if="line.product_id.tracking !== 'none'">
+                        <span class="fa fa-barcode"></span>
+                        <span class="o_line_lot_name"><t t-if="line.lot_name" t-esc="line.lot_name"></t></span>
+                        <span class="o_line_lot_id"><t t-if="line.lot_id &amp;&amp; line.lot_id[1]" t-esc="line.lot_id[1]"></t></span>
                     </p>
                 </div>
                 <div class="line" t-if="model == 'stock.inventory'" t-att-data-id="line.virtual_id || line.id" t-att-data-barcode="line.product_barcode">
