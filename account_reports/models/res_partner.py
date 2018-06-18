@@ -18,7 +18,7 @@ class ResPartner(models.Model):
                                            domain=[('reconciled', '=', False),
                                                    ('account_id.deprecated', '=', False),
                                                    ('account_id.internal_type', '=', 'receivable')])
-    partner_ledger_label = fields.Char(compute='_compute_partner_ledger_label', help='The label to display on partner ledger button, in form view')
+    partner_ledger_label = fields.Char(compute='_compute_partner_ledger_label')
     total_due = fields.Monetary(compute='_compute_for_followup', store=False, readonly=True)
     total_overdue = fields.Monetary(compute='_compute_for_followup', store=False, readonly=True)
     followup_status = fields.Selection(
@@ -88,7 +88,7 @@ class ResPartner(models.Model):
             if record.supplier == record.customer:
                 record.partner_ledger_label = _('Partner Ledger')
             elif record.supplier:
-                record.partner_ledger_label = _('Supplier Ledger')
+                record.partner_ledger_label = _('Vendor Ledger')
             else:
                 record.partner_ledger_label = _('Customer Ledger')
 
