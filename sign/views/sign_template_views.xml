@@ -37,6 +37,7 @@
                                 class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) > 0"/>
                             <span><field name="attachment_id"/></span>
                         </div>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         <div class="oe_kanban_bottom_left">
                             <em><field name="create_date"/></em>
                         </div>
@@ -75,13 +76,15 @@
                     <group>
                         <group>
                             <field name="active"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="Tags"/>
                         </group>
                         <group>
                             <field name="favorited_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </group>
                     </group>
 
-                    <label for="sign_item_ids"/><field name="sign_item_ids"/>
+                    <label for="sign_item_ids" groups="base.group_no_one"/>
+                    <field name="sign_item_ids" groups="base.group_no_one"/>
                 </sheet>
             </form>
         </field>

@@ -23,6 +23,7 @@ class SignTemplate(models.Model):
 
     sign_request_ids = fields.One2many('sign.request', 'template_id', string="Signature Requests")
 
+    tag_ids = fields.Many2many('sign.template.tag', string='Tags')
     color = fields.Integer()
 
     @api.multi
@@ -97,6 +98,19 @@ class SignTemplate(models.Model):
         if not template.share_link:
             template.share_link = str(uuid.uuid4())
         return template.share_link
+
+
+class SignTemplateTag(models.Model):
+
+    _name = "sign.template.tag"
+    _description = "Sign Template Tag"
+
+    name = fields.Char('Tag Name', required=True, translate=True)
+    color = fields.Integer('Color Index')
+
+    _sql_constraints = [
+        ('name_uniq', 'unique (name)', "Tag name already exists !"),
+    ]
 
 
 class SignItem(models.Model):
