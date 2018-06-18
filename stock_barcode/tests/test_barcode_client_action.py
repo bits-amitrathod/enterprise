@@ -358,7 +358,7 @@ class TestBarcodeClientAction(HttpCase):
 
     def test_delivery_reserved_1(self):
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'groups_id': [(6, None, [grp_multi_loc.id])]})
         delivery_picking = self.env['stock.picking'].create({
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
@@ -416,7 +416,7 @@ class TestBarcodeClientAction(HttpCase):
         """
 
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'groups_id': [(6, None, [grp_lot.id])]})
 
         # Add lot1 et lot2 sur productlot1
         lotObj = self.env['stock.production.lot']
@@ -450,7 +450,7 @@ class TestBarcodeClientAction(HttpCase):
         """
 
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'groups_id': [(6, None, [grp_lot.id])]})
 
         # Add 4 serial numbers productserial1
         snObj = self.env['stock.production.lot']
@@ -481,7 +481,7 @@ class TestBarcodeClientAction(HttpCase):
 
     def test_delivery_reserved_lots_1(self):
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'groups_id': [(6, None, [grp_lot.id])]})
 
         delivery_picking = self.env['stock.picking'].create({
             'location_id': self.stock_location.id,
@@ -533,7 +533,8 @@ class TestBarcodeClientAction(HttpCase):
         """
 
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'groups_id': [(6, None, [grp_lot.id])]})
+        #self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
 
         # Add 4 serial numbers productserial1
         snObj = self.env['stock.production.lot']
@@ -672,7 +673,7 @@ class TestBarcodeClientAction(HttpCase):
         """
 
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'groups_id': [(6, None, [grp_multi_loc.id])]})
 
         action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
         url = "/web#action=" + str(action_id.id)
@@ -714,7 +715,7 @@ class TestBarcodeClientAction(HttpCase):
         """
 
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'groups_id': [(6, None, [grp_lot.id])]})
 
         action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
         url = "/web#action=" + str(action_id.id)

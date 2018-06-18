@@ -36,8 +36,8 @@
             </div>
         </div>
         <div class="barcode_control">
-            <button class="o_button_barcode_standard o_previous_page"><span class="fa fa-angle-left" style='padding-right: 1em'></span>Previous</button>
-            <button class="o_button_barcode_standard o_next_page">Next<span class="fa fa-angle-right" style='padding-left: 1em'></span></button>
+            <button t-if="widget.groups.group_stock_multi_locations" class="o_button_barcode_standard o_previous_page"><span class="fa fa-angle-left" style='padding-right: 1em'></span>Previous</button>
+            <button t-if="widget.groups.group_stock_multi_locations" class="o_button_barcode_standard o_next_page">Next<span class="fa fa-angle-right" style='padding-left: 1em'></span></button>
             <button class="o_button_barcode_standard o_validate_page">Validate</button>
         </div>
     </t>
