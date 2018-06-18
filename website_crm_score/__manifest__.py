@@ -2,7 +2,7 @@
     'name': "Lead Scoring",
     'category': "Sales",
     'version': "1.0",
-    'depends': ['base', 'sales_team', 'website_crm'],
+    'depends': ['base', 'sales_team', 'website_crm', 'crm_enterprise'],
     'description': """
 Lead Scoring
 ============
@@ -18,6 +18,7 @@ This module allows you to...
         'views/reporting.xml',
         'views/sales.xml',
         'views/marketing.xml',
+        'views/crm_lead_views.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [
