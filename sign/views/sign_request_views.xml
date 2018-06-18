@@ -193,11 +193,11 @@
         </field>
     </record>
 
-    <!-- Menus -->
-    <menuitem id="menu_document" name="Sign" web_icon="sign,static/description/icon.png" groups="sign.group_sign_user"/>
-
-    <menuitem id="digital_signatures_menu" sequence="-5" name="Documents" parent="menu_document"/>
-    <menuitem id="sign_request_menu" name="Signature Requests" parent="digital_signatures_menu" action="sign_request_action" groups="sign.group_sign_user"/>
+    <record id="sign_request_item_action" model="ir.actions.act_window">
+        <field name="name">Signature Request Items</field>
+        <field name="res_model">sign.request.item</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- After installation of the module, open the related menu -->
     <record id="base.open_menu" model="ir.actions.todo">
