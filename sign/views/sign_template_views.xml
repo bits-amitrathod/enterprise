@@ -35,7 +35,7 @@
                                 class="fa fa-lg fa-star-o favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) == 0"/>
                             <a type="object" name="toggle_favorited" aria-label="In favorites, remove it" title="In favorites, remove it"
                                 class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) > 0"/>
-                            <span data-type="object" class="o_sign_action_link" data-name="go_to_custom_template"><field name="attachment_id"/></span>
+                            <span><field name="attachment_id"/></span>
                         </div>
                         <div class="oe_kanban_bottom_left">
                             <em><field name="create_date"/></em>

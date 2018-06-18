@@ -25,30 +25,6 @@ odoo.define('sign.views_custo', function(require) {
         },
     });
 
-    KanbanRecord.include({
-        //--------------------------------------------------------------------------
-        // Private
-        //--------------------------------------------------------------------------
-
-        /**
-         * @override
-         * @private
-         */
-        _openRecord: function () {
-            if (this.modelName === "sign.request" || this.modelName === "sign.template") {
-                var $link = this.$(".o_sign_action_link");
-                if ($link.length) {
-                    this.trigger_up('button_clicked', {
-                        attrs: $link.data(),
-                        record: this.state,
-                    });
-                    return;
-                }
-            }
-            return this._super.apply(this, arguments);
-        },
-    });
-
     function _make_custo(selector_button) {
         return {
             renderButtons: function () {
