@@ -304,7 +304,7 @@ var ClientAction = AbstractAction.extend({
                     return utils.into(line, field[1]);
                 }).join('#');
             });
-            pages = _.map(groups, function (group){
+            pages = _.map(groups, function (group) {
                 var page = {};
                 _.map(self._getPageFields(), function (field) {
                     page[field[0]] = utils.into(group[0], field[1]);
@@ -318,6 +318,7 @@ var ClientAction = AbstractAction.extend({
             });
             defaultPage.lines = [];
         }
+        pages = _.sortBy(pages, 'location_name');
 
         var currentPage = this.pages[this.currentPageIndex];
         // FIXME: what if already present in pages?
