@@ -99,15 +99,16 @@
     </div>
 
     <t t-name="sign.template">
-        <div class="text-center clearfix">
+
+        <div t-if="widget.has_sign_requests &amp;&amp; widget.isPDF" class="text-muted">
+            <span class="fa fa-exclamation-triangle"/> Used by a signature request.
+            <button type="button" class="o_sign_duplicate_sign_template btn btn-link">Duplicate</button>
+        </div>
+
+        <div class="text-center">
             <div class="o_sign_template_saved_info alert alert-success pull-right" role="status"><span class="fa fa-check"/> Saved</div>
             <span t-if="!widget.has_sign_requests" class="fa fa-pencil" title="Edit template name" role="img" aria-label="Edit template name"/>
             <input type="text" class="o_sign_template_name_input o_input" t-att-value="widget.sign_template.attachment_id.name"/>
-        </div>
-
-        <div t-if="widget.has_sign_requests &amp;&amp; widget.isPDF" class="text-center">
-            This template is used by some signature requests.
-            If you want to edit it, <button type="button" class="o_sign_duplicate_sign_template btn btn-link">click here</button> to start a new template from this one !
         </div>
 
         <div t-if="!widget.isPDF" class="o_sign_image_document">
