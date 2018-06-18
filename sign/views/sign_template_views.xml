@@ -21,12 +21,12 @@
                                     <span class="fa fa-bars fa-lg"/>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a role="menuitem" type="open" groups="base.group_no_one">Open</a></li>
+                                    <li><a role="menuitem" type="open">Open</a></li>
                                     <li><a role="menuitem" type="object" name="toggle_active">
                                         <t t-if="!record.active.raw_value">Restore</t>
                                         <t t-if="record.active.raw_value">Archive</t>
                                     </a></li>
-                                    <li><a role="menuitem" type="delete" groups="base.group_no_one">Delete</a></li>
+                                    <li><a role="menuitem" type="delete">Delete</a></li>
                                     <li role="menuitem" aria-haspopup="true"><ul role="menu" class="oe_kanban_colorpicker" data-field="color"/></li>
                                 </ul>
                             </div>
