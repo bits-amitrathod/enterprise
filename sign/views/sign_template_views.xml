@@ -96,6 +96,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="attachment_id"/>
+                <field name="tag_ids"/>
                 <filter name="active" string="Active" domain="[('active', '=', True)]"/>
                 <filter name="archive" string="Archived" domain="[('active', '=', False)]"/>
                 <separator/>

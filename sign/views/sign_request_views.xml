@@ -119,7 +119,8 @@
         <field name="arch" type="xml">
             <search>
                 <field name="reference"/>
-                <field name="template_id"/>
+                <field name="template_id" string="Template or Tag" filter_domain="['|', ('template_id.attachment_id.name', 'ilike', self), ('template_id.tag_ids.name', 'ilike', self)]"/>
+                <field name="request_item_ids" string="Signer Email" filter_domain="[('request_item_ids.partner_id.email', 'ilike', self)]"/>
                 <filter name="active" string="Active" domain="[('active', '=', True)]"/>
                 <filter name="archive" string="Archived" domain="[('active', '=', False)]"/>
                 <separator/>
