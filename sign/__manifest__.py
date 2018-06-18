@@ -22,6 +22,7 @@ Let your customers follow the signature process easily.
         'views/sign_template_views.xml',
 
         'views/res_users_views.xml',
+        'views/res_partner_views.xml',
 
         'data/sign_data.xml',
     ],
