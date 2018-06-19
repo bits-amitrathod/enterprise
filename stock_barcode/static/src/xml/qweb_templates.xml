@@ -15,10 +15,10 @@
         <div class="barcode_settings">
             <button t-if="widget.model == 'stock.picking'" class="o_button_barcode_standard o_print_picking">Print Picking Operations</button>
             <button t-if="widget.model == 'stock.picking'" class="o_button_barcode_standard o_print_delivery_slip">Print Delivery Slip</button>
-            <button t-if="widget.model == 'stock.picking'" class="o_button_barcode_standard o_scrap">Scrap</button>
+            <button t-if="widget.model == 'stock.picking' &amp;&amp; (widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel')" class="o_button_barcode_standard o_scrap">Scrap</button>
             <button t-if="widget.model == 'stock.inventory'" class="o_button_barcode_standard o_print_inventory">Print Inventory</button>
-            <button class="o_button_barcode_standard o_validate">Validate</button>
-            <button class="o_button_barcode_standard o_cancel">Cancel</button>
+            <button t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_button_barcode_standard o_validate">Validate</button>
+            <button t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_button_barcode_standard o_cancel">Cancel</button>
         </div>
     </t>
 
@@ -26,16 +26,19 @@
         <div class="barcode_lines_header"></div>
         <div class="barcode_lines">
             <div class="barcode_lines_add text-center">
-                <span class="fa fa-plus fa-3x mt16 o_add_line"></span>
+                <span t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="fa fa-plus fa-3x mt16 o_add_line"></span>
                 <br/>
                 <span class="o_hidden o_scan_message o_scan_message_scan_products">Scan products</span>
                 <span class="o_hidden o_scan_message o_scan_message_scan_more_dest">Scan more products, or scan the destination location</span>
                 <span class="o_hidden o_scan_message o_scan_message_scan_more_src">Scan more products, or scan a new source location</span>
                 <span class="o_hidden o_scan_message o_scan_message_scan_lot">Scan the serial or lot number of the product</span>
                 <span class="o_hidden o_scan_message o_scan_message_scan_src">Scan the source location</span>
+                <span class="o_hidden o_scan_message o_scan_message_picking_already_done">This picking is already done</span>
+                <span class="o_hidden o_scan_message o_scan_message_picking_already_cancelled">This picking is already cancelled</span>
+                <span class="o_hidden o_scan_message o_scan_message_inv_already_done">This inventory adjustment is already done</span>
             </div>
         </div>
-        <div class="barcode_control">
+        <div t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="barcode_control">
             <button t-if="widget.groups.group_stock_multi_locations" class="o_button_barcode_standard o_previous_page"><span class="fa fa-angle-left" style='padding-right: 1em'></span>Previous</button>
             <button t-if="widget.groups.group_stock_multi_locations" class="o_button_barcode_standard o_next_page">Next<span class="fa fa-angle-right" style='padding-left: 1em'></span></button>
             <button class="o_button_barcode_standard o_validate_page">Validate</button>

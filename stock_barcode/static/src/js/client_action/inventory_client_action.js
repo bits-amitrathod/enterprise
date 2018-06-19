@@ -34,6 +34,9 @@ var InventoryClientAction = ClientAction.extend({
             } else  {
                 self.mode = 'inventory';
             }
+            if (self.currentState.state === 'done') {
+                self.mode = 'done';
+            }
         });
         return res;
     },

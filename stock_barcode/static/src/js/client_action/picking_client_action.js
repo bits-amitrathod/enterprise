@@ -43,6 +43,12 @@ var PickingClientAction = ClientAction.extend({
             if (self.currentState.group_stock_multi_locations === false) {
                 self.mode = 'no_multi_locations';
             }
+
+            if (self.currentState.state === 'done') {
+                self.mode = 'done';
+            } else if (self.currentState.state === 'cancel') {
+                self.mode = 'cancel';
+            }
         });
         return res;
     },

@@ -170,6 +170,18 @@ var LinesWidget = Widget.extend({
      * @param {Number} nbPages: the total number of pages
      */
      _renderLines: function() {
+         if (this.mode === 'done') {
+             if (this.model === 'stock.picking') {
+                 this._toggleScanMessage('picking_already_done');
+             } else if (this.model === 'stock.inventory') {
+                 this._toggleScanMessage('inv_already_done');
+             }
+             return;
+         } else if (this.mode === 'cancel') {
+             this._toggleScanMessage('picking_already_cancelled');
+             return;
+         }
+
         // Render and append the page summary.
         var $header = this.$el.filter('.barcode_lines_header');
         var $pageSummary = $(QWeb.render('stock_barcode_summary_template', {

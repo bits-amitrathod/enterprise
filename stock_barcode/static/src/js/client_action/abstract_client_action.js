@@ -92,7 +92,7 @@ var ClientAction = AbstractAction.extend({
         core.bus.on('barcode_scanned', this, this._onBarcodeScannedHandler);
 
         this.headerWidget = new HeaderWidget(this);
-        this.settingsWidget = new SettingsWidget(this, this.actionParams.model);
+        this.settingsWidget = new SettingsWidget(this, this.actionParams.model, this.mode);
         return this._super.apply(this, arguments).then(function () {
             self.headerWidget.prependTo(self.$el);
             self.settingsWidget.appendTo(self.$el);
@@ -940,6 +940,10 @@ var ClientAction = AbstractAction.extend({
     _onBarcodeScannedHandler: function (barcode) {
         var self = this;
         this.mutex.exec(function() {
+            if (self.mode === 'done' || self.mode === 'cancel') {
+                self.do_warn(_t('Warning'), _t('Scanning is disabled in this state.'));
+                return $.when();
+            }
             var commandeHandler = self.commands[barcode];
             if (commandeHandler) {
                 return commandeHandler();
