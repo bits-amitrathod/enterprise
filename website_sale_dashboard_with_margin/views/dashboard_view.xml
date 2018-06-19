@@ -7,11 +7,10 @@
             <field name="inherit_id" ref="website_sale_dashboard.sale_dashboard_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//formula[@name='total']" position='after'>
-                    <aggregate name="total_margin" field="margin" domain="[['state', 'in', ['sale','done']]]" invisible="1"/>
+                    <aggregate name="total_margin" field="margin" invisible="1"/>
                     <formula name="average_margin" string="Average Margin" value="record.total_margin / record.order_id_confirmed_orders" widget="monetary"/>
                 </xpath>
             </field>
         </record>
     </data>
 </odoo>
-

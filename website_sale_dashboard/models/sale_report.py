@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import logging
-
 from odoo import models, fields
-
-_logger = logging.getLogger(__name__)
 
 
 class SaleReport(models.Model):
@@ -13,6 +9,12 @@ class SaleReport(models.Model):
 
     order_id = fields.Many2one(string="Order", comodel_name='sale.order', readonly=True)
     is_abandoned_cart = fields.Boolean(string="Abandoned Cart", readonly=True)
+    invoice_status = fields.Selection([
+        ('upselling', 'Upselling Opportunity'),
+        ('invoiced', 'Fully Invoiced'),
+        ('to invoice', 'To Invoice'),
+        ('no', 'Nothing to Invoice')
+        ], string="Invoice Status", readonly=True)
 
     def _select(self):
         select_term = """
@@ -22,6 +24,7 @@ class SaleReport(models.Model):
             AND s.state = 'draft'
             AND s.partner_id != %s
             AS is_abandoned_cart
+            , s.invoice_status as invoice_status
         """ % self.env.ref('base.public_partner').id
         return super(SaleReport, self)._select() + select_term
 
@@ -37,5 +40,6 @@ class SaleReport(models.Model):
             , s.id
             , config.value
             , team.team_type
+            , s.invoice_status
             """
         return super(SaleReport, self)._group_by() + group_by_term

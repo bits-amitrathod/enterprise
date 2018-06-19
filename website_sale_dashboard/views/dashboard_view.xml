@@ -6,8 +6,8 @@
              <field name="name">sale.report.graph</field>
              <field name="model">sale.report</field>
              <field name="arch" type="xml">
-                 <graph string="Sales Analysis">
-                     <field name="confirmation_date" interval="day" type="row"/>
+                 <graph string="Sales Analysis" type="line">
+                     <field name="date" interval="day" type="row"/>
                      <field name="price_subtotal" type="measure"/>
                  </graph>
              </field>
@@ -36,13 +36,13 @@
                     <view type="graph" ref="website_sale_dashboard.view_online_sales_graph"/>
                     <group col="1" string="At A Glance">
                         <group col="3">
-                            <aggregate name="price_subtotal_confirmed_orders" field="price_subtotal" string="Sold" domain="[['state', 'in', ['sale','done']]]" widget="monetary" domain_label="Confirmed Orders"/>
-                            <aggregate name="order_id_confirmed_orders" field="order_id" string="Orders" domain="[['state', 'in', ['sale','done']]]" domain_label="Confirmed Orders"/>
-                            <aggregate name="price_subtotal_abandoned_carts" field="price_subtotal" string="Abandoned Carts" domain="[['is_abandoned_cart', '=', True]]" widget="monetary"/>
+                            <aggregate name="price_subtotal_confirmed_orders" field="price_subtotal" string="Untaxed Total" widget="monetary"/>
+                            <aggregate name="order_id_confirmed_orders" field="order_id" string="Orders"/>
+                            <aggregate name="ordered_qty" string="Ordered Quantity" field="product_uom_qty"/>
                         </group>
                         <group col="3">
-                            <aggregate name="price_subtotal_all_orders" field="price_subtotal" invisible="1" domain="[['state', 'in', ['done','sale','draft','sent']]]"/>
-                            <formula name="conversion" string="Conversion" value="record.price_subtotal_confirmed_orders / record.price_subtotal_all_orders" widget="percentage"/>
+                            <aggregate name="price_subtotal_all_orders" field="price_subtotal" invisible="1"/>
+                            <aggregate name="avg_ordered_qty" string="Average Ordered Quantity" field="product_uom_qty" group_operator="avg" clickable="false"/>
                             <formula name="total" string="Average Untaxed Total" value="record.price_subtotal_confirmed_orders / record.order_id_confirmed_orders" widget="monetary"/>
                         </group>
                     </group>
@@ -51,25 +51,29 @@
             </field>
         </record>
 
-        <record id="sale_dashboard_search_view" model="ir.ui.view">
-            <field name="name">Website Sale: Search View</field>
+        <record id="sale_report_view_search_website_inherit" model="ir.ui.view">
+            <field name="name">sale.report.view.search.inherit</field>
             <field name="model">sale.report</field>
+            <field name="inherit_id" ref="website_sale.sale_report_view_search_website"/>
             <field name="arch" type="xml">
-                <search string="e-Commerce Analysis">
-                    <field name="date"/>
-                    <filter name="creation_date" string="Creation Date" date="date"/>
-                    <filter name="confirmation_date" string="Confirmation Date" date="confirmation_date"/>
-                </search>
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="order_id"/>
+                </xpath>
+
+                <xpath expr="//filter[@name='confirmed']" position="after">
+                    <filter string="Unpaid Orders" name="unpaid" domain="['&amp;', ('state', '=', 'sent'), ('invoice_status', '=', 'to invoice')]"/>
+                    <filter string="Abandoned Carts" name="abandoned" domain="[('is_abandoned_cart', '=', True)]"/>
+                </xpath>
             </field>
         </record>
 
         <record id="sale_dashboard" model="ir.actions.act_window">
-            <field name="name">Dashboard</field>
+            <field name="name">Sales Dashboard</field>
             <field name="res_model">sale.report</field>
             <field name="view_mode">dashboard</field>
             <field name="domain">[('team_id.team_type', '=', 'website')]</field>
-            <field name="search_view_id" ref="sale_dashboard_search_view"/>
-            <field name="context">{'search_default_month':1}</field>
+            <field name="search_view_id" ref="website_sale.sale_report_view_search_website"/>
+            <field name="context">{'search_default_confirmed':1,'search_default_order_date':1}</field>
         </record>
         <!-- ONBOARDING -->
         <template id="website_sale_dashboard_onboarding_panel" name="website.sale.dashboard.onboarding.panel">
