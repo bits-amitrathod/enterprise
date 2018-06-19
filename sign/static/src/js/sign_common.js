@@ -639,7 +639,7 @@ odoo.define('sign.document_signing', function(require) {
             this.signatureRatio = 3.0;
             this.signatureType = 'signature';
             this.currentFont = 0;
-            this.mode = 'auto';
+            this.mode = 'draw';
 
             this.confirmFunction = function() {};
         },
