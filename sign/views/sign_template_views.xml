@@ -64,6 +64,9 @@
         <field name="model">sign.template</field>
         <field name="arch" type="xml">
             <form create="false">
+                <header>
+                    <button name="%(sign.action_sign_send_request)d" string="Send" type="action" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button string="Edit fields" icon="fa-wrench" type="object" name="go_to_custom_template" class="oe_stat_button oe_read_only"/>

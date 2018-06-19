@@ -25,6 +25,8 @@ Let your customers follow the signature process easily.
         'views/res_partner_views.xml',
 
         'data/sign_data.xml',
+
+        'wizard/sign_send_request_views.xml',
     ],
     'qweb': ['static/src/xml/*.xml'],
     'demo': [

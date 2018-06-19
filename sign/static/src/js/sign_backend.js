@@ -227,179 +227,6 @@ odoo.define('sign.template', function(require) {
         },
     });
 
-    var CreateSignRequestDialog = Dialog.extend({
-        template: 'sign.create_sign_request_dialog',
-
-        init: function(parent, templateID, rolesToChoose, templateName, attachment, options) {
-            options = options || {};
-
-            options.title = options.title || _t("Send Signature Request");
-            options.size = options.size || "medium";
-
-            options.buttons = (options.buttons || []);
-            options.buttons.push({text: _t('Send'), classes: 'btn-primary', click: function(e) {
-                this.sendDocument();
-            }});
-            options.buttons.push({text: _t('Cancel'), classes: 'btn-default', close: true});
-
-            this._super(parent, options);
-
-            this.templateID = templateID;
-            this.rolesToChoose = rolesToChoose;
-            this.templateName = templateName;
-            this.attachment = attachment;
-        },
-
-        willStart: function() {
-            var self = this;
-            return $.when(this._super(),
-                this._rpc({
-                        model: 'res.users',
-                        method: 'read',
-                        args: [[session.uid], ['partner_id']],
-                    })
-                    .then(function(user) {
-                        return self._rpc({
-                                model: 'res.partner',
-                                method: 'read',
-                                args: [[user[0].partner_id[0]], ['name']],
-                            })
-                            .then(prepare_reference);
-                        })
-            );
-
-            function prepare_reference(partner) {
-                self.default_reference = "-";
-                var split = partner[0].name.split(' ');
-                for(var i = 0 ; i < split.length ; i++) {
-                    self.default_reference += split[i][0];
-                }
-            }
-        },
-
-        start: function() {
-            this.$subjectInput = this.$('.o_sign_subject_input').first();
-            this.$messageInput = this.$('.o_sign_message_textarea').first();
-            this.$referenceInput = this.$('.o_sign_reference_input').first();
-
-            this.$subjectInput.val('Signature Request - ' + this.templateName);
-            var defaultRef = this.templateName + this.default_reference;
-            this.$referenceInput.val(defaultRef).attr('placeholder', defaultRef);
-
-            this.$('.o_sign_warning_message_no_field').first().toggle($.isEmptyObject(this.rolesToChoose));
-            this.$('.o_sign_request_signers .o_sign_new_signer').remove();
-
-            sign_utils.setAsPartnerSelect(this.$('.o_sign_request_signers .form-group input[type="hidden"]')); // Followers
-
-            if($.isEmptyObject(this.rolesToChoose)) {
-                this.addSigner(0, _t("Signers"), true);
-            } else {
-                var roleIDs = Object.keys(this.rolesToChoose).sort();
-                for(var i = 0 ; i < roleIDs.length ; i++) {
-                    var roleID = roleIDs[i];
-                    if(roleID !== 0)
-                        this.addSigner(roleID, this.rolesToChoose[roleID], false);
-                }
-            }
-
-            return this._super.apply(this, arguments);
-        },
-
-        addSigner: function(roleID, roleName, multiple) {
-            var $newSigner = $('<div/>').addClass('o_sign_new_signer form-group');
-
-            $newSigner.append($('<label/>').addClass('col-md-3').text(roleName).data('role', roleID));
-
-            var $signerInfo = $('<input type="hidden"/>').attr('placeholder', _t("Write email or search contact..."));
-            if(multiple) {
-                $signerInfo.attr('multiple', 'multiple');
-            }
-
-            var $signerInfoDiv = $('<div/>').addClass('col-md-9');
-            $signerInfoDiv.append($signerInfo);
-
-            $newSigner.append($signerInfoDiv);
-
-            sign_utils.setAsPartnerSelect($signerInfo);
-
-            this.$('.o_sign_request_signers').first().prepend($newSigner);
-        },
-
-        sendDocument: function() {
-            var self = this;
-
-            var completedOk = true;
-            self.$('.o_sign_new_signer').each(function(i, el) {
-                var $elem = $(el);
-                var partnerIDs = $elem.find('input[type="hidden"]').val();
-                if(!partnerIDs || partnerIDs.length <= 0) {
-                    completedOk = false;
-                    $elem.addClass('has-error');
-                    $elem.one('focusin', function(e) {
-                        $elem.removeClass('has-error');
-                    });
-                }
-            });
-            if(!completedOk) {
-                return false;
-            }
-
-            var waitFor = [];
-
-            var signers = [];
-            self.$('.o_sign_new_signer').each(function(i, el) {
-                var $elem = $(el);
-                var selectDef = sign_utils.processPartnersSelection($elem.find('input[type="hidden"]')).then(function(partners) {
-                    for(var p = 0 ; p < partners.length ; p++) {
-                        signers.push({
-                            'partner_id': partners[p],
-                            'role': parseInt($elem.find('label').data('role'))
-                        });
-                    }
-                });
-                if(selectDef !== false) {
-                    waitFor.push(selectDef);
-                }
-            });
-
-            var followers = [];
-            var followerDef = sign_utils.processPartnersSelection(self.$('#o_sign_followers_select')).then(function(partners) {
-                followers = partners;
-            });
-            if(followerDef !== false) {
-                waitFor.push(followerDef);
-            }
-
-            var subject = self.$subjectInput.val() || self.$subjectInput.attr('placeholder');
-            var reference = self.$referenceInput.val() || self.$referenceInput.attr('placeholder');
-            var message = self.$messageInput.val();
-            $.when.apply($, waitFor).then(function(result) {
-                self._rpc({
-                        model: 'sign.request',
-                        method: 'initialize_new',
-                        args: [self.templateID, signers, followers, reference, subject, message],
-                    })
-                    .then(function(sr) {
-                        self.do_notify(_t("Success"), _t("Your signature request has been sent."));
-                        self.do_action({
-                            type: "ir.actions.client",
-                            tag: 'sign.Document',
-                            name: _t("New Document"),
-                            context: {
-                                id: sr.id,
-                                token: sr.token,
-                                sign_token: sr.sign_token || null,
-                                create_uid: session.uid,
-                                state: 'sent',
-                            },
-                        });
-                    }).always(function() {
-                        self.close();
-                    });
-            });
-        },
-    });
-
     var ShareTemplateDialog = Dialog.extend({
         template: 'sign.share_template_dialog',
 
@@ -774,18 +601,13 @@ odoo.define('sign.template', function(require) {
             this.rolesToChoose = {};
 
             var self = this;
-            var $sendButton = $('<button/>', {html: _t("Send"), type: "button"})
-                .addClass('btn btn-primary btn-sm')
-                .on('click', function() {
-                    self.prepareTemplateData();
-                    (new CreateSignRequestDialog(self, self.templateID, self.rolesToChoose, self.$templateNameInput.val(), self.sign_template.attachment_id)).open();
-                });
+            // YTI TODO: Buttons to remove
             var $shareButton = $('<button/>', {html: _t("Share"), type: "button"})
                 .addClass('btn btn-default btn-sm')
                 .on('click', function() {
                     (new ShareTemplateDialog(self, self.templateID)).open();
                 });
-            this.cp_content = {$buttons: $sendButton.add($shareButton)};
+            this.cp_content = {$buttons: $shareButton};
         },
 
         willStart: function() {
