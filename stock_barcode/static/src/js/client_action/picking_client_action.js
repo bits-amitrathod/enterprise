@@ -14,11 +14,15 @@ var PickingClientAction = ClientAction.extend({
         'cancel': '_onCancel',
     }),
 
-    init: function (parent, action) { // jshint ignore:line
+    init: function (parent, action) {
         this._super.apply(this, arguments);
         this.commands['O-BTN.scrap'] = this._scrap.bind(this);
         this.commands['O-BTN.validate'] = this._validate.bind(this);
         this.commands['O-BTN.cancel'] = this._cancel.bind(this);
+        if (! this.actionParams.pickingId) {
+            this.actionParams.pickingId = action.context.active_id;
+            this.actionParams.model = 'stock.picking';
+        }
     },
 
     willStart: function () {

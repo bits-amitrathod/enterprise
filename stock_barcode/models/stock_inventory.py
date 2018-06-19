@@ -74,6 +74,7 @@ class StockInventory(models.Model):
                     'model': 'stock.inventory',
                     'inventory_id': new_inv.id,
                 }
+                action['context'] = {'active_id': new_inv.id}
                 action = dict(action, target='fullscreen', params=params)
 
         return action

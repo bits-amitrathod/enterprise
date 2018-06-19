@@ -16,9 +16,13 @@ var InventoryClientAction = ClientAction.extend({
         picking_print_inventory: '_onPrintInventory'
     }),
 
-    init: function () {
+    init: function (parent, action) {
         this._super.apply(this, arguments);
         this.mode = 'inventory';
+        if (! this.actionParams.inventoryId) {
+            this.actionParams.inventoryId = action.context.active_id;
+            this.actionParams.model = 'stock.inventory';
+        }
     },
 
     willStart: function () {
