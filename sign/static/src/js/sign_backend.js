@@ -987,13 +987,7 @@ odoo.define('sign.DocumentBackend', function (require) {
             var self = this;
 
             this.$downloadButton = $('<a/>', {html: _t("Download Document")}).addClass('btn btn-sm btn-primary o_hidden');
-            var $historyButton = $('<button/>', {html: _t("View History"), type: "button"}).addClass('btn btn-sm btn-default');
-            $historyButton.on('click', function() {
-                if(self.documentPage) {
-                    self.documentPage.openChatter();
-                }
-            });
-            this.cp_content = {$buttons: this.$downloadButton.add($historyButton)};
+            this.cp_content = {$buttons: this.$downloadButton};
         },
 
         start: function () {

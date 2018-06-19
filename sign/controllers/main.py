@@ -173,34 +173,6 @@ class Sign(http.Controller):
             request._message_post_as_creator(_('Everybody Signed.'), type='comment', subtype='mt_comment')
         return True
 
-    @http.route(['/sign/get_notes/<int:id>/<token>'], type='json', auth='public')
-    def get_notes(self, id, token):
-        request = http.request.env['sign.request'].sudo().search([('id', '=', id), ('access_token', '=', token)], limit=1)
-        if not request:
-            return []
-
-        DateTimeConverter = http.request.env['ir.qweb.field.datetime']
-        ResPartner = http.request.env['res.partner'].sudo()
-        messages = request.message_ids.read(['message_type', 'author_id', 'date', 'body'])
-        for m in messages:
-            author_id = m['author_id'][0]
-            author = ResPartner.browse(author_id)
-            m['author_id'] = author.read(['name'])[0]
-            m['author_id']['avatar'] = '/web/image/res.partner/%s/image_small' % author_id
-            m['date'] = DateTimeConverter.value_to_html(m['date'], '')
-        return messages
-
-    @http.route(['/sign/send_note/<int:id>/<token>'], type='json', auth='public')
-    def send_note(self, id, token, access_token=None, message=None):
-        request = http.request.env['sign.request'].sudo().search([('id', '=', id), ('access_token', '=', token)], limit=1)
-        if not request:
-            return
-
-        request_item = request.request_item_ids.filtered(lambda r: r.access_token == access_token)
-        partner = request_item.partner_id if request_item else None
-        if (partner or http.request.env.user.id == request.create_uid.id) and message:
-            request._message_post_as_creator(message, author=partner, type='comment', subtype='mt_comment')
-
     @http.route(['/sign/save_location/<int:id>/<token>'], type='json', auth='public')
     def save_location(self, id, token, latitude=0, longitude=0):
         sign_request_item = http.request.env['sign.request.item'].sudo().search([('sign_request_id', '=', id), ('access_token', '=', token)], limit=1)

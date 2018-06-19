@@ -371,6 +371,7 @@ class SignRequest(models.Model):
         self.completed_document = base64.b64encode(output.getvalue())
         output.close()
 
+    # YTI TODO: Probably to remove
     @api.one
     def _message_post_as_creator(self, body, author=None, type='comment', subtype=False):
         return self.sudo(self.create_uid).message_post(

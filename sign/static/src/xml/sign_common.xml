@@ -19,26 +19,6 @@
         <span class="o_sign_responsible_display"/>
     </div>
 
-    <div t-name="sign.chatter" class="o_sign_chatter">
-        <div t-if="widget.sendAccess" class="form-group">
-            <textarea rows="3" name="comment" class="form-control" placeholder="Send a note..."/>
-            <hr/>
-        </div>
-        <ul class="media-list">
-            <t t-foreach="widget.messages" t-as="message">
-                <li class="media" t-if="message.message_type === 'comment'">
-                    <div class="media-body">
-                        <img class="media-object pull-left" t-att-src="message.author_id.avatar" alt="Avatar"/>
-                        <div class="media-body">
-                            <h5 class="media-heading"><t t-esc="message.author_id.name"/> <small>on <t t-esc="message.date"/></small></h5>
-                            <div t-raw="message.body"/>
-                        </div>
-                    </div>
-                </li>
-            </t>
-        </ul>
-    </div>
-
     <!-- Signing part -->
     <div t-name="sign.signature_dialog" class="form-horizontal">
         <div class="o_sign_signer_info form-group">

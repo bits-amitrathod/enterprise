@@ -259,49 +259,6 @@ odoo.define('sign.Document', function (require) {
 
     var _t = core._t;
 
-    var ChatterDialog = Dialog.extend({
-        template: "sign.chatter",
-
-        init: function(parent, requestID, token, sendAccess, accessToken, options) {
-            options = (options || {});
-            options.title = options.title || _t("History");
-            options.size = options.size || "medium";
-
-            this.sendAccess = sendAccess;
-
-            if(!options.buttons) {
-                options.buttons = [];
-                if(this.sendAccess) {
-                    options.buttons.push({text: _t("Send note"), classes: "btn-primary", click: function() {
-                        var self = this;
-                        ajax.jsonRpc('/sign/send_note/' + requestID + '/' + token, 'call', {
-                            access_token: accessToken,
-                            message: this.$('textarea').val(),
-                        }).then(function() {
-                            self.do_notify(_t("Success"), _t("Your message has been sent."));
-                        }).always(function() {
-                            self.close();
-                        });
-                    }});
-                }
-                options.buttons.push({text: _t("Cancel"), close: true});
-            }
-
-            this._super(parent, options);
-
-            this.requestID = requestID;
-            this.token = token;
-        },
-
-        willStart: function() {
-            var self = this;
-            var def = ajax.jsonRpc('/sign/get_notes/' + this.requestID + '/' + this.token, 'call', {})
-                          .then(function(messages) { self.messages = messages; });
-
-            return $.when(this._super.apply(this, arguments), def);
-        },
-    });
-
     var Document = Widget.extend({
         start: function() {
             this.attachmentLocation = this.$('#o_sign_input_attachment_location').val();
@@ -309,17 +266,12 @@ odoo.define('sign.Document', function (require) {
             this.requestToken = this.$('#o_sign_input_sign_request_token').val();
             this.accessToken = this.$('#o_sign_input_access_token').val();
             this.signerName = this.$('#o_sign_signer_name_input_info').val();
-            this.sendAccess = this.$('#o_sign_chatter_send_access').val();
             this.types = this.$('.o_sign_field_type_input_info');
             this.items = this.$('.o_sign_item_input_info');
 
             this.$validateBanner = this.$('.o_sign_validate_banner').first();
 
             return $.when(this._super.apply(this, arguments), this.initialize_iframe());
-        },
-
-        openChatter: function() {
-            (new ChatterDialog(this, this.requestID, this.requestToken, this.sendAccess, this.accessToken)).open();
         },
 
         get_pdfiframe_class: function () {
@@ -1097,7 +1049,6 @@ odoo.define('sign.document_signing', function(require) {
                 this.$validateBanner.show().animate({'opacity': 1}, 500);
             },
 
-            'click .o_sign_view_history': 'openChatter',
             'click .o_sign_validate_banner button': 'signItemDocument',
             'click .o_sign_sign_document_button': 'signDocument',
         },
