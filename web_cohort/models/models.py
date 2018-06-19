@@ -19,7 +19,19 @@ class Base(models.AbstractModel):
     _inherit = 'base'
 
     @api.model
-    def get_cohort_data(self, date_start, date_stop, measure, interval, domain):
+    def get_cohort_data(self, date_start, date_stop, measure, interval, domain, mode):
+        """
+            Get all the data needed to display a cohort view
+
+            :param date_start: the starting date to use in the group_by clause
+            :param date_stop: the date field which mark the change of state
+            :param measure: the field to aggregate
+            :param interval: the interval of time between two cells ('day', 'week', 'month', 'year')
+            :param domain: a domain to limit the read_group
+            :param mode: the mode of aggregation ('retention', 'churn') [default='retention']
+            :return: dictionary containing a total amount of records considered and a
+                     list of rows each of which contains 16 cells.
+        """
         rows = []
         columns_avg = defaultdict(lambda: dict(percentage=0, count=0))
         total_value = 0
@@ -57,6 +69,7 @@ class Base(models.AbstractModel):
                     columns_avg[col]
                     columns.append({
                         'value': '-',
+                        'churn_value': '-',
                         'percentage': '',
                     })
                     continue
@@ -71,11 +84,17 @@ class Base(models.AbstractModel):
 
                 previous_col_remaining_value = value if col == 0 else columns[-1]['value']
                 col_remaining_value = previous_col_remaining_value - col_value
-                percentage = value and round(100 * (col_remaining_value) / value, 1) or 0
+                percentage = value and (col_remaining_value) / value or 0
+                if mode == 'churn':
+                    percentage = 1 - percentage
+
+                percentage = round(100 * percentage, 1)
+
                 columns_avg[col]['percentage'] += percentage
                 columns_avg[col]['count'] += 1
                 columns.append({
                     'value': col_remaining_value,
+                    'churn_value': col_value + (columns[-1]['churn_value'] if col > 0 else 0),
                     'percentage': percentage,
                     'domain': [
                         (date_stop, ">=", col_start_date.strftime(DEFAULT_SERVER_DATE_FORMAT) ),

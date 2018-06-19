@@ -19,6 +19,7 @@ var CohortRenderer = AbstractRenderer.extend({
      * @param {Object} params.intervals
      * @param {string} params.dateStartString
      * @param {string} params.dateStopString
+     * @param {string} params.mode
      */
     init: function (parent, state, params) {
         this._super.apply(this, arguments);
@@ -26,6 +27,7 @@ var CohortRenderer = AbstractRenderer.extend({
         this.intervals = params.intervals;
         this.dateStartString = params.dateStartString;
         this.dateStopString = params.dateStopString;
+        this.mode = params.mode;
     },
 
     //--------------------------------------------------------------------------
@@ -44,6 +46,7 @@ var CohortRenderer = AbstractRenderer.extend({
             interval: this.intervals[this.state.interval],
             date_start_string: this.dateStartString,
             date_stop_string: this.dateStopString,
+            mode: this.mode,
         }));
         this.$('.o_cohort_value').tooltip();
         return this._super.apply(this, arguments);

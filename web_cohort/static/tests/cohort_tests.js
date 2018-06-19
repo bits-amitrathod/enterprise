@@ -27,6 +27,24 @@ QUnit.module('Views', {
                     {id: 8, start: '2017-08-24', stop: '', recurring: 22},
                 ]
             },
+            lead: {
+                fields: {
+                    id: {string: 'ID', type: 'integer'},
+                    start: {string: 'Start', type: 'date'},
+                    stop: {string: 'Stop', type: 'date'},
+                    revenue: {string: 'Revenue', type: 'float', store: true},
+                },
+                records: [
+                    {id: 1, start: '2017-07-12', stop: '2017-08-11', revenue: 1200.20},
+                    {id: 2, start: '2017-08-14', stop: '', revenue: 500},
+                    {id: 3, start: '2017-08-21', stop: '2017-08-29', revenue: 5599.99},
+                    {id: 4, start: '2017-08-21', stop: '', revenue: 13500},
+                    {id: 5, start: '2017-08-23', stop: '', revenue: 6000},
+                    {id: 6, start: '2017-08-24', stop: '', revenue: 1499.99},
+                    {id: 7, start: '2017-08-24', stop: '2017-08-29', revenue: 16000},
+                    {id: 8, start: '2017-08-24', stop: '', revenue: 22000},
+                ]
+            },
         };
     }
 }, function () {
@@ -115,6 +133,26 @@ QUnit.module('Views', {
                 'should active month for interval');
         assert.ok(cohort.$('.table thead tr:first th:nth-child(3):contains(Stop - By Month)').length,
             'should contain "Stop - By Month" in title');
+
+        cohort.destroy();
+    });
+
+    QUnit.test('test mode churn', function(assert) {
+        assert.expect(3);
+
+        var cohort = createView({
+            View: CohortView,
+            model: 'lead',
+            data: this.data,
+            arch: '<cohort string="Leads" date_start="start" date_stop="stop" interval="week" mode="churn" />',
+            mockRPC: function(route, args) {
+                assert.strictEqual(args.kwargs.mode, "churn", "churn mode should be sent via RPC");
+                return this._super(route, args);
+            },
+        });
+
+        assert.strictEqual(cohort.$('td .o_cohort_value:first').data('original-title'), 0, 'first col should contain no record');
+        assert.strictEqual(cohort.$('td .o_cohort_value:nth(4)').data('original-title'), 1, 'col 5 should contain one record');
 
         cohort.destroy();
     });

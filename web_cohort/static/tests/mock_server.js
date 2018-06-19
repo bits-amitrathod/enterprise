@@ -92,6 +92,7 @@ MockServer.include({
                     columnsAvg[column]['count'] += 0;
                     columns.push({
                         'value': '-',
+                        'churn_value': '-',
                         'percentage': '-',
                     });
                     continue;
@@ -114,11 +115,18 @@ MockServer.include({
 
                 var previousValue = column === 0 ? value : columns[column - 1]['value'];
                 var remainingValue = previousValue - colValue;
-                var percentage = value ? parseFloat((100 * remainingValue / value).toFixed(1)) : 0;
+                var previousChurnValue = column === 0 ? 0 : columns[column - 1]['churn_value'];
+                var churnValue = colValue + previousChurnValue;
+                var percentage = value ? parseFloat(remainingValue / value) : 0;
+                if (kwargs.mode === 'churn') {
+                    percentage = 1 - percentage;
+                }
+                percentage = (100 * percentage).toFixed(1);
                 columnsAvg[column]['percentage'] += percentage;
                 columnsAvg[column]['count'] += 1;
                 columns.push({
                     'value': remainingValue,
+                    'churn_value': churnValue,
                     'percentage': percentage,
                 });
             }

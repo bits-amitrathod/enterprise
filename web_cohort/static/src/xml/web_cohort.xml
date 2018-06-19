@@ -56,7 +56,7 @@
                                 t-attf-style="background-color: rgba(0, 160, 157, #{col.percentage/100.0}); color: #{col.percentage gt 50 and '#FFFFFF' or 'inherit'}"
                                 t-att-data-col="col_index"
                                 t-att-class="'o_cohort_highlight' + (col.value === '-' ? '' : ' o_cohort_value')"
-                                t-att-title="col.value === '-' ? '' : col.value">
+                                t-att-data-original-title="mode === 'churn' ? (col.churn_value === '-' ? '' : col.churn_value) : (col.value === '-' ? '' : col.value)">
                                 <t t-esc="col.percentage" /><t t-if="col.percentage !== ''">%</t>
                             </div>
                         </td>

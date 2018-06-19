@@ -47,6 +47,7 @@ var CohortView = AbstractView.extend({
         // Model Parameters
         this.loadParams.dateStart = params.context.cohort_date_start ||  attrs.date_start;
         this.loadParams.dateStop = params.context.cohort_date_stop ||  attrs.date_stop;
+        this.loadParams.mode = params.context.cohort_mode || attrs.mode || 'retention';
         this.loadParams.measure = params.context.cohort_measure ||  attrs.measure || '__count__';
         this.loadParams.interval = params.context.cohort_interval || attrs.interval || 'day';
 
@@ -60,6 +61,7 @@ var CohortView = AbstractView.extend({
         measures.__count__ = _t('Count');
         this.rendererParams.measures = measures;
         this.rendererParams.intervals = intervals;
+        this.rendererParams.mode = this.loadParams.mode;
         this.rendererParams.dateStartString = fields[this.loadParams.dateStart]['string'];
         this.rendererParams.dateStopString = fields[this.loadParams.dateStop]['string'];
 
