@@ -410,6 +410,7 @@ class AccountFinancialReportLine(models.Model):
         ('code_uniq', 'unique (code)', "A report line with the same code already exists."),
     ]
 
+    @api.one
     @api.constrains('code')
     def _code_constrains(self):
         if self.code and self.code.strip().lower() in __builtins__.keys():
