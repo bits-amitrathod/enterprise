@@ -19,7 +19,7 @@ class SignRequest(models.Model):
     _name = "sign.request"
     _description = "Document To Sign"
     _rec_name = 'reference'
-    _inherit = 'mail.thread'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     @api.multi
     def _default_access_token(self):

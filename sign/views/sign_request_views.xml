@@ -13,7 +13,8 @@
                 <field name="last_action_date"/>
                 <field name="request_item_infos"/>
                 <field name="state"/>
-
+                <field name="activity_ids"/>
+                <field name="activity_state"/>
                 <templates>
                     <div t-name="kanban-box" t-attf-class="oe_kanban_global_click {{kanban_color(record.color.raw_value)}}">
                         <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
@@ -42,11 +43,16 @@
                         <div class="o_signers">
                             <span t-foreach="record.request_item_infos.raw_value" t-as="request_item_info" t-att-class="(request_item_info.state === 'completed')? 'o_sign_completed' : 'o_sign_waiting'"><t t-esc="request_item_info.partner_name"/></span>
                         </div>
-                        <div class="oe_kanban_bottom_left">
-                            <em><field name="last_action_date"/></em>
-                        </div>
-                        <div class="oe_kanban_bottom_right">
-                            <img t-att-src="kanban_image('res.users', 'image_small', record.create_uid.raw_value)" t-att-data-member_id="record.create_uid.raw_value" width="32" height="32" class="oe_kanban_avatar" alt="Avatar"/>
+                        <div class="o_kanban_record_bottom">
+                            <div class="oe_kanban_bottom_left">
+                                <em><field name="last_action_date"/></em>
+                                <div class="o_kanban_inline_block">
+                                    <field name="activity_ids" widget="kanban_activity"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_bottom_right">
+                                <img t-att-src="kanban_image('res.users', 'image_small', record.create_uid.raw_value)" t-att-data-member_id="record.create_uid.raw_value" width="32" height="32" class="oe_kanban_avatar" alt="Avatar"/>
+                            </div>
                         </div>
                     </div>
                 </templates>
@@ -107,6 +113,7 @@
                 </sheet>
                 <div class="oe_chatter">
                      <field name="message_follower_ids" widget="mail_followers"/>
+                     <field name="activity_ids" widget="mail_activity"/>
                      <field name="message_ids" widget="mail_thread"/>
                 </div>
             </form>
@@ -130,6 +137,15 @@
                 <separator/>
                 <filter name="in_progress" string="To Sign" domain="[('state', '=', 'sent')]"/>
                 <filter name="signed" string="Signed" domain="[('state', '=', 'signed')]"/>
+                <separator/>
+                <filter string="Late Activities" name="activities_overdue"
+                    domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                    help="Show all records which has next action date is before today"/>
+                <filter string="Today Activities" name="activities_today"
+                    domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Future Activities" name="activities_upcoming_all"
+                        domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
+                        ]"/>
             </search>
         </field>
     </record>
