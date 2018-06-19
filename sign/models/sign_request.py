@@ -25,6 +25,10 @@ class SignRequest(models.Model):
     def _default_access_token(self):
         return str(uuid.uuid4())
 
+    @api.model
+    def _expand_states(self, states, domain, order):
+        return [key for key, val in type(self).state.selection]
+
     template_id = fields.Many2one('sign.template', string="Template", required=True)
     reference = fields.Char(required=True, string="Filename")
 
@@ -36,7 +40,7 @@ class SignRequest(models.Model):
         ("sent", "Signatures in Progress"),
         ("signed", "Fully Signed"),
         ("canceled", "Canceled")
-    ], default='draft', track_visibility='onchange')
+    ], default='draft', track_visibility='onchange', group_expand='_expand_states')
 
     follower_ids = fields.Many2many('res.partner', string="Document Followers")
 
