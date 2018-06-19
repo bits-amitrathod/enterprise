@@ -50,70 +50,79 @@ class AccountBankStatementImport(models.TransientModel):
             currency = statement.xpath('ns:Acct/ns:Ccy/text() | ns:Bal/ns:Amt/@Ccy', namespaces=ns)[0]
 
             for entry in statement.findall('ns:Ntry', ns):
-                sequence += 1
-                entry_vals = {
-                    'sequence': sequence,
-                }
-
-                # Amount 1..1
-                amount = float(entry.xpath('ns:Amt/text()', namespaces=ns)[0])
-
-                # Credit Or Debit Indicator 1..1
-                sign = entry.xpath('ns:CdtDbtInd/text()', namespaces=ns)[0]
-                counter_party = 'Dbtr'
-                if sign == 'DBIT':
-                    amount *= -1
-                    counter_party = 'Cdtr'
-                entry_vals['amount'] = amount
-
-                # Amount currency
-                instruc_amount = entry.xpath('ns:NtryDtls/ns:TxDtls/ns:AmtDtls/ns:InstdAmt/ns:Amt/text()', namespaces=ns)
-                instruc_curr = entry.xpath('ns:NtryDtls/ns:TxDtls/ns:AmtDtls/ns:InstdAmt/ns:Amt/@Ccy', namespaces=ns)
-                if instruc_amount and instruc_curr and instruc_curr[0] != currency and instruc_curr[0] in curr_cache:
-                    amount_currency = sum([float(x) for x in instruc_amount])
-                    entry_vals['amount_currency'] = amount_currency if entry_vals['amount'] > 0 else -amount_currency
-                    entry_vals['currency_id'] = curr_cache[instruc_curr[0]]
-
                 # Date 0..1
-                transaction_date = entry.xpath('ns:ValDt/ns:Dt/text() | ns:BookgDt/ns:Dt/text() | ns:BookgDt/ns:DtTm/text()', namespaces=ns)
-                entry_vals['date'] = transaction_date and transaction_date[0] or False
+                transaction_date = entry.xpath(
+                    'ns:ValDt/ns:Dt/text() | ns:BookgDt/ns:Dt/text() | ns:BookgDt/ns:DtTm/text()', namespaces=ns)
+                date = transaction_date and transaction_date[0] or False
 
-                # Name 0..1
-                transaction_name = entry.xpath('.//ns:RmtInf/ns:Ustrd/text()', namespaces=ns)
-                transaction_name = transaction_name or entry.xpath('ns:AddtlNtryInf/text()', namespaces=ns)
-                partner_name = entry.xpath('.//ns:RltdPties/ns:%s/ns:Nm/text()' % (counter_party,), namespaces=ns)
-                entry_vals['name'] = ' '.join(transaction_name) if transaction_name else '/'
-                entry_vals['partner_name'] = partner_name and partner_name[0] or False
-                # Bank Account No
-                bank_account_no = entry.xpath(""".//ns:RltdPties/ns:%sAcct/ns:Id/ns:IBAN/text() |
-                                                  (.//ns:%sAcct/ns:Id/ns:Othr/ns:Id)[1]/text()
-                                                  """ % (counter_party, counter_party), namespaces=ns)
-                entry_vals['account_number'] = bank_account_no and bank_account_no[0] or False
+                for entry_details in entry.xpath('.//ns:TxDtls', namespaces=ns):
+                    sequence += 1
 
-                # Reference 0..1
-                # Structured communication if available
-                ref = entry.xpath('.//ns:RmtInf/ns:Strd/ns:%sRefInf/ns:Ref/text()' % (counter_party,), namespaces=ns)
-                if not ref:
-                    # Otherwise, any of below given as reference
-                    ref = entry.xpath("""ns:AcctSvcrRef/text() | ns:NtryDtls/ns:TxDtls/ns:Refs/ns:TxId/text() |
-                                      ns:NtryDtls/ns:TxDtls/ns:Refs/ns:InstrId/text() | ns:NtryDtls/ns:TxDtls/ns:Refs/ns:EndToEndId/text() |
-                                      ns:NtryDtls/ns:TxDtls/ns:Refs/ns:MndtId/text() | ns:NtryDtls/ns:TxDtls/ns:Refs/ns:ChqNb/text()
-                                      """, namespaces=ns)
-                entry_vals['ref'] = ref and ref[0] or False
-                unique_import_ref = entry.xpath('ns:AcctSvcrRef/text()', namespaces=ns)
-                if unique_import_ref and not is_full_of_zeros(unique_import_ref[0]):
-                    entry_ref = entry.xpath('ns:NtryRef/text()', namespaces=ns)
-                    if entry_ref:
-                        entry_vals['unique_import_id'] = '{}-{}'.format(unique_import_ref[0], entry_ref[0])
-                    elif not entry_ref and unique_import_ref[0] not in unique_import_set:
-                        entry_vals['unique_import_id'] = unique_import_ref[0]
+                    entry_vals = {
+                        'sequence': sequence,
+                        'date': date,
+                    }
+
+                    # Amount 1..1
+                    amounts = entry_details.xpath('ns:Amt/text()', namespaces=ns) or entry.xpath('ns:Amt/text()', namespaces=ns)
+                    amount = float(amounts[0])
+
+                    # Credit Or Debit Indicator 1..1
+                    signs = entry_details.xpath('ns:CdtDbtInd/text()', namespaces=ns) or entry.xpath('ns:CdtDbtInd/text()', namespaces=ns)
+                    sign = signs[0]
+                    counter_party = 'Dbtr'
+                    if sign == 'DBIT':
+                        amount *= -1
+                        counter_party = 'Cdtr'
+                    entry_vals['amount'] = amount
+
+                    # Amount currency
+                    instruc_amount = entry_details.xpath('ns:AmtDtls/ns:InstdAmt/ns:Amt/text()', namespaces=ns)
+                    instruc_curr = entry_details.xpath('ns:AmtDtls/ns:InstdAmt/ns:Amt/@Ccy', namespaces=ns)
+                    if instruc_amount and instruc_curr and instruc_curr[0] != currency and instruc_curr[
+                        0] in curr_cache:
+                        amount_currency = sum([float(x) for x in instruc_amount])
+                        entry_vals['amount_currency'] = amount_currency if entry_vals[
+                                                                               'amount'] > 0 else -amount_currency
+                        entry_vals['currency_id'] = curr_cache[instruc_curr[0]]
+
+                    # Name 0..1
+                    transaction_name = entry_details.xpath('.//ns:RmtInf/ns:Ustrd/text()', namespaces=ns)
+                    transaction_name = transaction_name or entry_details.xpath('ns:AddtlNtryInf/text()', namespaces=ns)
+                    partner_name = entry_details.xpath('.//ns:RltdPties/ns:%s/ns:Nm/text()' % (counter_party,), namespaces=ns)
+                    entry_vals['name'] = ' '.join(transaction_name) if transaction_name else '/'
+                    entry_vals['partner_name'] = partner_name and partner_name[0] or False
+                    # Bank Account No
+                    bank_account_no = entry_details.xpath(""".//ns:RltdPties/ns:%sAcct/ns:Id/ns:IBAN/text() |
+                                                      (.//ns:%sAcct/ns:Id/ns:Othr/ns:Id)[1]/text()
+                                                      """ % (counter_party, counter_party), namespaces=ns)
+                    entry_vals['account_number'] = bank_account_no and bank_account_no[0] or False
+
+                    # Reference 0..1
+                    # Structured communication if available
+                    ref = entry_details.xpath('.//ns:RmtInf/ns:Strd/ns:%sRefInf/ns:Ref/text()' % (counter_party,),
+                                      namespaces=ns)
+                    if not ref:
+                        # Otherwise, any of below given as reference
+                        ref = entry_details.xpath("""ns:AcctSvcrRef/text() | ns:Refs/ns:TxId/text() |
+                                          ns:Refs/ns:InstrId/text() | ns:Refs/ns:EndToEndId/text() |
+                                          ns:Refs/ns:MndtId/text() | ns:Refs/ns:ChqNb/text()
+                                          """, namespaces=ns)
+                    entry_vals['ref'] = ref and ref[0] or False
+                    unique_import_ref = entry_details.xpath('ns:AcctSvcrRef/text()', namespaces=ns)
+                    if unique_import_ref and not is_full_of_zeros(unique_import_ref[0]):
+                        entry_ref = entry_details.xpath('ns:NtryRef/text()', namespaces=ns)
+                        if entry_ref:
+                            entry_vals['unique_import_id'] = '{}-{}'.format(unique_import_ref[0], entry_ref[0])
+                        elif not entry_ref and unique_import_ref[0] not in unique_import_set:
+                            entry_vals['unique_import_id'] = unique_import_ref[0]
+                        else:
+                            entry_vals['unique_import_id'] = '{}-{}'.format(unique_import_ref[0], sequence)
                     else:
-                        entry_vals['unique_import_id'] = '{}-{}'.format(unique_import_ref[0], sequence)
-                else:
-                    entry_vals['unique_import_id'] = '{}-{}'.format(statement_vals['name'], sequence)
+                        entry_vals['unique_import_id'] = '{}-{}'.format(statement_vals['name'], sequence)
 
-                unique_import_set.add(entry_vals['unique_import_id'])
-                transactions.append(entry_vals)
+                    unique_import_set.add(entry_vals['unique_import_id'])
+                    transactions.append(entry_vals)
             statement_vals['transactions'] = transactions
 
             # Start Balance
