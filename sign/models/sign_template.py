@@ -14,6 +14,8 @@ class SignTemplate(models.Model):
     _rec_name = "attachment_id"
 
     attachment_id = fields.Many2one('ir.attachment', string="Attachment", required=True, ondelete='cascade')
+    name = fields.Char(related='attachment_id.name')
+    datas = fields.Binary(related='attachment_id.datas')
     sign_item_ids = fields.One2many('sign.item', 'template_id', string="Signature Items")
 
     active = fields.Boolean(default=True, string="Active", oldname='archived')
