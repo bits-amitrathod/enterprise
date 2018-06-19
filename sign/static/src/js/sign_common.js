@@ -97,11 +97,16 @@ odoo.define('sign.PDFIframe', function (require) {
                 type: "text/javascript",
                 src: "/web/static/lib/jquery.ui/jquery-ui.js"
             });
+            var $select2Css = $("<link/>", {
+                rel: "stylesheet", type: "text/css",
+                href: "/web/static/lib/select2/select2.css"
+            });
             // use Node.appendChild to add resources and not jQuery that load script in top frame
             this.$('head')[0].appendChild($cssLink[0]);
             this.$('head')[0].appendChild($faLink[0]);
             this.$('head')[0].appendChild($jqueryLink[0]);
             this.$('head')[0].appendChild($jqueryScript[0]);
+            this.$('head')[0].appendChild($select2Css[0]);
 
             var waitFor = [];
 
@@ -311,6 +316,7 @@ odoo.define('sign.utils', function (require) {
             var select2Options = {
                 placeholder: _t("Select the responsible"),
                 allowClear: false,
+                width: '100%',
                 minimumInputLength: 3,
 
                 formatResult: function(data, resultElem, searchObj) {

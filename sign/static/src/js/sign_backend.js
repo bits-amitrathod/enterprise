@@ -115,33 +115,21 @@ odoo.define('sign.template', function(require) {
 
     var _t = core._t;
 
-    var SignItemCustomDialog = Dialog.extend({
-        template: 'sign.sign_item_custom_dialog',
+    var SignItemCustomPopover = Widget.extend({
+        template: 'sign.sign_item_custom_popover',
+        events: {
+            'click .o_sign_delete_field_button': function(e) {
+                this.$currentTarget.popover("hide");
+                this.$currentTarget.trigger('itemDelete');
+            },
+        },
 
         init: function(parent, parties, options) {
             options = options || {};
 
-            options.title = options.title || _t("Customize Field");
-            options.size = options.size || "medium";
-
-            if(!options.buttons) {
-                options.buttons = [];
-                options.buttons.push({text: 'Save', classes: 'btn-primary', close: true, click: function(e) {
-                    var resp = parseInt(this.$responsibleSelect.find('select').val());
-                    var required = this.$('input[type="checkbox"]').prop('checked');
-                    var name = this.$('#o_sign_name').val();
-
-                    this.getParent().currentRole = resp;
-                    this.$currentTarget.data({responsible: resp, required: required, name: name}).trigger('itemChange');
-                }});
-                options.buttons.push({text: _t('Remove'), classes: 'o_sign_delete_field_button btn-link', close: true, click: function(e) {
-                    this.$currentTarget.trigger('itemDelete');
-                }});
-                options.buttons.push({text: 'Discard', classes: 'btn-default', close: true});
-            }
-
+            this.title = options.title || _t("Customize Field");
             this._super(parent, options);
-
+            //TODO: Add buttons for save, discard and remove.
             this.parties = parties;
         },
 
@@ -154,14 +142,41 @@ odoo.define('sign.template', function(require) {
                 self.$('input[type="checkbox"]').prop('checked', self.$currentTarget.data('required'));
 
                 self.$('#o_sign_name').val(self.$currentTarget.data('name') );
-                self.set_title(self.title, '<span class="fa fa-long-arrow-right"/> ' + self.$currentTarget.prop('title') + ' Field');
+                self.title = self.title + ' <span class="fa fa-long-arrow-right"/> ' + self.$currentTarget.prop('field-type') + ' Field';
+                // Fix for select2 dropdown position offset issue inside iframe.
+                self.$responsibleSelect.on("select2-open select2-highlight select2-loaded select2-selecting", function(e) {
+                    var dropdown = $("#select2-drop");
+                    // Iframe top + dropdown top offset
+                    dropdown.css("top", dropdown.offset().top + $("iframe").offset().top);
+                });
             });
         },
 
-        open: function($signatureItem) {
-            this.$currentTarget = $signatureItem;
-            this._super.apply(this, arguments);
+        create: function($targetEl) {
+            var self = this;
+            this.$currentTarget = $targetEl;
+            this.$elPopover = $("<div class='o_sign_item_popover'/>");
+            this.appendTo(this.$elPopover).then(function() {
+                var options = {
+                    title: self.title,
+                    content: function () {
+                        return self.$el;
+                    },
+                    html: true,
+                    placement: 'auto',
+                    trigger:'click',
+                };
+                self.$currentTarget.popover(options).popover("show");
+            });
         },
+        hide: function() {
+            this.$currentTarget.popover("hide");
+            var resp = parseInt(this.$responsibleSelect.find('select').val());
+            var required = this.$('input[type="checkbox"]').prop('checked');
+            var name = this.$('#o_sign_name').val();
+            this.getParent().currentRole = resp;
+            this.$currentTarget.data({responsible: resp, required: required, name: name}).trigger('itemChange');
+        }
     });
 
     var InitialAllPagesDialog = Dialog.extend({
@@ -426,6 +441,7 @@ odoo.define('sign.template', function(require) {
         init: function() {
             this._super.apply(this, arguments);
 
+            this.customPopovers = {};
             this.events = _.extend(this.events || {}, {
                 'itemChange .o_sign_sign_item': function(e) {
                     this.updateSignItem($(e.target));
@@ -591,7 +607,8 @@ odoo.define('sign.template', function(require) {
         enableCustom: function($signatureItem) {
             var self = this;
 
-            $signatureItem.prop('title', this.types[$signatureItem.data('type')].name);
+            $signatureItem.prop('field-type', this.types[$signatureItem.data('type')].name);
+            var itemId = $signatureItem.data('itemId');
 
             var $configArea = $signatureItem.find('.o_sign_config_area');
 
@@ -600,7 +617,19 @@ odoo.define('sign.template', function(require) {
                 self.$('.ui-selected').removeClass('ui-selected');
                 $signatureItem.addClass('ui-selected');
 
-                (new SignItemCustomDialog(self, self.parties)).open($signatureItem);
+                _.each(_.keys(self.customPopovers), function(keyId) {
+                    if (keyId != itemId && self.customPopovers[keyId]) {
+                        self.customPopovers[keyId].hide();
+                        self.customPopovers[keyId] = false;
+                    }
+                });
+                if (self.customPopovers[itemId]) {
+                    self.customPopovers[itemId].hide();
+                    self.customPopovers[itemId] = false;
+                } else {
+                    self.customPopovers[itemId] = new SignItemCustomPopover(self, self.parties);
+                    self.customPopovers[itemId].create($signatureItem);
+                }
             });
 
             $configArea.find('.fa.fa-arrows').off('mouseup').on('mouseup', function(e) {
