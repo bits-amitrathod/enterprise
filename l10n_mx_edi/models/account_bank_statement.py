@@ -15,7 +15,7 @@ class AccountBankStatementLine(models.Model):
     def process_reconciliation(self, counterpart_aml_dicts=None,
                                payment_aml_rec=None, new_aml_dicts=None):
         invoice_ids = []
-        for aml_dict in counterpart_aml_dicts:
+        for aml_dict in counterpart_aml_dicts or []:
             if aml_dict['move_line'].invoice_id:
                 invoice_ids.append(aml_dict['move_line'].invoice_id.id)
         res = super(AccountBankStatementLine, self).process_reconciliation(
