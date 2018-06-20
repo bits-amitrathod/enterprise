@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import re
-import uuid
 
 from odoo import api, fields, models
 from odoo.tools import pycompat
@@ -143,6 +142,7 @@ class SignItemType(models.Model):
         ('initial', "Initial"),
         ('text', "Text"),
         ('textarea', "Multiline Text"),
+        ('checkbox', "Checkbox"),
     ], required=True, default='text')
 
     tip = fields.Char(required=True, default="fill in", translate=True)

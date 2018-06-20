@@ -26,3 +26,10 @@ class SignTemplateShare(models.TransientModel):
     template_id = fields.Many2one('sign.template', required=True)
     url = fields.Char(string="Link to Share")
     is_one_responsible = fields.Boolean()
+
+    def open(self):
+        return {
+            'name': 'Signed Document',
+            'type': 'ir.actions.act_url',
+            'url': '/sign/download/%(request_id)s/%(access_token)s/completed' % {'request_id': self.id, 'access_token': self.access_token},
+        }

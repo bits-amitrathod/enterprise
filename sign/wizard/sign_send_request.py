@@ -48,7 +48,7 @@ class SignSendRequest(models.TransientModel):
         reference = self.filename
         subject = self.subject
         message = self.message
-        res = self.env['sign.request'].initialize_new(template_id, signers, followers, reference, subject, message)
+        res = self.env['sign.request'].initialize_new(template_id, signers, followers, reference, subject, message, send=True)
         return {
             'type': 'ir.actions.act_window',
             'name': 'Signature(s)',

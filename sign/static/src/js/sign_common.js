@@ -973,6 +973,13 @@ odoo.define('sign.document_signing', function(require) {
                         if($elem.data('signature')) {
                             value = $elem.data('signature');
                         }
+                        if($elem[0].type === 'checkbox') {
+                            if ($elem[0].checked) {
+                                value = 'on';
+                            } else {
+                                value = 'off';
+                            }
+                        }
                         if(!value) {
                             if($elem.data('required')) {
                                 this.iframeWidget.checkSignItemsCompletion();

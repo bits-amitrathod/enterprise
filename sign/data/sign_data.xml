@@ -124,6 +124,14 @@
         <field name="default_height" type="float">0.100</field>
     </record>
 
+    <record model="sign.item.type" id="sign_item_type_checkbox">
+        <field name="name">Checkbox</field>
+        <field name="placeholder">Checkbox</field>
+        <field name="type">checkbox</field>
+        <field name="default_width" type="float">0.015</field>
+        <field name="default_height" type="float">0.015</field>
+    </record>
+
     <record model="sign.item.type" id="sign_item_type_date">
         <field name="name">Date</field>
         <field name="placeholder">Date</field>
@@ -152,6 +160,7 @@
         <field name="placeholder">Your company</field>
         <field name="auto_field">company_id.name</field>
     </record>
+
 
     <!-- Item responsibles -->
     <record model="sign.item.role" id="sign_item_role_customer">
