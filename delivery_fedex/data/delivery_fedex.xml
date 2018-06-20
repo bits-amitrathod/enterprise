@@ -48,9 +48,9 @@
     <!-- Fedex Delivery Carriers -->
     <record id="product_product_delivery_fedex_inter" model="product.product">
       <field name="name">Fedex International</field>
-      <field name="default_code">Delivery</field>
+      <field name="default_code">Delivery_005</field>
       <field name="type">service</field>
-      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="categ_id" ref="delivery.product_category_deliveries"/>
       <field name="sale_ok" eval="False"/>
       <field name="purchase_ok" eval="False"/>
       <field name="list_price">0.0</field>
@@ -69,9 +69,9 @@
 
     <record id="product_product_delivery_fedex_us" model="product.product">
       <field name="name">Fedex US</field>
-      <field name="default_code">Delivery</field>
+      <field name="default_code">Delivery_006</field>
       <field name="type">service</field>
-      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="categ_id" ref="delivery.product_category_deliveries"/>
       <field name="sale_ok" eval="False"/>
       <field name="purchase_ok" eval="False"/>
       <field name="list_price">0.0</field>

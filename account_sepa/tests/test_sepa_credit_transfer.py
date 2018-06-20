@@ -37,7 +37,7 @@ class TestSEPACreditTransfer(AccountingTestCase):
             'acc_type': 'iban',
             'partner_id': self.asustek_sup[0].id,
             'acc_number': 'BE39103123456719',
-            'bank_id': self.env.ref('base.bank_crelan').id,
+            'bank_id': self.env.ref('base.bank_bnp').id,
         })
         self.setSingleBankAccountToPartner(self.suppliers[0], {
             'acc_type': 'bank',

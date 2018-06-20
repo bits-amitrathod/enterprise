@@ -4,7 +4,7 @@
         <field name="journal_id" model="account.journal" search="[
             ('type', '=', 'general'),
             ('id', '!=', obj([]).env.user.company_id.currency_exchange_journal_id.id)]"/>
-        <field name="name">Odoo Yearly</field>
+        <field name="name">Office Cleaning Yearly</field>
         <field name="type">sale</field>
         <field name="method_period">1</field>
         <field name="method_number">12</field>
@@ -20,7 +20,7 @@
         <field name="journal_id" model="account.journal" search="[
             ('type', '=', 'general'),
             ('id', '!=', obj([]).env.user.company_id.currency_exchange_journal_id.id)]"/>
-        <field name="name">Odoo Monthly</field>
+        <field name="name">Cleaning Monthly</field>
         <field name="type">sale</field>
         <field name="method_period">1</field>
         <field name="method_number">1</field>
@@ -32,11 +32,11 @@
             ('user_type_id', '=', obj([]).env.ref('account.data_account_type_expenses').id)]"/>
     </record>
 
-    <record id="sale_subscription.odoo_yearly" model="sale.subscription.template">
+    <record id="sale_subscription.cleaning_yearly" model="sale.subscription.template">
         <field name="template_asset_category_id" ref="sale_subscription_asset.website_subscription_asset_year"/>
     </record>
 
-    <record id="sale_subscription.odoo_monthly" model="sale.subscription.template">
+    <record id="sale_subscription.cleaning_monthly" model="sale.subscription.template">
         <field name="template_asset_category_id" ref="sale_subscription_asset.website_subscription_asset_month"/>
     </record>
 

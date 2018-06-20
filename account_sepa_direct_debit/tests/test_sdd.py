@@ -84,12 +84,12 @@ class SDDTest(AccountingTestCase):
 
         # Then we setup the banking data and mandates of two customers (one with a one-off mandate, the other with a recurrent one)
         partner_agrolait = self.env.ref("base.res_partner_2")
-        partner_bank_agrolait = self.create_account('DE44500105175407324931', partner_agrolait, self.env.ref('base.bank_crelan'))
+        partner_bank_agrolait = self.create_account('DE44500105175407324931', partner_agrolait, self.env.ref('base.bank_ing'))
         mandate_agrolait = self.create_mandate(partner_agrolait, partner_bank_agrolait, False, company, user.id, company_bank_journal)
         mandate_agrolait.action_validate_mandate()
 
         partner_china_export = self.env.ref("base.res_partner_3")
-        partner_bank_china_export = self.create_account('SA0380000000608010167519', partner_china_export, self.env.ref('base.bank_cbc'))
+        partner_bank_china_export = self.create_account('SA0380000000608010167519', partner_china_export, self.env.ref('base.bank_bnp'))
         mandate_china_export = self.create_mandate(partner_china_export, partner_bank_china_export, True, company, user.id, company_bank_journal)
         mandate_china_export.action_validate_mandate()
 

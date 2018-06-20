@@ -10,7 +10,7 @@
             <field name="date_start" eval="(datetime.now().date().replace(day=1) + relativedelta(months=-3)).isoformat()"/>
             <field name="date" eval="(datetime.now().date().replace(day=1) + relativedelta(months=4, days=-1)).isoformat()"/>
         </record>
-        <record id="project.project_project_4" model="project.project">
+        <record id="project.project_project_2" model="project.project">
             <field name="allow_forecast" eval="True"/>
             <field name="date_start" eval="(datetime.now().date().replace(day=1) + relativedelta(months=1)).isoformat()"/>
             <field name="date" eval="(datetime.now().date().replace(day=1) + relativedelta(months=18, days=-1)).isoformat()"/>
@@ -43,7 +43,7 @@
       <record id="project_forecast_101" model="project.forecast">
         <field name="start_date" eval="(DateTime.today() +relativedelta(months=2)).strftime('%Y-%m-01')"/>
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=3, day=1, days=-1)).strftime('%Y-%m-%d')"/>
-        <field name="project_id" ref="project.project_project_4"/>
+        <field name="project_id" ref="project.project_project_2"/>
         <field name="resource_hours">25</field>
         <field name="user_id" ref="base.user_root"/>
         <field name="employee_id" ref="hr.employee_root"/>

@@ -13,7 +13,15 @@ class TestReleaseToPayInvoice(AccountingTestCase):
         """ Generic test function to check that each use scenario behaves properly.
         """
         partner = self.env.ref('base.res_partner_1')
-        product = self.env.ref('account_3way_match.demo_product')
+        product = self.env['product.product'].create({
+            'name': 'VR Computer',
+            'standard_price': 2500.0,
+            'list_price': 2899.0,
+            'type': 'consu',
+            'default_code': 'VR-01',
+            'weight': 1.0,
+            'purchase_method': 'receive',
+        })
 
         product.purchase_method = invoicing_policy
 

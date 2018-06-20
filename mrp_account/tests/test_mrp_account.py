@@ -24,6 +24,8 @@ class TestMrpAccount(common.TransactionCase):
         self.source_location_id = self.ref('stock.stock_location_14')
         self.product_screw = self.env.ref('mrp.product_product_computer_desk_screw')
         self.product_screw.categ_id = self.categ_standard.id
+        self.env['stock.move'].search([('product_id', 'in', [self.product_bolt.id, self.product_screw.id])])._do_unreserve()
+        (self.product_bolt + self.product_screw).write({'type': 'product'})
 
     def test_00_production_order_with_accounting(self):
         self.product_table_sheet.standard_price = 20.0
@@ -78,7 +80,7 @@ class TestMrpAccount(common.TransactionCase):
         move_value = production_table.move_finished_ids.filtered(lambda x: x.state == "done").value
 
         # 1 table head at 20 + 4 table leg at 15 + 4 bolt at 10 + 10 screw at 10
-        self.assertEqual(move_value, 220, 'Thing should have the correct price')
+        self.assertEqual(move_value, 121, 'Thing should have the correct price')
 
 #        produce_wizard = self.env['mrp.product.produce'].with_context({
 #            'active_id': production_table.id,

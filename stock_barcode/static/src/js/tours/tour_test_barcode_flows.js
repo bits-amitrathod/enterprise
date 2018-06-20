@@ -1597,7 +1597,6 @@ tour.register('test_inventory_adjustment_tracked_product', {test: true}, [
     {
         trigger: '.o_add_line',
     },
-
     {
         trigger: '.o_form_label:contains("Product")',
     },

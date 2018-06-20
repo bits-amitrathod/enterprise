@@ -4,9 +4,9 @@
 
     <record id="product_product_delivery_usps_domestic" model="product.product">
       <field name="name">USPS Domestic Flat Rate Envelope</field>
-      <field name="default_code">Delivery</field>
+      <field name="default_code">Delivery_012</field>
       <field name="type">service</field>
-      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="categ_id" ref="delivery.product_category_deliveries"/>
       <field name="sale_ok" eval="False"/>
       <field name="purchase_ok" eval="False"/>
       <field name="list_price">0.0</field>
@@ -25,9 +25,9 @@
 
     <record id="product_product_delivery_usps_international" model="product.product">
       <field name="name">USPS International Flat Rate Box</field>
-      <field name="default_code">Delivery</field>
+      <field name="default_code">Delivery_013</field>
       <field name="type">service</field>
-      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="categ_id" ref="delivery.product_category_deliveries"/>
       <field name="sale_ok" eval="False"/>
       <field name="purchase_ok" eval="False"/>
       <field name="list_price">0.0</field>

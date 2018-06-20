@@ -31,7 +31,7 @@ Tour.register({
             },
         },
         {
-            waitFor: ".o_list_editable td[data-field='product_id']:contains('[A1232] iPad Mini'),"
+            waitFor: ".o_list_editable td[data-field='product_id']:contains('[A1232] Large Cabinet'),"
                    + ".o_list_editable td[data-field='location_id']:contains('WH/Stock/Shelf 1')"
                    + ".o_list_editable td[data-field='product_qty']:contains('1')",
             title:   "Rescan the same product",
@@ -79,7 +79,7 @@ Tour.register({
             },
         },
         {
-            waitFor: ".o_list_editable td[data-field='product_id']:contains('[A1232] iPad Mini'),"
+            waitFor: ".o_list_editable td[data-field='product_id']:contains('[A1232] Large Cabinet'),"
                    + ".o_list_editable td[data-field='qty_done']:contains('0')",
             title:   "Scan the product 5 times",
             onload: function() {

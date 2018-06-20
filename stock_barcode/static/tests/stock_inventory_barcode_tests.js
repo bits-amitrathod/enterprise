@@ -20,10 +20,10 @@ QUnit.module('Barcode', {
                 },
                 records: [{
                     id: 1,
-                    name: "iPad Mini",
+                    name: "Large Cabinet",
                 }, {
                     id: 4,
-                    name: "Mouse, Optical",
+                    name: "Cabinet with Doors",
                 }],
             },
             'stock.inventory.line': {

@@ -30,8 +30,5 @@ Each vendor bill receives one of the following three states:
         'views/account_invoice_view.xml',
         'views/account_journal_dashboard_view.xml'
     ],
-    'demo': [
-        'data/account_3way_match_demo.xml',
-    ],
     'license': 'OEEL-1',
 }

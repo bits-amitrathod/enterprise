@@ -314,7 +314,7 @@ class StockPickingType(models.Model):
         of WH warehouse
         """
         picking_types = self.env['stock.picking.type'].with_context(active_test=False).search([])
-        for picking_type in picking_types:
+        for picking_type in picking_types.filtered(lambda type: type.warehouse_id):
             barcode = picking_type.warehouse_id.code.replace(" ", "") + "-" + picking_type.name.split(' ')[0]
             picking_type.barcode = barcode.upper()
 

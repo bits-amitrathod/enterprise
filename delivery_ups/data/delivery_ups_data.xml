@@ -78,9 +78,9 @@
 
     <record id="product_product_delivery_ups_us" model="product.product">
       <field name="name">UPS US</field>
-      <field name="default_code">Delivery</field>
+      <field name="default_code">Delivery_011</field>
       <field name="type">service</field>
-      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="categ_id" ref="delivery.product_category_deliveries"/>
       <field name="sale_ok" eval="False"/>
       <field name="purchase_ok" eval="False"/>
       <field name="list_price">0.0</field>
@@ -100,9 +100,9 @@
 
     <record id="product_product_delivery_ups_be" model="product.product">
       <field name="name">UPS BE</field>
-      <field name="default_code">Delivery</field>
+      <field name="default_code">Delivery_010</field>
       <field name="type">service</field>
-      <field name="categ_id" ref="product.product_category_all"/>
+      <field name="categ_id" ref="delivery.product_category_deliveries"/>
       <field name="sale_ok" eval="False"/>
       <field name="purchase_ok" eval="False"/>
       <field name="list_price">0.0</field>

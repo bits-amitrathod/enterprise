@@ -60,7 +60,7 @@ class TestDeliveryBpost(TransactionCase):
         SaleOrder = self.env['sale.order']
 
         sol_vals = {'product_id': self.iPadMini.id,
-                    'name': "[A1232] iPad Mini",
+                    'name': "[A1232] Large Cabinet",
                     'product_uom': self.env.ref('uom.product_uom_unit').id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.iPadMini.lst_price}
@@ -93,7 +93,7 @@ class TestDeliveryBpost(TransactionCase):
         SaleOrder = self.env['sale.order']
 
         sol_vals = {'product_id': self.iPadMini.id,
-                    'name': "[A1232] iPad Mini",
+                    'name': "[A1232] Large Cabinet",
                     'product_uom': self.env.ref('uom.product_uom_unit').id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.iPadMini.lst_price}

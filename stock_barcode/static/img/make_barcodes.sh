@@ -51,7 +51,7 @@ BARCODES
 
 cat > barcodes_demo_header.ps << HEADER
 /showTitle { /Helvetica findfont 12 scalefont setfont moveto show } def
-(iPad Mini) 89 705 showTitle
+(Large Cabinet) 89 705 showTitle
 (USB Adapter) 348 705 showTitle
 (Processor Core i5 2.70Ghz) 89 596 showTitle
 (Ice Cream) 348 596 showTitle

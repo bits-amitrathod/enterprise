@@ -10,7 +10,7 @@ class TestDeliveryDHL(TransactionCase):
         super(TestDeliveryDHL, self).setUp()
 
         self.iPadMini = self.env.ref('product.product_product_6')
-        self.iMac = self.env.ref('product.product_product_8')
+        self.large_desk = self.env.ref('product.product_product_8')
         self.uom_unit = self.env.ref('uom.product_uom_unit')
 
         self.your_company = self.env.ref('base.main_partner')
@@ -36,7 +36,7 @@ class TestDeliveryDHL(TransactionCase):
         SaleOrder = self.env['sale.order']
 
         sol_vals = {'product_id': self.iPadMini.id,
-                    'name': "[A1232] iPad Mini",
+                    'name': "[A1232] Large Cabinet",
                     'product_uom': self.uom_unit.id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.iPadMini.lst_price}
@@ -74,7 +74,7 @@ class TestDeliveryDHL(TransactionCase):
         SaleOrder = self.env['sale.order']
 
         sol_vals = {'product_id': self.iPadMini.id,
-                    'name': "[A1232] iPad Mini",
+                    'name': "[A1232] Large Cabinet",
                     'product_uom': self.uom_unit.id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.iPadMini.lst_price}
@@ -112,15 +112,15 @@ class TestDeliveryDHL(TransactionCase):
         SaleOrder = self.env['sale.order']
 
         sol_1_vals = {'product_id': self.iPadMini.id,
-                      'name': "[A1232] iPad Mini",
+                      'name': "[A1232] Large Cabinet",
                       'product_uom': self.uom_unit.id,
                       'product_uom_qty': 1.0,
                       'price_unit': self.iPadMini.lst_price}
-        sol_2_vals = {'product_id': self.iMac.id,
-                      'name': "[A1090] iMac",
+        sol_2_vals = {'product_id': self.large_desk.id,
+                      'name': "[A1090] Large Desk",
                       'product_uom': self.uom_unit.id,
                       'product_uom_qty': 1.0,
-                      'price_unit': self.iMac.lst_price}
+                      'price_unit': self.large_desk.lst_price}
 
         so_vals = {'partner_id': self.agrolait.id,
                    'carrier_id': self.env.ref('delivery_dhl.delivery_carrier_dhl_intl').id,
