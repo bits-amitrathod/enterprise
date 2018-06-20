@@ -861,52 +861,6 @@ odoo.define('sign.document_edition', function(require) {
 
     var _t = core._t;
 
-    var AddFollowersDialog = Dialog.extend({
-        template: "sign.add_followers_dialog",
-
-        init: function(parent, requestID, options) {
-            var self = this;
-            options = (options || {});
-            options.title = options.title || _t("Send a copy to third parties");
-            options.size = options.size || "medium";
-
-            if(!options.buttons) {
-                options.buttons = [];
-
-                options.buttons.push({text: _t("Send"), classes: "btn-primary", click: function(e) {
-                    var $button = $(e.target);
-                    $button.prop('disabled', true);
-
-                    sign_utils.processPartnersSelection(this.$select).then(function(partners) {
-                        self._rpc({
-                                model: 'sign.request',
-                                method: 'add_followers',
-                                args: [self.requestID, partners],
-                            })
-                            .then(function() {
-                                self.do_notify(_t("Success"), _t("A copy has been sent to the new followers."));
-                            })
-                            .always(function() {
-                                self.close();
-                            });
-                    });
-                }});
-
-                options.buttons.push({text: _t("Discard"), close: true});
-            }
-
-            this._super(parent, options);
-
-            this.requestID = requestID;
-        },
-
-        start: function() {
-            this.$select = this.$('#o_sign_followers_select');
-            sign_utils.setAsPartnerSelect(this.$select);
-            return this._super.apply(this, arguments);
-        },
-    });
-
     var EditableDocumentBackend = DocumentBackend.extend({
         events: {
             'click .o_sign_resend_access_button.fa': function(e) {
@@ -943,14 +897,6 @@ odoo.define('sign.document_edition', function(require) {
                     });
                 });
                 this.cp_content.$buttons = $signButton.add(this.cp_content.$buttons);
-            }
-
-            if (this.is_author) {
-                var $addFollowersButton = $('<button/>', {html: _t("Send a copy"), type: "button", 'class': 'btn btn-sm btn-default'});
-                $addFollowersButton.on('click', function () {
-                    (new AddFollowersDialog(self, self.documentID)).open();
-                });
-                this.cp_content.$buttons = this.cp_content.$buttons.add($addFollowersButton);
             }
         },
 
