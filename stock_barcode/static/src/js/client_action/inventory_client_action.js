@@ -145,19 +145,10 @@ var InventoryClientAction = ClientAction.extend({
         return deferred;
     },
 
-
-    //--------------------------------------------------------------------------
-    // Handlers
-    //--------------------------------------------------------------------------
-
     /**
-     * Handles the `show_information` OdooEvent. It hides the content of the page to show
-     * the InformationWidget
-     *
-     * @private
-     * @param {OdooEvent} ev
+     * @override
      */
-    _onShowInformation: function () {
+    _showInformation: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function () {
             if (self.formWidget) {
@@ -175,6 +166,10 @@ var InventoryClientAction = ClientAction.extend({
             self.formWidget.appendTo(self.$el);
         });
     },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
 
     /**
      * Handles the `validate` OdooEvent.

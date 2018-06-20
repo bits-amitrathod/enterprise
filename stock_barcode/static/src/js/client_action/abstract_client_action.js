@@ -1077,13 +1077,12 @@ var ClientAction = AbstractAction.extend({
     /**
      * Handles the `show_information` OdooEvent. It hides the main widget and
      * display a standard form view with information about the current record.
-     * To implement by specialized client action.
      *
-     * @abstract
      * @private
      * @param {OdooEvent} ev
      */
     _onShowInformation: function (ev) {  // jshint ignore:line
+        this._showInformation();
     },
 
     /**

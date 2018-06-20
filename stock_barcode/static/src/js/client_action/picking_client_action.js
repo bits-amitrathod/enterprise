@@ -234,6 +234,28 @@ var PickingClientAction = ClientAction.extend({
         }
     },
 
+    /**
+     * @override
+     */
+    _showInformation: function () {
+        var self = this;
+        return this._super.apply(this, arguments).then(function () {
+            if (self.formWidget) {
+                self.formWidget.destroy();
+            }
+            self.linesWidget.destroy();
+            self.formWidget = new FormWidget(
+                self,
+                'stock.picking',
+                'stock_barcode.stock_picking_barcode',
+                {},
+                self.currentState.id,
+                'readonly'
+            );
+            self.formWidget.appendTo(self.$el);
+        });
+    },
+
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
@@ -316,34 +338,6 @@ var PickingClientAction = ClientAction.extend({
         ev.stopPropagation();
         this._scrap();
     },
-
-    /**
-     * Handles the `show_information` OdooEvent. It hides the content of the page to show
-     * the InformationWidget
-     *
-     * @private
-     * @param {OdooEvent} ev
-     */
-    _onShowInformation: function (ev) {
-        var self = this;
-        ev.stopPropagation();
-        return this._showInformation().then(function () {
-            if (self.formWidget) {
-                self.formWidget.destroy();
-            }
-            self.linesWidget.destroy();
-            self.formWidget = new FormWidget(
-                self,
-                'stock.picking',
-                'stock_barcode.stock_picking_barcode',
-                {},
-                self.currentState.id,
-                'readonly'
-            );
-            self.formWidget.appendTo(self.$el);
-        });
-    },
-
 });
 
 core.action_registry.add('stock_barcode_picking_client_action', PickingClientAction);
