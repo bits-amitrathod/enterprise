@@ -151,7 +151,10 @@ class WebsiteHelpdesk(http.Controller):
         if not (team.use_rating and team.use_website_helpdesk_rating) and not user.sudo(user).has_group('helpdesk.group_helpdesk_manager'):
             raise NotFound()
         tickets = request.env['helpdesk.ticket'].sudo().search([('team_id', '=', team.id)])
-        domain = [('res_model', '=', 'helpdesk.ticket'), ('res_id', 'in', tickets.ids)]
+        domain = [
+            ('res_model', '=', 'helpdesk.ticket'), ('res_id', 'in', tickets.ids),
+            ('consumed', '=', True), ('rating', '>=', 1),
+        ]
         ratings = request.env['rating.rating'].search(domain, order="id desc", limit=100)
 
         yesterday = (datetime.date.today()-datetime.timedelta(days=-1)).strftime('%Y-%m-%d 23:59:59')
