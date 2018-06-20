@@ -70,14 +70,19 @@
         <field name="arch" type="xml">
             <form string="Picking Details">
                 <group>
-                    <group>
-                        <field name="partner_id" attrs="{'invisible': [('partner_id', '=', False)]}" />
-                        <field name="scheduled_date" attrs="{'invisible': [('scheduled_date', '=', False)]}" />
-                        <field name="origin" attrs="{'invisible': [('origin', '=', False)]}" />
-                        <field name="state" attrs="{'invisible': [('state', '=', False)]}" />
-                        <field name="priority" attrs="{'invisible': [('priority', '=', False)]}" />
-                        <field name="owner_id" attrs="{'invisible': [('owner_id', '=', False)]}" groups="stock.group_tracking_owner" />
-                    </group>
+                    <field name="partner_id" attrs="{'invisible': [('partner_id', '=', False)]}" />
+                    <field name="scheduled_date" attrs="{'invisible': [('scheduled_date', '=', False)]}" />
+                    <field name="origin" attrs="{'invisible': [('origin', '=', False)]}" />
+                    <field name="state" attrs="{'invisible': [('state', '=', False)]}" />
+                    <field name="priority" attrs="{'invisible': [('priority', '=', False)]}" />
+                    <field name="owner_id" attrs="{'invisible': [('owner_id', '=', False)]}" groups="stock.group_tracking_owner" />
+                    <field name="move_lines" attrs="{'invisible': [('move_lines', '=', False)]}" >
+                        <tree>
+                            <field name="product_id"/>
+                            <field name="product_uom_qty"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
                 </group>
             </form>
         </field>
