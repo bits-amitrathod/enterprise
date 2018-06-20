@@ -227,43 +227,6 @@ odoo.define('sign.template', function(require) {
         },
     });
 
-    var ShareTemplateDialog = Dialog.extend({
-        template: 'sign.share_template_dialog',
-
-        events: {
-            'focus input': function(e) {
-                $(e.target).select();
-            },
-        },
-
-        init: function(parent, templateID, options) {
-            options = options || {};
-            options.title = options.title || _t("Multiple Signature Requests");
-            options.size = options.size || "medium";
-
-            this.templateID = templateID;
-            this._super(parent, options);
-        },
-
-        start: function() {
-            var $linkInput = this.$('input').first();
-            var linkStart = window.location.href.substr(0, window.location.href.indexOf('/web')) + '/sign/';
-
-            return $.when(
-                this._super(),
-                this._rpc({
-                        model: 'sign.template',
-                        method: 'share',
-                        args: [this.templateID],
-                    })
-                    .then(function(link) {
-                        $linkInput.val((link)? (linkStart + link) : '');
-                        $linkInput.parent().toggle(!!link).next().toggle(!link);
-                    })
-            );
-        },
-    });
-
     var EditablePDFIframe = PDFIframe.extend({
         init: function() {
             this._super.apply(this, arguments);
@@ -601,13 +564,7 @@ odoo.define('sign.template', function(require) {
             this.rolesToChoose = {};
 
             var self = this;
-            // YTI TODO: Buttons to remove
-            var $shareButton = $('<button/>', {html: _t("Share"), type: "button"})
-                .addClass('btn btn-default btn-sm')
-                .on('click', function() {
-                    (new ShareTemplateDialog(self, self.templateID)).open();
-                });
-            this.cp_content = {$buttons: $shareButton};
+            this.cp_content = {};
         },
 
         willStart: function() {

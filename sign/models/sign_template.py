@@ -91,16 +91,6 @@ class SignTemplate(models.Model):
             template.share_link = None
         return template.id
 
-    @api.model
-    def share(self, id, **post):
-        template = self.browse(id)
-        if len(template.sign_item_ids.mapped('responsible_id')) > 1:
-            return False
-
-        if not template.share_link:
-            template.share_link = str(uuid.uuid4())
-        return template.share_link
-
 
 class SignTemplateTag(models.Model):
 

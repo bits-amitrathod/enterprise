@@ -15,6 +15,9 @@ Let your customers follow the signature process easily.
         'security/security.xml',
         'security/ir.model.access.csv',
 
+        'wizard/sign_send_request_views.xml',
+        'wizard/sign_template_share_views.xml',
+
         'views/sign_request_templates.xml',
         'views/sign_template_templates.xml',
 
@@ -25,8 +28,6 @@ Let your customers follow the signature process easily.
         'views/res_partner_views.xml',
 
         'data/sign_data.xml',
-
-        'wizard/sign_send_request_views.xml',
     ],
     'qweb': ['static/src/xml/*.xml'],
     'demo': [
