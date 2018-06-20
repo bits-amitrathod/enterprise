@@ -951,21 +951,6 @@ odoo.define('sign.document_edition', function(require) {
                     (new AddFollowersDialog(self, self.documentID)).open();
                 });
                 this.cp_content.$buttons = this.cp_content.$buttons.add($addFollowersButton);
-
-                if(this.is_sent) {
-                    var $cancelButton = $('<button/>', {html: _t("Cancel Request"), type: "button", 'class': 'btn btn-sm btn-default'});
-                    $cancelButton.on('click', function() {
-                        self._rpc({
-                                model: 'sign.request',
-                                method: 'cancel',
-                                args: [self.documentID],
-                            })
-                            .then(function() {
-                                self.go_back_to_kanban();
-                            });
-                    });
-                    this.cp_content.$buttons = this.cp_content.$buttons.add($cancelButton);
-                }
             }
         },
 
