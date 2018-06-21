@@ -14,7 +14,8 @@
                 <field name="request_item_infos"/>
                 <field name="state"/>
                 <field name="activity_ids"/>
-                <field name="activity_state"/>
+                <field name="activity_state" />
+                <progressbar field="activity_state" colors='{"planned": "success", "overdue": "danger", "today": "warning"}'/>
                 <templates>
                     <div t-name="kanban-box" t-attf-class="oe_kanban_global_click {{kanban_color(record.color.raw_value)}}">
                         <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
@@ -24,7 +25,6 @@
                                     <span class="fa fa-bars fa-lg"/>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a role="menuitem" type="open">Edit</a></li>
                                     <li><a role="menuitem" type="object" name="toggle_active">
                                         <t t-if="!record.active.raw_value">Restore</t>
                                         <t t-if="record.active.raw_value">Archive</t>
@@ -100,7 +100,6 @@
                         <h2><field name="template_id"/></h2>
                     </div>
 
-                    <label for="request_item_ids"/>
                     <field name="request_item_ids" context="{'default_sign_request_id': id}" nolabel="1"/>
 
                     <group>

@@ -21,7 +21,6 @@
                                     <span class="fa fa-bars fa-lg"/>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a role="menuitem" type="open">Edit</a></li>
                                     <li><a role="menuitem" type="object" name="toggle_active">
                                         <t t-if="!record.active.raw_value">Restore</t>
                                         <t t-if="record.active.raw_value">Archive</t>
@@ -40,8 +39,8 @@
                         <div class="oe_kanban_bottom_left">
                             <em><field name="create_date"/></em>
                         </div>
-                        <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-sm">Send</button>
-                        <button name="%(sign.action_sign_template_share)d" type="action" class="btn btn-sm">Share</button>
+                        <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-xs mt8">Send</button>
+                        <button name="%(sign.action_sign_template_share)d" type="action" class="btn btn-xs mt8">Share</button>
                     </div>
                 </templates>
             </kanban>
