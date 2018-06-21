@@ -164,7 +164,10 @@ var YodleeAccountConfigurationWidget = Widget.extend({
     renderElement: function() {
         var self = this;
         var fields = {};
-        if (this.refresh_info && this.refresh_info.providerAccount.refreshInfo.status === 'SUCCESS') {
+        if (this.refresh_info && (
+                this.refresh_info.providerAccount.refreshInfo.status === 'SUCCESS' ||
+                this.refresh_info.providerAccount.refreshInfo.status === 'PARTIAL_SUCCESS')
+           ) {
             if (this.action_end) {
                 return this._rpc({
                         model: 'account.online.provider',
