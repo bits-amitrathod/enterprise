@@ -11,3 +11,6 @@ class ResUsers(models.Model):
         selection=lambda self: self._get_group_selection('base.module_category_sign'),
         string='Document Signatures', compute='_compute_groups_id', inverse='_inverse_groups_id',
         category_xml_id='base.module_category_sign')
+
+    sign_signature = fields.Binary(string="Digital Signature")
+    sign_initials = fields.Binary(string="Digitial Initials")
