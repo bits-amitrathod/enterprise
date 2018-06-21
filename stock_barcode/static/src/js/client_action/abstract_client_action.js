@@ -325,12 +325,12 @@ var ClientAction = AbstractAction.extend({
         if (this.scanned_location && currentPage.location_id !== this.scanned_location.id) {
             var pageValues = {
                 location_id: this.scanned_location.id,
-                location_name: this.scanned_location.name,
+                location_name: this.scanned_location.display_name,
                 lines: [],
             };
             if (self.actionParams.model === 'stock.picking') {
                 pageValues.location_dest_id = this.currentState.location_dest_id.id;
-                pageValues.location_dest_name = this.currentState.location_dest_id.name;
+                pageValues.location_dest_name = this.currentState.location_dest_id.display_name;
             }
             pages.push(pageValues);
         }

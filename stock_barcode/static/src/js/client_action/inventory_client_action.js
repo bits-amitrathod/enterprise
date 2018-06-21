@@ -59,7 +59,7 @@ var InventoryClientAction = ClientAction.extend({
      _getPageFields: function () {
          return [
              ['location_id', 'location_id.id'],
-             ['location_name', 'location_id.name'],
+             ['location_name', 'location_id.display_name'],
          ];
      },
 

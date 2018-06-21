@@ -70,9 +70,9 @@ var PickingClientAction = ClientAction.extend({
     _getPageFields: function () {
         return [
             ['location_id', 'location_id.id'],
-            ['location_name', 'location_id.name'],
+            ['location_name', 'location_id.display_name'],
             ['location_dest_id', 'location_dest_id.id'],
-            ['location_dest_name', 'location_dest_id.name'],
+            ['location_dest_name', 'location_dest_id.display_name'],
         ];
     },
 
@@ -104,11 +104,11 @@ var PickingClientAction = ClientAction.extend({
             'qty_done': qty_done,
             'location_id': {
                 'id': currentPage.location_id,
-                'name': currentPage.location_name,
+                'display_name': currentPage.location_name,
             },
             'location_dest_id': {
                 'id': currentPage.location_dest_id,
-                'name': currentPage.location_dest_name,
+                'display_name': currentPage.location_dest_name,
             },
             'state': 'assigned',
             'reference': this.name,

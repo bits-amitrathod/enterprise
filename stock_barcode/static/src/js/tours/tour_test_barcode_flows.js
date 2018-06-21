@@ -150,7 +150,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Stock To Stock');
+            assertPageSummary('From WH/Stock To WH/Stock');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -178,7 +178,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function () {
-            assertPageSummary('From Shelf 1 To Stock');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -203,7 +203,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Stock');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -230,7 +230,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Stock');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -255,9 +255,9 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_dest:contains("Shelf 2")',
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 2")',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -287,7 +287,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -314,7 +314,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -341,9 +341,9 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_dest:contains("Shelf 3")',
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 3")',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 3');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 3');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(false);
@@ -374,7 +374,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 3');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 3');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(false);
@@ -401,7 +401,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 3');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 3');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(false);
@@ -428,9 +428,9 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_dest:contains("Shelf 2")',
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 2")',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(true);
@@ -451,7 +451,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
 ]);
 
 tour.register('test_internal_picking_from_scratch_2', {test: true}, [
-    /* Move 2 product1 from shelf 1 to shelf 2.
+    /* Move 2 product1 from WH/Stock/Shelf 1 to WH/Stock/Shelf 2.
      */
     {
         trigger: '.o_add_line',
@@ -501,7 +501,7 @@ tour.register('test_internal_picking_from_scratch_2', {test: true}, [
         },
     },
 
-    /* Move 1 product2 from shelf 1 to shelf 3.
+    /* Move 1 product2 from WH/Stock/Shelf 1 to WH/Stock/Shelf 3.
      */
     {
         trigger: '.o_add_line',
@@ -528,7 +528,7 @@ tour.register('test_internal_picking_from_scratch_2', {test: true}, [
 
     {
         trigger: ".o_field_widget[name=location_dest_id] input",
-        run: 'text Shelf 3',
+        run: 'text WH/Stock/Shelf 3',
     },
 
     {
@@ -558,7 +558,7 @@ tour.register('test_internal_picking_from_scratch_2', {test: true}, [
         trigger: '.o_barcode_summary_location_dest:contains("Shelf 2")',
         run: function() {
             assertPager('1/2');
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertLinesCount(1);
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
@@ -587,7 +587,7 @@ tour.register('test_internal_picking_from_scratch_2', {test: true}, [
         trigger: '.o_save',
     },
 
-    /* Move 1 product2 from shelf 1 to shelf 2.
+    /* Move 1 product2 from WH/Stock/Shelf 1 to WH/Stock/Shelf 2.
      */
     {
         trigger: '.o_add_line',
@@ -668,7 +668,7 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(true);
@@ -699,7 +699,7 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 3 To Stock');
+            assertPageSummary('From WH/Stock/Shelf 3 To WH/Stock');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(false);
@@ -724,7 +724,7 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 3 To Stock');
+            assertPageSummary('From WH/Stock/Shelf 3 To WH/Stock');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(false);
@@ -749,9 +749,9 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_dest:contains("Shelf 2")',
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 2")',
         run: function() {
-            assertPageSummary('From Shelf 3 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 3 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(false);
@@ -783,7 +783,7 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(true);
@@ -814,7 +814,7 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(true);
@@ -843,7 +843,7 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(true);
@@ -872,7 +872,7 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(true);
@@ -901,7 +901,7 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Shelf 1 To Shelf 2');
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock/Shelf 2');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(true);
@@ -937,9 +937,9 @@ tour.register('test_internal_picking_reserved_1', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_dest:contains("Shelf 4")',
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 4")',
         run: function() {
-            assertPageSummary('From Shelf 3 To Shelf 4');
+            assertPageSummary('From WH/Stock/Shelf 3 To WH/Stock/Shelf 4');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(true);
@@ -971,7 +971,7 @@ tour.register('test_receipt_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary(' To Stock');
+            assertPageSummary(' To WH/Stock');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -1034,9 +1034,9 @@ tour.register('test_receipt_reserved_1', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_dest:contains("Shelf 1")',
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 1")',
         run: function() {
-            assertPageSummary(' To Shelf 1');
+            assertPageSummary(' To WH/Stock/Shelf 1');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -1066,7 +1066,7 @@ tour.register('test_delivery_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Stock ');
+            assertPageSummary('From WH/Stock ');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -1092,7 +1092,7 @@ tour.register('test_delivery_reserved_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary('From Stock ');
+            assertPageSummary('From WH/Stock ');
             assertPreviousVisible(true);
             assertPreviousEnabled(false);
             assertNextVisible(false);
@@ -1126,9 +1126,9 @@ tour.register('test_delivery_reserved_1', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_src:contains("Shelf 1")',
+        trigger: '.o_barcode_summary_location_src:contains("WH/Stock/Shelf 1")',
         run: function() {
-            assertPageSummary('From Shelf 1 ');
+            assertPageSummary('From WH/Stock/Shelf 1 ');
             assertPreviousVisible(true);
             assertPreviousEnabled(true);
             assertNextVisible(false);
@@ -1151,7 +1151,7 @@ tour.register('test_receipt_from_scratch_with_lots_1', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary(' To Stock');
+            assertPageSummary(' To WH/Stock');
         }
     },
 
@@ -1186,9 +1186,9 @@ tour.register('test_receipt_from_scratch_with_lots_1', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_dest:contains("Shelf 1")',
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 1")',
         run: function() {
-            assertPageSummary(' To Shelf 1');
+            assertPageSummary(' To WH/Stock/Shelf 1');
             assertPreviousVisible(true);
         }
     },
@@ -1198,7 +1198,7 @@ tour.register('test_receipt_from_scratch_with_lots_2', {test: true}, [
     {
         trigger: '.barcode_client_action',
         run: function() {
-            assertPageSummary(' To Stock');
+            assertPageSummary(' To WH/Stock');
         }
     },
 
@@ -1233,9 +1233,9 @@ tour.register('test_receipt_from_scratch_with_lots_2', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_dest:contains("Shelf 1")',
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 1")',
         run: function() {
-            assertPageSummary(' To Shelf 1');
+            assertPageSummary(' To WH/Stock/Shelf 1');
             assertPreviousVisible(true);
         }
     },
@@ -1387,8 +1387,8 @@ tour.register('test_delivery_reserved_with_sn_1', {test: true}, [
 
 tour.register('test_receipt_reserved_lots_multiloc_1', {test: true}, [
     /* Receipt of a product tracked by lots. Open an existing picking with 4
-    * units initial demands. Scan 2 units in lot1 in location Stock. Then scan
-    * 2 unit in lot2 in location shelf 2
+    * units initial demands. Scan 2 units in lot1 in location WH/Stock. Then scan
+    * 2 unit in lot2 in location WH/Stock/Shelf 2
     */
 
     {
@@ -1517,7 +1517,7 @@ tour.register('test_inventory_adjustment_mutli_location', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_src:contains("Stock")',
+        trigger: '.o_barcode_summary_location_src:contains("WH/Stock")',
     },
 
     {
@@ -1541,7 +1541,7 @@ tour.register('test_inventory_adjustment_mutli_location', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_src:contains("Shelf 1")',
+        trigger: '.o_barcode_summary_location_src:contains("WH/Stock/Shelf 1")',
     },
 
     {
@@ -1555,7 +1555,7 @@ tour.register('test_inventory_adjustment_mutli_location', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_summary_location_src:contains("Shelf 2")',
+        trigger: '.o_barcode_summary_location_src:contains("WH/Stock/Shelf 2")',
     },
 
     {
