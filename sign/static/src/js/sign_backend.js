@@ -72,14 +72,13 @@ odoo.define('sign.views_custo', function(require) {
                     })
                     .then(function(data) {
                         self.do_action({
-                                type: "ir.actions.client",
-                                tag: 'sign.Template',
-                                name: _t("New Template"),
-                                context: {
-                                    id: data.template,
-                                },
-                            });
-                        })
+                            'type': 'ir.actions.act_window',
+                            'name': 'New Signature Template',
+                            'views': [[false, 'form']],
+                            'res_model': 'sign.template',
+                            'res_id': data.template,
+                        });
+                    })
                     .always(function() {
                         $upload_input.removeAttr('disabled');
                         $upload_input.val("");
