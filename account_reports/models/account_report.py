@@ -221,7 +221,11 @@ class AccountReport(models.AbstractModel):
 
     def open_tax(self, options, params=None):
         active_id = int(str(params.get('id')).split('_')[0])
-        domain = [('date', '>=', options.get('date').get('date_from')), ('date', '<=', options.get('date').get('date_to')),
+        tax = self.env['account.tax'].browse(active_id)
+        domain = []
+        if tax.tax_exigibility == 'on_payment':
+            domain = [('tax_exigible', '=', True)]
+        domain += [('date', '>=', options.get('date').get('date_from')), ('date', '<=', options.get('date').get('date_to')),
                   '|', ('tax_ids', 'in', [active_id]), ('tax_line_id', 'in', [active_id])]
         if not options.get('all_entries'):
             domain.append(('move_id.state', '=', 'posted'))
