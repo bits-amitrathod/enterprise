@@ -3,9 +3,9 @@
     <template id="report_payment_document_mx" inherit_id="account.report_payment_receipt_document">
         <xpath expr="//div[1]" position="before">
             <t t-if="not o.l10n_mx_edi_cfdi_uuid and o.l10n_mx_edi_is_required()">
-                <div class="btn btn-danger">
+                <button class="btn btn-danger">
                     <h1>A signature of this payment is required, but it is not signed.</h1>
-                </div>
+                </button>
             </t>
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <!--New global variables-->
@@ -27,7 +27,7 @@
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <div class="row" id='complement'>
                     <div class="barcode col-xs-3">
-                        <img t-att-src="'/report/barcode/QR/%s' % quote_plus('?') + keep_query(
+                        <img alt="Barcode" t-att-src="'/report/barcode/QR/%s' % quote_plus('?') + keep_query(
                                 re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,
                                 tt=0, id=o.l10n_mx_edi_cfdi_uuid)"/>
                     </div>

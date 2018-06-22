@@ -13,9 +13,9 @@
         <xpath expr="//div[1]" position="before">
             <t t-if="not o.l10n_mx_edi_cfdi_uuid and o.l10n_mx_edi_is_required()">
                 <!-- due to HTML preview for device responsive -->
-                <div t-attf-class="btn-danger #{'btn' if not type_html else ''}">
+                <button t-attf-class="btn-danger #{'btn' if not type_html else ''}">
                     <h1>A signature of this invoice is required, but it is not signed.</h1>
-                </div>
+                </button>
             </t>
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <!--New global variables-->
@@ -86,7 +86,7 @@
                 <div class="row" id='complement'>
                     <div class="barcode col-xs-3">
                         <t t-set="sello" t-value="xml.get('Sello', 'No identificado')[-8:]"/>
-                        <img t-att-src="'/report/barcode/?type=QR&amp;value=%s' % quote_plus(
+                        <img alt="Barcode" t-att-src="'/report/barcode/?type=QR&amp;value=%s' % quote_plus(
                             'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(
                                 re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,
                                 tt=o.l10n_mx_edi_cfdi_amount, id=o.l10n_mx_edi_cfdi_uuid)

@@ -9,7 +9,7 @@
                 <div attrs="{'invisible': ['|', ('feature_livechat_channel_id','=',False), ('use_website_helpdesk_livechat', '=', False)]}" class="mt16">
                     <p>
                         Test the livechat widget from this page:<br/>
-                        <a type="button" class="btn-link" target="_blank"><i class="fa fa-fw fa-arrow-right"/>
+                        <a type="button" role="button" class="btn-link" target="_blank"><i class="fa fa-fw fa-arrow-right" aria-label="Go to" title="Go to"/>
                             <field name="feature_livechat_web_page" readonly="1" class="oe_inline" widget="url"/>
                         </a>
                     </p>
@@ -28,7 +28,7 @@
                         <field name="is_canned_response"/>
                     </div>
                     <div class="o_setting_right_pane">
-                        <label string="Canned Responses"/>
+                        <label for="is_canned_response" string="Canned Responses"/>
                         <div class="text-muted">
                             Use predefined answers in the mail composer
                         </div>

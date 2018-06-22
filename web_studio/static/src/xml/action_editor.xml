@@ -29,24 +29,24 @@
     <div t-attf-class="o_web_studio_view_type #{!widget.active ? 'o_web_studio_inactive' : ''}" t-att-data-type="widget.view_type">
         <div class="o_web_studio_thumbnail">
             <span t-if="!widget.active" class="o_web_studio_view_label">Activate View</span>
-            <span t-if="widget.default_view" class="o_web_studio_default_view fa-stack fa-sm">
+            <span t-if="widget.default_view" class="o_web_studio_default_view fa-stack fa-sm" role="img" aria-label="Default view" title="Default view">
                 <i class="fa fa-circle fa-stack-2x"></i>
                 <i class="fa fa-home fa-stack-1x"></i>
             </span>
-            <img t-att-src="'/web_studio/static/src/img/view_type/' + widget.view_type + '.png'"/>
+            <img t-att-src="'/web_studio/static/src/img/view_type/' + widget.view_type + '.png'" t-attf-alt="View #{widget.view_type}"/>
         </div>
         <div class="o_web_studio_name"><t t-esc="widget.view_type"/></div>
-        <i class="dropdown-toggle fa fa-ellipsis-v o_web_studio_more" data-toggle="dropdown"/>
+        <i class="dropdown-toggle fa fa-ellipsis-v o_web_studio_more" data-toggle="dropdown" role="img" aria-label="Dropdown menu" title="Dropdown menu"/>
         <ul class="dropdown-menu" role="menu">
             <li t-if="widget.can_default">
-                <a href="#" t-att-class="widget.default_view ? 'o_web_studio_view_type_default' : ''" data-action="set_default_view">
-                    <i t-if="widget.default_view" class="fa fa-check" aria-hidden="true"/>
+                <a role="menuitem" href="#" t-att-class="widget.default_view ? 'o_web_studio_view_type_default' : ''" data-action="set_default_view">
+                    <i t-if="widget.default_view" class="fa fa-check" role="img" aria-label="Is default view" title="Is default view"/>
                     Set as Default
                 </a>
             </li>
-            <li t-if="widget.can_set_another"><a href="#" data-action="set_another_view">Set another view</a></li>
-            <li t-if="widget.can_be_disabled" class="divider"/>
-            <li t-if="widget.can_be_disabled"><a href="#" data-action="disable_view">Disable</a></li>
+            <li t-if="widget.can_set_another"><a role="menuitem" href="#" data-action="set_another_view">Set another view</a></li>
+            <li t-if="widget.can_be_disabled" class="divider" role="separator"/>
+            <li t-if="widget.can_be_disabled"><a role="menuitem" href="#" data-action="disable_view">Disable</a></li>
         </ul>
     </div>
 </t>

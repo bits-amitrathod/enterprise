@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <form string="Postal Wizard Order">
                     <sheet>
-                        <div class="alert alert-danger" attrs="{'invisible':['|',('provider_balance','&gt;', 0),('provider_environment','in', ['test', False])]}">
+                        <div role="alert" class="alert alert-danger" attrs="{'invisible':['|',('provider_balance','&gt;', 0),('provider_environment','in', ['test', False])]}">
                             <b> Credit error :</b> Your Provider Credit account is negative. Please refill your provider account to send documents.
                         </div>
                         <group>
@@ -26,7 +26,7 @@
                             <field name="provider_environment" invisible="1"/>
                         </group>
 
-                        <div class="alert alert-danger" attrs="{'invisible':[('error_message','=', False)]}">
+                        <div role="alert" class="alert alert-danger" attrs="{'invisible':[('error_message','=', False)]}">
                             <field name="error_message" class="oe_form_field"/>
                         </div>
 

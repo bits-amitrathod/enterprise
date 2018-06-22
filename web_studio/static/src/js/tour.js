@@ -89,7 +89,7 @@ tour.register('web_studio_new_app_tour', {
     trigger: '.o_web_studio_field_dialog_form > .o_web_studio_selection_new_value button',
     auto: true,
 }, {
-    trigger: '.modal-footer > button:eq(0)',
+    trigger: 'footer.modal-footer > button:eq(0)',
     auto: true,
 }, {
     trigger: '.o_web_studio_add_chatter',
@@ -213,7 +213,7 @@ tour.register('web_studio_tests_tour', {
     run: 'text coucou',
 }, {
     // an alert dialog should be opened
-    trigger: '.modal-footer > button:first',
+    trigger: 'footer.modal-footer > button:first',
 }, {
     // rename the label
     trigger: '.o_web_studio_sidebar_content.o_display_field input[name="string"]',
@@ -227,7 +227,7 @@ tour.register('web_studio_tests_tour', {
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_monetary',
     run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
 }, {
-    trigger: '.modal-footer .btn.btn-primary',
+    trigger: 'footer.modal-footer .btn.btn-primary',
 }, {
     // verify that the currency field is in the view
     extra_trigger: '.o_web_studio_form_view_editor td.o_td_label:contains("Currency")',
@@ -248,7 +248,7 @@ tour.register('web_studio_tests_tour', {
     // add a statusbar
     trigger: '.o_web_studio_statusbar_hook',
 }, {
-    trigger: '.modal-footer .btn.btn-primary',
+    trigger: 'footer.modal-footer .btn.btn-primary',
 }, {
     trigger: '.o_statusbar_status',
 }, {

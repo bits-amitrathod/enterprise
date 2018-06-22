@@ -12,13 +12,13 @@
                 <div class="col-xs-12 col-md-6 o_setting_box" id="fiscalyear">
                     <div class="o_setting_left_pane"/>
                     <div class="o_setting_right_pane">
-                        <label string="Fiscal Years"/>
+                        <span class="o_form_label">Fiscal Year</span>
                         <div class="text-muted">
                             Last day of your fiscal year, for automatic opening entries
                         </div>
                          <div class="content-group">
                             <div class="row mt16">
-                                <label string="Last Day" class="col-md-3 o_light_label"/>
+                                <label for="fiscalyear_last_month" string="Last Day" class="col-md-3 o_light_label"/>
                                 <field name="fiscalyear_last_month" style="width: 100px; margin-right: 8px;"/>
                                 <field name="fiscalyear_last_day" class="oe_inline"/>
                             </div>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="o_setting_right_pane">
                         <label for="use_anglo_saxon"/>
-                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." role="img" aria-label="Values set here are company-specific." groups="base.group_multi_company"/>
                         <div class="text-muted">
                             Record cost of goods sold in your journal entries
                         </div>
@@ -65,7 +65,7 @@
                 <div class="col-xs-12 col-md-6 o_setting_box" attrs="{'invisible': [('chart_template_id','=',False), ('module_account_accountant','=',False)]}">
                     <div class="o_setting_left_pane"/>
                     <div class="o_setting_right_pane">
-                        <label string="Inter-Banks Transfers"/>
+                        <span class="o_form_label">Inter-Banks Transfers</span>
                         <div class="text-muted">
                             Account used when transferring between banks
                         </div>

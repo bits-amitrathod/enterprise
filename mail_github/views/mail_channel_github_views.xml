@@ -33,7 +33,7 @@
 						<field name="secret" placeholder="The signature to be pasted when setting up the webhook on Github"/>
 						<field name="url_token"/>
 					</group>
-					<div class="alert alert-info">
+					<div class="alert alert-info" role="status">
 						<p>Once the repository is created in Odoo, create it on Github. Then, copy 'Payload URL' and 'Secret' in Github interface.</p>
 						<p>The webhook 'Content Type' should be set to <b>application/x-www-form-urlencoded</b>.</p>
 						<p>After that you can choose the events you want to follow in the channels. Be careful, only <i>Commit comment, Issues, Issue comment, Gollum, Pull request, Pull request review, Pull request review comment</i> and <i>Push</i> events are supported.</p>

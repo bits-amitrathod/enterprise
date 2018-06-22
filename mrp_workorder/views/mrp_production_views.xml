@@ -16,7 +16,7 @@
                 <label for="date_planned_start_wo" string="Scheduled Date" attrs="{'invisible': [('date_planned_start_wo', '=', False)]}"/>
                 <div class="o_row" attrs="{'invisible': [('date_planned_start_wo', '=', False)]}">
                     <field name="date_planned_start_wo" attrs="{'readonly': [('move_raw_ids', '!=', [])]}"/>
-                    <label string="to" attrs="{'invisible': [('date_planned_finished_wo', '=', False)]}"/>
+                    <label for="date_planned_finished_wo" string="to" attrs="{'invisible': [('date_planned_finished_wo', '=', False)]}"/>
                     <field name="date_planned_finished_wo" attrs="{'readonly': [('move_raw_ids', '!=', [])]}"/>
                 </div>
             </field>

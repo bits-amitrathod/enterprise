@@ -719,7 +719,7 @@ odoo.define('website_sign.document_signing', function(require) {
                 self.emptySignature = self.$signatureField.jSignature("getData");
 
                 self.$modeButtons.filter('.btn-primary').click();
-                self.$('.modal-footer .btn-primary').focus();
+                self.$('footer.modal-footer .btn-primary').focus();
             });
 
             return this._super.apply(this, arguments);
@@ -1202,7 +1202,7 @@ odoo.define('website_sign.document_signing', function(require) {
                     return false;
                 }
 
-                signDialog.$('.modal-footer .btn-primary').prop('disabled', true);
+                signDialog.$('footer.modal-footer .btn-primary').prop('disabled', true);
                 signDialog.close();
 
                 if(self.$('#o_sign_is_public_user').length > 0) {

@@ -134,14 +134,15 @@
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
+                            <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
                             <div class="o_dropdown_kanban dropdown" groups="base.group_user">
-                                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                                <a class="dropdown-toggle btn" role="button" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
                                     <span class="fa fa-bars fa-lg"/>
                                 </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
-                                    <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
-                                    <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+                                <ul class="dropdown-menu" role="menu">
+                                    <t t-if="widget.editable"><li><a role="menuitem" type="edit">Edit</a></li></t>
+                                    <t t-if="widget.deletable"><li><a role="menuitem" type="delete">Delete</a></li></t>
+                                    <li role="menuitem" aria-haspopup="true"><ul role="menu" class="oe_kanban_colorpicker" data-field="color"/></li>
                                 </ul>
                             </div>
                             <div class="oe_kanban_content">
@@ -167,7 +168,7 @@
                                     <div class="o_kanban_inline_block">
                                         <field name="activity_ids" widget="kanban_activity"/>
                                     </div>
-                                    <img t-att-src="kanban_image('hr.employee', 'image_small', record.employee_id.raw_value)" t-att-title="record.employee_id.value" width="24" height="24" class="oe_kanban_avatar"/>
+                                    <img t-att-src="kanban_image('hr.employee', 'image_small', record.employee_id.raw_value)" t-att-title="record.employee_id.value" t-att-alt="record.employee_id.value" width="24" height="24" class="oe_kanban_avatar"/>
                                 </div>
                                 <div class="oe_clear"></div>
                             </div>

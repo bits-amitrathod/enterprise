@@ -84,7 +84,7 @@ QUnit.module('web_mobile', {
             res_id: 11,
         });
 
-        var $button = form.$('div.oe_stat_button[widget="contact_sync"]');
+        var $button = form.$('button.oe_stat_button[widget="contact_sync"]');
 
         assert.strictEqual($button.length, 0, "the tag should not be visible in a non-mobile environment");
         assert.strictEqual(rpcCount, 1, "no extra rpc should be done by the widget (only the one from the view)");
@@ -129,7 +129,7 @@ QUnit.module('web_mobile', {
             res_id: 11,
         });
 
-        var $button = form.$('div.oe_stat_button[widget="contact_sync"]');
+        var $button = form.$('button.oe_stat_button[widget="contact_sync"]');
 
         assert.strictEqual($button.length, 1, "the tag should be visible in a mobile environment");
         assert.strictEqual(rpcCount, 1, "no extra rpc should be done by the widget (only the one from the view)");

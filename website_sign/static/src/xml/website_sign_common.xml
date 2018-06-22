@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="website_sign.signature_item" name="Signature Item">
         <t t-if="readonly">
-            <div t-if="type == 'signature' || type == 'initial'" class="o_sign_signature_item text-center" style="text-align: center;" t-att-data-signature="value"><span class="o_sign_helper"/><img t-if="value" t-att-src="value"/><t t-if="!value"><t t-esc="placeholder"/></t><t t-if="editMode" t-call="website_sign.signature_item_configuration"/></div>
+            <div t-if="type == 'signature' || type == 'initial'" class="o_sign_signature_item text-center" style="text-align: center;" t-att-data-signature="value"><span class="o_sign_helper"/><img t-if="value" t-att-src="value" alt="Signature"/><t t-if="!value"><t t-esc="placeholder"/></t><t t-if="editMode" t-call="website_sign.signature_item_configuration"/></div>
 
             <div t-if="type == 'text' || type == 'textarea'" class="o_sign_signature_item"><t t-esc="value"/><t t-if="editMode" t-call="website_sign.signature_item_configuration"/></div>
         </t>
@@ -15,7 +15,7 @@
     </t>
 
     <div t-name="website_sign.signature_item_configuration" class="o_sign_config_area">
-        <span class="fa fa-arrows"/>
+        <span class="fa fa-arrows" role="img" aria-label="Signature configuration" title="Signature configuration"/>
         <span class="o_sign_responsible_display"/>
     </div>
 
@@ -28,7 +28,7 @@
             <t t-foreach="widget.messages" t-as="message">
                 <li class="media" t-if="message.message_type === 'comment'">
                     <div class="media-body">
-                        <img class="media-object pull-left" t-att-src="message.author_id.avatar"/>
+                        <img class="media-object pull-left" t-att-src="message.author_id.avatar" alt="Avatar"/>
                         <div class="media-body">
                             <h5 class="media-heading"><t t-esc="message.author_id.name"/> <small>on <t t-esc="message.date"/></small></h5>
                             <div t-raw="message.body"/>
@@ -49,12 +49,12 @@
         </div>
         <div class="o_sign_signature_draw panel panel-default mt16 mb0">
             <div class="panel-heading">
-                <a class="o_sign_select_style pull-right btn btn-link">Select Signature Style</a>
-                <a class="o_sign_clean pull-right btn btn-link">Clear Signature</a>
-                <input type="file" name="files[]" class="o_sign_load pull-right btn btn-link"/>
-                <a data-mode="auto" class="o_sign_mode btn btn-primary">Auto</a>
-                <a data-mode="draw" class="o_sign_mode btn">Draw</a>
-                <a data-mode="load" class="o_sign_mode btn">Load</a>
+                <a role="button" class="o_sign_select_style pull-right btn btn-link">Select Signature Style</a>
+                <a role="button" class="o_sign_clean pull-right btn btn-link">Clear Signature</a>
+                <input type="file" name="files[]" class="o_sign_load pull-right btn btn-link" role="button"/>
+                <a data-mode="auto" class="o_sign_mode btn btn-primary" role="button">Auto</a>
+                <a data-mode="draw" class="o_sign_mode btn" role="button">Draw</a>
+                <a data-mode="load" class="o_sign_mode btn" role="button">Load</a>
             </div>
             <div class="o_sign_signature panel-body"/>
         </div>

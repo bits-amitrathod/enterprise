@@ -13,7 +13,7 @@
                 </header>
                 <sheet>
                     <div class="oe_title">
-                        <label string="Record"/>
+                        <span class="o_form_label">Record</span>
                         <h1>
                             <field name="resource_ref" required="1" options="{'hide_model': True}"/>
                         </h1>
@@ -57,7 +57,7 @@
                                                     <div class="col-xs-1">
                                                         <t t-set="icons" t-value="{'rejected': 'ban', 'processed': 'check', 'canceled': 'times', 'error': 'exclamation-triangle', 'scheduled': 'clock-o'}" />
                                                         <div t-attf-class="o_ma_icon o_ma_#{record.state.raw_value} text-center">
-                                                            <i t-attf-class="fa fa-#{icons[record.state.raw_value]}" />
+                                                            <i t-attf-class="fa fa-#{icons[record.state.raw_value]}" t-attf-title="State: #{record.state.raw_value}" role="img" t-attf-aria-label="State: #{record.state.raw_value}"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-11">
@@ -65,7 +65,8 @@
                                                             <field name="activity_id" />
                                                         </strong>
                                                         <span class="o_ma_type">
-                                                            <i t-attf-class="fa fa-#{record.activity_type.raw_value == 'email' ? 'envelope-o' : 'cogs'}" />
+                                                            <i class="fa fa-email" t-if="record.activity_type.raw_value == 'email'" title="Email" role="img" aria-label="Email"/>
+                                                            <i class="fa fa-cogs" t-if="record.activity_type.raw_value != 'email'" title="Non email activity" role="img" aria-label="Non email activity"/>
                                                             <field name="activity_type" />
                                                         </span>
                                                         <div>
@@ -77,18 +78,18 @@
                                                     </div>
                                                     <div t-if="record.activity_type.raw_value == 'email' and record.state.raw_value == 'processed'" class="col-xs-12">
                                                         <div class="o_ma_actions text-uppercase text-center">
-                                                            <span t-att-class="record.opened.raw_value ? 'active' : None"><i class="fa fa-check-circle" /> Opened</span>
-                                                            <span t-att-class="record.clicked.raw_value ? 'active' : None"><i class="fa fa-check-circle" /> Clicked</span>
-                                                            <span t-att-class="record.replied.raw_value ? 'active' : None"><i class="fa fa-check-circle" /> Replied</span>
-                                                            <span t-att-class="record.bounced.raw_value ? 'active' : None"><i class="fa fa-check-circle" /> Bounced</span>
+                                                            <span t-att-class="record.opened.raw_value ? 'active' : None"><span class="fa fa-check-circle"> Opened</span></span>
+                                                            <span t-att-class="record.clicked.raw_value ? 'active' : None"><span class="fa fa-check-circle"> Clicked</span></span>
+                                                            <span t-att-class="record.replied.raw_value ? 'active' : None"><span class="fa fa-check-circle"> Replied</span></span>
+                                                            <span t-att-class="record.bounced.raw_value ? 'active' : None"><span class="fa fa-check-circle"> Bounced</span></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div t-if="record.state.raw_value == 'scheduled' and record.schedule_date.raw_value" class="o_ma_test_buttons">
-                                                    <button name="action_execute" type="object" class="btn btn-primary btn-sm" title="Run">
+                                                    <button name="action_execute" type="object" class="btn btn-primary btn-sm" title="Run" aria-label="Run">
                                                         <i class="fa fa-play" />
                                                     </button>
-                                                    <button name="participant_action_cancel" type="object" class="btn btn-warning btn-sm" title="Cancel">
+                                                    <button name="participant_action_cancel" type="object" class="btn btn-warning btn-sm" title="Cancel" aria-label="Cancel">
                                                         <i class="fa fa-times" />
                                                     </button>
                                                 </div>
@@ -104,17 +105,17 @@
                                             <t t-else="">
                                                 <t t-if="record.trigger_type.raw_value == 'mail_open'">
                                                     <span class="o_ma_text_scheduled">
-                                                        <i t-attf-class="fa fa-envelope-open-o" /> Not opened yet
+                                                        <span t-attf-class="fa fa-envelope-open-o"> Not opened yet</span>
                                                     </span>
                                                 </t>
                                                 <t t-if="record.trigger_type.raw_value == 'mail_reply'">
                                                     <span class="o_ma_text_scheduled">
-                                                        <i t-attf-class="fa fa-reply" /> Not replied yet
+                                                        <span t-attf-class="fa fa-reply"> Not replied yet</span>
                                                     </span>
                                                 </t>
                                                 <t t-if="record.trigger_type.raw_value == 'mail_click'">
                                                     <span class="o_ma_text_scheduled">
-                                                        <i t-attf-class="fa fa-hand-pointer-o" /> Not clicked yet
+                                                        <span t-attf-class="fa fa-hand-pointer-o"> Not clicked yet</span>
                                                     </span>
                                                 </t>
                                             </t>

@@ -6,22 +6,22 @@
     <!-- 1. Main dashboard -->
     <div t-name="sale_subscription_dashboard.dashboard" class="container o_account_contract_dashboard">
         <div t-if="!has_mrr" class="o_welcome_message box">
-            <div class="o_welcome_image"><span class="fa fa-smile-o fa-5x"/></div>
+            <div class="o_welcome_image"><span class="fa fa-smile-o fa-5x" role="img" aria-label="Welcome!" title="Welcome!"/></div>
             <div t-if="has_template" class="o_welcome_content">
                 <h2>Hi there!</h2>
                 <t t-if="has_def_revenues">
                     <p class="mt0">Now that you have defined a subscription template and your revenues types,<br/> invoice your first subscription to activate your dashboard.</p>
-                    <a class="btn btn-primary on_demo_contracts">Your Subscriptions</a>
+                    <a role="button" class="btn btn-primary on_demo_contracts">Your Subscriptions</a>
                 </t>
                 <t t-if="!has_def_revenues">
                     <p class="mt0">You're just missing some Deferred Revenue Types to ensure your dashboard works correctly.</p>
-                    <a class="btn btn-primary on_demo_templates">Edit your Templates</a>
+                    <a role="button" class="btn btn-primary on_demo_templates">Edit your Templates</a>
                 </t>
             </div>
             <div t-if="!has_template" class="o_welcome_content">
                 <h2>Hi there!</h2>
                 <p class="mt0">This is a sample dashboard. Your actual dashboard will be activated after<br/>having defined your subscription templates and deferred revenue categories and invoiced your first subscription.</p>
-                <a class="btn btn-primary on_demo_templates">Create a Template</a>
+                <a role="button" class="btn btn-primary on_demo_templates">Create a Template</a>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
             <div t-foreach="stat_types" t-as="stat">
                 <a href="#" class="on_stat_box" t-att-data-stat="stat['code']">
                     <div class="box o_stat_box" t-att-name="stat['name']" t-att-code="stat['code']">
-                        <div class="o_loader"><span class="fa fa-3x fa-spin fa-spinner fa-pulse"/></div>
+                        <div class="o_loader"><span class="fa fa-3x fa-spin fa-spinner fa-pulse" role="img" aria-label="Loading..." title="Loading..."/></div>
                     </div>
                 </a>
             </div>
@@ -37,7 +37,7 @@
             <div t-foreach="_.values(forecast_stat_types)" t-as="forecast">
                 <a href="#" class="on_forecast_box" t-att-data-forecast="forecast['code']">
                     <div class="box o_forecast_box" t-att-name="forecast['name']" t-att-code="forecast['code']">
-                        <div class="o_loader"><span class="fa fa-3x fa-spin fa-spinner fa-pulse"/></div>
+                        <div class="o_loader"><span class="fa fa-3x fa-spin fa-spinner fa-pulse" role="img" aria-label="Loading..." title="Loading..."/></div>
                     </div>
                 </a>
             </div>
@@ -247,7 +247,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown">Filter on subscriptions<span class="caret"/></a>
             <ul class="dropdown-menu o_filters_menu" role="menu">
                 <li t-foreach="widget.contract_templates" t-as="template">
-                    <a href="#" class="o_contract_template_filter js_tag" t-att-data-id="template.id"><t t-esc="template.name"/></a>
+                    <a role="menuitem" href="#" class="o_contract_template_filter js_tag" t-att-data-id="template.id"><t t-esc="template.name"/></a>
                 </li>
             </ul>
         </div>
@@ -257,7 +257,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown">Filter on tags<span class="caret"/></a>
             <ul class="dropdown-menu o_filters_menu" role="menu">
                 <li t-foreach="widget.tags" t-as="tag">
-                    <a href="#" class="o_tags_filter js_tag" t-att-data-id="tag.id"><t t-esc="tag.name"/></a>
+                    <a role="menuitem" href="#" class="o_tags_filter js_tag" t-att-data-id="tag.id"><t t-esc="tag.name"/></a>
                 </li>
             </ul>
         </div>
@@ -267,7 +267,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown">Filter on companies<span class="caret"/></a>
             <ul class="dropdown-menu o_filters_menu" role="menu">
                 <li t-foreach="widget.companies" t-as="company">
-                    <a href="#" class="o_companies_filter js_tag" t-att-data-id="company.id"><t t-esc="company.name"/></a>
+                    <a role="menuitem" href="#" class="o_companies_filter js_tag" t-att-data-id="company.id"><t t-esc="company.name"/></a>
                 </li>
             </ul>
         </div>

@@ -6,7 +6,7 @@
             <p class="question-block" t-foreach="slides" t-as="slide" >
                 <div class="media">
                     <a class="media-left pull-left" t-attf-href="/slides/slide/#{slug(slide)}">
-                            <img class="media-object oe_slides_apart_small" t-attf-src="/web/image/slide.slide/#{slide.id}/image_thumb"/>
+                            <img class="media-object oe_slides_apart_small" t-attf-src="/web/image/slide.slide/#{slide.id}/image_thumb" alt="Slide image"/>
                     </a>
                     <div class="media-body" style="padding-top:5px">
                         <a t-attf-href="/slides/slide/#{slug(slide)}"><h5 class="media-heading" t-esc="slide.name"/></a>

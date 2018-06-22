@@ -108,7 +108,7 @@
                                         <strong><span><field name="value"/></span></strong>
                                     </div>
                                     <div class="col-xs-4 pull-right text-right">
-                                        <strong><i class="fa fa-fw fa-tags"></i><field name="leads_count"/> leads</strong>
+                                        <strong class="fa fa-fw fa-tags"><field name="leads_count"/> leads</strong>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -225,7 +225,7 @@
                                     <ul class="nav">
                                         <li>
                                             <a type="open">
-                                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" class="oe_kanban_image"/>
+                                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" class="oe_kanban_image" alt="Avatar"/>
                                             </a>
                                         </li>
                                         <li t-att-class="button_state">

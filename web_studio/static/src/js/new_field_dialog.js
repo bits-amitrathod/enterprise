@@ -116,7 +116,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             }));
         } else if (this.type === 'related') {
             // This restores default modal height (bootstrap) and allows field selector to overflow
-            this.$el.css("overflow", "visible").closest(".modal-dialog").css("height", "auto");
+            this.$el.css("overflow", "visible").closest("[role=\"dialog\"]").css("height", "auto");
             var field_options = {
                 fields: _.filter(this.fields, {type: 'many2one'}),
                 readonly: false,

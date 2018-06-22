@@ -100,8 +100,8 @@
 
     <t t-name="website_sign.template">
         <div class="text-center clearfix">
-            <div class="o_sign_template_saved_info alert alert-success pull-right"><span class="fa fa-check"/> Saved</div>
-            <span t-if="!widget.has_signature_requests" class="fa fa-pencil" title="Edit template name"/>
+            <div class="o_sign_template_saved_info alert alert-success pull-right" role="status"><span class="fa fa-check"> Saved</span></div>
+            <span t-if="!widget.has_signature_requests" class="fa fa-pencil" title="Edit template name" role="img" aria-label="Edit template name"/>
             <input type="text" class="o_sign_template_name_input o_input" t-att-value="widget.signature_request_template.attachment_id.name"/>
         </div>
 
@@ -112,7 +112,7 @@
 
         <div t-if="!widget.isPDF" class="o_sign_image_document">
             <t t-set="webimage" t-value="new RegExp('image.*(gif|jpe|jpg|png)').test(widget.signature_request_template.attachment_id.mimetype)"/>
-            <img t-if="webimage" class="img img-responsive" t-attf-src="/web/image/{{widget.signature_request_template.attachment_id.id}}"/>
+            <img t-if="webimage" class="img img-responsive" t-attf-src="/web/image/{{widget.signature_request_template.attachment_id.id}}" alt="Signature"/>
             <div t-if="!webimage" class="o_image" t-att-data-mimetype="widget.signature_request_template.attachment_id.mimetype"/>
         </div>
 

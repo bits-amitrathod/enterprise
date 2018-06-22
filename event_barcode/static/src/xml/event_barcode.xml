@@ -30,7 +30,7 @@
             </div>
             <div class="o_event_barcode_main mt16 mb16">
                 <h1 class="mt0">Barcode Scanning</h1>
-                <img class="mt16" src="/event_barcode/static/img/barcode.png"/>
+                <img class="mt16" src="/event_barcode/static/img/barcode.png" alt="Barcode"/>
                 <input class="mt32" type="text" id="event_barcode" placeholder="Waiting for barcode scan..." size="40"/>
             </div>
         </div>
@@ -39,10 +39,10 @@
     <t t-name="event_registration_summary">
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
-            <div class="text-center" style="margin-bottom: 18px;"><img t-att-src="registration.image"/></div>
-            <div t-if="success" class="alert alert-success text-center"><t t-esc="success"/></div>
-            <div t-if="warning" class="alert alert-warning text-center"><t t-esc="warning"/></div>
-            <div t-if="registration.alert" class="alert alert-danger text-center"><t t-esc="registration.alert"/></div>
+            <div class="text-center" style="margin-bottom: 18px;"><img t-att-src="registration.image" alt="Registration"/></div>
+            <div t-if="success" class="alert alert-success text-center" role="status"><t t-esc="success"/></div>
+            <div t-if="warning" class="alert alert-warning text-center" role="alert"><t t-esc="warning"/></div>
+            <div t-if="registration.alert" class="alert alert-danger text-center" role="alert"><t t-esc="registration.alert"/></div>
           </div>
         </div>
         <div id="registration_information" class="row">

@@ -50,14 +50,14 @@
                 <div class="col-md-4">
                     <h4 class="o_sign_request_reference_title"><t t-esc="signature_request.reference"/></h4>
 
-                    <a t-if="signature_request.state == 'signed'" t-attf-href="/sign/download/{{signature_request.id}}/{{signature_request.access_token}}/completed" class="btn btn-primary o_sign_download_document_button">Download Document</a>
+                    <a role="button" t-if="signature_request.state == 'signed'" t-attf-href="/sign/download/{{signature_request.id}}/{{signature_request.access_token}}/completed" class="btn btn-primary o_sign_download_document_button">Download Document</a>
                     <button type="button" class="btn btn-default o_sign_view_history">View History<t t-if="nbComments > 0"> (<t t-esc="nbComments"/> comment<t t-if="nbComments > 1">s</t>)</t></button>
                 </div>
 
                 <div class="col-md-4">
                     <h5 class="page-header">Sender</h5>
                     <div class="clearfix">
-                        <img class="media-object pull-right" t-attf-src="/web/image/res.partner/#{signature_request.create_uid.partner_id.id}/image_small"/>
+                        <img class="media-object pull-right" t-attf-src="/web/image/res.partner/#{signature_request.create_uid.partner_id.id}/image_small" alt="Signature"/>
                         <t t-if="signature_request.create_uid.partner_id.name"><t t-esc="signature_request.create_uid.partner_id.name"/><br/></t>
                         <t t-if="signature_request.create_uid.partner_id.email"><a t-attf-href="mailto:{{signature_request.create_uid.partner_id.email}}"><t t-esc="signature_request.create_uid.partner_id.email"/></a><br/></t>
                         <t t-if="signature_request.create_uid.partner_id.phone"><t t-esc="signature_request.create_uid.partner_id.phone"/><br/></t>
@@ -83,7 +83,7 @@
                     <t t-if="signature_request.nb_closed > 0">
                         <h5 class="page-header">Signed (<t t-esc="str(signature_request.nb_closed) +'/'+ str(len(signature_request.request_item_ids))"/>)</h5>
                         <t t-foreach="signature_request.request_item_ids" t-as="sign">
-                            <div t-if="sign.state == 'completed'" class="o_sign_signer_status clearfix"><img t-if="sign.signature" class="pull-right" t-attf-src="/web/image/signature.request.item/{{sign.id}}/signature"/><b><t t-esc="sign.partner_id.name"/></b><t t-if="sign.role_id"><t t-esc="' - ' + sign.role_id.name"/></t><br/><em>Signed on <span t-field="sign.signing_date"></span></em></div>
+                            <div t-if="sign.state == 'completed'" class="o_sign_signer_status clearfix"><img t-if="sign.signature" class="pull-right" t-attf-src="/web/image/signature.request.item/{{sign.id}}/signature" alt="Signature"/><b><t t-esc="sign.partner_id.name"/></b><t t-if="sign.role_id"><t t-esc="' - ' + sign.role_id.name"/></t><br/><em>Signed on <span t-field="sign.signing_date"></span></em></div>
                         </t>
                     </t>
                 </div>
@@ -92,7 +92,7 @@
             <div t-if="not hasItems and not isPDF" class="row">
                 <div class="col-md-12">
                     <a class="o_sign_image_document" t-attf-href="/sign/download/{{signature_request.id}}/{{signature_request.access_token}}/origin" target="_blank">
-                        <img t-if="webimage" class="img img-responsive" t-attf-src="/sign/download/{{signature_request.id}}/{{signature_request.access_token}}/origin"/>
+                        <img t-if="webimage" class="img img-responsive" t-attf-src="/sign/download/{{signature_request.id}}/{{signature_request.access_token}}/origin" alt="Signature"/>
                         <div t-if="not webimage" class="o_image" t-att-data-mimetype="signature_request.template_id.attachment_id.mimetype"/>
                     </a>
                 </div>
@@ -138,14 +138,14 @@
             <div class="o_sign_document">
                 <header>
                     <div class="container text-center">
-                        <a href="/"><img src="/logo.png"/></a>
+                        <a href="/"><img src="/logo.png" alt="Logo"/></a>
                         <div t-if="signature_request" class="o_sign_header_instruction">
                             <t t-if="not current_request_item">Need to sign? Check your inbox to get your secure access</t>
                             <t t-if="current_request_item and current_request_item.state == 'draft'">This document cannot be filled right now</t>
                             <t t-if="current_request_item and current_request_item.state == 'sent'">Please Review And Act On This Document</t>
                             <t t-if="current_request_item and current_request_item.state == 'completed'">You have completed the document</t>
                         </div>
-                        <a href="https://www.odoo.com/page/sign"><img src="/website_sign/static/img/odoo_signed.png"/></a>
+                        <a href="https://www.odoo.com/page/sign"><img src="/website_sign/static/img/odoo_signed.png" alt="Signed"/></a>
                     </div>
                 </header>
                 <t t-call="website_sign._doc_sign"/>

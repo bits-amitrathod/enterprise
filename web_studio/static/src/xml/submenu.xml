@@ -7,7 +7,7 @@
             Customizations <span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
-            <li>
+            <li role="menuitem">
                 <a href="#" class="o_web_studio_change_background">Change Background</a>
                 <span class="hide">
                     <t t-call="HiddenInputFile">
@@ -19,10 +19,10 @@
                 </span>
             </li>
             <li t-if="widget.menu_data.background_image">
-                <a href="#" class="o_web_studio_reset_default_background">Reset Default Background</a>
+                <a role="menuitem" href="#" class="o_web_studio_reset_default_background">Reset Default Background</a>
             </li>
-            <li><a href="#" class="o_web_studio_import">Import</a></li>
-            <li><a href="#" class="o_web_studio_export">Export</a></li>
+            <li><a role="menuitem" href="#" class="o_web_studio_import">Import</a></li>
+            <li><a role="menuitem" href="#" class="o_web_studio_export">Export</a></li>
         </ul>
     </li>
 </ul>
@@ -42,28 +42,28 @@
       <li class="o_web_studio_submenu_icons">
         <div class="o_web_studio_views_icons">
           <t t-if="_.contains(widget.active_view_types, 'form')">
-            <a href="#" data-name="form"><i class="fa fa-address-card"/></a>
+            <a href="#" data-name="form" title="Form View" aria-label="Form View"><i class="fa fa-address-card"/></a>
           </t>
           <t t-if="_.contains(widget.active_view_types, 'list')">
-            <a href="#" data-name="list"><i class="fa fa-list-ul"/></a>
+            <a href="#" data-name="list" title="List View" aria-label="List View"><i class="fa fa-list-ul"/></a>
           </t>
           <t t-if="_.contains(widget.active_view_types, 'kanban')">
-            <a href="#" data-name="kanban"><i class="fa fa-th-large"/></a>
+            <a href="#" data-name="kanban" title="Kanban View" aria-label="Kanban View"><i class="fa fa-th-large"/></a>
           </t>
           <t t-if="_.contains(widget.active_view_types, 'calendar')">
-            <a href="#" data-name="calendar"><i class="fa fa-calendar-o"/></a>
+            <a href="#" data-name="calendar" title="Calendar View" aria-label="Calendar View"><i class="fa fa-calendar-o"/></a>
           </t>
           <t t-if="_.contains(widget.active_view_types, 'graph')">
-            <a href="#" data-name="graph"><i class="fa fa-bar-chart"/></a>
+            <a href="#" data-name="graph" title="Graph View" aria-label="Graph View"><i class="fa fa-bar-chart"/></a>
           </t>
           <t t-if="_.contains(widget.active_view_types, 'pivot')">
-            <a href="#" data-name="pivot"><i class="fa fa-table"/></a>
+            <a href="#" data-name="pivot" title="Pivot View" aria-label="Pivot View"><i class="fa fa-table"/></a>
           </t>
           <t t-if="_.contains(widget.active_view_types, 'grid')">
-            <a href="#" data-name="grid"><i class="fa fa-th"/></a>
+            <a href="#" data-name="grid" title="Grid View" aria-label="Grid View"><i class="fa fa-th"/></a>
           </t>
           <t t-if="_.contains(widget.active_view_types, 'gantt')">
-            <a href="#" data-name="gantt"><i class="fa fa-tasks"/></a>
+            <a href="#" data-name="gantt" title="Gantt View" aria-label="Gantt View"><i class="fa fa-tasks"/></a>
           </t>
           <t t-if="_.contains(widget.active_view_types, 'cohort')">
             <a href="#" data-name="cohort"><i class="fa fa-signal"/></a>
@@ -72,8 +72,8 @@
       </li>
     </ul>
 
-    <div class="o_web_studio_redo"><button class="btn btn-sm"><i class="fa fa-repeat"/><span>Redo</span></button></div>
-    <div class="o_web_studio_undo"><button class="btn btn-sm"><i class="fa fa-undo"/><span>Undo</span></button></div>
+    <div class="o_web_studio_redo"><button class="btn btn-sm"><span class="fa fa-repeat">Redo</span></button></div>
+    <div class="o_web_studio_undo"><button class="btn btn-sm"><span class="fa fa-undo">Undo</span></button></div>
     <div class="o_web_studio_snackbar"/>
 
 </div>

@@ -4,7 +4,7 @@
     <t t-name="website_version.all_versions">
         <t t-foreach="versions" t-as="item">
             <li class="o_version_choice" t-att-data-version_id="item.id">
-                <a href="#" data-action="delete_version" style="position: absolute; right: 0px;" class="pull-right"><i class="fa fa-trash-o fa-fw"></i></a>
+                <a href="#" data-action="delete_version" style="position: absolute; right: 0px;" class="pull-right" aria-label="Delete version" title="Delete version"><i class="fa fa-trash-o fa-fw"></i></a>
                 <a href="#" data-action="change_version">
                     <t t-if="item.bold == 0 "><t t-esc="item.name"></t></t>
                     <t t-if="item.bold == 1 "><b><t t-esc="item.name"></t></b></t>
@@ -22,8 +22,8 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li class="o_first_choice"><a href="#" id="save_as_new_version" data-action="save_as_new_version" 
-                        class="btn btn-link btn-xs o_version">Save as New Version</a>
+                    <li class="o_first_choice" role="menuitem"><a href="#" id="save_as_new_version" data-action="save_as_new_version" 
+                        role="button" class="btn btn-link btn-xs o_version">Save as New Version</a>
                     </li>
                 </ul>
             </div>
@@ -33,7 +33,7 @@
     <t t-name="website_version.all_options">    
         <li class="o_second_choice">
             <a href="#" id="save_and_publish" data-action="save_and_publish" 
-                class="btn btn-link btn-xs o_version"><t t-esc="version"></t></a>
+                role="button" class="btn btn-link btn-xs o_version"><t t-esc="version"></t></a>
         </li>
     </t>
 
@@ -49,14 +49,14 @@
     </t>
 
     <t t-name="website_version.create_experiment">
-        <div class="modal fade">
+        <div role="dialog" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+              <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
                 <h4 class="modal-title">Launch A/B Tests</h4>
-              </div>
-                <div class="modal-body">
+              </header>
+                <main class="modal-body">
                     <t t-if="versions.length != 0 and config == 1">  
                         <form id="productForm" class="form-horizontal" role="form">
                             <div class="form-group form-group">
@@ -108,7 +108,7 @@
                     </t>
 
                     <t t-if= "config == 0">
-                        <div t-if="!has_config_rights" class="alert alert-warning">
+                        <div t-if="!has_config_rights" class="alert alert-warning" role="alert">
                             You need Administration/Settings rights to configure Google Analytics access.
                         </div>
                         <div class="o_configure_ab">
@@ -120,8 +120,7 @@
                                 <div class="panel-heading" role="tab" id="headingOne">
                                   <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                      To get your GA Key and your View ID
-                                      <span class="fa fa-info-circle" />
+                                      <span class="fa fa-suffix-info-circle">To get your GA Key and your View ID</span>
                                     </a>
                                   </h4>
                                 </div>
@@ -130,29 +129,29 @@
                                         <ul>
                                             <li> Go to <a href='https://www.google.com/analytics/' target='_blank'>https://www.google.com/analytics/</a>
                                             and connect you.
-                                                <br/><br/><img src=
+                                                <br/><br/><img alt="Login" src=
                                                 '/website_version/static/src/img/GA/GA_login.png'
                                                 class='analytics_img_tuto'/>
                                             </li>
                                             <li>
                                                 Click on <b>"Admin"</b>.
-                                                <br/><br/><img src='/website_version/static/src/img/GA/GA_admin.png' class='analytics_img_tuto'/>
+                                                <br/><br/><img alt="Admin" src='/website_version/static/src/img/GA/GA_admin.png' class='analytics_img_tuto'/>
                                             </li>
                                             <li>
                                                 Click on <b>"Tracking Code"</b>.
-                                                <br/><br/><img src='/website_version/static/src/img/GA/GA_tracking_code.png' class='analytics_img_tuto'/>   
+                                                <br/><br/><img alt="Tracking code" src='/website_version/static/src/img/GA/GA_tracking_code.png' class='analytics_img_tuto'/>   
                                             </li>
                                             <li>
                                                 Copy the <b>"Tracking ID"</b> and paste it in the field Google Analytics key.
-                                                <br/><br/><img src='/website_version/static/src/img/GA/GA_tracking_id.png' class='analytics_img_tuto'/>   
+                                                <br/><br/><img alt="Tracking ID" src='/website_version/static/src/img/GA/GA_tracking_id.png' class='analytics_img_tuto'/>   
                                             </li>
                                             <li>
                                                 Click on <b>"Admin"</b> and click on <b>"View Settings"</b>.
-                                                <br/><br/><img src='/website_version/static/src/img/GA/GA_view_settings.png' class='analytics_img_tuto'/>  
+                                                <br/><br/><img alt="Admin" src='/website_version/static/src/img/GA/GA_view_settings.png' class='analytics_img_tuto'/>  
                                             </li>
                                             <li>
                                                 Copy the <b>"View ID"</b> and paste it in the field View ID.
-                                                <br/><br/><img src='/website_version/static/src/img/GA/GA_view_id.png' class='analytics_img_tuto'/>  
+                                                <br/><br/><img alt="View ID" src='/website_version/static/src/img/GA/GA_view_id.png' class='analytics_img_tuto'/>  
                                             </li>
                                         </ul> 
                                     </div>
@@ -178,8 +177,7 @@
                                 <div class="panel-heading" role="tab" id="headingOne">
                                   <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                      To get your Client ID and your Client Secret, follow these steps
-                                      <span class="fa fa-info-circle" />
+                                      <span class="fa fa-info-circle">To get your Client ID and your Client Secret, follow these steps</span>
                                     </a>
                                   </h4>
                                 </div>
@@ -189,36 +187,36 @@
                                             <li> Connect on your google account and go to <a href='https://console.developers.google.com' target='_blank'>https://console.developers.google.com</a> </li>
                                             <li>
                                                 Click on <b>"Create Project"</b> and enter a project name.
-                                                <br/><br/><img src='/website_version/static/src/img/GC/GC_create_project.png' 
+                                                <br/><br/><img alt="Create project" src='/website_version/static/src/img/GC/GC_create_project.png' 
                                                 class='analytics_img_tuto'/>
-                                                <br/><br/><img src='/website_version/static/src/img/GC/GC_new_project.png' 
+                                                <br/><br/><img alt="Create project" src='/website_version/static/src/img/GC/GC_new_project.png' 
                                                 class='analytics_img_tuto'/> 
                                             </li>
                                             <li> In the menu on left side, select the sub menu APIs (from menu APIs and auth) and activate <b>"Analytics API"</b> by clicking on button "OFF".
                                                 <br/> When it's done, check that the button of <b>"Calendar API"</b> is well in green and with text "ON"
-                                                <br/><br/><img src='/website_version/static/src/img/GC/GC_API.png' 
+                                                <br/><br/><img alt="API" src='/website_version/static/src/img/GC/GC_API.png' 
                                                 class='analytics_img_tuto'/>
-                                                <br/><br/><img src='/website_version/static/src/img/GC/GC_off_api.png' 
+                                                <br/><br/><img alt="Turning off" src='/website_version/static/src/img/GC/GC_off_api.png' 
                                                 class='analytics_img_tuto'/>
-                                                <br/><br/><img src='/website_version/static/src/img/GC/GC_on_api.png' 
+                                                <br/><br/><img alt="Turning on" src='/website_version/static/src/img/GC/GC_on_api.png' 
                                                 class='analytics_img_tuto'/>
                                             </li> 
                                             <li>
                                                 In the menu on left side, select the sub menu <b>'Credentials'</b> (from menu APIs and auth) and click on button <b>'Create New Client ID'</b>
-                                                <br/><br/><img src='/website_version/static/src/img/GC/GC_credentials.png' 
+                                                <br/><br/><img alt="Credentials" src='/website_version/static/src/img/GC/GC_credentials.png' 
                                                 class='analytics_img_tuto'/>
-                                                <br/><br/><img src='/website_version/static/src/img/GC/GC_create_new_client_id.png' 
+                                                <br/><br/><img alt="New client ID" src='/website_version/static/src/img/GC/GC_create_new_client_id.png' 
                                                 class='analytics_img_tuto'/>
                                             </li>
                                             <li> Fill in the Name of application and check that the platform is well on <b>'Web Application'</b>.<br/>
                                                 <br/> You should now configure the allowed pages on which you will be redirected. To do it, you need to complete the field <b>"Authorized redirect URIs"</b>
                                                 and set as value  (your own domain followed by <i>"/google_account/authentication"</i>) :
                                                 <br/> You can now click on <b>'Create Client ID'</b>
-                                                <br/><br/><img src='/website_version/static/src/img/GC/GC_client_id.png' 
+                                                <br/><br/><img alt="Client ID" src='/website_version/static/src/img/GC/GC_client_id.png' 
                                                 class='analytics_img_tuto'/>
                                             </li> 
                                             <li>Once done, you will have the both informations (<b>Client ID</b> and <b>Client Secret</b>) that you need to insert in the 2 fields below !
-                                                <br/><br/><img src='/website_version/static/src/img/GC/GC_copy.png' 
+                                                <br/><br/><img alt="Copy client ID" src='/website_version/static/src/img/GC/GC_copy.png' 
                                                 class='analytics_img_tuto'/>
                                             </li>
                                         </ul>
@@ -263,8 +261,8 @@
                         </form>
                     </t>
 
-                </div>
-              <div class="modal-footer">
+                </main>
+              <footer class="modal-footer">
                 <t t-if="versions.length != 0 and config == 1"> 
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary o_launch">Launch</button>
@@ -284,59 +282,59 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" class="btn btn-link btn-xs o_configure">Configure</a></li>
+                            <li role="menuitem"><a href="#" role="button" class="btn btn-link btn-xs o_configure">Configure</a></li>
                         </ul>
                     </div>
                 </t>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              </div>
+              </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </t>
     <t t-name="website_version.message">
-        <div class="modal fade">
+        <div role="dialog" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+              <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
                 <h4 class="modal-title"><t t-esc="message"></t></h4>
-              </div>  
-              <div class="modal-footer">
+              </header>  
+              <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_confirm" data-dismiss="modal">Ok</button>
-              </div>
+              </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </t>
     <t t-name="website_version.dialogue">
-        <div class="modal fade">
+        <div role="dialog" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+              <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
                 <h4 class="modal-title"><t t-esc="message"></t></h4>
-              </div>  
-                <div class="modal-body">
+              </header>  
+                <main class="modal-body">
                     <p><t t-esc="dialogue"></t></p>
-                </div>
+                </main>
 
-              <div class="modal-footer">
+              <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_confirm" data-dismiss="modal">Ok</button>
-              </div>
+              </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </t>
     <t t-name="website_version.diff">
-        <div class="modal fade">
+        <div role="dialog" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+              <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
                 <h4 class="modal-title">Version: <t t-esc="version_name"></t></h4>
-              </div>  
-                <div class="modal-body">
+              </header>  
+                <main class="modal-body">
                     <t t-if="list.length != 0"> 
                         <ul>
                             <t t-foreach="list" t-as="item">
@@ -350,57 +348,57 @@
                     <t t-if="list.length == 0"> 
                         <p>There is no difference with Master</p>
                     </t>
-                </div>
+                </main>
 
-              <div class="modal-footer">
+              <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_confirm" data-dismiss="modal">Close</button>
-              </div>
+              </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </t>
     <t t-name="website_version.delete_message">
-        <div class="modal fade">
+        <div role="dialog" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+              <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
                 <h4 class="modal-title"><t t-esc="message"></t></h4>
-              </div>  
-              <div class="modal-footer">
+              </header>  
+              <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_confirm" data-dismiss="modal">Delete Version</button>
                 <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
-              </div>
+              </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </t>
 
     <t t-name="website_version.publish">
-        <div class="modal fade">
+        <div role="dialog" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+              <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
                 <h4 class="modal-title"><t t-esc="message"></t></h4>
-              </div>  
-              <div class="modal-footer">
+              </header>  
+              <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_confirm" data-dismiss="modal">Publish</button>
                 <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
-              </div>
+              </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </t>
     <t t-name="website_version.publish_message">
-        <div class="modal fade">
+        <div role="dialog" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+              <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
                 <h4 class="modal-title"><t t-esc="message"></t></h4>
-              </div>
-              <div class="modal-body">
+              </header>
+              <main class="modal-body">
                 <p>By publishing this version, you will overwrite the following master pages:</p>
                 <t t-if="list.length != 0"> 
                     <ul>
@@ -428,24 +426,24 @@
                         </label>
                     </div>
                 </form>
-              </div>
-              <div class="modal-footer">
+              </main>
+              <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_confirm">Publish</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              </div>
+              </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </t>
     <t t-name="website_version.new_version">
-        <div class="modal fade">
+        <div role="dialog" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+              <header class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
                 <h4 class="modal-title">New Version</h4>
-              </div>
-              <div class="modal-body">
+              </header>
+              <main class="modal-body">
                 <p class="text-muted">
                     A version allows to modify several pages, without publishing the changes directly.
                     You can also launch A/B tests to analyse the performance of different versions.
@@ -459,11 +457,11 @@
                     </div>             
 
                 </form>
-              </div>
-              <div class="modal-footer">
+              </main>
+              <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_create">Create</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              </div>
+              </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->

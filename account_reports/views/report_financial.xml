@@ -6,21 +6,21 @@
     <t t-foreach="footnotes" t-as="footnote">
         <p class="footnote" t-att-id="'footnote' + str(footnote.get('number'))" t-att-data-id="footnote.get('id')">
             <span class='text'><t t-esc="str(footnote.get('number')) + '. ' + str(footnote.get('text'))"/></span>
-            <span class='o_account_reports_footnote_icons'><i class="fa fa-fw fa-trash-o"></i></span>
+            <span class='o_account_reports_footnote_icons'><i class="fa fa-fw fa-trash-o" role="img" aria-label="Delete" title="Delete"></i></span>
         </p>
     </t>
 </template>
 
 <template id="line_caret_options">
-    <li t-if="line['caret_options'] == 'account.account'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_general_ledger">General Ledger</a></li>
-    <li t-if="line['caret_options'] == 'account.account'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_journal_items">Journal Items</a></li>
-    <li t-if="line['caret_options'] == 'account.invoice.out'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Invoice</a></li>
-    <li t-if="line['caret_options'] == 'account.invoice.in'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Bill</a></li>
-    <li t-if="line['caret_options'] == 'account.payment'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.payment" action="open_document">View Payment</a></li>
+    <li t-if="line['caret_options'] == 'account.account'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_general_ledger">General Ledger</a></li>
+    <li t-if="line['caret_options'] == 'account.account'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_journal_items">Journal Items</a></li>
+    <li t-if="line['caret_options'] == 'account.invoice.out'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Invoice</a></li>
+    <li t-if="line['caret_options'] == 'account.invoice.in'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Bill</a></li>
+    <li t-if="line['caret_options'] == 'account.payment'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.payment" action="open_document">View Payment</a></li>
     <t t-if="line['caret_options'] == 'account.tax'">
-        <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_tax">Audit</a></li>
+        <li><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_tax">Audit</a></li>
     </t>
-    <li t-if="line['caret_options'] == 'account.analytic.account'" role="presentation">
+    <li t-if="line['caret_options'] == 'account.analytic.account'">
         <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_analytic_entries">Analytic Entries</a>
     </li>
 </template>
@@ -140,7 +140,7 @@
         <tr t-att-class="trclass+' '+(line.get('class', ''))" t-att-data-parent-id="line.get('parent_id', False)" t-att-style="line.get('style', '')">
             <td t-att-data-id="line['id']" t-att-class="'o_account_report_line ' + (line.get('unfoldable') and 'js_account_report_foldable' or '')" t-att-data-unfolded="line.get('unfolded', False)" t-att-colspan="line.get('colspan', '1')">
                     <t t-if="line.get('unfoldable')">
-                        <span t-att-data-id="line['id']" class="o_account_reports_caret_icon"><i t-att-class="'fa fa-fw ' + (line.get('unfolded') and 'fa-caret-down' or 'fa-caret-right')"></i></span>
+                        <span t-att-data-id="line['id']" class="o_account_reports_caret_icon"><i class="fa fa-fw fa-caret-down" t-if="line.get('unfolded')" role="img" aria-label="Unfolded" title="Unfolded"/><i class="fa fa-fw fa-caret-right" t-if="not line.get('unfolded')" role="img" aria-label="Folded" title="Folded"/></span>
                     </t>
                     <t t-if="not line.get('caret_options')">
                             <span class="account_report_line_name">
@@ -164,7 +164,7 @@
                             <span class="js_account_report_line_footnote" t-att-data-id="line['id']"><sup t-if="line.get('footnote')"><b class="o_account_reports_footnote_sup"><a t-att-href="'#footnote'+line['footnote']"></a><t t-esc="line['footnote']"/></b></sup></span>
                             <ul class="dropdown-menu o_account_reports_domain_dropdown" role="menu">
                                 <t t-call="account_reports.line_caret_options"/>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" class="js_account_reports_add_footnote">Annotate</a></li>
+                                <li><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" class="js_account_reports_add_footnote">Annotate</a></li>
                             </ul>
                         </div>
                     </t>
@@ -209,7 +209,7 @@
             </t>
             <t t-call="account_reports.filter_info_template"/>
             <div class="o_account_reports_summary" style="padding-bottom:40px; position: relative;">
-                <i class="fa fa-fw fa-pencil o_account_reports_edit_summary_pencil"></i>
+                <i class="fa fa-fw fa-pencil o_account_reports_edit_summary_pencil" role="img" aria-label="Edit Summary" title="Edit Summary"></i>
                 <div class="o_account_report_summary" role="alert">
                     <span style="white-space: pre-wrap;" t-if="report.get('summary')"><t t-esc="report['summary']"/></span>
                     <input t-if="not report.get('summary')" type='text' class="o_input" name='summary' placeholder='Click to add an introductory explanation'/>
@@ -265,13 +265,13 @@
 <template id="template_aged_partner_balance_line_report" inherit_id="account_reports.line_template" primary="True">
     <xpath expr="//span[hasclass('o_account_reports_caret_icon')]" position="before">
         <t t-if="line.get('trust') == 'good'">
-            <span class="fa fa-circle color-green trust-partner"></span>
+            <span class="fa fa-circle color-green trust-partner" role="img" aria-label="Balance is good" title="Balance is good"></span>
         </t>
         <t t-if="line.get('trust') == 'bad'">
-            <span class="fa fa-circle color-red trust-partner"></span>
+            <span class="fa fa-circle color-red trust-partner" role="img" aria-label="Balance is bad" title="Balance is bad"></span>
         </t>
         <t t-if="line.get('trust') == 'normal'">
-            <span class="fa fa-circle color-transparent trust-partner"></span>
+            <span class="fa fa-circle color-transparent trust-partner" role="img" aria-label="Balance is normal" title="Balance is normal"></span>
         </t>
     </xpath>
 </template>
@@ -290,7 +290,7 @@
 <!-- Business Statements Aged receivable templates  -->
  <template id="line_template_aged_receivable_report" inherit_id="account_reports.template_aged_partner_balance_line_report" primary="True">
      <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
-         <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" groups="account.group_account_user">View Journal Entry</a></li>
+         <li><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" groups="account.group_account_user">View Journal Entry</a></li>
      </xpath>
  </template>
  <template id="template_aged_receivable_report" inherit_id="account_reports.main_template" primary="True">
@@ -304,7 +304,7 @@
  <!-- Business Statements Aged Payable templates -->
  <template id="line_template_aged_payable_report" inherit_id="account_reports.template_aged_partner_balance_line_report" primary="True">
      <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
-         <li role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" groups="account.group_account_user">View Journal Entry</a></li>
+         <li><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document" groups="account.group_account_user">View Journal Entry</a></li>
      </xpath>
  </template>
  <template id="template_aged_payable_report" inherit_id="account_reports.main_template" primary="True">
@@ -319,17 +319,17 @@
 <template id="line_template_partner_ledger_report" inherit_id="account_reports.line_template" primary="True">
     <xpath expr="//span[hasclass('o_account_reports_caret_icon')]" position="before">
         <t t-if="line.get('trust') == 'good'">
-            <span class="fa fa-circle color-green trust-partner"></span>
+            <span class="fa fa-circle color-green trust-partner" role="img" aria-label="Partner ledger is good" title="Partner ledger is good"></span>
         </t>
         <t t-if="line.get('trust') == 'bad'">
-            <span class="fa fa-circle color-red trust-partner"></span>
+            <span class="fa fa-circle color-red trust-partner" role="img" aria-label="Partner ledger is bad" title="Partner ledger is bad"></span>
         </t>
         <t t-if="line.get('trust') == 'normal'">
-            <span class="fa fa-circle color-transparent trust-partner"></span>
+            <span class="fa fa-circle color-transparent trust-partner" role="img" aria-label="Partner ledger is normal" title="Partner ledger is normal"></span>
         </t>
     </xpath>
     <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
-        <li t-if="line['caret_options'] != 'account.tax'" role="presentation" groups="account.group_account_user"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
+        <li t-if="line['caret_options'] != 'account.tax'" groups="account.group_account_user"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
     </xpath>
 </template>
 <template id="template_partner_ledger_report" inherit_id="account_reports.main_template" primary="True">
@@ -344,7 +344,7 @@
         &amp;nbsp;<a t-if="line.get('unfolded')" t-att-data-id="line.get('id')" action="view_all_journal_items" class="no_print o_journal_entries"> ⇒ journal items</a>
     </xpath>
     <xpath expr="//ul[hasclass('o_account_reports_domain_dropdown')]/li[last()]" position="before">
-        <li t-if="line['caret_options'] != 'account.tax'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
+        <li t-if="line['caret_options'] != 'account.tax'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_document">View Journal Entry</a></li>
     </xpath>
 </template>
 <template id="template_general_ledger_report" inherit_id="account_reports.main_template" primary="True">

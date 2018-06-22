@@ -8,18 +8,18 @@
     </template>
 
     <template id="ups_bill_my_account_dialog" name="UPS Bill My Account Dialog">
-        <div class="modal fade" role="dialog" aria-hidden="true" id="ups_bill_my_account_service">
+        <div role="dialog" class="modal fade" id="ups_bill_my_account_service">
             <div class="modal-dialog">
                 <form id="set_ups_carrier_account" action="/shop/ups_carrier_account/set" method="post">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <header class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
                             <h4 class="modal-titled">UPS Bill My Account</h4>
-                        </div>
-                        <div class="modal-body">
+                        </header>
+                        <main class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class='alert alert-warning hidden' id='ups_service_error'></div>
+                                    <div class='alert alert-warning hidden' id='ups_service_error' role="alert"></div>
                                     <div id="service_type">
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
                                         <input type="hidden" name="sale_order_id" t-att-value="order.id"/>
@@ -41,11 +41,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
+                        </main>
+                        <footer class="modal-footer">
                             <button type="submit" class="btn btn-primary o_apply_ups_bill_my_account">Apply</button>
                             <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                        </div>
+                        </footer>
                     </div>
                 </form>
             </div>
@@ -67,7 +67,7 @@
                     <t t-if="order.ups_carrier_account">
                         <a href="/shop/ups_carrier_account/unset">
                             Using Account <strong><t t-esc="order.ups_carrier_account"/></strong>
-                            <i class="fa fa-trash-o"/>
+                            <i class="fa fa-trash-o" role="img" aria-label="Delete" title="Delete"/>
                         </a>
                     </t>
                 </span>

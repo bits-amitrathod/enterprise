@@ -43,7 +43,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content: 'save footnote',
-            trigger: '.modal-footer .btn-primary',
+            trigger: 'footer.modal-footer .btn-primary',
             run: 'click'
         },
         {

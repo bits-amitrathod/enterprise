@@ -11,8 +11,8 @@
             </field>
             <xpath expr="//strong" position="before">
                 <span class="pull-right">
-                  <a name="toggle_active" type="object" t-if="record.active.raw_value"><i class="fa fa-remove"/></a>
-                  <a name="toggle_active" type="object" t-if="!record.active.raw_value"><i class="fa fa-undo"/></a>
+                  <a name="toggle_active" type="object" t-if="record.active.raw_value"><i class="fa fa-remove" role="img" aria-label="Remove" title="Remove"/></a>
+                  <a name="toggle_active" type="object" t-if="!record.active.raw_value"><i class="fa fa-undo" role="img" aria-label="Undo" title="Undo"/></a>
                 </span>
             </xpath>
             <xpath expr="//div[hasclass('oe_kanban_global_click')]" position="attributes">

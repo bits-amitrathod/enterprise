@@ -14,7 +14,7 @@
               <div colspan='2'>
                 <button name="action_get_carrier_type" string="Load your Easypost carrier accounts" type="object" class="oe_inline fa fa-arrow-right oe_link"/>
               </div>
-              <div colspan="2" class="alert alert-warning" attrs="{'invisible': ['|', ('easypost_delivery_type', '!=', False), ('delivery_type', '!=', 'easypost')]}">
+              <div colspan="2" class="alert alert-warning" attrs="{'invisible': ['|', ('easypost_delivery_type', '!=', False), ('delivery_type', '!=', 'easypost')]}" role="status">
                 <p>Do not forget to load your Easypost carrier accounts for a valid configuration.</p>
               </div>
               <field name="easypost_delivery_type" string="Carrier Type" readonly="1" attrs="{'invisible': [('easypost_delivery_type', '=', False)]}"/>
@@ -35,18 +35,18 @@
                   <a href="https://www.easypost.com/signup" target="_blank">Easypost Website</a>
                   to create a new account:</b>
                 <br/>
-                <img src="/delivery_easypost/static/src/img/signup.png"/>
+                <img src="/delivery_easypost/static/src/img/signup.png" alt="Sign up" title="Sign up"/>
               </li>
               <li>
                 <b>Once your account is created, go to your Dashboard and click on the arrow next to your username to configure your carrier accounts. </b>
                 <b>You can add new carrier accounts on the right side of the same page.</b>
                 <br/>
-                <img src="/delivery_easypost/static/src/img/carrier_accounts.png"/>
+                <img src="/delivery_easypost/static/src/img/carrier_accounts.png" alt="Carrier accounts" title="Carrier accounts"/>
               </li>
               <li>
                 <b>Copy your API keys in Odoo</b>
                 <br/>
-                <img src="/delivery_easypost/static/src/img/api_keys.png"/>
+                <img src="/delivery_easypost/static/src/img/api_keys.png" alt="API keys" title="API keys"/>
               </li>
             </ul>
           </group>

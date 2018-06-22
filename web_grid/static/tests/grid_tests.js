@@ -334,22 +334,22 @@ QUnit.module('Views', {
                 "should not have rendered a no content helper");
 
             assert.strictEqual(grid.$('div.o_grid_cell_container').length, 0, "should not have any cells");
-            assert.notOk($('div.modal').length, "should not have any modal open");
+            assert.notOk($('[role="dialog"]').length, "should not have any modal open");
             grid.$buttons.find('.o_grid_button_add').click();
 
-            assert.ok($('div.modal').length, "should have opened a modal");
+            assert.ok($('[role="dialog"]').length, "should have opened a modal");
 
             // input a project and a task
             for (var i = 0; i < 2; i++) {
-                $('.modal .o_field_many2one input').eq(i).click();
-                $('.modal .o_field_many2one input').eq(i).autocomplete('widget').find('a').first().click();
+                $('[role="dialog"] .o_field_many2one input').eq(i).click();
+                $('[role="dialog"] .o_field_many2one input').eq(i).autocomplete('widget').find('a').first().click();
             }
 
             // input unit_amount
-            $('.modal input').eq(3).val("4").trigger('input');
+            $('[role="dialog"] input').eq(3).val("4").trigger('input');
 
             // save
-            $('.modal .modal-footer button.btn-primary').click();
+            $('footer.modal-footer button.btn-primary').click();
             return concurrency.delay(0);
         }).then(function () {
             assert.strictEqual(grid.$('div.o_grid_cell_container').length, 7,
@@ -404,16 +404,16 @@ QUnit.module('Views', {
 
         return concurrency.delay(0).then(function () {
             grid.$buttons.find('.o_grid_button_add').click();
-            assert.ok($('div.modal').length, "should have opened a modal");
+            assert.ok($('[role="dialog"]').length, "should have opened a modal");
             // input a project and a task
             for (var i = 0; i < 2; i++) {
-                $('.modal .o_field_many2one input').eq(i).click();
-                $('.modal .o_field_many2one input').eq(i).autocomplete('widget').find('a').first().click();
+                $('[role="dialog"] .o_field_many2one input').eq(i).click();
+                $('[role="dialog"] .o_field_many2one input').eq(i).autocomplete('widget').find('a').first().click();
             }
             // input unit_amount
-            $('.modal input').eq(3).val("4").trigger('input');
+            $('[role="dialog"] input').eq(3).val("4").trigger('input');
             // save
-            $('.modal .modal-footer button.btn-primary').click();
+            $('footer.modal-footer button.btn-primary').click();
 
             grid.destroy();
             done();

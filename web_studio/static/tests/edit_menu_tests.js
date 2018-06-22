@@ -148,7 +148,7 @@ QUnit.module('Studio', {
         dialog.$('.js_edit_menu')[1].click();
         assert.strictEqual($('.o_act_window').length, 1,
             "there should be a act window modal in the dom");
-        assert.strictEqual($('.o_act_window input.o_field_widget[name="name"]').val(), "Menu 2",
+        assert.strictEqual($('input.o_field_widget[name="name"]').val(), "Menu 2",
             "the edited menu should be menu 2");
         // confirm the edition
         assert.strictEqual(customizeCalls, 0, "current changes have not been saved");

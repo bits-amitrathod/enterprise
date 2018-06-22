@@ -2,9 +2,9 @@
 <templates xml:space="preserve">
 
 <t t-name="voip.switch_panel_top_button">
-  <li title='Display Dialing Panel'>
-    <a href="#">
-      <i class="fa fa-phone fa-fw"></i>
+  <li>
+    <a href="#" title='Display Dialing Panel'>
+      <i class="fa fa-phone fa-fw" role="img" aria-label='Display Dialing Panel'></i>
     </a>
   </li>
 </t>
@@ -13,25 +13,25 @@
   <div class="o_dial o_in_home_menu">
     <div class="o_dial_fold text-right">
       <span>
-        <a href="#" class="o_dial_window_close fa fa-close"/>
+        <a href="#" class="o_dial_window_close fa fa-close" aria-label="Close" title="Close"/>
       </span>
-      <i class='fa fa-angle-up fa-2x o_dial_unfold'/>
+      <i class='fa fa-angle-up fa-2x o_dial_unfold' role="img" aria-label="Unfold" title="Unfold"/>
     </div>
     <div class="o_dial_panel o_form_view">
       <div class="o_dial_searchbar">
         <input class="o_dial_search_input" placeholder="Search Phone Calls..."/>
-        <span class="fa fa-search" title="Refresh the Panel"/>
+        <span class="fa fa-search" title="Refresh the Panel" role="img" aria-label="Refresh the Panel"/>
       </div>
       <div class="o_notebook">
         <!-- Nav tabs -->
         <ul class="o_dial_tabs nav nav-tabs" role="tablist">
-          <li role="presentation" class="o_dial_recent_tab col-md-3 text-center">
+          <li class="o_dial_recent_tab col-md-3 text-center">
             <a class="o_dial_tab" href="#recent" aria-controls="recent" role="tab" data-toggle="tab">RECENT</a>
           </li>
-          <li role="presentation" class="o_dial_activities_tab active col-md-5 text-center">
+          <li class="o_dial_activities_tab active col-md-5 text-center">
             <a class="o_dial_tab" href="#nextActivities" aria-controls="nextActivities" role="tab" data-toggle="tab">NEXT ACTIVITIES</a>
           </li>
-          <li role="presentation" class="col-md-4 text-center">
+          <li class="col-md-4 text-center">
             <a class="o_dial_tab" href="#contacts" aria-controls="contacts" role="tab" data-toggle="tab">CONTACTS</a>
           </li>
         </ul>
@@ -46,7 +46,7 @@
     <div class="o_dial_keypad">
       <div class="o_dial_keypad_input_div">
         <input class="o_dial_keypad_input" placeholder="Enter the number..."/>
-        <div class="o_dial_keypad_backspace fa fa-long-arrow-left" title="Backspace"/>
+        <div class="o_dial_keypad_backspace fa fa-long-arrow-left" title="Backspace" role="img" aria-label="Backspace"/>
       </div>
       <div class="clearfix o_dial_keypad_buttons mt16 mb16">
         <button class="O_dial_number o_dial_keypad_button text-primary">1</button>
@@ -64,8 +64,8 @@
       </div>
     </div>
     <div class="o_dial_buttons o_dial_main_buttons">
-      <button class="col-xs-6 o_dial_keypad_button o_dial_keypad_icon text-gray-light"><i class="fa fa-keyboard-o"></i></button>
-      <button class="col-xs-6 o_dial_call_button"><i class="fa fa-phone"></i></button>
+      <button class="col-xs-6 o_dial_keypad_button o_dial_keypad_icon text-gray-light" aria-label="Keypad" title="Keypad"><i class="fa fa-keyboard-o"></i></button>
+      <button class="col-xs-6 o_dial_call_button" aria-label="Call" title="Call"><i class="fa fa-phone"></i></button>
     </div>
   </div>
 </t>

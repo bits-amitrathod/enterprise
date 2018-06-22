@@ -3,7 +3,7 @@
 
 <div t-name="HomeMenu" class="o_home_menu">
     <div class="o_menu_search o_bar_hidden hidden-xs">
-        <span class="fa fa-search fa-2x o_menu_search_icon"/>
+        <span class="fa fa-search fa-2x o_menu_search_icon" role="img" aria-label="Search" title="Search"/>
         <input type="text" placeholder="Search..." class="o_menu_search_input" onfocus="this.value = this.value;"/>
     </div>
     <div class="o_home_menu_scrollable">
@@ -35,7 +35,7 @@
     <div t-if="widget._state.menuItems.length" class="o_menuitems">
         <t t-set="focused_menu_index" t-value="widget.getMenuIndex()"/>
         <t t-foreach="widget._state.menuItems" t-as="menu">
-            <a
+            <a role="menuitem"
               t-att-class="'o_menuitem' + ((focused_menu_index === menu_index)? ' o_focused' : '')"
               t-att-href="menu.href ? menu.href : ('#menu_id='+menu.id+'&amp;action_id='+menu.action)"
               t-att-data-menu="menu.id">
@@ -44,17 +44,17 @@
         </t>
     </div>
     <t t-if="widget._state.apps.length + widget._state.menuItems.length === 0">
-        <div class="o_no_result">No result</div>
+        <div class="o_no_result" role="alert">No result</div>
     </t>
     <div class="o_home_menu_footer">
-        <img src="/web/static/src/img/logo_inverse_white_206px.png"/>
+        <img src="/web/static/src/img/logo_inverse_white_206px.png" alt="Logo"/>
     </div>
 </t>
 
 <t t-name="WebClient.database_expiration_panel">
     <div class="database_expiration_panel" id="announcement_bar_table">
         <div t-attf-class="alert alert-#{diffDays&lt;6?'danger':(diffDays&lt;16?'warning':'info')}" role="alert">
-            <a href="#" class="oe_instance_hide_panel pull-right" t-translation="off">&amp;times;</a>
+            <a href="#" class="oe_instance_hide_panel pull-right" t-translation="off" aria-label="Dismiss">&amp;times;</a>
             <span>
                 <span class="oe_instance_expires"></span>
                 <span class="oe_instance_register">
@@ -86,12 +86,12 @@
                             </t>
                             <t t-if="dbexpiration_reason == 'renewal'">
                                 <a class="oe_instance_renew" href="#">Renew your subscription</a>
-                                <a class="check_enterprise_status" href="#" title="Refresh subscription status"><i class="fa fa-refresh"></i></a>
+                                <a class="check_enterprise_status" href="#" title="Refresh subscription status" aria-label="Refresh subscription status"><i class="fa fa-refresh"></i></a>
                             </t>
                             <t t-if="dbexpiration_reason == 'upsell'">
                                 You have more users than your subscription allows.<br/>
                                 <a class="oe_instance_upsell" href="#">Upgrade your subscription</a>
-                                <a class="check_enterprise_status" href="#" title="Refresh subscription status"><i class="fa fa-refresh"></i></a>
+                                <a class="check_enterprise_status" href="#" title="Refresh subscription status" aria-label="Refresh subscription status"><i class="fa fa-refresh"></i></a>
                             </t>
                         </t>
                         <t t-if="warning=='user'">
@@ -123,23 +123,23 @@
     </div>
 </t>
 
-<nav t-name="Menu">
-    <div class="o_main_navbar">
-        <a href="#" class="fa o_menu_toggle"/>
-        <button type="button" class="fa fa-bars pull-right visible-sm-block visible-xs-block o_mobile_menu_toggle"/>
+<header t-name="Menu">
+    <nav class="o_main_navbar">
+        <a href="#" class="fa o_menu_toggle" title="Applications" aria-label="Applications"/>
+        <button type="button" class="fa fa-bars pull-right visible-sm-block visible-xs-block o_mobile_menu_toggle" title="Toggle menu" aria-label="Toggle menu"/>
 
-        <div class="o_menu_brand" role="button" />
-        <ul class="o_menu_sections"/>
-        <ul class="o_menu_systray"/>
-    </div>
-</nav>
+        <a href="#" class="o_menu_brand" role="button" />
+        <ul class="o_menu_sections" role="menu"/>
+        <ul class="o_menu_systray" role="menu"/>
+    </nav>
+</header>
 
 <t t-name="Menu.link">
     <t t-if="!depth"><t t-set="depth" t-value="1"/></t>
     <t t-if="depth"><t t-set="depth" t-value="depth + 1"/></t>
 
     <li t-if="!menu.children.length">
-        <a t-attf-href="#menu_id=#{menu.id}&amp;action=#{menu.action ? menu.action.split(',')[1] : ''}"
+        <a role="menuitem" t-attf-href="#menu_id=#{menu.id}&amp;action=#{menu.action ? menu.action.split(',')[1] : ''}"
             t-att-data-menu="menu.id"
             t-att-data-action-model="menu.action ? menu.action.split(',')[0] : ''"
             t-att-data-action-id="menu.action ? menu.action.split(',')[1] : ''"
@@ -151,7 +151,7 @@
     </li>
 
     <!-- Desktop case -->
-    <li t-if="menu.children.length and !mobile" role="presentation" t-att-class="'dropdown-header o_menu_header_lvl_' + depth">
+    <li t-if="menu.children.length and !mobile" role="menuitem" t-att-class="'dropdown-header o_menu_header_lvl_' + depth">
         <span><t t-esc="menu.name"/></span>
         <t t-foreach="menu.children" t-as="menu">
             <t t-call="Menu.link"/>
@@ -159,12 +159,11 @@
     </li>
 
     <!-- Mobile case -->
-   <li t-if="menu.children.length and mobile" class="o_burger_menu_section">
+   <li t-if="menu.children.length and mobile" class="o_burger_menu_section" role="menuitem" aria-haspopup="true">
         <a href="#" t-att-class="'o_menu_entry_lvl_' + depth" t-att-data-menu-xmlid="menu.xmlid" data-toggle="dropdown" role="button" aria-expanded="false">
-            <t t-esc="menu.name"/>
-            <span class="fa fa-chevron-right toggle_icon pull-right"/>
+            <span t-esc="menu.name" class="fa fa-suffix-chevron-right toggle_icon pull-right"/>
         </a>
-        <ul>
+        <ul role="menu">
             <t t-foreach="menu.children" t-as="menu">
                 <t t-call="Menu.link"/>
             </t>

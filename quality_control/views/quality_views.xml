@@ -46,7 +46,7 @@
                                 <field name="display_name"/>
                             </div>
                             <div class="oe_kanban_bottom_right">
-                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
+                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
                             </div>
                             <div class="oe_kanban_bottom_left">
                                  <field name="priority" widget="priority"/>
@@ -310,7 +310,7 @@
         <field name="model">quality.check</field>
         <field name="arch" type="xml">
             <form string="Quality Check Failed">
-                <div class="alert alert-warning">
+                <div class="alert alert-warning" role="alert">
                     <field name="warning_message"/>
                 </div>
                 <div>
@@ -355,7 +355,7 @@
                                 </div>
                             </div>
                             <div class="oe_kanban_bottom_right">
-                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
+                                <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
                             </div>
                         </div>
                     </t>
@@ -510,15 +510,16 @@
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="#{kanban_color(record.color.raw_value)}">
+                            <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
                             <div t-attf-class="o_kanban_card_header">
                                 <div class="o_kanban_card_header_title">
                                     <div class="o_primary"><field name="name"/></div>
                                     <div t-if="record.alias_name.value and record.alias_domain.value">
-                                        <small><i class="fa fa-envelope-o"></i>&amp;nbsp; <field name="alias_id"/></small>
+                                        <small><i class="fa fa-envelope-o" role="img" aria-label="Domain alias" title="Domain alias"></i>&amp;nbsp; <field name="alias_id"/></small>
                                     </div>
                                 </div>
                                 <div class="o_kanban_manage_button_section">
-                                    <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" /></a>
+                                    <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
                                 </div>
                             </div>
                             <div class="container o_kanban_card_content">
@@ -541,7 +542,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><div class="container o_kanban_card_manage_pane dropdown-menu">
+                            </div><div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
                                 <div class="row">
                                     <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_view">
                                     </div>
@@ -549,8 +550,8 @@
                                     </div>
                                 </div>
                                 <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
-                                    <div class="col-xs-8">
-                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    <div role="menuitem" aria-haspopup="true" class="col-xs-8">
+                                        <ul role="menu" class="oe_kanban_colorpicker" data-field="color"/>
                                     </div>
                                     <div class="col-xs-4 text-right">
                                         <a type="edit">Settings</a>
@@ -790,7 +791,7 @@
                 </button>
                 <button name="action_see_spc_control" type="object" class="oe_stat_button"
                     attrs="{'invisible': ['|', ('check_count', '=', 0), ('test_type', '!=', 'measure')]}">
-                    <span class="fa fa-2x" data-icon="&#x2211;" style="padding-left: 10px;"/>
+                    <span class="fa fa-2x" data-icon="&#x2211;" style="padding-left: 10px;" role="img" aria-label="Statistics" title="Statistics"/>
                     <div class="o_field_widget o_stat_info mr4">
                         <span class="o_stat_text">AVG:</span>
                         <span class="o_stat_text">STD:</span>

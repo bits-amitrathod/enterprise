@@ -321,6 +321,7 @@
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
+                            <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
                             <div class="o_subscription_kanban_main">
                                 <div class="o_kanban_card_content">
                                     <div class="o_kanban_primary_left">
@@ -328,24 +329,24 @@
                                             <strong><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></strong>
                                         </h3>
                                         <div>Recurrence: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></div>
-                                        <div t-if="record.payment_mandatory.raw_value"><i class="fa fa-check" /> Automatic payments</div>
-                                        <div t-if="record.user_closable.raw_value"><i class="fa fa-check" /> Closable by customer</div>
+                                        <div t-if="record.payment_mandatory.raw_value"><span class="fa fa-check"> Automatic payments</span></div>
+                                        <div t-if="record.user_closable.raw_value"><span class="fa fa-check"> Closable by customer</span></div>
                                     </div>
-                                </div><div class="o_kanban_card_manage_pane dropdown-menu">
+                                </div><div class="o_kanban_card_manage_pane dropdown-menu" role="menu">
                                     <div class="o_kanban_card_manage_section o_kanban_manage_reports">
-                                        <div>
+                                        <div role="menuitem">
                                             <a type="edit">Settings</a>
                                         </div>
-                                        <div>
+                                        <div role="menuitem">
                                             <a name="%(sale_subscription_action_filtered)d" type="action">Subscriptions</a>
                                         </div>
                                     </div>
-                                    <div t-if="widget.editable" class="o_subscription_kanban_colorpicker">
-                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    <div role="menuitem" aria-haspopup="true" t-if="widget.editable" class="o_subscription_kanban_colorpicker">
+                                        <ul role="menu" class="oe_kanban_colorpicker" data-field="color"/>
                                     </div>
                                 </div>
                                 <div class="o_subscription_kanban_manage">
-                                    <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" /></a>
+                                    <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
                                 </div>
                             </div>
                             <div class="ml16">
@@ -423,7 +424,7 @@
                                 <field name="recurring_rule_type" class="field_rule_type"/>
                             </div>
                             <field name="recurring_rule_boundary" widget="radio" options="{'horizontal':true}"/>
-                            <label string="End After" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}"/>
+                            <label string="End After" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}" for="recurring_rule_count"/>
                             <div class="o_row" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}">
                                 <field name="recurring_rule_count"/>
                                 <span class="ml8"><strong>repeats</strong></span>

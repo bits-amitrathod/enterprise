@@ -2,7 +2,7 @@
 <templates>
 
 <t t-name="web_studio.Sidebar.Parameters" t-if="widget.debug">
-    <button class="btn btn-sm btn-default o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
+    <button class="btn btn-sm btn-default o_web_studio_parameters"><span class="fa fa-cog"> More</span></button>
 </t>
 
 <t t-name="web_studio.Sidebar.Remove">
@@ -10,7 +10,7 @@
 </t>
 
 <div t-name="web_studio.Sidebar.Warning.Groups" class="o_web_studio_remove_warning_groups">
-    <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+    <p class="fa fa-exclamation-triangle">
         This field is placed after another element that is only displayed under certain conditions.
     </p>
     You need to be part of these groups to see this field:<br/>
@@ -22,7 +22,7 @@
 </div>
 
 <t t-name="web_studio.Sidebar.XMLEditor" t-if="widget.debug">
-    <button class="btn btn-sm btn-default o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
+    <button class="btn btn-sm btn-default o_web_studio_xml_editor"><span class="fa fa-code"> XML</span></button>
 </t>
 
 <t t-name="web_studio.Sidebar.Toolbox">
@@ -107,13 +107,13 @@
     <!-- Header -->
     <div class="o_web_studio_sidebar_header">
         <div name="new" t-attf-class="o_web_studio_new #{_.contains(['form', 'list', 'kanban', 'search'], widget.view_type)  ? (widget.state.mode === 'new' ? 'active' : '') : 'inactive'}">
-            <i class="fa fa-plus" aria-hidden="true"/> Add
+            <span class="fa fa-plus"> Add</span>
         </div>
         <div name="view" t-attf-class="o_web_studio_view #{widget.state.mode === 'view' ? 'active' : ''}">
-            <i class="fa fa-television" aria-hidden="true"/> View
+            <span class="fa fa-television"> View</span>
         </div>
         <div name="properties" t-attf-class="disabled o_web_studio_properties #{widget.state.mode !== 'properties' ? 'inactive' : 'active'}">
-            <i class="fa fa-server" aria-hidden="true"/> Properties
+            <span class="fa fa-server"> Properties</span>
         </div>
     </div>
 
@@ -444,7 +444,7 @@
             <span/>
         </div>
         <label for="invisible">Invisible</label>
-        <a href="#" data-type="invisible" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
+        <a href="#" data-type="invisible" role="button" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
     </div>
     <t t-if="widget.state.modifiers.invisible !== true">
         <t t-if="_.contains(['list', 'form'], widget.view_type)">
@@ -457,7 +457,7 @@
                     <span/>
                 </div>
                 <label for="required">Required</label>
-                <a href="#" data-type="required" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
+                <a href="#" data-type="required" role="button" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
             </div>
             <div class="clearfix o_web_studio_sidebar_checkbox">
                 <t t-set="attrs_readonly" t-value="widget.state.modifiers.readonly and widget.state.modifiers.readonly !== true"/>
@@ -467,7 +467,7 @@
                     <span/>
                 </div>
                 <label for="readonly">Read only</label>
-                <a href="#" data-type="readonly" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
+                <a href="#" data-type="readonly" role="button" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
             </div>
         </t>
         <div t-if="widget.view_type === 'kanban'" class="o_web_studio_sidebar_checkbox">
@@ -571,7 +571,7 @@
         <div class="o_groups"/>
     </div>
     <div t-if="widget.state.field.manual and widget.state.field.type === 'selection'">
-        <a href="#" class="btn btn-sm btn-link o_web_studio_edit_selection_values"><i class="fa fa-pencil"/> Edit Possible Values</a>
+        <a href="#" role="button" class="btn btn-sm btn-link o_web_studio_edit_selection_values"><span class="fa fa-pencil"> Edit Possible Values</span></a>
     </div>
     <t t-call="web_studio.Sidebar.Toolbox">
         <t t-call="web_studio.Sidebar.Parameters"/>
@@ -692,12 +692,12 @@
             <div>
                 <input id="rainbow_img_url" name="rainbow_img_url" type="hidden" t-att-value="rainbow.img_url"/>
                 <div class="mb8 ml64 mr64">
-                    <img t-att-src="rainbow.img_url or '/web/static/src/img/smile.svg'" class="img img-responsive"/>
+                    <img t-att-src="rainbow.img_url or '/web/static/src/img/smile.svg'" class="img img-responsive" alt="Great !"/>
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-sm btn-default o_img_upload"><i class="fa fa-upload"/> Change Image</button>
-                <button t-if="rainbow.img_url" class="btn btn-sm btn-default o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
+                <button class="btn btn-sm btn-default o_img_upload"><span class="fa fa-upload"> Change Image</span></button>
+                <button t-if="rainbow.img_url" class="btn btn-sm btn-default o_img_reset"><span class="fa fa-undo">Reset Image</span></button>
             </div>
             <span class="hide">
                 <t t-call="HiddenInputFile">

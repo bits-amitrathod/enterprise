@@ -69,6 +69,7 @@
                 <templates>
                     <t t-name="kanban-box">
                         <div t-if="['incoming', 'outgoing', 'internal'].indexOf(record.code.raw_value) > -1" t-attf-class="oe_kanban_card #{kanban_color(record.color.raw_value)} oe_kanban_global_click">
+                            <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <strong><span><t t-esc="record.display_name.value"/></span></strong>

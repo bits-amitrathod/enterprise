@@ -99,7 +99,7 @@
                         </button>
                     </div>
                     <div class="oe_title">
-                        <label class="oe_edit_only" string="Name" />
+                        <span class="oe_edit_only">Name</span>
                         <h1><field name="name" required="1" placeholder="e.g. eCommerce Offers" /></h1>
                     </div>
                     <group>
@@ -140,7 +140,8 @@
                                             <div class="o_ma_card">
                                                 <div class="o_ma_title_bar">
                                                     <div class="o_ma_icon">
-                                                        <span t-attf-class="fa fa-#{record.activity_type.raw_value == 'email' ? 'envelope' : 'cogs'}" />
+                                                        <span t-attf-class="fa fa-envelope" t-if="record.activity_type.raw_value == 'email'" title="Email" role="img" aria-label="Email"/>
+                                                        <span t-attf-class="fa fa-cogs" t-if="record.activity_type.raw_value != 'email'" title="Non email activity" role="img" aria-label="Non email activity"/>
                                                     </div>
                                                     <div class="o_ma_title">
                                                         <h3 class="mb0 mt0"><a type="edit" t-attf-class="oe_kanban_action oe_kanban_action_a #{read_only_mode and 'o_ma_full' or None}" t-att-title="record.name.raw_value"><field name="name" /></a></h3>
@@ -148,9 +149,9 @@
                                                     </div>
                                                     <div class="o_ma_switch">
                                                         <div t-if="!read_only_mode" class="pull-left mt4 mr4">
-                                                            <a type="edit" class="btn btn-primary btn-xs">Edit</a><a type="delete" class="btn btn-link btn-xs">Delete</a>
+                                                            <a type="edit" role="button" class="btn btn-primary btn-xs">Edit</a><a type="delete" role="button" class="btn btn-link btn-xs">Delete</a>
                                                         </div>
-                                                        <span data-mode="graph" class="active" title="Graph"><i class="fa fa-pie-chart" /></span><span data-mode="filter" title="Filter"><i class="fa fa-filter" /></span>
+                                                        <span data-mode="graph" class="active" role="img" title="Graph" aria-label="Graph"><i class="fa fa-pie-chart" /></span><span data-mode="filter" title="Filter" role="img" aria-label="Filter"><i class="fa fa-filter" /></span>
                                                     </div>
                                                 </div>
                                                 <div class="o_pane o_pane_graph">
@@ -174,7 +175,7 @@
                                                     </div>
                                                     <div t-if="record.activity_type.raw_value == 'email'" class="row o_ma_email_details text-center">
                                                         <div class="col-xs-3 text-uppercase">
-                                                            <i class="fa fa-pie-chart" /> Email Details
+                                                            <span class="fa fa-pie-chart" > Email Details</span>
                                                         </div>
                                                         <div class="col-xs-3" title="Mails sent and not bounced">
                                                             <strong><t t-esc="record.total_sent.raw_value or 0"></t></strong> Sent
@@ -190,18 +191,18 @@
                                                 <div class="o_pane o_pane_filter hidden" />
                                                 <div t-if="!read_only_mode" class="o_ma_child_activity text-center">
                                                     <div class="o_ma_child_activity_title text-muted">
-                                                        <i class="fa fa-plus-circle" /> Add child activity
+                                                        <span class="fa fa-plus-circle"> Add child activity</span>
                                                     </div>
                                                     <div t-if="record.id.raw_value" class="o_ma_child_activity_buttons">
-                                                        <i data-type="act" class="fa fa-code-fork fa-rotate-180 fa-flip-vertical o_ma_text_processed o_add_child" title="Add Another Activity" />
+                                                        <i data-type="act" class="fa fa-code-fork fa-rotate-180 fa-flip-vertical o_ma_text_processed o_add_child" title="Add Another Activity" role="img" aria-label="Add Another Activity" />
                                                         <t t-if="record.activity_type.raw_value == 'email'">
-                                                            <i data-type="mail_open" class="fa fa-envelope-open-o o_ma_text_processed o_add_child" title="Mail Opened" />
-                                                            <i data-type="mail_not_open" class="fa fa-envelope-open-o o_ma_text_rejected o_add_child" title="Mail not Opened" />
-                                                            <i data-type="mail_reply" class="fa fa-reply o_ma_text_processed o_add_child" title="Mail Replied" />
-                                                            <i data-type="mail_not_reply" class="fa fa-reply o_ma_text_rejected o_add_child" title="Mail not Replied" />
-                                                            <i data-type="mail_click" class="fa fa-hand-pointer-o o_ma_text_processed o_add_child" title="Mail Clicked" />
-                                                            <i data-type="mail_not_click" class="fa fa-hand-pointer-o o_ma_text_rejected o_add_child" title="Mail not Clicked" />
-                                                            <i data-type="mail_bounce" class="fa fa fa-exclamation-circle o_ma_text_rejected o_add_child" title="Mail Bounced" />
+                                                            <i data-type="mail_open" class="fa fa-envelope-open-o o_ma_text_processed o_add_child" title="Mail Opened" role="img" aria-label="Mail Opened" />
+                                                            <i data-type="mail_not_open" class="fa fa-envelope-open-o o_ma_text_rejected o_add_child" title="Mail not Opened" role="img" aria-label="Mail not Opened" />
+                                                            <i data-type="mail_reply" class="fa fa-reply o_ma_text_processed o_add_child" title="Mail Replied" role="img" aria-label="Mail Replied" />
+                                                            <i data-type="mail_not_reply" class="fa fa-reply o_ma_text_rejected o_add_child" title="Mail not Replied" role="img" aria-label="Mail not Replied" />
+                                                            <i data-type="mail_click" class="fa fa-hand-pointer-o o_ma_text_processed o_add_child" title="Mail Clicked" role="img" aria-label="Mail Clicked" />
+                                                            <i data-type="mail_not_click" class="fa fa-hand-pointer-o o_ma_text_rejected o_add_child" title="Mail not Clicked" role="img" aria-label="Mail not Clicked" />
+                                                            <i data-type="mail_bounce" class="fa fa fa-exclamation-circle o_ma_text_rejected o_add_child" title="Mail Bounced" role="img" aria-label="Mail Bounced" />
                                                         </t>
                                                     </div>
                                                     <div t-else="" class="o_ma_child_activity_buttons">
@@ -216,41 +217,41 @@
                                         <div class="o_ma_timeline text-center">
                                             <t t-if="record.trigger_type.raw_value == 'mail_open'">
                                                 <div class="o_ma_text_processed">
-                                                    <i class="fa fa-envelope-open-o" /> Opened after
+                                                    <span class="fa fa-envelope-open-o"> Opened after</span>
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_reply'">
                                                 <div class="o_ma_text_processed">
-                                                    <i class="fa fa-reply" /> Replied after
+                                                    <span class="fa fa-reply"> Replied after</span>
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_click'">
                                                 <div class="o_ma_text_processed">
-                                                    <i class="fa fa-hand-pointer-o" /> Clicked after
+                                                    <span class="fa fa-hand-pointer-o"> Clicked after</span>
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_not_open'">
                                                 <div class="o_ma_text_rejected">
-                                                    <i class="fa fa-envelope-open-o" /> Not opened within
+                                                    <span class="fa fa-envelope-open-o"> Not opened within</span>
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_not_reply'">
                                                 <div class="o_ma_text_rejected">
-                                                    <i class="fa fa-reply" /> Not replied within
+                                                    <span class="fa fa-reply"> Not replied within</span>
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_not_click'">
                                                 <div class="o_ma_text_rejected">
-                                                    <i class="fa fa-hand-pointer-o" /> Not clicked within
+                                                    <span class="fa fa-hand-pointer-o"> Not clicked within</span>
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_bounce'">
                                                 <div class="o_ma_text_rejected">
-                                                    <i class="fa fa-exclamation-circle" /> Mail bounced after
+                                                    <span class="fa fa-exclamation-circle"> Mail bounced after</span>
                                                 </div>
                                             </t>
                                             <strong>
-                                                <i class="fa fa-clock-o" /> <field name="interval_number" />
+                                                <i class="fa fa-clock-o" role="img" aria-label="Select time" title="Select time"/> <field name="interval_number" />
                                                 <field name="interval_type" />
                                             </strong>
                                         </div>
@@ -294,7 +295,7 @@
                                             <div>
                                                 <field name="parent_id" domain="[('id', 'in', parent.marketing_activity_ids), ('id', '!=', id)]" attrs="{'required': [('trigger_type', '!=', 'begin')], 'invisible': [('trigger_type', '=', 'begin')]}" options="{'no_create_edit': True}"/>
                                             </div>
-                                            <label string="Warning" invisible="1"/>
+                                            <span class="o_form_label" invisible="1">Warning</span>
                                             <div>
                                                 <small class="oe_edit_only text-muted" attrs="{'invisible': [('trigger_type', '=', 'begin')]}">(save the campaign to make its activities selectable)</small>
                                             </div>

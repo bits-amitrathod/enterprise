@@ -115,7 +115,7 @@
                         <label for="discount" attrs="{ 'invisible':[('reward_type','!=','discount')] }"/>
                         <div class="o_row" attrs="{ 'invisible':[('reward_type','!=','discount')] }">
                             <field name="discount" />
-                            <label string="%"/>
+                            <span class="o_form_label">%</span>
                         </div>
                         <field name="discount_product_id"   attrs="{ 'invisible':[('reward_type','!=','discount')], 'required':[('reward_type','==','discount')] }"/>
                         <field name="point_product_id"      attrs="{ 'invisible':[('reward_type','!=','resale')],   'required':[('reward_type','==','resale')] }"/>

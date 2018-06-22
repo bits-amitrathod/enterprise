@@ -2,14 +2,14 @@
 <templates id="template" xml:space="preserve">
 
     <t t-name="ContactSync">
-        <div t-attf-class="btn btn-sm oe_stat_button"
+        <button t-attf-class="btn btn-sm oe_stat_button"
             widget="contact_sync" t-if="widget.is_mobile">
-            <div class="fa fa-fw  fa-user-plus o_button_icon mt8"> </div>
+            <div class="fa fa-fw  fa-user-plus o_button_icon mt8" role="img" aria-label="Add" title="Add"> </div>
             <div class="o_field_widget o_stat_info">
                 <span class="o_stat_value">Add to</span>
                 <span class="o_stat_value">Mobile</span>
             </div>
-        </div>
+        </button>
     </t>
 
 </templates>

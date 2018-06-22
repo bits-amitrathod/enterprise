@@ -103,7 +103,7 @@
                     </header>
                     <sheet>
                         <group>
-                            <div class="alert alert-danger" attrs="{'invisible':[('state','!=', 'error')]}">
+                            <div class="alert alert-danger" attrs="{'invisible':[('state','!=', 'error')]}" role="alert">
                                 <field name="error_message" class="oe_inline"/>
                                 When the error is resolved, please click on 'Reset to draft'.
                             </div>
@@ -185,7 +185,7 @@
                                         <strong><span><field name="provider_id"/></span></strong>
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <strong><i class="fa fa-print"/> <t t-esc="record.ink.value"/></strong>
+                                        <strong><i class="fa fa-print" title="Ink" role="img" aria-label="Ink"/> <t t-esc="record.ink.value"/></strong>
                                     </div>
                                 </div>
                                 <div class="row">
