@@ -7,7 +7,6 @@ from odoo import models, fields
 class SaleReport(models.Model):
     _inherit = 'sale.report'
 
-    order_id = fields.Many2one(string="Order", comodel_name='sale.order', readonly=True)
     is_abandoned_cart = fields.Boolean(string="Abandoned Cart", readonly=True)
     invoice_status = fields.Selection([
         ('upselling', 'Upselling Opportunity'),
@@ -17,7 +16,6 @@ class SaleReport(models.Model):
         ], string="Invoice Status", readonly=True)
 
     def _query(self, with_clause='', fields={}, groupby='', from_clause=''):
-        fields['order_id'] = ", s.id as order_id"
         fields['is_abandoned_cart'] = """, s.date_order <= (timezone('utc', now()) - ((COALESCE(config.value, '1.0') || ' hour')::INTERVAL))
         AND team.team_type = 'website'
         AND s.state = 'draft'
@@ -31,7 +29,6 @@ class SaleReport(models.Model):
         """
 
         groupby += """
-            , s.id
             , config.value
             , team.team_type
             , s.invoice_status

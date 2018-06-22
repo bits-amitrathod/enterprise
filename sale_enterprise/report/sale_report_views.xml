@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sale_report_view_dashboard" model="ir.ui.view">
+            <field name="name">sale.report.view.dashboard</field>
+            <field name="model">sale.report</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <dashboard>
+                    <view type="graph" ref="sale.view_order_product_graph"/>
+                    <group col="1" string="At A Glance">
+                        <group col="3">
+                            <aggregate name="untaxed_total" string="Untaxed Total" field="price_subtotal" group_operator="sum" widget="monetary"/>
+                            <aggregate name="orders" string="Orders" field="order_id" group_operator="count_distinct" measure="__count__"/>
+                            <aggregate name="invoiced" string="Amount Invoiced" field="untaxed_amount_invoiced" group_operator="sum" widget="monetary"/>
+                        </group>
+                        <group col="3">
+                            <formula name="avg_untaxed_total" string="Average Untaxed Total" value="record.untaxed_total / record.orders" widget="monetary"/>
+                            <aggregate name="days_to_confirm_total" string="Total Days to Confirm" field="days_to_confirm" group_operator="sum" invisible="1"/>
+                            <formula name="days_to_confirm" string="Days to Confirm" value="record.days_to_confirm_total / record.orders"/>
+                        </group>
+                    </group>
+                    <view type="pivot" ref="sale.view_order_product_pivot"/>
+                </dashboard>
+            </field>
+        </record>
+
+        <record id="sale_report_action_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">dashboard</field>
+            <field name="view_id" ref="sale_report_view_dashboard"/>
+            <field name="search_view_id" ref="sale.view_order_product_search"/>
+            <field name="context">{'search_default_Sales':1}</field>
+        </record>
+
+        <record id="sale.menu_report_product_all" model="ir.ui.menu">
+            <field name="action" ref="sale_report_action_dashboard"/>
+        </record>
+
+    </data>
+</odoo>
