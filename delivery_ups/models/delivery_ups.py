@@ -182,6 +182,7 @@ class ProviderUPS(models.Model):
                 raise UserError(result['error_message'])
 
             order = picking.sale_id
+            company = order.company_id or picking.company_id or self.env.user.company_id
             currency_order = picking.sale_id.currency_id
             if not currency_order:
                 currency_order = picking.company_id.currency_id
@@ -191,7 +192,7 @@ class ProviderUPS(models.Model):
             else:
                 quote_currency = ResCurrency.search([('name', '=', result['currency_code'])], limit=1)
                 price = quote_currency._convert(
-                    float(result['price']), currency_order, order.company_id, order.date_order or fields.Date.today())
+                    float(result['price']), currency_order, company, order.date_order or fields.Date.today())
 
             package_labels = []
             for track_number, label_binary_data in result.get('label_binary_data').items():
