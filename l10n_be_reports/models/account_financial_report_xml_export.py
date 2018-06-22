@@ -10,11 +10,17 @@ class AccountFinancialReportXMLReportExport(models.TransientModel):
 
     ask_restitution = fields.Boolean()
     ask_payment = fields.Boolean()
+    client_nihil = fields.Boolean()
+    currency_id = fields.Many2one('res.currency', default=lambda self: self.env.user.company_id.currency_id, required=True)
+    grid91 = fields.Monetary(string='Grid 91', currency_field='currency_id',
+        help='La grille 91 ne concerne que les assujettis tenus au dépôt de déclarations mensuelles. Cette grille ne peut être complétée que pour la déclaration relative aux opérations du mois de décembre.')
 
     def print_xml(self):
         options = self.env.context.get('options')
         options['ask_restitution'] = self.ask_restitution
         options['ask_payment'] = self.ask_payment
+        options['client_nihil'] = self.client_nihil
+        options['grid91'] = self.grid91
         return {
                 'type': 'ir_actions_account_report_download',
                 'data': {'model': self.env.context.get('model'),
@@ -77,7 +83,7 @@ class AccountFinancialReportXMLExport(models.AbstractModel):
         ctx.update({'no_format': True, 'date_from': date_from, 'date_to': date_to})
         lines = self.with_context(ctx).get_lines(options)
 
-        data = {'client_nihil': False, 'ask_restitution': options.get('ask_restitution', False), 'ask_payment': options.get('ask_payment', False)}
+        data = {'client_nihil': options.get('client_nihil'), 'ask_restitution': options.get('ask_restitution', False), 'ask_payment': options.get('ask_payment', False)}
 
         file_data = {
                         'issued_by': issued_by,
@@ -127,6 +133,10 @@ class AccountFinancialReportXMLExport(models.AbstractModel):
         data_of_file += '\t\t<ns2:Data>\t'
         cases_list = []
         currency_id = self.env.user.company_id.currency_id
+
+        if options.get('grid91') and not currency_id.is_zero(options['grid91']):
+            cases_list.append(('91', options['grid91']))
+
         for line in lines:
             if line['name'].startswith('91') and ending_month != 12:
                 # the tax code 91 can only be send for the declaration of December
