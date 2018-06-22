@@ -189,6 +189,7 @@ class USPSRequest():
         for line in picking.move_lines:
             USD = carrier.env['res.currency'].search([('name', '=', 'USD')], limit=1)
             order = picking.sale_id
+            company = order.company_id or picking.company_id or self.env.user.company_id
             shipper_currency = picking.sale_id.currency_id or picking.company_id.currency_id
             if shipper_currency.name == USD.name:
                 price = line.product_id.lst_price * int(line.product_uom_qty)
@@ -196,7 +197,7 @@ class USPSRequest():
                 quote_currency = picking.env['res.currency'].search([('name', '=', shipper_currency.name)], limit=1)
                 amount = line.product_id.lst_price * line.product_uom_qty
                 price = quote_currency._convert(
-                    amount, USD, order.company_id, order.date_order or fields.Date.today())
+                    amount, USD, company, order.date_order or fields.Date.today())
             weight = carrier._usps_convert_weight(line.product_id.weight * line.product_uom_qty)
             itemdetail.append(self._item_data(line, weight, price))
 
