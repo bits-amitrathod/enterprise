@@ -45,11 +45,11 @@ class SignTemplate(models.Model):
         self.write({'favorited_ids': [(3 if self.env.user in self[0].favorited_ids else 4, self.env.user.id)]})
 
     @api.model
-    def upload_template(self, name=None, dataURL=None):
+    def upload_template(self, name=None, dataURL=None, active=True):
         mimetype = dataURL[dataURL.find(':')+1:dataURL.find(',')]
         datas = dataURL[dataURL.find(',')+1:]
         attachment = self.env['ir.attachment'].create({'name': name[:name.rfind('.')], 'datas_fname': name, 'datas': datas, 'mimetype': mimetype})
-        template = self.create({'attachment_id': attachment.id, 'favorited_ids': [(4, self.env.user.id)]})
+        template = self.create({'attachment_id': attachment.id, 'favorited_ids': [(4, self.env.user.id)], 'active': active})
         return {'template': template.id, 'attachment': attachment.id}
 
     @api.model

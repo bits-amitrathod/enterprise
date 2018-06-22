@@ -44,6 +44,14 @@ odoo.define('sign.views_custo', function(require) {
                     e.stopImmediatePropagation();
                     _sign_upload_file.call(self);
                 });
+                this.$buttons.find(selector_button).after(
+                    $('<button class="btn btn-sm o-kanban-button-new ml8" type="button">Send a Request</button>')
+                    .off('click')
+                    .on('click', function (e) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        _sign_upload_file.call(self, true);
+                }));
             },
 
             _sign_create_request_button: function () {
@@ -57,7 +65,7 @@ odoo.define('sign.views_custo', function(require) {
         };
     }
 
-    function _sign_upload_file() {
+    function _sign_upload_file(inactive) {
         var self = this;
         var $upload_input = $('<input type="file" name="files[]"/>');
         $upload_input.on('change', function (e) {
@@ -65,10 +73,16 @@ odoo.define('sign.views_custo', function(require) {
             var reader = new FileReader();
 
             reader.onload = function(e) {
+                var args;
+                if (inactive) {
+                    args = [f.name, e.target.result, false];
+                } else {
+                    args = [f.name, e.target.result];
+                }
                 self._rpc({
                         model: 'sign.template',
                         method: 'upload_template',
-                        args: [f.name, e.target.result],
+                        args: args,
                     })
                     .then(function(data) {
                         self.do_action({
