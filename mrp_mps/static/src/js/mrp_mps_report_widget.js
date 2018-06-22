@@ -7,7 +7,7 @@ var AbstractAction = require('web.AbstractAction');
 var ControlPanelMixin = require('web.ControlPanelMixin');
 var SearchView = require('web.SearchView');
 var data = require('web.data');
-var pyeval = require('web.pyeval');
+var pyUtils = require('web.py_utils');
 var field_utils = require('web.field_utils');
 
 var QWeb = core.qweb;
@@ -325,7 +325,7 @@ var mrp_mps_report = AbstractAction.extend(ControlPanelMixin, {
      */
     _onSearch: function (event) {
         var session = this.getSession();
-        var result = pyeval.eval_domains_and_contexts({
+        var result = pyUtils.eval_domains_and_contexts({
             contexts: [session.user_context],
             domains: event.data.domains
         });

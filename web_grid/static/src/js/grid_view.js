@@ -7,7 +7,7 @@ var GridModel = require('web_grid.GridModel');
 var GridController = require('web_grid.GridController');
 var GridRenderer = require('web_grid.GridRenderer');
 var viewRegistry = require('web.view_registry');
-var pyeval = require('web.pyeval');
+var pyUtils = require('web.py_utils');
 
 var _lt = core._lt;
 
@@ -102,7 +102,7 @@ var GridView = AbstractView.extend({
         var ranges = [];
         var pyevalContext = py.dict.fromJSON(context || {});
         _.each(_.pluck(col_node.children, 'attrs'), function(range) {
-            if (range.invisible && pyeval.py_eval(range.invisible, {'context': pyevalContext})) {
+            if (range.invisible && pyUtils.py_eval(range.invisible, {'context': pyevalContext})) {
                 return;
             }
             ranges.push(range);

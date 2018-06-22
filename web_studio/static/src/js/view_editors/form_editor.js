@@ -6,7 +6,7 @@ var FormRenderer = require('web.FormRenderer');
 
 var EditorMixin = require('web_studio.EditorMixin');
 var FormEditorHook = require('web_studio.FormEditorHook');
-var pyeval = require('web.pyeval');
+var pyUtils = require('web.py_utils');
 
 var Qweb = core.qweb;
 var _t = core._t;
@@ -347,7 +347,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
             $button.attr('data-node-id', nodeID);
             this.setSelectable($button);
             if (node.attrs.effect) {
-                node.attrs.effect = _.defaults(pyeval.py_eval(node.attrs.effect), {
+                node.attrs.effect = _.defaults(pyUtils.py_eval(node.attrs.effect), {
                     fadeout: 'medium'
                 });
             }
