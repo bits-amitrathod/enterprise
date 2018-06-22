@@ -183,7 +183,14 @@
 <template id="main_template">
     <div class='o_account_reports_body'>
         <div class="container o_account_reports_page o_account_reports_no_print">
+            <div class="alert alert-info text-center no_print" t-if="options.get('unposted_in_period')">
+                <span>There are <a action="open_unposted_moves">unposted Journal Entries</a> prior or included in this period.</span>
+                <br/>
+                <span>You can visualize their impact by activating the option to view unposted entries, or post them to remove this warning.</span>
+            </div>
+
             <h2><t t-esc="report.get('name')"></t></h2>
+
             <t t-if="not options.get('multi_company')">
                 <h4 class='text-muted' t-esc="report.get('company_name')"/>
             </t>

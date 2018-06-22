@@ -269,6 +269,20 @@ class AccountReport(models.AbstractModel):
         action.update({'options': options, 'context': ctx, 'ignore_session': 'read'})
         return action
 
+    def open_unposted_moves(self, options, params=None):
+        ''' Open the list of draft journal entries that might impact the reporting'''
+        action = self.env.ref('account.action_move_journal_line').read()[0]
+        action = clean_action(action)
+        domain = [('state', '=', 'draft')]
+        if options.get('date'):
+            #there's no condition on the date from, as a draft entry might change the initial balance of a line
+            date_to = options['date'].get('date_to') or options['date'].get('date') or fields.Date.today()
+            domain += [('date', '<=', date_to)]
+        action['domain'] = domain
+        #overwrite the context to avoid default filtering on 'misc' journals
+        action['context'] = {}
+        return action
+
     def open_journal_items(self, options, params):
         action = self.env.ref('account.action_move_line_select').read()[0]
         action = clean_action(action)
@@ -319,7 +333,6 @@ class AccountReport(models.AbstractModel):
             ctx['partner_categories'] = self.env['res.partner.category'].browse([int(category) for category in options['partner_categories']])
         return ctx
 
-    @api.multi
     def get_report_informations(self, options):
         '''
         return a dictionary of informations that will be needed by the js widget, manager_id, footnotes, html of report and searchview, ...
@@ -341,6 +354,12 @@ class AccountReport(models.AbstractModel):
             searchview_dict['res_partner_categories'] = [(category.id, category.name) for category in self.env['res.partner.category'].search([])] or False
             options['selected_partner_ids'] = [self.env['res.partner'].browse(int(partner)).name for partner in options['partner_ids']]
             options['selected_partner_categories'] = [self.env['res.partner.category'].browse(int(category)).name for category in options['partner_categories']]
+
+        # Check whether there are unposted entries for the selected period or not
+        if options.get('date'):
+            date_to = options['date'].get('date_to') or options['date'].get('date') or fields.Date.today()
+            period_domain = [('state', '=', 'draft'), ('date', '<=', date_to)]
+            options['unposted_in_period'] = bool(self.env['account.move'].search_count(period_domain))
 
         report_manager = self.get_report_manager(options)
         info = {'options': options,
