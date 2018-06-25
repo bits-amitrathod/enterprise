@@ -25,6 +25,7 @@
                                     <span class="fa fa-bars fa-lg"/>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
+                                    <t t-if="widget.editable"><li><a role="menuitem" type="edit">Edit</a></li></t>
                                     <li><a role="menuitem" type="object" name="toggle_active">
                                         <t t-if="!record.active.raw_value">Restore</t>
                                         <t t-if="record.active.raw_value">Archive</t>
