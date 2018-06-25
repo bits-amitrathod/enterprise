@@ -345,6 +345,20 @@
                         <option t-att-selected="widget.state.attrs.interval === 'year' ? 'selected' : undefined" value="year">Year</option>
                     </select>
                 </div>
+                <div class="o_web_studio_sidebar_select">
+                    <label for="mode">Mode</label>
+                    <select id="mode" name="mode">
+                        <option t-att-selected="(widget.state.attrs.mode === 'retention' || !widget.state.attrs.mode) ? 'selected' : undefined" value="retention">Retention</option>
+                        <option t-att-selected="widget.state.attrs.mode === 'churn' ? 'selected' : undefined" value="churn">Churn</option>
+                    </select>
+                </div>
+                <div class="o_web_studio_sidebar_select">
+                    <label for="timeline">Timeline</label>
+                    <select id="timeline" name="timeline">
+                        <option t-att-selected="(widget.state.attrs.timeline === 'forward' || !widget.state.attrs.timeline) ? 'selected' : undefined" value="forward">Forward</option>
+                        <option t-att-selected="widget.state.attrs.timeline === 'backward' ? 'selected' : undefined" value="backward">Backward</option>
+                    </select>
+                </div>
             </t>
 
             <!-- Pivot view settings -->

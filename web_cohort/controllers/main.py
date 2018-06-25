@@ -3,7 +3,7 @@
 
 import json
 
-from odoo import http
+from odoo import http, _
 from odoo.http import request
 from odoo.tools.misc import xlwt
 
@@ -24,14 +24,21 @@ class WebCohort(http.Controller):
 
         # Headers
         columns_length = len(result['report']['rows'][0]['columns'])
+        if result['timeline'] == 'backward':
+            header_sign = ''
+            col_range = range(-(columns_length - 1), 1)
+        else:
+            header_sign = '+'
+            col_range = range(columns_length)
+
         worksheet.write_merge(row, row, col + 2, columns_length + 1, '%s - By %s' % (result['date_stop_string'], result['interval_string']), style_highlight)
         row += 1
         worksheet.write(row, col, result['date_start_string'], style_highlight)
         col += 1
         worksheet.write(row, col, result['measure_string'], style_highlight)
         col += 1
-        for n in range(columns_length):
-            worksheet.write(row, col, '+%s' % n, style_highlight)
+        for n in col_range:
+            worksheet.write(row, col, '%s%s' % (header_sign, n), style_highlight)
             col += 1
 
         # Rows
@@ -49,11 +56,11 @@ class WebCohort(http.Controller):
 
         # Total
         col = 0
-        worksheet.write(row, col, 'Total', style_highlight)
+        worksheet.write(row, col, _('Average'), style_highlight)
         col += 1
-        worksheet.write(row, col, result['report']['total']['total_value'], style_highlight)
+        worksheet.write(row, col, '%.1f' % result['report']['avg']['avg_value'], style_highlight)
         col += 1
-        total = result['report']['total']['columns_avg']
+        total = result['report']['avg']['columns_avg']
         for n in range(columns_length):
             if total[str(n)]['count']:
                 worksheet.write(row, col, '%.1f' % float(total[str(n)]['percentage'] / total[str(n)]['count']) + '%', style_highlight)

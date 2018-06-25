@@ -44,6 +44,7 @@ MockServer.include({
             fields: [kwargs.date_start],
             groupby: [kwargs.date_start + ':' + kwargs.interval],
         });
+        var totalCount = groups.length;
         _.each(groups, function (group) {
             var format;
             switch (kwargs.interval) {
@@ -77,9 +78,13 @@ MockServer.include({
                 }
             }
             totalValue += value;
+            var initialValue = value;
 
             var columns = [];
             var colStartDate = cohortStartDate.clone();
+            if (kwargs.timeline === 'backward') {
+                colStartDate = colStartDate.subtract(15, kwargs.interval);
+            }
             for (var column = 0; column <= 15; column++) {
                 if (!columnsAvg[column]) {
                     columnsAvg[column] = {'percentage': 0, 'count': 0};
@@ -113,7 +118,21 @@ MockServer.include({
                     }
                 }
 
-                var previousValue = column === 0 ? value : columns[column - 1]['value'];
+                if (kwargs.timeline === 'backward' && column === 0) {
+                    colRecords = _.filter(records.records, function (record) {
+                        return record[kwargs.date_stop] && moment(record[kwargs.date_stop], 'YYYY-MM-DD') >= colStartDate;
+                    });
+                    if (kwargs.measure === '__count__') {
+                        initialValue = colRecords.length;
+                    } else {
+                        if (colRecords.length) {
+                            initialValue = _.pluck(colRecords, kwargs.measure).reduce(function (a, b) {
+                                return a + b;
+                            });
+                        }
+                    }
+                }
+                var previousValue = column === 0 ? initialValue : columns[column - 1]['value'];
                 var remainingValue = previousValue - colValue;
                 var previousChurnValue = column === 0 ? 0 : columns[column - 1]['churn_value'];
                 var churnValue = colValue + previousChurnValue;
@@ -129,6 +148,7 @@ MockServer.include({
                     'churn_value': churnValue,
                     'percentage': percentage,
                     'domain': [],
+                    'period': compareDate,
                 });
             }
             rows.push({
@@ -141,7 +161,7 @@ MockServer.include({
 
         return $.when({
             'rows': rows,
-            'total': {'total_value': totalValue, 'columns_avg': columnsAvg},
+            'avg': {'avg_value': totalCount ? (totalValue / totalCount) : 0, 'columns_avg': columnsAvg},
         });
     },
 });

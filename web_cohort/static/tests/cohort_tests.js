@@ -46,6 +46,20 @@ QUnit.module('Views', {
                     {id: 8, start: '2017-08-24', stop: '', revenue: 22000},
                 ]
             },
+            attendee: {
+                fields: {
+                    id: {string: 'ID', type: 'integer'},
+                    event_begin_date: {string: 'Event Start Date', type: 'date'},
+                    registration_date: {string: 'Registration Date', type: 'date'},
+                },
+                records: [
+                    {id: 1, event_begin_date: '2018-06-30', registration_date: '2018-06-13'},
+                    {id: 2, event_begin_date: '2018-06-30', registration_date: '2018-06-20'},
+                    {id: 3, event_begin_date: '2018-06-30', registration_date: '2018-06-22'},
+                    {id: 4, event_begin_date: '2018-06-30', registration_date: '2018-06-22'},
+                    {id: 5, event_begin_date: '2018-06-30', registration_date: '2018-06-29'},
+                ]
+            },
         };
     }
 }, function () {
@@ -80,7 +94,7 @@ QUnit.module('Views', {
         cohort.destroy();
     });
 
-    QUnit.test('currectly set by default measure and interval', function (assert) {
+    QUnit.test('correctly set by default measure and interval', function (assert) {
         assert.expect(4);
 
         var cohort = createView({
@@ -103,7 +117,7 @@ QUnit.module('Views', {
         cohort.destroy();
     });
 
-    QUnit.test('currectly set measure and interval after changed', function (assert) {
+    QUnit.test('correctly set measure and interval after changed', function (assert) {
         assert.expect(8);
 
         var cohort = createView({
@@ -211,8 +225,34 @@ QUnit.module('Views', {
             },
         });
 
-        assert.strictEqual(cohort.$('td .o_cohort_value:first').data('original-title'), 0, 'first col should contain no record');
-        assert.strictEqual(cohort.$('td .o_cohort_value:nth(4)').data('original-title'), 1, 'col 5 should contain one record');
+        assert.strictEqual(cohort.$('td .o_cohort_value:first').text().trim(), '0.0%', 'first col should display 0 percent');
+        assert.strictEqual(cohort.$('td .o_cohort_value:nth(4)').text().trim(), '100.0%', 'col 5 should display 100 percent');
+
+        cohort.destroy();
+    });
+
+    QUnit.test('test backward timeline', function (assert) {
+        assert.expect(7);
+
+        var cohort = createView({
+            View: CohortView,
+            model: 'attendee',
+            data: this.data,
+            arch: '<cohort string="Attendees" date_start="event_begin_date" date_stop="registration_date" interval="day" timeline="backward" mode="churn"/>',
+            mockRPC: function (route, args) {
+                assert.strictEqual(args.kwargs.timeline, "backward", "backward timeline should be sent via RPC");
+                return this._super(route, args);
+            },
+        });
+
+        assert.ok(cohort.$('.table thead tr:nth-child(2) th:first:contains(-15)').length,
+            'interval should start with -15');
+        assert.ok(cohort.$('.table thead tr:nth-child(2) th:nth-child(16):contains(0)').length,
+            'interval should end with 0');
+        assert.strictEqual(cohort.$('td .o_cohort_value:first').text().trim(), '20.0%', 'first col should display 20 percent');
+        assert.strictEqual(cohort.$('td .o_cohort_value:nth(5)').text().trim(), '40.0%', 'col 6 should display 40 percent');
+        assert.strictEqual(cohort.$('td .o_cohort_value:nth(7)').text().trim(), '80.0%', 'col 8 should display 80 percent');
+        assert.strictEqual(cohort.$('td .o_cohort_value:nth(14)').text().trim(), '100.0%', 'col 15 should display 100 percent');
 
         cohort.destroy();
     });

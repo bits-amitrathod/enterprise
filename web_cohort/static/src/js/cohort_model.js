@@ -25,6 +25,7 @@ var CohortModel = AbstractModel.extend({
      * @param {string} params.interval
      * @param {Array[]} params.domain
      * @param {string} params.mode
+     * @param {string} params.timeline
      * @returns {Deferred}
      */
     load: function (params) {
@@ -35,6 +36,7 @@ var CohortModel = AbstractModel.extend({
         this.interval = params.interval;
         this.domain = params.domain;
         this.mode = params.mode;
+        this.timeline = params.timeline;
         this.data = {
             measure: this.measure,
             interval: this.interval,
@@ -86,6 +88,7 @@ var CohortModel = AbstractModel.extend({
                 interval: this.data.interval,
                 domain: this.domain,
                 mode: this.mode,
+                timeline: this.timeline,
             }
         }).then(function (result) {
             self.data.report = result;

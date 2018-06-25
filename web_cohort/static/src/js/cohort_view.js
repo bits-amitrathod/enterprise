@@ -48,6 +48,7 @@ var CohortView = AbstractView.extend({
         this.loadParams.dateStart = params.context.cohort_date_start ||  attrs.date_start;
         this.loadParams.dateStop = params.context.cohort_date_stop ||  attrs.date_stop;
         this.loadParams.mode = params.context.cohort_mode || attrs.mode || 'retention';
+        this.loadParams.timeline = params.context.cohort_timeline || attrs.timeline || 'forward';
         this.loadParams.measure = params.context.cohort_measure ||  attrs.measure || '__count__';
         this.loadParams.interval = params.context.cohort_interval || attrs.interval || 'day';
 
@@ -62,6 +63,7 @@ var CohortView = AbstractView.extend({
         this.rendererParams.measures = measures;
         this.rendererParams.intervals = intervals;
         this.rendererParams.mode = this.loadParams.mode;
+        this.rendererParams.timeline = this.loadParams.timeline;
         this.rendererParams.dateStartString = fields[this.loadParams.dateStart]['string'];
         this.rendererParams.dateStopString = fields[this.loadParams.dateStop]['string'];
 
@@ -72,6 +74,7 @@ var CohortView = AbstractView.extend({
         // Used in export
         this.controllerParams.dateStartString = this.rendererParams.dateStartString;
         this.controllerParams.dateStopString = this.rendererParams.dateStopString;
+        this.controllerParams.timeline = this.rendererParams.timeline;
         // Retrieve form and list view ids from the action to open those views
         // when a row of the cohort view is clicked
         this.controllerParams.views = [

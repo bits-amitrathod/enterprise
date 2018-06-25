@@ -9,6 +9,7 @@ var framework = require('web.framework');
 var session = require('web.session');
 
 var qweb = core.qweb;
+var _t = core._t;
 
 var CohortController = AbstractController.extend({
     custom_events: _.extend({}, AbstractController.prototype.custom_events, {
@@ -26,6 +27,7 @@ var CohortController = AbstractController.extend({
      * @param {Object} params.intervals
      * @param {string} params.dateStartString
      * @param {string} params.dateStopString
+     * @param {string} params.timeline
      * @param {Array[]} params.views
      */
     init: function (parent, model, renderer, params) {
@@ -35,6 +37,7 @@ var CohortController = AbstractController.extend({
         this.intervals = params.intervals;
         this.dateStartString = params.dateStartString;
         this.dateStopString = params.dateStopString;
+        this.timeline = params.timeline;
         this.views = params.views;
     },
 
@@ -90,9 +93,10 @@ var CohortController = AbstractController.extend({
         data = _.extend(data, {
             title: this.title,
             interval_string: this.intervals[data.interval],
-            measure_string: this.measures[data.measure] || 'Count',
+            measure_string: this.measures[data.measure] || _t('Count'),
             date_start_string: this.dateStartString,
             date_stop_string: this.dateStopString,
+            timeline: this.timeline,
         });
         framework.blockUI();
         session.get_file({

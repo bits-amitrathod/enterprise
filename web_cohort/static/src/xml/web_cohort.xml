@@ -37,8 +37,22 @@
         </div>
     </t>
 
+    <t t-name="CohortView.tooltip">
+        <ul class="oe_tooltip_technical" role="tooltip">
+            <li>
+                <span class="oe_tooltip_technical_title">Period:</span>
+                <t t-esc="period"/>
+            </li>
+            <li>
+                <span class="oe_tooltip_technical_title"><t t-esc='measure'/>:</span>
+                <t t-esc="count"/>
+            </li>
+        </ul>
+    </t>
+
     <div t-name="CohortView" class="o_cohort_view">
         <div t-if="report.rows.length" class="table-responsive">
+            <t t-set="col_length" t-value="report.rows[0].columns.length"/>
             <table class="table text-center mb0">
                 <thead>
                     <tr>
@@ -51,8 +65,13 @@
                         </th>
                     </tr>
                     <tr>
-                        <th t-foreach="_.range(report.rows[0].columns.length)" t-as="interval">
-                            +<t t-esc="interval" />
+                        <th t-foreach="_.range(col_length)" t-as="interval">
+                            <t t-if="timeline === 'backward'">
+                                <t t-esc="interval - (col_length - 1)"/>
+                            </t>
+                            <t t-else="">
+                                +<t t-esc="interval"/>
+                            </t>
                         </th>
                     </tr>
                 </thead>
@@ -69,7 +88,8 @@
                                 t-attf-style="background-color: rgba(0, 160, 157, #{col.percentage/100.0}); color: #{col.percentage gt 50 and '#FFFFFF' or 'inherit'}"
                                 t-att-data-col="col_index"
                                 t-att-class="'o_cohort_highlight' + (col.value === '-' ? '' : ' o_cohort_value')"
-                                t-att-data-original-title="mode === 'churn' ? (col.churn_value === '-' ? '' : col.churn_value) : (col.value === '-' ? '' : col.value)">
+                                t-att-data-period="col.period"
+                                t-att-data-count="mode === 'churn' ? (col.churn_value === '-' ? '' : col.churn_value) : (col.value === '-' ? '' : col.value)">
                                 <t t-esc="col.percentage" /><t t-if="col.percentage !== ''">%</t>
                             </div>
                         </td>
@@ -78,15 +98,15 @@
                 <tfoot>
                     <tr>
                         <td>
-                            Total
+                            Average
                         </td>
-                        <t t-set="total" t-value="report.total" />
+                        <t t-set="avg" t-value="report.avg" />
                         <td>
-                            <t t-esc="total.total_value" />
+                            <t t-esc="avg.avg_value.toFixed(1)"/>
                         </td>
-                        <td t-foreach="total.columns_avg" t-as="col">
-                            <t t-if="total.columns_avg[col]['count']">
-                                <t t-esc="(total.columns_avg[col]['percentage'] / total.columns_avg[col]['count']).toFixed(1)" />%
+                        <td t-foreach="avg.columns_avg" t-as="col">
+                            <t t-if="avg.columns_avg[col]['count']">
+                                <t t-esc="(avg.columns_avg[col]['percentage'] / avg.columns_avg[col]['count']).toFixed(1)" />%
                             </t>
                         </td>
                     </tr>

@@ -19,7 +19,7 @@ class Base(models.AbstractModel):
     _inherit = 'base'
 
     @api.model
-    def get_cohort_data(self, date_start, date_stop, measure, interval, domain, mode):
+    def get_cohort_data(self, date_start, date_stop, measure, interval, domain, mode, timeline):
         """
             Get all the data needed to display a cohort view
 
@@ -29,6 +29,7 @@ class Base(models.AbstractModel):
             :param interval: the interval of time between two cells ('day', 'week', 'month', 'year')
             :param domain: a domain to limit the read_group
             :param mode: the mode of aggregation ('retention', 'churn') [default='retention']
+            :param timeline: the direction to display data ('forward', 'backward') [default='forward']
             :return: dictionary containing a total amount of records considered and a
                      list of rows each of which contains 16 cells.
         """
@@ -50,7 +51,10 @@ class Base(models.AbstractModel):
             total_value += value
 
             columns = []
-            for col in range(0, 16):
+            initial_value = value
+            col_range = range(-15, 1) if timeline == 'backward' else range(0, 16)
+
+            for col_index, col in enumerate(col_range):
                 col_start_date = cohort_start_date
                 if interval == 'day':
                     col_start_date += relativedelta(days=col)
@@ -66,7 +70,7 @@ class Base(models.AbstractModel):
                     col_end_date = col_start_date + relativedelta(years=1)
 
                 if col_start_date > datetime.today():
-                    columns_avg[col]
+                    columns_avg[col_index]
                     columns.append({
                         'value': '-',
                         'churn_value': '-',
@@ -82,7 +86,15 @@ class Base(models.AbstractModel):
                 else:
                     col_value = sum([record[measure] for record in col_records])
 
-                previous_col_remaining_value = value if col == 0 else columns[-1]['value']
+                # In backward timeline, if columns are out of given range, we need
+                # to set initial value for calculating correct percentage
+                if timeline == 'backward' and col_index == 0:
+                    col_records = [record for record in records if record[date_stop] and record[date_stop] >= col_start_date]
+                    if measure == '__count__':
+                        initial_value = len(col_records)
+                    else:
+                        initial_value = sum([record[measure] for record in col_records])
+                previous_col_remaining_value = initial_value if col_index == 0 else columns[-1]['value']
                 col_remaining_value = previous_col_remaining_value - col_value
                 percentage = value and (col_remaining_value) / value or 0
                 if mode == 'churn':
@@ -90,16 +102,16 @@ class Base(models.AbstractModel):
 
                 percentage = round(100 * percentage, 1)
 
-                columns_avg[col]['percentage'] += percentage
-                columns_avg[col]['count'] += 1
+                columns_avg[col_index]['percentage'] += percentage
+                columns_avg[col_index]['count'] += 1
                 columns.append({
                     'value': col_remaining_value,
-                    'churn_value': col_value + (columns[-1]['churn_value'] if col > 0 else 0),
+                    'churn_value': col_value + (columns[-1]['churn_value'] if col_index > 0 else 0),
                     'percentage': percentage,
                     'domain': [
-                        (date_stop, ">=", col_start_date.strftime(DEFAULT_SERVER_DATE_FORMAT) ),
-                        (date_stop, "<", col_end_date.strftime(DEFAULT_SERVER_DATE_FORMAT) ),
-                    ]
+                        (date_stop, ">=", col_start_date.strftime(DEFAULT_SERVER_DATE_FORMAT)),
+                        (date_stop, "<", col_end_date.strftime(DEFAULT_SERVER_DATE_FORMAT))],
+                    'period': col_start_date.strftime(DISPLAY_FORMATS[interval]),
                 })
 
             rows.append({
@@ -111,5 +123,5 @@ class Base(models.AbstractModel):
 
         return {
             'rows': rows,
-            'total': {'total_value': total_value, 'columns_avg': columns_avg},
+            'avg': {'avg_value': total_value / len(rows) if rows else 0, 'columns_avg': columns_avg},
         }

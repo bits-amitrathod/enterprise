@@ -20,6 +20,7 @@ var CohortRenderer = AbstractRenderer.extend({
      * @param {string} params.dateStartString
      * @param {string} params.dateStopString
      * @param {string} params.mode
+     * @param {string} params.timeline
      */
     init: function (parent, state, params) {
         this._super.apply(this, arguments);
@@ -28,6 +29,7 @@ var CohortRenderer = AbstractRenderer.extend({
         this.dateStartString = params.dateStartString;
         this.dateStopString = params.dateStopString;
         this.mode = params.mode;
+        this.timeline = params.timeline;
     },
 
     //--------------------------------------------------------------------------
@@ -40,6 +42,7 @@ var CohortRenderer = AbstractRenderer.extend({
      * @returns {Deferred}
      */
     _render: function () {
+        var self = this;
         this.$el.empty().append(qweb.render('CohortView', {
             report: this.state.report,
             measure: this.measures[this.state.measure],
@@ -47,8 +50,18 @@ var CohortRenderer = AbstractRenderer.extend({
             date_start_string: this.dateStartString,
             date_stop_string: this.dateStopString,
             mode: this.mode,
+            timeline: this.timeline,
         }));
-        this.$('.o_cohort_value').tooltip();
+        this.$('.o_cohort_highlight.o_cohort_value').tooltip({
+            title: function () {
+                var $cell = $(this);
+                return qweb.render('CohortView.tooltip', {
+                    period: $cell.data('period'),
+                    count: $cell.data('count'),
+                    measure: self.measures[self.state.measure],
+                });
+            },
+        });
         return this._super.apply(this, arguments);
     },
 
