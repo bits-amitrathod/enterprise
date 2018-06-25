@@ -83,7 +83,7 @@
                                 t-att-MonedaDR="invoice.currency_id.name"
                                 t-att-TipoCambioDR="inv_rate"
                                 MetodoDePagoDR="PPD"
-                                t-att-NumParcialidad="len(invoice.payment_ids.filtered(lambda p: p.state not in ('draft', 'cancel')).ids)"
+                                t-att-NumParcialidad="len(invoice.payment_ids.filtered(lambda p: p.state not in ('draft', 'cancelled')).ids)"
                                 t-att-ImpSaldoAnt="'%0.*f' % (decimal_precision, balance)"
                                 t-att-ImpPagado="'%0.*f' % (decimal_precision, amount)"
                                 t-att-ImpSaldoInsoluto="'%0.*f' % (decimal_precision, residual)"/>
