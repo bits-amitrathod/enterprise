@@ -45,7 +45,7 @@ odoo.define('sign.views_custo', function(require) {
                     _sign_upload_file.call(self);
                 });
                 this.$buttons.find(selector_button).after(
-                    $('<button class="btn btn-sm o-kanban-button-new ml8" type="button">Send a Request</button>')
+                    $('<button class="btn btn-link btn-sm o-kanban-button-new ml8" type="button">Send a Request</button>')
                     .off('click')
                     .on('click', function (e) {
                         e.preventDefault();
