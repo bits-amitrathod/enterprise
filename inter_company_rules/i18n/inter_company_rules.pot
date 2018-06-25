@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,36 @@ msgstr ""
 #: code:addons/inter_company_rules/models/account_invoice.py:89
 #, python-format
 msgid " Invoice: "
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+msgid ", generate a"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "<strong>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml4\">Sale Order</span>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml4\">Purchase Order</span>\n"
+"                                    <span attrs=\"{'invisible':[('applicable_on','!=', 'sale_purchase')]}\" class=\"ml4\"> Sale and Purchase Order</span>\n"
+"                                </strong> using"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+msgid "<strong>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml8\">Sale Order </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml8\">Purchase Order </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale_purchase')]}\" class=\"ml8\"> Sale and Purchase Order </span>\n"
+"                            </strong>\n"
+"                            using"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__applicable_on
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__applicable_on
+msgid "Applicable On"
 msgstr ""
 
 #. module: inter_company_rules
@@ -37,19 +67,14 @@ msgid "Auto Generated Sales Order"
 msgstr ""
 
 #. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_validation
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__auto_validation
-#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
-msgid "Auto-validate Sales/Purchase Orders"
+msgid "Auto Validation"
 msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_company
 msgid "Companies"
-msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
-msgid "Company"
 msgstr ""
 
 #. module: inter_company_rules
@@ -60,23 +85,6 @@ msgid "Configure correct warehouse for company(%s) from Menu: Settings/Users/Com
 msgstr ""
 
 #. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_generate_invoices
-msgid "Create Invoices/Credit Notes when encoding invoices/credit notes made to this company"
-msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__po_from_so
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__po_from_so
-msgid "Create Purchase Orders when selling to this company"
-msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__so_from_po
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__so_from_po
-msgid "Create Sales Orders when buying to this company"
-msgstr ""
-
-#. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__warehouse_id
 msgid "Default value to set on Purchase Orders that will be created based on Sales Orders made to this company."
 msgstr ""
@@ -84,34 +92,6 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company__warehouse_id
 msgid "Default value to set on Purchase(Sales) Orders that will be created based on Sale(Purchase) Orders made to this company"
-msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__auto_generate_invoices
-msgid "Generate Customer/Vendor Bills (and credit notes) when encoding invoices (or credit notes) made to this company.\n"
-" e.g: Generate a Customer Invoice when a Vendor Bill with this company as vendor is created."
-msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__po_from_so
-msgid "Generate a Purchase Order when a Sale Order with this company as customer is created."
-msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__po_from_so
-msgid "Generate a Purchase Order when a Sales Order with this company as customer is created.\n"
-" The intercompany user must at least be Purchase User."
-msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__so_from_po
-msgid "Generate a Sale Order when a Purchase Order with this company as vendor is created."
-msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__so_from_po
-msgid "Generate a Sales Order when a Purchase Order with this company as vendor is created.\n"
-" The intercompany user must at least be Sale User."
 msgstr ""
 
 #. module: inter_company_rules
@@ -157,6 +137,8 @@ msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_purchase_order
+#: selection:res.company,applicable_on:0
+#: selection:res.config.settings,applicable_on:0
 msgid "Purchase Order"
 msgstr ""
 
@@ -171,13 +153,21 @@ msgid "Responsible user for creation of documents triggered by intercompany rule
 msgstr ""
 
 #. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__rule_type
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__rule_type
 msgid "Rule Type"
 msgstr ""
 
 #. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_validation
-msgid "Sale/Purchase Orders Auto Validation"
+#: selection:res.company,applicable_on:0
+#: selection:res.config.settings,applicable_on:0
+msgid "Sale Order"
+msgstr ""
+
+#. module: inter_company_rules
+#: selection:res.company,applicable_on:0
+#: selection:res.config.settings,applicable_on:0
+msgid "Sale and Purchase Order"
 msgstr ""
 
 #. module: inter_company_rules
@@ -191,18 +181,9 @@ msgid "Select company to setup Inter company rules."
 msgstr ""
 
 #. module: inter_company_rules
+#: model:ir.model.fields,help:inter_company_rules.field_res_company__rule_type
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__rule_type
 msgid "Select the type to setup inter company rules in selected company."
-msgstr ""
-
-#. module: inter_company_rules
-#: selection:res.config.settings,rule_type:0
-msgid "Send Invoices & Credit Notes"
-msgstr ""
-
-#. module: inter_company_rules
-#: selection:res.config.settings,rule_type:0
-msgid "Send Sales & Purchase Orders"
 msgstr ""
 
 #. module: inter_company_rules
@@ -221,6 +202,18 @@ msgid "Source Sales Order"
 msgstr ""
 
 #. module: inter_company_rules
+#: selection:res.company,rule_type:0
+#: selection:res.config.settings,rule_type:0
+msgid "Synchronize Invoices & Bills"
+msgstr ""
+
+#. module: inter_company_rules
+#: selection:res.company,rule_type:0
+#: selection:res.config.settings,rule_type:0
+msgid "Synchronize Sales & Purchase Orders"
+msgstr ""
+
+#. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__warehouse_id
 msgid "Warehouse"
 msgstr ""
@@ -231,14 +224,9 @@ msgid "Warehouse For Purchase Orders"
 msgstr ""
 
 #. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__auto_validation
-msgid "When a Sale Order or a Purchase Order is created by a multi\n"
-"            company rule for this company, it will automatically validate it."
-msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__auto_validation
-msgid "When a Sales Order or a Purchase Order is created by a multi company rule for this company, it will automatically validate it"
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "When a company validates a"
 msgstr ""
 
 #. module: inter_company_rules
@@ -248,7 +236,7 @@ msgid "You cannot create SO from PO because sale price list currency is differen
 msgstr ""
 
 #. module: inter_company_rules
-#: code:addons/inter_company_rules/models/res_company.py:32
+#: code:addons/inter_company_rules/models/res_company.py:37
 #, python-format
 msgid "You cannot select to create invoices based on other invoices\n"
 "                    simultaneously with another option ('Create Sales Orders when buying to this\n"
@@ -256,7 +244,34 @@ msgid "You cannot select to create invoices based on other invoices\n"
 msgstr ""
 
 #. module: inter_company_rules
+#: selection:res.company,auto_validation:0
+#: selection:res.config.settings,auto_validation:0
+msgid "draft"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "generate a"
+msgstr ""
+
+#. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings
 msgid "res.config.settings"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+msgid "to"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "to this company,"
+msgstr ""
+
+#. module: inter_company_rules
+#: selection:res.company,auto_validation:0
+#: selection:res.config.settings,auto_validation:0
+msgid "validated"
 msgstr ""
 
