@@ -577,7 +577,33 @@ odoo.define('sign.template', function(require) {
             this.rolesToChoose = {};
 
             var self = this;
-            this.cp_content = {};
+            var $sendButton = $('<button/>', {html: _t("Send"), type: "button"})
+                .addClass('btn btn-primary btn-sm')
+                .on('click', function() {
+                    self.do_action({
+                        type: 'ir.actions.act_window',
+                        res_model: 'sign.send.request',
+                        views: [[false, 'form']],
+                        target: 'new',
+                        context: {
+                            'active_id': self.templateID,
+                        },
+                    });
+                });
+            var $shareButton = $('<button/>', {html: _t("Share"), type: "button"})
+                .addClass('btn btn-default btn-sm')
+                .on('click', function() {
+                    self.do_action({
+                        type: 'ir.actions.act_window',
+                        res_model: 'sign.template.share',
+                        views: [[false, 'form']],
+                        target: 'new',
+                        context: {
+                            'active_id': self.templateID,
+                        },
+                    });
+                });
+            this.cp_content = {$buttons: $sendButton.add($shareButton)};
         },
 
         willStart: function() {
