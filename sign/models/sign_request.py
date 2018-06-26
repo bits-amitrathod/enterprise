@@ -497,7 +497,7 @@ class SignRequestItem(models.Model):
                 continue
             tpl = self.env.ref('sign.sign_template_mail_request')
             body = tpl.render({
-                'record': self,
+                'record': signer,
                 'link': "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.sign_request_id.id, 'access_token': signer.access_token},
                 'subject': subject,
                 'body': message,
