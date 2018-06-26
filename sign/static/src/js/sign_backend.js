@@ -39,18 +39,18 @@ odoo.define('sign.views_custo', function(require) {
 
             _sign_upload_file_button: function () {
                 var self = this;
-                this.$buttons.find(selector_button).text(_t("Upload a PDF Template")).off("click").on("click", function (e) {
+                this.$buttons.find(selector_button).text(_t("Send a Request")).off("click").on("click", function (e) {
                     e.preventDefault();
                     e.stopImmediatePropagation();
-                    _sign_upload_file.call(self);
+                    _sign_upload_file.call(self, true);
                 });
                 this.$buttons.find(selector_button).after(
-                    $('<button class="btn btn-link btn-sm o-kanban-button-new ml8" type="button">Send a Request</button>')
+                    $('<button class="btn btn-link btn-sm o-kanban-button-new ml8" type="button">UPLOAD A PDF TEMPLATE</button>')
                     .off('click')
                     .on('click', function (e) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
-                        _sign_upload_file.call(self, true);
+                        _sign_upload_file.call(self);
                 }));
             },
 
@@ -86,11 +86,12 @@ odoo.define('sign.views_custo', function(require) {
                     })
                     .then(function(data) {
                         self.do_action({
-                            'type': 'ir.actions.act_window',
-                            'name': 'New Signature Template',
-                            'views': [[false, 'form']],
-                            'res_model': 'sign.template',
-                            'res_id': data.template,
+                            type: "ir.actions.client",
+                            tag: 'sign.Template',
+                            name: _t("New Template"),
+                            context: {
+                                id: data.template,
+                            },
                         });
                     })
                     .always(function() {
