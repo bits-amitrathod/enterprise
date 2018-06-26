@@ -49,6 +49,7 @@ class SignRequest(models.Model):
     nb_draft = fields.Integer(string="Draft Requests", compute="_compute_count", store=True)
     nb_wait = fields.Integer(string="Sent Requests", compute="_compute_count", store=True)
     nb_closed = fields.Integer(string="Completed Signatures", compute="_compute_count", store=True)
+    nb_total = fields.Integer(string="Requested Signatures", compute="_compute_count", store=True)
     progress = fields.Integer(string="Progress", compute="_compute_count")
 
     active = fields.Boolean(default=True, string="Active", oldname='archived')
@@ -72,11 +73,12 @@ class SignRequest(models.Model):
         self.nb_draft = draft
         self.nb_wait = wait
         self.nb_closed = closed
+        self.nb_total = wait + closed
 
         if self.nb_wait + self.nb_closed <= 0:
             self.progress = 0
         else:
-            self.progress = self.nb_closed*100 / (self.nb_wait + self.nb_closed)
+            self.progress = self.nb_closed*100 / (self.nb_total)
 
     @api.one
     @api.depends('request_item_ids.state', 'request_item_ids.partner_id.name')
