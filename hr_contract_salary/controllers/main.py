@@ -3,24 +3,24 @@
 
 from odoo import fields, http, models, _
 
-from odoo.addons.website_sign.controllers.main import WebsiteSign
+from odoo.addons.sign.controllers.main import Sign
 from odoo.exceptions import AccessError
 from odoo.http import request
 
 from werkzeug.wsgi import get_current_url
 
 
-class WebsiteSignContract(WebsiteSign):
+class SignContract(Sign):
 
     @http.route(['/sign/sign/<int:id>/<token>'], type='json', auth='public')
     def sign(self, id, token, signature=None):
-        result = super(WebsiteSignContract, self).sign(id, token, signature)
-        request_item = request.env['signature.request.item'].sudo().search([('access_token', '=', token)])
+        result = super(SignContract, self).sign(id, token, signature)
+        request_item = request.env['sign.request.item'].sudo().search([('access_token', '=', token)])
         contract = request.env['hr.contract'].sudo().with_context(active_test=False).search([
-            ('signature_request_ids', 'in', request_item.signature_request_id.ids)])
+            ('sign_request_ids', 'in', request_item.sign_request_id.ids)])
         if contract:
             # Only the applicant/employee has signed
-            if request_item.signature_request_id.nb_closed == 1:
+            if request_item.sign_request_id.nb_closed == 1:
                 contract.active = True
                 if contract.car_id:
                     if contract.origin_contract_id and contract.origin_contract_id.car_id \
@@ -29,7 +29,7 @@ class WebsiteSignContract(WebsiteSign):
                     contract.car_id.driver_id = contract.employee_id.address_home_id
                 contract.access_token_consumed = True
             # Both applicant/employee and HR responsible have signed
-            if request_item.signature_request_id.nb_closed == 2:
+            if request_item.sign_request_id.nb_closed == 2:
                 if contract.employee_id:
                     contract.employee_id.active = True
                 if contract.employee_id.address_home_id:
@@ -240,7 +240,7 @@ class website_hr_contract_salary(http.Controller):
             'meal_voucher_amount': advantages['meal_voucher_amount'] / 20.0,
             'default_contract_id': contract.default_contract_id.id,
             'hr_responsible_id': contract.hr_responsible_id.id,
-            'signature_request_template_id': contract.signature_request_template_id.id,
+            'sign_template_id': contract.sign_template_id.id,
             'contract_update_template_id': contract.contract_update_template_id.id,
             'ip': advantages['ip'],
             'ip_wage_rate': advantages['ip_wage_rate'],
@@ -550,21 +550,21 @@ class website_hr_contract_salary(http.Controller):
 
         # Take specific contract to sign
         if kw.get('employee_contract_id'):
-            signature_request_template = new_contract.contract_update_template_id
+            sign_template = new_contract.contract_update_template_id
         elif kw.get('applicant_id'):
-            signature_request_template = new_contract.signature_request_template_id
+            sign_template = new_contract.sign_template_id
 
-        if not signature_request_template:
+        if not sign_template:
             return {'error': 1, 'error_msg': _('No signature template defined on the contract. Please contact the HR responsible.')}
 
         if not new_contract.hr_responsible_id:
             return {'error': 1, 'error_msg': _('No HR responsible defined on the job position. Please contact an administrator.')}
 
-        res = request.env['signature.request'].sudo().initialize_new(
-            signature_request_template.id,
+        res = request.env['sign.request'].sudo().initialize_new(
+            sign_template.id,
             [
-                {'role': request.env.ref('website_sign.signature_item_party_employee').id, 'partner_id': new_contract.employee_id.address_home_id.id},
-                {'role': request.env.ref('hr_contract_salary.signature_item_party_job_responsible').id, 'partner_id': new_contract.hr_responsible_id.partner_id.id}
+                {'role': request.env.ref('sign.sign_item_role_employee').id, 'partner_id': new_contract.employee_id.address_home_id.id},
+                {'role': request.env.ref('hr_contract_salary.sign_item_role_job_responsible').id, 'partner_id': new_contract.hr_responsible_id.partner_id.id}
             ],
             [new_contract.hr_responsible_id.partner_id.id],
             'Signature Request - ' + new_contract.name,
@@ -573,8 +573,8 @@ class website_hr_contract_salary(http.Controller):
             False
         )
 
-        items = request.env['signature.item'].sudo().search([
-            ('template_id', '=', signature_request_template.id),
+        items = request.env['sign.item'].sudo().search([
+            ('template_id', '=', sign_template.id),
             ('name', '!=', '')
         ])
         for item in items:
@@ -596,24 +596,24 @@ class website_hr_contract_salary(http.Controller):
             if isinstance(new_value, float):
                 new_value = round(new_value, 2)
             if new_value or (new_value == 0.0):
-                request.env['signature.item.value'].sudo().create({
-                    'signature_item_id': item.id,
-                    'signature_request_id': res['id'],
+                request.env['sign.item.value'].sudo().create({
+                    'sign_item_id': item.id,
+                    'sign_request_id': res['id'],
                     'value': new_value,
                 })
 
-        signature_request = request.env['signature.request'].browse(res['id']).sudo()
-        signature_request.toggle_favorited()
-        signature_request.action_sent()
-        signature_request.write({'state': 'sent'})
-        signature_request.request_item_ids.write({'state': 'sent'})
+        sign_request = request.env['sign.request'].browse(res['id']).sudo()
+        sign_request.toggle_favorited()
+        sign_request.action_sent()
+        sign_request.write({'state': 'sent'})
+        sign_request.request_item_ids.write({'state': 'sent'})
 
-        access_token = request.env['signature.request.item'].sudo().search([
-            ('signature_request_id', '=', res['id']),
-            ('role_id', '=', request.env.ref('website_sign.signature_item_party_employee').id)
+        access_token = request.env['sign.request.item'].sudo().search([
+            ('sign_request_id', '=', res['id']),
+            ('role_id', '=', request.env.ref('sign.sign_item_role_employee').id)
         ]).access_token
 
-        new_contract.signature_request_ids += signature_request
+        new_contract.sign_request_ids += sign_request
 
         if new_contract:
             if kw.get('applicant_id'):

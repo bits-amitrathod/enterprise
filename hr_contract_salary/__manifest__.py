@@ -10,7 +10,7 @@
         'website',
         'hr_recruitment',
         'l10n_be_hr_payroll_fleet',
-        'website_sign',
+        'sign',
     ],
     'description': """
     """,

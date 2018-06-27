@@ -13,9 +13,9 @@
                         <span class="o_stat_text">Reviews</span>
                      </div>
                 </button>
-                <button name="open_signature_requests" type="object" class="oe_stat_button" icon="fa-pencil" attrs="{'invisible': [('signature_request_count', '=', 0)]}">
+                <button name="open_sign_requests" type="object" class="oe_stat_button" icon="fa-pencil" attrs="{'invisible': [('sign_request_count', '=', 0)]}">
                     <div class="o_field_widget o_stat_info">
-                        <span class="o_stat_value"><field name="signature_request_count"/></span>
+                        <span class="o_stat_value"><field name="sign_request_count"/></span>
                         <span class="o_stat_text">Signature Requests</span>
                     </div>
                 </button>
@@ -28,19 +28,19 @@
                 <field name="access_token" invisible="1"/>
                 <field name="access_token_consumed" invisible="1"/>
                 <field name="access_token_end_date" invisible="1"/>
-                <field name="signature_request_ids" invisible="1"/>
+                <field name="sign_request_ids" invisible="1"/>
                 <field name="active_employee" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='state']" position="before">
-                <button name="action_accept_package" type="object" string="Accept Request" class="oe_highlight" groups="hr.group_hr_manager" attrs="{'invisible': ['|', '|', ('origin_contract_id', '=', False), ('state', '!=', 'draft'), ('signature_request_count', '=', 0)]}"/>
-                <button name="action_refuse_package" type="object" string="Refuse Request" class="oe_highlight" groups="hr.group_hr_manager" attrs="{'invisible': ['|', '|', ('origin_contract_id', '=', False), ('state', '!=', 'draft'), ('signature_request_count', '=', 0)]}"/>
+                <button name="action_accept_package" type="object" string="Accept Request" class="oe_highlight" groups="hr.group_hr_manager" attrs="{'invisible': ['|', '|', ('origin_contract_id', '=', False), ('state', '!=', 'draft'), ('sign_request_count', '=', 0)]}"/>
+                <button name="action_refuse_package" type="object" string="Refuse Request" class="oe_highlight" groups="hr.group_hr_manager" attrs="{'invisible': ['|', '|', ('origin_contract_id', '=', False), ('state', '!=', 'draft'), ('sign_request_count', '=', 0)]}"/>
             </xpath>
             <field name="job_id" position="after">
                 <field name="default_contract_id"/>
             </field>
             <group name="duration_group" position="inside">
                 <field name="hr_responsible_id"/>
-                <field name="signature_request_template_id"/>
+                <field name="sign_template_id"/>
                 <field name="contract_update_template_id"/>
             </group>
             <field name="type_id" position="before">
@@ -63,7 +63,7 @@
             </field>
             <field name="job_id" position="after">
                 <field name="hr_responsible_id"/>
-                <field name="signature_request_template_id"/>
+                <field name="sign_template_id"/>
                 <field name="contract_update_template_id"/>
             </field>
             <field name="struct_id" position="after">
@@ -98,10 +98,10 @@
         <field name="inherit_id" ref="hr_contract.hr_contract_view_kanban"/>
         <field name="arch" type="xml">
             <field name="employee_id" position="before">
-                <field name="signature_request_ids"/>
+                <field name="sign_request_ids"/>
             </field>
             <xpath expr="//div[hasclass('oe_kanban_content')]" position="inside">
-                <t t-if="record.signature_request_ids.raw_value.length">
+                <t t-if="record.sign_request_ids.raw_value.length">
                     <div class="oe_kanban_bottom_left">
                         <i class="fa fa-pencil"> <field name="signatures_count"/></i>
                     </div>
