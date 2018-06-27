@@ -1,6 +1,6 @@
 .o_menu_search {
-    @include o-flex-display;
-    @include o-flex(0, 0, auto); 
+    display: flex;
+    flex: 0 0 auto; 
     width: 100%;
     max-width: $o-home-menu-container-size;
     height: $o-navbar-height;
@@ -18,14 +18,14 @@
     }
 
     .o_menu_search_icon {
-        @include o-flex(0, 0, auto);
+        flex: 0 0 auto;
         padding: 10px;
         font-size: 28px;
         color: white;
     }
 
     .o_menu_search_input {
-        @include o-flex(1, 0, 0);
+        flex: 1 0 0;
         border: none;
         padding: 5px;
         background-color: rgba(0, 0, 0, 0);

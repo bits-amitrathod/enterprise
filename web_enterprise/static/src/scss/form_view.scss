@@ -26,14 +26,14 @@
     }
 
     @media (min-width: $screen-sm-min) {
-        @include o-flex-display;
-        @include o-flex-flow(column, nowrap);
+        display: flex;
+        flex-flow: column nowrap;
         min-height: 100%;
     }
 
     // Sheet
     .o_form_sheet_bg {
-        @include o-flex(1, 0, auto);
+        flex: 1 0 auto;
         background-color: $o-webclient-background-color;
         border-bottom: 1px solid $gray-lighter-dark;
 
@@ -113,7 +113,7 @@
         }
 
         > .btn.oe_stat_button, > .o_dropdown_more {
-            @include o-flex(0, 0, auto);
+            flex: 0 0 auto;
             width: percentage(1/3); // Adapt the number of visible buttons for each screen width
             @media (min-width: $screen-sm-min) {
                 width: percentage(1/5);
@@ -282,7 +282,7 @@
 
     // Chatter
     > .oe_chatter {
-        @include o-flex(1000, 0, auto);
+        flex: 1000 0 auto;
         // Mimic a .container (TODO improve)
         @include container-fixed;
         @media (min-width: $screen-sm-min) {
@@ -493,11 +493,11 @@
     }
 
     @media screen and (min-width: $o-screen-sidechatter-min) {
-        @include o-flex-flow(row, nowrap);
+        flex-flow: row nowrap;
         height: 100%;
 
         > .o_form_sheet_bg {
-            @include o-flex(1, 1, auto); // Side chatter is disabled if this has to shrink but this was added for safety
+            flex: 1 1 auto; // Side chatter is disabled if this has to shrink but this was added for safety
             width: $o-form-sheet-min-width + 2 * $o-horizontal-padding;
             // max-width: $container-lg + 2 * $o-horizontal-padding; // would be logical but breaks no-chatter form views
             padding: 0 $o-horizontal-padding;
@@ -514,7 +514,7 @@
             }
         }
         > .oe_chatter {
-            @include o-flex(1, 1, auto); // Side chatter is disabled if this has to shrink but this was added for safety
+            flex: 1 1 auto; // Side chatter is disabled if this has to shrink but this was added for safety
             width: $o-chatter-min-width;
             padding: 0;
             overflow: auto;

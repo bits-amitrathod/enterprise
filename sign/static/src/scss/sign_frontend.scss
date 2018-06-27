@@ -3,15 +3,15 @@
     height: 100%;
 
     > header {
-        @include o-flex(0, 0, auto);
+        flex: 0 0 auto;
         height: $navbar-height;
         background-color: $o-brand-lightsecondary;
         > div {
             height: 100%;
-            @include o-flex-display;
-            @include o-align-items(center);
+            display: flex;
+            align-items: center;
             a {
-                @include o-flex(0, 0, auto);
+                flex: 0 0 auto;
                 > img {
                     height: $navbar-height - 10;
                 }
@@ -19,7 +19,7 @@
 
             .o_sign_header_instruction {
                 font-size: 1.2em;
-                @include o-flex(1, 1, auto);
+                flex: 1 1 auto;
             }
         }
     }

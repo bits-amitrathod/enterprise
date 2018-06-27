@@ -5,7 +5,7 @@
             max-width: 900px;
             position: relative;
             padding: 0 $grid-gutter-width/2;
-            @include o-flex-display;
+            display: flex;
 
             > .o_web_studio_search_sample_ui {
                 border-radius: $border-radius-small;
@@ -33,19 +33,19 @@
             .o_web_studio_search_sub_item_icon {
                 padding: 12px 0 0 15%;
                 width: 25%;
-                @include o-flex-display;
-                @include o-align-items(baseline);
+                display: flex;
+                align-items: baseline;
 
                 > i {
                     font-size: 1.5em;
-                    @include o-flex(1,1,auto);
+                    flex: 1 1 auto;
                 }
             }
 
             > .o_web_studio_search_sub_item {
                 margin: 85px 15px 10px 10px;
                 border: none;
-                @include o-flex(1, 1, auto);
+                flex: 1 1 auto;
 
                 .o_list_view.table, thead, thead .caret, thead th {
                     background-color: transparent;
@@ -114,7 +114,7 @@
                     position: relative;
                     padding: 4px 0;
                     border: 0px dashed transparent;
-                    @include o-transition(all, 0.2s, 0s, cubic-bezier(0.215, 0.610, 0.355, 1.000));
+                    transition: all 0.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0s;
                 }
             }
             .o_web_studio_hook.o_web_studio_nearest_hook {

@@ -26,7 +26,7 @@
         }
     }
     &.o_kanban_grouped {
-        @include o-flex-flow(row, wrap);
+        flex-flow: row wrap;
         .o_kanban_record {
             min-width: inherit;
         }
@@ -46,7 +46,7 @@
     margin-bottom:-24px;
     padding: 10px 0px 24px 16px;
     background-color: $o-ma-hierarchy-background;
-    @include box-shadow(0px 1px 1px rgba(17, 17, 17, 0.23));
+    box-shadow: 0px 1px 1px rgba(17, 17, 17, 0.23);
     overflow-x: auto;
     .o_ma_hierarchy_title {
         padding: 0px 0px 0px 72px;
@@ -75,8 +75,8 @@
             border-radius: 25px;
         }
         .o_kanban_view.o_kanban_ungrouped .o_kanban_record {
-            @include o-flex-display;
-            @include o-flex(0, 0, 100%);
+            display: flex;
+            flex: 0 0 100%;
             border: 0px;
             padding: 0px 0px 0px 100px;
             margin: 0px 0px 0px 0px;
@@ -101,7 +101,7 @@
                     padding: 3px 0px;
                     border-radius: 3px;
                     background-color: $o-ma-color-white;
-                    @include box-shadow(0 1px 2px rgba(0,0,0,.1));
+                    box-shadow: 0 1px 2px rgba(0,0,0,.1);
                 }
                 // Current Record (not children or timeline)
                 .o_ma_card {
@@ -111,7 +111,7 @@
                     width: 500px;
                     border-radius: 3px;
                     background: $o-ma-color-white;
-                    @include box-shadow(0 1px 2px rgba(0,0,0,.1));
+                    box-shadow: 0 1px 2px rgba(0,0,0,.1);
                     // Triangle arrow for the card
                     &:before {
                         content: '';
@@ -120,7 +120,7 @@
                         @include square(14px);
                         background: $o-ma-color-white;
                         border-bottom: 1px solid $o-ma-border-color;
-                        @include o-transform(rotate(45deg));
+                        transform: rotate(45deg);
                     }
                     // Timeline dot
                     &:after {
@@ -171,7 +171,7 @@
                 color: $o-ma-color-white;
                 font-size: 14px;
                 border-radius: 3px;
-                @include o-skew-gradient($o-brand-optional, darken($o-brand-optional, 5%));
+                background: linear-gradient(linear, left top, right bottom, $o-brand-optional, darken($o-brand-optional, 5%));
             }
             .o_ma_title {
                 @include o-position-absolute;
@@ -200,7 +200,7 @@
                     display: inline-block;
                     border-left: 1px solid $o-ma-border-color;
                     border-bottom: 1px solid transparent;
-                    @include o-transition($duration: 0.2s);
+                    transition: all 0.2s ease 0s;
                     .fa {
                         font-size: 16px;
                         margin: 12px;
@@ -271,17 +271,17 @@
             background: $o-ma-hierarchy-background;
             @include size(100%, 18px);
             overflow: hidden;
-            @include o-transition($duration: 0.3s);
+            transition: all 0.3s ease 0s;
             .o_ma_child_activity_title {
                 padding: 2px;
                 font-size: 11px;
                 font-weight: bold;
             }
             .o_ma_child_activity_buttons {
-                @include o-flex-display;
-                @include o-justify-content(space-around);
+                display: flex;
+                justify-content: space-around;
                 i.fa {
-                    @include o-flex(1, 0, auto);
+                    flex: 1 0 auto;
                     padding: 10px;
                     border-top: 1px solid #E2E2E2;
                     border-left: 1px solid #E2E2E2;
@@ -330,10 +330,10 @@
             font-size: 10px;
         }
         .o_ma_actions {
-            @include o-flex-display;
-            @include o-justify-content(space-around);
+            display: flex;
+            justify-content: space-around;
             span {
-                @include o-flex(1, 0, auto);
+                flex: 1 0 auto;
                 padding: 3px;
                 border-top: 1px solid #F1F1F1;
                 border-left: 1px solid #F1F1F1;

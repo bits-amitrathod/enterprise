@@ -63,7 +63,7 @@
                 margin-bottom: 0;
                 background-color: transparent;
                 color: #000;
-                @include box-shadow(none);
+                box-shadow: none;
                 cursor: default;
                 text-align: right;
             }
@@ -124,7 +124,7 @@
                     &:hover,
                     &:focus {
                         border-color: $o-brand-optional;
-                        @include box-shadow(none);
+                        box-shadow: none;
                     }
                 }
                 .control-label {
@@ -231,7 +231,7 @@
             top: 2px;
             left: 6px;
             @include size(6px, 12px);
-            @include rotate(45deg);
+            transform: rotate(45deg);
             border: solid #fff;
             border-width: 0 2px 2px 0;
         }
@@ -301,7 +301,7 @@
 
         .select2-container {
             border: 0;
-            @include box-shadow(none);
+            box-shadow: none;
             .select2-choice {
                 background-color: #fff;
                 color: $text-color;
@@ -327,12 +327,12 @@
                 .select2-choice {
                     @include border-bottom-radius(0);
                     border-color: $o-brand-optional;
-                    @include box-shadow(none);
+                    box-shadow: none;
                 }
             }
             &:hover,
             &:focus {
-                @include box-shadow(none);
+                box-shadow: none;
                 .select2-choice {
                     border-color: $o-brand-optional;
                 }
@@ -351,7 +351,7 @@
 
     .select2-drop {
         margin-top: 0;
-        @include box-shadow(none);
+        box-shadow: none;
     }
 
     .select2-drop-active {

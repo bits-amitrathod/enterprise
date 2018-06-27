@@ -1,5 +1,5 @@
 %o-web-studio-app-creator-background {
-    @include o-linear-gradient($deg: 90deg, $start-color: #565d78, $end-color: #65545c);
+    background-image: linear-gradient(90deg, #565d78, #65545c);
 }
 
 // Home menu in studio mode
@@ -16,7 +16,7 @@
         &:not(.o_web_studio_new_app) {
             opacity: 0.5;
             .o_app_icon {
-                @include transition-property(none);
+                transition-property: none;
             }
             &:hover, &:focus {
                 opacity: 0.9;
@@ -127,7 +127,7 @@
             font-weight: 500;
 
             > span {
-                @include o-transition(opacity, 0.35s);
+                transition: opacity 0.35s ease 0s;
             }
             &:hover, &:focus {
                 color: $o-web-studio-text-inactive;
@@ -143,13 +143,13 @@
                 background-color: $o-brand-optional;
                 border-color: darken($o-brand-optional, 3%);
                 color: white;
-                @include o-transition(all, 0.3s);
-                @include transition-property(padding background);
+                transition: all 0.3s ease 0s;
+                transition-property: padding background;
 
                 > span {
                     opacity: 1;
                     padding-right: 15px;
-                    @include o-transition(opacity, 0.1s);
+                    transition: opacity 0.1s ease 0s;
                 }
 
                 &:hover, &:focus {
@@ -186,15 +186,15 @@
             width: 50%;
             float: left;
             padding: 16px 32px;
-            @include o-transition(width, 0.3s);
+            transition: width 0.3s ease 0s;
         }
         .o_web_studio_app_creator_left {
             border-radius: 3px 0 0 3px;
-            @include o-flex-display;
-            @include o-flex-flow(column, nowrap);
+            display: flex;
+            flex-flow: column nowrap;
 
             .o_web_studio_app_creator_left_content {
-                @include o-flex(1, 1, 100%);
+                flex: 1 1 100%;
                 padding-top: 20px;
 
                 .o_field_many2one {
@@ -202,7 +202,7 @@
                 }
             }
             .o_web_studio_app_creator_buttons {
-                @include o-flex(0, 0, auto);
+                flex: 0 0 auto;
 
                 .o_web_studio_app_creator_next {
                     float: right;
@@ -211,9 +211,9 @@
         }
         .o_web_studio_app_creator_right {
             border-radius: 0 3px 3px 0;
-            @include o-flex-display;
-            @include o-justify-content(center);
-            @include o-align-items(center);
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             .o_web_studio_app_creator_right {
                 height: 200px;

@@ -10,16 +10,16 @@ $o-dashboard-lg-screen: $o-screen-sidechatter-min;
     $padding: $o-horizontal-padding;
     $padding-small: $o-horizontal-padding*0.5;
 
-    @include o-flex-display;
-    @include o-flex-flow(row, wrap);
-    @include o-align-items(flex-start);
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
     width: 100%;
     height: auto;
     padding: $o-sheet-vpadding 0;
 
     > .o_group, .o_subview {
         // By default dashboard entries are full-width...
-        @include o-flex(1,1,100%);
+        flex: 1 1 100%;
         margin: 0 $padding $padding*2;
         padding: $padding;
         border: 1px solid $gray-lighter-darker;
@@ -28,31 +28,31 @@ $o-dashboard-lg-screen: $o-screen-sidechatter-min;
 
         //...trig masonery layout for very large screens
         @media (min-width: $o-dashboard-lg-screen) {
-            @include o-flex(1, 1, 47%);
+            flex: 1 1 47%;
         }
     }
 
     .o_group {
-        @include o-flex-display;
-        @include o-flex-flow(row, wrap);
-        @include o-align-items(flex-start);
+        display: flex;
+        flex-flow: row wrap;
+        align-items: flex-start;
 
         @for $i from 1 through $o-form-group-cols {
             .o_group_col_#{$i} {
                 padding: 0 $padding-small;
                 width: 50%;
-                @include o-flex(1, 1, 50%);
+                flex: 1 1 50%;
 
                 @media (max-width: $screen-sm-max) {
                     &.o_group {
                         width: 100%;
-                        @include o-flex(1, 1, 100%);
+                        flex: 1 1 100%;
                     }
                 }
 
                 @media (min-width: $screen-md-min) {
                     width: floor(100% / 12 * $i);
-                    @include o-flex(0, 0, floor(100% / 12 * $i));
+                    flex: 0 0 floor(100% / 12 * $i);
                 }
             }
         }
@@ -114,16 +114,16 @@ $o-dashboard-lg-screen: $o-screen-sidechatter-min;
 
     // Let expand first's group columns to fit the card size.
     > .o_group {
-        @include o-justify-content(stretch);
+        justify-content: stretch;
 
         > [class*="o_group_col_"] {
             @media (min-width: $screen-xs-min) and (max-width: $screen-sm-max){
                 width: 100%;
-                @include o-flex(1, 0, 100%);
+                flex: 1 0 100%;
             }
 
             @media (min-width: $screen-md-min){
-                @include o-flex(1, 1, auto);
+                flex: 1 1 auto;
                 margin-right: -$padding-small*0.5;
             }
         }

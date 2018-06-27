@@ -22,7 +22,7 @@ select { // FIXME buggy 'padding-left'
     background-color: transparent;
     min-width: 50px;
 
-    @include o-appearance(none);
+    appearance: none;
     background-image: url("/web_enterprise/static/src/img/down-arrow.png");
     background-repeat: no-repeat;
     background-position: right center;
@@ -113,7 +113,7 @@ select { // FIXME buggy 'padding-left'
 }
 
 .btn-primary.active, .btn-default.active, .btn-icon.active {
-    @include box-shadow(none);
+    box-shadow: none;
 }
 
 .btn-primary, .btn-default {

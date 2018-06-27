@@ -6,8 +6,8 @@
             padding: 0;
         }
         .o_form_sheet_bg {
-            @include o-flex-display;
-            @include o-flex-flow(column, nowrap);
+            display: flex;
+            flex-flow: column nowrap;
             padding: 16px;
         }
         .o_form_sheet, .oe_chatter {
@@ -21,7 +21,7 @@
             position: relative;
             .o_web_studio_overlay {
                 @include o-position-absolute(0, 0, 0, 0);
-                @include o-transition(all, 0.2s);
+                transition: all 0.2s ease 0s;
                 &:hover {
                     background-color: rgba(white, 0.4);
                 }
@@ -36,7 +36,7 @@
             height: 42px;
             line-height: 42px;
             opacity: 0.6;
-            @include o-transition(opacity, 0.3s);
+            transition: opacity 0.3s ease 0s;
 
             &:hover {
                 opacity: 1;
@@ -64,7 +64,7 @@
                     display: block;
                     position: relative;
                     border: 0px dashed transparent;
-                    @include o-transition(all, 0.2s, 0s, cubic-bezier(0.215, 0.610, 0.355, 1.000));
+                    transition: all 0.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0s;
                 }
             }
             .o_web_studio_hook.o_web_studio_nearest_hook {
@@ -150,19 +150,19 @@
             margin: 16px -16px;
             cursor: pointer;
             color: $o-web-studio-text-light;
-            @include o-transition(all, 0.2s);
+            transition: all 0.2s ease 0s;
             > .o_chatter_topbar {
                 padding: 16px;
                 max-width: 90%;
                 opacity: 0;
                 pointer-events: none;
-                @include o-transition(all, 0.2s);
+                transition: all 0.2s ease 0s;
             }
             > span {
                 position: relative;
                 max-width: 100%;
                 display: block;
-                @include o-transition(width, 0.2s, ease, .1s);
+                transition: width 0.2s ease .1s;
                 > span {
                     @include o-position-absolute($left:0);
                     @include size(100%, 52px);
@@ -175,12 +175,12 @@
                 width: auto;
                 background-color: rgba(white, 0.9);
                 color: transparent;
-                @include o-transition(all, .2s, ease, .2s);
+                transition: all .2s ease .2s;
                 > span {
                     width: 100%;
                 }
                 > .o_chatter_topbar {
-                    @include o-transition(all, .8s, ease, .1s);
+                    transition: all .8s ease .1s;
                     max-width: 100%;
                     opacity: 1;
                 }

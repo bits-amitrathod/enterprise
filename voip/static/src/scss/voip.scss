@@ -6,9 +6,9 @@
     $o-dial-panel-bg: white;
     $o-dial-panel-width: 300px;
 
-    @include o-flex-display;
-    @include o-flex-flow(column, nowrap);
-    @include box-shadow(4px 0 17px -2px rgba(0,0,0,0.42));
+    display: flex;
+    flex-flow: column nowrap;
+    box-shadow: 4px 0 17px -2px rgba(0,0,0,0.42);
     position: fixed;
     width: $o-dial-panel-width;
     max-width: 100%;
@@ -71,7 +71,7 @@
         cursor: not-allowed;
     }
     .o_dial_searchbar, .o_dial_keypad_input_div {
-        @include o-flex(0, 0, auto);
+        flex: 0 0 auto;
         padding: 5px 10px;
         position: relative;
 
@@ -91,9 +91,9 @@
         }
     }
     .o_dial_panel, .o_dial_keypad {
-        @include o-flex(1, 1, auto);
-        @include o-flex-display;
-        @include o-flex-flow(column, nowrap);
+        flex: 1 1 auto;
+        display: flex;
+        flex-flow: column nowrap;
         min-height: auto;
     }
     .o_dial_panel{
@@ -113,7 +113,7 @@
             }
         }
         .tab-content {
-            @include o-flex(1, 1, auto);
+            flex: 1 1 auto;
             overflow-y: scroll;
             overflow-x: hidden;
             position: relative;
@@ -226,9 +226,9 @@
         }
     }
     .o_dial_buttons{
-        @include o-flex(0, 0, auto);
-        @include o-flex-display;
-        @include o-flex-flow(row, wrap);
+        flex: 0 0 auto;
+        display: flex;
+        flex-flow: row wrap;
     }
     .o_dial_keypad_buttons, .o_dial_main_buttons {
         button {
@@ -237,7 +237,7 @@
         }
     }
     .o_dial_keypad_buttons{
-        @include o-flex(2, 1, auto);
+        flex: 2 1 auto;
 
         .o_dial_keypad_button {
             float: left;
@@ -252,7 +252,7 @@
     .o_dial_main_buttons {
         background-color: $gray-lighter;
         border-top: 1px solid $o-mid-gray;
-        @include o-flex-display;
+        display: flex;
 
         .o_dial_keypad_button .fa {
             font-size: xx-large;

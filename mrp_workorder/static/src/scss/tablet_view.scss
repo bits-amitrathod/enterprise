@@ -5,8 +5,8 @@
     $o-wo-tablet-text: o-get-most-contrast($o-wo-tablet-bg, $text-color, #FFF);
 
     .o_form_view.o_workorder_tablet {
-        @include o-flex-display;
-        @include o-flex-flow(column, nowrap);
+        display: flex;
+        flex-flow: column nowrap;
         padding: 0;
         background-color: $o-wo-tablet-bg;
         background-image: url(/web/static/lib/pdfjs/web/images/texture.png);
@@ -63,13 +63,13 @@
         }
 
         .o_workorder_bar_content {
-            @include o-flex-display;
-            @include o-flex-flow(row, nowrap);
-            @include o-flex(1, 0, auto);
-            @include o-align-items(center);
+            display: flex;
+            flex-flow: row nowrap;
+            flex: 1 0 auto;
+            align-items: center;
 
             &.o_workorder_bar_content_right {
-                @include o-justify-content(flex-end);
+                justify-content: flex-end;
             }
         }
 
@@ -81,16 +81,16 @@
 
         // First Top Block
         .workorder_bar {
-            @include o-flex-display();
-            @include o-flex-flow(row, wrap);
+            display: flex;
+            flex-flow: row wrap;
             padding: $o-wo-tablet-padding*0.5 $o-wo-tablet-padding;
             padding-left: $o-wo-tablet-padding - $o-wo-tablet-btn-margin;
         }
 
         // Last top Block
         .workorder_actions {
-            @include o-flex-display();
-            @include o-flex-flow(row, nowrap);
+            display: flex;
+            flex-flow: row nowrap;
             padding: $o-wo-tablet-padding*0.5 $o-wo-tablet-padding - $o-wo-tablet-btn-margin $o-wo-tablet-padding;
             box-shadow: 0 1px 1px rgba(black, 0.3);
             font-size: 1.2em;
@@ -127,16 +127,16 @@
             // Horizontal form
             .o_workorder_form {
                 padding-bottom: $o-wo-tablet-padding*0.5;
-                @include o-justify-content(space-between);
+                justify-content: space-between;
 
                 > div {
-                    @include o-flex(1,0,auto);
+                    flex: 1 0 auto;
                 }
 
                 .o_workorder_field {
                     > div {
-                        @include o-inline-flex-display;
-                        @include o-align-items(baseline);
+                        display: inline-flex;
+                        align-items: baseline;
                     }
 
                     .o_form_label {
@@ -155,15 +155,15 @@
 
         // PDF Viewer block
         .workorder_pdf {
-            @include o-flex-display;
-            @include o-flex(1, 0, auto);
+            display: flex;
+            flex: 1 0 auto;
 
             div.o_field_pdfviewer {
                 margin: 0;
                 height: auto;
                 position: relative;
-                @include o-flex-display;
-                @include o-flex(1, 0, auto);
+                display: flex;
+                flex: 1 0 auto;
 
                 iframe {
                     display: block;

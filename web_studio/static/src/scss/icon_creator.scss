@@ -25,12 +25,12 @@
             vertical-align: middle;
             text-align: center;
             border-radius: 6px;
-            @include o-transition(background, 0.2s);
+            transition: background 0.2s ease 0s;
 
             > i {
                 padding-left: 2px;
                 font-size: 6em;
-                @include o-transition(color, 0.2s);
+                transition: color 0.2s ease 0s;
             }
         }
     }
@@ -57,7 +57,7 @@
             border: 2px solid white;
             width: 30px;
             height: 30px;
-            @include transition-property(none);
+            transition-property: none;
             &:before {
                 display: none;
             }
@@ -87,8 +87,8 @@
         box-shadow: 0 0 0 1px darken($o-web-studio-bg-light, 50%);
         cursor: pointer;
         position: relative;
-        @include o-transition(all, 0.3s);
-        @include transition-property(opacity, box-shadow);
+        transition: all 0.3s ease 0s;
+        transition-property: opacity, box-shadow;
 
         background-color: white;
 
@@ -107,7 +107,7 @@
             display: block;
             width: 30px;
             border-top: 1px dotted white;
-            @include o-transition(all, 0.3s);
+            transition: all 0.3s ease 0s;
 
             &:after {
                 content: "\B0";
@@ -117,7 +117,7 @@
                 color: white;
                 text-shadow: 0 0 1px $o-web-studio-bg-dark;
                 @include o-position-absolute(12px, auto, auto, -16px);
-                @include o-transition(all, 0.3s);
+                transition: all 0.3s ease 0s;
             }
         }
 

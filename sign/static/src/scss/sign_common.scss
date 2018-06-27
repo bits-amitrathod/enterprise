@@ -2,7 +2,7 @@
     width: 100%;
     height: 100%;
     min-height: 0;
-    @include o-flex(0, 1, 100%);
+    flex: 0 1 100%;
     border: none;
     display: block;
 }
@@ -18,18 +18,18 @@
 
 /* Document view */
 .o_sign_document {
-    @include o-flex-display;
-    @include o-flex-flow(column, nowrap);
+    display: flex;
+    flex-flow: column nowrap;
     background-color: $o-view-background-color;
 
     > .container-fluid {
-        @include o-flex(0, 0, auto);
+        flex: 0 0 auto;
         margin: 0;
         padding: 0 $o-horizontal-padding 10px;
     }
 
     > .container {
-        @include o-flex(0, 0, auto);
+        flex: 0 0 auto;
     }
 
     .row {

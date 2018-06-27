@@ -1,16 +1,16 @@
 .o_web_studio_client_action.o_report_editor {
-    @include o-flex-display;
+    display: flex;
     .o_report_iframe {
-        @include o-flex(1, 1, auto);
+        flex: 1 1 auto;
         position: initial;
     }
 
     .o_web_studio_sidebar {
-        @include o-flex(0, 0, $o-web-studio-sidebar-width);
+        flex: 0 0 $o-web-studio-sidebar-width;
         overflow: auto;
     }
     .o_ace_view_editor {
-        @include o-flex(0, 0, auto);
+        flex: 0 0 auto;
     }
 
     .o_report_editor_unavailable {

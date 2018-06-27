@@ -81,13 +81,13 @@
 
     /* Module pages */
     .o_sign_template, .o_sign_document {
-        @include o-flex-display;
-        @include o-flex-flow(column, nowrap);
+        display: flex;
+        flex-flow: column nowrap;
         @include o-position-absolute(0, 0, 0, 0);
         @media (max-width: $screen-xs-max) {
             position: static;
             .o_sign_pdf_iframe {
-                @include o-flex(0, 0, 500px);
+                flex: 0 0 500px;
             }
         }
         background-color: $o-view-background-color;

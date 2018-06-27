@@ -1,12 +1,12 @@
 .o_datepickers_searchview {
-    @include o-flex-display;
-    @include o-align-items(center);
+    display: flex;
+    align-items: center;
 
     // Position relative is necessary to display the datepicker correctly when toggle
     // Requirement from the library.
     position: relative;
     > .o_datepicker {
-        @include o-flex(1, 0, 90px);
+        flex: 1 0 90px;
         margin: 0 10px;
         position: relative;
 
@@ -45,11 +45,11 @@
     }
 
     .o_stats_section {
-        @include o-flex-display;
-        @include o-flex-flow(row, wrap);
+        display: flex;
+        flex-flow: row wrap;
 
         > div {
-            @include o-flex(1, 1, 350px);
+            flex: 1 1 350px;
         }
     }
 
@@ -64,8 +64,8 @@
         margin: 5px;
 
         .o_stat_box_header {
-            @include o-flex-display;
-            @include o-justify-content(space-between);
+            display: flex;
+            justify-content: space-between;
             min-height: 40px;
         }
 
@@ -181,7 +181,7 @@
     .o_welcome_message {
         margin: 5px;
 
-        @include o-flex-display;
+        display: flex;
         justify-content: center;
 
         .o_welcome_image {

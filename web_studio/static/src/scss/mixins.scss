@@ -103,16 +103,16 @@
 @mixin o-web-studio-thumbnails {
     padding-top: 20px;
     overflow: auto;
-    @include o-flex-display;
-    @include o-align-content(flex-start);
-    @include o-align-items(flex-start);
-    @include o-flex-flow(row, wrap);
+    display: flex;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-flow: row wrap;
 
 }
 @mixin o-web-studio-thumbnail {
-    @include o-inline-flex-display;
-    @include o-justify-content(center);
-    @include o-align-items(baseline);
+    display: inline-flex;
+    justify-content: center;
+    align-items: baseline;
     float: left;
     position: relative;
     height: 140px;
@@ -130,12 +130,12 @@
         height: 115px;
         width: 100%;
         cursor: pointer;
-        @include o-flex-display;
+        display: flex;
 
         img {
             width: 60px;
             margin: auto;
-            @include o-align-self(center);
+            align-self: center;
         }
     }
     .o_web_studio_name {

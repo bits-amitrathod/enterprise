@@ -9,8 +9,8 @@
 }
 
 .o_burger_menu {
-    @include o-flex-display;
-    @include o-flex-flow(column, nowrap);
+    display: flex;
+    flex-flow: column nowrap;
     position: fixed;
     top: 0px;
     bottom: 0px;
@@ -20,7 +20,7 @@
     z-index: 10;
 
     .o_burger_menu_topbar {
-        @include o-flex(0, 0, $o-navbar-height);
+        flex: 0 0 $o-navbar-height;
         padding: 10px 16px;
         background: darken($o-brand-primary, 10%);
         color: white;
@@ -37,7 +37,7 @@
     }
 
     .o_burger_menu_content {
-        @include o-flex(1, 1, auto);
+        flex: 1 1 auto;
         overflow: auto;
         background: white;
         &.o_burger_menu_dark {

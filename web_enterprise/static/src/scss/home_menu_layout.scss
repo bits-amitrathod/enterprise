@@ -2,20 +2,20 @@
 .o_home_menu {
     height: 100%;
     overflow: auto;
-    @include o-flex-display;
-    @include o-flex-flow(column, nowrap);
-    @include o-align-items(center);
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
 
     .o_home_menu_scrollable {
-        @include o-flex-display;
-        @include o-flex-flow(column, nowrap);
-        @include o-align-items(center);
-        @include o-flex(1, 0, auto);
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        flex: 1 0 auto;
         width: 100%;
         max-width: $o-home-menu-container-size;
 
         .o_apps {
-            @include o-flex(0, 0, auto);
+            flex: 0 0 auto;
             width: 100%;
             max-width: $o-home-menu-container-size;
             @include clearfix;
@@ -57,7 +57,7 @@
         .o_menuitems {
             width: 100%;
 
-            @include o-flex(1, 0, auto);
+            flex: 1 0 auto;
             .o_menuitem {
                 @media (max-width: $screen-xs-max) {
                     padding: 6px;
@@ -66,12 +66,12 @@
 
         }
         .o_no_results {
-            @include o-flex(1, 0, auto);
+            flex: 1 0 auto;
         }
     }
     .o_home_menu_footer {
-        @include o-flex-display;
-        @include o-flex(1, 0, auto);
+        display: flex;
+        flex: 1 0 auto;
         align-items: flex-end;
 
         img {

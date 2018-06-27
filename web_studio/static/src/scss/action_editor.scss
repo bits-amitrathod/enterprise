@@ -1,29 +1,29 @@
 .o_web_studio_client_action {
     .o_web_studio_action_editor {
-        @include o-flex-display;
-        @include o-flex-flow(row, nowrap);
-        @include o-justify-content(center);
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
         @include o-web-studio-thumbnails-container;
 
         .o_web_studio_sidebar {
-            @include o-flex(0, 0, $o-web-studio-sidebar-width);
+            flex: 0 0 $o-web-studio-sidebar-width;
             overflow: auto;
         }
         .o_web_studio_views {
-            @include o-flex(1, 1, auto);
+            flex: 1 1 auto;
             @include o-web-studio-thumbnails;
 
             @media screen and (min-width: $screen-md-min) {
-                @include o-flex-flow(column, wrap);
+                flex-flow: column wrap;
             }
 
             @media screen and (min-width: ($screen-lg)) {
-                @include o-align-content(center);
+                align-content: center;
             }
 
             .o_web_studio_view_column {
-                @include o-flex-display;
-                @include o-flex-flow(column, nowrap);
+                display: flex;
+                flex-flow: column nowrap;
 
                 &:first-child {
                     margin-right: $grid-gutter-width*2
@@ -41,7 +41,7 @@
                     @include o-web-studio-thumbnail;
                     margin-bottom: 20px;
 
-                    @include o-transition(all, .2s);
+                    transition: all .2s ease 0s;
                     & + .o_web_studio_view_type {
                         margin-left: $grid-gutter-width*0.75
                     }
@@ -49,13 +49,13 @@
                     &.open {
                         box-shadow: none;
                         border: 1px solid darken($o-brand-optional, 5%);
-                        @include transition(box-shadow .75s, border .3s);
+                        transition: box-shadow .75s, border .3s;
                     }
 
                     &.o_web_studio_inactive {
                         opacity: 0.5;
                         overflow: hidden;
-                        @include o-transition(all, 0.3s);
+                        transition: all 0.3s ease 0s;
 
                         .o_web_studio_view_label {
                             text-align: center;
@@ -66,7 +66,7 @@
                             background: desaturate($o-brand-optional,20%);
                             color: white;
                             @include o-position-absolute(4px, -100px);
-                            @include o-transition(all, 0.2s, ease, 0.1s);
+                            transition: all 0.2s ease 0.1s;
                         }
 
                         .o_web_studio_thumbnail {

@@ -6,8 +6,8 @@ html {
 
     .o_web_client {
         height: 100%;
-        @include o-flex-display;
-        @include o-flex-flow(column, nowrap);
+        display: flex;
+        flex-flow: column nowrap;
 
         &.o_fullscreen {
             .o_main_navbar {
@@ -16,15 +16,15 @@ html {
         }
 
         .o_main_navbar {
-            @include o-flex(0, 0, auto);
+            flex: 0 0 auto;
         }
 
         .o_control_panel {
-            @include o-flex(0, 0, auto);
+            flex: 0 0 auto;
         }
 
         .o_content {
-            @include o-flex(1, 1, auto);
+            flex: 1 1 auto;
             @media (min-width: $screen-sm-min) {
                 overflow: auto;
                 height: 100%;

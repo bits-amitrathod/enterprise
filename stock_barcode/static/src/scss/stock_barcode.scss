@@ -1,8 +1,8 @@
 .o_stock_barcode_main_menu_container {
-    @include o-flex-display;
-    @include o-flex-flow(column, nowrap);
-    @include o-justify-content(center);
-    @include o-align-items(center);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
 
     @media (min-width: $screen-sm-min) {
         @include o-position-absolute(0, 0, 0, 0);
