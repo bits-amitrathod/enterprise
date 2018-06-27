@@ -230,6 +230,92 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('list editor invisible to visible on field', function(assert) {
+        assert.expect(1);
+
+        var archReturn = '<tree><field name="char_field" modifiers="{}" attrs="{}"/></tree>';
+        var fieldsView;
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='display_name'/>" +
+                        "<field name='char_field' invisible='1'/>" +
+                    "</tree>",
+            mockRPC: function(route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.ok(!('column_invisible' in args.operations[0].new_attrs),
+                            'we shouldn\'t send "column_invisible"');
+
+                    fieldsView.arch = archReturn;
+                    return $.when({
+                        fields_views: {list: fieldsView},
+                        fields: fieldsView.fields,
+                    });
+                }
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                return this._super.apply(this, arguments);
+            }
+        });
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        vem.$('.o_web_studio_sidebar').find('.o_web_studio_view').click();
+        vem.$('.o_web_studio_sidebar').find('input#show_invisible').click();
+
+        // select the second column
+        vem.$('thead th[data-node-id=2]').click();
+        // disable invisible
+        vem.$('.o_web_studio_sidebar').find('input#invisible').click();
+
+        vem.destroy();
+    });
+
+    QUnit.test('list editor invisible to visible on field readonly', function(assert) {
+        assert.expect(2);
+
+        var archReturn = '<tree><field name="char_field" readonly="1" attrs="{}" invisible="1" modifiers="{&quot;column_invisible&quot;: true, &quot;readonly&quot;: true}"/></tree>';
+        var fieldsView;
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='display_name'/>" +
+                        "<field name='char_field' readonly='1'/>" +
+                    "</tree>",
+            mockRPC: function(route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.ok(!('readonly' in args.operations[0].new_attrs),
+                        'we shouldn\'t send "readonly"');
+                    assert.equal(args.operations[0].new_attrs.invisible, 1,
+                        'we should send "invisible"');
+
+                    fieldsView.arch = archReturn;
+                    return $.when({
+                        fields_views: {list: fieldsView},
+                        fields: fieldsView.fields,
+                    });
+                }
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                return this._super.apply(this, arguments);
+            }
+        });
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        vem.$('.o_web_studio_sidebar').find('.o_web_studio_view').click();
+        vem.$('.o_web_studio_sidebar').find('input#show_invisible').click();
+
+        // select the second column
+        vem.$('thead th[data-node-id=2]').click();
+        // disable invisible
+        vem.$('.o_web_studio_sidebar').find('input#invisible').click();
+
+        vem.destroy();
+    });
+
     QUnit.test('list editor field', function(assert) {
         assert.expect(5);
 
@@ -2381,6 +2467,88 @@ QUnit.module('ViewEditorManager', {
         testUtils.dragAndDrop(vem.$('.o_web_studio_field_type_container .o_web_studio_field_columns'),
             $afterGroupHook, {disableDrop: true});
         assert.strictEqual(vem.$('.o_web_studio_nearest_hook').length, 1, "There should be 1 highlighted hook");
+        vem.destroy();
+    });
+
+    QUnit.test('One2Many list editor column_invisible in attrs ', function(assert) {
+        assert.expect(2);
+
+        var fieldsView;
+
+        var productArchReturn = '<tree>' +
+                                    '<field name="display_name" attrs="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;,&quot;=&quot;,2]]}" readonly="1" modifiers="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;, &quot;=&quot;, 2]], &quot;readonly&quot;: true}"/>' +
+                                '</tree>';
+
+        var coucouArchReturn = '<form>' +
+                                    '<field name="product_ids">' +
+                                        productArchReturn +
+                                    '</field>' +
+                                '</form>';
+
+
+        var coucouFields = {product_ids: {
+                                string: "product",
+                                type: "one2many",
+                                relation: "product",
+                                views: {
+                                    list: {
+                                        arch: productArchReturn,
+                                        fields: {
+                                            display_name: {
+                                                string: "Display Name",
+                                                type: "char",
+                                            },
+                                        },
+                                    },
+                                },
+                            }
+                        };
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<field name='product_ids'>" +
+                        "<tree>" +
+                            '<field name="display_name" attrs="{\'column_invisible\': [(\'parent.id\', \'=\',2)]}" />' +
+                        "</tree>" +
+                    "</field>" +
+                  "</form>",
+            mockRPC: function(route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.equal(args.operations[0].new_attrs.attrs, '{"column_invisible": [["parent.id","=",2]]}',
+                        'we should send "column_invisible" in attrs.attrs');
+
+                    assert.equal(args.operations[0].new_attrs.readonly, '1',
+                        'We should send "readonly" in the node attr');
+
+                    fieldsView.arch = coucouArchReturn;
+                    $.extend(fieldsView.fields, coucouFields);
+                    return $.when({
+                        fields_views: {form: fieldsView},
+                        fields: fieldsView.fields,
+                    });
+                }
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                return this._super.apply(this, arguments);
+            }
+        });
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        // Enter edit mode of the O2M
+        vem.$('.o_field_x2many_list[name=product_ids]').click();
+        vem.$('.o_web_studio_editX2Many').click();
+
+        vem.$('.o_web_studio_sidebar').find('.o_web_studio_view').click();
+        vem.$('.o_web_studio_sidebar').find('input#show_invisible').click();
+
+        // select the first column
+        vem.$('thead th[data-node-id=1]').click();
+        // enable readonly
+        vem.$('.o_web_studio_sidebar').find('input#readonly').click();
+
         vem.destroy();
     });
 });
