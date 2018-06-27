@@ -115,7 +115,14 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
     render_template: function() {
         this.$el.html(this.main_html);
         this.$el.find('.o_account_reports_summary_edit').hide();
+        this._add_line_classes();
     },
+    _add_line_classes: function() {
+        this.$('.o_account_report_line').filter(function () {
+            return $(this).data('unfolded') === 'True';
+        }).parent().addClass('o_js_account_report_parent_row_unfolded');
+        this.$('tr[data-parent-id]').addClass('o_js_account_report_inner_row');
+     },
     render_searchview_buttons: function() {
         var self = this;
         // bind searchview buttons/filter to the correct actions
@@ -431,6 +438,7 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
         var line_id = line.data('id');
         line.find('.fa-caret-down').toggleClass('fa-caret-right fa-caret-down');
         line.toggleClass('folded');
+        $(line).parent('tr').removeClass('o_js_account_report_parent_row_unfolded');
         var $lines_to_hide = this.$el.find('tr[data-parent-id="'+line_id+'"]');
         var index = self.report_options.unfolded_lines.indexOf(line_id);
         if (index > -1) {
@@ -460,6 +468,7 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
             $lines_in_dom.show();
             line.find('.fa-caret-right').toggleClass('fa-caret-right fa-caret-down');
             line.data('unfolded', 'True');
+            this._add_line_classes();
             return true;
         }
         else {
@@ -471,6 +480,7 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
                 })
                 .then(function(result){
                     $(line).parent('tr').replaceWith(result);
+                    self._add_line_classes();
                 });
         }
     },

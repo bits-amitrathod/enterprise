@@ -140,7 +140,10 @@
         <tr t-att-class="trclass+' '+(line.get('class', ''))" t-att-data-parent-id="line.get('parent_id', False)" t-att-style="line.get('style', '')">
             <td t-att-data-id="line['id']" t-att-class="'o_account_report_line ' + (line.get('unfoldable') and 'js_account_report_foldable' or '')" t-att-data-unfolded="line.get('unfolded', False)" t-att-colspan="line.get('colspan', '1')">
                     <t t-if="line.get('unfoldable')">
-                        <span t-att-data-id="line['id']" class="o_account_reports_caret_icon"><i class="fa fa-fw fa-caret-down" t-if="line.get('unfolded')" role="img" aria-label="Unfolded" title="Unfolded"/><i class="fa fa-fw fa-caret-right" t-if="not line.get('unfolded')" role="img" aria-label="Folded" title="Folded"/></span>
+                        <span t-att-data-id="line['id']" class="o_account_reports_caret_icon">
+                            <i class="fa fa-caret-down" t-if="line.get('unfolded')" role="img" aria-label="Unfolded" title="Unfolded"/>
+                            <i class="fa fa-caret-right" t-if="not line.get('unfolded')" role="img" aria-label="Folded" title="Folded"/>
+                        </span>
                     </t>
                     <t t-if="not line.get('caret_options')">
                             <span class="account_report_line_name">
@@ -182,7 +185,7 @@
 
 <template id="main_template">
     <div class='o_account_reports_body'>
-        <div class="container o_account_reports_page o_account_reports_no_print">
+        <div class="container-fluid o_account_reports_page o_account_reports_no_print">
             <div class="alert alert-info text-center no_print" t-if="options.get('unposted_in_period')">
                 <span>There are <a action="open_unposted_moves">unposted Journal Entries</a> prior or included in this period.</span>
                 <br/>
@@ -208,7 +211,7 @@
                 </h4>
             </t>
             <t t-call="account_reports.filter_info_template"/>
-            <div class="o_account_reports_summary" style="padding-bottom:40px; position: relative;">
+            <div class="o_account_reports_summary">
                 <i class="fa fa-fw fa-pencil o_account_reports_edit_summary_pencil" role="img" aria-label="Edit Summary" title="Edit Summary"></i>
                 <div class="o_account_report_summary" role="alert">
                     <span style="white-space: pre-wrap;" t-if="report.get('summary')"><t t-esc="report['summary']"/></span>
