@@ -29,7 +29,7 @@ class SignTemplateShare(models.TransientModel):
 
     def open(self):
         return {
-            'name': 'Signed Document',
+            'name': _('Sign'),
             'type': 'ir.actions.act_url',
-            'url': '/sign/download/%(request_id)s/%(access_token)s/completed' % {'request_id': self.id, 'access_token': self.access_token},
+            'url': '/sign/%s' % (self.template_id.share_link),
         }

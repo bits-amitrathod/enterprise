@@ -13,6 +13,7 @@
                 <span attrs="{'invisible': [('url', '!=', False)]}">To be able to share, there must be only one responsible for all fields!</span>
                 <footer>
                     <button string="Ok" class="btn-primary" special="cancel"/>
+                    <button string="Open" name="open" type="object" class="btn-primary" attrs="{'invisible': [('url', '=', False)]}"/> 
                 </footer>
             </form>
         </field>
