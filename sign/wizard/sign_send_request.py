@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class SignSendRequest(models.TransientModel):
@@ -28,6 +28,7 @@ class SignSendRequest(models.TransientModel):
     signers_count = fields.Integer()
     follower_ids = fields.Many2many('res.partner', string="Send a copy to")
     extension = fields.Char(compute='_compute_extension')
+    is_user_signer = fields.Boolean(compute='_compute_is_user_signer')
 
     subject = fields.Char(string="Subject")
     message = fields.Text("Message")
@@ -38,7 +39,16 @@ class SignSendRequest(models.TransientModel):
         for wizard in self.filtered(lambda w: w.template_id):
             wizard.extension = '.' + self.template_id.attachment_id.datas_fname.split('.')[-1]
 
-    def send_request(self):
+    @api.depends('signer_ids.partner_id', 'signer_id', 'signers_count')
+    def _compute_is_user_signer(self):
+        if self.signers_count and self.env.user.partner_id in self.signer_ids.mapped('partner_id'):
+            self.is_user_signer = True
+        elif not self.signers_count and self.env.user.partner_id == self.signer_id:
+            self.is_user_signer = True
+        else:
+            self.is_user_signer = False
+
+    def create_request(self):
         template_id = self.template_id.id
         if self.signers_count:
             signers = [{'partner_id': signer.partner_id.id, 'role': signer.role_id.id} for signer in self.signer_ids]
@@ -48,13 +58,34 @@ class SignSendRequest(models.TransientModel):
         reference = self.filename
         subject = self.subject
         message = self.message
-        res = self.env['sign.request'].initialize_new(template_id, signers, followers, reference, subject, message, send=True)
+        return self.env['sign.request'].initialize_new(template_id, signers, followers, reference, subject, message, send=True)
+
+    def send_request(self):
+        res = self.create_request()
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Signature(s)',
+            'name': _('Signature(s)'),
             'view_mode': 'form',
             'res_model': 'sign.request',
             'res_id': res['id']
+        }
+
+    def sign_directly(self):
+        res = self.create_request()
+        request = self.env['sign.request'].browse(res['id'])
+        user_item = request.request_item_ids.filtered(
+            lambda item: item.partner_id == item.env.user.partner_id)
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'sign.SignableDocument',
+            'name': _('Sign'),
+            'context': {
+                'id': request.id,
+                'token': user_item.access_token,
+                'sign_token': user_item.access_token,
+                'create_uid': request.create_uid.id,
+                'state': request.state,
+            },
         }
 
 
