@@ -298,7 +298,7 @@ var DashboardRenderer = FormRenderer.extend({
         // of those controllers)
         var aggregate = ev.currentTarget.getAttribute('name');
         var aggregateInfo = this.state.fieldsInfo.dashboard[aggregate];
-        var measure = aggregateInfo.field;
+        var measure = aggregateInfo.measure !== undefined ? aggregateInfo.measure : aggregateInfo.field;
         if (this.subControllers.pivot) {
             this.subcontrollersNextMeasures.pivot.pivot_measures = [measure];
         }

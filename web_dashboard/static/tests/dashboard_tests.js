@@ -1391,6 +1391,92 @@ QUnit.module('Views', {
             'groupby should be unselected');
         actionManager.destroy();
     });
+
+    QUnit.test('When there is a measure attribute we use it to filter the graph and pivot', function(assert) {
+        assert.expect(2);
+
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'test_report,false,dashboard': '<dashboard>' +
+                        '<view type="graph"/>' +
+                        '<group>' +
+                            '<aggregate name="number" field="id" group_operator="count" measure="__count__"/>' +
+                            '<aggregate name="untaxed" field="untaxed"/>' +
+                        '</group>' +
+                        '<view type="pivot"/>' +
+                    '</dashboard>',
+                'test_report,false,graph': '<graph>' +
+                        '<field name="categ_id"/>' +
+                        '<field name="sold" type="measure"/>' +
+                    '</graph>',
+                'test_report,false,pivot': '<pivot>' +
+                        '<field name="categ_id" type="row"/>' +
+                        '<field name="sold" type="measure"/>' +
+                    '</pivot>',
+                'test_report,false,search': '<search></search>',
+            },
+        });
+
+        actionManager.doAction({
+            name: 'Dashboard',
+            res_model: 'test_report',
+            type: 'ir.actions.act_window',
+            views: [[false, 'dashboard']],
+        });
+
+        // Clicking on aggregate to activate count measure
+        actionManager.$('.o_aggregate:first .o_value').click();
+        assert.ok(actionManager.$('.o_graph_measures_list li[data-field=\'__count__\']').hasClass('selected'),
+            'count measure should be selected in graph view');
+        assert.ok(actionManager.$('.o_pivot_measures_list li[data-field=\'__count\']').hasClass('selected'),
+            'count measure should be selected in pivot view');
+
+        actionManager.destroy();
+    });
+
+    QUnit.test('When no measure is given in the aggregate we use the field as measure', function(assert) {
+        assert.expect(2);
+
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'test_report,false,dashboard': '<dashboard>' +
+                        '<view type="graph"/>' +
+                        '<group>' +
+                            '<aggregate name="number" field="id" group_operator="count" measure="__count__"/>' +
+                            '<aggregate name="untaxed" field="untaxed"/>' +
+                        '</group>' +
+                        '<view type="pivot"/>' +
+                    '</dashboard>',
+                'test_report,false,graph': '<graph>' +
+                        '<field name="categ_id"/>' +
+                        '<field name="sold" type="measure"/>' +
+                    '</graph>',
+                'test_report,false,pivot': '<pivot>' +
+                        '<field name="categ_id" type="row"/>' +
+                        '<field name="sold" type="measure"/>' +
+                    '</pivot>',
+                'test_report,false,search': '<search></search>',
+            },
+        });
+
+        actionManager.doAction({
+            name: 'Dashboard',
+            res_model: 'test_report',
+            type: 'ir.actions.act_window',
+            views: [[false, 'dashboard']],
+        });
+
+        // Clicking on aggregate to activate untaxed measure
+        actionManager.$('.o_aggregate:nth(1) .o_value').click();
+        assert.ok(actionManager.$('.o_graph_measures_list li[data-field=\'untaxed\']').hasClass('selected'),
+            'untaxed measure should be selected in graph view');
+        assert.ok(actionManager.$('.o_pivot_measures_list li[data-field=\'untaxed\']').hasClass('selected'),
+            'untaxed measure should be selected in pivot view');
+
+        actionManager.destroy();
+    });
 });
 
 });
