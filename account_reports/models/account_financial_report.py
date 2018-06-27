@@ -897,6 +897,7 @@ class AccountFinancialReportLine(models.Model):
         line1 = {
             'id': line['id'],
             'name': line['name'],
+            'class': line['class'],
             'level': line['level'],
             'columns': [{'name': ''}] * len(line['columns']),
             'unfoldable': line['unfoldable'],
@@ -952,6 +953,7 @@ class AccountFinancialReportLine(models.Model):
                 'id': line.id,
                 'name': line.name,
                 'level': line.level,
+                'class': 'o_account_reports_totals_below_sections' if self.env.user.company_id.totals_below_sections else '',
                 'columns': [{'name': l} for l in res['line']],
                 'unfoldable': len(domain_ids) > 1 and line.show_domain != 'always',
                 'unfolded': line.id in options.get('unfolded_lines', []) or line.show_domain == 'always',
@@ -978,9 +980,9 @@ class AccountFinancialReportLine(models.Model):
                     if line.financial_report_id.name == 'Aged Receivable':
                         vals['trust'] = self.env['res.partner'].browse([domain_id]).trust
                     lines.append(vals)
-                if domain_ids:
+                if domain_ids and self.env.user.company_id.totals_below_sections:
                     lines.append({
-                        'id': 'total_'+str(line.id),
+                        'id': 'total_' + str(line.id),
                         'name': _('Total') + ' ' + line.name,
                         'class': 'o_account_reports_domain_total',
                         'parent_id': line.id,
@@ -1000,15 +1002,19 @@ class AccountFinancialReportLine(models.Model):
             if len(lines) == 1:
                 new_lines = line.children_ids.get_lines(financial_report, currency_table, options, linesDicts)
                 if new_lines and line.level > 0 and line.formulas:
-                    divided_lines = self._divide_line(lines[0])
-                    result = [divided_lines[0]] + new_lines + [divided_lines[1]]
+                    if self.env.user.company_id.totals_below_sections:
+                        divided_lines = self._divide_line(lines[0])
+                        result = [divided_lines[0]] + new_lines + [divided_lines[1]]
+                    else:
+                        result = [lines[0]] + new_lines
                 else:
                     result = []
-                    if line.level > 0:
+                    if line.level == 0 and self.env.user.company_id.totals_below_sections:
+                        result += new_lines
                         result += lines
-                    result += new_lines
-                    if line.level <= 0:
+                    else:
                         result += lines
+                        result += new_lines
             else:
                 result = lines
             final_result_table += result

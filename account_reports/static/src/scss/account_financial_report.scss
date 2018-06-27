@@ -341,6 +341,10 @@ p.o_account_reports_contact_info {
     .o_account_reports_level0 {
         border-collapse: separate;
 
+        &:not(.o_account_reports_totals_below_sections):not(:first-child) td {
+            padding-top: 35px;
+        }
+
         td {
             padding-top: 10px;
             padding-bottom: 10px;
@@ -356,6 +360,10 @@ p.o_account_reports_contact_info {
     .o_account_reports_level1 {
         @include o-account-reports-lines($border-width: 1px, $border-top-style: hidden, $border-bottom-style: solid, $border-color: $gray);
         @include o-account-reports-indentation(1);
+
+        &.o_account_reports_totals_below_sections:not(:first-child):not(.total) td {
+            padding-top: 35px;
+        }
 
         &.total {
             border-top-style: double;

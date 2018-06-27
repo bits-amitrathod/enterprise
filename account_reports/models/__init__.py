@@ -16,3 +16,4 @@ from . import account_report_coa
 from . import account_aged_partner_balance
 from . import account_partner_ledger
 from . import res_config_settings
+from . import wizard_multi_charts_accounts

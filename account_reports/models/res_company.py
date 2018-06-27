@@ -17,3 +17,6 @@ If you have any queries regarding your account, Please contact us.
 
 Thank you in advance for your cooperation.
 Best Regards,'''))
+    totals_below_sections = fields.Boolean(
+        string='Add totals below sections',
+        help='When ticked, totals and subtotals appear below the sections of the report.')
