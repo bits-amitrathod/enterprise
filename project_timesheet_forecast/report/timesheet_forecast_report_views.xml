@@ -33,8 +33,7 @@
                 <field name="project_id" filter_domain="[('project_id', 'ilike', self)]"/>
                 <field name="task_id" filter_domain="[('task_id', 'ilike', self)]"/>
                 <field name="date"/>
-                <filter string="This Month" name="month" domain="[('date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
-                <filter string="This Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <filter string="Date" name="year" date="date"/>
                 <separator/>
                 <group expand="1" string="Group By">
                     <filter string="By person, by task" name="resource_task" context="{'group_by':['employee_id', 'task_id']}"/>
