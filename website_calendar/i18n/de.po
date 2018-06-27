@@ -18,13 +18,14 @@
 # Gab_Odoo <gab@odoo.com>, 2017
 # Henry Mineehen <info@mineehen.de>, 2017
 # Anja Funk <anja.funk@afimage.de>, 2017
+# Ralf Hilgenstock <rh@dialoge.info>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Anja Funk <anja.funk@afimage.de>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Ralf Hilgenstock <rh@dialoge.info>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: website_calendar
-#: code:addons/website_calendar/models/calendar_appointment.py:63
+#: code:addons/website_calendar/models/calendar_appointment.py:65
 #, python-format
 msgid " (copy)"
 msgstr " (Kopie)"
@@ -177,6 +178,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_event__access_token
 msgid "Access Token"
 msgstr "Zugriffs-Token"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_needaction
+msgid "Action Needed"
+msgstr "Aktion notwendig"
 
 #. module: website_calendar
 #: model:ir.actions.act_window,name:website_calendar.website_calendar_report
@@ -419,6 +425,21 @@ msgid "Event"
 msgstr "Event"
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_follower_ids
+msgid "Followers"
+msgstr "Abonnenten"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Abonnenten (Kanäle)"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Abonnenten (Partner)"
+
+#. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment_calendar
 msgid "Fri"
 msgstr "Fr"
@@ -445,6 +466,16 @@ msgid "ID"
 msgstr "ID"
 
 #. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Falls markiert, benötigen neue Nachrichten Ihre Kenntnisnahme."
+
+#. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Falls markiert, benötigen neue Nachrichten Ihre Kenntnisnahme."
+
+#. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.setup
 msgid ""
 "In order to configure your first appointment, go\n"
@@ -464,6 +495,11 @@ msgstr "Individueller Terminlink"
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_intro
 msgid "Introduction Message"
 msgstr "Überblicksnachricht"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_is_follower
+msgid "Is Follower"
+msgstr "Ist ein Abonnent"
 
 #. module: website_calendar
 #: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__country_ids
@@ -519,6 +555,7 @@ msgid "Manager"
 msgstr "Manager"
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_ids
 #: model:ir.ui.view,arch_db:website_calendar.calendar_appointment_type_view_form
 msgid "Messages"
 msgstr "Nachrichten"
@@ -550,6 +587,21 @@ msgid "No data found"
 msgstr ""
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Anzahl der Aktionen"
+
+#. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
+
+#. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Anzahl ungelesener Nachrichten"
+
+#. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_event__appointment_type_id
 msgid "Online Appointment"
 msgstr "Online-Termin"
@@ -570,7 +622,7 @@ msgid "Placeholder"
 msgstr "Platzhalter"
 
 #. module: website_calendar
-#: code:addons/website_calendar/models/calendar_appointment.py:296
+#: code:addons/website_calendar/models/calendar_appointment.py:298
 #, python-format
 msgid "Please enter a valid hour between 0:00 to 24:00 for your slots."
 msgstr ""
@@ -702,6 +754,12 @@ msgid "Sunday"
 msgstr "Sonntag"
 
 #. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__website_url
+msgid "The full URL to access the document through the website."
+msgstr ""
+"Die vollständige URL mit der das Dokument überall aufgerufen werden kann."
+
+#. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment_calendar
 msgid "Thu"
 msgstr "Do"
@@ -753,9 +811,54 @@ msgid "Tuesday"
 msgstr "Dienstag"
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_unread
+msgid "Unread Messages"
+msgstr "Ungelesene Nachrichten"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Zähler der ungelesenen Nachrichten"
+
+#. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.index
 msgid "View Availabilities <span class=\"fa fa-arrow-right\"/>"
 msgstr "Verfügbarkeiten anzeigen <span class=\"fa fa-arrow-right\"/>"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_published
+msgid "Visible in Website"
+msgstr "Sichtbar auf der Website"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_message_ids
+msgid "Website Messages"
+msgstr "Website-Nachrichten"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_url
+msgid "Website URL"
+msgstr "Website URL"
+
+#. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__website_message_ids
+msgid "Website communication history"
+msgstr "Website-Kommunikationshistorie"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_meta_description
+msgid "Website meta description"
+msgstr "Website Meta Beschreibung"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_meta_keywords
+msgid "Website meta keywords"
+msgstr "Website Schlüsselwörter"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_meta_title
+msgid "Website meta title"
+msgstr "Website Meta-Titel"
 
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment_calendar

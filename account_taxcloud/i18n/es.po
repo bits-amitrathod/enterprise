@@ -4,27 +4,28 @@
 # 
 # Translators:
 # oihane <oihanecruce@gmail.com>, 2016
-# José Vicente <txusev@gmail.com>, 2016
 # Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
 # Ivan Nieto <ivan.n.s@tuta.io>, 2016
 # Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
 # Ana Juaristi <ajuaristio@gmail.com>, 2016
+# José Vicente <txusev@gmail.com>, 2016
 # Martin Trigaux, 2016
 # Carles Antoli <carlesantoli@hotmail.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
-# Antonio Trueba, 2016
 # Lina Maria Avendaño Carvajal <lina8823@gmail.com>, 2017
 # Gelo Joga Landoo <gj@landoo.es>, 2017
 # Eduardo Magdalena <emagdalena@close2circle.com>, 2017
+# Antonio Trueba, 2017
 # Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# Nicolás Broggi <rnbroggi@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Nicolás Broggi <rnbroggi@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -89,12 +90,6 @@ msgid "Display Name"
 msgstr "Nombre a mostrar"
 
 #. module: account_taxcloud
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax__state_ids
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax_template__state_ids
-msgid "Federal States"
-msgstr "Estados federales"
-
-#. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_account_fiscal_position
 msgid "Fiscal Position"
 msgstr "Posición fiscal"
@@ -125,6 +120,11 @@ msgid "Last Updated on"
 msgstr "Última actualización el"
 
 #. module: account_taxcloud
+#: model:ir.model,name:account_taxcloud.model_product_category
+msgid "Product Category"
+msgstr "Categoría del producto"
+
+#. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.account_taxcloud_tic_category_search
 msgid "Product TIC Categories"
 msgstr "Categorías de Productos TIC"
@@ -135,8 +135,6 @@ msgid "Product Template"
 msgstr "Plantilla de producto"
 
 #. module: account_taxcloud
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax__tic_category_ids
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax_template__tic_category_ids
 #: model:ir.ui.view,arch_db:account_taxcloud.account_taxcloud_tic_category_tree
 msgid "TIC Category"
 msgstr "Categoría TIC"
@@ -147,6 +145,7 @@ msgid "TIC Category Code"
 msgstr "Código de Categoría TIC"
 
 #. module: account_taxcloud
+#: model:ir.model.fields,field_description:account_taxcloud.field_product_category__tic_category_id
 #: model:ir.ui.view,arch_db:account_taxcloud.account_taxcloud_tic_category_search
 msgid "TIC Code"
 msgstr "Código TIC"
@@ -155,6 +154,11 @@ msgstr "Código TIC"
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_tic_category__description
 msgid "TIC Description"
 msgstr "Descripción TIC"
+
+#. module: account_taxcloud
+#: model:ir.ui.view,arch_db:account_taxcloud.product_category_view_form_inherit_account_taxcloud
+msgid "TaxCloud"
+msgstr "TaxCloud"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_res_config_settings__taxcloud_api_id
@@ -175,11 +179,13 @@ msgstr "Categorías TaxCloud"
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_product__tic_category_id
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_template__tic_category_id
+#: model:ir.ui.view,arch_db:account_taxcloud.product_category_view_form_inherit_account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.product_template_taxcloud_inherit_form
 msgid "TaxCloud Category"
 msgstr "Categoría TaxCloud"
 
 #. module: account_taxcloud
+#: model:ir.model.fields,help:account_taxcloud.field_product_category__tic_category_id
 #: model:ir.model.fields,help:account_taxcloud.field_product_product__tic_category_id
 #: model:ir.model.fields,help:account_taxcloud.field_product_template__tic_category_id
 msgid ""
@@ -200,16 +206,6 @@ msgstr ""
 "asigna automáticamente los productos a este TIC por defecto, de manera que, "
 "a no ser que haya cambiado el TIC de un producto en el pasado, ya debería "
 "estar establecido en 00000."
-
-#. module: account_taxcloud
-#: model:ir.model,name:account_taxcloud.model_account_fiscal_position_tax
-msgid "Taxes Fiscal Position"
-msgstr "Posición fiscal de impuestos"
-
-#. module: account_taxcloud
-#: model:ir.model,name:account_taxcloud.model_account_fiscal_position_tax_template
-msgid "Template Tax Fiscal Position"
-msgstr "Plantilla posición fiscal de impuesto"
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_account_fiscal_position_template
@@ -261,12 +257,6 @@ msgstr "Actualizar impuestos con Taxcloud"
 #: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_template__is_taxcloud
 msgid "Use TaxCloud API"
 msgstr "Usar API NubeImpuesto"
-
-#. module: account_taxcloud
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax__zip_codes
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax_template__zip_codes
-msgid "Zip"
-msgstr "C.P."
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/product.py:28

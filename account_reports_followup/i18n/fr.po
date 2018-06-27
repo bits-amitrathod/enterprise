@@ -6,26 +6,21 @@
 # Xavier Belmere <Info@cartmeleon.com>, 2016
 # Martin Trigaux, 2016
 # Clo <clo@odoo.com>, 2016
-# Loic <loic.richard2@gmail.com>, 2016
 # Nancy Bolognesi <nb@microcom.ca>, 2016
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
 # Shark McGnark <peculiarcheese@gmail.com>, 2016
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2016
-# Lucas Deliege <lud@odoo.com>, 2016
 # Fabien Pinckaers <fp@openerp.com>, 2016
-# Florian Hatat, 2017
 # Richard Mathot <rim@odoo.com>, 2017
 # Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2017
-# lap.odoo <lap@odoo.com>, 2017
 # e2f <projects@e2f.com>, 2018
-# fr trans <e2ftrans1@yahoo.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: fr trans <e2ftrans1@yahoo.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -134,11 +129,6 @@ msgid ": User's Company Name"
 msgstr ": Nom de la société de l'utilisateur"
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_followup_report_all
-msgid "A progress bar for followup reports"
-msgstr "Une barre de progression pour le suivi des rapports"
-
-#. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
 msgid "Account Follow-up"
 msgstr "Relances comptables"
@@ -157,11 +147,6 @@ msgstr "Après"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action_responsible_id
 msgid "Assign a Responsible"
 msgstr "Attribuer un responsable"
-
-#. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_res_company
-msgid "Companies"
-msgstr "Sociétés"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__company_id
@@ -191,12 +176,6 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner__payment_note
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_users__payment_note
-msgid "Customer Payment Promise"
-msgstr "Promesse de paiement client"
-
-#. module: account_reports_followup
 #: sql_constraint:account_followup.followup.line:0
 msgid "Days of the follow-up levels must be different"
 msgstr "Les jours des niveaux de relance doivent être différents"
@@ -213,12 +192,9 @@ msgid "Display Name"
 msgstr "Nom affiché"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
-msgid "Do it Later"
-msgstr "Le faire plus tard"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:19
+#, python-format
 msgid "Done"
 msgstr "Fait"
 
@@ -226,11 +202,6 @@ msgstr "Fait"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__delay
 msgid "Due Days"
 msgstr "Retard d'échéance"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
-msgid "Duration between two reminders"
-msgstr "Durée entre deux rappels"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
@@ -340,41 +311,27 @@ msgid "Latest Follow-up"
 msgstr "Date de relance"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup_report.py:58
-#, python-format
-msgid "Level: "
-msgstr "Grade:"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
-msgid "Log a Note"
-msgstr "Enregistrer une note"
-
-#. module: account_reports_followup
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:13
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+#, python-format
 msgid "Manual Action"
 msgstr "Action manuelle"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup_report.py:70
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action_type_id
+msgid "Manual Action Type"
+msgstr ""
+
+#. module: account_reports_followup
+#: code:addons/account_reports_followup/models/account_followup_report.py:82
 #, python-format
 msgid "Manual action done"
 msgstr "Action manuelle effectuée"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
-msgid "Minimum"
-msgstr "Minimum"
-
-#. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_company__min_days_between_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings__min_days_between_followup
-msgid "Minimum days between two follow-ups"
-msgstr "Nombre de jours entre deux rappels"
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup.py:113
+#: code:addons/account_reports_followup/models/account_followup.py:81
 #, python-format
 msgid ""
 "No follow-up is defined for the company \"%s\".\n"
@@ -382,6 +339,15 @@ msgid ""
 msgstr ""
 "Il n'y a pas de relance définie pour la société \"%s\".\n"
 "Merci d'en créer une."
+
+#. module: account_reports_followup
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:16
+#, python-format
+msgid ""
+"Odoo will remind you to take care of this follow-up on the next reminder "
+"date."
+msgstr ""
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
@@ -404,25 +370,16 @@ msgid "Partner entries"
 msgstr "Entrées partenaires"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
-msgid "Payment Follow-up"
-msgstr "Relance de paiement"
-
-#. module: account_reports_followup
 #: model:ir.actions.act_window,name:account_reports_followup.action_account_followup_definition_form
 msgid "Payment Follow-ups"
 msgstr "Relances de paiement"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_partner__payment_note
-#: model:ir.model.fields,help:account_reports_followup.field_res_users__payment_note
-msgid "Payment Note"
-msgstr "Note de paiement"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
-msgid "Print Letter"
-msgstr "Imprimer la lettre"
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:7
+#, python-format
+msgid "Print letter"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__description
@@ -430,9 +387,11 @@ msgid "Printed Message"
 msgstr "Imprimer le Message"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line__result
-msgid "Result"
-msgstr "Résultat"
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:16
+#, python-format
+msgid "Remind me later"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_filter
@@ -460,7 +419,9 @@ msgid "Send an Email"
 msgstr "Envoyer un courriel"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:10
+#, python-format
 msgid "Send by email"
 msgstr "Envoyer par courriel"
 
@@ -515,16 +476,6 @@ msgid "Total debit"
 msgstr "Total débit"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_company__min_days_between_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings__min_days_between_followup
-msgid ""
-"Use this if you want to be sure than a minimum number of days occurs between"
-" two follow-ups."
-msgstr ""
-"Utilisez ceci si vous voulez être sûr qu'il s'écoule un nombre minimal de "
-"jours entre deux relances."
-
-#. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__send_letter
 msgid "When processing, it will print a letter"
 msgstr "Lors du traitement, imprimera une lettre"
@@ -558,7 +509,7 @@ msgstr ""
 "en utilisant l'icône en haut à droite."
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup.py:64
+#: code:addons/account_reports_followup/models/account_followup.py:58
 #, python-format
 msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
@@ -566,11 +517,6 @@ msgid ""
 msgstr ""
 "Votre description n'est pas correcte, utilisez une légende exacte  ou %% si "
 "vous souhaitez utiliser le caractère pour cent."
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
-msgid "days between each reminder"
-msgstr "nombre de jours entre chaque rappel"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form

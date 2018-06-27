@@ -12,10 +12,10 @@
 # e2f_nl_c4 <e2f_nl_c4@hotmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: e2f_nl_c4 <e2f_nl_c4@hotmail.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -119,6 +119,18 @@ msgstr "annuleer de activiteit"
 #: selection:voip.phonecall,state:0 selection:voip.phonecall.report,state:0
 msgid "Cancelled"
 msgstr "Geannuleerd"
+
+#. module: voip
+#: model:ir.model.fields,help:voip.field_mail_activity_type__category
+msgid "Categories may trigger specific behavior like opening calendar view"
+msgstr ""
+"Categorieën kunnen specifiek gedrag triggeren, zoals het openen van een "
+"kalender."
+
+#. module: voip
+#: model:ir.model.fields,field_description:voip.field_mail_activity_type__category
+msgid "Category"
+msgstr "Categorie"
 
 #. module: voip
 #. openerp-web
@@ -350,7 +362,7 @@ msgstr "Log"
 #. module: voip
 #: model:ir.actions.act_window,help:voip.voip_phonecall_view
 msgid "Log the summary of a phonecall"
-msgstr ""
+msgstr "Log de samenvatting van een telefoongesprek"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall_log_wizard__phonecall_id
@@ -363,6 +375,11 @@ msgstr "Vastgelegd telefoongesprek"
 #, python-format
 msgid "Mark as done"
 msgstr "Markeer als gereed"
+
+#. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Meeting"
+msgstr "Afspraak"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__mobile
@@ -431,6 +448,11 @@ msgstr ""
 "Eén of meerdere parameters zijn niet ingesteld. Kijk uw instellingen na. "
 
 #. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Other"
+msgstr "Overige"
+
+#. module: voip
 #: selection:voip.phonecall,type:0
 msgid "Outgoing"
 msgstr "Uitgaand"
@@ -456,6 +478,11 @@ msgstr "Telefoon"
 #: model:ir.model.fields,field_description:voip.field_res_users__sanitized_phone
 msgid "Phone number sanitized"
 msgstr "Telefoonnummer opgeschoond"
+
+#. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Phonecall"
+msgstr ""
 
 #. module: voip
 #: model:ir.actions.act_window,name:voip.voip_phonecall_view
@@ -634,7 +661,7 @@ msgstr "De klant is tijdelijk onbereikbaar. Probeer het later nog eens."
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:460
+#: code:addons/voip/static/src/js/user_agent.js:468
 #, python-format
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
@@ -726,7 +753,7 @@ msgstr "VOIP instellingen"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_config_settings__mode
 msgid "VoIP Environment"
-msgstr ""
+msgstr "VoIP omgeving"
 
 #. module: voip
 #: code:addons/voip/wizard/voip_phonecall_transfer_wizard.py:34

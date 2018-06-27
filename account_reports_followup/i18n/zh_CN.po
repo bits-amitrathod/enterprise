@@ -5,19 +5,17 @@
 # Translators:
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
 # YINGLI WANG <zzlilycn@gmail.com>, 2016
-# hman tsao <herman.tsao@gmail.com>, 2016
+# hman tsao <herman.tsao@gmail.com>, 2017
 # fausthuang, 2017
 # 老窦 北京 <2662059195@qq.com>, 2017
-# Connie Xiao <connie.xiao@elico-corp.com>, 2017
 # e2f <projects@e2f.com>, 2018
-# 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -125,11 +123,6 @@ msgid ": User's Company Name"
 msgstr "：用户的公司名称"
 
 #. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_account_followup_report_all
-msgid "A progress bar for followup reports"
-msgstr "催款报告的进度条"
-
-#. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
 msgid "Account Follow-up"
 msgstr "会计催款"
@@ -148,11 +141,6 @@ msgstr "之后"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action_responsible_id
 msgid "Assign a Responsible"
 msgstr "指定负责人员"
-
-#. module: account_reports_followup
-#: model:ir.model,name:account_reports_followup.model_res_company
-msgid "Companies"
-msgstr "公司"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup__company_id
@@ -182,12 +170,6 @@ msgid "Created on"
 msgstr "创建时间"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_partner__payment_note
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_users__payment_note
-msgid "Customer Payment Promise"
-msgstr "客户付款承诺"
-
-#. module: account_reports_followup
 #: sql_constraint:account_followup.followup.line:0
 msgid "Days of the follow-up levels must be different"
 msgstr "催款等级中的天数必须是不同的"
@@ -204,12 +186,9 @@ msgid "Display Name"
 msgstr "显示名称"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
-msgid "Do it Later"
-msgstr "稍后做"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:19
+#, python-format
 msgid "Done"
 msgstr "完成"
 
@@ -217,11 +196,6 @@ msgstr "完成"
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__delay
 msgid "Due Days"
 msgstr "截止天数"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
-msgid "Duration between two reminders"
-msgstr "两个提醒的间距"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
@@ -326,41 +300,27 @@ msgid "Latest Follow-up"
 msgstr "最近催款"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup_report.py:58
-#, python-format
-msgid "Level: "
-msgstr "級別:"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
-msgid "Log a Note"
-msgstr "记录一个备注"
-
-#. module: account_reports_followup
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:13
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
+#, python-format
 msgid "Manual Action"
 msgstr "手动操作"
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup_report.py:70
+#: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__manual_action_type_id
+msgid "Manual Action Type"
+msgstr ""
+
+#. module: account_reports_followup
+#: code:addons/account_reports_followup/models/account_followup_report.py:82
 #, python-format
 msgid "Manual action done"
 msgstr "手动操作已完成"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
-msgid "Minimum"
-msgstr "最低"
-
-#. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_company__min_days_between_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_res_config_settings__min_days_between_followup
-msgid "Minimum days between two follow-ups"
-msgstr "两次随访之间的最短天数"
-
-#. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup.py:113
+#: code:addons/account_reports_followup/models/account_followup.py:81
 #, python-format
 msgid ""
 "No follow-up is defined for the company \"%s\".\n"
@@ -368,6 +328,15 @@ msgid ""
 msgstr ""
 "没有后续行动被公司定义\n"
 "请重新确定一下"
+
+#. module: account_reports_followup
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:16
+#, python-format
+msgid ""
+"Odoo will remind you to take care of this follow-up on the next reminder "
+"date."
+msgstr ""
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
@@ -388,25 +357,16 @@ msgid "Partner entries"
 msgstr "业务伙伴分录"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
-msgid "Payment Follow-up"
-msgstr "付款催收"
-
-#. module: account_reports_followup
 #: model:ir.actions.act_window,name:account_reports_followup.action_account_followup_definition_form
 msgid "Payment Follow-ups"
 msgstr "付款催收"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_partner__payment_note
-#: model:ir.model.fields,help:account_reports_followup.field_res_users__payment_note
-msgid "Payment Note"
-msgstr "付款备注"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
-msgid "Print Letter"
-msgstr "打印信件"
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:7
+#, python-format
+msgid "Print letter"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line__description
@@ -414,9 +374,11 @@ msgid "Printed Message"
 msgstr "已打印消息"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,field_description:account_reports_followup.field_account_move_line__result
-msgid "Result"
-msgstr "结果"
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:16
+#, python-format
+msgid "Remind me later"
+msgstr ""
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_filter
@@ -444,7 +406,9 @@ msgid "Send an Email"
 msgstr "发送电子邮件"
 
 #. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.template_followup_report
+#. openerp-web
+#: code:addons/account_reports_followup/static/src/xml/account_reports_followup_template.xml:10
+#, python-format
 msgid "Send by email"
 msgstr "以邮件形式发送"
 
@@ -496,14 +460,6 @@ msgid "Total debit"
 msgstr "借方总计"
 
 #. module: account_reports_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_company__min_days_between_followup
-#: model:ir.model.fields,help:account_reports_followup.field_res_config_settings__min_days_between_followup
-msgid ""
-"Use this if you want to be sure than a minimum number of days occurs between"
-" two follow-ups."
-msgstr "如果您想确保在两次跟踪之间出现最少天数，请使用此选项。"
-
-#. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line__send_letter
 msgid "When processing, it will print a letter"
 msgstr "当进行时，会打印一封信"
@@ -536,17 +492,12 @@ msgstr ""
 "                            翻译成各种语言 ."
 
 #. module: account_reports_followup
-#: code:addons/account_reports_followup/models/account_followup.py:64
+#: code:addons/account_reports_followup/models/account_followup.py:58
 #, python-format
 msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
 "the percent character."
 msgstr "说明有误，请使用正确的标识或百分数。"
-
-#. module: account_reports_followup
-#: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
-msgid "days between each reminder"
-msgstr "提醒之间的间隔"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form

@@ -5,13 +5,14 @@
 # Translators:
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
 # Cas Vissers <casvissers@brahoo.nl>, 2017
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Yenthe Van Ginneken <yenthespam@gmail.com>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_plaid
-#: code:addons/account_plaid/models/plaid.py:42
+#: model:ir.model.fields,help:account_plaid.field_account_online_provider__plaid_error_type
+msgid "Additional information on error"
+msgstr ""
+
+#. module: account_plaid
+#: code:addons/account_plaid/models/plaid.py:55
 #, python-format
 msgid "Get %s status code for call to %s. Content message: %s"
 msgstr "Krijg %s statuscode voor het bellen met %s. Inhoud bericht: %s"
@@ -31,12 +37,53 @@ msgid "Interface for online account journal"
 msgstr "Interface voor online rekening dagboek"
 
 #. module: account_plaid
+#: selection:account.online.provider,provider_type:0
+msgid "Plaid"
+msgstr "Plaid"
+
+#. module: account_plaid
+#: model:ir.model.fields,field_description:account_plaid.field_account_online_provider__plaid_error_type
+msgid "Plaid Error Type"
+msgstr ""
+
+#. module: account_plaid
+#: model:ir.model.fields,field_description:account_plaid.field_account_online_provider__plaid_item_id
+msgid "Plaid Item"
+msgstr ""
+
+#. module: account_plaid
+#: model:ir.model.fields,field_description:account_plaid.field_account_online_provider__provider_type
+msgid "Provider Type"
+msgstr "Type aanbieder"
+
+#. module: account_plaid
 #: model:ir.model,name:account_plaid.model_account_online_provider
 msgid "Provider for online account synchronization"
 msgstr "Provider for online rekening synchronisatie"
 
 #. module: account_plaid
-#: code:addons/account_plaid/models/plaid.py:68
+#: code:addons/account_plaid/models/plaid.py:41
 #, python-format
-msgid "Timeout: the server did not reply within 30s"
-msgstr "Timeout: De server heeft niet binnen 30s gereageerd."
+msgid ""
+"There was en error with Plaid Services!\n"
+"{message: %s,\n"
+"error code: %s,\n"
+"error type: %s,\n"
+"request id: %s}"
+msgstr ""
+
+#. module: account_plaid
+#: code:addons/account_plaid/models/plaid.py:73
+#, python-format
+msgid "Timeout: the server did not reply within 60s"
+msgstr ""
+
+#. module: account_plaid
+#: selection:account.online.provider,provider_type:0
+msgid "Yodlee"
+msgstr "Yodlee"
+
+#. module: account_plaid
+#: model:ir.model.fields,help:account_plaid.field_account_online_provider__plaid_item_id
+msgid "item id in plaid database"
+msgstr ""

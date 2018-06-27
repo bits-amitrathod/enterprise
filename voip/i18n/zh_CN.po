@@ -19,10 +19,10 @@
 # e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: e2f_cn c5 <jarvisn@ecinnovations.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -126,6 +126,16 @@ msgstr "取消活动"
 #: selection:voip.phonecall,state:0 selection:voip.phonecall.report,state:0
 msgid "Cancelled"
 msgstr "已取消"
+
+#. module: voip
+#: model:ir.model.fields,help:voip.field_mail_activity_type__category
+msgid "Categories may trigger specific behavior like opening calendar view"
+msgstr "类别可能触发特定行为，例如，打开日历视图"
+
+#. module: voip
+#: model:ir.model.fields,field_description:voip.field_mail_activity_type__category
+msgid "Category"
+msgstr "类别"
 
 #. module: voip
 #. openerp-web
@@ -371,6 +381,11 @@ msgid "Mark as done"
 msgstr "标记为完成"
 
 #. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Meeting"
+msgstr "会议"
+
+#. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__mobile
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall__mobile
 msgid "Mobile"
@@ -436,6 +451,11 @@ msgid "One or more parameter is missing. Please check your configuration."
 msgstr "一个或者多个参数缺失，请检查你的配置"
 
 #. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Other"
+msgstr "其他"
+
+#. module: voip
 #: selection:voip.phonecall,type:0
 msgid "Outgoing"
 msgstr "出向"
@@ -461,6 +481,11 @@ msgstr "电话"
 #: model:ir.model.fields,field_description:voip.field_res_users__sanitized_phone
 msgid "Phone number sanitized"
 msgstr "消除电话号码"
+
+#. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Phonecall"
+msgstr ""
 
 #. module: voip
 #: model:ir.actions.act_window,name:voip.voip_phonecall_view
@@ -635,7 +660,7 @@ msgstr "客户电话暂时不可用，请稍后再拨。"
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:460
+#: code:addons/voip/static/src/js/user_agent.js:468
 #, python-format
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "

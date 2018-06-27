@@ -14,10 +14,10 @@
 # Tina Milas, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Tina Milas, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -143,6 +143,11 @@ msgstr "ID nadređene kategorije"
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category__category_type
 msgid "Category Type"
 msgstr "Tip kategorije"
+
+#. module: sale_ebay
+#: model:ir.model.fields,field_description:sale_ebay.field_crm_team__team_type
+msgid "Channel Type"
+msgstr "Tip kanala"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_item_condition__code
@@ -480,6 +485,11 @@ msgid "Payment Policy"
 msgstr "Politika plaćanja"
 
 #. module: sale_ebay
+#: selection:crm.team,team_type:0
+msgid "Point of Sale"
+msgstr "POS blagajna"
+
+#. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Policies"
 msgstr "Politike"
@@ -543,8 +553,8 @@ msgstr "Objavi na eBayu"
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product__ebay_quantity
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template__ebay_quantity
-msgid "Quantity"
-msgstr "Količina"
+msgid "Quantity On eBay"
+msgstr ""
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product__ebay_quantity_sold
@@ -567,6 +577,11 @@ msgstr "Politika povrata"
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "Revise Item"
 msgstr "Revizija artikla"
+
+#. module: sale_ebay
+#: selection:crm.team,team_type:0
+msgid "Sales"
+msgstr "Prodaja"
 
 #. module: sale_ebay
 #: model:ir.model,name:sale_ebay.model_crm_team
@@ -695,6 +710,12 @@ msgid "The title is restricted to 80 characters"
 msgstr "Naslov je ograničen na 80 znakova"
 
 #. module: sale_ebay
+#: model:ir.model.fields,help:sale_ebay.field_crm_team__team_type
+msgid ""
+"The type of this channel, it will define the resources this channel uses."
+msgstr ""
+
+#. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product__ebay_category_2_id
 #: model:ir.model.fields,help:sale_ebay.field_product_template__ebay_category_2_id
 msgid ""
@@ -748,12 +769,18 @@ msgid "Variants"
 msgstr "Inačice"
 
 #. module: sale_ebay
+#: selection:crm.team,team_type:0
+msgid "Website"
+msgstr "Web stranica"
+
+#. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings__ebay_zip_code
 msgid "Zip"
 msgstr "Poštanski br."
 
 #. module: sale_ebay
 #: model:crm.team,name:sale_ebay.ebay_sales_team
+#: selection:crm.team,team_type:0
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 #: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "eBay"

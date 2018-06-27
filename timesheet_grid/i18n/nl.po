@@ -10,10 +10,10 @@
 # Cas Vissers <casvissers@brahoo.nl>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -206,10 +206,15 @@ msgid "Add a Task"
 msgstr "Taak toevoegen"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:78
+#: code:addons/timesheet_grid/models/analytic.py:81
 #, python-format
 msgid "All selected timesheets are already validated"
 msgstr "Alle geselecteerde urenstaten zijn al bevestigd"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__amount
+msgid "Amount"
+msgstr "Bedrag"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
@@ -253,12 +258,17 @@ msgstr "Datum tot wanneer de werknemer zijn urenstaten gevalideerd zijn"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_manager_delay
 msgid "Days to Remind Manager"
-msgstr ""
+msgstr "Dagen om manager te herinneren"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_delay
 msgid "Days to Remind User"
 msgstr "Dagen tot herinnering gebruiker"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__name
+msgid "Description"
+msgstr "Omschrijving"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__display_name
@@ -275,7 +285,7 @@ msgstr "Werknemer"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_interval
 msgid "Employee Frequency"
-msgstr ""
+msgstr "Werknemer frequentie"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_allow
@@ -286,7 +296,7 @@ msgstr "Werknemer herinnering"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_delay
 msgid "Employee Reminder Days"
-msgstr ""
+msgstr "Werknemer herinnering dagen"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -359,13 +369,13 @@ msgstr "Manager herinnering"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_delay
 msgid "Manager Reminder Days"
-msgstr ""
+msgstr "Manager herinnering dagen"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_interval
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_manager_interval
 msgid "Manager Reminder Frequency"
-msgstr ""
+msgstr "Manager herinneringsfrequentie"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
@@ -375,7 +385,7 @@ msgid "Month"
 msgstr "Maand"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:132
+#: code:addons/timesheet_grid/models/analytic.py:120
 #, python-format
 msgid ""
 "Multiple timesheet entries match the modified value. Please change the "
@@ -390,14 +400,14 @@ msgid "My Team"
 msgstr "Mijn Team"
 
 #. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_nextdate
+msgid "Next scheduled date for employee reminder"
+msgstr ""
+
+#. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_nextdate
 msgid "Next scheduled date for manager reminder"
 msgstr "Volgende geplande datum voor een manager herinnering "
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_nextdate
-msgid "Next scheduled date for user reminder"
-msgstr "Volgende geplande datum voor gebruiker herinnering"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -405,29 +415,12 @@ msgid "Non Validated"
 msgstr "Niet gevalideerd"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:100
+#: code:addons/timesheet_grid/models/analytic.py:103
 #, python-format
 msgid ""
-"Only a Timesheets Officer is allowed to create an entry older than the "
+"Only a Timesheets Manager is allowed to create an entry older than the "
 "validation limit."
 msgstr ""
-"Alleen een Urenstaat Officier is toegestaan om ingaven ouder dan de "
-"validatiedatum aan te passen."
-
-#. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:115
-#, python-format
-msgid "Only a Timesheets Officer is allowed to delete a validated entry."
-msgstr ""
-"Alleen een Urenstaat Officier is toegestaan om gevalideerde ingaven te "
-"verwijderen."
-
-#. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:109
-#, python-format
-msgid "Only a Timesheets Officer is allowed to modify a validated entry."
-msgstr ""
-"Alleen een urenstaat functionaris kan een bevestigde boeking aanpassen."
 
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_manager
@@ -455,7 +448,12 @@ msgid ""
 msgstr ""
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:73
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__task_id
+msgid "Task"
+msgstr "Taak"
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/analytic.py:76
 #, python-format
 msgid "There aren't any timesheet to validate"
 msgstr "Er zijn geen urenstaten om goed te keuren."

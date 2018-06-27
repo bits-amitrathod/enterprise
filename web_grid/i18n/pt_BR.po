@@ -9,10 +9,10 @@
 # Mateus Lopes <mateus1@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Mateus Lopes <mateus1@gmail.com>, 2017\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -23,11 +23,17 @@ msgstr ""
 
 #. module: web_grid
 #. openerp-web
-#: code:addons/web_grid/static/src/js/grid_controller.js:155
+#: code:addons/web_grid/static/src/js/grid_controller.js:148
 #: code:addons/web_grid/static/src/xml/grid_view.xml:5
 #, python-format
 msgid "Add a Line"
 msgstr "Adicionar uma linha"
+
+#. module: web_grid
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Calendar"
+msgstr "Calendário"
 
 #. module: web_grid
 #: code:addons/web_grid/models.py:212 code:addons/web_grid/models.py:244
@@ -36,22 +42,75 @@ msgid "Can not use fields of type %s as grid columns"
 msgstr "Não é possível usar campos do tipo %s Como colunas de grade"
 
 #. module: web_grid
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Dashboard"
+msgstr "Painel"
+
+#. module: web_grid
+#: selection:ir.ui.view,type:0
+msgid "Diagram"
+msgstr "Diagrama"
+
+#. module: web_grid
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Form"
+msgstr "Formulário"
+
+#. module: web_grid
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Gantt"
+msgstr "Gantt"
+
+#. module: web_grid
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Graph"
+msgstr "Gráfico"
+
+#. module: web_grid
 #. openerp-web
 #: code:addons/web_grid/static/src/js/grid_view.js:15
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
 #, python-format
 msgid "Grid"
 msgstr "Grade"
 
 #. module: web_grid
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Kanban"
+msgstr "Kanban"
+
+#. module: web_grid
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Pivot"
+msgstr "Pivô"
+
+#. module: web_grid
+#: selection:ir.ui.view,type:0
+msgid "QWeb"
+msgstr "QWeb"
+
+#. module: web_grid
+#: selection:ir.ui.view,type:0
+msgid "Search"
+msgstr "Pesquisar"
+
+#. module: web_grid
 #. openerp-web
-#: code:addons/web_grid/static/src/js/grid_renderer.js:199
+#: code:addons/web_grid/static/src/js/grid_renderer.js:215
 #, python-format
 msgid "See all the records aggregated in this cell"
 msgstr ""
 
 #. module: web_grid
 #. openerp-web
-#: code:addons/web_grid/static/src/js/grid_renderer.js:137
+#: code:addons/web_grid/static/src/js/grid_renderer.js:153
 #, python-format
 msgid ""
 "The sectioned grid view can't handle groups with different columns sets"
@@ -68,26 +127,39 @@ msgstr "Hoje"
 
 #. module: web_grid
 #. openerp-web
-#: code:addons/web_grid/static/src/js/grid_renderer.js:337
-#: code:addons/web_grid/static/src/js/grid_renderer.js:342
+#: code:addons/web_grid/static/src/js/grid_renderer.js:353
+#: code:addons/web_grid/static/src/js/grid_renderer.js:358
 #, python-format
 msgid "Total"
 msgstr "Total"
 
 #. module: web_grid
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Tree"
+msgstr "Visão em árvore"
+
+#. module: web_grid
 #. openerp-web
-#: code:addons/web_grid/static/src/js/grid_controller.js:210
+#: code:addons/web_grid/static/src/js/grid_controller.js:204
 #, python-format
 msgid "Undefined"
 msgstr "Indefinido"
 
 #. module: web_grid
 #. openerp-web
-#: code:addons/web_grid/static/src/js/grid_renderer.js:258
-#: code:addons/web_grid/static/src/js/grid_renderer.js:294
+#: code:addons/web_grid/static/src/js/grid_renderer.js:130
+#: code:addons/web_grid/static/src/js/grid_renderer.js:275
+#: code:addons/web_grid/static/src/js/grid_renderer.js:310
 #, python-format
 msgid "Unknown"
 msgstr "Desconhecido(a)"
+
+#. module: web_grid
+#: model:ir.model.fields,field_description:web_grid.field_ir_actions_act_window_view__view_mode
+#: model:ir.model.fields,field_description:web_grid.field_ir_ui_view__type
+msgid "View Type"
+msgstr "Tipo de Visão"
 
 #. module: web_grid
 #: code:addons/web_grid/models.py:255

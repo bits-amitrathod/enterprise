@@ -7,10 +7,10 @@
 # Martin Trigaux, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Martin Trigaux, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -140,12 +140,18 @@ msgid "B - Break Bulk Express"
 msgstr ""
 
 #. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+msgid "Based on Rules"
+msgstr "Szabályok alapján"
+
+#. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "C - Medical Express"
 msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model,name:delivery_dhl.model_delivery_carrier
+#: model:ir.model.fields,field_description:delivery_dhl.field_product_packaging__package_carrier_type
 msgid "Carrier"
 msgstr "Fuvarozó"
 
@@ -163,6 +169,12 @@ msgstr "Jelölje be ha a csomagja vámköteles."
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "D - Express Worldwide"
 msgstr "D - Express Worldwide"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "DHL"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_account_number
@@ -209,12 +221,14 @@ msgid "DHL SiteID"
 msgstr "DHL OldalID"
 
 #. module: delivery_dhl
+#: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_dom
 #: model:product.product,name:delivery_dhl.product_product_delivery_dhl_usa
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_usa_product_template
 msgid "DHL USA"
 msgstr "DHL USA"
 
 #. module: delivery_dhl
+#: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_intl
 #: model:product.product,name:delivery_dhl.product_product_delivery_dhl_intl
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_intl_product_template
 msgid "DHL USA -> International"
@@ -258,6 +272,17 @@ msgstr "Europa"
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "F - Freight Worldwide"
 msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "FedEx"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+msgid "Fixed Price"
+msgstr "Rögzített ár"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -320,6 +345,11 @@ msgid "N - Domestic Express"
 msgstr "N - Belföldi Expressz"
 
 #. module: delivery_dhl
+#: selection:product.packaging,package_carrier_type:0
+msgid "No carrier integration"
+msgstr "Nincs szállítmányozó integrálva"
+
+#. module: delivery_dhl
 #: code:addons/delivery_dhl/models/dhl_request.py:179
 #, python-format
 msgid "No service available for the selected product"
@@ -371,6 +401,11 @@ msgstr "Kérem válasszon legalább egy szállítandó tételt."
 #: selection:delivery.carrier,dhl_package_weight_unit:0
 msgid "Pounds"
 msgstr "Pounds"
+
+#. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr "Szolgáltató"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -436,6 +471,17 @@ msgid "U - Express Worldwide"
 msgstr ""
 
 #. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "UPS"
+msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+msgid "USPS"
+msgstr ""
+
+#. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "V - Europack"
 msgstr ""
@@ -470,6 +516,12 @@ msgstr ""
 #: selection:delivery.carrier,dhl_label_image_format:0
 msgid "ZPL2"
 msgstr "ZPL2"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "bpost"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:product.product,weight_uom_name:delivery_dhl.product_product_delivery_dhl_intl

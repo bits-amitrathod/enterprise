@@ -3,22 +3,20 @@
 # * mail_github
 # 
 # Translators:
-# Bohdan Lisnenko <lem8r.ka11a@gmail.com>, 2017
-# Yaroslav Molochko <onorua@gmail.com>, 2017
-# ТАрас <tratatuta@i.ua>, 2017
+# Bohdan Lisnenko, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: ТАрас <tratatuta@i.ua>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Bohdan Lisnenko, 2018\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
@@ -46,6 +44,11 @@ msgid "<b>Title :</b>"
 msgstr ""
 
 #. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_needaction
+msgid "Action Needed"
+msgstr "Дія необхідна"
+
+#. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid ""
 "After that you can choose the events you want to follow in the channels. Be "
@@ -55,9 +58,9 @@ msgid ""
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_channel_ids
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__channel_ids
 msgid "Channels"
-msgstr "Канали"
+msgstr ""
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
@@ -70,38 +73,53 @@ msgid "Commit"
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,help:mail_github.field_mail_channel_github_name
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__name
 msgid ""
 "Complete name of the github repository. e.i.: my-username/my-public-repo"
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_create_uid
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__create_uid
 msgid "Created by"
-msgstr "Створив"
+msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_create_date
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__create_date
 msgid "Created on"
-msgstr "Дата створення"
+msgstr ""
 
 #. module: mail_github
 #: model:ir.model,name:mail_github.model_mail_channel
 msgid "Discussion channel"
-msgstr "Канал обговорення"
+msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_display_name
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__display_name
 msgid "Display Name"
-msgstr "Назва для відображення"
+msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_enabled
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel__github_enabled
 msgid "Enable listening to Github repositories"
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_res_users_github_login
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_follower_ids
+msgid "Followers"
+msgstr "Підписники"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Підписники (Канали)"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Підписники (Партнери)"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_res_users__github_login
 msgid "GitHub Login"
 msgstr ""
 
@@ -117,29 +135,64 @@ msgid "Github Repositories"
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_id
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__id
 msgid "ID"
-msgstr "ІД"
+msgstr ""
+
+#. module: mail_github
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Якщо позначено, то повідомленя потребує вашої уваги"
+
+#. module: mail_github
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Якщо відмічено, то нові повідомлення будуть потребувати вашої уваги."
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_is_follower
+msgid "Is Follower"
+msgstr "Стежить"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
 msgid "Issue"
-msgstr "Проблема"
+msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github___last_update
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github____last_update
 msgid "Last Modified on"
-msgstr "Остання модифікація"
+msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_write_uid
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__write_uid
 msgid "Last Updated by"
-msgstr "Востаннє оновив"
+msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_write_date
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__write_date
 msgid "Last Updated on"
-msgstr "Останнє оновлення"
+msgstr ""
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_ids
+msgid "Messages"
+msgstr "Повідомлення"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Кількість дій"
+
+#. module: mail_github
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Кількість повідомлень, які потебують дії"
+
+#. module: mail_github
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Кількість непрочитаних повідомлень"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
@@ -154,17 +207,17 @@ msgid "PR"
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_url_token
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__url_token
 msgid "Payload URL"
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_repo_ids
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel__github_repo_ids
 msgid "Repositories"
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_github_repository_id
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__github_repository_id
 msgid "Repository ID"
 msgstr ""
 
@@ -174,17 +227,17 @@ msgid "Repository full name: user/repository."
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_name
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__name
 msgid "Repository name"
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_secret
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__secret
 msgid "Secret"
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,help:mail_github.field_mail_channel_github_repo_ids
+#: model:ir.model.fields,help:mail_github.field_mail_channel__github_repo_ids
 msgid "The Github repositories the channel will follow"
 msgstr ""
 
@@ -201,14 +254,24 @@ msgid ""
 msgstr ""
 
 #. module: mail_github
-#: model:ir.model.fields,help:mail_github.field_mail_channel_github_url_token
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__url_token
 msgid "URL to put as the payload target when configuring GitHub webhook"
 msgstr ""
 
 #. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_unread
+msgid "Unread Messages"
+msgstr "Непрочитані повідомлення"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Кількість непрочитаних повідомлень"
+
+#. module: mail_github
 #: model:ir.model,name:mail_github.model_res_users
 msgid "Users"
-msgstr "Користувачі"
+msgstr ""
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
