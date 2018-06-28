@@ -284,7 +284,6 @@ QUnit.module('Views', {
 
         return concurrency.delay(0).then(function () {
             grid.update({groupBy: ["date"]});
-            debugger;
             assert.strictEqual(grid.$('tbody th:first').text(),
                                "January 2017",
                                "Should be equal.");
