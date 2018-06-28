@@ -7,10 +7,10 @@
 # Martin Trigaux, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Martin Trigaux, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,13 @@ msgid "BUSINESS_SERVICE_CENTER"
 msgstr "BUSINESS_SZOLGÁLTATÁSI_KÖZPONT"
 
 #. module: delivery_fedex
+#: selection:delivery.carrier,delivery_type:0
+msgid "Based on Rules"
+msgstr "Szabályok alapján"
+
+#. module: delivery_fedex
 #: model:ir.model,name:delivery_fedex.model_delivery_carrier
+#: model:ir.model.fields,field_description:delivery_fedex.field_product_packaging__package_carrier_type
 msgid "Carrier"
 msgstr "Fuvarozó"
 
@@ -61,6 +67,12 @@ msgstr "Fuvarozó"
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Certification Process"
 msgstr "Osztályozási folyamat"
+
+#. module: delivery_fedex
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "DHL"
+msgstr ""
 
 #. module: delivery_fedex
 #: selection:delivery.carrier,fedex_droppoff_type:0
@@ -83,7 +95,7 @@ msgid "EPL2"
 msgstr "EPL2"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:197
+#: code:addons/delivery_fedex/models/delivery_fedex.py:206
 #, python-format
 msgid ""
 "Error:\n"
@@ -116,6 +128,12 @@ msgid "FIRST_OVERNIGHT"
 msgstr "FIRST_MÁSNAP"
 
 #. module: delivery_fedex
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "FedEx"
+msgstr ""
+
+#. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_account_number
 msgid "FedEx Account Number"
 msgstr ""
@@ -142,6 +160,7 @@ msgid "Fedex Configuration"
 msgstr "Fedex beállítás"
 
 #. module: delivery_fedex
+#: model:delivery.carrier,name:delivery_fedex.delivery_carrier_fedex_inter
 #: model:product.product,name:delivery_fedex.product_product_delivery_fedex_inter
 #: model:product.template,name:delivery_fedex.product_product_delivery_fedex_inter_product_template
 msgid "Fedex International"
@@ -163,6 +182,7 @@ msgid "Fedex Tutorial"
 msgstr "Fedex oktató"
 
 #. module: delivery_fedex
+#: model:delivery.carrier,name:delivery_fedex.delivery_carrier_fedex_us
 #: model:product.product,name:delivery_fedex.product_product_delivery_fedex_us
 #: model:product.template,name:delivery_fedex.product_product_delivery_fedex_us_product_template
 msgid "Fedex US"
@@ -182,6 +202,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_droppoff_type
 msgid "Fedex drop-off type"
 msgstr "Fedex kiszállítás típus"
+
+#. module: delivery_fedex
+#: selection:delivery.carrier,delivery_type:0
+msgid "Fixed Price"
+msgstr "Rögzített ár"
 
 #. module: delivery_fedex
 #: model:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -214,7 +239,12 @@ msgid "Meter Number"
 msgstr "Méter szám"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:379
+#: selection:product.packaging,package_carrier_type:0
+msgid "No carrier integration"
+msgstr "Nincs szállítmányozó integrálva"
+
+#. module: delivery_fedex
+#: code:addons/delivery_fedex/models/delivery_fedex.py:385
 #, python-format
 msgid "No packages for this picking"
 msgstr ""
@@ -285,6 +315,11 @@ msgid "Password"
 msgstr "Jelszó"
 
 #. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr "Szolgáltató"
+
+#. module: delivery_fedex
 #: selection:delivery.carrier,fedex_droppoff_type:0
 msgid "REGULAR_PICKUP"
 msgstr "ÁLTALÁNOS_FELVÉTEL"
@@ -340,19 +375,19 @@ msgid "Saturday Delivery"
 msgstr ""
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:402
+#: code:addons/delivery_fedex/models/delivery_fedex.py:408
 #, python-format
 msgid "Shipment N° %s has been cancelled"
 msgstr "N° %s sz. szállítmányt érvénytelenítettük"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:366
+#: code:addons/delivery_fedex/models/delivery_fedex.py:372
 #, python-format
 msgid "Shipment created into Fedex <br/> <b>Tracking Number : </b>%s"
 msgstr "Szállítmány létrehozva az Fedex-ben <br/> <b>Követési szám : </b>%s"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:323
+#: code:addons/delivery_fedex/models/delivery_fedex.py:329
 #, python-format
 msgid ""
 "Shipment created into Fedex<br/><b>Tracking Numbers:</b> "
@@ -392,7 +427,18 @@ msgstr ""
 "szolgáltatáshoz kapcsolódáshoz."
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:203
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "UPS"
+msgstr ""
+
+#. module: delivery_fedex
+#: selection:delivery.carrier,delivery_type:0
+msgid "USPS"
+msgstr ""
+
+#. module: delivery_fedex
+#: code:addons/delivery_fedex/models/delivery_fedex.py:212
 #, python-format
 msgid ""
 "Warning:\n"
@@ -403,6 +449,12 @@ msgstr ""
 #: selection:delivery.carrier,fedex_label_file_type:0
 msgid "ZPLII"
 msgstr "ZPLII"
+
+#. module: delivery_fedex
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "bpost"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:product.product,weight_uom_name:delivery_fedex.product_product_delivery_fedex_inter

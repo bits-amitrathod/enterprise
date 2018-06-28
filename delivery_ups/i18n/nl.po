@@ -6,19 +6,26 @@
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2016
 # Cas Vissers <casvissers@brahoo.nl>, 2017
 # Martin Trigaux, 2017
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2018
+# Eric Geens <ericgeens@yahoo.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Martin Trigaux, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+msgid "Based on Rules"
+msgstr "Gebaseerd op regels"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_bill_my_account
@@ -33,6 +40,7 @@ msgstr "COD Funding Optie"
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_delivery_carrier
+#: model:ir.model.fields,field_description:delivery_ups.field_product_packaging__package_carrier_type
 msgid "Carrier"
 msgstr "Vervoerder"
 
@@ -63,6 +71,12 @@ msgid "Collect on Delivery"
 msgstr "Rembours"
 
 #. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "DHL"
+msgstr "DHL"
+
+#. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0
 msgid "EPL"
 msgstr "EPL"
@@ -76,6 +90,17 @@ msgid ""
 msgstr ""
 "Fout:\n"
 "%s"
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "FedEx"
+msgstr "FedEx"
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+msgid "Fixed Price"
+msgstr "Vaste prijs"
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier__ups_bill_my_account
@@ -98,6 +123,11 @@ msgid "Kilograms"
 msgstr "Kilogram"
 
 #. module: delivery_ups
+#: selection:product.packaging,package_carrier_type:0
+msgid "No carrier integration"
+msgstr "Geen vervoerder informatie"
+
+#. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0
 msgid "PDF"
 msgstr "PDF"
@@ -117,6 +147,11 @@ msgstr "Voorzie minimaal één item om te verzend aub."
 #: selection:delivery.carrier,ups_package_weight_unit:0
 msgid "Pounds"
 msgstr "Ponden"
+
+#. module: delivery_ups
+#: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr "Provider"
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_sale_order
@@ -221,11 +256,18 @@ msgid "Transfer"
 msgstr "Overplaatsing"
 
 #. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "UPS"
+msgstr "UPS"
+
+#. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_access_number
 msgid "UPS AccessLicenseNumber"
 msgstr "UPS toegang licentie nummer"
 
 #. module: delivery_ups
+#: model:delivery.carrier,name:delivery_ups.delivery_carrier_ups_be
 #: model:product.product,name:delivery_ups.product_product_delivery_ups_be
 #: model:product.template,name:delivery_ups.product_product_delivery_ups_be_product_template
 msgid "UPS BE"
@@ -275,6 +317,7 @@ msgid "UPS Shipper Number"
 msgstr "UPS verzender nummer"
 
 #. module: delivery_ups
+#: model:delivery.carrier,name:delivery_ups.delivery_carrier_ups_us
 #: model:product.product,name:delivery_ups.product_product_delivery_ups_us
 #: model:product.template,name:delivery_ups.product_product_delivery_ups_us_product_template
 msgid "UPS US"
@@ -284,6 +327,11 @@ msgstr "UPS US"
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_username
 msgid "UPS Username"
 msgstr "UPS gebruikersnaam"
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+msgid "USPS"
+msgstr "USPS"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_package_dimension_unit
@@ -304,6 +352,12 @@ msgstr "Waarde toegevoegde diensten"
 #: selection:delivery.carrier,ups_label_file_type:0
 msgid "ZPL"
 msgstr "ZPL"
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "bpost"
+msgstr "bpost"
 
 #. module: delivery_ups
 #: model:product.product,weight_uom_name:delivery_ups.product_product_delivery_ups_be

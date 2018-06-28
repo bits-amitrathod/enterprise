@@ -4,15 +4,17 @@
 # 
 # Translators:
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Cas Vissers <casvissers@brahoo.nl>, 2017
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2018
+# Eric Geens <ericgeens@yahoo.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,6 +48,11 @@ msgid "<b>Title :</b>"
 msgstr "<b>Titel:</b>"
 
 #. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_needaction
+msgid "Action Needed"
+msgstr "Vereist actie"
+
+#. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
 msgid ""
 "After that you can choose the events you want to follow in the channels. Be "
@@ -59,7 +66,7 @@ msgstr ""
 "en<i>Push</i> verandering zijn ondersteund."
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_channel_ids
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__channel_ids
 msgid "Channels"
 msgstr "Kanalen"
 
@@ -74,7 +81,7 @@ msgid "Commit"
 msgstr "Commit"
 
 #. module: mail_github
-#: model:ir.model.fields,help:mail_github.field_mail_channel_github_name
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__name
 msgid ""
 "Complete name of the github repository. e.i.: my-username/my-public-repo"
 msgstr ""
@@ -82,12 +89,12 @@ msgstr ""
 "/mijn-publieke-repo"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_create_uid
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__create_uid
 msgid "Created by"
 msgstr "Aangemaakt door"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_create_date
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__create_date
 msgid "Created on"
 msgstr "Aangemaakt op"
 
@@ -97,17 +104,32 @@ msgid "Discussion channel"
 msgstr "Discussiekanaal"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_display_name
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__display_name
 msgid "Display Name"
-msgstr "Schermnaam"
+msgstr "Weergave naam"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_enabled
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel__github_enabled
 msgid "Enable listening to Github repositories"
 msgstr "Sta luisteren naar Github repositories toe"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_res_users_github_login
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_follower_ids
+msgid "Followers"
+msgstr "Volgers"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Volgers (Kanalen)"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Volgers (Relaties)"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_res_users__github_login
 msgid "GitHub Login"
 msgstr "Github login"
 
@@ -123,9 +145,24 @@ msgid "Github Repositories"
 msgstr "Github repositories"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_id
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__id
 msgid "ID"
 msgstr "ID"
+
+#. module: mail_github
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
+
+#. module: mail_github
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_is_follower
+msgid "Is Follower"
+msgstr "Is een volger"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.message_github_notification
@@ -133,19 +170,39 @@ msgid "Issue"
 msgstr "Issue"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github___last_update
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github____last_update
 msgid "Last Modified on"
 msgstr "Laatst gewijzigd op"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_write_uid
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__write_uid
 msgid "Last Updated by"
 msgstr "Laatst bijgewerkt door"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_write_date
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__write_date
 msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_ids
+msgid "Messages"
+msgstr "Berichten"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Aantal acties"
+
+#. module: mail_github
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Aantal berichten die actie vereisen"
+
+#. module: mail_github
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Aantal ongelezen berichten"
 
 #. module: mail_github
 #: model:ir.ui.view,arch_db:mail_github.mail_channel_github_view_form
@@ -162,17 +219,17 @@ msgid "PR"
 msgstr "PR"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_url_token
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__url_token
 msgid "Payload URL"
 msgstr "Payload URL"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_repo_ids
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel__github_repo_ids
 msgid "Repositories"
 msgstr "Repositories"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_github_repository_id
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__github_repository_id
 msgid "Repository ID"
 msgstr "Repository ID"
 
@@ -182,17 +239,17 @@ msgid "Repository full name: user/repository."
 msgstr "Volledige naam repository: gebruiker/repository."
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_name
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__name
 msgid "Repository name"
 msgstr "Repository naam"
 
 #. module: mail_github
-#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github_secret
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__secret
 msgid "Secret"
 msgstr "Geheim"
 
 #. module: mail_github
-#: model:ir.model.fields,help:mail_github.field_mail_channel_github_repo_ids
+#: model:ir.model.fields,help:mail_github.field_mail_channel__github_repo_ids
 msgid "The Github repositories the channel will follow"
 msgstr "De Github repositories die het kanaal zal volgen"
 
@@ -211,10 +268,20 @@ msgstr ""
 "urlencoded</b>."
 
 #. module: mail_github
-#: model:ir.model.fields,help:mail_github.field_mail_channel_github_url_token
+#: model:ir.model.fields,help:mail_github.field_mail_channel_github__url_token
 msgid "URL to put as the payload target when configuring GitHub webhook"
 msgstr ""
 "URL om in te geven als payload wanneer u de Github webhook configureert"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_unread
+msgid "Unread Messages"
+msgstr "Ongelezen berichten"
+
+#. module: mail_github
+#: model:ir.model.fields,field_description:mail_github.field_mail_channel_github__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Aantal ongelezen berichten"
 
 #. module: mail_github
 #: model:ir.model,name:mail_github.model_res_users

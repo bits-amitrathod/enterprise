@@ -10,13 +10,14 @@
 # Liping Wang <lynn.config@gmail.com>, 2017
 # Martin Trigaux, 2017
 # e2f <projects@e2f.com>, 2018
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,6 +30,38 @@ msgstr ""
 #, python-format
 msgid " Invoice: "
 msgstr "发票"
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+msgid ", generate a"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid ""
+"<strong>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml4\">Sale Order</span>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml4\">Purchase Order</span>\n"
+"                                    <span attrs=\"{'invisible':[('applicable_on','!=', 'sale_purchase')]}\" class=\"ml4\"> Sale and Purchase Order</span>\n"
+"                                </strong> using"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+msgid ""
+"<strong>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml8\">Sale Order </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml8\">Purchase Order </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale_purchase')]}\" class=\"ml8\"> Sale and Purchase Order </span>\n"
+"                            </strong>\n"
+"                            using"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__applicable_on
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__applicable_on
+msgid "Applicable On"
+msgstr "可适用于"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice__auto_generated
@@ -46,19 +79,14 @@ msgid "Auto Generated Sales Order"
 msgstr "自动生成的销售订单"
 
 #. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_validation
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__auto_validation
-#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
-msgid "Auto-validate Sales/Purchase Orders"
-msgstr "自动审核销售/采购订单"
+msgid "Auto Validation"
+msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_company
 msgid "Companies"
-msgstr "公司"
-
-#. module: inter_company_rules
-#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
-msgid "Company"
 msgstr "公司"
 
 #. module: inter_company_rules
@@ -69,25 +97,6 @@ msgid ""
 "Configure correct warehouse for company(%s) from Menu: "
 "Settings/Users/Companies"
 msgstr "在菜单:设置/用户/公司中,为公司(%s)配置正确的仓库"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_generate_invoices
-msgid ""
-"Create Invoices/Credit Notes when encoding invoices/credit notes made to "
-"this company"
-msgstr "在向该公司编码发票/信用票据时，创建发票/信用票据"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__po_from_so
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__po_from_so
-msgid "Create Purchase Orders when selling to this company"
-msgstr "给该公司销售的时候创建采购订单"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__so_from_po
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__so_from_po
-msgid "Create Sales Orders when buying to this company"
-msgstr "在向该公司购买的时候创建销售订单"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__warehouse_id
@@ -102,47 +111,6 @@ msgid ""
 "Default value to set on Purchase(Sales) Orders that will be created based on"
 " Sale(Purchase) Orders made to this company"
 msgstr "在该公司销售（采购）订单的基础上建立的采购（销售）订单的默认值"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__auto_generate_invoices
-msgid ""
-"Generate Customer/Vendor Bills (and credit notes) when encoding invoices (or credit notes) made to this company.\n"
-" e.g: Generate a Customer Invoice when a Vendor Bill with this company as vendor is created."
-msgstr ""
-"在向该公司编码发票（或信用票据）给这家公司的时候生成客户/供应商的账单（和信用票据）。\n"
-" 例如：在该公司为供应商与供应商账单的时候，生成客户发票时。"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__po_from_so
-msgid ""
-"Generate a Purchase Order when a Sale Order with this company as customer is"
-" created."
-msgstr "在该公司作为客户时的销售订单生成一张采购订单"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__po_from_so
-msgid ""
-"Generate a Purchase Order when a Sales Order with this company as customer is created.\n"
-" The intercompany user must at least be Purchase User."
-msgstr ""
-"当该公司作为客户创建销售订单时生成采购订单。\n"
-" 公司间的用户至少有一个必须是采购用户。"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__so_from_po
-msgid ""
-"Generate a Sale Order when a Purchase Order with this company as vendor is "
-"created."
-msgstr "在该公司作为供应商的采购订单生成销售订单"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__so_from_po
-msgid ""
-"Generate a Sales Order when a Purchase Order with this company as vendor is created.\n"
-" The intercompany user must at least be Sale User."
-msgstr ""
-"当该公司作为供应商创建采购订单时生成销售订单。\n"
-" 公司间的用户至少有一个必须是销售用户。"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__intercompany_user_id
@@ -187,6 +155,8 @@ msgstr "请为%提供一个公司间用户"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_purchase_order
+#: selection:res.company,applicable_on:0
+#: selection:res.config.settings,applicable_on:0
 msgid "Purchase Order"
 msgstr "采购订单"
 
@@ -202,14 +172,22 @@ msgid ""
 msgstr "对公司内部的规则触发文件创建的责任用户。"
 
 #. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__rule_type
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__rule_type
 msgid "Rule Type"
 msgstr "规则类型"
 
 #. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_validation
-msgid "Sale/Purchase Orders Auto Validation"
-msgstr "销售/采购订单自动确认"
+#: selection:res.company,applicable_on:0
+#: selection:res.config.settings,applicable_on:0
+msgid "Sale Order"
+msgstr "销售订单"
+
+#. module: inter_company_rules
+#: selection:res.company,applicable_on:0
+#: selection:res.config.settings,applicable_on:0
+msgid "Sale and Purchase Order"
+msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__rules_company_id
@@ -222,19 +200,10 @@ msgid "Select company to setup Inter company rules."
 msgstr "选择公司用了建立公司内部规则"
 
 #. module: inter_company_rules
+#: model:ir.model.fields,help:inter_company_rules.field_res_company__rule_type
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__rule_type
 msgid "Select the type to setup inter company rules in selected company."
 msgstr "在选择的公司中,选择类型用来建立内部公司规则"
-
-#. module: inter_company_rules
-#: selection:res.config.settings,rule_type:0
-msgid "Send Invoices & Credit Notes"
-msgstr "发送发票和信用票据"
-
-#. module: inter_company_rules
-#: selection:res.config.settings,rule_type:0
-msgid "Send Sales & Purchase Orders"
-msgstr "发送销售和采购订单"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice__auto_invoice_id
@@ -252,6 +221,16 @@ msgid "Source Sales Order"
 msgstr "源销售订单"
 
 #. module: inter_company_rules
+#: selection:res.company,rule_type:0 selection:res.config.settings,rule_type:0
+msgid "Synchronize Invoices & Bills"
+msgstr ""
+
+#. module: inter_company_rules
+#: selection:res.company,rule_type:0 selection:res.config.settings,rule_type:0
+msgid "Synchronize Sales & Purchase Orders"
+msgstr ""
+
+#. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__warehouse_id
 msgid "Warehouse"
 msgstr "仓库"
@@ -262,18 +241,10 @@ msgid "Warehouse For Purchase Orders"
 msgstr "采购订单仓库"
 
 #. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__auto_validation
-msgid ""
-"When a Sale Order or a Purchase Order is created by a multi\n"
-"            company rule for this company, it will automatically validate it."
-msgstr "当该公司的销售订单或者采购订单由公司间的规则创建，它就会自动验证它"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__auto_validation
-msgid ""
-"When a Sales Order or a Purchase Order is created by a multi company rule "
-"for this company, it will automatically validate it"
-msgstr "当该公司的销售订单或者采购订单由公司间的规则创建，规则就会自动验证订单"
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "When a company validates a"
+msgstr ""
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
@@ -284,7 +255,7 @@ msgid ""
 msgstr "因为销售价格表和采购价格表的币种不一致，所以不能从采购订单创建销售订单"
 
 #. module: inter_company_rules
-#: code:addons/inter_company_rules/models/res_company.py:32
+#: code:addons/inter_company_rules/models/res_company.py:37
 #, python-format
 msgid ""
 "You cannot select to create invoices based on other invoices\n"
@@ -296,6 +267,33 @@ msgstr ""
 " 公司时创建销售订单”或“卖出该公司时创建采购订单”）！"
 
 #. module: inter_company_rules
+#: selection:res.company,auto_validation:0
+#: selection:res.config.settings,auto_validation:0
+msgid "draft"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "generate a"
+msgstr ""
+
+#. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings
 msgid "res.config.settings"
 msgstr "设置-基础设置"
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+msgid "to"
+msgstr "到"
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "to this company,"
+msgstr ""
+
+#. module: inter_company_rules
+#: selection:res.company,auto_validation:0
+#: selection:res.config.settings,auto_validation:0
+msgid "validated"
+msgstr ""

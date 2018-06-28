@@ -10,10 +10,10 @@
 # Cas Vissers <casvissers@brahoo.nl>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_lead__pageviews_count
 msgid "# Page Views"
 msgstr "# Paginaweergaven"
+
+#. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__message_needaction
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__message_needaction
+msgid "Action Needed"
+msgstr "Vereist actie"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__running
@@ -78,7 +84,7 @@ msgstr "Capaciteit"
 #. module: website_crm_score
 #: model:ir.actions.act_window,help:website_crm_score.team_user_action
 msgid "Create a new salesman"
-msgstr ""
+msgstr "Maak een nieuwe verkoper"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user__create_uid
@@ -127,7 +133,7 @@ msgstr "Datum waarop de lead is toegewezen via het auto-toewijzingsmechanisme"
 #. module: website_crm_score
 #: model:ir.actions.act_window,help:website_crm_score.team_action
 msgid "Define a new sales channel"
-msgstr ""
+msgstr "Definieer een nieuw verkoopkanaal"
 
 #. module: website_crm_score
 #: selection:website.crm.score,rule_type:0
@@ -154,6 +160,24 @@ msgid "Event-based rule"
 msgstr "Gebeurtenis gebaseerde regel"
 
 #. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__message_follower_ids
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__message_follower_ids
+msgid "Followers"
+msgstr "Volgers"
+
+#. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__message_channel_ids
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Volgers (Kanalen)"
+
+#. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__message_partner_ids
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Volgers (Relaties)"
+
+#. module: website_crm_score
 #: model:ir.model,name:website_crm_score.model_ir_http
 msgid "HTTP routing"
 msgstr "HTTP routing"
@@ -164,6 +188,24 @@ msgstr "HTTP routing"
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__id
 msgid "ID"
 msgstr "ID"
+
+#. module: website_crm_score
+#: model:ir.model.fields,help:website_crm_score.field_team_user__message_unread
+#: model:ir.model.fields,help:website_crm_score.field_website_crm_score__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
+
+#. module: website_crm_score
+#: model:ir.model.fields,help:website_crm_score.field_team_user__message_needaction
+#: model:ir.model.fields,help:website_crm_score.field_website_crm_score__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
+
+#. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__message_is_follower
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__message_is_follower
+msgid "Is Follower"
+msgstr "Is een volger"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_lead__lang_id
@@ -259,6 +301,12 @@ msgid "Maximum Leads / 30 days"
 msgstr "Maximaal aantal leads / 30 dagen"
 
 #. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__message_ids
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__message_ids
+msgid "Messages"
+msgstr "Berichten"
+
+#. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team__min_for_assign
 msgid "Minimum score"
 msgstr "Minimum score"
@@ -274,6 +322,24 @@ msgstr "Minimum score om automatisch toe te wijzen (>=)"
 #: model:ir.ui.view,arch_db:website_crm_score.view_crm_score_form
 msgid "Name"
 msgstr "Naam"
+
+#. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__message_needaction_counter
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Aantal acties"
+
+#. module: website_crm_score
+#: model:ir.model.fields,help:website_crm_score.field_team_user__message_needaction_counter
+#: model:ir.model.fields,help:website_crm_score.field_website_crm_score__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Aantal berichten die actie vereisen"
+
+#. module: website_crm_score
+#: model:ir.model.fields,help:website_crm_score.field_team_user__message_unread_counter
+#: model:ir.model.fields,help:website_crm_score.field_website_crm_score__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Aantal ongelezen berichten"
 
 #. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.crm_score_views_action_table
@@ -300,6 +366,11 @@ msgstr "Pagina weergaven"
 #: model:ir.model.fields,field_description:website_crm_score.field_team_user__percentage_leads
 msgid "Percentage leads"
 msgstr "Percentage leads"
+
+#. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_crm_lead__phone
+msgid "Phone"
+msgstr "Telefoon"
 
 #. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_crm_team__ratio
@@ -330,6 +401,15 @@ msgstr "Verkoper"
 #: model:ir.model,name:website_crm_score.model_crm_team
 msgid "Sales Channel"
 msgstr "Verkoopkanaal"
+
+#. module: website_crm_score
+#: model:ir.model.fields,help:website_crm_score.field_res_users__sale_team_id
+msgid ""
+"Sales Channel the user is member of. Used to compute the members of a sales "
+"channel through the inverse one2many"
+msgstr ""
+"Verkoopkanaal waarvan de gebruiker lid is. Gebruikt om de leden te berekenen"
+" van een verkoopkanaal via het one2many veld"
 
 #. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.team_action
@@ -427,6 +507,18 @@ msgid "Unassigned leads"
 msgstr "Niet toegewezen leads"
 
 #. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__message_unread
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__message_unread
+msgid "Unread Messages"
+msgstr "Ongelezen berichten"
+
+#. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__message_unread_counter
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Aantal ongelezen berichten"
+
+#. module: website_crm_score
 #: model:ir.model.fields,field_description:website_crm_score.field_website_crm_pageview__url
 msgid "Url"
 msgstr "Url"
@@ -446,6 +538,11 @@ msgid "User"
 msgstr "Gebruiker"
 
 #. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_res_users__sale_team_id
+msgid "User Sales Channel"
+msgstr ""
+
+#. module: website_crm_score
 #: model:ir.model,name:website_crm_score.model_res_users
 msgid "Users"
 msgstr "Gebruikers"
@@ -461,9 +558,21 @@ msgid "Viewing Date"
 msgstr "Datum bekeken"
 
 #. module: website_crm_score
+#: model:ir.model.fields,field_description:website_crm_score.field_team_user__website_message_ids
+#: model:ir.model.fields,field_description:website_crm_score.field_website_crm_score__website_message_ids
+msgid "Website Messages"
+msgstr "Website berichten"
+
+#. module: website_crm_score
 #: model:ir.actions.act_window,name:website_crm_score.website_crm_score_pageviews
 msgid "Website Pages"
 msgstr "Websitepagina's"
+
+#. module: website_crm_score
+#: model:ir.model.fields,help:website_crm_score.field_team_user__website_message_ids
+#: model:ir.model.fields,help:website_crm_score.field_website_crm_score__website_message_ids
+msgid "Website communication history"
+msgstr "Website communicatie geschiedenis"
 
 #. module: website_crm_score
 #: model:ir.model.fields,help:website_crm_score.field_website_crm_score__event_based

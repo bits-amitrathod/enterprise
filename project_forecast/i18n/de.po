@@ -18,10 +18,10 @@
 # Katharina Moritz <kmo@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Katharina Moritz <kmo@e2f.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgid "% Time"
 msgstr "% Zeit"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:186
+#: code:addons/project_forecast/models/project_forecast.py:199
 #, python-format
 msgid "%s Task(s): %s"
 msgstr ""
@@ -189,6 +189,12 @@ msgid "Forecast"
 msgstr "Prognose"
 
 #. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:273
+#, python-format
+msgid "Forecast (in %s)"
+msgstr ""
+
+#. module: project_forecast
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_report_activities
 #: model:ir.ui.menu,name:project_forecast.project_forecast_report_activities
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_graph
@@ -229,7 +235,7 @@ msgid "Forecast end date should be greater or equal to its start date"
 msgstr ""
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:184
+#: code:addons/project_forecast/models/project_forecast.py:197
 #, python-format
 msgid ""
 "Forecast should not overlap existing forecasts. To solve this, check the "
@@ -247,7 +253,7 @@ msgid "Forecast: view by project"
 msgstr ""
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:150
+#: code:addons/project_forecast/models/project_forecast.py:163
 #, python-format
 msgid "Forecasted time must be positive"
 msgstr "Veranschlagte Zeit muss positiv sein"
@@ -258,7 +264,7 @@ msgid "Future"
 msgstr "Fiktiver Bestand"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:281
+#: code:addons/project_forecast/models/project_forecast.py:295
 #, python-format
 msgid ""
 "Grid adjustment for project forecasts only supports the 'start_date' columns"
@@ -373,6 +379,14 @@ msgid "Task tags"
 msgstr "Aufgaben-Tags"
 
 #. module: project_forecast
+#: code:addons/project_forecast/models/project_forecast.py:131
+#, python-format
+msgid ""
+"The employee (%s) doesn't have a timezone, this might cause errors in the "
+"time computation. It is configurable on the user linked to the employee"
+msgstr ""
+
+#. module: project_forecast
 #: model:ir.model.fields,help:project_forecast.field_project_project__allow_forecast
 #: model:ir.model.fields,help:project_forecast.field_project_task__allow_forecast
 msgid "This feature shows the Forecast link in the kanban view"
@@ -434,7 +448,7 @@ msgid ""
 msgstr ""
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:156
+#: code:addons/project_forecast/models/project_forecast.py:169
 #, python-format
 msgid "Your task is not in the selected project."
 msgstr "Ihre Aufgabe ist nicht im ausgewählten Projekt."
@@ -455,7 +469,7 @@ msgid "res.config.settings"
 msgstr "res.config.settings"
 
 #. module: project_forecast
-#: code:addons/project_forecast/models/project_forecast.py:104
+#: code:addons/project_forecast/models/project_forecast.py:108
 #, python-format
 msgid "undefined"
 msgstr "undefiniert"

@@ -27,10 +27,10 @@
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
@@ -134,6 +134,18 @@ msgstr "Aktivität abbrechen"
 #: selection:voip.phonecall,state:0 selection:voip.phonecall.report,state:0
 msgid "Cancelled"
 msgstr "Abgebrochen"
+
+#. module: voip
+#: model:ir.model.fields,help:voip.field_mail_activity_type__category
+msgid "Categories may trigger specific behavior like opening calendar view"
+msgstr ""
+"Kategorien können spezifische Aktionen, wie das Öffnen der Kalenderansicht, "
+"auslösen."
+
+#. module: voip
+#: model:ir.model.fields,field_description:voip.field_mail_activity_type__category
+msgid "Category"
+msgstr "Kategorie"
 
 #. module: voip
 #. openerp-web
@@ -379,6 +391,11 @@ msgid "Mark as done"
 msgstr "Als fertig makieren"
 
 #. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Meeting"
+msgstr "Meeting"
+
+#. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__mobile
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall__mobile
 msgid "Mobile"
@@ -445,6 +462,11 @@ msgstr ""
 "Ein oder mehrere Parameter fehlen. Bitte prüfen Sie ihre Konfiguration."
 
 #. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Other"
+msgstr "Andere"
+
+#. module: voip
 #: selection:voip.phonecall,type:0
 msgid "Outgoing"
 msgstr "Ausgehend"
@@ -470,6 +492,11 @@ msgstr "Telefon"
 #: model:ir.model.fields,field_description:voip.field_res_users__sanitized_phone
 msgid "Phone number sanitized"
 msgstr "Telefonnummer bereinigt"
+
+#. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Phonecall"
+msgstr ""
 
 #. module: voip
 #: model:ir.actions.act_window,name:voip.voip_phonecall_view
@@ -646,7 +673,7 @@ msgstr "Der Kunde ist vorübergehend nicht erreichbar. Bitte später versuchen."
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:460
+#: code:addons/voip/static/src/js/user_agent.js:468
 #, python-format
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "

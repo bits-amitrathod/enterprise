@@ -11,13 +11,14 @@
 # Denis Trepalin <zekarious@gmail.com>, 2017
 # Gennady Marchenko <gennadym@gmail.com>, 2017
 # Masha Koc <mariya.kos.ua@gmail.com>, 2017
+# Max Belyanin <maxbelyanin@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Masha Koc <mariya.kos.ua@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Max Belyanin <maxbelyanin@gmail.com>, 2018\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -186,6 +187,11 @@ msgid ""
 msgstr ""
 "Версия позволяет изменять несколько страниц, без публикации изменений непосредственно.\n"
 "                    Вы также можете запустить A/B тесты для анализа производительности различных версий."
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_needaction
+msgid "Action Needed"
+msgstr "Требует внимания"
 
 #. module: website_version
 #. openerp-web
@@ -568,6 +574,21 @@ msgstr ""
 "Заполните Название приложения и проверьте, что платформа хорошо работает"
 
 #. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_follower_ids
+msgid "Followers"
+msgstr "Подписчики"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Подписчики (Каналы)"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Подписчики (Партнеры)"
+
+#. module: website_version
 #: model:ir.model.fields,field_description:website_version.field_website_version_experiment_version__frequency
 msgid "Frequency"
 msgstr "Частота"
@@ -656,6 +677,16 @@ msgid "ID"
 msgstr "Номер"
 
 #. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Если отмечено, новые сообщения будут требовать вашего внимания."
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Если отмечено - новые сообщения требуют Вашего внимания."
+
+#. module: website_version
 #. openerp-web
 #: code:addons/website_version/static/src/xml/version_templates.xml:206
 #, python-format
@@ -671,6 +702,11 @@ msgid ""
 " and activate"
 msgstr ""
 "В меню слева выберите подменю APIs (из меню APIs & auth) и активируйте"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_is_follower
+msgid "Is Follower"
+msgstr "Подписчик"
 
 #. module: website_version
 #: model:ir.model.fields,field_description:website_version.field_google_management____last_update
@@ -754,6 +790,11 @@ msgid "Medium"
 msgstr "Средний"
 
 #. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_ids
+msgid "Messages"
+msgstr "Сообщения"
+
+#. module: website_version
 #: selection:website_version.experiment.version,frequency:0
 msgid "More"
 msgstr "Еще"
@@ -778,6 +819,21 @@ msgstr "Новая версия"
 #, python-format
 msgid "Now we will delete the version you have just published."
 msgstr "Теперь мы удалим версию, которую вы только что опубликовали."
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Количество действий"
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Количество сообщений, требующих внимания"
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Количество непрочитанных сообщений"
 
 #. module: website_version
 #: model:ir.model.fields,field_description:website_version.field_website_version_experiment__goal_id
@@ -1038,6 +1094,16 @@ msgid "Toggle Dropdown"
 msgstr "Переключить выпадающее"
 
 #. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_unread
+msgid "Unread Messages"
+msgstr "Непрочитанные Сообщения"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Счетчик непрочитанных сообщений"
+
+#. module: website_version
 #. openerp-web
 #: code:addons/website_version/static/src/xml/version_templates.xml:276
 #: code:addons/website_version/static/src/xml/version_templates.xml:277
@@ -1118,6 +1184,16 @@ msgstr "Вебсайт"
 #: model:ir.ui.menu,name:website_version.menu_website_view
 msgid "Website Domain"
 msgstr "Домен сайта"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__website_message_ids
+msgid "Website Messages"
+msgstr "Сообщения с сайта"
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__website_message_ids
+msgid "Website communication history"
+msgstr "История общения с сайта"
 
 #. module: website_version
 #: model:ir.actions.act_window,name:website_version.action_website_view

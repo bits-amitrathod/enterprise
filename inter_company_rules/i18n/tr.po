@@ -10,13 +10,14 @@
 # Ediz Duman <neps1192@gmail.com>, 2017
 # Umur Akın <umura@projetgrup.com>, 2018
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2018
+# Levent Karakaş <levent@mektup.at>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Levent Karakaş <levent@mektup.at>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,6 +30,38 @@ msgstr ""
 #, python-format
 msgid " Invoice: "
 msgstr "Fatura:"
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+msgid ", generate a"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid ""
+"<strong>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml4\">Sale Order</span>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml4\">Purchase Order</span>\n"
+"                                    <span attrs=\"{'invisible':[('applicable_on','!=', 'sale_purchase')]}\" class=\"ml4\"> Sale and Purchase Order</span>\n"
+"                                </strong> using"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+msgid ""
+"<strong>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml8\">Sale Order </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml8\">Purchase Order </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale_purchase')]}\" class=\"ml8\"> Sale and Purchase Order </span>\n"
+"                            </strong>\n"
+"                            using"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__applicable_on
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__applicable_on
+msgid "Applicable On"
+msgstr "Uygulanabilir"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice__auto_generated
@@ -46,20 +79,15 @@ msgid "Auto Generated Sales Order"
 msgstr "Otomatik Oluşturulan Satış Siparişi"
 
 #. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_validation
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__auto_validation
-#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
-msgid "Auto-validate Sales/Purchase Orders"
-msgstr "Satış/Alım Siparişlerini Otomatik Onayla"
+msgid "Auto Validation"
+msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_company
 msgid "Companies"
 msgstr "Firmalar"
-
-#. module: inter_company_rules
-#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
-msgid "Company"
-msgstr "Firma"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:82
@@ -69,27 +97,6 @@ msgid ""
 "Configure correct warehouse for company(%s) from Menu: "
 "Settings/Users/Companies"
 msgstr ""
-
-#. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_generate_invoices
-msgid ""
-"Create Invoices/Credit Notes when encoding invoices/credit notes made to "
-"this company"
-msgstr ""
-"Şirket için Fatura/İade-Fiyat Farkı kodlarken, Fatura/İade-Fiyat Farkı "
-"notları oluştur."
-
-#. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__po_from_so
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__po_from_so
-msgid "Create Purchase Orders when selling to this company"
-msgstr "Şirkete yapılan satışlar için Satın Alma Talebi oluştur."
-
-#. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__so_from_po
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__so_from_po
-msgid "Create Sales Orders when buying to this company"
-msgstr "Şirketten yapılan satışlar için Satış Talebi oluştur."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__warehouse_id
@@ -108,51 +115,6 @@ msgid ""
 msgstr ""
 "Şirket için yapılan Satış Siparişi baz alınarak yapılacak Satın Alma Talebi "
 "için varsayılan değer."
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__auto_generate_invoices
-msgid ""
-"Generate Customer/Vendor Bills (and credit notes) when encoding invoices (or credit notes) made to this company.\n"
-" e.g: Generate a Customer Invoice when a Vendor Bill with this company as vendor is created."
-msgstr ""
-"Bu şirkete yapılan faturaları (veya kredi notlarını) kodlarken Müşteri / Tedarikçi Faturası (ve kredi notları) oluşturun.\n"
-"örnek: Tedarikçi olarak bu şirket ile bir Tedarikçi Faturası oluşturulduğunda bir Müşteri Faturası oluşturun."
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__po_from_so
-msgid ""
-"Generate a Purchase Order when a Sale Order with this company as customer is"
-" created."
-msgstr ""
-"Bu şirket için bir Satış Siparişi, müşteri olarak oluşturulduğunda  Satın "
-"Alma Talebi oluşturun."
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__po_from_so
-msgid ""
-"Generate a Purchase Order when a Sales Order with this company as customer is created.\n"
-" The intercompany user must at least be Purchase User."
-msgstr ""
-"Bu firma ile müşteri olarak bir Satış Siparişi oluşturulduğunda bir grup şirkette Satınalma Siparişi oluşturun.\n"
-"Grup Şirket kullanıcısı en azından Satın Alma Kullanıcısı yetkilerine sahip olmalıdır."
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__so_from_po
-msgid ""
-"Generate a Sale Order when a Purchase Order with this company as vendor is "
-"created."
-msgstr ""
-"Bu şirket ile bir Satın Alma Talebi , tedarikçi olarak oluşturulduğunda "
-"Satış Siparişi oluşturun"
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__so_from_po
-msgid ""
-"Generate a Sales Order when a Purchase Order with this company as vendor is created.\n"
-" The intercompany user must at least be Sale User."
-msgstr ""
-"Bu firma ile tedarikçi olarak bir Satınalma Siparişi oluşturulduğunda bir grup şirkette otomatik olarak Satış Siparişi oluşturun.\n"
-"Greup Şirket kullanıcısı en azından Satış Kullanıcısı yetkilerine sahip olmalıdır."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__intercompany_user_id
@@ -198,6 +160,8 @@ msgstr "Grup Şirketler arası % kayıtlar için bir kullanıcı sağlayın"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_purchase_order
+#: selection:res.company,applicable_on:0
+#: selection:res.config.settings,applicable_on:0
 msgid "Purchase Order"
 msgstr "Satınalma Siparişi"
 
@@ -215,14 +179,22 @@ msgstr ""
 "oluşturulmasından sorumlu kullanıcı."
 
 #. module: inter_company_rules
+#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__rule_type
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__rule_type
 msgid "Rule Type"
 msgstr "Kural Türü"
 
 #. module: inter_company_rules
-#: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_validation
-msgid "Sale/Purchase Orders Auto Validation"
-msgstr "Satış/Satın Alma Talepleri Oto Onayı"
+#: selection:res.company,applicable_on:0
+#: selection:res.config.settings,applicable_on:0
+msgid "Sale Order"
+msgstr "Satış Siparişi"
+
+#. module: inter_company_rules
+#: selection:res.company,applicable_on:0
+#: selection:res.config.settings,applicable_on:0
+msgid "Sale and Purchase Order"
+msgstr ""
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__rules_company_id
@@ -235,21 +207,12 @@ msgid "Select company to setup Inter company rules."
 msgstr "Grup şirket kurallarına göre ayarlamak için şirket seçin."
 
 #. module: inter_company_rules
+#: model:ir.model.fields,help:inter_company_rules.field_res_company__rule_type
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__rule_type
 msgid "Select the type to setup inter company rules in selected company."
 msgstr ""
 "Seçilen şirkette grup şirketler arası kayıt kurallarını ayarlamak için "
 "gerekli türü seçin."
-
-#. module: inter_company_rules
-#: selection:res.config.settings,rule_type:0
-msgid "Send Invoices & Credit Notes"
-msgstr "Faturaları Gönder"
-
-#. module: inter_company_rules
-#: selection:res.config.settings,rule_type:0
-msgid "Send Sales & Purchase Orders"
-msgstr "Satış/Satın Alma Talebi gönder."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice__auto_invoice_id
@@ -267,6 +230,16 @@ msgid "Source Sales Order"
 msgstr "Kaynak Satış Sipariş "
 
 #. module: inter_company_rules
+#: selection:res.company,rule_type:0 selection:res.config.settings,rule_type:0
+msgid "Synchronize Invoices & Bills"
+msgstr ""
+
+#. module: inter_company_rules
+#: selection:res.company,rule_type:0 selection:res.config.settings,rule_type:0
+msgid "Synchronize Sales & Purchase Orders"
+msgstr ""
+
+#. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__warehouse_id
 msgid "Warehouse"
 msgstr "Depo"
@@ -277,24 +250,10 @@ msgid "Warehouse For Purchase Orders"
 msgstr "Satınalma Siparişleri için Depo Tanımı"
 
 #. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_config_settings__auto_validation
-msgid ""
-"When a Sale Order or a Purchase Order is created by a multi\n"
-"            company rule for this company, it will automatically validate it."
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "When a company validates a"
 msgstr ""
-"Bu şirket için birden çok şirket kuralı tarafından oluşturulduğunda bir "
-"Satış Siparişi ya da bir Satın Alma Talebi, bu otomatik olarak "
-"doğrulanacaktır."
-
-#. module: inter_company_rules
-#: model:ir.model.fields,help:inter_company_rules.field_res_company__auto_validation
-msgid ""
-"When a Sales Order or a Purchase Order is created by a multi company rule "
-"for this company, it will automatically validate it"
-msgstr ""
-"Bu şirket için birden çok şirket kuralı tarafından oluşturulduğunda bir "
-"Satış Siparişi ya da bir Satın Alma Talebi, bu otomatik olarak "
-"doğrulanacaktır."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
@@ -307,7 +266,7 @@ msgstr ""
 "farklı olduğu için Satın Alma Siparişi'nden Satış Siparişi oluşturamazsınız."
 
 #. module: inter_company_rules
-#: code:addons/inter_company_rules/models/res_company.py:32
+#: code:addons/inter_company_rules/models/res_company.py:37
 #, python-format
 msgid ""
 "You cannot select to create invoices based on other invoices\n"
@@ -319,6 +278,33 @@ msgstr ""
 "Oluştur' ya da şirkete bir şey satıyorsanız 'Satın Alma Talebi Oluştur')!"
 
 #. module: inter_company_rules
+#: selection:res.company,auto_validation:0
+#: selection:res.config.settings,auto_validation:0
+msgid "draft"
+msgstr ""
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "generate a"
+msgstr ""
+
+#. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings
 msgid "res.config.settings"
 msgstr "res.config.settings"
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
+msgid "to"
+msgstr "den"
+
+#. module: inter_company_rules
+#: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
+msgid "to this company,"
+msgstr ""
+
+#. module: inter_company_rules
+#: selection:res.company,auto_validation:0
+#: selection:res.config.settings,auto_validation:0
+msgid "validated"
+msgstr ""

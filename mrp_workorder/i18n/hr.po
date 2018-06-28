@@ -11,10 +11,10 @@
 # Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -90,10 +90,14 @@ msgid "Date"
 msgstr "Datum"
 
 #. module: mrp_workorder
-#: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder__component_uom_id
 #: model:ir.model.fields,help:mrp_workorder.field_quality_check__component_uom_id
 msgid "Default Unit of Measure used for all stock operation."
 msgstr "Predefinirana JM za sve funkcije zalihe."
+
+#. module: mrp_workorder
+#: model:ir.model.fields,help:mrp_workorder.field_quality_point__test_type_id
+msgid "Defines the type of the quality control point."
+msgstr ""
 
 #. module: mrp_workorder
 #: selection:quality.point,worksheet:0
@@ -101,7 +105,7 @@ msgid "Do not update page"
 msgstr ""
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/quality.py:112
+#: code:addons/mrp_workorder/models/quality.py:113
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__qty_done
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__qty_done
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
@@ -158,9 +162,14 @@ msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__lot_id
-#: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__lot_id
 msgid "Lot"
 msgstr "Lot"
+
+#. module: mrp_workorder
+#: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
+msgid "Lot Number"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -189,7 +198,7 @@ msgid "Mark as Done and Close MO"
 msgstr ""
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:298
+#: code:addons/mrp_workorder/models/mrp_workorder.py:299
 #, python-format
 msgid "Menu"
 msgstr "Izbornik"
@@ -268,8 +277,8 @@ msgid "Planning by Workcenter"
 msgstr "Planiranje po radnom centru"
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:175
-#: code:addons/mrp_workorder/models/mrp_workorder.py:199
+#: code:addons/mrp_workorder/models/mrp_workorder.py:176
+#: code:addons/mrp_workorder/models/mrp_workorder.py:200
 #, python-format
 msgid ""
 "Please ensure the quantity to produce is nonnegative and does not exceed the"
@@ -277,13 +286,13 @@ msgid ""
 msgstr ""
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:179
+#: code:addons/mrp_workorder/models/mrp_workorder.py:180
 #, python-format
 msgid "Please enter a Lot/SN."
 msgstr ""
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:181
+#: code:addons/mrp_workorder/models/mrp_workorder.py:182
 #, python-format
 msgid "Please enter a positive quantity."
 msgstr ""
@@ -362,7 +371,7 @@ msgid "Register a by product"
 msgstr ""
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/quality.py:106
+#: code:addons/mrp_workorder/models/quality.py:107
 #, python-format
 msgid "Register component(s)"
 msgstr ""
@@ -380,11 +389,6 @@ msgstr "Odgovoran"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__result
 msgid "Result"
-msgstr ""
-
-#. module: mrp_workorder
-#: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
-msgid "SN"
 msgstr ""
 
 #. module: mrp_workorder
@@ -416,6 +420,11 @@ msgstr "Otpis"
 #: selection:quality.point,worksheet:0
 msgid "Scroll to specific page"
 msgstr ""
+
+#. module: mrp_workorder
+#: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
+msgid "Serial Number"
+msgstr "Serijski broj"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -468,6 +477,7 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_quality_point_test_type
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__test_type
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__test_type_id
 msgid "Test Type"
 msgstr "Tip testa"
 
@@ -485,7 +495,7 @@ msgid "Title"
 msgstr "Naslov"
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/quality.py:112
+#: code:addons/mrp_workorder/models/quality.py:113
 #, python-format
 msgid "To Do"
 msgstr "Za napraviti"
@@ -546,7 +556,7 @@ msgid "Work Order"
 msgstr "Radni nalog"
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/quality.py:60
+#: code:addons/mrp_workorder/models/quality.py:61
 #, python-format
 msgid "Work Order Messages"
 msgstr ""
@@ -583,13 +593,13 @@ msgid "Worksheet page"
 msgstr ""
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:409
+#: code:addons/mrp_workorder/models/mrp_workorder.py:410
 #, python-format
 msgid "You should provide a lot for the final product"
 msgstr "Trebali biste pripremiti lot za gotovi proizvod."
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:407
+#: code:addons/mrp_workorder/models/mrp_workorder.py:408
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr "Još trebate odraditi teestove kavlitete!"

@@ -18,13 +18,14 @@
 # Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
 # Nicolás Broggi <rnbroggi@gmail.com>, 2018
 # e2f <projects@e2f.com>, 2018
+# Christopher Ormaza <chris.ormaza@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Christopher Ormaza <chris.ormaza@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,6 +42,11 @@ msgstr "Abandonar"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_account_validated
 msgid "Account Validated"
 msgstr "Cuenta validada"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "Based on Rules"
+msgstr "En base a reglas"
 
 #. module: delivery_usps
 #: model:ir.model,name:delivery_usps.model_delivery_carrier
@@ -64,6 +70,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_content_type
 msgid "Content Type"
 msgstr "Tipo de contenido"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "DHL"
+msgstr "DHL"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
@@ -96,9 +107,19 @@ msgid "Express"
 msgstr "Express"
 
 #. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "FedEx"
+msgstr "FedEx"
+
+#. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
 msgid "First Class"
 msgstr "Primera clase"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "Fixed Price"
+msgstr "Precio Fijo"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
@@ -293,7 +314,12 @@ msgid "Priority"
 msgstr "Prioridad"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:366
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr "Proveedor"
+
+#. module: delivery_usps
+#: code:addons/delivery_usps/models/usps_request.py:367
 #, python-format
 msgid "Recipient address cannot be found. Please check the address exists."
 msgstr ""
@@ -422,6 +448,16 @@ msgid "Type of container"
 msgstr "Tipo de contenedor"
 
 #. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "UPS"
+msgstr "UPS"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "USPS"
+msgstr "USPS"
+
+#. module: delivery_usps
 #: model:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "USPS Configuration"
 msgstr "Configuración USPS"
@@ -433,6 +469,7 @@ msgid "USPS Delivery Methods"
 msgstr "Métodos de entrega de USPS"
 
 #. module: delivery_usps
+#: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_domestic
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_domestic
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_domestic_product_template
 msgid "USPS Domestic Flat Rate Envelope"
@@ -454,6 +491,7 @@ msgid "USPS First Class Mail Type"
 msgstr "Tipo de USPS Correo Primera Clase"
 
 #. module: delivery_usps
+#: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_international
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_international
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_international_product_template
 msgid "USPS International Flat Rate Box"
@@ -495,10 +533,15 @@ msgid "Usps Size Container"
 msgstr "Tamaño de contenedor Usps"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:368
+#: code:addons/delivery_usps/models/usps_request.py:369
 #, python-format
 msgid "Your company or recipient ZIP code is incorrect."
 msgstr "Su compañía o el código zip del destinatario es incorrecto."
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "bpost"
+msgstr "bpost"
 
 #. module: delivery_usps
 #: model:product.product,weight_uom_name:delivery_usps.product_product_delivery_usps_domestic

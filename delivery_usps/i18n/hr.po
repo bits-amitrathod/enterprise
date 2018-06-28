@@ -7,13 +7,14 @@
 # Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
 # Martin Trigaux, 2017
 # Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
+# Tina Milas, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Vladimir Olujić <olujic.vladimir@storm.hr>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Tina Milas, 2018\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,6 +31,11 @@ msgstr "Napusti"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_account_validated
 msgid "Account Validated"
 msgstr "Potvrđeni konto"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "Based on Rules"
+msgstr "Na temelju pravilnika"
 
 #. module: delivery_usps
 #: model:ir.model,name:delivery_usps.model_delivery_carrier
@@ -51,6 +57,11 @@ msgstr "Telefonski broj tvrtke nije valjan. Molim unesite US telefonski broj."
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_content_type
 msgid "Content Type"
 msgstr "Vrsta datoteke"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "DHL"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
@@ -81,9 +92,19 @@ msgid "Express"
 msgstr ""
 
 #. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "FedEx"
+msgstr ""
+
+#. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
 msgid "First Class"
 msgstr "Prva klasa"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "Fixed Price"
+msgstr "Fiksna cijena"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
@@ -271,7 +292,12 @@ msgid "Priority"
 msgstr "Prioritet"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:366
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr "Davatelj "
+
+#. module: delivery_usps
+#: code:addons/delivery_usps/models/usps_request.py:367
 #, python-format
 msgid "Recipient address cannot be found. Please check the address exists."
 msgstr ""
@@ -395,6 +421,16 @@ msgid "Type of container"
 msgstr "Vrsta spremnika"
 
 #. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "UPS"
+msgstr ""
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "USPS"
+msgstr ""
+
+#. module: delivery_usps
 #: model:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "USPS Configuration"
 msgstr "USPS konfiguracija"
@@ -406,6 +442,7 @@ msgid "USPS Delivery Methods"
 msgstr ""
 
 #. module: delivery_usps
+#: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_domestic
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_domestic
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_domestic_product_template
 msgid "USPS Domestic Flat Rate Envelope"
@@ -425,6 +462,7 @@ msgid "USPS First Class Mail Type"
 msgstr ""
 
 #. module: delivery_usps
+#: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_international
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_international
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_international_product_template
 msgid "USPS International Flat Rate Box"
@@ -464,9 +502,14 @@ msgid "Usps Size Container"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:368
+#: code:addons/delivery_usps/models/usps_request.py:369
 #, python-format
 msgid "Your company or recipient ZIP code is incorrect."
+msgstr ""
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "bpost"
 msgstr ""
 
 #. module: delivery_usps

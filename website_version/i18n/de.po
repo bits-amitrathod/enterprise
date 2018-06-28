@@ -23,10 +23,10 @@
 # e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
@@ -196,6 +196,11 @@ msgid ""
 msgstr ""
 "Mit einer Version können mehrere Seiten geändert werden, ohne die Änderungen direkt zu veröffentlichen.\n"
 " Sie können auch A/B-Tests starten, um die Leistung verschiedener Versionen zu analysieren."
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_needaction
+msgid "Action Needed"
+msgstr "Aktion notwendig"
 
 #. module: website_version
 #. openerp-web
@@ -575,6 +580,21 @@ msgstr ""
 "funktioniert"
 
 #. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_follower_ids
+msgid "Followers"
+msgstr "Abonnenten"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Abonnenten (Kanäle)"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Abonnenten (Partner)"
+
+#. module: website_version
 #: model:ir.model.fields,field_description:website_version.field_website_version_experiment_version__frequency
 msgid "Frequency"
 msgstr "Frequenz"
@@ -663,6 +683,16 @@ msgid "ID"
 msgstr "ID"
 
 #. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Falls markiert, benötigen neue Nachrichten Ihre Kenntnisnahme."
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Falls markiert, benötigen neue Nachrichten Ihre Kenntnisnahme."
+
+#. module: website_version
 #. openerp-web
 #: code:addons/website_version/static/src/xml/version_templates.xml:206
 #, python-format
@@ -679,6 +709,11 @@ msgid ""
 msgstr ""
 "Im Menü auf der linken Seite, wählen Sie die API aus dem Untermenü und "
 "aktivieren diese (Menü: APIs and auth)"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_is_follower
+msgid "Is Follower"
+msgstr "Ist ein Abonnent"
 
 #. module: website_version
 #: model:ir.model.fields,field_description:website_version.field_google_management____last_update
@@ -762,6 +797,11 @@ msgid "Medium"
 msgstr "Medium"
 
 #. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_ids
+msgid "Messages"
+msgstr "Nachrichten"
+
+#. module: website_version
 #: selection:website_version.experiment.version,frequency:0
 msgid "More"
 msgstr "Mehr"
@@ -787,6 +827,21 @@ msgstr "Neue Version"
 msgid "Now we will delete the version you have just published."
 msgstr ""
 "Jetzt werden wir die von Ihnen gerade veröffentlichte Version löschen."
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Anzahl der Aktionen"
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Anzahl ungelesener Nachrichten"
 
 #. module: website_version
 #: model:ir.model.fields,field_description:website_version.field_website_version_experiment__goal_id
@@ -1058,6 +1113,16 @@ msgid "Toggle Dropdown"
 msgstr "Auswahlfeld umschalten"
 
 #. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_unread
+msgid "Unread Messages"
+msgstr "Ungelesene Nachrichten"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Zähler der ungelesenen Nachrichten"
+
+#. module: website_version
 #. openerp-web
 #: code:addons/website_version/static/src/xml/version_templates.xml:276
 #: code:addons/website_version/static/src/xml/version_templates.xml:277
@@ -1138,6 +1203,16 @@ msgstr "Website"
 #: model:ir.ui.menu,name:website_version.menu_website_view
 msgid "Website Domain"
 msgstr "Website Domain"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__website_message_ids
+msgid "Website Messages"
+msgstr "Website-Nachrichten"
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__website_message_ids
+msgid "Website communication history"
+msgstr "Website-Kommunikationshistorie"
 
 #. module: website_version
 #: model:ir.actions.act_window,name:website_version.action_website_view

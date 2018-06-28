@@ -18,13 +18,15 @@
 # İlknur Püskül <ilknurpuskull@gmail.com>, 2017
 # Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2018
 # Umur Akın <umura@projetgrup.com>, 2018
+# Mehmet Demirel <mdemirell@gmail.com>, 2018
+# José Luis <alagunajs@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Umur Akın <umura@projetgrup.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: José Luis <alagunajs@gmail.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -189,6 +191,11 @@ msgid ""
 "A version allows to modify several pages, without publishing the changes directly.\n"
 "                    You can also launch A/B tests to analyse the performance of different versions."
 msgstr ""
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_needaction
+msgid "Action Needed"
+msgstr "Eylem Gerekiyor"
 
 #. module: website_version
 #. openerp-web
@@ -555,6 +562,21 @@ msgstr ""
 "edin"
 
 #. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_follower_ids
+msgid "Followers"
+msgstr "Takipçiler"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Takipçiler (Kanallar)"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Tekipçiler (İş ortakları)"
+
+#. module: website_version
 #: model:ir.model.fields,field_description:website_version.field_website_version_experiment_version__frequency
 msgid "Frequency"
 msgstr "Sıklık"
@@ -643,6 +665,16 @@ msgid "ID"
 msgstr "ID"
 
 #. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Eğer işaretliyse yeni iletiler ilginizi gerektirir."
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "İşaretliyse, yeni mesajlar dikkatinize sunulacak."
+
+#. module: website_version
 #. openerp-web
 #: code:addons/website_version/static/src/xml/version_templates.xml:206
 #, python-format
@@ -659,6 +691,11 @@ msgid ""
 msgstr ""
 "Sol taraftaki menüde API'leri alt menü (Menü API ve kimlik doğrulama) seçin "
 "ve Etkinleştir"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_is_follower
+msgid "Is Follower"
+msgstr "Takipçi mi"
 
 #. module: website_version
 #: model:ir.model.fields,field_description:website_version.field_google_management____last_update
@@ -742,6 +779,11 @@ msgid "Medium"
 msgstr "Medya"
 
 #. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_ids
+msgid "Messages"
+msgstr "Mesajlar"
+
+#. module: website_version
 #: selection:website_version.experiment.version,frequency:0
 msgid "More"
 msgstr "Daha"
@@ -766,6 +808,21 @@ msgstr ""
 #, python-format
 msgid "Now we will delete the version you have just published."
 msgstr ""
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Eylemlerin Sayısı"
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Eylem gerektiren mesaj sayısı"
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Okunmamış mesaj sayısı"
 
 #. module: website_version
 #: model:ir.model.fields,field_description:website_version.field_website_version_experiment__goal_id
@@ -1024,6 +1081,16 @@ msgid "Toggle Dropdown"
 msgstr "Aşağı açılıra geç"
 
 #. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_unread
+msgid "Unread Messages"
+msgstr "Okunmamış Mesajlar"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Okunmamış Mesaj Sayacı"
+
+#. module: website_version
 #. openerp-web
 #: code:addons/website_version/static/src/xml/version_templates.xml:276
 #: code:addons/website_version/static/src/xml/version_templates.xml:277
@@ -1104,6 +1171,16 @@ msgstr "Web Sitesi"
 #: model:ir.ui.menu,name:website_version.menu_website_view
 msgid "Website Domain"
 msgstr "Website Domaini"
+
+#. module: website_version
+#: model:ir.model.fields,field_description:website_version.field_website_version_experiment__website_message_ids
+msgid "Website Messages"
+msgstr "Websitesi Mesajları"
+
+#. module: website_version
+#: model:ir.model.fields,help:website_version.field_website_version_experiment__website_message_ids
+msgid "Website communication history"
+msgstr "Web Sitesi iletişim geçmişi"
 
 #. module: website_version
 #: model:ir.actions.act_window,name:website_version.action_website_view
@@ -1253,13 +1330,15 @@ msgid ""
 "and connect you.\n"
 "                                    <br/><br/>"
 msgstr ""
+"ve sizi bağlayın.\n"
+"                                    <br/><br/>"
 
 #. module: website_version
 #. openerp-web
 #: code:addons/website_version/static/src/xml/version_templates.xml:191
 #, python-format
 msgid "and enter a project name."
-msgstr ""
+msgstr "ve bir proje adı girin."
 
 #. module: website_version
 #. openerp-web

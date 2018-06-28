@@ -9,10 +9,10 @@
 # Kovács Tibor <kovika@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Kovács Tibor <kovika@gmail.com>, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -50,16 +50,6 @@ msgstr "Bank"
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Bank Journal"
 msgstr "Banki napló"
-
-#. module: account_batch_deposit
-#: model:ir.model,name:account_batch_deposit.model_account_bank_statement
-msgid "Bank Statement"
-msgstr "Bankkivonat"
-
-#. module: account_batch_deposit
-#: model:ir.model,name:account_batch_deposit.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr "Bankkivonat tételsor"
 
 #. module: account_batch_deposit
 #: model:account.payment.method,name:account_batch_deposit.account_payment_method_batch_deposit
@@ -163,7 +153,7 @@ msgstr "Azonosító ID"
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:137
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:135
 #, python-format
 msgid "Incorrect Operation"
 msgstr "Hibás művelet"
@@ -262,7 +252,7 @@ msgstr "Egy kötegelt befizetés kiválasztása"
 
 #. module: account_batch_deposit
 #. openerp-web
-#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:135
+#: code:addons/account_batch_deposit/static/src/js/account_batch_deposit_reconciliation.js:133
 #, python-format
 msgid ""
 "Some journal items from the selected batch deposit are already selected in "
@@ -295,6 +285,11 @@ msgstr "Összesen"
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Unreconciled"
 msgstr "Egyeztetetlen, könyveletlen"
+
+#. module: account_batch_deposit
+#: model:ir.model,name:account_batch_deposit.model_account_reconciliation_widget
+msgid "account.reconciliation.widget"
+msgstr ""
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
