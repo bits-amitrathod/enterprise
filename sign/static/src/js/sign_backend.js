@@ -25,6 +25,25 @@ odoo.define('sign.views_custo', function(require) {
         },
     });
 
+    KanbanRecord.include({
+        //--------------------------------------------------------------------------
+        // Private
+        //--------------------------------------------------------------------------
+
+        /**
+         * On click of kanban open send signature wizard
+         * @override
+         * @private
+         */
+        _openRecord: function () {
+            if (this.modelName === 'sign.template') {
+                this.$('button.o_kanban_sign_send_request').click();
+            } else {
+                this._super.apply(this, arguments);
+            }
+        }
+    });
+
     function _make_custo(selector_button) {
         return {
             renderButtons: function () {
