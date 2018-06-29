@@ -273,7 +273,7 @@ models.Order = models.Order.extend({
             var discount = round_pr(order_total * (reward.discount / 100), crounding);
 
             if ( round_pr(discount * reward.point_cost,lrounding) > spendable ) { 
-                discount = round_pr(Math.floor( spendable / reward.point_cost ), crounding);
+                discount = round_pr(spendable / reward.point_cost, crounding);
             }
 
             product   = this.pos.db.get_product_by_id(reward.discount_product_id[0]);
@@ -303,7 +303,7 @@ models.Order = models.Order.extend({
 
             product_price = product.get_price(this.pricelist, 1);
             if ( round_pr( spendable * product_price, crounding ) > order_total ) {
-                spendable = round_pr( Math.floor(order_total / product_price), lrounding);
+                spendable = round_pr(order_total / product_price, lrounding);
             }
 
             if ( spendable < 0.00001 ) {
