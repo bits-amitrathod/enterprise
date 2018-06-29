@@ -17,10 +17,10 @@
 # sergeiruzkiicode <sergei.ruzki@icode.by>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: sergeiruzkiicode <sergei.ruzki@icode.by>, 2018\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -124,6 +124,16 @@ msgstr ""
 #: selection:voip.phonecall,state:0 selection:voip.phonecall.report,state:0
 msgid "Cancelled"
 msgstr "Отменено"
+
+#. module: voip
+#: model:ir.model.fields,help:voip.field_mail_activity_type__category
+msgid "Categories may trigger specific behavior like opening calendar view"
+msgstr ""
+
+#. module: voip
+#: model:ir.model.fields,field_description:voip.field_mail_activity_type__category
+msgid "Category"
+msgstr "Категория"
 
 #. module: voip
 #. openerp-web
@@ -368,6 +378,11 @@ msgid "Mark as done"
 msgstr "Отметить сделанным"
 
 #. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Meeting"
+msgstr "Встреча"
+
+#. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__mobile
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall__mobile
 msgid "Mobile"
@@ -431,6 +446,11 @@ msgstr ""
 "Один или более параметр отсутствует. Пожалуйста, проверьте конфигурацию."
 
 #. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Other"
+msgstr "Другое"
+
+#. module: voip
 #: selection:voip.phonecall,type:0
 msgid "Outgoing"
 msgstr "Исходящие"
@@ -455,6 +475,11 @@ msgstr "Телефон"
 #: model:ir.model.fields,field_description:voip.field_res_partner__sanitized_phone
 #: model:ir.model.fields,field_description:voip.field_res_users__sanitized_phone
 msgid "Phone number sanitized"
+msgstr ""
+
+#. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Phonecall"
 msgstr ""
 
 #. module: voip
@@ -632,7 +657,7 @@ msgstr "Клиент временно недоступен. Пожалуйста
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:460
+#: code:addons/voip/static/src/js/user_agent.js:468
 #, python-format
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "

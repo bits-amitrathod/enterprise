@@ -9,13 +9,18 @@
 # 卓忆科技 <zhanghao@jointd.com>, 2017
 # 老窦 北京 <2662059195@qq.com>, 2017
 # 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018
+# e2f <projects@e2f.com>, 2018
+# Martin Trigaux, 2018
+# liAnGjiA <liangjia@qq.com>, 2018
+# waveyeung <waveyeung@qq.com>, 2018
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,9 +74,22 @@ msgid ") Sent Appraisal"
 msgstr ") 发送评价"
 
 #. module: hr_appraisal
+#: code:addons/hr_appraisal/models/hr_appraisal.py:127
+#, python-format
+msgid ""
+"<a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">Meeting</a> for <a "
+"href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s's</a> appraisal"
+msgstr ""
+
+#. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "<strong><span>Final Interview: </span></strong>"
 msgstr "<strong><span>最后一次面试: </span></strong>"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_needaction
+msgid "Action Needed"
+msgstr "需要采取行动"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__action_plan
@@ -82,6 +100,22 @@ msgstr "行动计划"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__active
 msgid "Active"
 msgstr "有效"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_ids
+msgid "Activities"
+msgstr "活动"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_state
+msgid "Activity State"
+msgstr "活动状态"
+
+#. module: hr_appraisal
+#: model:ir.actions.act_window,name:hr_appraisal.mail_activity_type_action_config_hr_appraisal
+#: model:ir.ui.menu,name:hr_appraisal.hr_appraisal_menu_config_activity_type
+msgid "Activity Types"
+msgstr "活动类型"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__survey_completed_ids
@@ -120,15 +154,14 @@ msgid "Appraisal Colleagues"
 msgstr "评价同事"
 
 #. module: hr_appraisal
-#: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_new
-#: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_new
-msgid "Appraisal Created"
-msgstr "评价已创建"
-
-#. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__date_close
 msgid "Appraisal Deadline"
 msgstr "评价截止时间"
+
+#. module: hr_appraisal
+#: model:mail.activity.type,name:hr_appraisal.mail_act_appraisal_form
+msgid "Appraisal Form to Fill"
+msgstr ""
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
@@ -163,10 +196,9 @@ msgid "Appraisal Repeat Every"
 msgstr "重复每一个评价"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:212
+#: code:addons/hr_appraisal/models/hr_appraisal.py:234
 #: selection:hr.appraisal,state:0 selection:hr.appraisal.report,state:0
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
-#: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_sent
 #, python-format
 msgid "Appraisal Sent"
 msgstr "评价送出"
@@ -182,9 +214,10 @@ msgid "Appraisal by Manager"
 msgstr ""
 
 #. module: hr_appraisal
-#: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_sent
-msgid "Appraisal sent"
-msgstr "评价送出"
+#: code:addons/hr_appraisal/models/hr_appraisal.py:181
+#, python-format
+msgid "Appraisal form(s) have been sent"
+msgstr ""
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.hr_appraisal_action_from_department
@@ -195,12 +228,6 @@ msgstr "待开始的评价"
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_department_view_kanban
 msgid "Appraisal(s)"
 msgstr "评价"
-
-#. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:161
-#, python-format
-msgid "Appraisal(s) form have been sent"
-msgstr "评价表已经发送"
 
 #. module: hr_appraisal
 #: model:ir.actions.server,name:hr_appraisal.ir_cron_scheduler_appraisal_ir_actions_server
@@ -231,7 +258,7 @@ msgid "Cancel"
 msgstr "取消"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:212
+#: code:addons/hr_appraisal/models/hr_appraisal.py:234
 #: selection:hr.appraisal,state:0 selection:hr.appraisal.report,state:0
 #, python-format
 msgid "Cancelled"
@@ -279,6 +306,11 @@ msgstr "颜色索引"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__company_id
 msgid "Company"
 msgstr "公司"
+
+#. module: hr_appraisal
+#: model:ir.ui.menu,name:hr_appraisal.menu_hr_appraisal_configuration
+msgid "Configuration"
+msgstr "配置"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report__create_date
@@ -333,7 +365,7 @@ msgid "Display Name"
 msgstr "显示名称"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:212
+#: code:addons/hr_appraisal/models/hr_appraisal.py:234
 #: selection:hr.appraisal,state:0 selection:hr.appraisal.report,state:0
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -394,6 +426,14 @@ msgid "Extended Filters..."
 msgstr "扩展筛选..."
 
 #. module: hr_appraisal
+#: code:addons/hr_appraisal/models/hr_appraisal.py:177
+#, python-format
+msgid ""
+"Fill form <a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s</a> for <a"
+" href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s's</a> appraisal"
+msgstr ""
+
+#. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Final Evaluation"
 msgstr "最终评估"
@@ -407,6 +447,21 @@ msgstr "最终面试"
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "Final Interview Date"
 msgstr "最终面谈日期"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_follower_ids
+msgid "Followers"
+msgstr "关注者"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "关注者(渠道)"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "关注者(业务伙伴)"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -435,6 +490,16 @@ msgid "ID"
 msgstr "ID"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_unread
+msgid "If checked new messages require your attention."
+msgstr "查看是否有需要你留意的新信息。"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "如果勾选此项，有新消息会提醒你。"
+
+#. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__action_plan
 msgid ""
 "If the evaluation does not meet the expectations, you can propose an action "
@@ -450,6 +515,11 @@ msgstr "正在进行的评估"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report__final_interview
 msgid "Interview"
 msgstr "面试"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_is_follower
+msgid "Is Follower"
+msgstr "是关注者"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal____last_update
@@ -496,10 +566,9 @@ msgid "Meeting"
 msgstr "会议"
 
 #. module: hr_appraisal
-#: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_meeting
-#: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_meeting
-msgid "Meeting Scheduled"
-msgstr "会议安排"
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_ids
+msgid "Messages"
+msgstr "消息"
 
 #. module: hr_appraisal
 #: selection:hr.employee,appraisal_frequency_unit:0
@@ -518,9 +587,29 @@ msgid "Name"
 msgstr "名称"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "下一活动截止日期"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_summary
+msgid "Next Activity Summary"
+msgstr "下一活动摘要"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_type_id
+msgid "Next Activity Type"
+msgstr "下一活动类型"
+
+#. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_date
 msgid "Next Appraisal Date"
 msgstr "下一个评价日期"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_needaction_counter
+msgid "Number of Actions"
+msgstr "行动数量"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__count_completed_survey
@@ -533,13 +622,27 @@ msgid "Number of Sent Forms"
 msgstr "已发送表单数量"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "需要行动消息的数量"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_unread_counter
+msgid "Number of unread messages"
+msgstr "未读消息的数量"
+
+#. module: hr_appraisal
 #: model:res.groups,name:hr_appraisal.group_hr_appraisal_user
 msgid "Officer"
 msgstr "主管"
 
 #. module: hr_appraisal
+#: selection:hr.appraisal,activity_state:0
+msgid "Overdue"
+msgstr "逾期"
+
+#. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__periodic_appraisal
-#: model:ir.ui.menu,name:hr_appraisal.menu_hr_appraisal_configuration
 msgid "Periodic Appraisal"
 msgstr "定期评价"
 
@@ -559,6 +662,11 @@ msgid "Plan"
 msgstr "计划"
 
 #. module: hr_appraisal
+#: selection:hr.appraisal,activity_state:0
+msgid "Planned"
+msgstr "已安排"
+
+#. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__related_partner_id
 msgid "Related Partner"
 msgstr "相关的业务伙伴"
@@ -572,6 +680,11 @@ msgstr "重复"
 #: model:ir.ui.menu,name:hr_appraisal.menu_hr_appraisal_report
 msgid "Reporting"
 msgstr "报告"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_user_id
+msgid "Responsible User"
+msgstr "责任用户"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -623,6 +736,19 @@ msgid "Status"
 msgstr "状态"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"基于活动的状态 \n"
+" 逾期：已经超过截止日期 \n"
+" 现今：活动日期是当天 \n"
+" 计划：未来的活动。"
+
+#. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_survey_user_input
 msgid "Survey User Input"
 msgstr "调查用户输入"
@@ -666,7 +792,7 @@ msgid "This employee will do a self-appraisal"
 msgstr "该员工将做自我评价"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:212
+#: code:addons/hr_appraisal/models/hr_appraisal.py:234
 #: selection:hr.appraisal,state:0 selection:hr.appraisal.report,state:0
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #, python-format
@@ -674,9 +800,34 @@ msgid "To Start"
 msgstr "开始"
 
 #. module: hr_appraisal
+#: selection:hr.appraisal,activity_state:0
+msgid "Today"
+msgstr "今日"
+
+#. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
 msgid "Today Activities"
 msgstr "今天的活动"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_unread
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "未读消息计数器"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__website_message_ids
+msgid "Website Messages"
+msgstr "网站信息"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__website_message_ids
+msgid "Website communication history"
+msgstr "网站沟通记录"
 
 #. module: hr_appraisal
 #: selection:hr.employee,appraisal_frequency_unit:0
@@ -684,7 +835,7 @@ msgid "Year"
 msgstr "年"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:205
+#: code:addons/hr_appraisal/models/hr_appraisal.py:227
 #, python-format
 msgid "You cannot delete appraisal which is in %s state"
 msgstr ""

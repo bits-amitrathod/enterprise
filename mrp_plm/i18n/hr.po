@@ -13,13 +13,15 @@
 # Đurđica Žarković <durdica.zarkovic@storm.hr>, 2017
 # Mario Jureša <mario.juresa@uvid.hr>, 2017
 # Jasmina Otročak <jasmina@uvid.hr>, 2017
+# Marko Carević <marko.carevic@live.com>, 2018
+# Stjepan Lovasić <stjepan.lovasic@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Jasmina Otročak <jasmina@uvid.hr>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Stjepan Lovasić <stjepan.lovasic@gmail.com>, 2018\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,7 +67,7 @@ msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:639
+#: code:addons/mrp_plm/models/mrp_eco.py:648
 #, python-format
 msgid ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
@@ -76,7 +78,7 @@ msgid ""
 msgstr ""
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/product.py:38
+#: code:addons/mrp_plm/models/product.py:40
 #, python-format
 msgid ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
@@ -116,9 +118,25 @@ msgstr ""
 " zapis za ovaj alias."
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_needaction
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_needaction
+msgid "Action Needed"
+msgstr "Potrebna dodatna radnja"
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__active
 msgid "Active"
 msgstr "Aktivan"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_ids
+msgid "Activities"
+msgstr "Aktivnosti"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_state
+msgid "Activity State"
+msgstr "Status aktivnosti"
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -267,8 +285,8 @@ msgid "At Date"
 msgstr "Na datum"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:631
-#: code:addons/mrp_plm/models/product.py:30
+#: code:addons/mrp_plm/models/mrp_eco.py:640
+#: code:addons/mrp_plm/models/product.py:32
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__mrp_document_ids
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 #: model:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
@@ -651,13 +669,13 @@ msgid "Eco"
 msgstr "Nalog za izmjenu"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:671
+#: code:addons/mrp_plm/models/mrp_eco.py:680
 #, python-format
 msgid "Eco BoM"
 msgstr "Nalog za izmjenu sastavnice"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:683
+#: code:addons/mrp_plm/models/mrp_eco.py:692
 #, python-format
 msgid "Eco Routing"
 msgstr "Usmjeravanje naloga za izmjenu"
@@ -743,6 +761,24 @@ msgid "Folded in kanban view"
 msgstr "Zatvoreno u kanban načinu pogleda"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_follower_ids
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_follower_ids
+msgid "Followers"
+msgstr "Pratitelji"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_channel_ids
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Pratitelji (Kanali)"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_partner_ids
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Pratitelji (Partneri)"
+
+#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__effectivity_date
 msgid "For reference only."
 msgstr ""
@@ -789,6 +825,27 @@ msgstr ""
 "pseudonim pod kojim djelatnik kreira zadatak)"
 
 #. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_unread
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Ako je odabrano, nove poruke zahtijevaju Vašu pažnju."
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_needaction
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Ako je označeno, nove poruke zahtijevaju Vašu pažnju."
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_bom__active
+msgid ""
+"If the active field is set to False, it will allow you to hide the bills of "
+"material without removing it."
+msgstr ""
+"If the active field is set to False, it will allow you to hide the bills of "
+"material without removing it."
+
+#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__active
 msgid ""
 "If the active field is set to False, it will allow you to hide the "
@@ -811,6 +868,12 @@ msgstr "U tijeku"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__is_approved
 msgid "Is Approved"
 msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_is_follower
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_is_follower
+msgid "Is Follower"
+msgstr "Je pratitelj"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__is_rejected
@@ -894,6 +957,12 @@ msgid "Master Data"
 msgstr "Glavni podaci"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_ids
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_ids
+msgid "Messages"
+msgstr "Poruke"
+
+#. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_tag_view_search
 msgid "Mrp Eco Tags"
 msgstr "Mrp Eco Oznake"
@@ -966,6 +1035,21 @@ msgid "New revision quantity"
 msgstr "Nova revizija količine"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_summary
+msgid "Next Activity Summary"
+msgstr "Sažetak sljedeće aktivnosti"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: mrp_plm
 #: selection:mrp.eco,priority:0
 msgid "Normal"
 msgstr "Normalan"
@@ -980,6 +1064,24 @@ msgstr "Ne još"
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Note"
 msgstr "Bilješka"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_needaction_counter
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Broj akcija"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_needaction_counter
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Broj poruka koje zahtijevaju aktivnost"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_unread_counter
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Broj nepročitanih poruka"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__old_time_cycle_manual
@@ -1001,6 +1103,11 @@ msgstr ""
 "Opcionalni ID zapisa na kojeg će biti povezane sve dolazne poruke, čak i ako"
 " oni nisu odgovorili na njega. Ako je postavljeno, to će onemogućiti "
 "stvaranje novih zapisa u potpunosti."
+
+#. module: mrp_plm
+#: selection:mrp.eco,activity_state:0
+msgid "Overdue"
+msgstr "Dospjelo"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_user_id
@@ -1038,6 +1145,11 @@ msgstr ""
 "Matični model sadrži pseudonim. Model sadrži alias referencu ali nije nužno "
 "da model daje alias_model_id (na primjer: projekt ( matični_model ) kraj "
 "zadatka (model))"
+
+#. module: mrp_plm
+#: selection:mrp.eco,activity_state:0
+msgid "Planned"
+msgstr "Planirano"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_contact
@@ -1112,6 +1224,11 @@ msgid "Product Template"
 msgstr "Predložak proizvoda"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__active
+msgid "Production Ready"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_products
 msgid "Products"
 msgstr "Proizvodi"
@@ -1177,6 +1294,11 @@ msgstr "Traženi korisnici"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_id
 msgid "Responsible"
 msgstr "Odgovoran"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_user_id
+msgid "Responsible User"
+msgstr "Odgovorna osoba"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1315,6 +1437,15 @@ msgid "Status"
 msgstr "Status"
 
 #. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:345
 #, python-format
 msgid "Successfully Rebased !"
@@ -1419,6 +1550,11 @@ msgid "To Do"
 msgstr "Za napraviti"
 
 #. module: mrp_plm
+#: selection:mrp.eco,activity_state:0
+msgid "Today"
+msgstr "Danas"
+
+#. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Today Activities"
 msgstr "Današnje aktivnosti"
@@ -1435,6 +1571,18 @@ msgstr "Vrsta"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__uom_change
 msgid "Unit of Measure"
 msgstr "Jedinica mjere"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_unread
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_unread
+msgid "Unread Messages"
+msgstr "Nepročitane poruke"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_unread_counter
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Brojač nepročitanih poruka"
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -1492,6 +1640,18 @@ msgid "Waiting my Approvals"
 msgstr "Čekanje mojih odobrenja"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__website_message_ids
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__website_message_ids
+msgid "Website Messages"
+msgstr "Poruke webstranica"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__website_message_ids
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__website_message_ids
+msgid "Website communication history"
+msgstr "Povijest komunikacije Web stranice"
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__workcenter_id
 msgid "Work Center"
 msgstr "Radni centar"
@@ -1502,7 +1662,7 @@ msgid "Work Centers"
 msgstr "Radni centri"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:652
+#: code:addons/mrp_plm/models/mrp_eco.py:661
 #, python-format
 msgid "Workorder Messages"
 msgstr "Poruke radnog naloga"

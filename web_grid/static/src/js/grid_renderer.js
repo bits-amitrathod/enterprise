@@ -259,15 +259,15 @@ return AbstractRenderer.extend({
         var self = this;
         return _.map(grid, function (row, rowIndex) {
             var rowValues = [];
+            var rowKeys = [];
             for (var i = 0; i < groupFields.length; i++) {
                 var row_field = groupFields[i];
                 var value = rows[rowIndex].values[row_field];
                 var field_type = self.fields[row_field].type;
+                rowKeys.push(value[0]);
                 rowValues.push(self._field2label(value, field_type));
             }
-            var rowKey = _.map(rowValues, function (v) {
-                return v[0];
-            }).join('|');
+            var rowKey = rowKeys.join('|');
 
             return h('tr', {key: rowKey}, [
                 h('th', {}, [

@@ -504,10 +504,6 @@ class SaleSubscription(models.Model):
             invoice = tx.invoice_ids and tx.invoice_ids[0]
         if tx.state in ['done', 'authorized']:
             invoice.write({'reference': tx.reference, 'name': tx.reference})
-            if tx.acquirer_id.journal_id and tx.state == 'done':
-                invoice.action_invoice_open()
-                journal = tx.acquirer_id.journal_id
-                invoice.with_context(default_ref=tx.reference, default_currency_id=tx.currency_id.id).pay_and_reconcile(journal, pay_amount=tx.amount)
             self.increment_period()
             self.write({'state': 'open', 'date': False})
         else:

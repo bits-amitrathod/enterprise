@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -121,6 +121,11 @@ msgstr ""
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category__category_type
 msgid "Category Type"
+msgstr ""
+
+#. module: sale_ebay
+#: model:ir.model.fields,field_description:sale_ebay.field_crm_team__team_type
+msgid "Channel Type"
 msgstr ""
 
 #. module: sale_ebay
@@ -450,6 +455,11 @@ msgid "Payment Policy"
 msgstr ""
 
 #. module: sale_ebay
+#: selection:crm.team,team_type:0
+msgid "Point of Sale"
+msgstr ""
+
+#. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "Policies"
 msgstr ""
@@ -513,7 +523,7 @@ msgstr ""
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product__ebay_quantity
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template__ebay_quantity
-msgid "Quantity"
+msgid "Quantity On eBay"
 msgstr ""
 
 #. module: sale_ebay
@@ -536,6 +546,11 @@ msgstr ""
 #. module: sale_ebay
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 msgid "Revise Item"
+msgstr ""
+
+#. module: sale_ebay
+#: selection:crm.team,team_type:0
+msgid "Sales"
 msgstr ""
 
 #. module: sale_ebay
@@ -663,6 +678,11 @@ msgid "The title is restricted to 80 characters"
 msgstr ""
 
 #. module: sale_ebay
+#: model:ir.model.fields,help:sale_ebay.field_crm_team__team_type
+msgid "The type of this channel, it will define the resources this channel uses."
+msgstr ""
+
+#. module: sale_ebay
 #: model:ir.model.fields,help:sale_ebay.field_product_product__ebay_category_2_id
 #: model:ir.model.fields,help:sale_ebay.field_product_template__ebay_category_2_id
 msgid "The use of a secondary category is not allowed on every eBay sites. Fees can be claimed by eBay for this feature"
@@ -712,12 +732,18 @@ msgid "Variants"
 msgstr ""
 
 #. module: sale_ebay
+#: selection:crm.team,team_type:0
+msgid "Website"
+msgstr ""
+
+#. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings__ebay_zip_code
 msgid "Zip"
 msgstr ""
 
 #. module: sale_ebay
 #: model:crm.team,name:sale_ebay.ebay_sales_team
+#: selection:crm.team,team_type:0
 #: model:ir.ui.view,arch_db:sale_ebay.product_template_sale_ebay_form_view
 #: model:ir.ui.view,arch_db:sale_ebay.res_config_settings_view_form
 msgid "eBay"

@@ -81,6 +81,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         this.GROUPABLE_TYPES = ['many2one', 'char', 'boolean', 'selection', 'date', 'datetime'];
         // FIXME: At the moment, it's not possible to set default value for these types
         this.NON_DEFAULT_TYPES = ['many2one', 'many2many', 'one2many', 'binary'];
+        this.MODIFIERS_IN_NODE_AND_ATTRS = ['readonly', 'invisible', 'required'];
 
         this.state = params.state || {};
 
@@ -209,17 +210,25 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      * @returns {Object}
      */
     _getNewAttrsFromModifiers: function (modifiers) {
+        var self = this;
         var newAttributes = {};
         var attrs = [];
+        var originNodeAttr = this.state.modifiers;
+        var originSubAttrs =  JSON.parse((this.state.attrs.attrs || '{}').replace(/'/g, '"').replace(/\(/g, "[").replace(/\)/g, "]"));
         _.each(modifiers, function (value, key) {
-            if (value === true || _.isEqual(value, [])) { // modifier always applied, use modifier attribute
-                newAttributes[key] = "1";
-            } else { // modifier not applied or under certain condition, remove modifier attribute and use attrs if any
-                newAttributes[key] = "";
-                if (value !== false) {
-                    attrs.push(_.str.sprintf("\"%s\": %s", key, Domain.prototype.arrayToString(value)));
+                var keyInNodeAndAttrs = _.contains(self.MODIFIERS_IN_NODE_AND_ATTRS, key);
+                var keyFromView = originSubAttrs[key] !== undefined;
+                var trueValue = value === true || _.isEqual(value, []);
+                var isOriginNodeAttr = originNodeAttr[key] !== undefined;
+
+                if (keyInNodeAndAttrs && !isOriginNodeAttr && trueValue) { // modifier always applied, use modifier attribute
+                    newAttributes[key] = "1";
+                } else if (keyFromView || !trueValue) { // modifier not applied or under certain condition, remove modifier attribute and use attrs if any
+                    newAttributes[key] = "";
+                    if (value !== false) {
+                        attrs.push(_.str.sprintf("\"%s\": %s", key, Domain.prototype.arrayToString(value)));
+                    }
                 }
-            }
         });
         newAttributes.attrs = _.str.sprintf("{%s}", attrs.join(", "));
         return newAttributes;
@@ -475,7 +484,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
                     new_attrs.options = JSON.stringify({size: [90, 90]});
                 }
             } else if ($input.attr('type') === 'checkbox') {
-                if (!_.contains(["invisible", "required", "readonly"], attribute)) {
+                if (!_.contains(this.MODIFIERS_IN_NODE_AND_ATTRS, attribute)) {
                     if ($input.is(':checked')) {
                         new_attrs[attribute] = $input.data('leave-empty') === 'checked' ? '': 'True';
                     } else {

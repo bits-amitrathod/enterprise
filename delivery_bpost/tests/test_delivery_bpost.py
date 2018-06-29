@@ -53,6 +53,8 @@ class TestDeliveryBpost(TransactionCase):
                                  'phone': '+1 (650) 691-3277  '})
         self.iPadMini = self.env.ref('product.product_product_6')
         self.uom_unit = self.env.ref('uom.product_uom_unit')
+        self.stock_location = self.env.ref('stock.stock_location_stock')
+        self.customer_location = self.env.ref('stock.stock_location_customers')
 
     def test_01_bpost_basic_be_domestic_flow(self):
         SaleOrder = self.env['sale.order']
@@ -119,3 +121,42 @@ class TestDeliveryBpost(TransactionCase):
         picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "bpost did not return any tracking number")
         self.assertGreater(picking.carrier_price, 0.0, "bpost carrying price is probably incorrect")
+
+    def test_03_bpost_flow_from_delivery_order(self):
+
+        inventory = self.env['stock.inventory'].create({
+            'name': '[A1232] iPad Mini',
+            'filter': 'product',
+            'location_id': self.stock_location.id,
+            'product_id': self.iPadMini.id,
+        })
+
+        StockPicking = self.env['stock.picking']
+
+        order1_vals = {
+                    'product_id': self.iPadMini.id,
+                    'name': "[A1232] iPad Mini",
+                    'product_uom': self.uom_unit.id,
+                    'product_uom_qty': 1.0,
+                    'location_id': self.stock_location.id,
+                    'location_dest_id': self.customer_location.id}
+
+        do_vals = { 'partner_id': self.think_big_system.id,
+                    'carrier_id': self.env.ref('delivery_bpost.delivery_carrier_bpost_inter').id,
+                    'location_id': self.stock_location.id,
+                    'location_dest_id': self.customer_location.id,
+                    'picking_type_id': self.env.ref('stock.picking_type_out').id,
+                    'move_ids_without_package': [(0, None, order1_vals)]}
+
+        delivery_order = StockPicking.create(do_vals)
+        self.assertEqual(delivery_order.state, 'draft', 'Shipment state should be draft.')
+
+        delivery_order.action_confirm()
+        self.assertEqual(delivery_order.state, 'confirmed', 'Shipment state should be waiting(confirmed).')
+
+        delivery_order.action_assign()
+        self.assertEqual(delivery_order.state, 'assigned', 'Shipment state should be ready(assigned).')
+        delivery_order.move_ids_without_package.quantity_done = 1.0
+
+        delivery_order.button_validate()
+        self.assertEqual(delivery_order.state, 'done', 'Shipment state should be done.')

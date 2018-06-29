@@ -7,10 +7,10 @@
 # Martin Trigaux, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Martin Trigaux, 2017\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -20,13 +20,32 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_coupon_delivery
+#: selection:sale.coupon.reward,reward_type:0
+msgid "Discount"
+msgstr "Kedvezmény"
+
+#. module: sale_coupon_delivery
+#: model:ir.model.fields,help:sale_coupon_delivery.field_sale_coupon_reward__reward_type
+msgid ""
+"Discount - Reward will be provided as discount.\n"
+"Free Product - Free product will be provide as reward \n"
+"Free Shipping - Free shipping will be provided as reward (Need delivery module)"
+msgstr ""
+
+#. module: sale_coupon_delivery
 #: code:addons/sale_coupon_delivery/models/sale_order.py:33
 #, python-format
 msgid "Discount: "
 msgstr ""
 
 #. module: sale_coupon_delivery
+#: selection:sale.coupon.reward,reward_type:0
+msgid "Free Product"
+msgstr ""
+
+#. module: sale_coupon_delivery
 #: code:addons/sale_coupon_delivery/models/sale_coupon_reward.py:18
+#: selection:sale.coupon.reward,reward_type:0
 #, python-format
 msgid "Free Shipping"
 msgstr ""
@@ -35,6 +54,11 @@ msgstr ""
 #: model:ir.model,name:sale_coupon_delivery.model_sale_order
 msgid "Quotation"
 msgstr "Árajánlat"
+
+#. module: sale_coupon_delivery
+#: model:ir.model.fields,field_description:sale_coupon_delivery.field_sale_coupon_reward__reward_type
+msgid "Reward Type"
+msgstr ""
 
 #. module: sale_coupon_delivery
 #: model:ir.model,name:sale_coupon_delivery.model_sale_coupon_program

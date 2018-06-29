@@ -52,7 +52,7 @@ class SaleOrder(models.Model):
             'pricelist_id': self.pricelist_id.id,
             'company_id': self.company_id.id,
             'analytic_account_id': self.analytic_account_id.id,
-            'payment_token_id': self.payment_tx_id.payment_token_id.id if template.payment_mandatory else False
+            'payment_token_id': self.transaction_ids.get_last_transaction().payment_token_id.id if template.payment_mandatory else False
         }
         # compute the next date
         today = datetime.date.today()
@@ -189,8 +189,14 @@ class SaleOrderLine(models.Model):
         for line in self:
             sub_line = subscription.recurring_invoice_line_ids.filtered(lambda l: (l.product_id, l.uom_id) == (line.product_id, line.product_uom))
             if sub_line:
-                dict_changes.setdefault(sub_line.id, sub_line.quantity)
-                dict_changes[sub_line.id] += line.product_uom_qty
+                if len(sub_line) > 1:
+                    # we are in an ambiguous case
+                    # to avoid adding information to a random line, in that case we create a new line
+                    # we can simply duplicate an arbitrary line to that effect
+                    sub_line[0].copy({'name': line.display_name, 'quantity': line.product_uom_qty})
+                else:
+                    dict_changes.setdefault(sub_line.id, sub_line.quantity)
+                    dict_changes[sub_line.id] += line.product_uom_qty
             else:
                 values.append(line._prepare_subscription_line_data()[0])
 

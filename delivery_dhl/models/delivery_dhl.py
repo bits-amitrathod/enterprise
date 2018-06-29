@@ -120,12 +120,13 @@ class Providerdhl(models.Model):
         for picking in pickings:
             shipping = srm.send_shipping(picking, self)
             order = picking.sale_id
+            company = order.company_id or picking.company_id or self.env.user.company_id
             order_currency = picking.sale_id.currency_id or picking.company_id.currency_id
             if order_currency.name == shipping['currency']:
                 carrier_price = float(shipping['price'])
             else:
                 quote_currency = self.env['res.currency'].search([('name', '=', shipping['currency'])], limit=1)
-                carrier_price = quote_currency._convert(float(shipping['price']), order_currency, order.company_id, order.date_order or fields.Date.today())
+                carrier_price = quote_currency._convert(float(shipping['price']), order_currency, company, order.date_order or fields.Date.today())
             carrier_tracking_ref = shipping['tracking_number']
             logmessage = (_("Shipment created into DHL <br/> <b>Tracking Number : </b>%s") % (carrier_tracking_ref))
             picking.message_post(body=logmessage, attachments=[('LabelDHL-%s.%s' % (carrier_tracking_ref, self.dhl_label_image_format), srm.save_label())])

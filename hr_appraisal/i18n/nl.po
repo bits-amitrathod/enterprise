@@ -7,13 +7,14 @@
 # Martin Trigaux, 2016
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2016
 # Cas Vissers <casvissers@brahoo.nl>, 2016
+# Eric Geens <ericgeens@yahoo.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2016\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,9 +68,22 @@ msgid ") Sent Appraisal"
 msgstr ") Verzend beoordeling"
 
 #. module: hr_appraisal
+#: code:addons/hr_appraisal/models/hr_appraisal.py:127
+#, python-format
+msgid ""
+"<a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">Meeting</a> for <a "
+"href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s's</a> appraisal"
+msgstr ""
+
+#. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "<strong><span>Final Interview: </span></strong>"
 msgstr "<strong><span>Laatste interview: </span></strong>"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_needaction
+msgid "Action Needed"
+msgstr "Vereist actie"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__action_plan
@@ -80,6 +94,22 @@ msgstr "Actieplan"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__active
 msgid "Active"
 msgstr "Actief"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_ids
+msgid "Activities"
+msgstr "Activiteiten"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_state
+msgid "Activity State"
+msgstr "Activiteitsfase"
+
+#. module: hr_appraisal
+#: model:ir.actions.act_window,name:hr_appraisal.mail_activity_type_action_config_hr_appraisal
+#: model:ir.ui.menu,name:hr_appraisal.hr_appraisal_menu_config_activity_type
+msgid "Activity Types"
+msgstr "Soorten activiteiten"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__survey_completed_ids
@@ -118,15 +148,14 @@ msgid "Appraisal Colleagues"
 msgstr "Beoordeling collega's"
 
 #. module: hr_appraisal
-#: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_new
-#: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_new
-msgid "Appraisal Created"
-msgstr "Beoordeling aangemaakt"
-
-#. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__date_close
 msgid "Appraisal Deadline"
 msgstr "Beoordelingsdeadline"
+
+#. module: hr_appraisal
+#: model:mail.activity.type,name:hr_appraisal.mail_act_appraisal_form
+msgid "Appraisal Form to Fill"
+msgstr ""
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
@@ -161,10 +190,9 @@ msgid "Appraisal Repeat Every"
 msgstr "Beoordeling herhaal iedere"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:212
+#: code:addons/hr_appraisal/models/hr_appraisal.py:234
 #: selection:hr.appraisal,state:0 selection:hr.appraisal.report,state:0
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
-#: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_sent
 #, python-format
 msgid "Appraisal Sent"
 msgstr "Beoordeling verzonden"
@@ -177,12 +205,13 @@ msgstr "Beoordeling statistieken"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__manager_appraisal
 msgid "Appraisal by Manager"
-msgstr ""
+msgstr "Beoordeling door manager"
 
 #. module: hr_appraisal
-#: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_sent
-msgid "Appraisal sent"
-msgstr "Beoordeling verzonden"
+#: code:addons/hr_appraisal/models/hr_appraisal.py:181
+#, python-format
+msgid "Appraisal form(s) have been sent"
+msgstr ""
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.hr_appraisal_action_from_department
@@ -193,12 +222,6 @@ msgstr "Te starten beoordeling"
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_department_view_kanban
 msgid "Appraisal(s)"
 msgstr "Beoordeling(en)"
-
-#. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:161
-#, python-format
-msgid "Appraisal(s) form have been sent"
-msgstr "Beoordeling(s) formulier(en) verzonden"
 
 #. module: hr_appraisal
 #: model:ir.actions.server,name:hr_appraisal.ir_cron_scheduler_appraisal_ir_actions_server
@@ -229,7 +252,7 @@ msgid "Cancel"
 msgstr "Annuleer"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:212
+#: code:addons/hr_appraisal/models/hr_appraisal.py:234
 #: selection:hr.appraisal,state:0 selection:hr.appraisal.report,state:0
 #, python-format
 msgid "Cancelled"
@@ -277,6 +300,11 @@ msgstr "Kleur index"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__company_id
 msgid "Company"
 msgstr "Bedijf"
+
+#. module: hr_appraisal
+#: model:ir.ui.menu,name:hr_appraisal.menu_hr_appraisal_configuration
+msgid "Configuration"
+msgstr "Instellingen"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report__create_date
@@ -331,7 +359,7 @@ msgid "Display Name"
 msgstr "Schermnaam"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:212
+#: code:addons/hr_appraisal/models/hr_appraisal.py:234
 #: selection:hr.appraisal,state:0 selection:hr.appraisal.report,state:0
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -392,6 +420,14 @@ msgid "Extended Filters..."
 msgstr "Uitgebreide filters..."
 
 #. module: hr_appraisal
+#: code:addons/hr_appraisal/models/hr_appraisal.py:177
+#, python-format
+msgid ""
+"Fill form <a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s</a> for <a"
+" href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s's</a> appraisal"
+msgstr ""
+
+#. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Final Evaluation"
 msgstr "Finale evaluatie"
@@ -405,6 +441,21 @@ msgstr "Eindgesprek"
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "Final Interview Date"
 msgstr "Finale interview datum"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_follower_ids
+msgid "Followers"
+msgstr "Volgers"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Volgers (Kanalen)"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Volgers (Relaties)"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -433,6 +484,16 @@ msgid "ID"
 msgstr "ID"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
+
+#. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
+
+#. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__action_plan
 msgid ""
 "If the evaluation does not meet the expectations, you can propose an action "
@@ -449,6 +510,11 @@ msgstr "Beoordelingen in bewerking"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report__final_interview
 msgid "Interview"
 msgstr "Gesprek"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_is_follower
+msgid "Is Follower"
+msgstr "Is een volger"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal____last_update
@@ -495,10 +561,9 @@ msgid "Meeting"
 msgstr "Afspraak"
 
 #. module: hr_appraisal
-#: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_meeting
-#: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_meeting
-msgid "Meeting Scheduled"
-msgstr "Meeting ingepland"
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_ids
+msgid "Messages"
+msgstr "Berichten"
 
 #. module: hr_appraisal
 #: selection:hr.employee,appraisal_frequency_unit:0
@@ -517,9 +582,29 @@ msgid "Name"
 msgstr "Naam"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Volgende activiteit deadline"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_summary
+msgid "Next Activity Summary"
+msgstr "Omschrijving volgende actie"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_type_id
+msgid "Next Activity Type"
+msgstr "Volgende activiteit type"
+
+#. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_date
 msgid "Next Appraisal Date"
 msgstr "Volgende beoordelingsdatum"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Aantal acties"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__count_completed_survey
@@ -532,13 +617,27 @@ msgid "Number of Sent Forms"
 msgstr "Aantal verzonden formulieren"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Aantal berichten die actie vereisen"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Aantal ongelezen berichten"
+
+#. module: hr_appraisal
 #: model:res.groups,name:hr_appraisal.group_hr_appraisal_user
 msgid "Officer"
 msgstr "Functionaris"
 
 #. module: hr_appraisal
+#: selection:hr.appraisal,activity_state:0
+msgid "Overdue"
+msgstr "Vervallen"
+
+#. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__periodic_appraisal
-#: model:ir.ui.menu,name:hr_appraisal.menu_hr_appraisal_configuration
 msgid "Periodic Appraisal"
 msgstr "Periodieke beoordeling"
 
@@ -558,6 +657,11 @@ msgid "Plan"
 msgstr "Plan"
 
 #. module: hr_appraisal
+#: selection:hr.appraisal,activity_state:0
+msgid "Planned"
+msgstr "Gepland"
+
+#. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__related_partner_id
 msgid "Related Partner"
 msgstr "Gekoppelde relatie"
@@ -571,6 +675,11 @@ msgstr "Herhaal iedere"
 #: model:ir.ui.menu,name:hr_appraisal.menu_hr_appraisal_report
 msgid "Reporting"
 msgstr "Rapportages"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_user_id
+msgid "Responsible User"
+msgstr "Verantwoordelijke gebruiker"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -622,6 +731,19 @@ msgid "Status"
 msgstr "Status"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Status gebaseerd op activiteiten\n"
+"Te laat: Datum is al gepasseerd\n"
+"Vandaag: Activiteit datum is vandaag\n"
+"Gepland: Toekomstige activiteiten."
+
+#. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_survey_user_input
 msgid "Survey User Input"
 msgstr "Enquête gebruikers invoer"
@@ -667,7 +789,7 @@ msgid "This employee will do a self-appraisal"
 msgstr "Deze werknemer doet een zelfbeoordeling"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:212
+#: code:addons/hr_appraisal/models/hr_appraisal.py:234
 #: selection:hr.appraisal,state:0 selection:hr.appraisal.report,state:0
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #, python-format
@@ -675,9 +797,34 @@ msgid "To Start"
 msgstr "Te starten"
 
 #. module: hr_appraisal
+#: selection:hr.appraisal,activity_state:0
+msgid "Today"
+msgstr "Vandaag"
+
+#. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
 msgid "Today Activities"
 msgstr "Activiteiten van vandaag"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_unread
+msgid "Unread Messages"
+msgstr "Ongelezen berichten"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Aantal ongelezen berichten"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__website_message_ids
+msgid "Website Messages"
+msgstr "Website berichten"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__website_message_ids
+msgid "Website communication history"
+msgstr "Website communicatie geschiedenis"
 
 #. module: hr_appraisal
 #: selection:hr.employee,appraisal_frequency_unit:0
@@ -685,7 +832,7 @@ msgid "Year"
 msgstr "Jaar"
 
 #. module: hr_appraisal
-#: code:addons/hr_appraisal/models/hr_appraisal.py:205
+#: code:addons/hr_appraisal/models/hr_appraisal.py:227
 #, python-format
 msgid "You cannot delete appraisal which is in %s state"
 msgstr ""

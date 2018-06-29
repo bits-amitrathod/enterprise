@@ -7,10 +7,10 @@
 # Martin Trigaux, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Martin Trigaux, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+msgid "Based on Rules"
+msgstr "Szabályok alapján"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_bill_my_account
@@ -32,6 +37,7 @@ msgstr ""
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_delivery_carrier
+#: model:ir.model.fields,field_description:delivery_ups.field_product_packaging__package_carrier_type
 msgid "Carrier"
 msgstr "Fuvarozó"
 
@@ -62,6 +68,12 @@ msgid "Collect on Delivery"
 msgstr ""
 
 #. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "DHL"
+msgstr ""
+
+#. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0
 msgid "EPL"
 msgstr "EPL"
@@ -73,6 +85,17 @@ msgid ""
 "Error:\n"
 "%s"
 msgstr ""
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "FedEx"
+msgstr ""
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+msgid "Fixed Price"
+msgstr "Rögzített ár"
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier__ups_bill_my_account
@@ -91,6 +114,11 @@ msgstr "Inches"
 #: selection:delivery.carrier,ups_package_weight_unit:0
 msgid "Kilograms"
 msgstr "Kilogramm"
+
+#. module: delivery_ups
+#: selection:product.packaging,package_carrier_type:0
+msgid "No carrier integration"
+msgstr "Nincs szállítmányozó integrálva"
 
 #. module: delivery_ups
 #: selection:delivery.carrier,ups_label_file_type:0
@@ -112,6 +140,11 @@ msgstr "Kérem válasszon legalább egy szállítandó tételt."
 #: selection:delivery.carrier,ups_package_weight_unit:0
 msgid "Pounds"
 msgstr "Pounds"
+
+#. module: delivery_ups
+#: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr "Szolgáltató"
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_sale_order
@@ -207,11 +240,18 @@ msgid "Transfer"
 msgstr "Átvitel"
 
 #. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "UPS"
+msgstr ""
+
+#. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_access_number
 msgid "UPS AccessLicenseNumber"
 msgstr "UPS HozzáférésiLiszencSzám"
 
 #. module: delivery_ups
+#: model:delivery.carrier,name:delivery_ups.delivery_carrier_ups_be
 #: model:product.product,name:delivery_ups.product_product_delivery_ups_be
 #: model:product.template,name:delivery_ups.product_product_delivery_ups_be_product_template
 msgid "UPS BE"
@@ -261,6 +301,7 @@ msgid "UPS Shipper Number"
 msgstr "UPS szállító száma"
 
 #. module: delivery_ups
+#: model:delivery.carrier,name:delivery_ups.delivery_carrier_ups_us
 #: model:product.product,name:delivery_ups.product_product_delivery_ups_us
 #: model:product.template,name:delivery_ups.product_product_delivery_ups_us_product_template
 msgid "UPS US"
@@ -270,6 +311,11 @@ msgstr "UPS US"
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_username
 msgid "UPS Username"
 msgstr "UPS Felhasználói név"
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+msgid "USPS"
+msgstr ""
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_package_dimension_unit
@@ -290,6 +336,12 @@ msgstr ""
 #: selection:delivery.carrier,ups_label_file_type:0
 msgid "ZPL"
 msgstr "ZPL"
+
+#. module: delivery_ups
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "bpost"
+msgstr ""
 
 #. module: delivery_ups
 #: model:product.product,weight_uom_name:delivery_ups.product_product_delivery_ups_be

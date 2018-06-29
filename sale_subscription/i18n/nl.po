@@ -13,10 +13,10 @@
 # e2f_nl_c4 <e2f_nl_c4@hotmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: e2f_nl_c4 <e2f_nl_c4@hotmail.com>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -378,9 +378,25 @@ msgid "Accounting Journal"
 msgstr "Dagboek"
 
 #. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_needaction
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__message_needaction
+msgid "Action Needed"
+msgstr "Vereist actie"
+
+#. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__active
 msgid "Active"
 msgstr "Actief"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__activity_ids
+msgid "Activities"
+msgstr "Activiteiten"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__activity_state
+msgid "Activity State"
+msgstr "Activiteitsfase"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.wizard_action
@@ -633,12 +649,12 @@ msgstr "Maak een nieuw product aan"
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_filtered
 msgid "Create a new subscription"
-msgstr ""
+msgstr "Maak een nieuw abonnement aan"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_template_action
 msgid "Create a new template of subscription"
-msgstr ""
+msgstr "Maak een nieuw sjabloon van abonnement"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -830,6 +846,24 @@ msgid "Expiring soon"
 msgstr "Verloopt binnenkort"
 
 #. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_follower_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__message_follower_ids
+msgid "Followers"
+msgstr "Volgers"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_channel_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Volgers (Kanalen)"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_partner_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Volgers (Relaties)"
+
+#. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Future Activities"
 msgstr "Toekomstige activiteiten"
@@ -872,6 +906,18 @@ msgstr "Ik gebruik het niet"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__id
 msgid "ID"
 msgstr "ID"
+
+#. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__message_unread
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
+
+#. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__message_needaction
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__user_closable
@@ -1024,10 +1070,16 @@ msgid "Invoices"
 msgstr "Facturen"
 
 #. module: sale_subscription
-#: code:addons/sale_subscription/models/sale_order.py:152
+#: code:addons/sale_subscription/models/sale_order.py:153
 #, python-format
 msgid "Invoicing period: %s - %s"
 msgstr "Factuur periode: %s - %s"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_is_follower
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__message_is_follower
+msgid "Is Follower"
+msgstr "Is een volger"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
@@ -1106,6 +1158,12 @@ msgid "Manage your payment methods"
 msgstr "Beheer uw betaalmethodes"
 
 #. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__message_ids
+msgid "Messages"
+msgstr "Berichten"
+
+#. module: sale_subscription
 #: selection:sale.subscription.template,recurring_rule_type:0
 msgid "Month(s)"
 msgstr "Maand(en)"
@@ -1150,6 +1208,21 @@ msgid "Newest"
 msgstr "Nieuwste"
 
 #. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Volgende activiteit deadline"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__activity_summary
+msgid "Next Activity Summary"
+msgstr "Omschrijving volgende actie"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__activity_type_id
+msgid "Next Activity Type"
+msgstr "Volgende activiteit type"
+
+#. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Next invoice:"
 msgstr "Volgende factuur:"
@@ -1157,7 +1230,25 @@ msgstr "Volgende factuur:"
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_template_action_subscription
 msgid "No product found"
-msgstr ""
+msgstr "Geen product gevonden"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_needaction_counter
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Aantal acties"
+
+#. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__message_needaction_counter
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Aantal berichten die actie vereisen"
+
+#. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__message_unread_counter
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Aantal ongelezen berichten"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -1195,6 +1286,11 @@ msgstr "Order Nummer"
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_5
 msgid "Other"
 msgstr "Overige"
+
+#. module: sale_subscription
+#: selection:sale.subscription,activity_state:0
+msgid "Overdue"
+msgstr "Vervallen"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -1235,6 +1331,11 @@ msgstr "Betalingsherinneringen voor abonnement ${object.code}"
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Pending subscriptions"
 msgstr "Wachtende abonnementen"
+
+#. module: sale_subscription
+#: selection:sale.subscription,activity_state:0
+msgid "Planned"
+msgstr "Gepland"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:303
@@ -1378,6 +1479,11 @@ msgstr "Elke (Dag/Week/Maand/Jaar) herhalen"
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 msgid "Reporting"
 msgstr "Rapportages"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__activity_user_id
+msgid "Responsible User"
+msgstr "Verantwoordelijke gebruiker"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__sale_order_count
@@ -1534,6 +1640,19 @@ msgid "Status"
 msgstr "Status"
 
 #. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Status gebaseerd op activiteiten\n"
+"Te laat: Datum is al gepasseerd\n"
+"Vandaag: Activiteit datum is vandaag\n"
+"Gepland: Toekomstige activiteiten."
+
+#. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line__price_subtotal
 msgid "Sub Total"
 msgstr "Subtotaal"
@@ -1570,7 +1689,6 @@ msgstr "Abonnement sluit reden:"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account__subscription_count
-#: model:ir.model.fields,field_description:sale_subscription.field_project_project__subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__subscription_count
 msgid "Subscription Count"
@@ -1659,7 +1777,6 @@ msgstr "Abonnement status is gewijzigd"
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_filtered
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_res_partner
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account__subscription_ids
-#: model:ir.model.fields,field_description:sale_subscription.field_project_project__subscription_ids
 #: model:ir.model.fields,field_description:sale_subscription.field_res_partner__subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_res_users__subscription_count
 #: model:ir.module.category,name:sale_subscription.module_category_subscription_management
@@ -1824,6 +1941,11 @@ msgid "To Renew"
 msgstr "Te vernieuwen"
 
 #. module: sale_subscription
+#: selection:sale.subscription,activity_state:0
+msgid "Today"
+msgstr "Vandaag"
+
+#. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Today Activities"
 msgstr "Activiteiten van vandaag"
@@ -1859,6 +1981,18 @@ msgstr "Prijs"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option__uom_id
 msgid "Unit of Measure"
 msgstr "Maateenheid"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_unread
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__message_unread
+msgid "Unread Messages"
+msgstr "Ongelezen berichten"
+
+#. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_unread_counter
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Aantal ongelezen berichten"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1906,9 +2040,21 @@ msgstr ""
 "abonnement annuleert?"
 
 #. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__website_message_ids
+#: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__website_message_ids
+msgid "Website Messages"
+msgstr "Website berichten"
+
+#. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__website_url
 msgid "Website URL"
 msgstr "Website URL"
+
+#. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription__website_message_ids
+#: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__website_message_ids
+msgid "Website communication history"
+msgstr "Website communicatie geschiedenis"
 
 #. module: sale_subscription
 #: selection:sale.subscription.template,recurring_rule_type:0

@@ -8,13 +8,14 @@
 # Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017
 # 老窦 北京 <2662059195@qq.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,12 +78,6 @@ msgid "Display Name"
 msgstr "显示名称"
 
 #. module: account_taxcloud
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax__state_ids
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax_template__state_ids
-msgid "Federal States"
-msgstr "联邦政府"
-
-#. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_account_fiscal_position
 msgid "Fiscal Position"
 msgstr "财政状况"
@@ -113,6 +108,11 @@ msgid "Last Updated on"
 msgstr "最后更新时间"
 
 #. module: account_taxcloud
+#: model:ir.model,name:account_taxcloud.model_product_category
+msgid "Product Category"
+msgstr "产品分类"
+
+#. module: account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.account_taxcloud_tic_category_search
 msgid "Product TIC Categories"
 msgstr "产品TIC类别"
@@ -123,8 +123,6 @@ msgid "Product Template"
 msgstr "产品模板"
 
 #. module: account_taxcloud
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax__tic_category_ids
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax_template__tic_category_ids
 #: model:ir.ui.view,arch_db:account_taxcloud.account_taxcloud_tic_category_tree
 msgid "TIC Category"
 msgstr "TIC 类别"
@@ -135,6 +133,7 @@ msgid "TIC Category Code"
 msgstr "TIC 类别代码"
 
 #. module: account_taxcloud
+#: model:ir.model.fields,field_description:account_taxcloud.field_product_category__tic_category_id
 #: model:ir.ui.view,arch_db:account_taxcloud.account_taxcloud_tic_category_search
 msgid "TIC Code"
 msgstr "TIC 代码"
@@ -143,6 +142,11 @@ msgstr "TIC 代码"
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_tic_category__description
 msgid "TIC Description"
 msgstr "TIC说明"
+
+#. module: account_taxcloud
+#: model:ir.ui.view,arch_db:account_taxcloud.product_category_view_form_inherit_account_taxcloud
+msgid "TaxCloud"
+msgstr "TaxCloud"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_res_config_settings__taxcloud_api_id
@@ -163,11 +167,13 @@ msgstr "TaxCloud 类别"
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_product__tic_category_id
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_template__tic_category_id
+#: model:ir.ui.view,arch_db:account_taxcloud.product_category_view_form_inherit_account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.product_template_taxcloud_inherit_form
 msgid "TaxCloud Category"
 msgstr "TaxCloud 类别"
 
 #. module: account_taxcloud
+#: model:ir.model.fields,help:account_taxcloud.field_product_category__tic_category_id
 #: model:ir.model.fields,help:account_taxcloud.field_product_product__tic_category_id
 #: model:ir.model.fields,help:account_taxcloud.field_product_template__tic_category_id
 msgid ""
@@ -183,16 +189,6 @@ msgstr ""
 "确保以正确的税率向目录中每个项目征税（或者，对于免税项目，不征收任何税），因此有必要确保为每个项目都分配一个 "
 "TIC。如果您无法为目录中的项目找到正确的税务类别，可将其分配到“一般商品和服务”TIC (00000)。TaxCloud 会自动将产品分配到此 TIC"
 " 作为默认值，因此除非您更改过项目的 TIC ，否则它应该已被设置为 00000。"
-
-#. module: account_taxcloud
-#: model:ir.model,name:account_taxcloud.model_account_fiscal_position_tax
-msgid "Taxes Fiscal Position"
-msgstr "税金财政状况"
-
-#. module: account_taxcloud
-#: model:ir.model,name:account_taxcloud.model_account_fiscal_position_tax_template
-msgid "Template Tax Fiscal Position"
-msgstr "模板税金替换规则"
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_account_fiscal_position_template
@@ -238,12 +234,6 @@ msgstr "使用 Taxcloud 更新税款"
 #: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_template__is_taxcloud
 msgid "Use TaxCloud API"
 msgstr "使用TaxCloud API"
-
-#. module: account_taxcloud
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax__zip_codes
-#: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_tax_template__zip_codes
-msgid "Zip"
-msgstr "邮政编码"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/product.py:28

@@ -68,12 +68,13 @@ class ProviderBpost(models.Model):
                 raise UserError(check_value)
             shipping = bpost.send_shipping(picking, self)
             order = picking.sale_id
+            company = order.company_id or picking.company_id or self.env.user.company_id
             order_currency = picking.sale_id.currency_id or picking.company_id.currency_id
             if order_currency.name == "EUR":
                 carrier_price = shipping['price']
             else:
                 quote_currency = self.env['res.currency'].search([('name', '=', 'EUR')], limit=1)
-                carrier_price = quote_currency._convert(shipping['price'], order_currency, order.company_id, order.date_order or fields.Date.today())
+                carrier_price = quote_currency._convert(shipping['price'], order_currency, company, order.date_order or fields.Date.today())
             carrier_tracking_ref = shipping['tracking_code']
             # bpost does not seem to handle multipackage
             logmessage = (_("Shipment created into bpost <br/> <b>Tracking Number : </b>%s") % (carrier_tracking_ref))

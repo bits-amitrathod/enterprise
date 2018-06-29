@@ -9,13 +9,14 @@
 # Emre Akayoğlu <emre.akayoglu@mechsoft.com.tr>, 2017
 # Murat Kaplan <muratk@projetgrup.com>, 2017
 # Umur Akın <umura@projetgrup.com>, 2018
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Umur Akın <umura@projetgrup.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,6 +33,15 @@ msgstr ""
 #: model:ir.ui.menu,name:stock_barcode.stock_barcode_menu
 msgid "Barcode"
 msgstr "Barkod"
+
+#. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot___barcode_scanned
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_inventory___barcode_scanned
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line___barcode_scanned
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_picking___barcode_scanned
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_scrap___barcode_scanned
+msgid "Barcode Scanned"
+msgstr "Barkod tarandı"
 
 #. module: stock_barcode
 #. openerp-web
@@ -342,6 +352,15 @@ msgid "Validate Lot"
 msgstr "Lot Doğrula"
 
 #. module: stock_barcode
+#: model:ir.model.fields,help:stock_barcode.field_stock_barcode_lot___barcode_scanned
+#: model:ir.model.fields,help:stock_barcode.field_stock_inventory___barcode_scanned
+#: model:ir.model.fields,help:stock_barcode.field_stock_move_line___barcode_scanned
+#: model:ir.model.fields,help:stock_barcode.field_stock_picking___barcode_scanned
+#: model:ir.model.fields,help:stock_barcode.field_stock_scrap___barcode_scanned
+msgid "Value of the last barcode scanned."
+msgstr "Son taranan barkodun değeri"
+
+#. module: stock_barcode
 #. openerp-web
 #: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:10
 #, python-format
@@ -364,7 +383,8 @@ msgid "Wrong barcode"
 msgstr "Yanlış barkod"
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/wizard/stock_barcode_lot.py:55
+#: code:addons/stock_barcode/wizard/stock_barcode_lot.py:58
+#: code:addons/stock_barcode/wizard/stock_barcode_lot.py:133
 #, python-format
 msgid "You cannot scan two times the same serial number"
 msgstr "Aynı seri numarasını iki kez tarayamazsınız."

@@ -8,10 +8,10 @@
 # gezza <geza.nagy@oregional.hu>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: gezza <geza.nagy@oregional.hu>, 2017\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: website_calendar
-#: code:addons/website_calendar/models/calendar_appointment.py:63
+#: code:addons/website_calendar/models/calendar_appointment.py:65
 #, python-format
 msgid " (copy)"
 msgstr " (másolat)"
@@ -153,6 +153,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_event__access_token
 msgid "Access Token"
 msgstr "Hozzáférési token"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_needaction
+msgid "Action Needed"
+msgstr "Művelet szükséges"
 
 #. module: website_calendar
 #: model:ir.actions.act_window,name:website_calendar.website_calendar_report
@@ -393,6 +398,21 @@ msgid "Event"
 msgstr "Esemény"
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_follower_ids
+msgid "Followers"
+msgstr "Követők"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Követők (Csatornák)"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Követők (Partnerek)"
+
+#. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment_calendar
 msgid "Fri"
 msgstr "P"
@@ -417,6 +437,16 @@ msgid "ID"
 msgstr "Azonosító"
 
 #. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Ha be van jelölve, akkor figyelje az új üzeneteket."
+
+#. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Ha be van jelölve, akkor figyelje az új üzeneteket."
+
+#. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.setup
 msgid ""
 "In order to configure your first appointment, go\n"
@@ -433,6 +463,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_intro
 msgid "Introduction Message"
 msgstr ""
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_is_follower
+msgid "Is Follower"
+msgstr "Ő egy követő"
 
 #. module: website_calendar
 #: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__country_ids
@@ -486,6 +521,7 @@ msgid "Manager"
 msgstr "Menedzser"
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_ids
 #: model:ir.ui.view,arch_db:website_calendar.calendar_appointment_type_view_form
 msgid "Messages"
 msgstr "Üzenetek"
@@ -517,6 +553,21 @@ msgid "No data found"
 msgstr ""
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Műveletek száma"
+
+#. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Üzenetek száma, melyek akciót igényelnek"
+
+#. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Olvasatlan üzenetek száma"
+
+#. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_event__appointment_type_id
 msgid "Online Appointment"
 msgstr ""
@@ -537,7 +588,7 @@ msgid "Placeholder"
 msgstr ""
 
 #. module: website_calendar
-#: code:addons/website_calendar/models/calendar_appointment.py:296
+#: code:addons/website_calendar/models/calendar_appointment.py:298
 #, python-format
 msgid "Please enter a valid hour between 0:00 to 24:00 for your slots."
 msgstr ""
@@ -667,6 +718,12 @@ msgid "Sunday"
 msgstr "Vasárnap"
 
 #. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__website_url
+msgid "The full URL to access the document through the website."
+msgstr ""
+"A teljes elérési út/URL a dokumentum weboldalon keresztüli eléréséhez."
+
+#. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment_calendar
 msgid "Thu"
 msgstr "Cs"
@@ -718,9 +775,54 @@ msgid "Tuesday"
 msgstr "Kedd"
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_unread
+msgid "Unread Messages"
+msgstr "Olvasatlan üzenetek"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Olvasatlan üzenetek számlálója"
+
+#. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.index
 msgid "View Availabilities <span class=\"fa fa-arrow-right\"/>"
 msgstr ""
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_published
+msgid "Visible in Website"
+msgstr "Látható a weboldalon"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_message_ids
+msgid "Website Messages"
+msgstr "Weboldal üzenetek"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_url
+msgid "Website URL"
+msgstr "Honlap URL"
+
+#. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__website_message_ids
+msgid "Website communication history"
+msgstr "Weboldal  kommunikáció történet"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_meta_description
+msgid "Website meta description"
+msgstr "Honlap meta leírás"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_meta_keywords
+msgid "Website meta keywords"
+msgstr "Honlap meta kulcsszavak"
+
+#. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__website_meta_title
+msgid "Website meta title"
+msgstr "Honlap meta cím"
 
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment_calendar

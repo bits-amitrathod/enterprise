@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Артур Чеботарь <artcha.chebotar@gmail.com>, 2017
-# Максим Дронь <dronmax@gmail.com>, 2017
+# Sergey Vilizhanin <sv@grimmette.ru>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Максим Дронь <dronmax@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Sergey Vilizhanin <sv@grimmette.ru>, 2018\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,12 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. module: account_plaid
-#: code:addons/account_plaid/models/plaid.py:42
+#: model:ir.model.fields,help:account_plaid.field_account_online_provider__plaid_error_type
+msgid "Additional information on error"
+msgstr ""
+
+#. module: account_plaid
+#: code:addons/account_plaid/models/plaid.py:55
 #, python-format
 msgid "Get %s status code for call to %s. Content message: %s"
 msgstr "Получен %s код статуса для вызова %s. Содержание сообщения: %s"
@@ -31,12 +36,53 @@ msgid "Interface for online account journal"
 msgstr "Интерфейс для журнала счета онлайн"
 
 #. module: account_plaid
+#: selection:account.online.provider,provider_type:0
+msgid "Plaid"
+msgstr "Plaid"
+
+#. module: account_plaid
+#: model:ir.model.fields,field_description:account_plaid.field_account_online_provider__plaid_error_type
+msgid "Plaid Error Type"
+msgstr ""
+
+#. module: account_plaid
+#: model:ir.model.fields,field_description:account_plaid.field_account_online_provider__plaid_item_id
+msgid "Plaid Item"
+msgstr ""
+
+#. module: account_plaid
+#: model:ir.model.fields,field_description:account_plaid.field_account_online_provider__provider_type
+msgid "Provider Type"
+msgstr ""
+
+#. module: account_plaid
 #: model:ir.model,name:account_plaid.model_account_online_provider
 msgid "Provider for online account synchronization"
 msgstr "Поставщик для синхронизации счета онлайн"
 
 #. module: account_plaid
-#: code:addons/account_plaid/models/plaid.py:68
+#: code:addons/account_plaid/models/plaid.py:41
 #, python-format
-msgid "Timeout: the server did not reply within 30s"
-msgstr "Задержка: сервер не отвечает более 30 сек."
+msgid ""
+"There was en error with Plaid Services!\n"
+"{message: %s,\n"
+"error code: %s,\n"
+"error type: %s,\n"
+"request id: %s}"
+msgstr ""
+
+#. module: account_plaid
+#: code:addons/account_plaid/models/plaid.py:73
+#, python-format
+msgid "Timeout: the server did not reply within 60s"
+msgstr ""
+
+#. module: account_plaid
+#: selection:account.online.provider,provider_type:0
+msgid "Yodlee"
+msgstr "Yodlee"
+
+#. module: account_plaid
+#: model:ir.model.fields,help:account_plaid.field_account_online_provider__plaid_item_id
+msgid "item id in plaid database"
+msgstr ""

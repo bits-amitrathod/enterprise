@@ -264,12 +264,67 @@ QUnit.module('Views', {
         });
     });
 
+    QUnit.test('DOM keys are unique', function (assert) {
+        /*Snabbdom, the virtual dom libraries, use keys to distinguish similar
+        elements (typically grid rows).
+        If these keys are not unique, and there are rows that are repeated,
+        the library might crash upon comparing the elements to refresh.
+        */
+
+        assert.expect(8);
+        var done = assert.async();
+
+        var line_records = [
+                {id: 12, project_id: 142, date: "2017-01-17", unit_amount: 0},
+                {id: 1, project_id: 31, date: "2017-01-24", unit_amount: 2.5},
+                {id: 3, project_id: 143, date: "2017-01-25", unit_amount: 5.5},
+                {id: 2, project_id: 33, date: "2017-01-25", unit_amount: 2},
+                {id: 4, project_id: 143, date: "2017-01-18", unit_amount: 0},
+                {id: 5, project_id: 142, date: "2017-01-18", unit_amount: 0},
+                {id: 10, project_id: 31, date: "2017-01-18", unit_amount: 0},
+                {id: 22, project_id: 33, date: "2017-01-19", unit_amount: 0},
+                {id: 21, project_id: 99, date: "2017-01-19", unit_amount: 0},
+        ];
+        var project_records = [
+                {id: 31, display_name: "Rem"},
+                {id: 33, display_name: "Rer"},
+                {id: 142, display_name: "Sas"},
+                {id: 143, display_name: "Sassy"},
+                {id: 99, display_name: "Sar"},
+        ];
+        this.data.project.records = project_records;
+        this.data['analytic.line'].records = line_records;
+
+        var grid = createView({
+            View: GridView,
+            model: 'analytic.line',
+            data: this.data,
+            arch: this.arch,
+            currentDate: "2017-01-25",
+        });
+
+        return concurrency.delay(0).then(function () {
+            assert.strictEqual(grid.$('tbody th:first').text(), "RerUnknown", "Should be equal.");
+            assert.strictEqual(grid.$('tbody th:eq(1)').text(), "SassyUnknown", "Should be equal.");
+            assert.strictEqual(grid.$('tbody th:eq(2)').text(), "RemUnknown", "Should be equal.");
+
+            grid.$buttons.find('button.grid_arrow_previous').click();
+            return concurrency.delay(0);
+        }).then(function () {
+            assert.strictEqual(grid.$('tbody th:first').text(), "SarUnknown", "Should be equal.");
+            assert.strictEqual(grid.$('tbody th:eq(1)').text(), "RerUnknown", "Should be equal.");
+            assert.strictEqual(grid.$('tbody th:eq(2)').text(), "RemUnknown", "Should be equal.");
+            assert.strictEqual(grid.$('tbody th:eq(3)').text(), "SassyUnknown", "Should be equal.");
+            assert.strictEqual(grid.$('tbody th:eq(4)').text(), "SasUnknown", "Should be equal.");
+
+            grid.destroy();
+            done();
+        });
+    });
+
     QUnit.test('group by non-relational field', function (assert) {
         assert.expect(1);
         var done = assert.async();
-        var nbReadGridDomain = 0;
-        var nbReadGroup = 0;
-        var nbReadGrid = 0;
 
         var grid = createView({
             View: GridView,

@@ -12,13 +12,13 @@ class ProductTemplate(models.Model):
         'corresponding to the description of the product exported. Node '
         '"FraccionArancelaria" to concept.')
     l10n_mx_edi_umt_aduana_id = fields.Many2one(
-        'product.uom', 'UMT Aduana', help='Used in complement '
+        'uom.uom', 'UMT Aduana', help='Used in complement '
         '"Comercio Exterior" to indicate in the products the '
         'TIGIE Units of Measurement, this based in the SAT catalog.')
 
 
-class ProductUoM(models.Model):
-    _inherit = 'product.uom'
+class UoM(models.Model):
+    _inherit = 'uom.uom'
 
     l10n_mx_edi_code_aduana = fields.Char(
         'Code Aduana', help='Used in the complement of "Comercio Exterior" to '

@@ -7,13 +7,20 @@
 # Martin Trigaux, 2018
 # Umur Akın <umura@projetgrup.com>, 2018
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2018
+# Ediz Duman <neps1192@gmail.com>, 2018
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2018
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2018
+# Mehmet Demirel <mdemirell@gmail.com>, 2018
+# Ramiz Deniz Öner <deniz@denizoner.com>, 2018
+# Nurettin Emre Ozbakir <emre.ozbakir@gamareklam.com>, 2018
+# ilyas kurt <ilyaskrt19@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
-"Last-Translator: Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2018\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: ilyas kurt <ilyaskrt19@gmail.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,24 +30,44 @@ msgstr ""
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
-msgid ""
-"<i class=\"fa fa-plus-circle\" aria-hidden=\"true\"/> <span> Add a new bank "
-"to the system</span>"
+msgid "\" bank accounts have been retrieved."
 msgstr ""
-"<I class = \"fa fa-plus-circle\" aria-hidden = \"true\" /> <span> Sisteme "
-"yeni bir banka ekleyin </ span>"
+
+#. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid "<strong>Ooops</strong> It would seems that the process to"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid "<strong>Ooops</strong> We could not"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid "<strong>Success!</strong> Your account has been succesfully refreshed."
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid "<strong>Success!</strong> Your account has been succesfully updated."
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid ""
-"<strong>Well done!</strong>\n"
-"                  Your banking institution is now synchronized with Odoo and a total of"
+"<strong>Well done!</strong> Your banking institution is now synchronized "
+"with Odoo."
 msgstr ""
-"<Strong> Harika! </ Strong>\n"
-"                  Bankanız şimdi Odoo ile senkronize edildi ve toplamda"
+
+#. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid "A total of \""
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__account_number
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__account_number
 msgid "Account Number"
 msgstr "Hesap Numarası"
 
@@ -56,11 +83,31 @@ msgid "Account Online Provider"
 msgstr "Online Hesap Sağlayıcısı"
 
 #. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__account_online_wizard_id
+msgid "Account Online Wizard"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__name
+msgid "Account name"
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.actions.server,name:account_online_sync.online_sync_cron_ir_actions_server
 #: model:ir.cron,cron_name:account_online_sync.online_sync_cron
 #: model:ir.cron,name:account_online_sync.online_sync_cron
 msgid "Account: Journal online sync"
 msgstr "Muhasebe: Online muhasebe yevmiye senkronizasyonu"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__action
+msgid "Action"
+msgstr "Aksiyon"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_needaction
+msgid "Action Needed"
+msgstr "Eylem Gerekiyor"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__action_required
@@ -73,18 +120,14 @@ msgid "Additional information"
 msgstr "Ek bilgi"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:59
+#: code:addons/account_online_sync/models/online_sync.py:62
 #, python-format
 msgid "An error occurred during online synchronization"
 msgstr "Çevrimiçi eşitleme sırasında bir hata oluştu"
 
 #. module: account_online_sync
-#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
-msgid "Associate to journal"
-msgstr "Yevmiye ile ilişkilendir"
-
-#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__balance
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__balance
 msgid "Balance"
 msgstr "Bakiye"
 
@@ -92,6 +135,11 @@ msgstr "Bakiye"
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
 msgid "Bank Accounts"
 msgstr "Banka Hesapları"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_journal__bank_statements_source
+msgid "Bank Feeds"
+msgstr "Banka Bilgi Akışı"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_bank_statement
@@ -104,9 +152,19 @@ msgid "Bank Statement Line"
 msgstr "Banka Hesap Özeti Kalemi"
 
 #. module: account_online_sync
+#: selection:account.journal,bank_statements_source:0
+msgid "Bank Synchronization"
+msgstr "Banka Senkronizasyonu"
+
+#. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
-msgid "Close"
-msgstr "Kapat"
+msgid "Cancel"
+msgstr "İptal"
+
+#. module: account_online_sync
+#: selection:account.online.wizard,status:0
+msgid "Cancelled"
+msgstr "İptal Edildi"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider__status_code
@@ -125,11 +183,6 @@ msgid "Configure"
 msgstr "Yapılandırma"
 
 #. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__count_account_online_journal
-msgid "Count Account Online Journal"
-msgstr "Online Muhasebe Yevmiyesi Say"
-
-#. module: account_online_sync
 #: selection:account.journal,bank_statement_creation:0
 msgid "Create bi-monthly statements"
 msgstr "İki aylık durumlar oluşturun."
@@ -145,6 +198,11 @@ msgid "Create monthly statements"
 msgstr "Aylık özetler oluşturun."
 
 #. module: account_online_sync
+#: selection:account.online.link.wizard,action:0
+msgid "Create new journal"
+msgstr ""
+
+#. module: account_online_sync
 #: selection:account.journal,bank_statement_creation:0
 msgid "Create one statement per synchronization"
 msgstr "Her senkronizasyon için bir durum oluşturun."
@@ -156,6 +214,7 @@ msgstr "Haftalık durumlar oluşturun."
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__create_uid
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__create_uid
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__create_uid
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__create_uid
 msgid "Created by"
@@ -163,6 +222,7 @@ msgstr "Oluşturan"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__create_date
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__create_date
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__create_date
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__create_date
 msgid "Created on"
@@ -175,10 +235,26 @@ msgstr "Banka hesap özeti oluşumu."
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__display_name
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__display_name
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__display_name
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__display_name
 msgid "Display Name"
 msgstr "Görünüm Adı"
+
+#. module: account_online_sync
+#: selection:account.online.link.wizard,action:0
+msgid "Do not link"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid "Done"
+msgstr "Tamamlandı"
+
+#. module: account_online_sync
+#: selection:account.online.wizard,status:0
+msgid "Failed"
+msgstr "Başarısız"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__sync_date
@@ -186,7 +262,33 @@ msgid "Fetch transaction from"
 msgstr "Şuradan alınıyor:"
 
 #. module: account_online_sync
+#: selection:account.journal,bank_statements_source:0
+msgid "File Import"
+msgstr "Dosya İçe Aktarma"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_follower_ids
+msgid "Followers"
+msgstr "Takipçiler"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Takipçiler (Kanallar)"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Tekipçiler (İş ortakları)"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__hide_table
+msgid "Hide Table"
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__id
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__id
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__id
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__id
 msgid "ID"
@@ -209,14 +311,36 @@ msgstr ""
 "numarası"
 
 #. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Eğer işaretliyse yeni iletiler ilginizi gerektirir."
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "İşaretliyse, yeni mesajlar dikkatinize sunulacak."
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__name
+msgid "Institution"
+msgstr "Kurum"
+
+#. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_journal
 msgid "Interface for online account journal"
 msgstr "Çevrimiçi hesap günlüğü için arayüz"
 
 #. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_is_follower
+msgid "Is Follower"
+msgstr "Takipçi mi"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:107
 #: model:ir.model,name:account_online_sync.model_account_journal
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__journal_ids
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__journal_id
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__journal_id
+#, python-format
 msgid "Journal"
 msgstr "Yevmiye"
 
@@ -227,6 +351,7 @@ msgstr "Yevmiye Adı"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal____last_update
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard____last_update
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider____last_update
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard____last_update
 msgid "Last Modified on"
@@ -239,6 +364,7 @@ msgstr "Son Yenileme"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__write_uid
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__write_uid
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__write_uid
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__write_uid
 msgid "Last Updated by"
@@ -246,6 +372,7 @@ msgstr "Son Güncelleyen"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__write_date
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__write_date
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__write_date
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__write_date
 msgid "Last Updated on"
@@ -255,6 +382,16 @@ msgstr "Son Güncelleme"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__last_sync
 msgid "Last synchronization"
 msgstr "Son senkronizasyon"
+
+#. module: account_online_sync
+#: model:ir.model,name:account_online_sync.model_account_online_link_wizard
+msgid "Link a particular synchronized account to a journal"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.online.link.wizard,action:0
+msgid "Link to existing journal"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.actions.act_window,help:account_online_sync.action_online_provider_account
@@ -268,13 +405,19 @@ msgstr "Elle Yenile"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__message
 msgid "Message"
 msgstr "Mesaj"
 
 #. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__name
-msgid "Name"
-msgstr "İsim"
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_ids
+msgid "Messages"
+msgstr "Mesajlar"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__method
+msgid "Method"
+msgstr "Yöntem"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
@@ -288,12 +431,34 @@ msgid "Next synchronization"
 msgstr "Sonraki senkronizasyon"
 
 #. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:109
+#, python-format
+msgid "No new transactions have been loaded in the system."
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__number_added
 msgid "Number Added"
 msgstr "Sayı Eklendi"
 
 #. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Eylemlerin Sayısı"
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Eylem gerektiren mesaj sayısı"
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Okunmamış mesaj sayısı"
+
+#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal__account_online_journal_id
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__online_account_id
 msgid "Online Account"
 msgstr "Çevrimiçi Hesap"
 
@@ -305,29 +470,19 @@ msgstr "Çevrimiçi Tanımlayıcı"
 
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_online_provider_account
-msgid "Online Provider Account"
-msgstr "Online Sağlayıcı Hesabı"
+msgid "Online Institution Accounts"
+msgstr ""
 
 #. module: account_online_sync
-#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
-msgid "Online Sync configuration"
-msgstr "Çevrimiçi senkronizasyon yapılandırması"
-
-#. module: account_online_sync
-#: model:ir.actions.act_window,name:account_online_sync.action_account_online_wizard_form
 #: model:ir.ui.menu,name:account_online_sync.menu_action_online_provider_account
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_form_inherit_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "Online Synchronization"
 msgstr "Çevrimiçi Senkronizasyon"
 
 #. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__account_online_journal_id
-msgid "Online account"
-msgstr "Online hesap"
-
-#. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:270
+#: code:addons/account_online_sync/models/online_sync.py:357
 #, python-format
 msgid "Opening statement: first synchronization"
 msgstr "Açılış Kaydı: ilk senkronizasyon"
@@ -336,6 +491,20 @@ msgstr "Açılış Kaydı: ilk senkronizasyon"
 #: selection:account.online.provider,provider_type:0
 msgid "Plaid"
 msgstr "Kareli"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:82
+#, python-format
+msgid "Please enter at least a character for the search"
+msgstr ""
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:223
+#, python-format
+msgid ""
+"Please link your accounts to a journal or select \"do not link\" as action "
+"to do"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
@@ -368,9 +537,42 @@ msgid "Provider for online account synchronization"
 msgstr "Çevrimiçi hesap senkronizasyonu sağlayıcısı"
 
 #. module: account_online_sync
+#: selection:account.journal,bank_statements_source:0
+msgid "Record Manually"
+msgstr "Elle Kaydet"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:281
+#, python-format
+msgid "Select your institution"
+msgstr ""
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:76
+#: code:addons/account_online_sync/models/online_sync.py:90
+#, python-format
+msgid "Server not reachable, please try again later"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__status
+msgid "Status"
+msgstr "Durumu"
+
+#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__status_code
 msgid "Status Code"
 msgstr "Durum Kodu"
+
+#. module: account_online_sync
+#: selection:account.online.wizard,status:0
+msgid "Success"
+msgstr "Başarı"
+
+#. module: account_online_sync
+#: model:ir.actions.act_window,name:account_online_sync.action_account_online_wizard_form
+msgid "Synchronization result"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal__synchronization_status
@@ -380,8 +582,14 @@ msgstr "Senkronizasyon durumu"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "Synchronize now"
 msgstr "Şimdi senkronize et"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__account_ids
+msgid "Synchronized accounts"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message
@@ -391,10 +599,26 @@ msgstr ""
 "mesaj"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:60
+#: model:ir.model.fields,help:account_online_sync.field_account_online_wizard__hide_table
+msgid "Technical field to hide table in view"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid "The account has been linked to your bank journal."
+msgstr ""
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:63
 #, python-format
 msgid "The following error happened during the synchronization: %s"
 msgstr "Senkronizasyon sırasında aşağıdaki hata oluştu:% s"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:105
+#, python-format
+msgid "The following transactions have been loaded in the system."
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_journal__bank_statement_creation
@@ -408,15 +632,48 @@ msgstr ""
 "önceki ya da yeni hesap özetinin içine konabilecek."
 
 #. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:74
+#: code:addons/account_online_sync/models/online_sync.py:88
+#, python-format
+msgid "Timeout: the server did not reply within 60s"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__transactions
+msgid "Transactions"
+msgstr "İşlemler"
+
+#. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider__action_required
 msgid "True if user needs to take action by updating account"
 msgstr "Kullanıcının hesabı güncelleyerek işlem yapması gerekiyorsa doğrudur"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:127
+#: selection:account.journal,bank_statements_source:0
+msgid "Undefined"
+msgstr "Tanımlanmamış"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:189
 #, python-format
 msgid "Unimplemented"
 msgstr "Uygulanmayan"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:117
+#, python-format
+msgid "Unknown reason"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_unread
+msgid "Unread Messages"
+msgstr "Okunmamış Mesajlar"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Okunmamış Mesaj Sayacı"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
@@ -435,9 +692,19 @@ msgid "View problem"
 msgstr "Problemi görüntüle"
 
 #. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__website_message_ids
+msgid "Website Messages"
+msgstr "Websitesi Mesajları"
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_online_provider__website_message_ids
+msgid "Website communication history"
+msgstr "Web Sitesi iletişim geçmişi"
+
+#. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_wizard
-msgid "Wizard for online account synchronization"
-msgstr "Çevrimiçi hesap senkronizasyonu sihirbazı"
+msgid "Wizard to link synchronized accounts to journal"
+msgstr ""
 
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
@@ -445,18 +712,33 @@ msgid "Yodlee"
 msgstr "Yodlee"
 
 #. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid ""
+"You can associate those bank accounts to a journal in order to automatically"
+" retrieve the latest statements from your bank."
+msgstr ""
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:225
+#, python-format
+msgid "You can not link two accounts to the same journal"
+msgstr ""
+
+#. module: account_online_sync
+#: selection:account.online.wizard,method:0
+msgid "add"
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal__balance
+#: model:ir.model.fields,help:account_online_sync.field_account_online_link_wizard__balance
 msgid "balance of the account sent by the third party provider"
 msgstr "Üçüncü taraf sağlayıcı tarafından gönderilen hesabın bakiyesi"
 
 #. module: account_online_sync
-#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
-msgid ""
-"bank accounts have been retrieved.\n"
-"                  You can associate those bank accounts to a journal in order to automatically retrieve the latest statements from your bank."
+#: selection:account.online.wizard,method:0
+msgid "edit"
 msgstr ""
-"Banka hesapları alındı.\n"
-"                  Bankanızdan en yeni bildirimleri otomatik olarak almak için bu banka hesaplarını bir yevmiye ile ilişkilendirebilirsiniz."
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal__online_identifier
@@ -470,21 +752,33 @@ msgid "name of the banking institution"
 msgstr "Bankacılık kurumunun adı"
 
 #. module: account_online_sync
-#: model:ir.model.fields,help:account_online_sync.field_account_online_wizard__number_added
-msgid "number of accounts added from call to new_institution"
-msgstr "New_institution çağrısından eklenen hesapların sayısı"
-
-#. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:316
+#: code:addons/account_online_sync/models/online_sync.py:403
 #, python-format
 msgid "online sync"
 msgstr "Çevrimiçi senkronizasyon"
 
 #. module: account_online_sync
-#: model:ir.model.fields,help:account_online_sync.field_account_online_wizard__count_account_online_journal
-msgid ""
-"technical field used to hide account_online_journal_id if no institution has"
-" been loaded in the system"
+#: selection:account.online.wizard,method:0
+msgid "refresh"
+msgstr "yenile"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:107
+#, python-format
+msgid "transactions loaded"
 msgstr ""
-"Sistemde herhangi bir kurum yüklenmemişse account_online_journal_id'yi "
-"gizlemek için kullanılan teknik alan"
+
+#. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid ""
+"your account because of the following \n"
+"                    error during the process:"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+msgid ""
+"your account was not \n"
+"                    thoroughly completed. You can try to manually update your account by clicking the refresh button on the dashboard\n"
+"                    or in the online synchronization menu."
+msgstr ""

@@ -25,6 +25,8 @@ class TestDeliveryUPS(TransactionCase):
                              'city': 'Auderghem-Ouderghem',
                              'street': 'Avenue Edmond Van Nieuwenhuyse',
                              'zip': '1160'})
+        self.stock_location = self.env.ref('stock.stock_location_stock')
+        self.customer_location = self.env.ref('stock.stock_location_customers')
 
     def test_01_ups_basic_flow(self):
         SaleOrder = self.env['sale.order']
@@ -131,3 +133,50 @@ class TestDeliveryUPS(TransactionCase):
         picking.cancel_shipment()
         self.assertFalse(picking.carrier_tracking_ref, "Carrier Tracking code has not been properly deleted")
         self.assertEquals(picking.carrier_price, 0.0, "Carrier price has not been properly deleted")
+
+    def test_03_ups_flow_from_delivery_order(self):
+
+        inventory = self.env['stock.inventory'].create({
+            'name': '[A1232] iPad Mini',
+            'filter': 'product',
+            'location_id': self.stock_location.id,
+            'product_id': self.iPadMini.id,
+        })
+
+        # Set service type = 'UPS Worldwide Expedited', which is available between US to BE
+        carrier = self.env.ref('delivery_ups.delivery_carrier_ups_us')
+        carrier.write({'ups_default_service_type': '08',
+                       'ups_package_dimension_unit': 'IN'})
+        carrier.ups_default_packaging_id.write({'height': '3',
+                                                'width': '3',
+                                                'length': '3'})
+
+        StockPicking = self.env['stock.picking']
+
+        order1_vals = {
+                    'product_id': self.iPadMini.id,
+                    'name': "[A1232] iPad Mini",
+                    'product_uom': self.uom_unit.id,
+                    'product_uom_qty': 1.0,
+                    'location_id': self.stock_location.id,
+                    'location_dest_id': self.customer_location.id}
+
+        do_vals = { 'partner_id': self.agrolait.id,
+                    'carrier_id': carrier.id,
+                    'location_id': self.stock_location.id,
+                    'location_dest_id': self.customer_location.id,
+                    'picking_type_id': self.env.ref('stock.picking_type_out').id,
+                    'move_ids_without_package': [(0, None, order1_vals)]}
+
+        delivery_order = StockPicking.create(do_vals)
+        self.assertEqual(delivery_order.state, 'draft', 'Shipment state should be draft.')
+
+        delivery_order.action_confirm()
+        self.assertEqual(delivery_order.state, 'confirmed', 'Shipment state should be waiting(confirmed).')
+
+        delivery_order.action_assign()
+        self.assertEqual(delivery_order.state, 'assigned', 'Shipment state should be ready(assigned).')
+        delivery_order.move_ids_without_package.quantity_done = 1.0
+
+        delivery_order.button_validate()
+        self.assertEqual(delivery_order.state, 'done', 'Shipment state should be done.')

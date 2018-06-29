@@ -14,10 +14,10 @@
 # Stjepan Lovasić <stjepan.lovasic@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Stjepan Lovasić <stjepan.lovasic@gmail.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -121,6 +121,16 @@ msgstr ""
 #: selection:voip.phonecall,state:0 selection:voip.phonecall.report,state:0
 msgid "Cancelled"
 msgstr "Otkazano"
+
+#. module: voip
+#: model:ir.model.fields,help:voip.field_mail_activity_type__category
+msgid "Categories may trigger specific behavior like opening calendar view"
+msgstr ""
+
+#. module: voip
+#: model:ir.model.fields,field_description:voip.field_mail_activity_type__category
+msgid "Category"
+msgstr "Kategorija"
 
 #. module: voip
 #. openerp-web
@@ -364,6 +374,11 @@ msgid "Mark as done"
 msgstr ""
 
 #. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Meeting"
+msgstr "Sastanak"
+
+#. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__mobile
 #: model:ir.model.fields,field_description:voip.field_voip_phonecall__mobile
 msgid "Mobile"
@@ -426,6 +441,11 @@ msgid "One or more parameter is missing. Please check your configuration."
 msgstr "Jedan ili više parametara nedostaje. Provjerite postavke."
 
 #. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Other"
+msgstr "Ostalo"
+
+#. module: voip
 #: selection:voip.phonecall,type:0
 msgid "Outgoing"
 msgstr "Odlazno"
@@ -450,6 +470,11 @@ msgstr "Telefon"
 #: model:ir.model.fields,field_description:voip.field_res_partner__sanitized_phone
 #: model:ir.model.fields,field_description:voip.field_res_users__sanitized_phone
 msgid "Phone number sanitized"
+msgstr ""
+
+#. module: voip
+#: selection:mail.activity.type,category:0
+msgid "Phonecall"
 msgstr ""
 
 #. module: voip
@@ -625,7 +650,7 @@ msgstr "Kupac je trenutno nedostupan. Molimo pokušajte kasnije."
 
 #. module: voip
 #. openerp-web
-#: code:addons/voip/static/src/js/user_agent.js:460
+#: code:addons/voip/static/src/js/user_agent.js:468
 #, python-format
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "

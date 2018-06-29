@@ -261,6 +261,7 @@ class ProviderFedex(models.Model):
             srm.shipment_label('COMMON2D', self.fedex_label_file_type, self.fedex_label_stock_type, 'TOP_EDGE_OF_TEXT_FIRST', 'SHIPPING_LABEL_FIRST')
 
             order = picking.sale_id
+            company = order.company_id or picking.company_id or self.env.user.company_id
             order_currency = picking.sale_id.currency_id or picking.company_id.currency_id
 
             net_weight = self._fedex_convert_weight(picking.shipping_weight, self.fedex_weight_unit)
@@ -273,7 +274,7 @@ class ProviderFedex(models.Model):
                 commodity_country_of_manufacture = picking.picking_type_id.warehouse_id.partner_id.country_id.code
 
                 for operation in picking.move_line_ids:
-                    commodity_amount = order_currency._convert(operation.product_id.list_price, commodity_currency, order.company_id, order.date_order or fields.Date.today())
+                    commodity_amount = order_currency._convert(operation.product_id.list_price, commodity_currency, company, order.date_order or fields.Date.today())
                     total_commodities_amount += (commodity_amount * operation.qty_done)
                     commodity_description = operation.product_id.name
                     commodity_number_of_piece = '1'
@@ -358,11 +359,11 @@ class ProviderFedex(models.Model):
                                 if _convert_curr_iso_fdx(company_currency.name) in request['price']:
                                     amount = request['price'][_convert_curr_iso_fdx(company_currency.name)]
                                     carrier_price = company_currency._convert(
-                                        amount, order_currency, order.company_id, order.date_order or fields.Date.today())
+                                        amount, order_currency, company, order.date_order or fields.Date.today())
                                 else:
                                     amount = request['price']['USD']
                                     carrier_price = company_currency._convert(
-                                        amount, order_currency, order.company_id, order.date_order or fields.Date.today())
+                                        amount, order_currency, company, order.date_order or fields.Date.today())
 
                             carrier_tracking_ref = carrier_tracking_ref + "," + request['tracking_number']
 
@@ -413,11 +414,11 @@ class ProviderFedex(models.Model):
                         if _convert_curr_iso_fdx(company_currency.name) in request['price']:
                             amount = request['price'][_convert_curr_iso_fdx(company_currency.name)]
                             carrier_price = company_currency._convert(
-                                amount, order_currency, order.company_id, order.date_order or fields.Date.today())
+                                amount, order_currency, company, order.date_order or fields.Date.today())
                         else:
                             amount = request['price']['USD']
                             carrier_price = company_currency._convert(
-                                amount, order_currency, order.company_id, order.date_order or fields.Date.today())
+                                amount, order_currency, company, order.date_order or fields.Date.today())
 
                     carrier_tracking_ref = request['tracking_number']
                     logmessage = (_("Shipment created into Fedex <br/> <b>Tracking Number : </b>%s") % (carrier_tracking_ref))

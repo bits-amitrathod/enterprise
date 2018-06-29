@@ -12,9 +12,6 @@ This module allows you to set a deferred revenue on your subscriptions.
         'views/sale_subscription_views.xml',
         'views/res_config_settings_views.xml',
     ],
-    'demo': [
-        'data/sale_subscription_asset_demo.xml',
-    ],
     'installable': True,
     'auto_install': True,
     'license': 'OEEL-1',

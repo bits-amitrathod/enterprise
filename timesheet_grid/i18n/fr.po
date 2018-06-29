@@ -21,10 +21,10 @@
 # Frédéric LIETART <stuff@tifred.fr>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Frédéric LIETART <stuff@tifred.fr>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -221,10 +221,15 @@ msgid "Add a Task"
 msgstr ""
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:78
+#: code:addons/timesheet_grid/models/analytic.py:81
 #, python-format
 msgid "All selected timesheets are already validated"
 msgstr "Toutes les feuilles de temps sélectionnées sont déjà validées"
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__amount
+msgid "Amount"
+msgstr "Montant"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
@@ -276,6 +281,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_delay
 msgid "Days to Remind User"
 msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__name
+msgid "Description"
+msgstr "Description"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__display_name
@@ -392,7 +402,7 @@ msgid "Month"
 msgstr "Mois"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:132
+#: code:addons/timesheet_grid/models/analytic.py:120
 #, python-format
 msgid ""
 "Multiple timesheet entries match the modified value. Please change the "
@@ -407,13 +417,13 @@ msgid "My Team"
 msgstr "Mon équipe"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_nextdate
-msgid "Next scheduled date for manager reminder"
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_nextdate
+msgid "Next scheduled date for employee reminder"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_nextdate
-msgid "Next scheduled date for user reminder"
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_nextdate
+msgid "Next scheduled date for manager reminder"
 msgstr ""
 
 #. module: timesheet_grid
@@ -422,30 +432,12 @@ msgid "Non Validated"
 msgstr "Non Validé"
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:100
+#: code:addons/timesheet_grid/models/analytic.py:103
 #, python-format
 msgid ""
-"Only a Timesheets Officer is allowed to create an entry older than the "
+"Only a Timesheets Manager is allowed to create an entry older than the "
 "validation limit."
 msgstr ""
-"Seul un agent responsable des feuilles de temps est autorisé à créer une "
-"entrée qui dépasse le délai limite de validation."
-
-#. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:115
-#, python-format
-msgid "Only a Timesheets Officer is allowed to delete a validated entry."
-msgstr ""
-"Seul un agent responsable des feuilles de temps est autorisé à supprimer une"
-" entrée validée."
-
-#. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:109
-#, python-format
-msgid "Only a Timesheets Officer is allowed to modify a validated entry."
-msgstr ""
-"Seul un agent responsable des feuilles de temps est autorisé à modifier une "
-"entrée validée."
 
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_manager
@@ -474,7 +466,12 @@ msgid ""
 msgstr ""
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/analytic.py:73
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__task_id
+msgid "Task"
+msgstr "Tâche"
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/analytic.py:76
 #, python-format
 msgid "There aren't any timesheet to validate"
 msgstr "Il n'y a pas de feuilles de temps à valider"

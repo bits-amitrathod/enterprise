@@ -12,10 +12,10 @@
 # Anja Funk <anja.funk@afimage.de>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.2+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 14:21+0000\n"
-"PO-Revision-Date: 2018-03-22 14:21+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Anja Funk <anja.funk@afimage.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
@@ -112,15 +112,25 @@ msgid "Service Provider"
 msgstr "Service Provider"
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:75
+#: code:addons/currency_rate_live/models/res_config_settings.py:356
 #, python-format
 msgid ""
 "The Yahoo currency rate web service has been discontinued. Please select "
 "another currency rate provider."
 msgstr ""
+"Der Yahoo-Wechselkurs-Webservice wurde eingestellt. Wählen Sie bitte einen "
+"anderen Dienstleister."
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:85
+#: code:addons/currency_rate_live/models/res_config_settings.py:86
+#, python-format
+msgid ""
+"Unable to connect to the online exchange rate platform %s. The web service "
+"may be temporary down."
+msgstr ""
+
+#. module: currency_rate_live
+#: code:addons/currency_rate_live/models/res_config_settings.py:359
 #, python-format
 msgid ""
 "Unable to connect to the online exchange rate platform. The web service may "
@@ -138,10 +148,10 @@ msgstr "Wöchentlich"
 #. module: currency_rate_live
 #: selection:res.company,currency_provider:0
 msgid "Yahoo (DISCONTINUED)"
-msgstr ""
+msgstr "Yahoo (EINGESTELLT)"
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:120
+#: code:addons/currency_rate_live/models/res_config_settings.py:122
 #, python-format
 msgid ""
 "Your main currency %s is unsupported by this exchange rate provider. Please "
