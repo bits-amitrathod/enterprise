@@ -7,17 +7,18 @@
 # oon arfiandwi (OonID) <oon.arfiandwi@gmail.com>, 2016
 # William Surya Permana <zarambie_game@yahoo.com>, 2016
 # Deddy Ddr <deddy.ddr@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Lorenz Damara <lorenzrenz@gmail.com>, 2016
 # Bonny Useful <bonny.useful@gmail.com>, 2017
 # Ryanto The <ry.the77@gmail.com>, 2017
+# Ikhsanul Wirsa <iwirsa02@outlook.co.id>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
 "PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Ryanto The <ry.the77@gmail.com>, 2017\n"
+"Last-Translator: Ikhsanul Wirsa <iwirsa02@outlook.co.id>, 2018\n"
 "Language-Team: Indonesian (https://www.transifex.com/odoo/teams/41243/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,6 +41,8 @@ msgid ""
 "<strong>Well done!</strong>\n"
 "                  Your banking institution is now synchronized with Odoo and a total of"
 msgstr ""
+"<strong>Selamat!</strong>\n"
+"                  Lembaga perbankan Anda telah disinkronasi dengan Odoo dan total sejumlah"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_account_number
@@ -65,18 +68,18 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
 msgid "Additional information"
-msgstr ""
+msgstr "Informasi Tambahan"
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:57
 #, python-format
 msgid "An error occurred during online synchronization"
-msgstr ""
+msgstr "Kesalahan terjadi ketika sinkronasi daring"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "Associate to journal"
-msgstr ""
+msgstr "Kaitkan pada jurnal"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_balance
@@ -101,7 +104,7 @@ msgstr "Transaksi buku bank"
 #. module: account_online_sync
 #: model:ir.actions.act_window,help:account_online_sync.action_online_provider_account
 msgid "Click to add an online bank to the system."
-msgstr ""
+msgstr "Klik untuk menambahkan sebuah bank daring ke sistem."
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -111,7 +114,7 @@ msgstr "Tutup"
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_status_code
 msgid "Code to identify problem"
-msgstr ""
+msgstr "Kode untuk mengidentifikasi masalah"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_company_id
@@ -152,7 +155,7 @@ msgstr "Nama Tampilan"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_sync_date
 msgid "Fetch transaction from"
-msgstr ""
+msgstr "Ambil transaksi dari"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_id
@@ -166,17 +169,19 @@ msgstr "ID"
 msgid ""
 "ID of the banking institution in third party server used for debugging "
 "purpose"
-msgstr ""
+msgstr "ID lembaga perbankan dalam server pihak ketika untuk proses debug"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_provider_account_identifier
 msgid "ID used to identify provider account in third party server"
 msgstr ""
+"ID yang digunakan untuk mengidentifikasi rekening penyedia dalam server "
+"pihak ketiga"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_journal
 msgid "Interface for online account journal"
-msgstr ""
+msgstr "Antarmuka untuk jurnal rekening daring"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_journal
@@ -218,12 +223,12 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_last_sync
 msgid "Last synchronization"
-msgstr ""
+msgstr "Sinkronasi terakhir"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
 msgid "Manual Refresh"
-msgstr ""
+msgstr "Pembaharuan Manual"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_message
@@ -240,13 +245,13 @@ msgstr "Nama"
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 msgid "Next sync:"
-msgstr ""
+msgstr "Sinkronasi selanjutnya:"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_next_synchronization
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_next_refresh
 msgid "Next synchronization"
-msgstr ""
+msgstr "Sinkronasi berikutnya:"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_number_added
@@ -261,17 +266,17 @@ msgstr "Akun Daring"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_bank_statement_line_online_identifier
 msgid "Online Identifier"
-msgstr ""
+msgstr "Pengenal Daring"
 
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_online_provider_account
 msgid "Online Provider Account"
-msgstr ""
+msgstr "Rekening Penyedia Daring"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "Online Sync configuration"
-msgstr ""
+msgstr "Pengaturan sinkronisasi daring"
 
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_account_online_wizard_form
@@ -279,12 +284,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_form_inherit_online_sync
 msgid "Online Synchronization"
-msgstr ""
+msgstr "SInkronisasi daring"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard_account_online_journal_id
 msgid "Online account"
-msgstr ""
+msgstr "Rekening daring"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal_online_identifier
@@ -300,12 +305,12 @@ msgstr ""
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
 msgid "Plaid"
-msgstr ""
+msgstr "Kotak-kotak"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 msgid "Problem during synchronization"
-msgstr ""
+msgstr "Masalah pada sinkronisasi"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_account_identifier
@@ -315,7 +320,7 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_provider
 msgid "Provider for online account synchronization"
-msgstr ""
+msgstr "Penyedia untuk sinkronisasi rekening daring"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_provider_identifier
@@ -336,55 +341,57 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal_synchronization_status
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider_status
 msgid "Synchronization status"
-msgstr ""
+msgstr "Status sinkronisasi"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 msgid "Synchronize now"
-msgstr ""
+msgstr "Sinkronisasi sekarang"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_message
 msgid "Techhnical message from third party provider that can help debugging"
 msgstr ""
+"Pesan teknis dari penyedia pihak ketiga yang dapat membantu proses debug"
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:58
 #, python-format
 msgid "The following error happened during the synchronization: %s"
-msgstr ""
+msgstr "Kesalahan berikut terjadi pada sinkronisasi: %s"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_action_required
 msgid "True if user needs to take action by updating account"
 msgstr ""
+"Benar jika pengguna ingin mengambil tindakan dengan memperbarui rekening"
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:122
 #, python-format
 msgid "Unimplemented"
-msgstr ""
+msgstr "Belum dijalankan"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
 msgid "Update Credentials"
-msgstr ""
+msgstr "Perbarui Kredensial"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_journal_synchronization_status
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_status
 msgid "Update status of provider account"
-msgstr ""
+msgstr "Perbarui status penyedia rekening"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 msgid "View problem"
-msgstr ""
+msgstr "Lihat masalah"
 
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_wizard
 msgid "Wizard for online account synchronization"
-msgstr ""
+msgstr "Wizard untuk sinkronisasi rekening daring"
 
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
@@ -394,7 +401,7 @@ msgstr "Yodlee"
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_balance
 msgid "balance of the account sent by the third party provider"
-msgstr ""
+msgstr "Saldo rekening yang dikirim oleh penyedia pihak ketiga"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -402,22 +409,26 @@ msgid ""
 "bank accounts have been retrieved.\n"
 "                  You can associate those bank accounts to a journal in order to automatically retrieve the latest statements from your bank."
 msgstr ""
+"rekening bank telah diterima. Anda dapat mengaitkan rekening-rekening "
+"tersebut pada jurnal untuk menerima pernyataan terkini dari bank Anda secara"
+" otomatis."
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_online_identifier
 msgid "id use to identify account in provider system"
 msgstr ""
+"ID yang digunakan untuk mengidentifikasi rekening dalam sistem penyedia"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_journal_provider_name
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider_name
 msgid "name of the banking institution"
-msgstr ""
+msgstr "nama lembaga perbankan"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard_number_added
 msgid "number of accounts added from call to new_institution"
-msgstr ""
+msgstr "jumlah rekening yang ditambahkan dari panggilan ke new_institution"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard_count_account_online_journal
@@ -425,3 +436,5 @@ msgid ""
 "technical field used to hide account_online_journal_id if no institution has"
 " been loaded in the system"
 msgstr ""
+"kolom teknis yang digunakan untuk menyembunyikan account_online_journal_id "
+"jika tidak ada lembaga yang dipanggil oleh sistem"

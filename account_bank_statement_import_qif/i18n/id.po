@@ -3,16 +3,17 @@
 # * account_bank_statement_import_qif
 # 
 # Translators:
-# Azhe 403 <azhe403@gmail.com>, 2016
+# Azhe-kun <azhe403@gmail.com>, 2016
 # Lorenz Damara <lorenzrenz@gmail.com>, 2016
 # William Surya Permana <zarambie_game@yahoo.com>, 2016
+# Ikhsanul Wirsa <iwirsa02@outlook.co.id>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
 "PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: William Surya Permana <zarambie_game@yahoo.com>, 2016\n"
+"Last-Translator: Ikhsanul Wirsa <iwirsa02@outlook.co.id>, 2018\n"
 "Language-Team: Indonesian (https://www.transifex.com/odoo/teams/41243/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,6 +28,9 @@ msgid ""
 " be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
 msgstr ""
+"Jurnal akuntansi yang berhubungan dengan surat pernyataan bank yang Anda "
+"impor. Itu harus dipilih secara manual untuk format pernyataan dimana "
+"pendeteksian jurnal otomatis tidak diperbolehkan (QIF sebagai contoh)."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_bank_statement_import_qif_date_format
@@ -35,12 +39,16 @@ msgid ""
 "financial institutions use the local format.Therefore, it is frequent "
 "outside the US to have QIF date formated day-first (dd/mm/yy)."
 msgstr ""
+"Walaupun dalam format tanggal historis QIF adalah berawalan bulan "
+"(bb/hh/tt), banyak institusi keuangan menggunakan format lokal. Oleh "
+"karenanya, sering institusi diluar AS menggunakan format tanggal QIF "
+"berawalan hari (hh/bb/tt)."
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:61
 #, python-format
 msgid "Could not decipher the QIF file."
-msgstr ""
+msgstr "Tidak dapat membaca berkas QIF."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_qif_date_format
@@ -65,7 +73,7 @@ msgstr "Jurnal"
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_qif
 msgid "Quicken Interchange Format (.QIF)"
-msgstr ""
+msgstr "Format Antarmuka Cepat (QIF)."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import_show_qif_date_format
@@ -78,6 +86,8 @@ msgid ""
 "Technical field used to ask the user for the date format used in the QIF "
 "file, as this format is ambiguous."
 msgstr ""
+"Kolom teknis yang digunakan untuk bertanya pada pengguna tentang format "
+"tanggal yang digunakan pada berkas QIF, karena format ini meragukan."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view_inherited
@@ -85,6 +95,8 @@ msgid ""
 "The QIF format is ambiguous about dates: please check with your financial "
 "institution whether they format it with month or day first.<br/>"
 msgstr ""
+"Format QIF meragukan pada tanggal: mohon cek pada institusi  keuangan Anda "
+"apakah format yang digunakan dimulai dari bulan atau hari terlebih dahulu."
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:101

@@ -4,17 +4,18 @@
 # 
 # Translators:
 # Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Febrasari Almania <febrasari.almania@gmail.com>, 2016
 # William Surya Permana <zarambie_game@yahoo.com>, 2016
 # Deddy Ddr <deddy.ddr@gmail.com>, 2016
+# Ikhsanul Wirsa <iwirsa02@outlook.co.id>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-19 12:58+0000\n"
 "PO-Revision-Date: 2016-09-19 12:58+0000\n"
-"Last-Translator: Deddy Ddr <deddy.ddr@gmail.com>, 2016\n"
+"Last-Translator: Ikhsanul Wirsa <iwirsa02@outlook.co.id>, 2018\n"
 "Language-Team: Indonesian (https://www.transifex.com/odoo/teams/41243/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -91,6 +92,19 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Kepada Yth. %(partner_name)s,\n"
+"\n"
+"Kami cukup kecewa melihat bahwa rekening Anda telah lama lewat dari jatuh tempo meskipun peringatan telah dikirim.\n"
+"\n"
+"Pembayaran sangat penting untuk segera dilakukan, sebaliknya kami akan memberhentikan rekening Anda dimana artinya kami tidak berkemampuan lagi untuk menyediakan (barang/jasa) untuk perusahaan Anda.\n"
+"Mohon lakukan tindakan bijak untuk melunasi pembayaran dalam kurun waktu 8 hari ke depan.\n"
+"\n"
+"Jika Anda menemui masalah dalam pembayaran faktur yang tidak kami ketahui, jangan sungkan untuk menghubungi bidang akuntansi kami, sehingga kami dapat menyelesaikan masalah tersebut sesegera mungkin.\n"
+"\n"
+"Rincian pembayaran jatuh tempo tertulis dibawah ini.\n"
+"\n"
+"Salam Hormat,\n"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -109,7 +123,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_report_context_followup_all
 msgid "A progress bar for followup reports"
-msgstr ""
+msgstr "Bar proses untuk menindaklanjuti laporan"
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_followup_followup
@@ -140,6 +154,8 @@ msgstr "Saldo"
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
 msgid "Click to define follow-up levels and their related actions."
 msgstr ""
+"Klik untuk menentukan tingkatan tindaklanjut dan tindakannya yang "
+"berhubungan."
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_res_company
@@ -192,7 +208,7 @@ msgstr "Nama Tampilan"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Do it Later"
-msgstr ""
+msgstr "Lakukan itu Nanti"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
@@ -207,7 +223,7 @@ msgstr "Hari karena"
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
 msgid "First reminder email"
-msgstr ""
+msgstr "Surel Peringatan Pertama"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_followup_id
@@ -259,6 +275,8 @@ msgid ""
 "                possible to use print and e-mail templates to send specific messages to\n"
 "                the customer."
 msgstr ""
+"Tentukan tindakan yang akan diambil dan penundaan dalam hari untuk setiap langkah.  Diperbolehkan\n"
+"                untuk menggunakan template cetak dan surel untuk mengirimkan pesan khusus kepada pelanggan."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
@@ -309,12 +327,12 @@ msgstr "Tingkat"
 #: code:addons/account_reports_followup/account_followup_report.py:62
 #, python-format
 msgid "Level: "
-msgstr ""
+msgstr "Tingkat:"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Log a Note"
-msgstr ""
+msgstr "Buat sebuah Catatan"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_manual_action
@@ -331,7 +349,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
 msgid "Minimum days between two follow-ups"
-msgstr ""
+msgstr "Hari minimal diantara dua tindaklanjut"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
@@ -345,6 +363,8 @@ msgid ""
 "No follow-up is defined for the company \"%s\".\n"
 " Please define one."
 msgstr ""
+"Tidak ada tindaklanjut yang ditetapkan untuk perusahaan tersebut \"%s\".\n"
+" Mohon tentukan salah satu."
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
@@ -383,7 +403,7 @@ msgstr "Pembayaran Catatan"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Print Letter"
-msgstr ""
+msgstr "Cetak Surat"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_description
@@ -398,7 +418,7 @@ msgstr "Cari Tindak lanjut"
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line2
 msgid "Second reminder letter and email"
-msgstr ""
+msgstr "Surat dan Surel Peringatan Kedua"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_letter
@@ -408,7 +428,7 @@ msgstr "Kirim surat"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
 msgid "Send a Letter or Email"
-msgstr ""
+msgstr "Kirim Surat atau Surel"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_email
@@ -418,7 +438,7 @@ msgstr "Kirim email"
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
 msgid "Send by email"
-msgstr ""
+msgstr "Kirim dengan Surel"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_sequence
@@ -439,7 +459,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line3
 msgid "Third reminder: phone the customer"
-msgstr ""
+msgstr "Peringatan ketiga: hubungi pelanggan"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_form
@@ -475,12 +495,12 @@ msgstr "Total debit"
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line4
 msgid "Urging reminder email"
-msgstr ""
+msgstr "Surel peringatan mendesak"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line5
 msgid "Urging reminder letter"
-msgstr ""
+msgstr "Surat peringatan mendesak"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_config_settings_min_days_between_followup

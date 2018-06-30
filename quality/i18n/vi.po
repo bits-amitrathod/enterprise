@@ -5,7 +5,7 @@
 # Translators:
 # lam nguyen <lamev.inc@gmail.com>, 2016
 # Hoang Loc Le Huu <loclhh@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # fanha99 <fanha99@hotmail.com>, 2016
 # son dang <son.dang@doda100.com>, 2016
 # Duy Pham <phamduy1812@gmail.com>, 2016
@@ -14,13 +14,14 @@
 # Su Pham Nghiep Vu <nghiepvusupham58@gmail.com>, 2017
 # thanh nguyen <thanhnguyen.icsc@gmail.com>, 2017
 # Thang Duong Bao <nothingctrl@gmail.com>, 2017
+# Duy BQ <duybq86@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-10 09:14+0000\n"
 "PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Thang Duong Bao <nothingctrl@gmail.com>, 2017\n"
+"Last-Translator: Duy BQ <duybq86@gmail.com>, 2018\n"
 "Language-Team: Vietnamese (https://www.transifex.com/odoo/teams/41243/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,22 +33,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alert_count
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_count
 msgid "# Quality Alerts"
-msgstr ""
+msgstr "SL cảnh báo chất lượng"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_check_count
 msgid "# Quality Checks"
-msgstr ""
+msgstr "SL đánh giá chất lượng"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "% of the operation"
-msgstr ""
+msgstr "% của hoạt động"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
-msgstr ""
+msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -55,11 +56,13 @@ msgid ""
 "<span attrs=\"{'invisible': [('measure_frequency_type', '=', "
 "'all')]}\">Every </span>"
 msgstr ""
+"<span attrs=\"{'invisible': [('measure_frequency_type', '=', "
+"'all')]}\">Mỗi</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "<span class=\"o_stat_text\">Quality Check</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Đánh giá chất lượng</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
@@ -69,12 +72,12 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "<span>from </span>"
-msgstr ""
+msgstr "<span>từ </span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "<span>to </span>"
-msgstr ""
+msgstr "<span>đến</span>"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_defaults
@@ -82,6 +85,8 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
+"Một thư viện Python mà sẽ được biểu thị/đánh giá để cung cấp các giá trị mặc"
+" định khi tạo mới các bản ghi cho bí danh này."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
@@ -96,18 +101,18 @@ msgstr "Có hiệu lực"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_done
 msgid "Alert Processed"
-msgstr ""
+msgstr "Cảnh báo đã xử lý"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 msgid "Alert(s)"
-msgstr ""
+msgstr "Cảnh báo"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_ids
 #: model:ir.ui.menu,name:quality.menu_quality_alerts
 msgid "Alerts"
-msgstr ""
+msgstr "Cảnh báo"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_id
@@ -117,22 +122,22 @@ msgstr "Bí danh"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_contact
 msgid "Alias Contact Security"
-msgstr ""
+msgstr "An ninh bí danh liên hệ"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_name
 msgid "Alias Name"
-msgstr ""
+msgstr "Tên bí danh"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_domain
 msgid "Alias domain"
-msgstr ""
+msgstr "Bí danh tên miền"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_model_id
 msgid "Aliased Model"
-msgstr ""
+msgstr "Bí danh Model"
 
 #. module: quality
 #: selection:quality.point,measure_frequency_type:0
@@ -162,27 +167,27 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
 msgid "Checked By"
-msgstr ""
+msgstr "Đánh giá bởi"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
 msgid "Checked Date"
-msgstr ""
+msgstr "Đánh giá ngày"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_check_ids
 msgid "Checks"
-msgstr ""
+msgstr "Đánh giá"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
 msgid "Checks In Progress"
-msgstr ""
+msgstr "Tiến trình đánh giá"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_point_action
 msgid "Click here to add a new Quality Control Points"
-msgstr ""
+msgstr "Bấm để thêm một điểm Kiểm soát chất lượng mới"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_color
@@ -210,42 +215,42 @@ msgstr "Cấu hình"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
 msgid "Control Date"
-msgstr ""
+msgstr "Ngày kiểm soát"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Control Frequency"
-msgstr ""
+msgstr "Tần suất kiểm soát"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 msgid "Control Person"
-msgstr ""
+msgstr "Người kiểm soát"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_point_id
 msgid "Control Point"
-msgstr ""
+msgstr "Điểm kiểm soát"
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_control_points
 msgid "Control Points"
-msgstr ""
+msgstr "Điểm kiểm soát"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Control Type"
-msgstr ""
+msgstr "Cách kiểm soát"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_action_corrective
 msgid "Corrective Action"
-msgstr ""
+msgstr "Biện Pháp khắc Phục"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Corrective Actions"
-msgstr ""
+msgstr "Biện Pháp khắc Phục"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_create_uid
@@ -282,7 +287,7 @@ msgstr "Màn hình điều khiển"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_date_assign
 msgid "Date Assigned"
-msgstr ""
+msgstr "Ngày phân công"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_date_close
@@ -297,27 +302,27 @@ msgstr "Ngày"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_defaults
 msgid "Default Values"
-msgstr ""
+msgstr "Giá trị mặc định"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Describe the corrective actions you did..."
-msgstr ""
+msgstr "Mô tả các hành động khắc phục bạn đã làm ..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Describe the preventive actions you did..."
-msgstr ""
+msgstr "Mô tả các hành động phòng ngừa bạn đã làm ..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Describe the quality check to do..."
-msgstr ""
+msgstr "Mô tả kiểm tra chất lượng cần làm ..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Describe why you need to perform this quality check..."
-msgstr ""
+msgstr "Mô tả lý do bạn cần phải thực hiện kiểm tra chất lượng này ..."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_description
@@ -328,7 +333,7 @@ msgstr "Miêu tả"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Description of the issue..."
-msgstr ""
+msgstr "Mô tả về vấn đề..."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_display_name
@@ -356,7 +361,7 @@ msgstr "Email bí danh"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 #: selection:quality.check,measure_success:0
 msgid "Fail"
-msgstr ""
+msgstr "Không đạt"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
@@ -367,13 +372,13 @@ msgstr "Hỏng"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_folded
 msgid "Folded"
-msgstr ""
+msgstr "Nhóm lại"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_type
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit_value
 msgid "Frequency"
-msgstr ""
+msgstr "Tần suất"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
@@ -384,7 +389,7 @@ msgstr "Nhóm theo"
 #. module: quality
 #: model:ir.module.category,description:quality.module_category_quality
 msgid "Helps you manage your quality alerts and quality checks."
-msgstr ""
+msgstr "Giúp bạn quản lý cảnh báo chất lượng và đánh giá chất lượng"
 
 #. module: quality
 #: selection:quality.alert,priority:0
@@ -466,7 +471,7 @@ msgstr "Thấp"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 msgid "Make Alert"
-msgstr ""
+msgstr "Tạo cảnh báo"
 
 #. module: quality
 #: model:res.groups,name:quality.group_quality_manager
@@ -476,7 +481,7 @@ msgstr "Quản trị dự án"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_max
 msgid "Max Tolerance"
-msgstr ""
+msgstr "Dung sai tối đa"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure
@@ -497,7 +502,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_min
 msgid "Min Tolerance"
-msgstr ""
+msgstr "Dung sai tối thiểu"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
@@ -815,6 +820,8 @@ msgid ""
 "Quality Control Points are places in your logistics process\n"
 "                where you want to do quality control."
 msgstr ""
+"Điểm kiểm soát chất lượng được đặt trong quy trình logistics của bạn\n"
+"                nơi bạn muốn kiểm soát chất lượng."
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_controls

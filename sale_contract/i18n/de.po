@@ -53,7 +53,7 @@ msgstr "Aktiv"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_actual_quantity
 msgid "Actual quantity"
-msgstr ""
+msgstr "Ist-Menge"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_account_analytic_account
@@ -197,7 +197,7 @@ msgstr "Arbeitsvertrag"
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
 msgid "Contracts in progress"
-msgstr ""
+msgstr "Laufende Verträge (Offen, Entwurf)"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_search
@@ -438,7 +438,7 @@ msgstr "Rechnung wird im entsprechenden Zeitinterval automatisch neu erstellt"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_invoice_count
 msgid "Invoice count"
-msgstr ""
+msgstr "Rechnungsanzahl"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
@@ -485,6 +485,7 @@ msgstr "Abonnements verwalten"
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_line_quantity
 msgid "Max between actual and sold quantities; this quantity will be invoiced"
 msgstr ""
+"Differenz zwischen Ist- und Verkaufsmenge; diese Menge wird abgerechnet"
 
 #. module: sale_contract
 #: selection:sale.subscription.template,recurring_rule_type:0
@@ -516,6 +517,8 @@ msgid ""
 "            state. After the negociation, the salesman should close or renew\n"
 "            pending contracts."
 msgstr ""
+"Odoo versetzt Abonnements, die erneuert werden sollen, automatisch in den Zustand „Unerledigt“.\n"
+"Nach der Verhandlung sollte der Verkäufer unerledigte Abonnements beenden oder erneuern."
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_res_partner
@@ -531,7 +534,7 @@ msgstr "Verträge zur Wiedervorlage"
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
 msgid "Plan Change Tags"
-msgstr ""
+msgstr "Stichworte im Plan bearbeiten"
 
 #. module: sale_contract
 #: code:addons/sale_contract/models/sale_subscription.py:172
@@ -593,12 +596,12 @@ msgstr "Menge"
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_line_actual_quantity
 msgid "Quantity actually used by the customer"
-msgstr ""
+msgstr "Tatsächlich vom Kunden genutzte Menge"
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_line_sold_quantity
 msgid "Quantity sold to the customer"
-msgstr ""
+msgstr "An den Kunden verkaufte Menge"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_close_reason_view_form
@@ -693,7 +696,7 @@ msgstr "Einstellungen"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_sold_quantity
 msgid "Sold quantity"
-msgstr ""
+msgstr "Verkaufte Menge"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_date_start
@@ -787,12 +790,12 @@ msgstr "Vorlage für Abonnements"
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_template_line
 msgid "Subscription Template Line"
-msgstr ""
+msgstr "Abonnement Vorlagenposition"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_subscription_template_line_ids
 msgid "Subscription Template Lines"
-msgstr ""
+msgstr "Abonnement Vorlagenpositionen"
 
 #. module: sale_contract
 #: model:ir.actions.act_window,name:sale_contract.sale_subscription_template_action
@@ -810,7 +813,7 @@ msgstr "Abonnement Produkte"
 #. module: sale_contract
 #: model:mail.message.subtype,description:sale_contract.subtype_state_change
 msgid "Subscription state has changed"
-msgstr ""
+msgstr "Abonnementstatus hat sich geändert"
 
 #. module: sale_contract
 #: model:ir.actions.act_window,name:sale_contract.sale_subscription_action
@@ -840,18 +843,18 @@ msgstr "Zu erneuernde Aboaufträge"
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_close_reason
 msgid "Susbcription Close Reason"
-msgstr ""
+msgstr "Grund für Abonnementbeendigung"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_account_analytic_account_subscription_count
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_subscription_count
 msgid "Susbcription Count"
-msgstr ""
+msgstr "Abonnementanzahl"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_line
 msgid "Susbcription Line"
-msgstr ""
+msgstr "Abonnementposition"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_tag_ids
@@ -905,7 +908,7 @@ msgstr ""
 #. module: sale_contract
 #: model:res.groups,comment:sale_contract.group_sale_contract_view
 msgid "The user will have read access to contracts."
-msgstr ""
+msgstr "Der Benutzer hat Leserecht für Verträge."
 
 #. module: sale_contract
 #: model:res.groups,comment:sale_contract.group_sale_contract_manager
@@ -922,7 +925,7 @@ msgstr "Diese Rechnung bezieht sich auf folgenden Periode: %s - %s"
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_order_view_form_subscription
 msgid "This order is linked to a subscription."
-msgstr ""
+msgstr "Der Auftrag ist an ein Abonnement gebunden."
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_company_uom_id
@@ -972,6 +975,10 @@ msgid ""
 "                work done, expenses and/or sales orders. Odoo will automatically manage\n"
 "                the alerts for the renewal of the contracts to the right salesperson."
 msgstr ""
+"Verwenden Sie Verträge, um Aufgaben, Probleme, Zeitnachweis- \n"
+"oder Leistungsabrechnungen, Auslagen und/oder Verkaufsaufträge zu fixieren. \n"
+"Odoo wird automatisch Benachrichtigungen über Vertragsverlängerungen an den \n"
+"richtigen Verkäufer richten."
 
 #. module: sale_contract
 #: selection:sale.subscription.template,recurring_rule_type:0
@@ -984,6 +991,8 @@ msgid ""
 "When a customer wants to change his subscription plan, he has the choice "
 "between all the recurring contracts with the same tags."
 msgstr ""
+"Wenn ein Kunde seinen Abonnement-Plan ändern möchte, kann er aus allen "
+"wiederkehrenden Verträgen mit gleichen Tags wählen."
 
 #. module: sale_contract
 #: selection:sale.subscription.template,recurring_rule_type:0
@@ -1014,11 +1023,13 @@ msgid ""
 "            end date is passed or the working effort is higher than the\n"
 "            maximum authorized one."
 msgstr ""
+"Sie finden hier die Veträge, die erneuert werden müssen, weil das Enddatum "
+"verstrichen oder der Arbeitsaufwand höher ist als der erlaubte Maximalwert."
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_close_reason_wizard
 msgid "sale.subscription.close.reason.wizard"
-msgstr ""
+msgstr "sale.subscription.close.reason.wizard"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
