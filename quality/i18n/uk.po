@@ -59,6 +59,8 @@ msgid ""
 "<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Quality Checks</span>\n"
 "                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Quality Checks</span>"
 msgstr ""
+"<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Перевірки якості</span>\n"
+"                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Перевірки якості</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -66,6 +68,8 @@ msgid ""
 "<span class=\"o_stat_text\">AVG:</span>\n"
 "                                <span class=\"o_stat_text\">STD:</span>"
 msgstr ""
+"<span class=\"o_stat_text\">AVG:</span>\n"
+"                                <span class=\"o_stat_text\">STD:</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
@@ -90,12 +94,12 @@ msgstr "<span>до </span>"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.view_quality_point_kanban
 msgid "<strong>Operation :</strong>"
-msgstr ""
+msgstr "<strong>Операція :</strong>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.view_quality_point_kanban
 msgid "<strong>Product :</strong>"
-msgstr ""
+msgstr "<strong>Товар :</strong>"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_defaults
@@ -187,7 +191,7 @@ msgstr "Перевірка"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_check_count
 msgid "Check Count"
-msgstr ""
+msgstr "Перевірити підрахунок"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
@@ -245,7 +249,7 @@ msgstr "Налаштування"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 msgid "Confirm Measure"
-msgstr ""
+msgstr "Підтвердити міру"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
@@ -280,7 +284,7 @@ msgstr "Тип контролю"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 msgid "Correct Measure"
-msgstr ""
+msgstr "Коригувати міру"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_action_corrective
@@ -295,7 +299,7 @@ msgstr "Виправні дії"
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_alert_action_check
 msgid "Create Quality Alerts."
-msgstr ""
+msgstr "Створіть якісні сповіщення."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_create_uid
@@ -421,7 +425,7 @@ msgstr "Невдача"
 #: model:ir.model.fields,field_description:quality.field_quality_check_failure_message
 #: model:ir.model.fields,field_description:quality.field_quality_point_failure_message
 msgid "Failure Message"
-msgstr ""
+msgstr "Повідомлення про помилку"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_folded
@@ -484,7 +488,7 @@ msgstr "В процесі"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Instructions"
-msgstr ""
+msgstr "Інстурукції"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert___last_update
@@ -557,7 +561,7 @@ msgstr "Міра"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
 msgid "Measure Frequency Unit"
-msgstr ""
+msgstr "Вимірювати одиницю частоти "
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure_success
@@ -567,7 +571,7 @@ msgstr "Виміряйте успіх"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Message If Failure"
-msgstr ""
+msgstr "Повідомлення, якщо помилка"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_tolerance_min
@@ -802,7 +806,7 @@ msgstr "Аналіз якісного сповіщення"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_count
 msgid "Quality Alert Count"
-msgstr ""
+msgstr "Якість попередження кількості"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_alert_stage
@@ -860,14 +864,14 @@ msgstr "Аналіз перевірки якості"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_quality_check_fail
 msgid "Quality Check Fail"
-msgstr ""
+msgstr "Помилка перевірки якості"
 
 #. module: quality
 #: code:addons/quality/models/quality.py:321
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 #, python-format
 msgid "Quality Check Failed"
-msgstr ""
+msgstr "Помилка перевірки якості"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_check_action_main
@@ -944,7 +948,7 @@ msgstr "Тег якості"
 #: model:ir.actions.act_window,name:quality.quality_tag_action
 #: model:ir.ui.menu,name:quality.menu_config_quality_tags
 msgid "Quality Tags"
-msgstr ""
+msgstr "Теги якості"
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_alert_team_action_config
@@ -1015,7 +1019,7 @@ msgstr "Стадія"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_standard_deviation
 msgid "Standard Deviation"
-msgstr ""
+msgstr "Стандартне відхилення"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
@@ -1056,7 +1060,7 @@ msgstr "Команди"
 #: model:ir.model.fields,field_description:quality.field_quality_point_test_type
 #: model:ir.model.fields,field_description:quality.field_quality_point_test_type_technical_name
 msgid "Technical name"
-msgstr ""
+msgstr "Технічна назва"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_point_test_type
@@ -1162,7 +1166,7 @@ msgstr "Дуже високий"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_warning_message
 msgid "Warning Message"
-msgstr ""
+msgstr "Повідомлення про попередження"
 
 #. module: quality
 #: selection:quality.point,measure_frequency_unit:0
@@ -1173,7 +1177,7 @@ msgstr "Тиждень (тижні)"
 #: code:addons/quality/models/quality.py:273
 #, python-format
 msgid "You measured %.2f %s and it should be between %.2f and %.2f %s."
-msgstr ""
+msgstr "Ви виміряли %.2f %s і це має бути між %.2f та %.2f %s."
 
 #. module: quality
 #: code:addons/quality/models/stock_picking.py:63

@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: lt\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: hr_contract_salary
 #: model:mail.template,subject:hr_contract_salary.mail_template_send_offer
@@ -39,27 +39,27 @@ msgstr "${object.subject}"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "+ International Communication"
-msgstr ""
+msgstr "+ Tarptautiniai ryšiai"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "+32 2 290 34 90"
-msgstr ""
+msgstr "+32 2 290 34 90"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "00.00.00-000.00"
-msgstr ""
+msgstr "00.00.00-000.00"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "110 €"
-msgstr ""
+msgstr "110 €"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "150 €"
-msgstr ""
+msgstr "150 €"
 
 #. module: hr_contract_salary
 #: model:mail.template,body_html:hr_contract_salary.mail_template_send_offer
@@ -77,6 +77,18 @@ msgid ""
 "                </div>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div>\n"
+"                    <h2>Sveikiname!</h2>\n"
+"                    <p>Galite tvarkyti savo atlyginimo paketą paspaudę ant nuorodos žemiau.</p>\n"
+"                    <br/><br/>\n"
+"                    <center>\n"
+"                        <a href=\"${ctx.get('salary_package_url')}\" target=\"_blank\" style=\"background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;\" class=\"o_default_snippet_text\">Tvarkyti savo paketą</a>\n"
+"                        <br/><br/><br/>\n"
+"                    </center>\n"
+"\n"
+"                </div>\n"
+"            "
 
 #. module: hr_contract_salary
 #: model:mail.template,body_html:hr_contract_salary.mail_template_data_notification_email_send_offer
@@ -155,62 +167,137 @@ msgid ""
 "                </html>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<html>\n"
+"                <head/>\n"
+"                % set record = ctx.get('record')\n"
+"                % set company = record and record.company_id or user.company_id\n"
+"                <body style=\"margin: 0; padding: 0;\">\n"
+"                <table border=\"0\" width=\"100%\" cellpadding=\"0\" bgcolor=\"#ededed\" style=\"padding: 20px; background-color: #ededed\" summary=\"o_mail_notification\">\n"
+"                    <tbody>\n"
+"\n"
+"                      <!-- HEADER -->\n"
+"                      <tr>\n"
+"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                          <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-color: rgb(135,90,123); padding: 20px;\">\n"
+"                            <tr>\n"
+"                              <td valign=\"middle\">\n"
+"                                  <span style=\"font-size:20px; color:white; font-weight: bold;\">\n"
+"                                      ${object.record_name}\n"
+"                                  </span>\n"
+"                              </td>\n"
+"                              <td valign=\"middle\" align=\"right\">\n"
+"                                  <img src=\"/logo.png?company=${company.id}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${company.name}\"/>\n"
+"                              </td>\n"
+"                            </tr>\n"
+"                          </table>\n"
+"                        </td>\n"
+"                      </tr>\n"
+"\n"
+"                      <!-- CONTENT -->\n"
+"                      <tr>\n"
+"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                          <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#ffffff\" style=\"min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;\">\n"
+"                            <tbody>\n"
+"                              <td valign=\"top\" style=\"font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;\">\n"
+"                                ${object.body | safe}\n"
+"                              </td>\n"
+"                            </tbody>\n"
+"                          </table>\n"
+"                        </td>\n"
+"                      </tr>\n"
+"\n"
+"                      <!-- FOOTER -->\n"
+"                      <tr>\n"
+"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                          <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-color: rgb(135,90,123); padding: 20px;\">\n"
+"                            <tr>\n"
+"                              <td valign=\"middle\" align=\"left\" style=\"color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;\">\n"
+"                                ${company.name}<br/>\n"
+"                                ${company.phone or ''}\n"
+"                              </td>\n"
+"                              <td valign=\"middle\" align=\"right\" style=\"color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;\">\n"
+"                                % if company.email:\n"
+"                                <a href=\"mailto:${company.email}\" style=\"text-decoration:none; color: white;\">${company.email}</a><br/>\n"
+"                                % endif\n"
+"                                % if company.website:\n"
+"                                    <a href=\"${company.website}\" style=\"text-decoration:none; color: white;\">\n"
+"                                        ${company.website}\n"
+"                                    </a>\n"
+"                                % endif\n"
+"                              </td>\n"
+"                            </tr>\n"
+"                          </table>\n"
+"                        </td>\n"
+"                      </tr>\n"
+"                      <tr>\n"
+"                        <td align=\"center\">\n"
+"                            Sukurta <a target=\"_blank\" href=\"https://www.odoo.com\">Odoo</a>.\n"
+"                        </td>\n"
+"                      </tr>\n"
+"                    </tbody>\n"
+"                </table>\n"
+"                </body>\n"
+"                </html>\n"
+"            "
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-car fa-fw\"/> Transport"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-car fa-fw\"/> Transportas"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-crosshairs fa-fw fa-lg\"/> Commissions"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-crosshairs fa-fw fa-lg\"/> Komisiniai"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-cutlery fa-fw\"/> Meal Vouchers"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-cutlery fa-fw\"/> Maitinimo kuponai"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-gift fa-fw fa-lg\"/> 13<sup>th</sup> Month"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-gift fa-fw fa-lg\"/> 13-asis mėnuo"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-globe fa-fw fa-lg\"/> Internet Subscription"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-globe fa-fw fa-lg\"/> Interneto abonementas"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-leaf fa-fw\"/> Eco Vouchers"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-leaf fa-fw\"/> Ekologiniai kuponai"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-male fa-fw fa-lg\"/> Representation Fees"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-male fa-fw fa-lg\"/> Reprezentacinės išmokos"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Company Car)"
 msgstr ""
+"<i class=\"fa fa-1x fa-minus fa-fw\"/> Išmokos natūra (įmonės automobilis)"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Internet)"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/> Išmokos natūra (internetas)"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid ""
 "<i class=\"fa fa-1x fa-minus fa-fw\"/> Benefit in Kind (Phone Subscription)"
 msgstr ""
+"<i class=\"fa fa-1x fa-minus fa-fw\"/> Išmokos natūra (telefono abonementas)"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Meal Vouchers"
-msgstr ""
+msgstr "<i class=\"fa fa-1x fa-minus fa-fw\"/> Maitinimo kuponai"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -739,7 +826,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Monthly Advantages in Cash"
-msgstr ""
+msgstr "Mėnesiniai priedai grynais"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -983,7 +1070,7 @@ msgstr "Gatvė"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Street 2"
-msgstr ""
+msgstr "Gatvė 2"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1050,12 +1137,12 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Yearly Advantages"
-msgstr ""
+msgstr "Metiniai priedai"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Yearly Advantages in Cash"
-msgstr ""
+msgstr "Metiniai priedai grynais"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1065,12 +1152,12 @@ msgstr "Taip"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Your Personal Information"
-msgstr ""
+msgstr "Jūsų asmeninė informacija"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package_thank_you
 msgid "Your contract has been sent to:"
-msgstr ""
+msgstr "Jūsų sutartis buvo nusiųsta:"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
