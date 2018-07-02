@@ -336,6 +336,35 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('sorting rows is disabled in Studio', function (assert) {
+        assert.expect(3);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'product',
+            arch: "<tree editable='true'> "+
+                "<field name='id' widget='handle'/>" +
+                "<field name='display_name'/>" +
+            "</tree>",
+        });
+
+        assert.strictEqual(vem.$('.ui-sortable-handle').length, 2,
+            "the widget handle should be displayed");
+        assert.strictEqual(vem.$('.o_data_cell').text(), "xpadxpod",
+            "the records should be ordered");
+
+        // Drag and drop the second line in first position
+        testUtils.dragAndDrop(
+            vem.$('.ui-sortable-handle').eq(1),
+            vem.$('tbody tr').first(),
+            {position: 'top'}
+        );
+        assert.strictEqual(vem.$('.o_data_cell').text(), "xpadxpod",
+            "the records should not have been moved (sortable should be disabled in Studio)");
+
+        vem.destroy();
+    });
+
     QUnit.module('Form');
 
     QUnit.test('empty form editor', function(assert) {
