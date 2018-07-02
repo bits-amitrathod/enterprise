@@ -219,22 +219,37 @@ class AccountReport(models.AbstractModel):
                 'context': ctx,
             }
 
-    def open_tax(self, options, params=None):
-        active_id = int(str(params.get('id')).split('_')[0])
-        tax = self.env['account.tax'].browse(active_id)
-        domain = []
-        if tax.tax_exigibility == 'on_payment':
-            domain = [('tax_exigible', '=', True)]
-        domain += [('date', '>=', options.get('date').get('date_from')), ('date', '<=', options.get('date').get('date_to')),
-                  '|', ('tax_ids', 'in', [active_id]), ('tax_line_id', 'in', [active_id])]
+    def open_action(self, options, domain):
+        assert isinstance(domain, (list, tuple))
+        domain += [('date', '>=', options.get('date').get('date_from')),
+                   ('date', '<=', options.get('date').get('date_to'))]
         if not options.get('all_entries'):
-            domain.append(('move_id.state', '=', 'posted'))
-        action = self.env.ref('account.action_move_line_select_tax_audit').read()[0]
+            domain += [('move_id.state', '=', 'posted')]
+
         ctx = self.env.context.copy()
-        ctx.update({'active_id': active_id, 'search_default_account': 1, 'search_default_date_filter': 1,})
+        ctx.update({'search_default_account': 1, 'search_default_date_filter': 1})
+
+        action = self.env.ref('account.action_move_line_select_tax_audit').read()[0]
         action = clean_action(action)
         action['domain'] = domain
         action['context'] = ctx
+        return action
+
+    def open_tax(self, options, params=None):
+        active_id = int(str(params.get('id')).split('_')[0])
+        tax = self.env['account.tax'].browse(active_id)
+        domain = ['|', ('tax_ids', 'in', [active_id]),
+                       ('tax_line_id', 'in', [active_id])]
+        if tax.tax_exigibility == 'on_payment':
+            domain += [('tax_exigible', '=', True)]
+        return self.open_action(options, domain)
+
+    def open_tax_report_line(self, options, params=None):
+        active_id = int(str(params.get('id')).split('_')[0])
+        line = self.env['account.financial.html.report.line'].browse(active_id)
+        domain = safe_eval(line.domain)
+        action = self.open_action(options, domain)
+        action['display_name'] = _('Journal Items (%s)') % line.name
         return action
 
     def view_too_many(self, options, params=None):

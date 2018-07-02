@@ -959,6 +959,9 @@ class AccountFinancialReportLine(models.Model):
                 'unfolded': line.id in options.get('unfolded_lines', []) or line.show_domain == 'always',
             }
 
+            if financial_report.tax_report and line.domain and not line.action_id:
+                vals['caret_options'] = 'tax.report.line'
+
             if line.action_id:
                 vals['action_id'] = line.action_id.id
             domain_ids.remove('line')
