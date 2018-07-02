@@ -2184,7 +2184,7 @@ QUnit.module('ViewEditorManager', {
         var fieldsView;
 
         var productArchReturn = '<tree>' +
-                                    '<field name="display_name" attrs="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;,&quot;=&quot;,2]]}" readonly="1" modifiers="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;, &quot;=&quot;, 2]], &quot;readonly&quot;: true}"/>' +
+                                    '<field name="display_name" attrs="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;,&quot;=&quot;,false]]}" readonly="1" modifiers="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;, &quot;=&quot;, false]], &quot;readonly&quot;: true}"/>' +
                                 '</tree>';
 
         var coucouArchReturn = '<form>' +
@@ -2218,13 +2218,13 @@ QUnit.module('ViewEditorManager', {
             arch: "<form>" +
                     "<field name='product_ids'>" +
                         "<tree>" +
-                            '<field name="display_name" attrs="{\'column_invisible\': [(\'parent.id\', \'=\',2)]}" />' +
+                            '<field name="display_name" attrs="{\'column_invisible\': [(\'parent.id\', \'=\',False)]}" />' +
                         "</tree>" +
                     "</field>" +
                   "</form>",
             mockRPC: function(route, args) {
                 if (route === '/web_studio/edit_view') {
-                    assert.equal(args.operations[0].new_attrs.attrs, '{"column_invisible": [["parent.id","=",2]]}',
+                    assert.equal(args.operations[0].new_attrs.attrs, '{"column_invisible": [["parent.id","=",False]]}',
                         'we should send "column_invisible" in attrs.attrs');
 
                     assert.equal(args.operations[0].new_attrs.readonly, '1',
