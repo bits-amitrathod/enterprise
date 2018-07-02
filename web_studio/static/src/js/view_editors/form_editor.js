@@ -141,6 +141,23 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         return def;
     },
     /**
+     * @private
+     * @param {MouseEvent} ev
+     * @param {Object} ui
+     */
+    _handleDrop: function (ev, ui) {
+        var $hook = this.$('.o_web_studio_nearest_hook');
+        if ($hook.length) {
+            var hook_id = $hook.data('hook_id');
+            var hook = this.hook_nodes[hook_id];
+            // draggable is only set on `droppable` elements, not `draggable`
+            var $drag = ui.draggable || $(ev.target);
+            this.handleDrop($drag, hook.node, hook.position);
+            ui.helper.removeClass('ui-draggable-helper-ready');
+            $hook.removeClass('o_web_studio_nearest_hook');
+        }
+    },
+    /**
      * @override
      * @private
      */
@@ -198,17 +215,8 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         this.has_message_field = false;
 
         this.$el.droppable({
-            accept: ".o_web_studio_component, .ui-draggable-helper-ready",
-            drop: function (event, ui) {
-                var $hook = self.$('.o_web_studio_nearest_hook');
-                if ($hook.length) {
-                    var hook_id = $hook.data('hook_id');
-                    var hook = self.hook_nodes[hook_id];
-
-                    EditorMixin.handleDrop.call(self, ui.draggable, hook.node, hook.position);
-                    ui.helper.removeClass('ui-draggable-helper-ready');
-                }
-            },
+            accept: ".o_web_studio_component",
+            drop: this._handleDrop.bind(this),
         });
 
         return this._super.apply(this, arguments).then(function () {
@@ -626,9 +634,9 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                 }
                 self.$('.ui-draggable-helper').removeClass('ui-draggable-helper');
                 self.$('.ui-draggable-helper-ready').removeClass('ui-draggable-helper-ready');
-                self.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
                 return true;
             },
+            stop: this._handleDrop.bind(this),
         });
 
         // display nearest hook (handled by the ViewEditorManager)

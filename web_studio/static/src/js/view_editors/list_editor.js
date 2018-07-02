@@ -106,6 +106,34 @@ return ListRenderer.extend(EditorMixin, {
     //--------------------------------------------------------------------------
 
     /**
+     * @private
+     * @param {MouseEvent} ev
+     * @param {Object} ui
+     */
+    _handleDrop: function (ev, ui) {
+        var $hook = this.$('.o_web_studio_nearest_hook');
+        if ($hook.length) {
+            var position = $hook.closest('table').find('th').eq($hook.index()).data('position') || 'after';
+            var hookedFieldIndex = position === 'before' && $hook.index() + 1 || $hook.index() - 1;
+            var fieldName = $hook.closest('table').find('th').eq(hookedFieldIndex).data('name');
+            var node = _.find(this.columns, function (column) {
+                return column.attrs.name === fieldName;
+            });
+            // When there is no column in the list view, the only possible hook is inside <tree>
+            if (!this.columns.length) {
+                node = {
+                   tag: 'tree',
+               };
+               position = 'inside';
+            }
+            // draggable is only set on `droppable` elements, not `draggable`
+            var $drag = ui.draggable || $(ev.target);
+            this.handleDrop($drag, node, position);
+            ui.helper.removeClass('ui-draggable-helper-ready');
+            $hook.removeClass('o_web_studio_nearest_hook');
+        }
+    },
+    /**
      * Get all elements associated to a table column.
      *
      * @private
@@ -131,31 +159,11 @@ return ListRenderer.extend(EditorMixin, {
      * @private
      */
     _render: function () {
-        var self = this;
         var def = this._super.apply(this, arguments);
 
         this.$el.droppable({
-            accept: ".o_web_studio_component, th[data-node-id]",
-            drop: function (ev, ui) {
-                var $hook = self.$('.o_web_studio_nearest_hook');
-                if ($hook.length) {
-                    var position = $hook.closest('table').find('th').eq($hook.index()).data('position') || 'after';
-                    var hookedFieldIndex = position === 'before' && $hook.index() + 1 || $hook.index() - 1;
-                    var fieldName = $hook.closest('table').find('th').eq(hookedFieldIndex).data('name');
-                    var node = _.find(self.columns, function (column) {
-                        return column.attrs.name === fieldName;
-                    });
-                    // When there is no column in the list view, the only possible hook is inside <tree>
-                    if (!self.columns.length) {
-                        node = {
-                           tag: 'tree',
-                       };
-                       position = 'inside';
-                    }
-                    EditorMixin.handleDrop.call(self, ui.draggable, node, position);
-                    ui.helper.removeClass('ui-draggable-helper-ready');
-                }
-            },
+            accept: ".o_web_studio_component",
+            drop: this._handleDrop.bind(this),
         });
 
         this.setSelectable(this.$('th, td').not('.o_web_studio_hook'));
@@ -293,6 +301,7 @@ return ListRenderer.extend(EditorMixin, {
                 self.$('.o_web_studio_clicked').removeClass('o_web_studio_clicked');
                 ui.helper.addClass('ui-draggable-helper');
             },
+            stop: this._handleDrop.bind(this),
             revert: function () {
                 // a field cannot be dropped on the same place
                 var $hook = self.$('.o_web_studio_nearest_hook');
@@ -306,7 +315,6 @@ return ListRenderer.extend(EditorMixin, {
                 }
                 self.$('.ui-draggable-helper').removeClass('ui-draggable-helper');
                 self.$('.ui-draggable-helper-ready').removeClass('ui-draggable-helper-ready');
-                self.$('.o_web_studio_nearest_hook').removeClass('o_web_studio_nearest_hook');
                 return true;
             },
         });
