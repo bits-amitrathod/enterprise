@@ -922,9 +922,8 @@ odoo.define('sign.document_edition', function(require) {
 
     var EditableDocumentBackend = DocumentBackend.extend({
         events: {
-            'click .o_sign_resend_access_button.fa': function(e) {
+            'click .o_sign_resend_access_button': function(e) {
                 var $envelope = $(e.target);
-                $envelope.removeClass('fa fa-envelope').html('...');
                 this._rpc({
                         model: 'sign.request.item',
                         method: 'resend_access',
@@ -965,10 +964,13 @@ odoo.define('sign.document_edition', function(require) {
             return this._super.apply(this, arguments).then(function () {
                 if(self.is_author && self.is_sent) {
                     self.$('.o_sign_signer_status').each(function(i, el) {
-                        $(el).prepend($('<button/>', {
+                        $(el).append($('<button/>', {
                             type: 'button',
                             title: _t("Resend the invitation"),
-                        }).addClass('o_sign_resend_access_button btn btn-link fa fa-envelope pull-right'));
+                            text: _t('Resend'),
+                            class: 'o_sign_resend_access_button btn btn-link ml8',
+                            style: 'vertical-align: baseline;',
+                        }));
                     });
                 }
             });
