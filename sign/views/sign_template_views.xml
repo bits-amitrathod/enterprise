@@ -14,7 +14,6 @@
 
                 <templates>
                     <div t-name="kanban-box" t-attf-class="oe_kanban_global_click {{kanban_color(record.color.raw_value)}}">
-                        <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
                         <div class="o_kanban_title clearfix">
                             <div class="o_dropdown_kanban dropdown">
                                 <a role="button" class="dropdown-toggle btn" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
@@ -31,9 +30,9 @@
                                 </ul>
                             </div>
                             <a type="object" name="toggle_favorited" aria-label="Not in favorites, set it" title="Not in favorites, add it"
-                                class="fa fa-lg fa-star-o favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) == 0"/>
+                                class="fa fa-lg fa-star-o favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) &lt; 0"/>
                             <a type="object" name="toggle_favorited" aria-label="In favorites, remove it" title="In favorites, remove it"
-                                class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) > 0"/>
+                                class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) == 0"/>
                             <span><field name="attachment_id"/></span>
                         </div>
                         <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
