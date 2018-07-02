@@ -15,7 +15,7 @@ from odoo.tools import pycompat
 
 
 CONTAINER_TYPES = (
-    'group', 'page', 'sheet', 'div', 'ul', 'li',
+    'group', 'page', 'sheet', 'div', 'ul', 'li', 'notebook',
 )
 
 
