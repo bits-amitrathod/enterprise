@@ -446,27 +446,30 @@ QUnit.module('ViewEditorManager', {
             arch: "<form>" +
                     "<sheet>" +
                         "<field name='display_name' invisible='1'/>" +
+                        "<group>" +
+                            "<field name='m2o' attrs=\"{'invisible': [('id', '!=', '42')]}\"/>" +
+                        "</group>" +
                     "</sheet>" +
                 "</form>",
         });
 
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_invisible_modifier[data-node-id]').length, 1,
-            "there should be one invisible node");
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor [data-node-id]:not(.o_invisible_modifier)').length, 0,
-            "there should be no visible node");
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 1,
-            "there should be one hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_field_widget.o_invisible_modifier').length, 2,
+            "there should be two invisible nodes");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor [data-node-id]').length, 1,
+            "the invisible node should not be editable (only the group has a node-id set)");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 2,
+            "there should be two hooks (outside and inside the group");
 
         // click on show invisible
         vem.$('.o_web_studio_sidebar').find('.o_web_studio_view').click();
         vem.$('.o_web_studio_sidebar').find('input#show_invisible').click();
 
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_show_invisible[data-node-id]').length, 1,
-            "there should be one visible node (the invisible one)");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_show_invisible[data-node-id]').length, 2,
+            "there should be one visible nodes (the invisible ones)");
         assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_invisible_modifier[data-node-id]').length, 0,
             "there should be no invisible node");
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 1,
-            "there should be one hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 3,
+            "there should be three hooks");
 
         vem.destroy();
     });

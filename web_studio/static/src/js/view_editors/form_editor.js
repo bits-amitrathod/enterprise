@@ -156,6 +156,10 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         } else if (node.attrs.name === "message_follower_ids") {
             this.has_follower_field = true;
         } else {
+            var modifiers = self._getEvaluatedModifiers(node, this.state);
+            if (modifiers.invisible && !this.show_invisible) {
+                return;
+            }
             $el.attr('data-node-id', this.node_id++);
             this.setSelectable($el);
             $el.click(function (event) {
@@ -320,7 +324,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                 self.selected_node_id = nodeID;
                 self.trigger_up('node_clicked', {node: node});
             });
-        };
+        }
         return $button;
     },
     /**
