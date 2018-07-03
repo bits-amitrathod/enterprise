@@ -22,8 +22,8 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a type="open" groups="base.group_no_one">Open</a></li>
                                     <li><a type="object" name="toggle_archived">
-                                        <t t-if="record.archived.value">Restore</t>
-                                        <t t-if="!record.archived.value">Archive</t>
+                                        <t t-if="record.archived.raw_value">Restore</t>
+                                        <t t-if="!record.archived.raw_value">Archive</t>
                                     </a></li>
                                     <li><a type="delete" groups="base.group_no_one">Delete</a></li>
                                     <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
