@@ -2,6 +2,7 @@ odoo.define('web_cohort.CohortController', function (require) {
 'use strict';
 
 var AbstractController = require('web.AbstractController');
+var config = require('web.config');
 var core = require('web.core');
 var crash_manager = require('web.crash_manager');
 var framework = require('web.framework');
@@ -65,7 +66,8 @@ var CohortController = AbstractController.extend({
         if ($node) {
             this.$buttons = $(qweb.render('CohortView.buttons', {
                 measures: this.measures,
-                intervals: this.intervals
+                intervals: this.intervals,
+                isMobile: config.device.isMobile
             }));
             this.$measureList = this.$buttons.find('.o_cohort_measures_list');
             this.$buttons.appendTo($node);
@@ -136,6 +138,11 @@ var CohortController = AbstractController.extend({
         var data = this.model.get();
         // Hide download button if no cohort data
         this.$buttons.find('.o_cohort_download_button').toggleClass('hidden', !data.report.rows.length);
+        if (config.device.isMobile) {
+            var $activeInterval = this.$buttons
+                .find('.o_cohort_interval_button[data-interval="' + data.interval + '"]');
+            this.$buttons.find('.dropdown_cohort_content').text($activeInterval.text());
+        }
         this.$buttons.find('.o_cohort_interval_button').removeClass('active');
         this.$buttons
             .find('.o_cohort_interval_button[data-interval="' + data.interval + '"]')

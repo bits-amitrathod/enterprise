@@ -14,7 +14,17 @@
                 <li data-field="__count__"><a href="#">Count</a></li>
             </ul>
         </div>
-        <div class="btn-group btn-group-sm">
+        <div class="btn-group" t-if="isMobile">
+            <a class="btn btn-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                <span class="dropdown_cohort_content mr4"></span><i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li t-foreach="intervals" t-as="interval" class="btn btn-default o_cohort_interval_button" t-att-data-interval="interval" style="display:block;">
+                    <t t-esc="intervals[interval]" />
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group btn-group-sm" t-else="">
             <button t-foreach="intervals" t-as="interval" class="btn btn-default o_cohort_interval_button" t-att-data-interval="interval">
                 <t t-esc="intervals[interval]" />
             </button>
