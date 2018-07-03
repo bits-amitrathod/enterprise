@@ -3,8 +3,9 @@ odoo.define('web_grid.GridRenderer', function (require) {
 
 var AbstractRenderer = require('web.AbstractRenderer');
 var core = require('web.core');
+var utils = require('web.utils');
 var fieldUtils = require('web.field_utils');
-var field_registry = require('web.field_registry');
+var gridWidgetRegistry = require('web_grid.widget_registry');
 
 var patch = require('snabbdom.patch');
 var h = require('snabbdom.h');
@@ -18,7 +19,10 @@ var _t = core._t;
  * lightweight virtual dom implementation.
  */
 return AbstractRenderer.extend({
-
+    custom_events: _.extend({}, AbstractRenderer.prototype.custom_events, {
+        'grid_cell_edited': '_onGridWidgetBlur',
+        'grid_cell_refresh': '_onGridWidgetRefresh',
+    }),
     events: {
         'blur .o_grid_input': "_onGridInputBlur",
         'keydown .o_grid_input': "_onGridInputKeydown",
@@ -38,7 +42,14 @@ return AbstractRenderer.extend({
         this.editableCells = params.editableCells;
         this.measureLabel = params.measureLabel;
         this.cellWidget = params.cellWidget;
-        this.cellWidgetOptions = params.cellWidgetOptions;
+        this.cellWidgetOptions = params.cellWidgetOptions || {};
+
+        // Here, we create a grid widget, responsible for formatting, parsing and rendering
+        // the value in the inner cell. The formatType above is a fallback. Widget are prior.
+        if (gridWidgetRegistry.contains(this.cellWidget)){
+            var WidgetClass = gridWidgetRegistry.get(this.cellWidget);
+            this.CellWidgetInstance = new WidgetClass(this, this.fields[this.state.cellField], this.cellWidgetOptions);
+        }
 
         // formatType is used to determine which format (and parse) functions
         // to call to format the field's value to insert into the DOM (typically
@@ -47,12 +58,8 @@ return AbstractRenderer.extend({
         // the 'widget' attrs if is is given, and if it is a valid key, with a
         // fallback on the field type, ensuring that the value is formatted and
         // displayed according to the choosen widget, if any.
-        var formatType = this.fields[this.state.cellField].type;
-        var WidgetClass = field_registry.get(this.cellWidget);
-        if (WidgetClass) {
-            formatType = WidgetClass.prototype.formatType;
-        }
-        this.formatType = formatType;
+        this.formatType = this.CellWidgetInstance && this.CellWidgetInstance.formatType ?
+            this.CellWidgetInstance.formatType : this.fields[this.state.cellField].type;
     },
     /**
      * @override
@@ -110,6 +117,12 @@ return AbstractRenderer.extend({
         if (value === undefined) {
             return '';
         }
+        // if the grid widget exists, it is responsible of the formating to use options that only
+        // the widget can have (even if not defined on the 'field' node of the view).
+        if (this.CellWidgetInstance){
+            return this.CellWidgetInstance.format(value);
+        }
+        // else, the grid view format, using the format type
         var cellField = this.fields[this.state.cellField];
         return fieldUtils.format[this.formatType](value, cellField, this.cellWidgetOptions);
     },
@@ -128,6 +141,12 @@ return AbstractRenderer.extend({
      * @returns {*}
      */
     _parse: function (value) {
+        // if the grid widget exists, it is responsible of the parsing to use options that only
+        // the widget can have (even if not defined on the 'field' node of the view).
+        if (this.CellWidgetInstance){
+            return this.CellWidgetInstance.parse(value);
+        }
+        // else, the grid view format, using the format type
         var cellField = this.fields[this.state.cellField];
         return fieldUtils.parse[this.formatType](value, cellField, this.cellWidgetOptions);
     },
@@ -206,9 +225,8 @@ return AbstractRenderer.extend({
                 classmap[cls] = true;
             }
         });
-
         return h('td', {class: {o_grid_current: cell.is_current}}, [
-            this._renderCellContent(this._format(cell.value), is_readonly, classmap, path)
+            this._renderCellContent(cell.value, is_readonly, classmap, path)
         ]);
     },
     /**
@@ -226,21 +244,40 @@ return AbstractRenderer.extend({
                     title: _t("See all the records aggregated in this cell")
                 }
             }, []),
-            this._renderCellInner(cell_value, isReadonly)
+            this._renderCellInner(cell_value, isReadonly, path)
         ]);
     },
     /**
      * @private
-     * @param {string} formattedValue
+     * @param {string|float|int} cellValue
      * @param {boolean} isReadonly
+     * @param {string} path
      * @returns {snabbdom}
      */
-    _renderCellInner: function (formattedValue, isReadonly) {
-        if (isReadonly) {
+    _renderCellInner: function (cellValue, isReadonly, path) {
+        var formattedValue = this._format(cellValue);
+        if (this.CellWidgetInstance) {
+            return this._renderCellInnerWidget(cellValue, isReadonly, path)
+        } else if (isReadonly) {
             return h('div.o_grid_show', formattedValue);
         } else {
             return h('div.o_grid_input', {attrs: {contentEditable: "true"}}, formattedValue);
         }
+        return '';
+    },
+    /**
+     * Render the inner cell using a Grid Widget
+     *
+     * @private
+     * @param {string} cellValue
+     * @param {Boolean} isReadonly
+     * @param {string} path
+     * @returns {snabbdom}
+     */
+    _renderCellInnerWidget: function (cellValue, isReadonly, path) {
+        var widget_instance = this.CellWidgetInstance;
+        var render_method = widget_instance.render(isReadonly, path);
+        return render_method.call(this, cellValue);
     },
     /**
      * @private
@@ -449,6 +486,7 @@ return AbstractRenderer.extend({
         var grid_path = cell_path.slice(0, -3);
         var row_path = grid_path.concat(['rows'], cell_path.slice(-2, -1));
         var col_path = grid_path.concat(['cols'], cell_path.slice(-1));
+
         this.trigger_up('cell_edited', {
             cell_path: cell_path,
             row_path: row_path,
@@ -469,6 +507,61 @@ return AbstractRenderer.extend({
             break;
         }
     },
+    /**
+     * @private
+     * @param {OdooEvent} e
+     */
+    _onGridWidgetBlur: function(e) {
+        var value;
+        try {
+            value = this._parse(e.data.formattedValue);
+        } catch (_) {
+            return;
+        }
+
+        // path should be [path, to, grid, 'grid', row_index, col_index]
+        var cell_path = e.data.path.split('.');
+        var grid_path = cell_path.slice(0, -3);
+        var row_path = grid_path.concat(['rows'], cell_path.slice(-2, -1));
+        var col_path = grid_path.concat(['cols'], cell_path.slice(-1));
+
+        this.trigger_up('cell_edited', {
+            cell_path: cell_path,
+            row_path: row_path,
+            col_path: col_path,
+            value: value,
+        });
+    },
+    /**
+     * Handler to refresh the content of a cell when its appearance needs to
+     * change without being sent to the server. This event is usually triggered
+     * by the Grid Widget.
+     *
+     * @private
+     * @param {OdooEvent} e
+     * @param {string} e.data.path: the path to identify the impacted cell
+     * @param {string} e.data.formattedValue: the current formatted value of the cell
+     * @param {string} e.data.selector: the selector of the cell widget in which the new
+     *        value should be insert.
+     *
+     */
+    _onGridWidgetRefresh: function(e) {
+        try {
+            var value = e.data.formattedValue;
+            var path = e.data.path;
+            var selector = e.data.selector || false;
+
+            var $cell = this.$("div[data-path='"+path+"']")
+
+            if (selector) {
+                $cell.find(selector).text(value);
+            } else {
+                $cell.text(value);
+            }
+        } catch (_) {
+            return;
+        }
+    }
 });
 
 });
