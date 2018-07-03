@@ -555,6 +555,68 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('correctly display hook below group title', function(assert) {
+        assert.expect(14);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        "<group>" +
+                        "</group>" +
+                        "<group string='Kikou2'>" +
+                        "</group>" +
+                        "<group>" +
+                            "<field name='m2o'/>" +
+                        "</group>" +
+                        "<group string='Kikou'>" +
+                            "<field name='id'/>" +
+                        "</group>" +
+                    "</sheet>" +
+                "</form>",
+        });
+
+
+        // first group (without title, without content)
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(0) .o_web_studio_hook').length, 1,
+            "there should be 1 hook");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(0) tr:eq(1)').hasClass('o_web_studio_hook'),
+            "the second row should be a hook");
+
+        // second group (with title, without content)
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(1) .o_web_studio_hook').length, 1,
+            "there should be 1 hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(1) tr:eq(0)').text(), "Kikou2",
+            "the first row is the group title");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(1) tr:eq(2)').hasClass('o_web_studio_hook'),
+            "the third row should be a hook");
+
+        // third group (without title, with content)
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(2) .o_web_studio_hook').length, 2,
+            "there should be 2 hooks");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(2) tr:eq(0)').hasClass('o_web_studio_hook'),
+            "the first row should be a hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(2) tr:eq(1)').text(), "M2O",
+            "the second row is the field");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(2) tr:eq(2)').hasClass('o_web_studio_hook'),
+            "the third row should be a hook");
+
+        // last group (with title, with content)
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) .o_web_studio_hook').length, 2,
+            "there should be 2 hooks");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) tr:eq(0)').text(), "Kikou",
+            "the first row is the group title");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) tr:eq(1)').hasClass('o_web_studio_hook'),
+            "the second row should be a hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) tr:eq(2)').text(), "ID",
+            "the third row is the field");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) tr:eq(3)').hasClass('o_web_studio_hook'),
+            "the last row should be a hook");
+
+        vem.destroy();
+    });
+
     QUnit.test('notebook edition', function(assert) {
         assert.expect(8);
 

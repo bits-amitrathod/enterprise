@@ -367,12 +367,16 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         if (!node.children.length) {
             formEditorHook = this._renderHook(node, 'inside', 'tr', 'insideGroup');
             formEditorHook.appendTo($result);
-            this.setSelectable($result);
         } else {
             // Add hook before the first node in a group.
+            var $firstRow = $result.find('tr:first');
             formEditorHook = this._renderHook(node.children[0], 'before', 'tr');
-            formEditorHook.appendTo($('<div>')); // start the widget
-            $result.find("tr").first().before(formEditorHook.$el);
+            if (node.attrs.string) {
+                // the group string is displayed in a tr
+                formEditorHook.insertAfter($firstRow);
+            } else {
+                formEditorHook.insertBefore($firstRow);
+            }
         }
         return $result;
     },
