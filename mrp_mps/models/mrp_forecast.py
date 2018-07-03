@@ -150,11 +150,11 @@ class SaleForecastIndirect(models.Model):
     quantity = fields.Float('Indirect Quantity')
 
 
-class ProcurementRule(models.Model):
-    _inherit = 'procurement.rule'
+class StockRule(models.Model):
+    _inherit = 'stock.rule'
 
     def _make_po_get_domain(self, values, partner):
-        domain = super(ProcurementRule, self)._make_po_get_domain(values, partner)
+        domain = super(StockRule, self)._make_po_get_domain(values, partner)
         if values.get('add_date_in_domain', False) and values.get('date_planned', False):
             domain += (('date_planned', '=', values['date_planned']),)
         return domain
