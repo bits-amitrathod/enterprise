@@ -150,21 +150,6 @@ class View(models.Model):
         # after this one when calling the read_combined to get the old_view then
         # re-enabling them all afterwards.
 
-        def add_xpath_to_arch(arch, xpath):
-            """
-            Appends the xpath to the arch if the xpath's position != 'replace'
-            (deletion), otherwise it is prepended to the arch.
-
-            This is done because when moving an existing field somewhere before
-            its original position it will append a replace xpath and then
-            append the existing field xpath, effictively removing the one just
-            added and showing the one that existed before.
-            """
-            # TODO: Only add attributes if the xpath has children
-            if xpath.get('position') == 'replace':
-                arch.insert(0, xpath)
-            else:
-                arch.append(xpath)
 
         def is_moved(node):
             """ Helper method that determines if a node is a moved field."""
@@ -341,8 +326,7 @@ class View(models.Model):
                         elif ((node.tag != 'attributes' and xpath.get('position') != 'after') or
                                 (node.tag == 'attributes' and xpath.get('position') != 'attributes')):
                             # Consecutive removals need different xpath
-                            add_xpath_to_arch(arch, xpath)
-                            xpath = etree.Element('xpath')
+                            xpath = self._close_and_get_new(arch, xpath)
 
                     xpath.attrib['expr'] = self._node_to_xpath(node)
                     if node.tag == 'attributes':
@@ -378,15 +362,12 @@ class View(models.Model):
                     if node.tag == 'attribute' and self._get_node_from_xpath(xpath, node.getparent().getparent(), moved_fields) is not None:
                         continue
 
-                    # If the current xpath is not compatible with what we want
-                    # to add, we need to close it.
-                    if xpath.get('expr') and not self._is_compatible(xpath, node, moved_fields):
-                            add_xpath_to_arch(arch, xpath)
-                            xpath = etree.Element('xpath')
+                    anchor_node = self._get_anchor_node(arch, xpath, node, moved_fields)
 
-                    # At this point, we either have no current xpath, or the one
-                    # that exists is compatible with what we want to add
-                    if not xpath.get('expr'):
+                    if anchor_node.tag == 'xpath' and not anchor_node.get('expr'):
+                        # If the current xpath was not compatible, it has been
+                        # closed and a new one has been generated
+                        xpath = anchor_node
                         xpath.attrib['expr'], xpath.attrib['position'] = self._closest_node_to_xpath(node, old_view_tree, moved_fields)
 
                     if node.tag == 'field' and node.get('name') in moved_fields:
@@ -396,14 +377,7 @@ class View(models.Model):
                             'position': 'move',
                         })
 
-                    # Is your parent a studio node ? If yes, append inside of it
-                    parent_node = node.getparent()
-                    if parent_node is not None:
-                        studio_parent_node = self._get_node_from_xpath(xpath, parent_node, moved_fields)
-                    if parent_node is not None and studio_parent_node is not None:
-                        self._clone_and_append_to(node, studio_parent_node)
-                    else:
-                        self._clone_and_append_to(node, xpath)
+                    self._clone_and_append_to(node, anchor_node)
 
                 else:
                     old_node = next(old_view_iterator)
@@ -411,12 +385,11 @@ class View(models.Model):
                     # This is an unchanged line, if an xpath is ungoing, close it.
                     if old_node.tag not in ['attribute', 'attributes']:
                         if xpath.get('expr'):
-                            add_xpath_to_arch(arch, xpath)
-                            xpath = etree.Element('xpath')
+                            xpath = self._close_and_get_new(arch, xpath)
 
         # Append last remaining xpath if needed
         if xpath.get('expr') is not None:
-            add_xpath_to_arch(arch, xpath)
+            self._add_xpath_to_arch(arch, xpath)
 
         def get_node_attributes_diff(node1, node2):
             """ Computes the differences of attributes between two nodes."""
@@ -445,12 +418,16 @@ class View(models.Model):
                     etree.SubElement(xpath, 'attribute', {
                         'name': attr,
                     }).text = attrs_diff[attr]
-                add_xpath_to_arch(arch, xpath)
+                self._add_xpath_to_arch(arch, xpath)
 
         normalized_arch = etree.tostring(self._indent_tree(arch), encoding='unicode') if len(arch) else u''
         return normalized_arch
 
-    def _is_compatible(self, xpath, node, moved_fields):
+    def _close_and_get_new(self, arch, xpath):
+        self._add_xpath_to_arch(arch, xpath)
+        return etree.Element('xpath')
+
+    def _get_anchor_node(self, arch, xpath, node, moved_fields):
         """
         Check if a node can be merged inside an existing xpath
 
@@ -462,21 +439,39 @@ class View(models.Model):
         # - the node we want to add is not contiguous with the current xpath,
         #   which means the current xpath is not empty and the node preceding
         #   the one we we want to add is not in the xpath
-        if node.tag == 'attribute':
-            return xpath.get('position') == 'attributes'
-        elif xpath.get('position') == 'attributes':
-            return False
-        elif not len(xpath):
-            return True
 
-        # If the preceding node is in the current xpath, we can append to it
-        previous_node = node.getprevious()
-        if (previous_node is None or previous_node.tag in ['attribute', 'attributes']):
-            previous_node = node.getparent()
-            if previous_node.tag == 'attributes':
-                previous_node = previous_node.getparent()
+        if not len(xpath):
+            return xpath
 
-        return self._get_node_from_xpath(xpath, previous_node, moved_fields) is not None
+        if xpath.get('position') == 'attributes':
+            if node.tag == 'attribute':
+                return xpath
+            else:
+                return self._close_and_get_new(arch, xpath)
+
+        # If the preceding node or the parent is in the current xpath, we can append to it
+        anchor_node = node.getprevious()
+        if (anchor_node is not None and anchor_node.tag not in ['attribute', 'attributes']):
+            studio_previous_node = self._get_node_from_xpath(xpath, anchor_node, moved_fields)
+            if studio_previous_node is not None:
+                return studio_previous_node.getparent()
+            else:
+                return self._close_and_get_new(arch, xpath)
+
+        else:
+            anchor_node = node.getparent()
+            if anchor_node.tag == 'attributes':
+                anchor_node = anchor_node.getparent()
+
+            if node.tag == 'field' and node.get('name') in moved_fields:
+                # Parent node of a moved field xpath must be the xpath of the new targeted position
+                return self._close_and_get_new(arch, xpath)
+
+            studio_parent_node = self._get_node_from_xpath(xpath, anchor_node, moved_fields)
+            if studio_parent_node is not None:
+                return studio_parent_node
+            else:
+                return self._close_and_get_new(arch, xpath)
 
     def _get_node_from_xpath(self, xpath, node, moved_fields):
         """
@@ -497,6 +492,22 @@ class View(models.Model):
                     if n.get('expr') == self._node_to_xpath(old_node):
                         return n
         return None
+
+    def _add_xpath_to_arch(self, arch, xpath):
+            """
+            Appends the xpath to the arch if the xpath's position != 'replace'
+            (deletion), otherwise it is prepended to the arch.
+
+            This is done because when moving an existing field somewhere before
+            its original position it will append a replace xpath and then
+            append the existing field xpath, effictively removing the one just
+            added and showing the one that existed before.
+            """
+            # TODO: Only add attributes if the xpath has children
+            if xpath.get('position') == 'replace':
+                arch.insert(0, xpath)
+            else:
+                arch.append(xpath)
 
     def _clone_and_append_to(self, node, parent_node):
         """
