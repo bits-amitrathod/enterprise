@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="sign.sign_item_custom_popover">
         <div class="o_sign_item_custom_popover">
-            <div class="form-group clearfix" groups="base.group_no_one">
+            <div class="form-group clearfix" t-if="widget.debug">
                 <label for="o_sign_name" class="col-md-2">Field Name</label>
                 <div class="col-md-10">
                     <input type="text" id="o_sign_name" class="o_input"/>

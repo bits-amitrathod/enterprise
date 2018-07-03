@@ -139,6 +139,7 @@ odoo.define('sign.template', function(require) {
     var AbstractAction = require('web.AbstractAction');
     var ControlPanelMixin = require('web.ControlPanelMixin');
     var core = require('web.core');
+    var config = require('web.config');
     var Dialog = require('web.Dialog');
     var framework = require('web.framework');
     var session = require('web.session');
@@ -164,6 +165,7 @@ odoo.define('sign.template', function(require) {
             this._super(parent, options);
             //TODO: Add buttons for save, discard and remove.
             this.parties = parties;
+            this.debug = config.debug;
         },
 
         start: function() {
