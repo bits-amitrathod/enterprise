@@ -749,7 +749,9 @@ odoo.define('sign.template', function(require) {
 
         refresh_cp: function() {
             this.update_control_panel({
-                cp_content: this.cp_content
+                cp_content: this.cp_content,
+                search_view_hidden: true,
+                clear: true
             });
         },
 
@@ -902,6 +904,8 @@ odoo.define('sign.DocumentBackend', function (require) {
         refresh_cp: function () {
             this.update_control_panel({
                 cp_content: this.cp_content,
+                search_view_hidden: true,
+                clear: true
             });
         },
     });
