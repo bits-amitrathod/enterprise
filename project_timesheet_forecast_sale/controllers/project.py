@@ -119,7 +119,7 @@ class TimesheetForecastController(SaleTimesheetController):
     def _table_get_empty_so_lines(self, projects):
         """ get the Sale Order Lines having no forecast but having generated a task or a project """
         empty_line_ids, empty_order_ids = super(TimesheetForecastController, self)._table_get_empty_so_lines(projects)
-        so_lines = projects.mapped('tasks.sale_line_id.order_id.order_line').filtered(lambda sol: (sol.task_id or sol.project_id) and not sol.analytic_line_ids)
+        so_lines = projects.sudo().mapped('tasks.sale_line_id.order_id.order_line').filtered(lambda sol: (sol.task_id or sol.project_id) and not sol.analytic_line_ids)
         return empty_line_ids | set(so_lines.ids), empty_order_ids | set(so_lines.mapped('order_id').ids)
 
     # --------------------------------------------------
