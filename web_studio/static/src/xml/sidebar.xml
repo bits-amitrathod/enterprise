@@ -2,7 +2,7 @@
 <templates>
 
 <t t-name="web_studio.Sidebar.Parameters" t-if="widget.debug">
-    <button class="btn btn-sm btn-default o_web_studio_parameters"><span class="fa fa-cog"> More</span></button>
+    <button class="btn btn-sm btn-default o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
 </t>
 
 <t t-name="web_studio.Sidebar.Remove">
@@ -22,7 +22,7 @@
 </div>
 
 <t t-name="web_studio.Sidebar.XMLEditor" t-if="widget.debug">
-    <button class="btn btn-sm btn-default o_web_studio_xml_editor"><span class="fa fa-code"> XML</span></button>
+    <button class="btn btn-sm btn-default o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
 </t>
 
 <t t-name="web_studio.Sidebar.Toolbox">
@@ -107,13 +107,13 @@
     <!-- Header -->
     <div class="o_web_studio_sidebar_header">
         <div name="new" t-attf-class="o_web_studio_new #{_.contains(['form', 'list', 'kanban', 'search'], widget.view_type)  ? (widget.state.mode === 'new' ? 'active' : '') : 'inactive'}">
-            <span class="fa fa-plus"> Add</span>
+            <i class="fa fa-plus"/> Add
         </div>
         <div name="view" t-attf-class="o_web_studio_view #{widget.state.mode === 'view' ? 'active' : ''}">
-            <span class="fa fa-television"> View</span>
+            <i class="fa fa-television"/> View
         </div>
         <div name="properties" t-attf-class="disabled o_web_studio_properties #{widget.state.mode !== 'properties' ? 'inactive' : 'active'}">
-            <span class="fa fa-server"> Properties</span>
+            <i class="fa fa-server"/> Properties
         </div>
     </div>
 
@@ -696,8 +696,8 @@
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-sm btn-default o_img_upload"><span class="fa fa-upload"> Change Image</span></button>
-                <button t-if="rainbow.img_url" class="btn btn-sm btn-default o_img_reset"><span class="fa fa-undo">Reset Image</span></button>
+                <button class="btn btn-sm btn-default o_img_upload"><i class="fa fa-upload"/> Change Image</button>
+                <button t-if="rainbow.img_url" class="btn btn-sm btn-default o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
             </div>
             <span class="hide">
                 <t t-call="HiddenInputFile">

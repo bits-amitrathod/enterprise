@@ -129,7 +129,7 @@
                                         to create tickets
                                     </p>
                                     <p attrs="{'invisible': [('alias_domain', '!=', False)]}">
-                                        <a type="action" name="%(base_setup.action_general_configuration)d"><span class="fa fa-arrow-right"> Configure domain name</span></a>
+                                        <a type="action" name="%(base_setup.action_general_configuration)d"><i class="fa fa-arrow-right"/> Configure domain name</a>
                                     </p>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                                 <div attrs="{'invisible': [('use_api','=',False)]}" class="mt16">
                                     <!-- TODO: write a dedicated doc on how to create helpdesk tickets -->
                                     <a href="https://www.odoo.com/documentation/9.0/api_integration.html" target="_blank">
-                                        <span class="fa fa-arrow-right"> View documentation</span>
+                                        <i class="fa fa-arrow-right"></i> View documentation
                                     </a>
                                 </div>
                             </div>
@@ -258,8 +258,8 @@
                                 </div>
                                 <div attrs="{'invisible': ['|', ('portal_show_rating', '=', False), ('portal_rating_url','=',False)]}" class="mt16">
                                     View this teams ratings on this page:<br/>
-                                    <a type="button" class="btn-link" target="_blank" role="button">
-                                        <label for="portal_rating_url" string="URL to Submit Issue" class="fa fa-fw fa-arrow-right"/>
+                                    <a type="button" class="btn-link" target="_blank" role="button"><i class="fa fa-fw fa-arrow-right" role="img" aria-label="Rating URL" title="Rating URL"/>
+                                        <label for="portal_rating_url" string="URL to Submit Issue"/>
                                         <field name="portal_rating_url" readonly="1" class="oe_inline" widget="url"/>
                                     </a>
                                 </div>

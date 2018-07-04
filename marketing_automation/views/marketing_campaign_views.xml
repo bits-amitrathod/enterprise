@@ -175,7 +175,7 @@
                                                     </div>
                                                     <div t-if="record.activity_type.raw_value == 'email'" class="row o_ma_email_details text-center">
                                                         <div class="col-xs-3 text-uppercase">
-                                                            <span class="fa fa-pie-chart" > Email Details</span>
+                                                            <i class="fa fa-pie-chart" /> Email Details
                                                         </div>
                                                         <div class="col-xs-3" title="Mails sent and not bounced">
                                                             <strong><t t-esc="record.total_sent.raw_value or 0"></t></strong> Sent
@@ -191,7 +191,7 @@
                                                 <div class="o_pane o_pane_filter hidden" />
                                                 <div t-if="!read_only_mode" class="o_ma_child_activity text-center">
                                                     <div class="o_ma_child_activity_title text-muted">
-                                                        <span class="fa fa-plus-circle"> Add child activity</span>
+                                                        <i class="fa fa-plus-circle" /> Add child activity
                                                     </div>
                                                     <div t-if="record.id.raw_value" class="o_ma_child_activity_buttons">
                                                         <i data-type="act" class="fa fa-code-fork fa-rotate-180 fa-flip-vertical o_ma_text_processed o_add_child" title="Add Another Activity" role="img" aria-label="Add Another Activity" />
@@ -217,37 +217,37 @@
                                         <div class="o_ma_timeline text-center">
                                             <t t-if="record.trigger_type.raw_value == 'mail_open'">
                                                 <div class="o_ma_text_processed">
-                                                    <span class="fa fa-envelope-open-o"> Opened after</span>
+                                                    <i class="fa fa-envelope-open-o" /> Opened after
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_reply'">
                                                 <div class="o_ma_text_processed">
-                                                    <span class="fa fa-reply"> Replied after</span>
+                                                    <i class="fa fa-reply" /> Replied after
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_click'">
                                                 <div class="o_ma_text_processed">
-                                                    <span class="fa fa-hand-pointer-o"> Clicked after</span>
+                                                    <i class="fa fa-hand-pointer-o" /> Clicked after
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_not_open'">
                                                 <div class="o_ma_text_rejected">
-                                                    <span class="fa fa-envelope-open-o"> Not opened within</span>
+                                                    <i class="fa fa-envelope-open-o" /> Not opened within
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_not_reply'">
                                                 <div class="o_ma_text_rejected">
-                                                    <span class="fa fa-reply"> Not replied within</span>
+                                                    <i class="fa fa-reply" /> Not replied within
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_not_click'">
                                                 <div class="o_ma_text_rejected">
-                                                    <span class="fa fa-hand-pointer-o"> Not clicked within</span>
+                                                    <i class="fa fa-hand-pointer-o" /> Not clicked within
                                                 </div>
                                             </t>
                                             <t t-if="record.trigger_type.raw_value == 'mail_bounce'">
                                                 <div class="o_ma_text_rejected">
-                                                    <span class="fa fa-exclamation-circle"> Mail bounced after</span>
+                                                    <i class="fa fa-exclamation-circle" /> Mail bounced after
                                                 </div>
                                             </t>
                                             <strong>

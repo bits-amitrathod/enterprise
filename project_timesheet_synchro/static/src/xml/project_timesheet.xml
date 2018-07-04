@@ -21,21 +21,21 @@
                             <a href='#'><span class="fa fa-edit menu_icon"><span class="menu_text">Today</span></span></a>
                         </li>
                         <li class="pt_menu_item" data-menu-id="activities" data-options='{"show_week":"true"}'>
-                            <a href='#'><span class="fa fa-tasks menu_icon"><span class="menu_text">This Week</span></span></a>
+                            <a href='#'><span class="fa fa-tasks menu_icon"></span><span class="menu_text">This Week</span></a>
                         </li>
                         <hr/>
                         <li class="pt_menu_item" data-menu-id="day_plan">
-                            <a href='#'><span class="fa fa-calendar-o menu_icon"><span class="menu_text">Today's Plan</span></span></a>
+                            <a href='#'><span class="fa fa-calendar-o menu_icon"/><span class="menu_text">Today's Plan</span></a>
                         </li>
                         <li class="pt_menu_item" data-menu-id="stats">
-                            <a href='#'><span class="fa fa-bar-chart menu_icon"><span class="menu_text">Statistics</span></span></a>
+                            <a href='#'><span class="fa fa-bar-chart menu_icon"/><span class="menu_text">Statistics</span></a>
                         </li>
                         <hr/>
                         <li class="pt_menu_item" data-menu-id="sync">
-                            <a href='#'><span class="fa fa-cloud-download menu_icon"><span class="menu_text">Synchronize</span></span></a>
+                            <a href='#'><span class="fa fa-cloud-download menu_icon"/><span class="menu_text">Synchronize</span></a>
                         </li>
                         <li class="pt_menu_item" data-menu-id="settings">
-                            <a href='#'><span class="fa fa-cog menu_icon"><span class="menu_text">Settings</span></span></a>
+                            <a href='#'><span class="fa fa-cog menu_icon"/><span class="menu_text">Settings</span></a>
                         </li>
                     </ul>
                 </div>
@@ -142,8 +142,8 @@
                         </t>
                         <!--TODO : add styling-->
                         <div t-if="!widget.aal_flag" class="pt_empty_activities_screen">
-                            <span class="fa fa-smile-o" style="font-size:4em;">
-                                <div class="pt_motivation_text"><t t-esc="widget.motivation_text"/></div></span>
+                            <span class="fa fa-smile-o" style="font-size:4em;" aria-label="Motivation Text" title="Motivation Text" role="img"/>
+                            <div class="pt_motivation_text"><t t-esc="widget.motivation_text"/></div>
                         </div>
                     </table>
                 </div>
@@ -167,17 +167,17 @@
                         <!--Start button / stop button-->
                         <t t-if="(!widget.current_activity) &amp;&amp; (!widget.timer_on)">
                             <a href="#" role="button" class="btn btn-primary pt_btn_start_timer">
-                                <span class="fa fa-play">&amp;emsp;Start</span>
+                                <span class="fa fa-play"/>&amp;emsp;Start
                             </a>
                         </t>
                         <t t-if="!widget.current_activity &amp;&amp; widget.timer_on">
                             <a href="#" role="button" class="btn btn-primary pt_btn_stop_timer">
-                                <span class="fa fa-stop">&amp;emsp;Stop</span>
+                                <span class="fa fa-stop"/>&amp;emsp;Stop
                             </a>
                         </t>
                         <t t-if="widget.current_activity &amp;&amp; widget.timer_on">
                             <a href="#" role="button" class="btn btn-primary pt_btn_interrupt_activity">
-                                <span class="fa fa-stop">&amp;emsp;Stop</span>
+                                <span class="fa fa-stop"/>&amp;emsp;Stop
                             </a>
                         </t>
                     </div>

@@ -50,7 +50,7 @@
                                         <div class="row">
 
                                             <span class="col-sm-3 o_form_label control-label">
-                                                <span class="fa fa-1x fa-car fa-fw"> Transport</span>
+                                                <i class="fa fa-1x fa-car fa-fw"/> Transport
                                             </span>
 
                                             <div class="col-sm-7">
@@ -157,7 +157,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-3 control-label">
-                                                <span class="fa fa-1x fa-globe fa-fw fa-lg"> Internet Subscription</span>
+                                                <i class="fa fa-1x fa-globe fa-fw fa-lg"/> Internet Subscription
                                             </label>
                                             <div class="col-sm-7">
                                                 <input class="form-control form-control-primary mb8 advantage_input" type="number" t-att-value="contract.internet or '0'" name="internet"/>
@@ -176,7 +176,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <span class="col-sm-3 o_form_label control-label">
-                                                <span class="fa fa-1x fa-mobile fa-fw fa-lg"> Phone Subscription</span>
+                                                <i class="fa fa-1x fa-mobile fa-fw fa-lg"/> Phone Subscription
                                             </span>
                                             <div class="col-sm-7">
                                                 <label class="hr_cs_control hr_cs_control_radio">
@@ -207,7 +207,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-3 control-label" for="holidays_slider">
-                                                <span class="fa fa-1x fa-suitcase fa-fw"> Legal Leaves</span>
+                                                <i class="fa fa-1x fa-suitcase fa-fw"/> Legal Leaves
                                             </label>
                                             <div class="col-sm-7">
                                                 <div t-att-class="'hidden' if not contract.holidays_editable else ''">
@@ -253,7 +253,7 @@
                                         <div class="form-group" name="representation_fees">
                                             <div class="row">
                                                 <span class="col-sm-3 o_form_label control-label">
-                                                    <span class="fa fa-1x fa-male fa-fw fa-lg"> Representation Fees</span>
+                                                    <i class="fa fa-1x fa-male fa-fw fa-lg"/> Representation Fees
                                                 </span>
 
                                                 <div class="col-sm-7">
@@ -287,7 +287,7 @@
                                         <div t-att-class="'form-group' + (' hidden' if not contract.ip_wage_rate else '')">
                                             <div class="row">
                                                 <span class="col-sm-3 o_form_label control-label">
-                                                    <span class="fa fa-1x fa-puzzle-piece fa-fw fa-lg"> Intellectual Property</span>
+                                                    <i class="fa fa-1x fa-puzzle-piece fa-fw fa-lg"/> Intellectual Property
                                                 </span>
                                                 <div class="col-sm-7">
                                                     <label class="hr_cs_control hr_cs_control_radio">
@@ -316,7 +316,7 @@
                                     <div name="fuel_card" class="form-group">
                                         <div class="row">
                                             <label class="col-sm-3 control-label" for="fuel_card_slider">
-                                                <span class="fa fa-1x fa-tint fa-fw"> Fuel Card</span>
+                                                <i class="fa fa-1x fa-tint fa-fw"/> Fuel Card
                                             </label>
                                             <div class="col-sm-7">
                                                 <span class="label label-default"><t t-esc="contract.get_attribute('fuel_card', 'lower_bound')"/></span>
@@ -343,7 +343,7 @@
                                         <div class="form-group" name="commission_on_target_div">
                                             <div class="row">
                                                 <label class="col-sm-3 control-label" for="commission_on_target">
-                                                    <span class="fa fa-1x fa-crosshairs fa-fw fa-lg"> Commissions</span>
+                                                    <i class="fa fa-1x fa-crosshairs fa-fw fa-lg"/> Commissions
                                                 </label>
                                                 <div class="col-sm-7">
                                                     <span class="help-block">This commission is only effective if the target is reached. The commissions are paid using warrants that you receive every three months. This results to a net warrant value of <t t-esc="round(contract.warrant_value_employee / 12.0, 2)"/></span>
@@ -365,7 +365,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <label class="col-sm-3 control-label" for="meal_voucher_amount">
-                                                    <span class="fa fa-1x fa-cutlery fa-fw"> Meal Vouchers</span>
+                                                    <i class="fa fa-1x fa-cutlery fa-fw"/> Meal Vouchers
                                                 </label>
                                                 <div class="col-sm-7">
                                                     <span class="help-block">Every month, you'll get 7.45€ per worked day on your meal voucher card.
@@ -388,7 +388,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-3 control-label" for="eco_checks">
-                                                <span class="fa fa-1x fa-leaf fa-fw"> Eco Vouchers</span>
+                                                <i class="fa fa-1x fa-leaf fa-fw"/> Eco Vouchers
                                             </label>
                                             <div class="col-sm-7">
                                                 <span class="help-block">You'll receive this amount in the form of Eco Vouchers around June. This amount may be different based on your working schedule and the number of worked days during the year. </span>
@@ -406,7 +406,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-3 control-label" for="thirteen_month">
-                                                <span class="fa fa-1x fa-gift fa-fw fa-lg"> 13<sup>th</sup> Month</span>
+                                                <i class="fa fa-1x fa-gift fa-fw fa-lg"/> 13<sup>th</sup> Month
                                             </label>
                                             <div class="col-sm-7">
                                                 <span class="help-block">You'll receive this amount around December. This amount may be different based on your working schedule and the number of worked days during the year.</span>
@@ -424,7 +424,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-3 control-label" for="double_holidays">
-                                                <span class="fa fa-1x fa-suitcase fa-fw"> Holiday Bonus</span>
+                                                <i class="fa fa-1x fa-suitcase fa-fw"/> Holiday Bonus
                                             </label>
                                             <div class="col-sm-7">
                                                 <span class="help-block">You'll receive this amount around June. This amount may be different based on your working schedule and the number of worked days during the year.</span>
@@ -594,8 +594,8 @@
                                 </div>
             
                                 <div class="col-sm-4 mt48">
-                                    <button t-att-class="'hidden' if need_personal_information else 'btn'" type="button" name="toggle_personal_information"><span class="fa fa-suffix-chevron-down">Show </span></button>
-                                    <button class="hidden btn" type="button" name="toggle_personal_information"><span class="fa fa-suffix-chevron-up">Hide </span></button>
+                                    <button t-att-class="'hidden' if need_personal_information else 'btn'" type="button" name="toggle_personal_information">Show <i class="fa fa-chevron-down"></i></button>
+                                    <button class="hidden btn" type="button" name="toggle_personal_information">Hide <i class="fa fa-chevron-up"></i></button>
                                 </div>
                             </div>
                             <div class="row">
@@ -999,7 +999,7 @@
                                     <!--  -->
                                     <div name="internet_atn" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-plus fa-fw" for="ATN.INT.1"> Benefit in Kind (Internet)</label>
+                                            <label class="col-sm-10 control-label" for="ATN.INT.1"><i class="fa fa-1x fa-plus fa-fw"/> Benefit in Kind (Internet)</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="5" disabled="disabled" name="ATN.INT.1"/>
@@ -1012,7 +1012,7 @@
                                     <!--  -->
                                     <div name="mobile_atn" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-plus fa-fw" for="ATN.MOB.1"> Benefit in Kind Phone (Subscription)</label>
+                                            <label class="col-sm-10 control-label" for="ATN.MOB.1"><i class="fa fa-1x fa-plus fa-fw"/> Benefit in Kind Phone (Subscription)</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="12.50" disabled="disabled" name="ATN.MOB.1"/>
@@ -1038,7 +1038,7 @@
                                     <!--  -->
                                     <div name="company_car_atn" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-plus fa-fw" for="ATN.CAR.1"> Benefit in Kind (Company Car)</label>
+                                            <label class="col-sm-10 control-label" for="ATN.CAR.1"><i class="fa fa-1x fa-plus fa-fw"/> Benefit in Kind (Company Car)</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="250" disabled="disabled" name="ATN.CAR.1"/>
@@ -1050,7 +1050,7 @@
 
                                     <div class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-minus fa-fw" for="ONSS"> Social contribution</label>
+                                            <label class="col-sm-10 control-label" for="ONSS"><i class="fa fa-1x fa-minus fa-fw"/> Social contribution</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="339.82" disabled="disabled" name="ONSS"/>
@@ -1063,7 +1063,7 @@
                                     <!--  -->
                                     <div name="employment_bonus" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-plus fa-fw" for="EMP.BONUS"> Employment Bonus</label>
+                                            <label class="col-sm-10 control-label" for="EMP.BONUS"><i class="fa fa-1x fa-plus fa-fw"/> Employment Bonus</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="0.0" disabled="disabled" name="EMP.BONUS"/>
@@ -1075,7 +1075,7 @@
 
                                     <div class="form-group" name="ip_div">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-minus fa-fw" for="IP"> Intellectual Property</label>
+                                            <label class="col-sm-10 control-label" for="IP"><i class="fa fa-1x fa-minus fa-fw"/> Intellectual Property</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="25.0" disabled="disabled" name="IP"/>
@@ -1101,7 +1101,7 @@
                                     <!--  -->
                                     <div class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-minus fa-fw" for="P.P"> Withholding Tax</label>
+                                            <label class="col-sm-10 control-label" for="P.P"><i class="fa fa-1x fa-minus fa-fw"/> Withholding Tax</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control"  value="~" disabled="disabled" name="P.P"/>
@@ -1114,7 +1114,7 @@
                                     <!--  -->
                                     <div name="withholding_tax_reduction" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-plus fa-fw" for="PP.RED"> Withholding Tax Reductions</label>
+                                            <label class="col-sm-10 control-label" for="PP.RED"><i class="fa fa-1x fa-plus fa-fw"/> Withholding Tax Reductions</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" value="0.0" disabled="disabled" name="PP.RED"/>
@@ -1127,7 +1127,7 @@
                                     <!--  -->
                                     <div name="m_onss_div" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-minus fa-fw" for="M.ONSS"> Special social contribution</label>
+                                            <label class="col-sm-10 control-label" for="M.ONSS"><i class="fa fa-1x fa-minus fa-fw"/> Special social contribution</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control"  value="0.0" disabled="disabled" name="M.ONSS"/>
@@ -1140,7 +1140,7 @@
                                     <!--  -->
                                     <div class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-minus fa-fw" for="MEAL_V_EMP"> Meal Vouchers</label>
+                                            <label class="col-sm-10 control-label" for="MEAL_V_EMP"><i class="fa fa-1x fa-minus fa-fw"/> Meal Vouchers</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control"  value="21.80" disabled="disabled" name="MEAL_V_EMP"/>
@@ -1153,7 +1153,7 @@
                                     <!--  -->
                                     <div name="company_car_atn" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-minus fa-fw" for="ATN.CAR.2"> Benefit in Kind (Company Car)</label>
+                                            <label class="col-sm-10 control-label" for="ATN.CAR.2"><i class="fa fa-1x fa-minus fa-fw"/> Benefit in Kind (Company Car)</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" value="250" disabled="disabled" name="ATN.CAR.2"/>
@@ -1167,7 +1167,7 @@
                                     <!--  -->
                                     <div name="internet_atn" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-minus fa-fw" for="ATN.INT.2"> Benefit in Kind (Internet)</label>
+                                            <label class="col-sm-10 control-label" for="ATN.INT.2"><i class="fa fa-1x fa-minus fa-fw"/> Benefit in Kind (Internet)</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="5" disabled="disabled" name="ATN.INT.2"/>
@@ -1180,7 +1180,7 @@
                                     <!--  -->
                                     <div name="mobile_atn" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-minus fa-fw" for="ATN.MOB.2"> Benefit in Kind (Phone Subscription)</label>
+                                            <label class="col-sm-10 control-label" for="ATN.MOB.2"><i class="fa fa-1x fa-minus fa-fw"/> Benefit in Kind (Phone Subscription)</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="12.50" disabled="disabled" name="ATN.MOB.2"/>
@@ -1205,7 +1205,7 @@
                                     <!--  -->
                                     <div class="form-group" name="representation_fees_div">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-plus fa-fw" for="representation_fees"> Representation Fees</label>
+                                            <label class="col-sm-10 control-label" for="representation_fees"><i class="fa fa-1x fa-plus fa-fw"/> Representation Fees</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="contract.representation_fees" disabled="disabled" name="representation_fees"/>
@@ -1217,7 +1217,7 @@
 
                                     <div class="form-group" name="ip_div">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-plus fa-fw" for="IP"> Intellectual Property</label>
+                                            <label class="col-sm-10 control-label" for="IP"><i class="fa fa-1x fa-plus fa-fw"/> Intellectual Property</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" t-att-value="25.0" disabled="disabled" name="IP"/>
@@ -1228,7 +1228,7 @@
                                     </div>
                                     <div name="ip_div" class="form-group">
                                         <div class="row">
-                                            <label class="col-sm-10 control-label fa fa-1x fa-minus fa-fw" for="IP.DED"> Intellectual Property Income Deduction</label>
+                                            <label class="col-sm-10 control-label" for="IP.DED"><i class="fa fa-1x fa-minus fa-fw"/> Intellectual Property Income Deduction</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <input class="form-control" type="text" value="0" disabled="disabled" name="IP.DED"/>
@@ -1270,7 +1270,7 @@
             <div class="wrap">
                 <div id="hr_cs_form" class="container">
                     <div class="text-center mt48 mb48">
-                        <h1 class="hr_cs_brand_optional"><span class="fa fa-check-circle-o mr8">Congratulations</span></h1>
+                        <h1 class="hr_cs_brand_optional"><i class="fa fa-check-circle-o mr8"/>Congratulations</h1>
                         <p class="lead mb24">Your contract has been sent to:</p>
                         <p class="lead mb4"> <b><t t-if="responsible_name" t-esc="responsible_name"/></b></p>
                         <p class="mb24">

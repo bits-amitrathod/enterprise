@@ -131,7 +131,7 @@
                                                 <i/> Customer Satisfaction Ration: <t t-esc="team.percentage_satisfaction"/> %
                                             </p>
                                             <p t-if="team.alias_name and team.alias_domain"  class="text-muted">
-                                                <span class="fa fa-envelope"> Email :</span> <t t-esc="team.alias_name"/>@<t t-esc="team.alias_domain"/>
+                                                <i class="fa fa-envelope"/> Email : <t t-esc="team.alias_name"/>@<t t-esc="team.alias_domain"/>
                                             </p>
                                             <div class="row">
                                                 <div class="col-md-16 text-center">
@@ -142,7 +142,7 @@
                                         <div class="caption">
                                             <p>
                                                 <a t-att-href="'/helpdesk/rating/%s' % team.id" role="button" class="btn btn-primary btn-lg btn-block">
-                                                    <span class="fa fa-arrow-circle-right "> See the feedbacks</span>
+                                                    <i class="fa fa-arrow-circle-right "/> See the feedbacks
                                                 </a>
                                             </p>
                                         </div>

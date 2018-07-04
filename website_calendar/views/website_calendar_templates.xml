@@ -58,7 +58,7 @@
                       <t t-call="website_calendar.employee_select"/>
                       <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
-                            <button type="submit" class="btn btn-primary"><span class="fa fa-suffix-arrow-right">View Availabilities </span></button>
+                            <button type="submit" class="btn btn-primary">View Availabilities <span class="fa fa-arrow-right"/></button>
                         </div>
                       </div>
                     </form>
@@ -290,7 +290,7 @@
 
                       <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-primary"><span class="fa fa-suffix-arrow-right">Confirm Appointment </span></button>
+                          <button type="submit" class="btn btn-primary">Confirm Appointment <span class="fa fa-arrow-right"/></button>
                         </div>
                       </div>
                     </form>
@@ -370,16 +370,16 @@
                       </div>
                       <div class="col-sm-3">
                           <a role="button" class="btn btn-block btn-primary" t-attf-href="/website/calendar/ics/#{event.access_token}.ics">
-                              <span class="fa fa-fw fa-arrow-right">Add to iCal/Outlook</span>
+                              <i class="fa fa-fw fa-arrow-right"></i>Add to iCal/Outlook
                           </a>
                           <a role="button" class="btn btn-primary btn-block" t-att-href="google_url">
-                              <span class="fa fa-fw fa-arrow-right">Add to Google Calendar</span>
+                              <i class="fa fa-fw fa-arrow-right"></i>Add to Google Calendar
                           </a>
                           <t t-if="event.appointment_type_id">
                             <br/>
                             <br/>
                             <a role="button" class="btn btn-danger btn-block" t-attf-href="/website/calendar/cancel/#{event.access_token}">
-                                <span class="fa fa-fw fa-times">Cancel / Reschedule</span>
+                                <i class="fa fa-fw fa-times"></i>Cancel / Reschedule
                             </a>
                           </t>
                       </div>

@@ -329,8 +329,8 @@
                                             <strong><t t-if="record.code.value"><t t-esc="record.code.value"/> - </t><t t-esc="record.name.value"/></strong>
                                         </h3>
                                         <div>Recurrence: <t t-esc="record.recurring_interval.value"/>&amp;nbsp;<t t-esc="record.recurring_rule_type.value"/></div>
-                                        <div t-if="record.payment_mandatory.raw_value"><span class="fa fa-check"> Automatic payments</span></div>
-                                        <div t-if="record.user_closable.raw_value"><span class="fa fa-check"> Closable by customer</span></div>
+                                        <div t-if="record.payment_mandatory.raw_value"><i class="fa fa-check" /> Automatic payments</div>
+                                        <div t-if="record.user_closable.raw_value"><i class="fa fa-check" /> Closable by customer</div>
                                     </div>
                                 </div><div class="o_kanban_card_manage_pane dropdown-menu" role="menu">
                                     <div class="o_kanban_card_manage_section o_kanban_manage_reports">

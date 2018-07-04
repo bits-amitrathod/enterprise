@@ -109,9 +109,9 @@
                                         <i t-if="partner.trust == 'bad'" class="fa fa-circle oe-account_followup-trust" style="color: red; font-size: 0.8em;" role="img" aria-label="Bad debtor" title="Bad debtor"></i>
                                     </span>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="trustDropdown">
-                                        <li><a role='menuitem' class='o_change_trust' data-new-trust='good'><span class="fa fa-circle" style="color: green;"> Good Debtor</span></a></li>
-                                        <li><a role='menuitem' class='o_change_trust' data-new-trust='normal'><span class="fa fa-circle" style="color: grey;"> Normal Debtor</span></a></li>
-                                        <li><a role='menuitem' class='o_change_trust' data-new-trust='bad'><span class="fa fa-circle" style="color: red;"> Bad Debtor</span></a></li>
+                                        <li><a role='menuitem' class='o_change_trust' data-new-trust='good'><i class="fa fa-circle" style="color: green;"></i> Good Debtor</a></li>
+                                        <li><a role='menuitem' class='o_change_trust' data-new-trust='normal'><i class="fa fa-circle" style="color: grey;"></i> Normal Debtor</a></li>
+                                        <li><a role='menuitem' class='o_change_trust' data-new-trust='bad'><i class="fa fa-circle" style="color: red;"></i> Bad Debtor</a></li>
                                     </ul>
                                 </span>
                                 <a action="open_partner_form"><t t-esc='partner.name' /></a>
@@ -154,7 +154,7 @@
         <template id="followup_search_template">
             <div class="btn-group o_dropdown o_account_reports_followup-filter">
                 <a type="button" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="fa fa-filter"> Partners:</span>
+                    <span class="fa fa-filter"/> Partners:
                     <t t-if="options.get('type_followup', '') == 'action'">
                         In Need of Action
                     </t>

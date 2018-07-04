@@ -66,14 +66,14 @@
             <a href="#" data-name="gantt" title="Gantt View" aria-label="Gantt View"><i class="fa fa-tasks"/></a>
           </t>
           <t t-if="_.contains(widget.active_view_types, 'cohort')">
-            <a href="#" data-name="cohort"><i class="fa fa-signal"/></a>
+            <a href="#" data-name="cohort" title="Cohort View" aria-label="Cohort View"><i class="fa fa-signal"/></a>
           </t>
         </div>
       </li>
     </ul>
 
-    <div class="o_web_studio_redo"><button class="btn btn-sm"><span class="fa fa-repeat">Redo</span></button></div>
-    <div class="o_web_studio_undo"><button class="btn btn-sm"><span class="fa fa-undo">Undo</span></button></div>
+    <div class="o_web_studio_redo"><button class="btn btn-sm"><i class="fa fa-repeat"/><span>Redo</span></button></div>
+    <div class="o_web_studio_undo"><button class="btn btn-sm"><i class="fa fa-undo"/><span>Undo</span></button></div>
     <div class="o_web_studio_snackbar"/>
 
 </div>
