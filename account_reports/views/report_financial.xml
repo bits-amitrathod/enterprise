@@ -23,9 +23,11 @@
     <li t-if="line['caret_options'] == 'tax.report.line'">
         <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_tax_report_line">Audit</a>
     </li>
+    <li t-if="line['caret_options'] == 'account.bank.statement.line'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.bank.statement" action="open_document">View Bank Statement</a></li>
     <li t-if="line['caret_options'] == 'account.analytic.account'">
         <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_analytic_entries">Analytic Entries</a>
     </li>
+
 </template>
 
 <template id="filter_info_template">
@@ -149,7 +151,7 @@
                         </span>
                     </t>
                     <t t-if="not line.get('caret_options')">
-                            <span class="account_report_line_name">
+                            <span class="account_report_line_name" t-att-title="line.get('title_hover')">
                                 <a t-if="line.get('action_id')" t-att-data-id="line['id']" t-att-data-action-id="line['action_id']" t-att-action="line.get('action', 'execute_action')">
                                     <t t-esc="line.get('name')"/>
                                 </a>

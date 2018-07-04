@@ -192,21 +192,26 @@ class AccountReport(models.AbstractModel):
             params = {}
         ctx = self.env.context.copy()
         ctx.pop('id', '')
-        aml_id = params.get('id')
+        line_id = params.get('id')
         document = params.get('object', 'account.move')
-        if aml_id:
-            aml = self.env['account.move.line'].browse(aml_id)
-            view_name = 'view_move_form'
-            res_id = aml.move_id.id
-            if document == 'account.invoice' and aml.invoice_id.id:
-                res_id = aml.invoice_id.id
-                if aml.invoice_id.type in ('in_refund', 'in_invoice'):
-                    view_name = 'invoice_supplier_form'
-                elif aml.invoice_id.type in ('out_refund', 'out_invoice'):
-                    view_name = 'invoice_form'
-            elif document == 'account.payment' and aml.payment_id.id:
-                view_name = 'view_account_payment_form'
-                res_id = aml.payment_id.id
+        if line_id:
+            if document == 'account.bank.statement':
+                statement_line = self.env['account.bank.statement.line'].browse(line_id)
+                view_name = 'view_bank_statement_form'
+                res_id = statement_line.statement_id.id
+            else:
+                aml = self.env['account.move.line'].browse(line_id)
+                view_name = 'view_move_form'
+                res_id = aml.move_id.id
+                if document == 'account.invoice' and aml.invoice_id.id:
+                    res_id = aml.invoice_id.id
+                    if aml.invoice_id.type in ('in_refund', 'in_invoice'):
+                        view_name = 'invoice_supplier_form'
+                    elif aml.invoice_id.type in ('out_refund', 'out_invoice'):
+                        view_name = 'invoice_form'
+                elif document == 'account.payment' and aml.payment_id.id:
+                    view_name = 'view_account_payment_form'
+                    res_id = aml.payment_id.id
             view_id = self.env['ir.model.data'].get_object_reference('account', view_name)[1]
             return {
                 'type': 'ir.actions.act_window',

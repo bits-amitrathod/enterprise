@@ -23,24 +23,14 @@ class account_bank_reconciliation_report(models.AbstractModel):
             {'name': _("Amount"), 'class': 'number'},
         ]
 
-    def add_title_line(self, options, title, amount):
+    def add_title_line(self, options, title, amount=None, level=0, display_date=True):
         self.line_number += 1
         line_currency = self.env.context.get('line_currency', False)
         return {
             'id': 'line_' + str(self.line_number),
             'name': title,
-            'columns': [{'name': v} for v in [options['date']['date'], '', self.format_value(amount, line_currency)]],
-            'level': 0,
-        }
-
-    def add_subtitle_line(self, title, amount=None):
-        self.line_number += 1
-        line_currency = self.env.context.get('line_currency', False)
-        return {
-            'id': 'line_' + str(self.line_number),
-            'name': title,
-            'columns': [{'name': v} for v in ['', '', amount and self.format_value(amount, line_currency) or '']],
-            'level': 1,
+            'columns': [{'name': v} for v in [display_date and options['date']['date'] or '', '', amount and self.format_value(amount, line_currency)]],
+            'level': level,
         }
 
     def add_total_line(self, amount):
@@ -48,9 +38,10 @@ class account_bank_reconciliation_report(models.AbstractModel):
         line_currency = self.env.context.get('line_currency', False)
         return {
             'id': 'line_' + str(self.line_number),
-            'name': '',
+            'name': _('Total Virtual GL Balance'),
             'columns': [{'name': v} for v in ["", "", self.format_value(amount, line_currency)]],
             'level': 2,
+            'class': 'total',
         }
 
     def add_bank_statement_line(self, line, amount):
@@ -58,12 +49,10 @@ class account_bank_reconciliation_report(models.AbstractModel):
         line_currency = self.env.context.get('line_currency', False)
         return {
             'id': str(line.id),
-            #'statement_id': line.statement_id.id,
-            #'type': 'bank_statement_id',
-            'caret_options': True,
+            'caret_options': 'account.bank.statement.line',
             'name': len(name) >= 85 and name[0:80] + '...' or name,
             'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(amount, line_currency)]],
-            'level': 1,
+            'level': 3,
         }
 
     def print_pdf(self, options):
@@ -75,91 +64,111 @@ class account_bank_reconciliation_report(models.AbstractModel):
         return super(account_bank_reconciliation_report, self).print_xlsx(options)
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_bank_rec_report_data(self, options, line_id=None):
+        # General data + setup
+        rslt = {}
+
         journal_id = self._context.get('active_id') or options.get('active_id')
         journal = self.env['account.journal'].browse(journal_id)
-        lines = []
-        #Start amount
-        use_foreign_currency = journal.currency_id and journal.currency_id != journal.company_id.currency_id or False
-        account_ids = list(set([journal.default_debit_account_id.id, journal.default_credit_account_id.id]))
-        line_currency = use_foreign_currency and journal.currency_id or False
-        self = self.with_context(line_currency=line_currency)
-        lines_already_accounted = self.env['account.move.line'].search([('account_id', 'in', account_ids),
+
+        rslt['use_foreign_currency'] = journal.currency_id and journal.currency_id != journal.company_id.currency_id or False
+        rslt['account_ids'] = list(set([journal.default_debit_account_id.id, journal.default_credit_account_id.id]))
+        rslt['line_currency'] = rslt['use_foreign_currency'] and journal.currency_id or False
+        self = self.with_context(line_currency=rslt['line_currency'])
+        lines_already_accounted = self.env['account.move.line'].search([('account_id', 'in', rslt['account_ids']),
                                                                         ('date', '<=', self.env.context['date_to']),
                                                                         ('company_id', 'in', self.env.context['company_ids'])])
-        start_amount = sum([line.amount_currency if use_foreign_currency else line.balance for line in lines_already_accounted])
-        lines.append(self.add_title_line(options, _("Current Balance in GL"), start_amount))
+        rslt['odoo_balance'] = sum([line.amount_currency if rslt['use_foreign_currency'] else line.balance for line in lines_already_accounted])
 
-        # Un-reconcilied bank statement lines
+        # Payments not reconciled with a bank statement line
         move_lines = self.env['account.move.line'].search([('move_id.journal_id', '=', journal_id),
                                                            '|', ('statement_line_id', '=', False), ('statement_line_id.date', '>', self.env.context['date_to']),
                                                            ('user_type_id.type', '=', 'liquidity'),
                                                            ('full_reconcile_id', '=', False),
                                                            ('date', '<=', self.env.context['date_to']),
                                                            ('company_id', 'in', self.env.context['company_ids'])])
-        unrec_tot = 0
         if move_lines:
-            tmp_lines = []
-            for line in move_lines:
-                self.line_number += 1
-                tmp_lines.append({
-                    'id': str(line.id),
-                    #'move_id': line.move_id.id,
-                    #'type': 'move_line_id',
-                    #'action': line.get_model_id_and_name(),
-                    'name': line.name,
-                    'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(-line.balance, line_currency)]],
-                    'level': 1,
-                })
-                unrec_tot -= line.amount_currency if use_foreign_currency else line.balance
-            if unrec_tot > 0:
-                title = _("Plus Unreconciled Payments")
-            else:
-                title = _("Minus Unreconciled Payments")
-            lines.append(self.add_subtitle_line(title))
-            lines += tmp_lines
-            lines.append(self.add_total_line(unrec_tot))
+            rslt['not_reconciled_pmts'] = move_lines
 
-        # Outstanding plus
-        not_reconcile_plus = self.env['account.bank.statement.line'].search([('statement_id.journal_id', '=', journal_id),
+        # Bank statement lines not reconciled with a payment
+        rslt['not_reconciled_st_positive'] = self.env['account.bank.statement.line'].search([('statement_id.journal_id', '=', journal_id),
                                                                              ('date', '<=', self.env.context['date_to']),
                                                                              ('journal_entry_ids', '=', False),
                                                                              ('amount', '>', 0),
                                                                              ('company_id', 'in', self.env.context['company_ids'])])
-        outstanding_plus_tot = 0
-        if not_reconcile_plus:
-            lines.append(self.add_subtitle_line(_("Plus Unreconciled Statement Lines")))
-            for line in not_reconcile_plus:
-                lines.append(self.add_bank_statement_line(line, line.amount))
-                outstanding_plus_tot += line.amount
-            lines.append(self.add_total_line(outstanding_plus_tot))
 
-        # Outstanding less
-        not_reconcile_less = self.env['account.bank.statement.line'].search([('statement_id.journal_id', '=', journal_id),
+        rslt['not_reconciled_st_negative'] = self.env['account.bank.statement.line'].search([('statement_id.journal_id', '=', journal_id),
                                                                              ('date', '<=', self.env.context['date_to']),
                                                                              ('journal_entry_ids', '=', False),
                                                                              ('amount', '<', 0),
                                                                              ('company_id', 'in', self.env.context['company_ids'])])
-        outstanding_less_tot = 0
-        if not_reconcile_less:
-            lines.append(self.add_subtitle_line(_("Minus Unreconciled Statement Lines")))
-            for line in not_reconcile_less:
-                lines.append(self.add_bank_statement_line(line, line.amount))
-                outstanding_less_tot += line.amount
-            lines.append(self.add_total_line(outstanding_less_tot))
 
         # Final
-        computed_stmt_balance = start_amount + outstanding_plus_tot + outstanding_less_tot + unrec_tot
         last_statement = self.env['account.bank.statement'].search([('journal_id', '=', journal_id),
                                        ('date', '<=', self.env.context['date_to']), ('company_id', 'in', self.env.context['company_ids'])], order="date desc, id desc", limit=1)
-        real_last_stmt_balance = last_statement.balance_end
-        if computed_stmt_balance != real_last_stmt_balance:
-            if real_last_stmt_balance - computed_stmt_balance > 0:
-                title = _("Plus Missing Statements")
-            else:
-                title = _("Minus Missing Statements")
-            lines.append(self.add_subtitle_line(title, real_last_stmt_balance - computed_stmt_balance))
-        lines.append(self.add_title_line(options, _("Equal Last Statement Balance"), real_last_stmt_balance))
+        rslt['last_st_balance'] = last_statement.balance_end
+
+        return rslt
+
+    @api.model
+    def get_lines(self, options, line_id=None):
+        # Fetch data
+        report_data = self._get_bank_rec_report_data(options, line_id)
+
+        # Compute totals
+        unrec_tot = sum([-(aml.amount_currency if report_data['use_foreign_currency'] else aml.balance) for aml in report_data.get('not_reconciled_pmts', [])])
+        outstanding_plus_tot = sum([st_line.amount for st_line in report_data.get('not_reconciled_st_positive', [])])
+        outstanding_minus_tot = sum([st_line.amount for st_line in report_data.get('not_reconciled_st_negative', [])])
+        computed_stmt_balance = report_data['odoo_balance'] + outstanding_plus_tot + outstanding_minus_tot + unrec_tot
+        difference = computed_stmt_balance - report_data['last_st_balance']
+
+        # Build report
+        lines = []
+
+        lines.append(self.add_title_line(options, _("Virtual GL Balance"), level=1))
+
+        gl_title = _("Current balance of account %s")
+        if len(report_data['account_ids']) > 1:
+            gl_title = _("Current balance of accounts %s")
+
+        accounts = self.env['account.account'].browse(report_data['account_ids'])
+        accounts_string = ', '.join(accounts.mapped('code'))
+        lines.append(self.add_title_line(options, gl_title % accounts_string, level=2, amount=report_data['odoo_balance']))
+
+        lines.append(self.add_title_line(options, _("Operations to Process"), level=2, display_date=False))
+
+        if report_data.get('not_reconciled_st_positive') or report_data.get('not_reconciled_st_negative'):
+            lines.append(self.add_title_line(options, _("Unreconciled Bank Statement Lines"), level=3, display_date=False))
+            for line in report_data.get('not_reconciled_st_positive', []):
+                lines.append(self.add_bank_statement_line(line, line.amount))
+
+            for line in report_data.get('not_reconciled_st_negative', []):
+                lines.append(self.add_bank_statement_line(line, line.amount))
+
+        if report_data.get('not_reconciled_pmts'):
+            lines.append(self.add_title_line(options, _("Validated Payments not Linked with a Bank Statement Line"), level=3, display_date=False))
+            for line in report_data['not_reconciled_pmts']:
+                    self.line_number += 1
+                    lines.append({
+                        'id': str(line.id),
+                        'name': line.name,
+                        'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(-line.balance, report_data['line_currency'])]],
+                        'level': 4,
+                        'caret_options': 'account.payment',
+                    })
+
+        lines.append(self.add_total_line(computed_stmt_balance))
+
+        lines.append(self.add_title_line(options, _("Last Bank Statement Ending Balance"), level=1, amount=report_data['last_st_balance']))
+        last_line = self.add_title_line(options, _("Unexplained Difference"), level=1, amount=difference)
+        last_line['title_hover'] = _("Difference between Virtual GL Balance and Last Bank Statement Ending Balance. "
+            "If non-zero, it is probably due to the fact some bank statements have not been encoded into Odoo. You should "
+            "check the start and end balance of each of your encoded bank statements, and make sure that there is no gap "
+            "between them.")
+        line_currency = self.env.context.get('line_currency', False)
+        last_line['columns'][-1]['title'] = self.format_value(computed_stmt_balance, line_currency) + " - " + self.format_value(report_data['last_st_balance'], line_currency)
+        lines.append(last_line)
+
         return lines
 
     @api.model
