@@ -961,7 +961,6 @@ var ClientAction = AbstractAction.extend({
         this.mutex.exec(function () {
             return self._save().then(function () {
                 self.actionManager.$el.height(self.actionManagerInitHeight);
-                self.trigger_up('toggle_fullscreen');
                 self.trigger_up('history_back');
             });
         });

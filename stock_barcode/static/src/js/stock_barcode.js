@@ -18,6 +18,10 @@ var MainMenu = AbstractAction.extend({
         "click .button_inventory": function(){
             this.open_inventory();
         },
+        "click .o_stock_barcode_menu": function(){
+            this.trigger_up('toggle_fullscreen');
+            this.trigger_up('show_home_menu');
+        },
     },
 
     init: function(parent, action) {
