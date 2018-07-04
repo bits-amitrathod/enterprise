@@ -555,6 +555,41 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('correctly display hook in form sheet', function (assert) {
+        assert.expect(4);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        // hook here
+                        "<group>" +
+                            "<group/>" +
+                            "<group/>" +
+                        "</group>" +
+                        // hook here
+                        "<group>" +
+                            "<group/>" +
+                            "<group/>" +
+                        "</group>" +
+                        // hook here
+                    "</sheet>" +
+                "</form>",
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_form_sheet > div.o_web_studio_hook').length, 3,
+            "there should be three hooks as children of the sheet");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_form_sheet > div:eq(1)').hasClass('o_web_studio_hook'),
+            "second div should be a hook");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_form_sheet > div:eq(3)').hasClass('o_web_studio_hook'),
+            "fourth div should be a hook");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_form_sheet > div:eq(5)').hasClass('o_web_studio_hook'),
+            "last div should be a hook");
+
+        vem.destroy();
+    });
+
     QUnit.test('correctly display hook below group title', function(assert) {
         assert.expect(14);
 
@@ -2161,7 +2196,7 @@ QUnit.module('ViewEditorManager', {
         fieldsView = $.extend(true, {}, vem.fields_view);
         assert.strictEqual(vem.$('.o_field_char').eq(0).text(), 'jean',
             "the partner view form should be displayed.");
-        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_char'), $('.o_web_studio_hook'));
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_char'), vem.$('.o_group .o_web_studio_hook:first'));
 
         // add a new button
         vem.$('.o_web_studio_form_view_editor .o_web_studio_button_hook').click();
