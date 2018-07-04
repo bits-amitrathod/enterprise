@@ -125,28 +125,26 @@ var PickingClientAction = ClientAction.extend({
      */
     _validate: function () {
         var self = this;
-        return this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._rpc({
-                    'model': self.actionParams.model,
-                    'method': 'button_validate',
-                    'args': [[self.actionParams.pickingId]],
-                }).then(function (res) {
-                    var def = $.when();
-                    var exitCallback = function () { self.trigger_up('exit');};
-                    if (res) {
-                        var options = {
-                            on_close: exitCallback,
-                        };
-                        def.then(function () {
-                            return self.do_action(res, options);
-                        });
-                    } else {
-                        return def.then(function () {
-                            return exitCallback();
-                        });
-                    }
-                });
+        return self._save().then(function () {
+            return self._rpc({
+                'model': self.actionParams.model,
+                'method': 'button_validate',
+                'args': [[self.actionParams.pickingId]],
+            }).then(function (res) {
+                var def = $.when();
+                var exitCallback = function () { self.trigger_up('exit');};
+                if (res) {
+                    var options = {
+                        on_close: exitCallback,
+                    };
+                    def.then(function () {
+                        return self.do_action(res, options);
+                    });
+                } else {
+                    return def.then(function () {
+                        return exitCallback();
+                    });
+                }
             });
         });
     },
@@ -158,8 +156,8 @@ var PickingClientAction = ClientAction.extend({
      */
     _cancel: function () {
         var self = this;
-        this._save().then(function () {
-            self._rpc({
+        return self._save().then(function () {
+            return self._rpc({
                 'model': self.actionParams.model,
                 'method': 'action_cancel',
                 'args': [[self.actionParams.pickingId]],
@@ -176,13 +174,13 @@ var PickingClientAction = ClientAction.extend({
      */
     _scrap: function () {
         var self = this;
-        this._save().then(function () {
-            self._rpc({
+        return self._save().then(function () {
+            return self._rpc({
                 'model': 'stock.picking',
                 'method': 'button_scrap',
                 'args': [[self.actionParams.pickingId]],
             }).then(function(res) {
-                self.do_action(res);
+                return self.do_action(res);
             });
         });
     },
@@ -269,7 +267,12 @@ var PickingClientAction = ClientAction.extend({
      */
     _onValidate: function (ev) {
         ev.stopPropagation();
-        this._validate();
+        var self = this;
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._validate();
+            });
+        });
     },
 
     /**
@@ -281,7 +284,12 @@ var PickingClientAction = ClientAction.extend({
      */
     _onCancel: function (ev) {
         ev.stopPropagation();
-        this._cancel();
+        var self = this;
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._cancel();
+            });
+        });
     },
 
     /**
@@ -294,13 +302,15 @@ var PickingClientAction = ClientAction.extend({
     _onPrintPicking: function (ev) {
         ev.stopPropagation();
         var self = this;
-        this._save().then(function () {
-            self._rpc({
-                'model': 'stock.picking',
-                'method': 'do_print_picking',
-                'args': [[self.actionParams.pickingId]],
-            }).then(function(res) {
-                self.do_action(res);
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._rpc({
+                    'model': 'stock.picking',
+                    'method': 'do_print_picking',
+                    'args': [[self.actionParams.pickingId]],
+                }).then(function(res) {
+                    return self.do_action(res);
+                });
             });
         });
     },
@@ -316,13 +326,15 @@ var PickingClientAction = ClientAction.extend({
     _onPrintDeliverySlip: function (ev) {
         ev.stopPropagation();
         var self = this;
-        this._save().then(function () {
-            self.do_action(self.currentState.actionReportDeliverySlipId, {
-                'additional_context': {
-                    'active_id': self.actionParams.pickingId,
-                    'active_ids': [self.actionParams.pickingId],
-                    'active_model': 'stock.picking',
-                }
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self.do_action(self.currentState.actionReportDeliverySlipId, {
+                    'additional_context': {
+                        'active_id': self.actionParams.pickingId,
+                        'active_ids': [self.actionParams.pickingId],
+                        'active_model': 'stock.picking',
+                    }
+                });
             });
         });
     },
@@ -336,7 +348,12 @@ var PickingClientAction = ClientAction.extend({
      */
     _onScrap: function (ev) {
         ev.stopPropagation();
-        this._scrap();
+        var self = this;
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return this._scrap();
+            });
+        });
     },
 });
 

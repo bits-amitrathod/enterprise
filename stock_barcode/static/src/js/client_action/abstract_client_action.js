@@ -894,14 +894,12 @@ var ClientAction = AbstractAction.extend({
      */
     _nextPage: function (){
         var self = this;
-        return this.mutex.exec(function () {
-            return self._save().then(function () {
-                if (self.currentPageIndex < self.pages.length - 1) {
-                    self.currentPageIndex++;
-                }
-                self._reloadLineWidget(self.currentPageIndex);
-                self._endBarcodeFlow();
-            });
+        return self._save().then(function () {
+            if (self.currentPageIndex < self.pages.length - 1) {
+                self.currentPageIndex++;
+            }
+            self._reloadLineWidget(self.currentPageIndex);
+            self._endBarcodeFlow();
         });
     },
 
@@ -912,16 +910,14 @@ var ClientAction = AbstractAction.extend({
      */
     _previousPage: function () {
         var self = this;
-        return this.mutex.exec(function () {
-            return self._save().then(function () {
-                if (self.currentPageIndex > 0) {
-                    self.currentPageIndex--;
-                } else {
-                    self.currentPageIndex = self.pages.length - 1;
-                }
-                self._reloadLineWidget(self.currentPageIndex);
-                self._endBarcodeFlow();
-            });
+        return self._save().then(function () {
+            if (self.currentPageIndex > 0) {
+                self.currentPageIndex--;
+            } else {
+                self.currentPageIndex = self.pages.length - 1;
+            }
+            self._reloadLineWidget(self.currentPageIndex);
+            self._endBarcodeFlow();
         });
     },
 
@@ -939,7 +935,7 @@ var ClientAction = AbstractAction.extend({
      */
     _onBarcodeScannedHandler: function (barcode) {
         var self = this;
-        this.mutex.exec(function() {
+        this.mutex.exec(function () {
             if (self.mode === 'done' || self.mode === 'cancel') {
                 self.do_warn(_t('Warning'), _t('Scanning is disabled in this state.'));
                 return $.when();
@@ -962,7 +958,7 @@ var ClientAction = AbstractAction.extend({
      _onExit: function (ev) {
         ev.stopPropagation();
         var self = this;
-        this.mutex.exec( function () {
+        this.mutex.exec(function () {
             return self._save().then(function () {
                 self.actionManager.$el.height(self.actionManagerInitHeight);
                 self.trigger_up('toggle_fullscreen');
@@ -1082,7 +1078,12 @@ var ClientAction = AbstractAction.extend({
      * @param {OdooEvent} ev
      */
     _onShowInformation: function (ev) {  // jshint ignore:line
-        this._showInformation();
+        var self = this;
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._showInformation();
+            });
+        });
     },
 
     /**
@@ -1154,8 +1155,13 @@ var ClientAction = AbstractAction.extend({
      * @param {OdooEvent} ev
      */
     _onNextPage: function (ev) {
+        var self = this;
         ev.stopPropagation();
-        this._nextPage();
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._nextPage();
+            });
+        });
     },
 
     /**
@@ -1166,8 +1172,13 @@ var ClientAction = AbstractAction.extend({
      * @param {OdooEvent} ev
      */
     _onPreviousPage: function (ev) {
+        var self = this;
         ev.stopPropagation();
-        this._previousPage();
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._previousPage();
+            });
+        });
     },
 });
 

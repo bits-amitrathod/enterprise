@@ -10,8 +10,8 @@ var FormWidget = require('stock_barcode.FormWidget');
 
 var InventoryClientAction = ClientAction.extend({
     custom_events: _.extend({}, ClientAction.prototype.custom_events, {
-        validate: '_validate',
-        cancel: '_cancel',
+        validate: '_onValidate',
+        cancel: '_onCancel',
         show_information: '_onShowInformation',
         picking_print_inventory: '_onPrintInventory'
     }),
@@ -177,7 +177,7 @@ var InventoryClientAction = ClientAction.extend({
      * @private
      * @param {OdooEvent} ev
      */
-     _validate: function (ev) {
+     _onValidate: function (ev) {
         ev.stopPropagation();
         var self = this;
         return this.mutex.exec(function () {
@@ -199,16 +199,18 @@ var InventoryClientAction = ClientAction.extend({
     * @private
     * @param {OdooEvent} ev
     */
-    _cancel: function (ev) {
+    _onCancel: function (ev) {
         ev.stopPropagation();
         var self = this;
-        this._save().then(function () {
-            self._rpc({
-                'model': self.actionParams.model,
-                'method': 'action_cancel_draft',
-                'args': [[self.currentState.id]],
-            }).then(function () {
-                self.trigger_up('exit');
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._rpc({
+                    'model': self.actionParams.model,
+                    'method': 'action_cancel_draft',
+                    'args': [[self.currentState.id]],
+                }).then(function () {
+                    self.trigger_up('exit');
+                });
             });
         });
     },
@@ -224,13 +226,15 @@ var InventoryClientAction = ClientAction.extend({
     _onPrintInventory: function (ev) {
         ev.stopPropagation();
         var self = this;
-        this._save().then(function () {
-            self.do_action(self.currentState.actionReportInventory, {
-                'additional_context': {
-                    'active_id': self.actionParams.id,
-                    'active_ids': [self.actionParams.inventoryId],
-                    'active_model': 'stock.inventory',
-                }
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self.do_action(self.currentState.actionReportInventory, {
+                    'additional_context': {
+                        'active_id': self.actionParams.id,
+                        'active_ids': [self.actionParams.inventoryId],
+                        'active_model': 'stock.inventory',
+                    }
+                });
             });
         });
     },
