@@ -50,6 +50,8 @@ var ClientAction = AbstractAction.extend({
         this.commands = {
             'O-CMD.PREV': this._previousPage.bind(this),
             'O-CMD.NEXT': this._nextPage.bind(this),
+            'O-CMD.PAGER-FIRST': this._firstPage.bind(this),
+            'O-CMD.PAGER-LAST': this._lastPage.bind(this),
         };
 
         // State variables
@@ -918,6 +920,34 @@ var ClientAction = AbstractAction.extend({
             }
             self._reloadLineWidget(self.currentPageIndex);
             self._endBarcodeFlow();
+        });
+    },
+    /**
+     * Helper used when we want to go the first page. It calls `this._endBarcodeFlow`.
+     * @private
+     */
+    _firstPage: function () {
+        var self = this;
+        return self._save().then(function () {
+            if (self.currentPageIndex !== 0) {
+                self.currentPageIndex = 0;
+                self._reloadLineWidget(0);
+                self._endBarcodeFlow();
+            }
+        });
+    },
+    /**
+     * Helper used when we want to go the last page. It calls `this._endBarcodeFlow`.
+     * @private
+     */
+    _lastPage: function () {
+        var self = this;
+        return self._save().then(function () {
+            if (self.currentPageIndex !== self.pages.length - 1) {
+                self.currentPageIndex = self.pages.length - 1;
+                self._reloadLineWidget(self.pages.length - 1);
+                self._endBarcodeFlow();
+            }
         });
     },
 
