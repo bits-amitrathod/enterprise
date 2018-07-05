@@ -40,6 +40,7 @@
         </div>
         <div t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="barcode_control">
             <button t-if="widget.groups.group_stock_multi_locations" class="o_button_barcode_standard o_previous_page"><span class="fa fa-angle-left" style='padding-right: 1em'></span>Previous</button>
+            <button t-if="widget.groups.group_tracking_lot" class="o_button_barcode_standard o_put_in_pack">Put In Pack</button>
             <button t-if="widget.groups.group_stock_multi_locations" class="o_button_barcode_standard o_next_page">Next<span class="fa fa-angle-right" style='padding-left: 1em'></span></button>
             <button class="o_button_barcode_standard o_validate_page">Validate</button>
         </div>
@@ -67,7 +68,7 @@
                         <span class="fa fa-cubes"></span> <span class="qty-done"><t t-esc="line.qty_done"></t></span> / <t t-esc="line.product_uom_qty"></t>
                         <span t-if="groups.group_uom" t-esc="line.product_uom_id[1]"/>
                     </p>
-                    <p t-if="line.package_id">
+                    <p t-if="line.package_id || line.result_package_id">
                         <span class="fa fa-truck"></span> <t t-esc="line.package_id[1]"></t> <span class="fa fa-long-arrow-right"></span> <t t-esc="line.result_package_id[1]"></t>
                     </p>
                     <p t-if="line.owner_id">

@@ -12,6 +12,7 @@ var LinesWidget = Widget.extend({
         'click .o_validate_page': '_onClickValidatePage',
         'click .o_next_page': '_onClickNextPage',
         'click .o_previous_page': '_onClickPreviousPage',
+        'click .o_put_in_pack': '_onPutInPack',
     },
 
     init: function (parent, page, pageIndex, nbPages) {
@@ -421,6 +422,17 @@ var LinesWidget = Widget.extend({
     _onClickPreviousPage: function (ev) {
         ev.stopPropagation();
         this.trigger_up('previous_page');
+    },
+
+    /**
+     * Handles the click on the `put in pack button`.
+     *
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onPutInPack: function (ev) {
+        ev.stopPropagation();
+        this.trigger_up('put_in_pack');
     },
 });
 

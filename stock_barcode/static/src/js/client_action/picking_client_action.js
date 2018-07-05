@@ -5,6 +5,8 @@ var core = require('web.core');
 var ClientAction = require('stock_barcode.ClientAction');
 var FormWidget = require('stock_barcode.FormWidget');
 
+var _t = core._t;
+
 var PickingClientAction = ClientAction.extend({
     custom_events: _.extend({}, ClientAction.prototype.custom_events, {
         'picking_print_delivery_slip': '_onPrintDeliverySlip',
@@ -12,6 +14,7 @@ var PickingClientAction = ClientAction.extend({
         'picking_scrap': '_onScrap',
         'validate': '_onValidate',
         'cancel': '_onCancel',
+        'put_in_pack': '_onPutInPack',
     }),
 
     init: function (parent, action) {
@@ -19,6 +22,7 @@ var PickingClientAction = ClientAction.extend({
         this.commands['O-BTN.scrap'] = this._scrap.bind(this);
         this.commands['O-BTN.validate'] = this._validate.bind(this);
         this.commands['O-BTN.cancel'] = this._cancel.bind(this);
+        this.commands['O-BTN.pack'] = this._putInPack.bind(this);
         if (! this.actionParams.pickingId) {
             this.actionParams.pickingId = action.context.active_id;
             this.actionParams.model = 'stock.picking';
@@ -80,7 +84,7 @@ var PickingClientAction = ClientAction.extend({
      * @override
      */
     _getWriteableFields: function () {
-        return ['qty_done', 'location_id.id', 'location_dest_id.id', 'lot_name', 'lot_id.id'];
+        return ['qty_done', 'location_id.id', 'location_dest_id.id', 'lot_name', 'lot_id.id', 'result_package_id'];
     },
 
     /**
@@ -201,6 +205,7 @@ var PickingClientAction = ClientAction.extend({
                     'location_dest_id': line.location_dest_id.id,
                     'lot_id': line.lot_id && line.lot_id[0],
                     'lot_name': line.lot_name,
+                    'result_package_id': line.result_package_id ? line.result_package_id[0] : false,
                 }];
                 formattedCommands.push(cmd);
             } else {
@@ -215,6 +220,7 @@ var PickingClientAction = ClientAction.extend({
                     'lot_name': line.lot_name,
                     'lot_id': line.lot_id && line.lot_id[0],
                     'state': 'assigned',
+                    'result_package_id': line.result_package_id ? line.result_package_id[0] : false,
                 }];
                 formattedCommands.push(cmd);
             }
@@ -252,6 +258,41 @@ var PickingClientAction = ClientAction.extend({
             );
             self.formWidget.appendTo(self.$el);
         });
+    },
+
+    /**
+     *
+     */
+    _putInPack: function () {
+        var self = this;
+        if (! this.scannedLines) {
+            this.do_warn(_t('Warning'), _t('You are expected to scan one or more products before moving them to a package.'));
+            return $.when();
+        } else {
+            // First, we create a new stock.quant.package and get back its id.
+            return this._rpc({
+                'model': 'stock.quant.package',
+                'method': 'create',
+                'args': [[]],
+            }).then(function (package_id) {
+                return self._rpc({
+                    'model': 'stock.quant.package',
+                    'method': 'read',
+                    args: [[package_id], ['name']],
+                }).then(function (package_name) {
+                    // Write `package_id` as `result_package_id` on the scanned lines.
+                    _.each(_.uniq(self.scannedLines), function (idOrVirtualId) {
+                        var currentStateLine = _.find(self._getLines(self.currentState), function (line) {
+                            return line.virtual_id &&
+                                   line.virtual_id.toString() === idOrVirtualId ||
+                                   line.id  === idOrVirtualId;
+                        });
+                        currentStateLine.result_package_id = [package_id, package_name];
+                        self.trigger_up('reload');
+                    });
+                });
+            });
+        }
     },
 
     //--------------------------------------------------------------------------
@@ -353,6 +394,14 @@ var PickingClientAction = ClientAction.extend({
             return self._save().then(function () {
                 return this._scrap();
             });
+        });
+    },
+
+    _onPutInPack: function (ev) {
+        ev.stopPropagation();
+        var self = this;
+        this.mutex.exec(function () {
+            return self._putInPack();
         });
     },
 });
