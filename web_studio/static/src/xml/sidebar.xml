@@ -10,7 +10,7 @@
 </t>
 
 <div t-name="web_studio.Sidebar.Warning.Groups" class="o_web_studio_remove_warning_groups">
-    <p class="fa fa-exclamation-triangle">
+    <p><i class="fa fa-exclamation-triangle"/>
         This field is placed after another element that is only displayed under certain conditions.
     </p>
     You need to be part of these groups to see this field:<br/>
@@ -571,7 +571,7 @@
         <div class="o_groups"/>
     </div>
     <div t-if="widget.state.field.manual and widget.state.field.type === 'selection'">
-        <a href="#" role="button" class="btn btn-sm btn-link o_web_studio_edit_selection_values"><span class="fa fa-pencil"> Edit Possible Values</span></a>
+        <a href="#" role="button" class="btn btn-sm btn-link o_web_studio_edit_selection_values"><i class="fa fa-pencil"/> Edit Possible Values</a>
     </div>
     <t t-call="web_studio.Sidebar.Toolbox">
         <t t-call="web_studio.Sidebar.Parameters"/>

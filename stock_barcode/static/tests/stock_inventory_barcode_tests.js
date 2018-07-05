@@ -113,12 +113,12 @@ QUnit.test('scan a product with qty keypress (no tracking)', function (assert) {
     setTimeout(function () {
         var keycode = $.ui.keyCode.ENTER;
 
-        assert.strictEqual($('main.modal-body').length, 1, 'should open a modal with a quantity as input');
-        assert.strictEqual($('main.modal-body .o_set_qty_input').val(), '5', 'the quantity by default in the modal shoud be 5');
+        assert.strictEqual($('.modal .modal-body').length, 1, 'should open a modal with a quantity as input');
+        assert.strictEqual($('.modal .modal-body .o_set_qty_input').val(), '5', 'the quantity by default in the modal shoud be 5');
 
-        $('main.modal-body .o_set_qty_input').val('7');
+        $('.modal .modal-body .o_set_qty_input').val('7');
 
-        $('main.modal-body .o_set_qty_input').trigger($.Event('keypress', {which: keycode, keyCode: keycode}));
+        $('.modal .modal-body .o_set_qty_input').trigger($.Event('keypress', {which: keycode, keyCode: keycode}));
         assert.strictEqual(form.$('.o_data_row .o_data_cell:nth(2)').text(), '7.0',
             "quantity checked should be 7");
         form.destroy();

@@ -28,7 +28,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content: 'Open dropdown menu of one of the unfolded line',
-            trigger: '[data-parent-id] .o_account_report_line a:first', 
+            trigger: '[data-parent-id] .o_account_report_line a:first',
             run: 'click',
         },
         {
@@ -43,7 +43,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content: 'save footnote',
-            trigger: 'footer.modal-footer .btn-primary',
+            trigger: '.modal-footer .btn-primary',
             run: 'click'
         },
         {

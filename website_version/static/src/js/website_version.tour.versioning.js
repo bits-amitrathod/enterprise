@@ -27,7 +27,7 @@ odoo.define('website_version.tour', function (require) {
         trigger:  'button.btn-primary.o_create',
     }, {
         content:  _t("Confirm"),
-        extra_trigger:  'html:not(:has(modal input.form-control[type=text])) [role="dialog"]',
+        extra_trigger:  'html:not(:has(modal input.form-control[type=text])) .modal',
         trigger:  'button.o_confirm',
     }, {
         content:  _t("All the modifications you will do, will be saved in this version. Drag the Cover block and drop it in your page."),
@@ -82,10 +82,10 @@ odoo.define('website_version.tour', function (require) {
     }, {
         content:  _t("Click on delete version button"),
         position: 'bottom',
-        trigger:  'footer.modal-footer:has(.cancel) button.o_confirm',
+        trigger:  '.modal-footer:has(.cancel) button.o_confirm',
     }, {
         content:  _t("Confirm. Felicitation, you are now able to edit and manage your versions."),
         position: 'right',
-        trigger:  'footer.modal-footer:not(:has(.cancel)) button.o_confirm[data-dismiss]',
+        trigger:  '.modal-footer:not(:has(.cancel)) button.o_confirm[data-dismiss]',
     }]);
 });

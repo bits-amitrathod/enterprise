@@ -138,14 +138,14 @@ Tour.register({
         },
         // Here, the 'wizard' to scan lots/serial numbers should open
         {
-            waitFor: "[role=\"dialog\"] .o_list_editable",
+            waitFor: ".modal-dialog .o_list_editable",
             title:   "Scan a lot number",
             onload: function() {
                 scan_barcode("LOT-000001");
             },
         },
         {
-            waitFor: "[role=\"dialog\"] .o_list_editable td[data-field='lot_name']:contains('LOT-000001')",
+            waitFor: ".modal-dialog .o_list_editable td[data-field='lot_name']:contains('LOT-000001')",
             title:   "Scan 'validate'",
             onload: function() {
                 scan_barcode("O-BTN.validate");

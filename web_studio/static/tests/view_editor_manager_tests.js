@@ -932,7 +932,7 @@ QUnit.module('ViewEditorManager', {
             "a modal should be open to create the new selection field");
         assert.deepEqual($('.o_web_studio_selection_editor li').length, 3,
             "there should be 3 pre-filled values for the selection field");
-        $('footer.modal-footer .btn-primary:first').click(); // confirm
+        $('.modal-footer .btn-primary:first').click(); // confirm
 
         vem.destroy();
     });
@@ -1415,7 +1415,7 @@ QUnit.module('ViewEditorManager', {
         // edit the autocompletion field
         vem.$('.o_web_studio_search_autocompletion_container [data-node-id]').click();
         vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
-        $('[role="dialog"] .btn-primary').click();
+        $('.modal .btn-primary').click();
 
         assert.strictEqual(vem.$('[data-node-id]').length, 0, "there should be no node anymore");
 
@@ -1532,7 +1532,7 @@ QUnit.module('ViewEditorManager', {
         // delete a field to generate a view edition
         vem.$('.o_web_studio_list_view_editor [data-node-id]').click();
         vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
-        $('[role="dialog"] .btn-primary').click();
+        $('.modal .btn-primary').click();
 
         assert.strictEqual($('.o_web_studio_view_renderer').length, 1,
             "there should only be one renderer");
@@ -1642,19 +1642,19 @@ QUnit.module('ViewEditorManager', {
 
         // add a monetary field
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), vem.$('th.o_web_studio_hook').first());
-        assert.strictEqual($('main.modal-body:first').text(), currencyCreationText, "this should trigger an alert");
-        $('footer.modal-footer .btn:contains(Cancel)').click(); // cancel
+        assert.strictEqual($('.modal-body:first').text(), currencyCreationText, "this should trigger an alert");
+        $('.modal-footer .btn:contains(Cancel)').click(); // cancel
 
         // add a related monetary field
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), vem.$('th.o_web_studio_hook').first());
-        assert.strictEqual($('[role="dialog"] .o_field_selector').length, 1,
+        assert.strictEqual($('.modal .o_field_selector').length, 1,
             "a modal with a field selector should be opened to selected the related field");
-        $('[role="dialog"] .o_field_selector').focusin(); // open the selector popover
+        $('.modal .o_field_selector').focusin(); // open the selector popover
         $('.o_field_selector_popover li[data-name=m2o]').click();
         $('.o_field_selector_popover li[data-name=monetary_field]').click();
-        $('footer.modal-footer .btn-primary:first').click(); // confirm
-        assert.strictEqual($('main.modal-body:eq(1)').text(), currencyCreationText, "this should trigger an alert");
-        $('footer.modal-footer:eq(1) .btn:contains(Ok)').click(); // confirm
+        $('.modal-footer .btn-primary:first').click(); // confirm
+        assert.strictEqual($('.modal-body:eq(1)').text(), currencyCreationText, "this should trigger an alert");
+        $('.modal-footer:eq(1) .btn:contains(Ok)').click(); // confirm
 
         vem.destroy();
     });
@@ -1707,16 +1707,16 @@ QUnit.module('ViewEditorManager', {
             "there should be one node");
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_monetary'), $('.o_web_studio_hook'));
         assert.strictEqual(nbEdit, 1, "the view should have been updated");
-        assert.strictEqual($('[role="dialog"]').length, 0, "there should be no modal");
+        assert.strictEqual($('.modal').length, 0, "there should be no modal");
 
         // add a related monetary field
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), vem.$('th.o_web_studio_hook').first());
-        assert.strictEqual($('[role="dialog"] .o_field_selector').length, 1,
+        assert.strictEqual($('.modal .o_field_selector').length, 1,
             "a modal with a field selector should be opened to selected the related field");
-        $('[role="dialog"] .o_field_selector').focusin(); // open the selector popover
+        $('.modal .o_field_selector').focusin(); // open the selector popover
         $('.o_field_selector_popover li[data-name=m2o]').click();
         $('.o_field_selector_popover li[data-name=monetary_field]').click();
-        $('footer.modal-footer .btn-primary:first').click(); // confirm
+        $('.modal-footer .btn-primary:first').click(); // confirm
         assert.strictEqual(nbEdit, 2, "the view should have been updated");
 
         vem.destroy();
@@ -1774,35 +1774,35 @@ QUnit.module('ViewEditorManager', {
 
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), $('.o_web_studio_hook'));
 
-        assert.strictEqual($('[role="dialog"]').length, 1, "a modal should be displayed");
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
 
         // try to create an empty related field
-        $('[role="dialog"] button:contains("Confirm")').click();
+        $('.modal button:contains("Confirm")').click();
         assert.verifySteps(['warning'], "should have triggered a warning");
-        assert.strictEqual($('[role="dialog"]').length, 1, "the modal should still be displayed");
+        assert.strictEqual($('.modal').length, 1, "the modal should still be displayed");
 
-        $('[role="dialog"] .o_field_selector').focusin(); // open the selector popover
+        $('.modal .o_field_selector').focusin(); // open the selector popover
         $('.o_field_selector_popover li[data-name=m2o]').click();
         $('.o_field_selector_popover li[data-name=display_name]').click();
-        $('footer.modal-footer .btn-primary:first').click(); // confirm
+        $('.modal-footer .btn-primary:first').click(); // confirm
 
         // create a new many2one related field
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), $('.o_web_studio_hook'));
-        assert.strictEqual($('[role="dialog"]').length, 1, "a modal should be displayed");
-        $('[role="dialog"] .o_field_selector').focusin(); // open the selector popover
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+        $('.modal .o_field_selector').focusin(); // open the selector popover
         $('.o_field_selector_popover li[data-name=m2o]').click();
         $('.o_field_selector_popover li[data-name=m2o]').click();
-        $('[role="dialog"] .o_field_selector .o_field_selector_close').click(); // close the selector popover
-        $('footer.modal-footer .btn-primary:first').click(); // confirm
+        $('.modal .o_field_selector .o_field_selector_close').click(); // close the selector popover
+        $('.modal-footer .btn-primary:first').click(); // confirm
 
         // create a new one2many related field
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), $('.o_web_studio_hook'));
-        assert.strictEqual($('[role="dialog"]').length, 1, "a modal should be displayed");
-        $('[role="dialog"] .o_field_selector').focusin(); // open the selector popover
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+        $('.modal .o_field_selector').focusin(); // open the selector popover
         $('.o_field_selector_popover li[data-name=m2o]').click();
         $('.o_field_selector_popover li[data-name=partner_ids]').click();
-        $('[role="dialog"] .o_field_selector .o_field_selector_close').click(); // close the selector popover
-        $('footer.modal-footer .btn-primary:first').click(); // confirm
+        $('.modal .o_field_selector .o_field_selector_close').click(); // close the selector popover
+        $('.modal-footer .btn-primary:first').click(); // confirm
 
         assert.strictEqual(nbEdit, 3, "should have edited the view");
         assert.verifySteps(['warning'], "should have triggered only one warning");
@@ -1849,19 +1849,19 @@ QUnit.module('ViewEditorManager', {
         testUtils.intercept(vem, 'warning', assert.step.bind(assert, 'warning'));
 
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_one2many'), $('.o_web_studio_hook'));
-        assert.strictEqual($('[role="dialog"]').length, 1, "a modal should be displayed");
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
 
         // try to confirm without specifying a related field
-        $('[role="dialog"] button:contains("Confirm")').click();
-        assert.strictEqual($('[role="dialog"]').length, 1, "the modal should still be displayed");
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 1, "the modal should still be displayed");
         assert.verifySteps(['warning'], "should have triggered a warning");
 
         // select a related field and confirm
-        $('[role="dialog"] .o_field_many2one input').click();
+        $('.modal .o_field_many2one input').click();
         var $dropdown = $('.o_field_many2one input').autocomplete('widget');
         $dropdown.find('li:first').click();
-        $('[role="dialog"] button:contains("Confirm")').click();
-        assert.strictEqual($('[role="dialog"]').length, 0, "the modal should be closed");
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 0, "the modal should be closed");
         assert.verifySteps(['warning', 'edit'], "should have created the field");
 
         vem.destroy();
@@ -1906,19 +1906,19 @@ QUnit.module('ViewEditorManager', {
         testUtils.intercept(vem, 'warning', assert.step.bind(assert, 'warning'));
 
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_many2many'), $('.o_web_studio_hook'));
-        assert.strictEqual($('[role="dialog"]').length, 1, "a modal should be displayed");
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
 
         // try to confirm without specifying a relation
-        $('[role="dialog"] button:contains("Confirm")').click();
-        assert.strictEqual($('[role="dialog"]').length, 1, "the modal should still be displayed");
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 1, "the modal should still be displayed");
         assert.verifySteps(['warning'], "should have triggered a warning");
 
         // select a model and confirm
-        $('[role="dialog"] .o_field_many2one input').click();
+        $('.modal .o_field_many2one input').click();
         var $dropdown = $('.o_field_many2one input').autocomplete('widget');
         $dropdown.find('li:first').click();
-        $('[role="dialog"] button:contains("Confirm")').click();
-        assert.strictEqual($('[role="dialog"]').length, 0, "the modal should be closed");
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 0, "the modal should be closed");
         assert.verifySteps(['warning', 'edit'], "should have created the field");
 
         vem.destroy();
@@ -1963,19 +1963,19 @@ QUnit.module('ViewEditorManager', {
         testUtils.intercept(vem, 'warning', assert.step.bind(assert, 'warning'));
 
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_many2one'), $('.o_web_studio_hook'));
-        assert.strictEqual($('[role="dialog"]').length, 1, "a modal should be displayed");
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
 
         // try to confirm without specifying a relation
-        $('[role="dialog"] button:contains("Confirm")').click();
-        assert.strictEqual($('[role="dialog"]').length, 1, "the modal should still be displayed");
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 1, "the modal should still be displayed");
         assert.verifySteps(['warning'], "should have triggered a warning");
 
         // select a model and confirm
-        $('[role="dialog"] .o_field_many2one input').click();
+        $('.modal .o_field_many2one input').click();
         var $dropdown = $('.o_field_many2one input').autocomplete('widget');
         $dropdown.find('li:first').click();
-        $('[role="dialog"] button:contains("Confirm")').click();
-        assert.strictEqual($('[role="dialog"]').length, 0, "the modal should be closed");
+        $('.modal button:contains("Confirm")').click();
+        assert.strictEqual($('.modal').length, 0, "the modal should be closed");
         assert.verifySteps(['warning', 'edit'], "should have created the field");
 
         vem.destroy();
@@ -2022,7 +2022,7 @@ QUnit.module('ViewEditorManager', {
 
         // delete a field
         vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
-        $('[role="dialog"] .btn-primary').click();
+        $('.modal .btn-primary').click();
 
         assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
             "there should be one node");
@@ -2216,7 +2216,7 @@ QUnit.module('ViewEditorManager', {
 
         vem.$('.o_web_studio_form_view_editor .o_web_studio_button_hook').click();
 
-        assert.strictEqual($('[role="dialog"]:visible').length, 1, "there should be one modal");
+        assert.strictEqual($('.modal:visible').length, 1, "there should be one modal");
         assert.strictEqual($('.o_web_studio_new_button_dialog').length, 1,
             "there should be a modal to create a button in the buttonbox");
         assert.strictEqual($('.o_web_studio_new_button_dialog .o_field_many2one').length, 1,
@@ -2225,7 +2225,7 @@ QUnit.module('ViewEditorManager', {
         $('.o_web_studio_new_button_dialog .o_field_many2one input').focus();
         $('.o_web_studio_new_button_dialog .o_field_many2one input').val('test').trigger('keyup').trigger('focusout');
 
-        assert.strictEqual($('[role="dialog"]:visible').length, 1, "should not display the create modal");
+        assert.strictEqual($('.modal:visible').length, 1, "should not display the create modal");
 
         vem.destroy();
     });
@@ -2287,30 +2287,30 @@ QUnit.module('ViewEditorManager', {
         // remove field
         vem.$('[name="display_name"]').click();
         vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
-        assert.strictEqual($('main.modal-body:first').text(), "Are you sure you want to remove this field from the view?",
+        assert.strictEqual($('.modal-body:first').text(), "Are you sure you want to remove this field from the view?",
             "should display the correct message");
-        $('[role="dialog"] .btn-primary').click();
+        $('.modal .btn-primary').click();
 
         // remove other field so group is empty
         vem.$('[name="m2o"]').click();
         vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
-        assert.strictEqual($('main.modal-body:first').text(), "Are you sure you want to remove this field from the view?",
+        assert.strictEqual($('.modal-body:first').text(), "Are you sure you want to remove this field from the view?",
             "should display the correct message");
-        $('[role="dialog"] .btn-primary').click();
+        $('.modal .btn-primary').click();
 
         // remove group
         vem.$('.o_group[data-node-id]').click();
         vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
-        assert.strictEqual($('main.modal-body:first').text(), "Are you sure you want to remove this group from the view?",
+        assert.strictEqual($('.modal-body:first').text(), "Are you sure you want to remove this group from the view?",
             "should display the correct message");
-        $('[role="dialog"] .btn-primary').click();
+        $('.modal .btn-primary').click();
 
         // remove page
         vem.$('.o_notebook li[data-node-id]').click();
         vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
-        assert.strictEqual($('main.modal-body:first').text(), "Are you sure you want to remove this page from the view?",
+        assert.strictEqual($('.modal-body:first').text(), "Are you sure you want to remove this page from the view?",
             "should display the correct message");
-        $('[role="dialog"] .btn-primary').click();
+        $('.modal .btn-primary').click();
 
         assert.strictEqual(editViewCount, 4,
             "should have edit the view 4 times");
@@ -2486,50 +2486,50 @@ QUnit.module('ViewEditorManager', {
         fieldsView = $.extend(true, {}, vem.fields_view);
 
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_selection'), $('.o_web_studio_hook:first'));
-        assert.strictEqual($('[role="dialog"] .o_web_studio_field_dialog_form').length, 1, "a modal should be opened");
-        assert.strictEqual($('[role="dialog"] .o_web_studio_selection_editor').length, 0, "there should be no selection editor");
+        assert.strictEqual($('.modal .o_web_studio_field_dialog_form').length, 1, "a modal should be opened");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor').length, 0, "there should be no selection editor");
 
         // add a new value (with ENTER)
-        $('[role="dialog"] .o_web_studio_selection_new_value input')
+        $('.modal .o_web_studio_selection_new_value input')
             .val('Value 1')
             .trigger($.Event('keyup', {which: $.ui.keyCode.ENTER}));
-        assert.strictEqual($('[role="dialog"] .o_web_studio_selection_editor > li').length, 1, "there should be 1 selection value");
-        assert.strictEqual($('[role="dialog"] .o_web_studio_selection_editor > li span:contains(Value 1)').length, 1, "the value should be correctly set");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li').length, 1, "there should be 1 selection value");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li span:contains(Value 1)').length, 1, "the value should be correctly set");
 
         // add a new value (with button +)
-        $('[role="dialog"] .o_web_studio_selection_new_value input').val('Value 2');
-        $('[role="dialog"] .o_web_studio_selection_new_value button').click();
-        assert.strictEqual($('[role="dialog"] .o_web_studio_selection_editor > li').length, 2, "there should be 2 selection values");
+        $('.modal .o_web_studio_selection_new_value input').val('Value 2');
+        $('.modal .o_web_studio_selection_new_value button').click();
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li').length, 2, "there should be 2 selection values");
 
         // edit the first value
-        $('[role="dialog"] .o_web_studio_selection_editor li:first .o_web_studio_edit_selection_value').click();
-        assert.strictEqual($('[role="dialog"]').length, 2, "a new modal should be opened");
-        assert.strictEqual($('[role="dialog"]:eq(1) input#o_selection_label').val(), "Value 1",
+        $('.modal .o_web_studio_selection_editor li:first .o_web_studio_edit_selection_value').click();
+        assert.strictEqual($('.modal').length, 2, "a new modal should be opened");
+        assert.strictEqual($('.modal:eq(1) input#o_selection_label').val(), "Value 1",
             "the value should be set in the edition modal");
-        $('[role="dialog"]:eq(1) input#o_selection_label').val('My Value');
-        $('[role="dialog"]:eq(1) button:contains(Confirm)').click();
-        assert.strictEqual($('[role="dialog"]').length, 1, "the second modal should be closed");
-        assert.strictEqual($('[role="dialog"] .o_web_studio_selection_editor > li:first span:contains(My Value)').length, 1, "the value should have been updated");
+        $('.modal:eq(1) input#o_selection_label').val('My Value');
+        $('.modal:eq(1) button:contains(Confirm)').click();
+        assert.strictEqual($('.modal').length, 1, "the second modal should be closed");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li:first span:contains(My Value)').length, 1, "the value should have been updated");
 
         // add a value and delete it
-        $('[role="dialog"] .o_web_studio_selection_new_value input').val('Value 3');
-        $('[role="dialog"] .o_web_studio_selection_new_value button').click();
-        assert.strictEqual($('[role="dialog"] .o_web_studio_selection_editor > li').length, 3, "there should be 3 selection values");
+        $('.modal .o_web_studio_selection_new_value input').val('Value 3');
+        $('.modal .o_web_studio_selection_new_value button').click();
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li').length, 3, "there should be 3 selection values");
 
-        $('[role="dialog"] .o_web_studio_selection_editor > li:eq(2) .o_web_studio_remove_selection_value').click();
-        assert.strictEqual($('[role="dialog"]').length, 2, "a new confirmation modal should be opened");
-        $('[role="dialog"]:eq(1) button:contains(Ok)').click();
-        assert.strictEqual($('[role="dialog"]').length, 1, "the confirmation modal should be closed");
-        assert.strictEqual($('[role="dialog"] .o_web_studio_selection_editor > li').length, 2, "there should be 2 selection values");
+        $('.modal .o_web_studio_selection_editor > li:eq(2) .o_web_studio_remove_selection_value').click();
+        assert.strictEqual($('.modal').length, 2, "a new confirmation modal should be opened");
+        $('.modal:eq(1) button:contains(Ok)').click();
+        assert.strictEqual($('.modal').length, 1, "the confirmation modal should be closed");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li').length, 2, "there should be 2 selection values");
 
         // reorder values
         testUtils.dragAndDrop(
-            $('[role="dialog"] .ui-sortable-handle').eq(1),
-            $('[role="dialog"] .o_web_studio_selection_editor > li').first(),
+            $('.modal .ui-sortable-handle').eq(1),
+            $('.modal .o_web_studio_selection_editor > li').first(),
             {position: 'top'});
-        assert.strictEqual($('[role="dialog"] .o_web_studio_selection_editor > li:first span:contains(Value 2)').length, 1, "the values should have been reordered");
+        assert.strictEqual($('.modal .o_web_studio_selection_editor > li:first span:contains(Value 2)').length, 1, "the values should have been reordered");
 
-        $('[role="dialog"] button:contains(Confirm)').click();
+        $('.modal button:contains(Confirm)').click();
         vem.destroy();
     });
 
@@ -2571,7 +2571,7 @@ QUnit.module('ViewEditorManager', {
         // add a priority field
         testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_priority'), $('.o_web_studio_hook'));
 
-        assert.strictEqual($('[role="dialog"]').length, 0, "there should be no modal");
+        assert.strictEqual($('.modal').length, 0, "there should be no modal");
 
         vem.destroy();
     });
@@ -2810,9 +2810,9 @@ QUnit.module('ViewEditorManager', {
 
         // add a new button
         vem.$('.o_web_studio_form_view_editor .o_web_studio_button_hook').click();
-        assert.strictEqual($('[role="dialog"] .o_web_studio_new_button_dialog').length, 1,
+        assert.strictEqual($('.modal .o_web_studio_new_button_dialog').length, 1,
             "there should be an opened modal to add a button");
-        $('[role="dialog"] .o_web_studio_new_button_dialog .js_many2one_field input').click();
+        $('.modal .o_web_studio_new_button_dialog .js_many2one_field input').click();
 
         vem.destroy();
     });
@@ -2857,10 +2857,10 @@ QUnit.module('ViewEditorManager', {
         vem.$('.o_web_studio_form_view_editor .o_field_widget[name="m2o"]').click();
 
         // open the domain editor
-        assert.strictEqual($('[role="dialog"] .o_domain_selector').length, 0,
+        assert.strictEqual($('.modal .o_domain_selector').length, 0,
             "the domain selector should not be opened");
         vem.$('.o_web_studio_sidebar_content input[name="domain"]').trigger('focusin');
-        assert.strictEqual($('[role="dialog"] .o_domain_selector').length, 1,
+        assert.strictEqual($('.modal .o_domain_selector').length, 1,
             "the domain selector should be correctly opened");
 
         vem.destroy();

@@ -17,18 +17,18 @@ tour.register('timesheet_tour', {
     content: _t('Timesheets are done on tasks, click here to create your first one.'),
     position: 'bottom',
 }, {
-    trigger: "main.modal-body .o_timesheet_tour_project_name",
+    trigger: ".modal-body .o_timesheet_tour_project_name",
     content: _t('Choose a <b>project name</b>. (e.g. name of a customer, or product)'),
     position: "right",
     run: function (actions) {
         actions.auto();
     },
 }, {
-    trigger: "main.modal-body .o_timesheet_tour_task_name",
+    trigger: ".modal-body .o_timesheet_tour_task_name",
     content: _t('Use tasks to track the different type of activities. (e.g. Graphic Design, Programming, Project Management)'),
     position: "right",
     run: function (actions) {
-        actions.auto("footer.modal-footer .btn-default");
+        actions.auto(".modal-footer .btn-default");
     },
 }, {
     trigger: '.o_grid_input',

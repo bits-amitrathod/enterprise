@@ -185,14 +185,14 @@ QUnit.module('Views', {
                 "should display 1 tasks line");
 
             gantt.$('.gantt_task_cell').first().click();
-            $('main.modal-body input:first').val('new task').trigger('input');
+            $('.modal .modal-body input:first').val('new task').trigger('input');
 
             rpcCount = 0;
-            $('footer.modal-footer button.btn-primary').click();  // save
+            $('.modal .modal-footer button.btn-primary').click();  // save
 
             assert.strictEqual(rpcCount, 2, "should have done 2 rpcs (1 write and 1 searchread to reload)");
 
-            assert.notOk($('[role="dialog"]').length, "should have closed the modal");
+            assert.notOk($('.modal').length, "should have closed the modal");
             assert.ok($('div.gantt_tree_content:contains(new task)').length,
                 "should display the task name in the dom");
 
@@ -200,7 +200,7 @@ QUnit.module('Views', {
 
             // open formViewDialog
             gantt.$('.gantt_cell.gantt_last_cell').click();
-            $('[role="dialog"] .o_field_many2one[name="user_id"] input').click();
+            $('.modal .o_field_many2one[name="user_id"] input').click();
 
             gantt.destroy();
             done();
@@ -273,10 +273,10 @@ QUnit.module('Views', {
 
             // create a task
             gantt.$('.gantt_task_cell').first().click();
-            $('main.modal-body input:first').val('new task').trigger('input');
+            $('.modal .modal-body input:first').val('new task').trigger('input');
 
             // save it
-            $('footer.modal-footer button.btn-primary').click();
+            $('.modal .modal-footer button.btn-primary').click();
 
             // open formViewDialog
             gantt.$('.gantt_cell.gantt_last_cell').click();
