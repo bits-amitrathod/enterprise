@@ -23,13 +23,43 @@ class StockPicking(models.Model):
         """ Return the initial state of the barcode view as a dict.
         blablabla.
         """
-        pickings = self.read()
+        pickings = self.read([
+            'move_line_ids',
+            'picking_type_id',
+            'location_id',
+            'location_dest_id',
+            'name',
+            'state',
+            'picking_type_code',
+        ])
         for picking in pickings:
-            picking['move_line_ids'] = self.env['stock.move.line'].browse(picking.pop('move_line_ids')).read()
+            picking['move_line_ids'] = self.env['stock.move.line'].browse(picking.pop('move_line_ids')).read([
+                'product_id',
+                'location_id',
+                'location_dest_id',
+                'qty_done',
+                'display_name',
+                'product_uom_qty',
+                'product_uom_id',
+                'product_barcode',
+                'owner_id',
+                'lot_id',
+                'lot_name'
+            ])
             for move_line_id in picking['move_line_ids']:
-                move_line_id['product_id'] = self.env['product.product'].browse(move_line_id.pop('product_id')[0]).read()[0]
-                move_line_id['location_id'] = self.env['stock.location'].browse(move_line_id.pop('location_id')[0]).read()[0]
-                move_line_id['location_dest_id'] = self.env['stock.location'].browse(move_line_id.pop('location_dest_id')[0]).read()[0]
+                move_line_id['product_id'] = self.env['product.product'].browse(move_line_id.pop('product_id')[0]).read([
+                    'id',
+                    'tracking',
+                    'barcode',
+                ])[0]
+                move_line_id['location_id'] = self.env['stock.location'].browse(move_line_id.pop('location_id')[0]).read([
+                    'id',
+                    'display_name',
+                ])[0]
+                move_line_id['location_dest_id'] = self.env['stock.location'].browse(move_line_id.pop('location_dest_id')[0]).read([
+                    'id',
+                    'display_name',
+                ])[0]
             picking['location_id'] = self.env['stock.location'].browse(picking.pop('location_id')[0]).read()[0]
             picking['location_dest_id'] = self.env['stock.location'].browse(picking.pop('location_dest_id')[0]).read()[0]
             picking['group_stock_multi_locations'] = self.env.user.has_group('stock.group_stock_multi_locations')

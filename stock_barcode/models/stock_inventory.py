@@ -33,13 +33,37 @@ class StockInventory(models.Model):
         """ Return the initial state of the barcode view as a dict.
         blablabla.
         """
-        inventories = self.read()
+        inventories = self.read([
+            'line_ids',
+            'location_id',
+            'name',
+            'state',
+            'company_id',
+        ])
         for inventory in inventories:
-            inventory['line_ids'] = self.env['stock.inventory.line'].browse(inventory.pop('line_ids')).read()
+            inventory['line_ids'] = self.env['stock.inventory.line'].browse(inventory.pop('line_ids')).read([
+                'product_id',
+                'location_id',
+                'product_qty',
+                'theoretical_qty',
+                'product_uom_id',
+            ])
             for line_id in inventory['line_ids']:
-                line_id['product_id'] = self.env['product.product'].browse(line_id.pop('product_id')[0]).read()[0]
-                line_id['location_id'] = self.env['stock.location'].browse(line_id.pop('location_id')[0]).read()[0]
-            inventory['location_id'] = self.env['stock.location'].browse(inventory.pop('location_id')[0]).read()[0]
+                line_id['product_id'] = self.env['product.product'].browse(line_id.pop('product_id')[0]).read([
+                    'id',
+                    'display_name',
+                    'tracking',
+                    'barcode',
+                ])[0]
+                line_id['location_id'] = self.env['stock.location'].browse(line_id.pop('location_id')[0]).read([
+                    'id',
+                    'display_name',
+                ])[0]
+            inventory['location_id'] = self.env['stock.location'].browse(inventory.pop('location_id')[0]).read([
+                'id',
+                'display_name',
+                'parent_path',
+            ])[0]
             inventory['group_stock_multi_locations'] = self.env.user.has_group('stock.group_stock_multi_locations')
             inventory['group_tracking_owner'] = self.env.user.has_group('stock.group_tracking_owner')
             inventory['group_tracking_lot'] = self.env.user.has_group('stock.group_tracking_lot')
