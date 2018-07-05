@@ -156,6 +156,9 @@ odoo.define('sign.template', function(require) {
                 this.$currentTarget.popover("hide");
                 this.$currentTarget.trigger('itemDelete');
             },
+            'click .o_sign_validate_field_button': function (e) {
+                this.hide();
+            }
         },
 
         init: function(parent, parties, options) {
@@ -199,9 +202,9 @@ odoo.define('sign.template', function(require) {
                     },
                     html: true,
                     placement: 'auto',
-                    trigger:'click',
+                    trigger:'focus',
                 };
-                self.$currentTarget.popover(options).popover("show");
+                self.$currentTarget.popover(options).popover("toggle");
             });
         },
         hide: function() {
@@ -443,16 +446,16 @@ odoo.define('sign.template', function(require) {
                 $signatureItem.addClass('ui-selected');
 
                 _.each(_.keys(self.customPopovers), function(keyId) {
-                    if (keyId != itemId && self.customPopovers[keyId]) {
+                    if (keyId != itemId && self.customPopovers[keyId] && ((keyId && itemId) || (keyId != 'undefined' && !itemId))) {
                         self.customPopovers[keyId].hide();
                         self.customPopovers[keyId] = false;
                     }
                 });
                 if (self.customPopovers[itemId]) {
-                    self.customPopovers[itemId].hide();
+                    self.customPopovers[itemId].$currentTarget.popover('hide');
                     self.customPopovers[itemId] = false;
                 } else {
-                    self.customPopovers[itemId] = new SignItemCustomPopover(self, self.parties);
+                    self.customPopovers[itemId] = new SignItemCustomPopover(self, self.parties, {'field_type': $signatureItem[0]['field-type']});
                     self.customPopovers[itemId].create($signatureItem);
                 }
             });
