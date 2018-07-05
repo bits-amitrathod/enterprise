@@ -269,13 +269,15 @@ class AccountReport(models.AbstractModel):
         action = self.env.ref('account.action_move_line_select').read()[0]
         action = clean_action(action)
         ctx = self.env.context.copy()
-
         if params and 'id' in params:
             active_id = params['id']
             ctx.update({
                     'search_default_account_id': [active_id],
             })
             action['context'] = ctx
+        if options and options.get('analytic_accounts'):
+            analytic_ids = [int(r) for r in options['analytic_accounts']]
+            action['domain'] = [('analytic_account_id', 'in', analytic_ids)]
         return action
 
     def reverse(self, values):

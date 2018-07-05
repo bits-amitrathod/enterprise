@@ -208,7 +208,7 @@ class SaleSubscription(models.Model):
             self.env['ir.sequence'].with_context(force_company=vals.get('company_id')).next_by_code('sale.subscription') or
             'New'
         )
-        if vals.get('name', 'New') == 'New' and not vals.get('analytic_account_id'):
+        if vals.get('name', 'New') == 'New':
             vals['name'] = vals['code']
         subscription = super(SaleSubscription, self).create(vals)
         if subscription.partner_id:

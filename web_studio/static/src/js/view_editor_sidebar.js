@@ -12,6 +12,7 @@ var session = require("web.session");
 var Widget = require('web.Widget');
 var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var view_components = require('web_studio.view_components');
+var pyeval = require('web.pyeval');
 
 var form_component_widget_registry = view_components.registry;
 var _t = core._t;
@@ -69,6 +70,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         this.view_type = params.view_type;
         this.model_name = params.model_name;
         this.isEditingX2m = params.isEditingX2m;
+        this.editorData = params.editorData;
         this.renamingAllowedFields = params.renamingAllowedFields;
 
         this.fields = params.fields;
@@ -214,12 +216,12 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         var newAttributes = {};
         var attrs = [];
         var originNodeAttr = this.state.modifiers;
-        var originSubAttrs =  JSON.parse((this.state.attrs.attrs || '{}').replace(/'/g, '"').replace(/\(/g, "[").replace(/\)/g, "]"));
+        var originSubAttrs =  pyeval.py_eval(this.state.attrs.attrs || '{}', this.editorData);
         _.each(modifiers, function (value, key) {
                 var keyInNodeAndAttrs = _.contains(self.MODIFIERS_IN_NODE_AND_ATTRS, key);
-                var keyFromView = originSubAttrs[key] !== undefined;
+                var keyFromView = key in originSubAttrs;
                 var trueValue = value === true || _.isEqual(value, []);
-                var isOriginNodeAttr = originNodeAttr[key] !== undefined;
+                var isOriginNodeAttr = key in originNodeAttr;
 
                 if (keyInNodeAndAttrs && !isOriginNodeAttr && trueValue) { // modifier always applied, use modifier attribute
                     newAttributes[key] = "1";

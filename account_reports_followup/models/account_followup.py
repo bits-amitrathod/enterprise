@@ -5,7 +5,7 @@ import datetime
 from odoo import api, fields, models, _
 from odoo.exceptions import Warning
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
-
+from odoo.osv import expression
 
 class Followup(models.Model):
     _name = 'account_followup.followup'
@@ -72,10 +72,34 @@ class ResPartner(models.Model):
                                              help="Optionally you can assign a user to this field, which will make him responsible for the action.",
                                              track_visibility="onchange", copy=False, company_dependent=True)
 
-    def get_partners_in_need_of_action(self, overdue_only=False):
-        return self.get_partners_in_need_of_action_and_update()
+    def _get_needofaction_fup_lines_domain(self, date):
+        """ returns the part of the domain on account.move.line that will filter lines ready to reach another followup level.
+        This is achieved by looking if a line at a certain followup level has a COALESCE(date_maturity, date) older than the
+        pivot date where it should get to the next level."""
+        domain = []
+        fups = self._compute_followup_lines()
+        for fup_level_id, fup_level_info in fups.items():
+            domain = expression.OR([
+                domain,
+                [('followup_line_id', '=', fup_level_id or False)] +
+                expression.OR([
+                    [('date_maturity', '!=', False), ('date_maturity', '<=', fup_level_info[0])],
+                    [('date_maturity', '=', False), ('date', '<=', fup_level_info[0])]
+                ])
+            ])
+        # we don't filter using company's days_between_two_followups as it is removed
+        # from the setting view in this module although we technically could
+        return domain
 
     def _compute_followup_lines(self):
+        """ returns the followup plan of the current user's company (of given in context directly)
+        in the form of a dictionary with
+         * keys being the different possible levels of followup for account.move.line's (None or IDs of account_followup.followup.line)
+         * values being a tuple of 3 elements corresponding respectively to
+           - the oldest date that any line in that followup level should be compared to in order to know if it is ready for the next level
+           - the followup ID of the next level
+           - the delays in days of the next level
+        """
         followup_id = 'followup_id' in self.env.context and self.env.context['followup_id'] or self.env['account_followup.followup'].search([('company_id', '=', self.env.user.company_id.id)]).id
         if not followup_id:
             raise Warning(_('No follow-up is defined for the company "%s".\n Please define one.') % self.env.user.company_id.name)
@@ -128,24 +152,6 @@ class ResPartner(models.Model):
                     if level is None or level[1] < delay:
                         level = (next_level, delay)
         return level
-
-    @api.model
-    def get_partners_in_need_of_action_and_update(self):
-        current_date = datetime.date.today()
-        fups = self._compute_followup_lines()
-        partners_ids = []
-        partners_to_skip = self.env['res.partner'].search([('payment_next_action_date', '>', current_date.strftime(DEFAULT_SERVER_DATE_FORMAT))])
-
-        for record in self.env['res.partner'].search([('id', 'not in', partners_to_skip.ids)]):
-            for aml in record.unreconciled_aml_ids:
-                if aml.company_id == self.env.user.company_id:
-                    index = aml.followup_line_id.id or None
-                    followup_date = fups[index][0]
-                    if (aml.date_maturity and aml.date_maturity <= followup_date.strftime(DEFAULT_SERVER_DATE_FORMAT)) or (current_date <= followup_date):
-                        if record.id not in partners_ids:
-                            partners_ids.append(record.id)
-                            continue
-        return self.browse(partners_ids)
 
     @api.multi
     def update_next_action(self, options=False):
