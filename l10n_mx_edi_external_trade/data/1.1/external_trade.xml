@@ -46,6 +46,23 @@
                                t-att-Pais="customer.country_id.l10n_mx_edi_code"
                                t-att-CodigoPostal="customer.zip"/>
                        </cce11:Receptor>
+                       <t t-set="dest" t-value="record.env['res.partner'].browse(record.get_delivery_partner_id())"/>
+                       <t t-if="dest and dest != record.partner_id">
+                            <cce11:Destinatario
+                                t-att-NumRegIdTrib="dest.vat"
+                                t-att-Nombre="dest.name">
+                                <cce11:Domicilio
+                                    t-att-Calle="record._get_string_cfdi(dest.street_name or '') or None"
+                                    t-att-NumeroExterior="record._get_string_cfdi(dest.street_number or '') or None"
+                                    t-att-NumeroInterior="record._get_string_cfdi(dest.street_number2 or '') or None"
+                                    t-att-Colonia="record._get_string_cfdi(dest.l10n_mx_edi_colony or '') or None"
+                                    t-att-Localidad="dest.l10n_mx_edi_locality"
+                                    t-att-Municipio="dest.city"
+                                    t-att-Estado="dest.state_id.code"
+                                    t-att-Pais="dest.country_id.l10n_mx_edi_code"
+                                    t-att-CodigoPostal="dest.zip"/>
+                            </cce11:Destinatario>
+                       </t>
                        <cce11:Mercancias>
                            <t t-set="products" t-value="[]"/>
                            <t t-foreach="record.invoice_line_ids" t-as="line">

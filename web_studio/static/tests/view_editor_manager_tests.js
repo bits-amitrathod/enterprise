@@ -343,6 +343,35 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('sorting rows is disabled in Studio', function (assert) {
+        assert.expect(3);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'product',
+            arch: "<tree editable='true'> "+
+                "<field name='id' widget='handle'/>" +
+                "<field name='display_name'/>" +
+            "</tree>",
+        });
+
+        assert.strictEqual(vem.$('.ui-sortable-handle').length, 2,
+            "the widget handle should be displayed");
+        assert.strictEqual(vem.$('.o_data_cell').text(), "xpadxpod",
+            "the records should be ordered");
+
+        // Drag and drop the second line in first position
+        testUtils.dragAndDrop(
+            vem.$('.ui-sortable-handle').eq(1),
+            vem.$('tbody tr').first(),
+            {position: 'top'}
+        );
+        assert.strictEqual(vem.$('.o_data_cell').text(), "xpadxpod",
+            "the records should not have been moved (sortable should be disabled in Studio)");
+
+        vem.destroy();
+    });
+
     QUnit.module('Form');
 
     QUnit.test('empty form editor', function(assert) {
@@ -453,27 +482,30 @@ QUnit.module('ViewEditorManager', {
             arch: "<form>" +
                     "<sheet>" +
                         "<field name='display_name' invisible='1'/>" +
+                        "<group>" +
+                            "<field name='m2o' attrs=\"{'invisible': [('id', '!=', '42')]}\"/>" +
+                        "</group>" +
                     "</sheet>" +
                 "</form>",
         });
 
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_invisible_modifier[data-node-id]').length, 1,
-            "there should be one invisible node");
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor [data-node-id]:not(.o_invisible_modifier)').length, 0,
-            "there should be no visible node");
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 1,
-            "there should be one hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_field_widget.o_invisible_modifier').length, 2,
+            "there should be two invisible nodes");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor [data-node-id]').length, 1,
+            "the invisible node should not be editable (only the group has a node-id set)");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 2,
+            "there should be two hooks (outside and inside the group");
 
         // click on show invisible
         vem.$('.o_web_studio_sidebar').find('.o_web_studio_view').click();
         vem.$('.o_web_studio_sidebar').find('input#show_invisible').click();
 
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_show_invisible[data-node-id]').length, 1,
-            "there should be one visible node (the invisible one)");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_show_invisible[data-node-id]').length, 2,
+            "there should be one visible nodes (the invisible ones)");
         assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_invisible_modifier[data-node-id]').length, 0,
             "there should be no invisible node");
-        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 1,
-            "there should be one hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_web_studio_hook').length, 3,
+            "there should be three hooks");
 
         vem.destroy();
     });
@@ -556,6 +588,103 @@ QUnit.module('ViewEditorManager', {
             "empty field without label should be special");
         assert.strictEqual(vem.$('.o_web_studio_form_view_editor [name="char_field"]').text(), "A char",
             "empty field without label should have its string as label");
+
+        vem.destroy();
+    });
+
+    QUnit.test('correctly display hook in form sheet', function (assert) {
+        assert.expect(4);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        // hook here
+                        "<group>" +
+                            "<group/>" +
+                            "<group/>" +
+                        "</group>" +
+                        // hook here
+                        "<group>" +
+                            "<group/>" +
+                            "<group/>" +
+                        "</group>" +
+                        // hook here
+                    "</sheet>" +
+                "</form>",
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_form_sheet > div.o_web_studio_hook').length, 3,
+            "there should be three hooks as children of the sheet");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_form_sheet > div:eq(1)').hasClass('o_web_studio_hook'),
+            "second div should be a hook");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_form_sheet > div:eq(3)').hasClass('o_web_studio_hook'),
+            "fourth div should be a hook");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_form_sheet > div:eq(5)').hasClass('o_web_studio_hook'),
+            "last div should be a hook");
+
+        vem.destroy();
+    });
+
+    QUnit.test('correctly display hook below group title', function(assert) {
+        assert.expect(14);
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<form>" +
+                    "<sheet>" +
+                        "<group>" +
+                        "</group>" +
+                        "<group string='Kikou2'>" +
+                        "</group>" +
+                        "<group>" +
+                            "<field name='m2o'/>" +
+                        "</group>" +
+                        "<group string='Kikou'>" +
+                            "<field name='id'/>" +
+                        "</group>" +
+                    "</sheet>" +
+                "</form>",
+        });
+
+
+        // first group (without title, without content)
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(0) .o_web_studio_hook').length, 1,
+            "there should be 1 hook");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(0) tr:eq(1)').hasClass('o_web_studio_hook'),
+            "the second row should be a hook");
+
+        // second group (with title, without content)
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(1) .o_web_studio_hook').length, 1,
+            "there should be 1 hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(1) tr:eq(0)').text(), "Kikou2",
+            "the first row is the group title");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(1) tr:eq(2)').hasClass('o_web_studio_hook'),
+            "the third row should be a hook");
+
+        // third group (without title, with content)
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(2) .o_web_studio_hook').length, 2,
+            "there should be 2 hooks");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(2) tr:eq(0)').hasClass('o_web_studio_hook'),
+            "the first row should be a hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(2) tr:eq(1)').text(), "M2O",
+            "the second row is the field");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(2) tr:eq(2)').hasClass('o_web_studio_hook'),
+            "the third row should be a hook");
+
+        // last group (with title, with content)
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) .o_web_studio_hook').length, 2,
+            "there should be 2 hooks");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) tr:eq(0)').text(), "Kikou",
+            "the first row is the group title");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) tr:eq(1)').hasClass('o_web_studio_hook'),
+            "the second row should be a hook");
+        assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) tr:eq(2)').text(), "ID",
+            "the third row is the field");
+        assert.ok(vem.$('.o_web_studio_form_view_editor .o_inner_group:eq(3) tr:eq(3)').hasClass('o_web_studio_hook'),
+            "the last row should be a hook");
 
         vem.destroy();
     });
@@ -2388,7 +2517,7 @@ QUnit.module('ViewEditorManager', {
         fieldsView = $.extend(true, {}, vem.fields_view);
         assert.strictEqual(vem.$('.o_field_char').eq(0).text(), 'jean',
             "the partner view form should be displayed.");
-        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_char'), $('.o_web_studio_hook'));
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_char'), vem.$('.o_group .o_web_studio_hook:first'));
 
         // add a new button
         vem.$('.o_web_studio_form_view_editor .o_web_studio_button_hook').click();
@@ -2476,7 +2605,7 @@ QUnit.module('ViewEditorManager', {
         var fieldsView;
 
         var productArchReturn = '<tree>' +
-                                    '<field name="display_name" attrs="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;,&quot;=&quot;,2]]}" readonly="1" modifiers="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;, &quot;=&quot;, 2]], &quot;readonly&quot;: true}"/>' +
+                                    '<field name="display_name" attrs="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;,&quot;=&quot;,false]]}" readonly="1" modifiers="{&quot;column_invisible&quot;: [[&quot;parent.id&quot;, &quot;=&quot;, false]], &quot;readonly&quot;: true}"/>' +
                                 '</tree>';
 
         var coucouArchReturn = '<form>' +
@@ -2510,13 +2639,13 @@ QUnit.module('ViewEditorManager', {
             arch: "<form>" +
                     "<field name='product_ids'>" +
                         "<tree>" +
-                            '<field name="display_name" attrs="{\'column_invisible\': [(\'parent.id\', \'=\',2)]}" />' +
+                            '<field name="display_name" attrs="{\'column_invisible\': [(\'parent.id\', \'=\',False)]}" />' +
                         "</tree>" +
                     "</field>" +
                   "</form>",
             mockRPC: function(route, args) {
                 if (route === '/web_studio/edit_view') {
-                    assert.equal(args.operations[0].new_attrs.attrs, '{"column_invisible": [["parent.id","=",2]]}',
+                    assert.equal(args.operations[0].new_attrs.attrs, '{"column_invisible": [["parent.id","=",False]]}',
                         'we should send "column_invisible" in attrs.attrs');
 
                     assert.equal(args.operations[0].new_attrs.readonly, '1',
