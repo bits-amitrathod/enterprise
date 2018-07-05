@@ -351,6 +351,8 @@ var ViewEditorManager = Widget.extend({
             renamingAllowedFields: this.renamingAllowedFields,
             state: state,
             isEditingX2m: !!this.x2mField,
+            // In case of a search view, the editor doesn't have state
+            editorData: this.editor.state && this.editor.state.data || {},
         };
 
         if (_.contains(['list', 'form', 'kanban'], this.view_type)) {

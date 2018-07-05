@@ -173,6 +173,10 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         } else if (node.attrs.name === "message_follower_ids") {
             this.has_follower_field = true;
         } else {
+            var modifiers = self._getEvaluatedModifiers(node, this.state);
+            if (modifiers.invisible && !this.show_invisible) {
+                return;
+            }
             $el.attr('data-node-id', this.node_id++);
             this.setSelectable($el);
             $el.click(function (event) {
@@ -364,7 +368,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
                 self.selected_node_id = nodeID;
                 self.trigger_up('node_clicked', {node: node});
             });
-        };
+        }
         return $button;
     },
     /**
@@ -407,12 +411,16 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
         if (!node.children.length) {
             formEditorHook = this._renderHook(node, 'inside', 'tr', 'insideGroup');
             formEditorHook.appendTo($result);
-            this.setSelectable($result);
         } else {
             // Add hook before the first node in a group.
+            var $firstRow = $result.find('tr:first');
             formEditorHook = this._renderHook(node.children[0], 'before', 'tr');
-            formEditorHook.appendTo($('<div>')); // start the widget
-            $result.find("tr").first().before(formEditorHook.$el);
+            if (node.attrs.string) {
+                // the group string is displayed in a tr
+                formEditorHook.insertAfter($firstRow);
+            } else {
+                formEditorHook.insertBefore($firstRow);
+            }
         }
         return $result;
     },
@@ -562,7 +570,7 @@ var FormEditor =  FormRenderer.extend(EditorMixin, {
     _renderTagSheet: function (node) {
         var $result = this._super.apply(this, arguments);
         var formEditorHook = this._renderHook(node, 'inside', '', 'insideSheet');
-        formEditorHook.appendTo($result);
+        formEditorHook.prependTo($result);
         return $result;
     },
     /**
