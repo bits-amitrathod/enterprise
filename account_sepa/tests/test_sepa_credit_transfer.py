@@ -86,10 +86,10 @@ class TestSEPACreditTransfer(AccountingTestCase):
         })
 
         batch.validate_batch()
-        credit_transfer = self.env['account.sepa.credit.transfer'].browse(batch.generate_sct_xml()['res_id'])
+        download_wizard = self.env['account.batch.download.wizard'].browse(batch.export_batch_payment()['res_id'])
 
-        self.assertFalse(credit_transfer.is_generic)
-        sct_doc = etree.fromstring(base64.b64decode(credit_transfer.file))
+        self.assertFalse(batch.sct_generic)
+        sct_doc = etree.fromstring(base64.b64decode(download_wizard.export_file))
         self.assertTrue(self.xmlschema.validate(sct_doc), self.xmlschema.error_log.last_error)
         self.assertEqual(self.payment_1.state, 'sent')
         self.assertEqual(self.payment_2.state, 'sent')
@@ -103,10 +103,10 @@ class TestSEPACreditTransfer(AccountingTestCase):
         })
 
         batch.validate_batch()
-        credit_transfer = self.env['account.sepa.credit.transfer'].browse(batch.generate_sct_xml()['res_id'])
+        download_wizard = self.env['account.batch.download.wizard'].browse(batch.export_batch_payment()['res_id'])
 
-        self.assertTrue(credit_transfer.is_generic)
-        sct_doc = etree.fromstring(base64.b64decode(credit_transfer.file))
+        self.assertTrue(batch.sct_generic)
+        sct_doc = etree.fromstring(base64.b64decode(download_wizard.export_file))
         self.assertTrue(self.xmlschema.validate(sct_doc), self.xmlschema.error_log.last_error)
         self.assertEqual(self.payment_1.state, 'sent')
         self.assertEqual(self.payment_3.state, 'sent')

@@ -8,4 +8,3 @@ from . import account_journal
 from . import account_journal_dashboard
 from . import account_payment
 from . import res_company
-from . import sepa_credit_transfer

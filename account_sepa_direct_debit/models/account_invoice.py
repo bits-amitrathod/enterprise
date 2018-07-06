@@ -41,6 +41,7 @@ class AccountInvoice(models.Model):
                                                       'journal_id': payment_journal.id,
                                                       'payment_method_id': payment_method.id,
                                                       'amount': self.residual,
+                                                      'currency_id': self.currency_id.id,
                                                       'payment_type': 'inbound',
                                                       'communication': self.number,
                                                       'partner_type': 'customer',

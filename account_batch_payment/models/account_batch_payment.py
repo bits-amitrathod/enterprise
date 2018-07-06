@@ -20,8 +20,24 @@ class AccountBatchPayment(models.Model):
     batch_type = fields.Selection(selection=[('inbound', 'Inbound'), ('outbound', 'Outbound')], required=True, readonly=True, states={'draft': [('readonly', '=', False)]}, default='inbound')
     payment_method_id = fields.Many2one(comodel_name='account.payment.method', string='Payment Method', required=True, readonly=True, states={'draft': [('readonly', '=', False)]}, help="The payment method used by the payments in this batch.")
     payment_method_code = fields.Char(related='payment_method_id.code')
+    export_file_create_date = fields.Date(string='Generation Date', default=fields.Date.today, readonly=True, help="Creation date of the related export file.")
+    export_file = fields.Binary(string='File', readonly=True, help="Export file related to this batch")
+    export_filename = fields.Char(string='File Name', help="Name of the export file generated for this batch", store=True)
 
     available_payment_method_ids = fields.One2many(comodel_name='account.payment', compute='_compute_available_payment_method_ids')
+    file_generation_enabled = fields.Boolean(help="Whether or not this batch payment should display the 'Generate File' button instead of 'Print' in form view.", compute='_compute_file_generation_enabled')
+
+    @api.depends('payment_method_id')
+    def _compute_file_generation_enabled(self):
+        for record in self:
+            record.file_generation_enabled = record.payment_method_id.code in record._get_methods_generating_files()
+
+    def _get_methods_generating_files(self):
+        """ Hook for extension. Any payment method whose code stands in the list
+        returned by this function will see the "print" button disappear on batch
+        payments form when it gets selected and an 'Export file' appear instead.
+        """
+        return []
 
     @api.depends('journal_id', 'batch_type')
     def _compute_available_payment_method_ids(self):
@@ -81,7 +97,7 @@ class AccountBatchPayment(models.Model):
     @api.multi
     def write(self, vals):
         if 'batch_type' in vals:
-            vals['name'] = self.with_context(default_journal_id = self.journal_id.id)._get_batch_name(vals['batch_type'], self.date, vals)
+            vals['name'] = self.with_context(default_journal_id=self.journal_id.id)._get_batch_name(vals['batch_type'], self.date, vals)
 
         rslt = super(AccountBatchPayment, self).write(vals)
 
@@ -111,6 +127,44 @@ class AccountBatchPayment(models.Model):
             record.payment_ids.write({'state':'sent', 'payment_reference': record.name})
         records.write({'state': 'sent'})
 
-    @api.multi
+        records = self.filtered(lambda x: x.file_generation_enabled)
+        if records:
+            return self.export_batch_payment()
+
+    def export_batch_payment(self):
+        export_file_data = {}
+        #export and save the file for each batch payment
+        for record in self:
+            export_file_data = record._generate_export_file()
+            record.export_file = export_file_data['file']
+            record.export_filename = export_file_data['filename']
+            record.export_file_create_date = fields.Date.today()
+
+        #if the validation was asked for a single batch payment, open the wizard to download the newly generated file
+        if len(self) == 1:
+            download_wizard = self.env['account.batch.download.wizard'].create({
+                    'batch_payment_id': self.id,
+                    'warning_message': export_file_data.get('warning'),
+            })
+            return {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'account.batch.download.wizard',
+                'target': 'new',
+                'res_id': download_wizard.id,
+            }
+
     def print_batch_payment(self):
         return self.env.ref('account_batch_payment.action_print_batch_payment').report_action(self, config=False)
+
+    def _generate_export_file(self):
+        """ To be overridden by modules adding support for different export format.
+            This function returns False if no export file could be generated
+            for this batch. Otherwise, it returns a dictionary containing the following keys:
+            - file: the content of the generated export file, in base 64.
+            - filename: the name of the generated file
+            - warning: (optional) the warning message to display
+
+        """
+        self.ensure_one()
+        return False

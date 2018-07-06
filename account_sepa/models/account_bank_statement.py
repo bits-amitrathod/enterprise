@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models
-from .sepa_credit_transfer import prepare_SEPA_string
+from .account_batch_payment import prepare_SEPA_string
 
 
 class AccountBankStatementLine(models.Model):

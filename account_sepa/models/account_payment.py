@@ -1,10 +1,18 @@
 # -*- coding: utf-8 -*-
 
-import re
-
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from .sepa_credit_transfer import check_valid_SEPA_str
+from .account_batch_payment import check_valid_SEPA_str
+
+
+class AccountAbstractPayment(models.AbstractModel):
+    _inherit = "account.abstract.payment"
+
+    @api.model
+    def _get_method_codes_using_bank_account(self):
+        res = super(AccountAbstractPayment, self)._get_method_codes_using_bank_account()
+        res.append('sepa_ct')
+        return res
 
 
 class AccountRegisterPayments(models.TransientModel):
@@ -12,20 +20,6 @@ class AccountRegisterPayments(models.TransientModel):
 
     partner_bank_account_id = fields.Many2one('res.partner.bank', string="Recipient Bank Account")
 
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        if hasattr(super(AccountRegisterPayments, self), '_onchange_partner_id'):
-            super(AccountRegisterPayments, self)._onchange_partner_id()
-        if self.partner_id and len(self.partner_id.bank_ids) > 0:
-            self.partner_bank_account_id = self.partner_id.bank_ids[0]
-        else:
-            self.partner_bank_account_id = False
-
-    def _prepare_payment_vals(self, invoices):
-        res = super(AccountRegisterPayments, self)._prepare_payment_vals(invoices)
-        if self.payment_method_id == self.env.ref('account_sepa.account_payment_method_sepa_ct'):
-            res.update({'partner_bank_account_id': self.partner_bank_account_id.id})
-        return res
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
@@ -59,21 +53,6 @@ class AccountPayment(models.Model):
             # Note, the condition allows to use non-IBAN account. SEPA actually supports this under certain conditions
             if self.partner_bank_account_id.acc_type == 'iban' and not self.partner_bank_account_id.bank_bic:
                 raise ValidationError(_("The partner account '%s' requires a Bank Identification Code (BIC) to pay via SEPA. Please configure it first.") % self.partner_bank_account_id.acc_number)
-
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        res = {}
-        if hasattr(super(AccountPayment, self), '_onchange_partner_id'):
-            res = super(AccountPayment, self)._onchange_partner_id()
-        if self.partner_id and len(self.partner_id.bank_ids) > 0:
-            self.partner_bank_account_id = self.partner_id.bank_ids[0]
-        else:
-            self.partner_bank_account_id = False
-        res = res or {'domain': {}}
-        res['domain']['partner_bank_account_id'] = [
-            ('partner_id', 'in', [self.partner_id.id, self.partner_id.commercial_partner_id.id])
-        ]
-        return res
 
     @api.onchange('destination_journal_id')
     def _onchange_destination_journal_id(self):

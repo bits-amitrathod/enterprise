@@ -56,6 +56,5 @@
         'views/res_partner_view.xml',
         'views/sdd_mandate_views.xml',
         'views/account_batch_payment_views.xml',
-        'wizard/sdd_xml_wizards.xml',
     ],
 }

@@ -24,6 +24,7 @@ When you proceed with the reconciliation, simply select the corresponding batch 
         'views/account_batch_payment_templates.xml',
         'views/account_batch_payment_views.xml',
         'views/account_journal_views.xml',
+        'wizard/download_wizard_views.xml',
     ],
     'qweb': [
         "static/src/xml/account_reconciliation.xml",
