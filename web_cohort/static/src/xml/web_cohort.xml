@@ -13,7 +13,7 @@
                     t-att-data-field="measure">
                     <t t-esc="measures[measure]"/>
                 </button>
-                <div class="dropdown-divider"/>
+                <div t-if="_.keys(measures).length" class="dropdown-divider"/>
                 <button type="button" class="dropdown-item" data-field="__count__">Count</button>
             </div>
         </div>
