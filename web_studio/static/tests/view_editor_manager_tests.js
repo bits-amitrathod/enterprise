@@ -1128,7 +1128,7 @@ QUnit.module('ViewEditorManager', {
 
         // move m2o before display_name
         testUtils.dragAndDrop(vem.$('.o_web_studio_form_view_editor .ui-draggable:eq(2)'),
-            vem.$('.o_web_studio_hook:first'));
+            vem.$('.o_group .o_web_studio_hook:first'));
 
         assert.strictEqual(vem.$('.o_web_studio_form_view_editor .o_form_sheet').text(), "M2ODisplay NameA char",
             "the moved field should be the first column");
