@@ -11,7 +11,7 @@ odoo.define('web_dashboard.DashboardModel', function (require) {
 
 var BasicModel = require('web.BasicModel');
 var Domain = require('web.Domain');
-var pyeval = require('web.pyeval');
+var pyUtils = require('web.py_utils');
 
 var DashboardModel = BasicModel.extend({
 
@@ -51,7 +51,7 @@ var DashboardModel = BasicModel.extend({
     _evaluateFormulas: function (dataPoint) {
         _.each(dataPoint.formulas, function (formula, formulaID) {
             try {
-                dataPoint.data[formulaID] = pyeval.py_eval(formula.value, {
+                dataPoint.data[formulaID] = pyUtils.py_eval(formula.value, {
                     record: dataPoint.data,
                 });
                 if (!isFinite(dataPoint.data[formulaID])) {

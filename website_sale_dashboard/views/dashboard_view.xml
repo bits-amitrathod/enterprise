@@ -57,15 +57,8 @@
             <field name="arch" type="xml">
                 <search string="e-Commerce Analysis">
                     <field name="date"/>
-                    <filter name="today" string="Today" domain="[['date', '=', context_today().strftime('%Y-%m-%d')]]"/>
-                    <filter name="week" string="This Week"
-                                domain="[
-                                    '&amp;',
-                                    ('date', '>=', (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
-                                    ('date', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d')),
-                                ]"/>
-                    <filter string="This Month" name="month" domain="[('date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
-                    <filter string="This Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                    <filter name="creation_date" string="Creation Date" date="date"/>
+                    <filter name="confirmation_date" string="Confirmation Date" date="confirmation_date"/>
                 </search>
             </field>
         </record>

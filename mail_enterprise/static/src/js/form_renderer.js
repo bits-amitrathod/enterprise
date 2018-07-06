@@ -3,7 +3,7 @@ odoo.define('mail_enterprise.form_renderer', function (require) {
 
 var config = require('web.config');
 var core = require('web.core');
-var pyeval = require('web.pyeval');
+var pyUtils = require('web.py_utils');
 var FormRenderer = require('web.FormRenderer');
 
 var QWeb = core.qweb;
@@ -80,7 +80,7 @@ FormRenderer.include({
             this._handleAttributes(this.$attachmentPreview, node);
             this._registerModifiers(node, this.state, this.$attachmentPreview);
             if (node.attrs.options) {
-                this.$attachmentPreview.data(pyeval.py_eval(node.attrs.options));
+                this.$attachmentPreview.data(pyUtils.py_eval(node.attrs.options));
             }
             if (this.attachmentPreviewWidth) {
                 this.$attachmentPreview.css('width', this.attachmentPreviewWidth);
