@@ -392,7 +392,7 @@ var PickingClientAction = ClientAction.extend({
         var self = this;
         this.mutex.exec(function () {
             return self._save().then(function () {
-                return this._scrap();
+                return self._scrap();
             });
         });
     },
