@@ -42,6 +42,22 @@ var CohortController = AbstractController.extend({
     //--------------------------------------------------------------------------
 
     /**
+     * Returns the current mode, measure and groupbys, so we can restore the
+     * view when we save the current state in the search view, or when we add it
+     * to the dashboard.
+     *
+     * @override
+     * @returns {Object}
+     */
+    getContext: function () {
+        var state = this.model.get();
+        return {
+            cohort_measure: state.measure,
+            cohort_interval: state.interval,
+        };
+    },
+
+    /**
      * @override
      * @param {jQueryElement} $node
      */

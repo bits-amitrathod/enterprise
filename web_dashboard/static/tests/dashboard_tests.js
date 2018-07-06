@@ -270,6 +270,52 @@ QUnit.module('Views', {
         dashboard.destroy();
     });
 
+    QUnit.test('basic rendering of a cohort tag', function (assert) {
+        assert.expect(6);
+
+        this.data.test_report.fields.create_date = {type: 'date', string: 'Creation Date'};
+        this.data.test_report.fields.transformation_date = {type: 'date', string: 'Transormation Date'};
+
+        this.data.test_report.records[0].create_date = '2018-05-01';
+        this.data.test_report.records[1].create_date = '2018-05-01';
+        this.data.test_report.records[0].transformation_date = '2018-07-03';
+        this.data.test_report.records[1].transformation_date = '2018-06-23';
+
+
+        var readGroups = [[], ['categ_id']]
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard><view type="cohort" ref="some_xmlid"/></dashboard>',
+            archs: {
+                'test_report,some_xmlid,cohort': '<cohort string="Cohort" date_start="create_date" date_stop="transformation_date" interval="week"/>',
+            },
+            mockRPC: function (route, args) {
+                assert.step(args.method || route);
+                if (args.method === 'read_group') {
+                    var groupBy = readGroups.shift();
+                    assert.deepEqual(args.kwargs.fields, ['sold'],
+                        "should read the correct fields");
+                    assert.deepEqual(args.kwargs.groupby, groupBy,
+                        "should group by the correct field");
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(dashboard.$('.o_subview .o_cohort_buttons').length, 1,
+            "should have rendered the cohort view's buttons");
+        assert.strictEqual(dashboard.$('.o_subview .o_cohort_buttons .o_button_switch').length,
+            1, "should have rendered an additional switch button");
+        assert.strictEqual(dashboard.$('.o_subview .o_cohort_view').length, 1,
+            "should have rendered a graph view");
+
+        assert.verifySteps(['load_views', 'get_cohort_data']);
+
+        dashboard.destroy();
+    });
+
     QUnit.test('rendering of an aggregate with widget monetary', function (assert) {
         assert.expect(1);
 
@@ -672,6 +718,71 @@ QUnit.module('Views', {
         actionManager.destroy();
     });
 
+    QUnit.test('clicking on an aggregate interaction with cohort', function (assert) {
+        assert.expect(9);
+
+        this.data.test_report.fields.create_date = {type: 'date', string: 'Creation Date'};
+        this.data.test_report.fields.transformation_date = {type: 'date', string: 'Transormation Date'};
+
+        this.data.test_report.records[0].create_date = '2018-05-01';
+        this.data.test_report.records[1].create_date = '2018-05-01';
+        this.data.test_report.records[0].transformation_date = '2018-07-03';
+        this.data.test_report.records[1].transformation_date = '2018-06-23';
+
+        // create an action manager to test the interactions with the search view
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'test_report,false,dashboard': '<dashboard>' +
+                        '<group>' +
+                            '<aggregate name="untaxed" field="untaxed"/>' +
+                            '<aggregate name="sold" field="sold"/>' +
+                        '</group>' +
+                        '<view type="cohort"/>' +
+                    '</dashboard>',
+                'test_report,false,cohort': '<cohort string="Cohort" date_start="create_date" date_stop="transformation_date" interval="week" measure="sold"/>',
+                'test_report,false,search': '<search></search>',
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'read_group') {
+                    assert.step(args.kwargs.fields);
+                }
+                if (args.method === 'get_cohort_data') {
+                    assert.step(args.kwargs.measure);
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        actionManager.doAction({
+            res_model: 'test_report',
+            type: 'ir.actions.act_window',
+            views: [[false, 'dashboard']],
+        });
+
+        assert.ok(actionManager.$('.o_cohort_measures_list li[data-field=sold]').hasClass('selected'),
+            "sold measure should be active in cohort view");
+        assert.notOk(actionManager.$('.o_cohort_measures_list li[data-field=untaxed]').hasClass('selected'),
+            "untaxed measure should not be active in cohort view");
+
+        // click on the 'untaxed' field: it should activate the 'untaxed' measure in cohort subview
+        actionManager.$('.o_aggregate[name=untaxed]').click();
+
+        assert.notOk(actionManager.$('.o_cohort_measures_list li[data-field=sold]').hasClass('selected'),
+            "sold measure should not be active in cohort view");
+        assert.ok(actionManager.$('.o_cohort_measures_list li[data-field=untaxed]').hasClass('selected'),
+            "untaxed measure should be active in cohort view");
+
+        assert.verifySteps([
+            ['untaxed:sum(untaxed)', 'sold:sum(sold)'], // fields
+            'sold', // cohort
+            ['untaxed:sum(untaxed)', 'sold:sum(sold)'], // fields
+            'untaxed', // cohort
+        ]);
+
+        actionManager.destroy();
+    });
+
     QUnit.test('clicking on aggregate with domain attribute', function (assert) {
         assert.expect(9);
 
@@ -842,6 +953,76 @@ QUnit.module('Views', {
         actionManager.destroy();
     });
 
+    QUnit.test('open a cohort view fullscreen', function (assert) {
+        assert.expect(9);
+
+        this.data.test_report.fields.create_date = {type: 'date', string: 'Creation Date'};
+        this.data.test_report.fields.transformation_date = {type: 'date', string: 'Transormation Date'};
+
+        this.data.test_report.records[0].create_date = '2018-05-01';
+        this.data.test_report.records[1].create_date = '2018-05-01';
+        this.data.test_report.records[0].transformation_date = '2018-07-03';
+        this.data.test_report.records[1].transformation_date = '2018-06-23';
+
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'test_report,false,dashboard': '<dashboard>' +
+                        '<view type="cohort" ref="some_xmlid"/>' +
+                    '</dashboard>',
+                'test_report,some_xmlid,cohort': '<cohort string="Cohort" date_start="create_date" date_stop="transformation_date" interval="week"/>',
+                'test_report,false,search': '<search>' +
+                        '<filter name="categ" help="Category 1" domain="[(\'categ_id\', \'=\', 1)]"/>' +
+                    '</search>',
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'get_cohort_data') {
+                    assert.step(args.kwargs.domain);
+                }
+                return this._super.apply(this, arguments);
+            },
+            intercepts: {
+                do_action: function (ev) {
+                    actionManager.doAction(ev.data.action, ev.data.options);
+                },
+            },
+        });
+
+        actionManager.doAction({
+            name: 'Dashboard',
+            res_model: 'test_report',
+            type: 'ir.actions.act_window',
+            views: [[false, 'dashboard']],
+        });
+
+        assert.strictEqual($('.o_control_panel .breadcrumb li').text(), 'Dashboard',
+            "'Dashboard' should be displayed in the breadcrumbs");
+
+        // activate 'Category 1' filter
+        $('.o_control_panel .o_filters_menu a:contains(Category 1)').click();
+        assert.strictEqual($('.o_control_panel .o_facet_values').text().trim(), 'Category 1',
+            "the filter should appear in the search view");
+
+        // open graph in fullscreen
+        actionManager.$('.o_cohort_buttons .o_button_switch').click();
+        assert.strictEqual($('.o_control_panel .breadcrumb li:nth(1)').text(), 'Cohort Analysis',
+            "'Cohort Analysis' should have been stacked in the breadcrumbs");
+        assert.strictEqual($('.o_control_panel .o_facet_values').text().trim(), 'Category 1',
+            "the filter should have been kept");
+
+        // go back using the breadcrumbs
+        $('.o_control_panel .breadcrumb a').click();
+
+        assert.verifySteps([
+            [], // initial get_cohort_data
+            [['categ_id', '=', 1]], // dashboard view after applying the filter
+            [['categ_id', '=', 1]], // cohort view opened fullscreen
+            [['categ_id', '=', 1]], // dashboard after coming back
+        ]);
+
+        actionManager.destroy();
+    });
+
     QUnit.test('interact with a graph view and open it fullscreen', function (assert) {
         assert.expect(8);
 
@@ -901,6 +1082,66 @@ QUnit.module('Views', {
 
         // open graph in fullscreen
         dashboard.$('.o_graph_buttons .o_button_switch').click();
+        assert.verifySteps(['doAction']);
+
+        dashboard.destroy();
+    });
+
+    QUnit.test('interact with a cohort view and open it fullscreen', function (assert) {
+        assert.expect(6);
+
+        this.data.test_report.fields.create_date = {type: 'date', string: 'Creation Date'};
+        this.data.test_report.fields.transformation_date = {type: 'date', string: 'Transormation Date'};
+
+        this.data.test_report.records[0].create_date = '2018-05-01';
+        this.data.test_report.records[1].create_date = '2018-05-01';
+        this.data.test_report.records[0].transformation_date = '2018-07-03';
+        this.data.test_report.records[1].transformation_date = '2018-06-23';
+
+        var activeMeasure = 'sold';
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard><view type="cohort"/></dashboard>',
+            archs: {
+                'test_report,false,cohort': '<cohort string="Cohort" date_start="create_date" date_stop="transformation_date" interval="week" measure="sold"/>',
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'get_cohort_data') {
+                    assert.deepEqual(args.kwargs.measure, activeMeasure,
+                        "should read the correct measure");
+                }
+                return this._super.apply(this, arguments);
+            },
+            intercepts: {
+                do_action: function (ev) {
+                    assert.step('doAction');
+                    var expectedAction = {
+                        context: {
+                            cohort_measure: 'untaxed',
+                            cohort_interval: 'week',
+                        },
+                        domain: [],
+                        name: 'Cohort Analysis',
+                        res_model: 'test_report',
+                        type: 'ir.actions.act_window',
+                        views: [[false, 'cohort']],
+                    };
+                    assert.deepEqual(ev.data.action, expectedAction,
+                        "should execute an action with correct params");
+                },
+            },
+        });
+
+        // select 'untaxed' as measure
+        activeMeasure = 'untaxed';
+        assert.strictEqual(dashboard.$('.o_cohort_buttons li[data-field=untaxed]').length, 1,
+            "should have 'untaxed' in the list of measures");
+        dashboard.$('.o_cohort_buttons li[data-field=untaxed] a').click();
+
+        // open cohort in fullscreen
+        dashboard.$('.o_cohort_buttons .o_button_switch').click();
         assert.verifySteps(['doAction']);
 
         dashboard.destroy();
@@ -1192,6 +1433,7 @@ QUnit.module('Views', {
 
         dashboard.destroy();
     });
+
     QUnit.test('getContext correctly returns pivot subview context', function (assert) {
         assert.expect(2);
 
@@ -1220,6 +1462,43 @@ QUnit.module('Views', {
             pivot_column_groupby: ['categ_id'],
             pivot_measures: ['__count', 'sold'],
             pivot_row_groupby: [],
+        }, "context should be correct");
+
+        dashboard.destroy();
+    });
+
+    QUnit.test('getContext correctly returns cohort subview context', function (assert) {
+        assert.expect(2);
+
+        this.data.test_report.fields.create_date = {type: 'date', string: 'Creation Date'};
+        this.data.test_report.fields.transformation_date = {type: 'date', string: 'Transormation Date'};
+
+        this.data.test_report.records[0].create_date = '2018-05-01';
+        this.data.test_report.records[1].create_date = '2018-05-01';
+        this.data.test_report.records[0].transformation_date = '2018-07-03';
+        this.data.test_report.records[1].transformation_date = '2018-06-23';
+
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard><view type="cohort" ref="some_xmlid"/></dashboard>',
+            archs: {
+                'test_report,some_xmlid,cohort': '<cohort string="Cohort" date_start="create_date" date_stop="transformation_date" interval="week"/>',
+            },
+        });
+
+        assert.deepEqual(dashboard.getContext().cohort, {
+            cohort_measure: '__count__',
+            cohort_interval: 'week',
+        }, "context should be correct");
+
+        dashboard.$('li[data-field="sold"] a').click(); // change measure
+        dashboard.$('button[data-mode="line"]').click(); // change mode
+
+        assert.deepEqual(dashboard.getContext().cohort, {
+            cohort_measure: 'sold',
+            cohort_interval: 'week',
         }, "context should be correct");
 
         dashboard.destroy();
@@ -1313,6 +1592,53 @@ QUnit.module('Views', {
         dashboard.destroy();
     });
 
+    QUnit.test('correctly uses cohort_ keys from the context', function (assert) {
+        assert.expect(4);
+
+        this.data.test_report.fields.create_date = {type: 'date', string: 'Creation Date'};
+        this.data.test_report.fields.transformation_date = {type: 'date', string: 'Transormation Date'};
+
+        this.data.test_report.records[0].create_date = '2018-05-01';
+        this.data.test_report.records[1].create_date = '2018-05-01';
+        this.data.test_report.records[0].transformation_date = '2018-07-03';
+        this.data.test_report.records[1].transformation_date = '2018-06-23';
+
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard><view type="cohort" ref="some_xmlid"/></dashboard>',
+            archs: {
+                'test_report,some_xmlid,cohort': '<cohort string="Cohort" date_start="create_date" date_stop="transformation_date" interval="week"/>',
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'get_cohort_data') {
+                    assert.deepEqual(args.kwargs.measure, 'untaxed',
+                        "should fetch data for untaxed");
+                }
+                return this._super.apply(this, arguments);
+            },
+            viewOptions: {
+                context: {
+                    cohort: {
+                        cohort_measure: 'untaxed',
+                        cohort_interval: 'year',
+                    }
+                },
+            },
+        });
+
+        // check interval
+        assert.strictEqual(dashboard.renderer.subControllers.cohort.renderer.state.interval,
+            "year", "should use year interval");
+        assert.notOk(dashboard.$('button[data-interval="day"]').hasClass('active'),
+                'day interval button should not be active');
+        assert.ok(dashboard.$('button[data-interval="year"]').hasClass('active'),
+            'year interval button should be active');
+
+        dashboard.destroy();
+    });
+
     QUnit.test('correctly uses graph_ keys from the context (at reload)', function (assert) {
         assert.expect(3);
 
@@ -1348,6 +1674,50 @@ QUnit.module('Views', {
         assert.verifySteps([
             ['categ_id', 'sold'], // first load
             ['categ_id', 'untaxed'], // reload
+        ]);
+
+        dashboard.destroy();
+    });
+
+    QUnit.test('correctly uses cohort_ keys from the context (at reload)', function (assert) {
+        assert.expect(3);
+
+        this.data.test_report.fields.create_date = {type: 'date', string: 'Creation Date'};
+        this.data.test_report.fields.transformation_date = {type: 'date', string: 'Transormation Date'};
+
+        this.data.test_report.records[0].create_date = '2018-05-01';
+        this.data.test_report.records[1].create_date = '2018-05-01';
+        this.data.test_report.records[0].transformation_date = '2018-07-03';
+        this.data.test_report.records[1].transformation_date = '2018-06-23';
+
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard><view type="cohort" ref="some_xmlid"/></dashboard>',
+            archs: {
+                'test_report,some_xmlid,cohort': '<cohort string="Cohort" date_start="create_date" date_stop="transformation_date" interval="week"/>',
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'get_cohort_data') {
+                    assert.step(args.kwargs.measure);
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        dashboard.reload({
+            context: {
+                cohort: {
+                    cohort_measure: 'untaxed',
+                    cohort_interval: 'year',
+                },
+            },
+        });
+
+        assert.verifySteps([
+            '__count__', // first load
+            'untaxed', // reload
         ]);
 
         dashboard.destroy();
@@ -1474,6 +1844,51 @@ QUnit.module('Views', {
             'untaxed measure should be selected in graph view');
         assert.ok(actionManager.$('.o_pivot_measures_list li[data-field=\'untaxed\']').hasClass('selected'),
             'untaxed measure should be selected in pivot view');
+
+        actionManager.destroy();
+    });
+
+    QUnit.test('changes in search view do not affect measure selection in cohort subview', function (assert) {
+        assert.expect(2);
+
+        this.data.test_report.fields.create_date = {type: 'date', string: 'Creation Date'};
+        this.data.test_report.fields.transformation_date = {type: 'date', string: 'Transormation Date'};
+
+        this.data.test_report.records[0].create_date = '2018-05-01';
+        this.data.test_report.records[1].create_date = '2018-05-01';
+        this.data.test_report.records[0].transformation_date = '2018-07-03';
+        this.data.test_report.records[1].transformation_date = '2018-06-23';
+
+        // create an action manager to test the interactions with the search view
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'test_report,false,dashboard': '<dashboard>' +
+                        '<view type="cohort" ref="some_xmlid"/>' +
+                        '</dashboard>',
+                'test_report,some_xmlid,cohort': '<cohort string="Cohort" date_start="create_date" date_stop="transformation_date" interval="week"/>',
+                'test_report,1,search': '<search>'+
+                    '<field name="categ_id" string="Label"/>' +
+                    '<filter string="categ" name="positive" domain="[(\'categ_id\', \'>=\', 0)]"/>' +
+                '</search>',
+            },
+        });
+
+        actionManager.doAction({
+            res_model: 'test_report',
+            type: 'ir.actions.act_window',
+            views: [[false, 'dashboard']],
+            search_view_id: [1, 'search'],
+        });
+
+        $('.o_cohort_buttons button:first').click();
+        $('.o_cohort_buttons .o_cohort_measures_list li a').eq(1).click();
+        assert.ok($('.o_cohort_buttons .o_cohort_measures_list li').eq(1).hasClass('selected'),
+            'groupby should be unselected');
+        $('.o_search_options button span.fa-filter').click();
+        $('.o_filters_menu li a').eq(0).click();
+        assert.ok($('.o_cohort_buttons .o_cohort_measures_list li').eq(1).hasClass('selected'),
+            'groupby should be unselected');
 
         actionManager.destroy();
     });

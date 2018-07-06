@@ -29,8 +29,8 @@ var DashboardRenderer = FormRenderer.extend({
         this.subFieldsViews = params.subFieldsViews;
         this.additionalMeasures = params.additionalMeasures;
         this.subControllers = {};
-        this.subControllersContext = _.pick(state.context || {}, 'pivot', 'graph');
-        this.subcontrollersNextMeasures = {pivot: {}, graph: {}};
+        this.subControllersContext = _.pick(state.context || {}, 'pivot', 'graph', 'cohort');
+        this.subcontrollersNextMeasures = {pivot: {}, graph: {}, cohort: {}};
         this.formatOptions = {
             // in the dashboard view, all monetary values are displayed in the
             // currency of the current company of the user
@@ -77,7 +77,7 @@ var DashboardRenderer = FormRenderer.extend({
         for (viewType in this.subControllers) {
             this.subControllersContext[viewType] = this.subControllers[viewType].getContext();
         }
-        var subControllersContext = _.pick(params.context || {}, 'pivot', 'graph');
+        var subControllersContext = _.pick(params.context || {}, 'pivot', 'graph', 'cohort');
         _.extend(this.subControllersContext, subControllersContext);
         for (viewType in this.subControllers) {
             _.extend(this.subControllersContext[viewType], this.subcontrollersNextMeasures[viewType]);
@@ -262,7 +262,8 @@ var DashboardRenderer = FormRenderer.extend({
     _renderView: function () {
         var self = this;
         var oldControllers = _.values(this.subControllers);
-        return this._super.apply(this, arguments).then(function () {
+        var r = this._super.apply(this, arguments);
+        return r.then(function () {
             _.invoke(oldControllers, 'destroy');
             if (self.isInDOM) {
                 _.invoke(self.subControllers, 'on_attach_callback');
@@ -305,7 +306,9 @@ var DashboardRenderer = FormRenderer.extend({
         if (this.subControllers.graph) {
             this.subcontrollersNextMeasures.graph.graph_measure = measure;
         }
-
+        if (this.subControllers.cohort) {
+            this.subcontrollersNextMeasures.cohort.cohort_measure = measure;
+        }
         // update the domain and trigger a reload
         var domain = new Domain(aggregateInfo.domain);
         // I don't know if it is a good idea to use this.state.fields[measure].string
