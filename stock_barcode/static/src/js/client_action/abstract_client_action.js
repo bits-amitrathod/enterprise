@@ -620,9 +620,9 @@ var ClientAction = AbstractAction.extend({
                 params.lot_name
                 ) {
                 if (this.actionParams.model === 'stock.picking') {
-                    line.qty_done++;
+                    line.qty_done += params.product.qty || 1;
                 } else if (this.actionParams.model === 'stock.inventory') {
-                    line.product_qty++;
+                    line.product_qty += params.product.qty || 1;
                 }
             }
         } else {
@@ -632,7 +632,7 @@ var ClientAction = AbstractAction.extend({
                 params.lot_id ||
                 params.lot_name
                 ) {
-                line = this._makeNewLine(params.product, params.barcode, 1);
+                line = this._makeNewLine(params.product, params.barcode, params.product.qty || 1);
             } else {
                 line = this._makeNewLine(params.product, params.barcode, 0);
             }
@@ -722,7 +722,7 @@ var ClientAction = AbstractAction.extend({
                 linesActions.push([this.linesWidget.addProduct, [res.lineDescription, this.actionParams.model]]);
             } else {
                 if (product.tracking === 'none') {
-                    linesActions.push([this.linesWidget.incrementProduct, [res.id || res.virtualId, 1, this.actionParams.model]]);
+                    linesActions.push([this.linesWidget.incrementProduct, [res.id || res.virtualId, product.qty || 1, this.actionParams.model]]);
                 } else {
                     linesActions.push([this.linesWidget.incrementProduct, [res.id || res.virtualId, 0, this.actionParams.model]]);
                 }
