@@ -12,7 +12,7 @@ var session = require("web.session");
 var Widget = require('web.Widget');
 var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
 var view_components = require('web_studio.view_components');
-var pyeval = require('web.pyeval');
+var pyUtils = require('web.py_utils');
 
 var form_component_widget_registry = view_components.registry;
 var _t = core._t;
@@ -216,7 +216,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
         var newAttributes = {};
         var attrs = [];
         var originNodeAttr = this.state.modifiers;
-        var originSubAttrs =  pyeval.py_eval(this.state.attrs.attrs || '{}', this.editorData);
+        var originSubAttrs =  pyUtils.py_eval(this.state.attrs.attrs || '{}', this.editorData);
         _.each(modifiers, function (value, key) {
                 var keyInNodeAndAttrs = _.contains(self.MODIFIERS_IN_NODE_AND_ATTRS, key);
                 var keyFromView = key in originSubAttrs;
