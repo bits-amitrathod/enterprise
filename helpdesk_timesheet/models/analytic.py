@@ -11,6 +11,7 @@ class AccountAnalyticLine(models.Model):
 
     @api.onchange('project_id')
     def onchange_project_id(self):
-        super(AccountAnalyticLine, self).onchange_project_id()
+        result = super(AccountAnalyticLine, self).onchange_project_id()
         if self.helpdesk_ticket_id:
             self.task_id = self.helpdesk_ticket_id.task_id
+        return result

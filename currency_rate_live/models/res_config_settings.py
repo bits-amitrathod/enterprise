@@ -237,13 +237,13 @@ class ResCompany(models.Model):
         day immediate before the rate is gotten, it means the rate for 02/Feb is the one at 31/jan.
         * The base currency is always MXN but with the inverse 1/rate.
         * The official institution is Banxico.
-        * The webservice returns the following currency rates (same order):
-            1) USD SAT - Officially used from SAT institution
-            2) USD Fixed
-            3) EUR
-            4) CAD
-            5) JPY
-            6) GAB
+        * The webservice returns the following currency rates:
+            - SF46410 EUR
+            - SF60632 CAD
+            - SF43718 USD Fixed
+            - SF46407 GBP
+            - SF46406 JPY
+            - SF60653 USD SAT - Officially used from SAT institution
         Source: http://www.banxico.org.mx/portal-mercado-cambiario/
         """
         def update_rate(currency, rate, date):
@@ -265,7 +265,7 @@ class ResCompany(models.Model):
         ns = xml.nsmap
         # nsmap don't support "None" key then deleting
         ns.pop(None, None)
-        serie = xml.xpath("bm:DataSet/bm:Series[1]/bm:Obs", namespaces=ns)[0]
+        serie = xml.xpath("bm:DataSet/bm:Series[@IDSERIE='SF43718']/bm:Obs", namespaces=ns)[0]
         usd_mxn = float(serie.get('OBS_VALUE'))
         date = datetime.datetime.strptime(
             serie.get('TIME_PERIOD'), BANXICO_DATE_FORMAT).strftime(DEFAULT_SERVER_DATE_FORMAT)
@@ -286,13 +286,13 @@ class ResCompany(models.Model):
         base_mxn_rate = base_currency.compute(1, mxn, round=False)
         foreigns = {
             # position order of the rates from webservices
-            3: self.env.ref('base.EUR'),
-            4: self.env.ref('base.CAD'),
-            5: self.env.ref('base.JPY'),
-            6: self.env.ref('base.GBP'),
+            'SF46410': self.env.ref('base.EUR'),
+            'SF60632': self.env.ref('base.CAD'),
+            'SF46406': self.env.ref('base.JPY'),
+            'SF46407': self.env.ref('base.GBP'),
         }
         for index, currency in foreigns.items():
-            serie = xml.xpath("bm:DataSet/bm:Series[%d]/bm:Obs" % index, namespaces=ns)[0]
+            serie = xml.xpath("bm:DataSet/bm:Series[@IDSERIE='%s']/bm:Obs" % index, namespaces=ns)[0]
             try:
                 foreign_mxn_rate = float(serie.get('OBS_VALUE'))
             except ValueError:
