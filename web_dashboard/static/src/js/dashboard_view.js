@@ -26,6 +26,7 @@ var DashboardView = BasicView.extend({
     },
     display_name: _lt('Dashboard'),
     groupable: false,
+    enableTimeRangeMenu: true,
     icon: 'fa-tachometer',
     viewType: 'dashboard',
 

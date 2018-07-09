@@ -10,8 +10,11 @@ odoo.define('web_dashboard.DashboardModel', function (require) {
  */
 
 var BasicModel = require('web.BasicModel');
+var dataComparisonUtils = require('web.dataComparisonUtils');
 var Domain = require('web.Domain');
 var pyUtils = require('web.py_utils');
+
+var computeVariation = dataComparisonUtils.computeVariation;
 
 var DashboardModel = BasicModel.extend({
 
@@ -19,6 +22,18 @@ var DashboardModel = BasicModel.extend({
     // Public
     //--------------------------------------------------------------------------
 
+    /**
+     * @override
+     */
+     get: function () {
+        var record = this._super.apply(this, arguments);
+        record.timeRange = this.dataPoint.timeRange;
+        record.comparisonTimeRange = this.dataPoint.comparisonTimeRange;
+        record.compare = this.dataPoint.compare;
+        record.comparisonData = this.dataPoint.comparisonData;
+        record.variationData = this.dataPoint.variationData;
+        return record;
+     },
     /**
      * @override
      */
@@ -34,6 +49,21 @@ var DashboardModel = BasicModel.extend({
         options = options || {};
         if (options.domain !== undefined) {
             this.dataPoint.domain = options.domain;
+        }
+        if (options.context !== undefined) {
+            var timeRangeMenuData = options.context.timeRangeMenuData;
+            if (timeRangeMenuData) {
+                this.dataPoint.timeRange = timeRangeMenuData.timeRange || [];
+                this.dataPoint.comparisonTimeRange = timeRangeMenuData.comparisonTimeRange || [];
+                this.dataPoint.compare = this.dataPoint.comparisonTimeRange.length > 0;
+                // the following step has to be done since we instantiate subviews using the context in particular
+                this.dataPoint.context.timeRangeMenuData = timeRangeMenuData;
+            } else {
+                this.dataPoint.timeRange = [];
+                this.dataPoint.comparisonTimeRange = [];
+                this.dataPoint.compare = false;
+                this.dataPoint.context = _.omit(this.dataPoint.context, 'timeRangeMenuData');
+            }
         }
         return this._load(this.dataPoint);
     },
@@ -52,7 +82,7 @@ var DashboardModel = BasicModel.extend({
         _.each(dataPoint.formulas, function (formula, formulaID) {
             try {
                 dataPoint.data[formulaID] = pyUtils.py_eval(formula.value, {
-                    record: dataPoint.data,
+                    record: dataPoint.data
                 });
                 if (!isFinite(dataPoint.data[formulaID])) {
                     dataPoint.data[formulaID] = NaN;
@@ -60,7 +90,29 @@ var DashboardModel = BasicModel.extend({
             } catch (e) {
                 dataPoint.data[formulaID] = NaN;
             }
+            if (dataPoint.compare) {
+                try {
+                    dataPoint.comparisonData[formulaID] = pyUtils.py_eval(formula.value, {
+                        record: dataPoint.comparisonData
+                    });
+                    if (!isFinite(dataPoint.comparisonData[formulaID])) {
+                        dataPoint.comparisonData[formulaID] = NaN;
+                    }
+                } catch (e) {
+                    dataPoint.comparisonData[formulaID] = NaN;
+                }
+            }
         });
+    },
+    /**
+     * @param  {Array[]} range
+     * @param  {Array[]} aggregateDomain
+     * @return {Array[]}
+     */
+    _getReadGroupDomain: function (range, aggregateDomain) {
+        return Domain.prototype.normalizeArray(this.dataPoint.domain)
+            .concat(aggregateDomain)
+            .concat(Domain.prototype.normalizeArray(new Domain(range).toArray()));
     },
     /**
      * @override
@@ -80,31 +132,43 @@ var DashboardModel = BasicModel.extend({
             }
         });
 
-        var defs = _.map(domainMapping, function (aggregateNames, domain) {
-            var fieldNames = _.map(aggregateNames, function (aggregateName) {
+        var defs = [];
+        _.each(domainMapping, function (aggregateNames, domain) {
+            var fields = _.map(aggregateNames, function (aggregateName) {
                 var fieldName = fieldsInfo[aggregateName].field;
                 var groupOperator = fieldsInfo[aggregateName].group_operator;
                 return aggregateName + ':' + groupOperator + '(' + fieldName + ')';
             });
-            return self._rpc({
-                context: dataPoint.getContext(),
-                domain: dataPoint.domain.concat(new Domain(domain).toArray()),
-                fields: fieldNames,
-                groupBy: [],
-                lazy: true,
-                method: 'read_group',
-                model: dataPoint.model,
-                orderBy: [],
+
+            defs.push(self._readGroup({
+                domain: self._getReadGroupDomain(domain, self.dataPoint.timeRange),
+                fields: fields, 
             }).then(function (result) {
-                result = result[0];
-                _.each(aggregateNames, function (aggregateName) {
-                    dataPoint.data[aggregateName] = result[aggregateName] || 0;
-                });
-            });
+                _.extend(self.dataPoint.data, _.pick(result, aggregateNames));
+            }));
+            if (dataPoint.compare) {
+                defs.push(self._readGroup({
+                    domain: self._getReadGroupDomain(domain, self.dataPoint.comparisonTimeRange),
+                    fields: fields,
+                }).then(function (result) {
+                    _.extend(self.dataPoint.comparisonData, _.pick(result, aggregateNames));
+                }));
+            }
         });
 
         return $.when.apply($, defs).then(function () {
             self._evaluateFormulas(dataPoint);
+            if (dataPoint.compare) {
+                var value, comparisonValue;
+                for (var statisticName in dataPoint.data) {
+                    value = dataPoint.data[statisticName];
+                    comparisonValue = dataPoint.comparisonData[statisticName];
+                    dataPoint.variationData[statisticName] = computeVariation(value, comparisonValue);
+                }
+            } else {
+                dataPoint.comparisonData = {};
+                dataPoint.variationData = {};
+            }
             return dataPoint.id;
         });
     },
@@ -116,8 +180,33 @@ var DashboardModel = BasicModel.extend({
         var dataPoint = this._super.apply(this, arguments);
         dataPoint.aggregates = params.aggregates;
         dataPoint.formulas = params.formulas;
+        dataPoint.timeRange = params.timeRange;
+        dataPoint.comparisonTimeRange = params.comparisonTimeRange;
+        dataPoint.compare = params.compare;
+        dataPoint.comparisonData = {};
+        dataPoint.variationData = {};
         return dataPoint;
     },
+    /**
+     * @param  {Object} args
+     * @returns {Deferred}
+     */
+    _readGroup: function (args) {
+        var readGroupArgs = _.extend({
+            context: this.dataPoint.getContext(),
+            groupBy: [],
+            lazy: true,
+            method: 'read_group',
+            model: this.dataPoint.model,
+            orderBy: [],
+        }, args);
+        return this._rpc(readGroupArgs).then(function (result) {
+            result = result[0];
+            return _.mapObject(result, function (value) {
+                return value || 0;
+            });
+        });
+    }
 });
 
 return DashboardModel;

@@ -3,11 +3,14 @@ odoo.define('web_dashboard.DashboardRenderer', function (require) {
 
 var config = require('web.config');
 var core = require('web.core');
+var dataComparisonUtils = require('web.dataComparisonUtils');
 var Domain = require('web.Domain');
 var fieldUtils = require('web.field_utils');
 var FormRenderer = require('web.FormRenderer');
-var viewRegistry = require('web.view_registry');
 var pyUtils = require('web.py_utils');
+var viewRegistry = require('web.view_registry');
+
+var renderComparison = dataComparisonUtils.renderComparison;
 
 var QWeb = core.qweb;
 
@@ -32,6 +35,8 @@ var DashboardRenderer = FormRenderer.extend({
         this.subControllers = {};
         this.subControllersContext = _.pick(state.context || {}, 'pivot', 'graph', 'cohort');
         this.subcontrollersNextMeasures = {pivot: {}, graph: {}, cohort: {}};
+        this.timeRangeDescription = params.timeRangeDescription;
+        this.comparisonTimeRangeDescription = params.comparisonTimeRangeDescription;
         this.formatOptions = {
             // in the dashboard view, all monetary values are displayed in the
             // currency of the current company of the user
@@ -83,6 +88,16 @@ var DashboardRenderer = FormRenderer.extend({
         for (viewType in this.subControllers) {
             _.extend(this.subControllersContext[viewType], this.subcontrollersNextMeasures[viewType]);
             this.subcontrollersNextMeasures[viewType] = {};
+        }
+        if (params.context !== undefined) {
+            var timeRangeMenuData = params.context.timeRangeMenuData;
+            if (timeRangeMenuData) {
+                this.timeRangeDescription = timeRangeMenuData.timeRangeDescription;
+                this.comparisonTimeRangeDescription = timeRangeMenuData.comparisonTimeRangeDescription;
+            } else {
+                this.timeRangeDescription = undefined;
+                this.comparisonTimeRangeDescription = undefined;
+            }
         }
         return this._super.apply(this, arguments);
     },
@@ -136,30 +151,64 @@ var DashboardRenderer = FormRenderer.extend({
      * @returns {jQueryElement}
      */
     _renderStatistic: function (node) {
+        var self = this;
         var $label = this._renderLabel(node);
+
+        var $el = $('<div>')
+            .attr('name', node.attrs.name)
+            .append($label);
+
         var $value;
+        var statisticName = node.attrs.name;
+        var variation;
+        var formatter;
+        var statistic = self.state.fieldsInfo.dashboard[statisticName];
         if (!node.attrs.widget || (node.attrs.widget in fieldUtils.format)) {
             // use a formatter to render the value if there exists one for the
             // specified widget attribute, or there is no widget attribute
-            var statisticName = node.attrs.name;
-            var fieldValue = this.state.data[statisticName];
-            if (isNaN(fieldValue)) {
-                $value = $('<div>', {class: 'o_value'}).html("-");
+            var fieldValue = self.state.data[statisticName];
+            var formatType = node.attrs.widget || statistic.type;
+            formatter = fieldUtils.format[formatType];
+            if (this.state.compare) {
+                var comparisonValue = this.state.comparisonData[statisticName];
+                variation = this.state.variationData[statisticName];
+                renderComparison($el, fieldValue, comparisonValue, variation, formatter, statistic, this.formatOptions);
             } else {
-                var statistic = this.state.fieldsInfo.dashboard[statisticName];
-                var formatType = node.attrs.widget || statistic.type;
-                var formatter = fieldUtils.format[formatType];
-                fieldValue = formatter(fieldValue, statistic, this.formatOptions);
+                fieldValue = isNaN(fieldValue) ? '-' : formatter(fieldValue, statistic, this.formatOptions);
                 $value = $('<div>', {class: 'o_value'}).html(fieldValue);
+                $el.append($value);
             }
         } else {
-            // instantiate a widget to render the value if there is no formatter
-            $value = this._renderFieldWidget(node, this.state).addClass('o_value');
+            if (this.state.compare) {
+                // use fakeState here too (to change domain)?
+                var $originalValue = this._renderFieldWidget(node, this.state);
+                var fakeState = _.clone(this.state);
+                fakeState.data = fakeState.comparisonData;
+                var $comparisonValue = this._renderFieldWidget(node, fakeState);
+                variation = this.state.variationData[statisticName];
+                fakeState.data[statisticName] = variation.magnitude;
+                var $variationValue = fieldUtils.format.percentage(
+                    variation.magnitude,
+                    statistic,
+                    this.formatOptions
+                );
+
+                $el
+                .append($('<div>', {class: 'o_variation' + variation.signClass}).html(
+                    $variationValue
+                ))
+                .append($('<div>', {class: 'o_comparison'}).append(
+                    $originalValue,
+                    $('<span>').html(" vs "),
+                    $comparisonValue
+                ));
+            } else {
+                // instantiate a widget to render the value if there is no formatter
+                $value = this._renderFieldWidget(node, this.state).addClass('o_value');
+                $el.append($value);
+            }
         }
-        var $el = $('<div>')
-            .attr('name', node.attrs.name)
-            .append($label)
-            .append($value);
+
         this._registerModifiers(node, this.state, $el);
         if (config.debug || node.attrs.help) {
             this._addStatisticTooltip($el, node);
@@ -195,7 +244,7 @@ var DashboardRenderer = FormRenderer.extend({
      */
     _renderTagAggregate: function (node) {
         var $aggregate = this._renderStatistic(node).addClass('o_aggregate');
-        var isClickable = node.attrs.clickable === undefined || pyUtils.py_eval(node.attrs.clickable); 
+        var isClickable = node.attrs.clickable === undefined || pyUtils.py_eval(node.attrs.clickable);
         $aggregate.toggleClass('o_clickable', isClickable);
 
         var $result = $('<div>').append($aggregate);
@@ -273,6 +322,37 @@ var DashboardRenderer = FormRenderer.extend({
                 _.invoke(self.subControllers, 'on_attach_callback');
             }
         });
+    },
+    /**
+     * @override
+     * @private
+     * @param {JQueryElement} $node
+     * @returns {JQueryElement}
+     */
+    _renderTagWidget: function (node) {
+        if (!this.state.compare) {
+            return this._super.apply(this, arguments);
+        } else {
+            var $div = $('<div>');
+            var originalTitle = node.attrs.modifiers.title ? node.attrs.modifiers.title : undefined;
+            var fakeState = _.clone(this.state);
+            var fakeNode = JSON.parse(JSON.stringify(node));
+
+            fakeState.domain = fakeState.domain.concat(this.state.timeRange || []);
+            if (originalTitle) {
+                fakeNode.attrs.modifiers.title = originalTitle + ' (' + this.timeRangeDescription + ')';
+            }
+
+            $div.append(this._renderWidget(fakeState, fakeNode));
+
+            fakeState.domain = this.state.domain.concat(this.state.comparisonTimeRange || []);
+            fakeState.data = this.state.comparisonData;
+            if (originalTitle) {
+                fakeNode.attrs.modifiers.title = originalTitle + ' (' + this.comparisonTimeRangeDescription + ')';
+            }
+            $div.append(this._renderWidget(fakeState, fakeNode));
+            return $div;
+        }
     },
     /**
      * Overrides to get rid of the FormRenderer logic about fields, as there is

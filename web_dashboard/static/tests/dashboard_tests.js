@@ -10,6 +10,8 @@ var widgetRegistry = require('web.widget_registry');
 
 var createActionManager = testUtils.createActionManager;
 var createView = testUtils.createView;
+var patchDate = testUtils.patchDate;
+
 var FieldFloat = BasicFields.FieldFloat;
 
 QUnit.module('Views', {
@@ -33,6 +35,32 @@ QUnit.module('Views', {
                     sold: 3,
                     untaxed: 20,
                     categ_id: 2,
+                }],
+            },
+            test_time_range : {
+                fields: {
+                    categ_id: {string: "categ_id", type: 'many2one', relation: 'test_report'},
+                    sold: {string: "Sold", type: 'float', store: true, group_operator:'sum'},
+                    untaxed: {string: "Untaxed", type: 'float', group_operator:'sum', store: true},
+                    date: {string: "Date", type: 'date', sortable: true},
+                    transformation_date: {string: "Transformation Date", type: 'datetime', sortable: true},
+                },
+                records: [{
+                    display_name: "First",
+                    id: 1,
+                    sold: 5,
+                    untaxed: 10,
+                    categ_id: 1,
+                    date: '1983-07-15',
+                    transformation_date: '2018-07-30 04:56:00'
+                }, {
+                    display_name: "Second",
+                    id: 2,
+                    sold: 3,
+                    untaxed: 20,
+                    categ_id: 2,
+                    date: '1984-12-15',
+                    transformatin_date: '2018-12-15 14:07:03'
                 }],
             },
         };
@@ -1928,6 +1956,7 @@ QUnit.module('Views', {
                     "Measure on graph should not have changed")
 
         dashboard.destroy();
+
     });
 
     QUnit.test('rendering of aggregate with widget attribute (widget)', function (assert) {
@@ -1961,6 +1990,142 @@ QUnit.module('Views', {
         dashboard.destroy();
         delete fieldRegistry.map.test;
     });
-});
 
+    QUnit.test('rendering of aggregate with widget attribute (widget) and comparison active', function (assert) {
+        assert.expect(16);
+
+        var MyWidget = FieldFloat.extend({
+            start: function () {
+                this.$el.text('The value is ' + this._formatValue(this.value));
+            },
+        });
+        fieldRegistry.add('test', MyWidget);
+
+        var nbReadGroup = 0;
+
+        var RealDate = window.Date;
+
+        window.Date = function TestDate() {
+            // month are indexed from 0!
+            return new RealDate(2017,2,22);
+        };
+        window.Date.now = function Test() {
+            return new Date(2017,2,22);
+        };
+
+        // create an action manager to test the interactions with the search view
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'test_time_range,false,dashboard': '<dashboard>' +
+                        '<aggregate name="some_value" field="sold" string="Some Value" widget="test"/>' +
+                    '</dashboard>',
+                'test_time_range,false,search': '<search></search>',
+            },
+            mockRPC: function (route, args) {
+                var def = this._super.apply(this, arguments);
+                if (args.method === 'read_group') {
+                    nbReadGroup++;
+                    if (nbReadGroup === 1) {
+                        assert.deepEqual(args.kwargs.fields, ['some_value:sum(sold)'],
+                            "should read the correct field");
+                        assert.deepEqual(args.kwargs.domain, [],
+                            "should send the correct domain");
+                        assert.deepEqual(args.kwargs.groupby, [],
+                            "should send the correct groupby");
+                        return def.then(function (result) {
+                            result[0].some_value = 8;
+                            return result;
+                        });
+                    }
+                    if (nbReadGroup === 2 || nbReadGroup === 3) {
+                        assert.deepEqual(args.kwargs.fields, ['some_value:sum(sold)'],
+                            "should read the correct field");
+                        assert.deepEqual(args.kwargs.domain, ["&", ["date", ">=", "2017-03-22"], ["date", "<", "2017-03-23"]],
+                            "should send the correct domain");
+                        assert.deepEqual(args.kwargs.groupby, [],
+                            "should send the correct groupby");
+                        return def.then(function (result) {
+                            // this is not the real value computed from data
+                            result[0].some_value = 16;
+                            return result;
+                        });
+                    }
+                    if (nbReadGroup === 4) {
+                        assert.deepEqual(args.kwargs.fields, ['some_value:sum(sold)'],
+                            "should read the correct field");
+                        assert.deepEqual(args.kwargs.domain, ["&", ["date", ">=", "2017-03-21"], ["date", "<", "2017-03-22"]],
+                            "should send the correct domain");
+                        assert.deepEqual(args.kwargs.groupby, [],
+                            "should send the correct groupby");
+                        return def.then(function (result) {
+                            // this is not the real value computed from data
+                            result[0].some_value = 4;
+                            return result;
+                        });
+                    }
+                }
+                return def;
+            },
+        });
+
+        actionManager.doAction({
+            res_model: 'test_time_range',
+            type: 'ir.actions.act_window',
+            views: [[false, 'dashboard']],
+        });
+        assert.strictEqual(actionManager.$('.o_aggregate .o_value').length, 1);
+
+        // Apply time range with today
+        $('button.o_time_range_menu_button').click();
+        $('.o_apply_range').click();
+        assert.strictEqual(actionManager.$('.o_aggregate .o_value').length, 1);
+
+        // Apply range with today and comparison with previous period
+        $('button.o_time_range_menu_button').click();
+        $('.o_comparison_checkbox').click();
+        $('.o_apply_range').click();
+        assert.strictEqual(actionManager.$('.o_aggregate .o_variation').text(), "300%");
+        assert.strictEqual(actionManager.$('.o_aggregate .o_comparison').text(), "The value is 16.00 vs The value is 4.00");
+
+        actionManager.destroy();
+        delete fieldRegistry.map.test;
+        window.Date = RealDate;
+    });
+
+    QUnit.test('rendering of a cohort tag with comparison active', function (assert) {
+        assert.expect(1);
+
+        var unpatchDate = patchDate(2016,11,20, 1, 0, 0);
+
+        // create an action manager to test the interactions with the search view
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'test_time_range,false,dashboard': '<dashboard>' +
+                        '<view type="cohort" ref="some_xmlid"/>' +
+                    '</dashboard>',
+                'test_time_range,some_xmlid,cohort': '<cohort string="Cohort" date_start="date" date_stop="transformation_date" interval="week"/>',
+                'test_time_range,false,search': '<search></search>',
+            },
+        });
+
+
+        actionManager.doAction({
+            res_model: 'test_time_range',
+            type: 'ir.actions.act_window',
+            views: [[false, 'dashboard']],
+        });
+
+        $('.o_time_range_menu_button').click();
+        $('.o_time_range_menu .custom-control-label').click();
+        $('.o_time_range_menu .o_apply_range').click();
+
+        // The test should be modified and extended.
+        assert.strictEqual($('.o_cohort_view div.o_cohort_no_data').length, 1);
+
+        unpatchDate();
+        actionManager.destroy();
+    });
+});
 });

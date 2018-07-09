@@ -84,15 +84,27 @@
             }
 
             .o_value {
-                font-size: 1.4em;
+                font-size: 1.6em;
             }
+            .o_comparison {
+                font-size: 1em
+            }
+            .o_variation {
+                font-size: 1.6em;
+                &.o_positive {
+                    color: green;
+                }
+                &.o_negative {
+                    color: red;
+                }
+            }
+
         }
 
         .o_aggregate.o_clickable {
             .o_value {
                 // .btn-link(); FIXME
                 cursor: pointer;
-                font-size: 1.4em;
 
                 &:after {
                     font: $font-size-base/1 "FontAwesome";
