@@ -80,6 +80,22 @@
         </div>
     </div>
 
+    <div t-name="sign.public_sms_signer" class="form-horizontal">
+        <div class="form-group">
+            <span>A SMS will be sent to the following phone number. Please update it if it's not relevant.</span>
+            <div>
+                <input type="text" id="o_sign_phone_number_input" placeholder="Phone number..." class="form-control" t-att-value="widget.signerPhone"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <span>Please enter the code received through SMS to complete your signature</span>
+            <div>
+                <input type="text" id="o_sign_public_signer_sms_input" placeholder="SMS Code" class="form-control"/>
+                <button class='btn-link o_sign_resend_sms'>Send SMS</button>
+            </div>
+        </div>
+    </div>
+
     <div t-name="sign.thank_you_dialog">
         <div class="o_thankyou_message">We will let you know by email once everyone has signed.<br/>
         So you can close the window and come back later.</div>

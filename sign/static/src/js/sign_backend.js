@@ -754,7 +754,7 @@ odoo.define('sign.template', function(require) {
                         'height': configuration[page][i].data('height'),
                     };
 
-                    this.rolesToChoose[resp] = this.iframeWidget.parties[resp].name;
+                    this.rolesToChoose[resp] = this.iframeWidget.parties[resp];
                 }
             }
             return data;
@@ -998,6 +998,12 @@ odoo.define('sign.document_signing_backend', function(require) {
             return SignableDocument2;
         },
     });
+
+    var SMSSignerDialogBackend = document_signing.SMSSignerDialog.include({
+        get_thankyoudialog_class: function () {
+            return NoPubThankYouDialog;
+        },
+    })
 
     core.action_registry.add('sign.SignableDocument', SignableDocumentBackend);
 });

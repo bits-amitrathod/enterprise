@@ -2,12 +2,16 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
+import logging
 import mimetypes
 import os
 import re
 
 from odoo import http, _
 from odoo.addons.web.controllers.main import content_disposition
+from odoo.addons.iap.models.iap import InsufficientCreditError
+
+_logger = logging.getLogger()
 
 
 class Sign(http.Controller):
@@ -160,10 +164,49 @@ class Sign(http.Controller):
             partner = ResPartner.create({'name': name, 'email': mail})
         sign_request.request_item_ids[0].write({'partner_id': partner.id})
 
-    @http.route(['/sign/sign/<int:id>/<token>'], type='json', auth='public')
-    def sign(self, id, token, signature=None):
+    @http.route([
+        '/sign/send-sms/<int:id>/<token>/<phone_number>',
+        ], type='json', auth='public')
+    def send_sms(self, id, token, phone_number):
         request_item = http.request.env['sign.request.item'].sudo().search([('sign_request_id', '=', id), ('access_token', '=', token), ('state', '=', 'sent')], limit=1)
-        if not (request_item and request_item.sign(signature)):
+        if not request_item:
+            return False
+        if request_item.role_id and request_item.role_id.sms_authentification:
+            if request_item.partner_id.mobile != phone_number:
+                request_item.partner_id.mobile = phone_number
+            try:
+                request_item._send_sms()
+            except InsufficientCreditError:
+                _logger.warning('Unable to send SMS: no more credits')
+                http.request.env['mail.activity'].sudo().create({
+                    'activity_type_id': http.request.env.ref('mail.mail_activity_data_todo').id,
+                    'note': _("%s couldn't sign the document due to an insufficient credit error." % (request_item.partner_id.display_name)),
+                    'user_id': request_item.sign_request_id.create_uid.id,
+                    'res_id': request_item.sign_request_id.id,
+                    'res_model_id': http.request.env['ir.model'].sudo().search([('model', '=', request_item.sign_request_id._name)], limit=1).id,
+                })
+                return False
+        return True
+
+    @http.route([
+        '/sign/sign/<int:id>/<token>',
+        '/sign/sign/<int:id>/<token>/<sms_token>'
+        ], type='json', auth='public')
+    def sign(self, id, token, sms_token=False, signature=None):
+        request_item = http.request.env['sign.request.item'].sudo().search([('sign_request_id', '=', id), ('access_token', '=', token), ('state', '=', 'sent')], limit=1)
+        if not request_item:
+            return False
+        if request_item.role_id and request_item.role_id.sms_authentification:
+            if not sms_token:
+                return {
+                    'sms': True
+                }
+            if sms_token != request_item.sms_token:
+                return False
+            if sms_token == request_item.sms_token:
+                request_item.sign_request_id._message_log(body=_('%s validated the signature by SMS with the phone number %s.') % (request_item.partner_id.display_name, request_item.sms_number))
+
+        if not request_item.sign(signature):
             return False
 
         request_item.action_completed()

@@ -10,6 +10,8 @@ from email.utils import formataddr
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
+from werkzeug.urls import url_join
+from random import randint
 
 from odoo import api, fields, models, _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
@@ -192,7 +194,8 @@ class SignRequest(models.Model):
             SignRequestItem.create({
                 'partner_id': signer['partner_id'],
                 'sign_request_id': self.id,
-                'role_id': signer['role']
+                'role_id': signer['role'],
+                'sms_number': signer['sms_number'],
             })
 
     @api.multi
@@ -436,6 +439,8 @@ class SignRequestItem(models.Model):
 
     access_token = fields.Char('Security Token', required=True, default=_default_access_token, readonly=True)
     role_id = fields.Many2one('sign.item.role', string="Role")
+    sms_number = fields.Char(related='partner_id.mobile')
+    sms_token = fields.Char('SMS Token', readonly=True)
 
     signature = fields.Binary(attachment=True)
     signing_date = fields.Date('Signed on', readonly=True)
@@ -548,3 +553,14 @@ class SignRequestItem(models.Model):
     @api.model
     def resend_access(self, id):
         self.browse(id).send_signature_accesses()
+
+    @api.multi
+    def _reset_sms_token(self):
+        for record in self:
+            record.sms_token = randint(100000, 999999)
+
+    @api.one
+    def _send_sms(self):
+        self.ensure_one()
+        self._reset_sms_token()
+        self.env['sms.api']._send_sms([self.sms_number], _('Your confirmation code is %s' % self.sms_token))

@@ -169,6 +169,8 @@ class SignItemParty(models.Model):
 
     name = fields.Char(required=True, translate=True)
 
+    sms_authentification = fields.Boolean('SMS Authentification', default=False)
+
     @api.model
     def add(self, name):
         party = self.search([('name', '=', name)])

@@ -4,7 +4,7 @@ odoo.define('sign.PDFIframe', function (require) {
     var core = require('web.core');
     var Dialog = require('web.Dialog');
     var Widget = require('web.Widget');
-
+    
     var _t = core._t;
 
     var PDFIframe = Widget.extend({
@@ -271,6 +271,7 @@ odoo.define('sign.Document', function (require) {
             this.requestToken = this.$('#o_sign_input_sign_request_token').val();
             this.accessToken = this.$('#o_sign_input_access_token').val();
             this.signerName = this.$('#o_sign_signer_name_input_info').val();
+            this.signerPhone = this.$('#o_sign_signer_phone_input_info').val();
             this.types = this.$('.o_sign_field_type_input_info');
             this.items = this.$('.o_sign_item_input_info');
 
@@ -766,8 +767,84 @@ odoo.define('sign.document_signing', function(require) {
                 self.$inputs.eq(0).val(name);
                 self.$inputs.eq(1).val(mail);
             });
-
             return this._super.apply(this, arguments);
+        },
+    });
+
+    var SMSSignerDialog = Dialog.extend({
+        template: "sign.public_sms_signer",
+
+        events: {
+            'click button.o_sign_resend_sms': function(e) {
+                var route = '/sign/send-sms/' + this.requestID + '/' + this.requestToken + '/' + this.$('#o_sign_phone_number_input').val();
+                session.rpc(route, {}).then(function(success) {
+                    if (!success) {
+                        Dialog.alert(self, _t("Unable to send the SMS, please contact the sender of the document."), {
+                            title: _t("Error"),
+                            confirm_callback: function() {
+                                window.location.reload();
+                            },
+                        });
+                    }
+                    else {
+                        self.$('.o_sign_resend_sms').html('Send Again');
+                    }
+                });
+            }
+        },
+
+        _onValidateSMS: function () {
+            var input = this.$('#o_sign_public_signer_sms_input')
+            if(!input.val()) {
+                input.closest('.form-group').toggleClass('has-error');
+                return false;
+            }
+            var route = '/sign/sign/' + this.requestID + '/' + this.requestToken + '/' + input.val();
+            var params = {
+                signature: this.signature
+            };
+            var self = this;
+            session.rpc(route, params).then(function(response) {
+                if (!response) {
+                    Dialog.alert(self, _t("Sorry, an error occured, please try to fill the document again."), {
+                        title: _t("Error"),
+                        confirm_callback: function() {
+                            window.location.reload();
+                        },
+                    });
+                }
+                if (response === true) {
+                    (new (self.get_thankyoudialog_class())(self)).open();
+                }
+                if (typeof response === 'object') {
+                    if (response.url) {
+                        document.location.pathname = success['url'];
+                    }
+                }
+            });
+        },
+
+        get_thankyoudialog_class: function () {
+            return ThankYouDialog;
+        },
+
+        init: function(parent, requestID, requestToken, signature, signerPhone, options) {
+            options = (options || {});
+            options.title = options.title || _t("Final Validation");
+            options.size = options.size || "medium";
+            if(!options.buttons) {
+                options.buttons = [{
+                    text: _t("Verify"),
+                    classes: "btn btn-sm btn-primary o_sign_validate_sms",
+                    click: this._onValidateSMS
+                }]
+            }
+            this._super(parent, options);
+            this.requestID = requestID;
+            this.requestToken = requestToken;
+            this.signature = signature;
+            this.signerPhone = signerPhone;
+            this.sent = $.Deferred();
         },
     });
 
@@ -992,27 +1069,40 @@ odoo.define('sign.document_signing', function(require) {
                         signatureValues[parseInt($elem.data('item-id'))] = value;
                     }
                 }
-
+                var route = '/sign/sign/' + this.requestID + '/' + this.accessToken;
+                var params = {
+                    signature: signatureValues
+                };
                 var self = this;
-                ajax.jsonRpc('/sign/sign/' + this.requestID + '/' + this.accessToken, 'call', {
-                    signature: signatureValues,
-                }).then(function(success) {
-                    if(!success) {
-                        setTimeout(function() { // To be sure this dialog opens after the thank you dialog below
-                            Dialog.alert(self, _t("Sorry, an error occured, please try to fill the document again."), {
+                session.rpc(route, params).then(function(response) {
+                    if (!response) {
+                        Dialog.alert(self, _t("Sorry, an error occured, please try to fill the document again."), {
+                            title: _t("Error"),
+                            confirm_callback: function() {
+                                window.location.reload();
+                            },
+                        });
+                    }
+                    if (response === true) {
+                        self.iframeWidget.disableItems();
+                        (new (self.get_thankyoudialog_class())(self)).open();
+                    }
+                    if (typeof response === 'object') {
+                        if (response.sms) {
+                            (new SMSSignerDialog(self, self.requestID, self.accessToken, signatureValues, self.signerPhone))
+                                .open();
+                        }
+                        if (response.credit_error) {
+                            Dialog.alert(self, _t("Unable to send the SMS, please contact the sender of the document."), {
                                 title: _t("Error"),
                                 confirm_callback: function() {
                                     window.location.reload();
                                 },
                             });
-                        }, 500);
-                    }
-                    if (success === true) {
-                        self.iframeWidget.disableItems();
-                        (new (self.get_thankyoudialog_class())(self)).open();
-                    }
-                    if (typeof success === 'object' && success.url) {
-                        document.location.pathname = success['url'];
+                        }
+                        if (response.url) {
+                            document.location.pathname = success['url'];
+                        }
                     }
                 });
             }
@@ -1087,5 +1177,6 @@ odoo.define('sign.document_signing', function(require) {
         ThankYouDialog: ThankYouDialog,
         initDocumentToSign: initDocumentToSign,
         SignableDocument: SignableDocument,
+        SMSSignerDialog: SMSSignerDialog
     };
 });

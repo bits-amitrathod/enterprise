@@ -12,9 +12,12 @@ from werkzeug.wsgi import get_current_url
 
 class SignContract(Sign):
 
-    @http.route(['/sign/sign/<int:id>/<token>'], type='json', auth='public')
-    def sign(self, id, token, signature=None):
-        result = super(SignContract, self).sign(id, token, signature)
+    @http.route([
+        '/sign/sign/<int:id>/<token>',
+        '/sign/sign/<int:id>/<token>/<sms_token>'
+        ], type='json', auth='public')
+    def sign(self, id, token, sms_token=False, signature=None):
+        result = super(SignContract, self).sign(id, token, sms_token=sms_token, signature=signature)
         request_item = request.env['sign.request.item'].sudo().search([('access_token', '=', token)])
         contract = request.env['hr.contract'].sudo().with_context(active_test=False).search([
             ('sign_request_ids', 'in', request_item.sign_request_id.ids)])
