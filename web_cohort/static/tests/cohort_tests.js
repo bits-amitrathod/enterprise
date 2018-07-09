@@ -5,6 +5,7 @@ var CohortView = require('web_cohort.CohortView');
 var testUtils = require('web.test_utils');
 
 var createView = testUtils.createView;
+var createActionManager = testUtils.createActionManager;
 
 QUnit.module('Views', {
     beforeEach: function () {
@@ -155,6 +156,65 @@ QUnit.module('Views', {
         assert.strictEqual(cohort.$('td .o_cohort_value:nth(4)').data('original-title'), 1, 'col 5 should contain one record');
 
         cohort.destroy();
+    });
+
+    QUnit.test('when clicked on cell redirects to the action list/form view passed in context', function(assert) {
+        assert.expect(4);
+
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'subscription,false,cohort': '<cohort string="Subscriptions" date_start="start" date_stop="stop" measure="__count__" interval="week" />',
+                'subscription,my_list_view,list': '<tree>' +
+                        '<field name="start"/>' +
+                        '<field name="stop"/>' +
+                    '</tree>',
+                'subscription,my_form_view,form': '<form>' +
+                        '<field name="start"/>' +
+                        '<field name="stop"/>' +
+                    '</form>',
+                'subscription,false,list': '<tree>' +
+                    '<field name="recurring"/>' +
+                    '<field name="start"/>' +
+                    '</tree>',
+                'subscription,false,form': '<form>' +
+                        '<field name="recurring"/>' +
+                        '<field name="start"/>' +
+                    '</form>',
+                'subscription,false,search': '<search></search>',
+            },
+            intercepts: {
+                do_action: function (ev) {
+                    actionManager.doAction(ev.data.action, ev.data.options);
+                },
+            },
+        });
+
+        actionManager.doAction({
+            name: 'Subscriptions',
+            res_model: 'subscription',
+            type: 'ir.actions.act_window',
+            views: [[false, 'cohort']],
+            context: {list_view_id: 'my_list_view', form_view_id: 'my_form_view'},
+        });
+
+        // Going to the list view
+        actionManager.$('td div.o_cohort_value:first').click();
+
+        assert.strictEqual(actionManager.$('.o_list_view th:nth(1)').text(), 'Start',
+                "First field in the list view should be start");
+        assert.strictEqual(actionManager.$('.o_list_view th:nth(2)').text(), 'Stop',
+                "Second field in the list view should be stop");
+
+        // Going to the form view
+        actionManager.$('.o_list_view .o_data_row').click();
+
+        assert.strictEqual(actionManager.$('.o_form_view span:first').attr('name'), 'start',
+                "First field in the form view should be start");
+        assert.strictEqual(actionManager.$('.o_form_view span:nth(1)').attr('name'), 'stop',
+                "Second field in the form view should be stop");
+
+        actionManager.destroy();
     });
 
 });

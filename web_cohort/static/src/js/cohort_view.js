@@ -75,13 +75,18 @@ var CohortView = AbstractView.extend({
         // Retrieve form and list view ids from the action to open those views
         // when a row of the cohort view is clicked
         this.controllerParams.views = [
-            _findView(params.action && params.action.views, 'list'),
-            _findView(params.action && params.action.views, 'form'),
+            _findViewID('list'),
+            _findViewID('form'),
         ];
-        function _findView(views, viewType) {
-            return _.find(views, function (view) {
-                return view[1] === viewType;
-            }) || [false, viewType];
+        function _findViewID(viewType) {
+            var action = params.action;
+
+            if (action === undefined) {
+                return [false, viewType];
+            }
+            var contextID = viewType === 'list' ? action.context.list_view_id : action.context.form_view_id;
+            var result = _.findWhere(action.views, {type: viewType});
+            return [contextID || (result ? result.viewID : false), viewType];
         }
     },
 });

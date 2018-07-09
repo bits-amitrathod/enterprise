@@ -128,6 +128,7 @@ MockServer.include({
                     'value': remainingValue,
                     'churn_value': churnValue,
                     'percentage': percentage,
+                    'domain': [],
                 });
             }
             rows.push({
