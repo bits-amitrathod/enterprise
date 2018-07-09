@@ -135,7 +135,7 @@ class BanxicoTest(TransactionCase):
         self.foreign_currencies = [
             self.usd, self.eur, self.cad, self.jpy, self.gbp]
         self.foreign_expected_rates = [
-            21.7204, 23.0649, 16.4474, 0.1889, 26.3893]
+            21.6643, 23.0649, 16.4474, 0.1889, 26.3893]
         self.mxn.active = True
         for currency in self.foreign_currencies:
             currency.active = True

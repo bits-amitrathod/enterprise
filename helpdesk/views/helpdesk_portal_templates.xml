@@ -101,6 +101,7 @@
                 </div>
                 <div class="col-md-10 col-md-offset-1 mt16">
                     <t t-call="portal.message_thread">
+                        <t t-set="token" t-value="ticket.access_token" />
                         <t t-set="object" t-value="ticket"/>
                         <t t-set="disable_composer" t-value="ticket.stage_id.is_close"/>
                     </t>

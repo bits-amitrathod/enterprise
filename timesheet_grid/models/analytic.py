@@ -96,6 +96,9 @@ class AnalyticLine(models.Model):
 
     @api.model
     def create(self, vals):
+        # when the name is not provide by the 'Add a line' form from grid view, we set a default one
+        if vals.get('project_id') and not vals.get('name'):
+            vals['name'] = _('/')
         line = super(AnalyticLine, self).create(vals)
         # A line created before validation limit will be automatically validated
         if not self.user_has_groups('hr_timesheet.group_timesheet_manager') and line.is_timesheet and line.validated:
@@ -115,18 +118,19 @@ class AnalyticLine(models.Model):
         additionnal_domain = self._get_adjust_grid_domain(column_value)
         domain = expression.AND([row_domain, additionnal_domain])
         line = self.search(domain)
-        if len(line) > 1:
-            raise UserError(_(
-                'Multiple timesheet entries match the modified value. Please '
-                'change the search options or modify the entries individually.'
-            ))
 
-        if line:  # update existing line
+        day = column_value.split('/')[0]
+        if len(line) > 1:  # copy the last line as adjustment
+            line[0].copy({
+                'name': _('Timesheet Adjustment'),
+                column_field: day,
+                cell_field: change
+            })
+        elif len(line) == 1:  # update existing line
             line.write({
                 cell_field: line[cell_field] + change
             })
         else:  # create new one
-            day = column_value.split('/')[0]
             self.search(row_domain, limit=1).copy({
                 'name': _('Timesheet Adjustment'),
                 column_field: day,
@@ -137,4 +141,4 @@ class AnalyticLine(models.Model):
     def _get_adjust_grid_domain(self, column_value):
         # span is always daily and value is an iso range
         day = column_value.split('/')[0]
-        return [('name', '=', False), ('date', '=', day)]
+        return [('date', '=', day)]

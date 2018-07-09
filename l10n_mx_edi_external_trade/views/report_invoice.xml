@@ -5,7 +5,7 @@
             <t t-set="xml" t-value="o.l10n_mx_edi_get_xml_etree()"/>
             <t t-set="external" t-value="o.l10n_mx_edi_get_et_etree(xml)"/>
         </xpath>
-        <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[7]" position="after">
+        <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[last()]" position="after">
             <th t-if="o.l10n_mx_edi_cfdi_uuid and external != None">Tariff Fraction</th>
             <th t-if="o.l10n_mx_edi_cfdi_uuid and external != None">Customs Qty</th>
             <th t-if="o.l10n_mx_edi_cfdi_uuid and external != None">Customs Unit</th>

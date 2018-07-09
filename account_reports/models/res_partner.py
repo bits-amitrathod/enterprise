@@ -34,28 +34,23 @@ class ResPartner(models.Model):
         """
         if operator != '=' or value not in ['in_need_of_action', 'with_overdue_invoices', 'no_action_needed']:
             return []
-        all_partners = self.env['res.partner'].search([])
-        partners_in_need_of_action = self.get_partners_in_need_of_action().ids
-        partners = []
-        for record in all_partners:
-            total_due = 0
-            total_overdue = 0
-            today = datetime.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
-            for aml in record.unreconciled_aml_ids:
-                if aml.company_id == self.env.user.company_id:
-                    amount = aml.amount_residual
-                    total_due += amount
-                    is_overdue = today > aml.date_maturity if aml.date_maturity else today > aml.date
-                    if is_overdue:
-                        total_overdue += not aml.blocked and amount or 0
-            if total_overdue > 0:
-                if value == 'in_need_of_action' and record.id in partners_in_need_of_action:
-                    partners.append(record.id)
-                elif value == 'with_overdue_invoices':
-                    partners.append(record.id)
-            elif value == 'no_action_needed':
-                partners.append(record.id)
-        return [('id', 'in', partners)]
+
+        today = fields.Date.context_today(self)
+        domain = self.get_followup_lines_domain(today, overdue_only=value == 'with_overdue_invoices')
+
+        query = self.env['account.move.line']._where_calc(domain)
+        tables, where_clause, where_params = query.get_sql()
+        sql = """SELECT "account_move_line".partner_id
+                 FROM %s
+                 WHERE %s
+                   AND "account_move_line".partner_id IS NOT NULL
+                 GROUP BY "account_move_line".partner_id"""
+        query = sql % (tables, where_clause)
+        self.env.cr.execute(query, where_params)
+        results = self.env.cr.fetchall()
+        if value in ('in_need_of_action', 'with_overdue_invoices'):
+            return [('id', 'in', results)]
+        return [('id', 'not in', results)]
 
     def _compute_for_followup(self):
         """
@@ -97,28 +92,31 @@ class ResPartner(models.Model):
         Return a list of partners which are in status 'in_need_of_action'.
         If 'overdue_only' is set to True, partners in status 'with_overdue_invoices' are included in the list
         """
-        result = []
         today = fields.Date.context_today(self)
-        partners = self.search([('payment_next_action_date', '>', today)])
-        domain = partners.with_context(exclude_given_ids=True).get_followup_lines_domain(today, overdue_only=overdue_only, only_unblocked=True)
+        domain = self.get_followup_lines_domain(today, overdue_only=overdue_only, only_unblocked=True)
         query = self.env['account.move.line']._where_calc(domain)
         tables, where_clause, where_params = query.get_sql()
         sql = """SELECT "account_move_line".partner_id
                  FROM %s
-                 WHERE %s GROUP BY "account_move_line".partner_id"""
+                 WHERE %s
+                   AND "account_move_line".partner_id IS NOT NULL
+                 GROUP BY "account_move_line".partner_id"""
         query = sql % (tables, where_clause)
         self.env.cr.execute(query, where_params)
-        results = self.env.cr.fetchall()
-        for res in results:
-            if res[0]:
-                result.append(res[0])
-        return self.browse(result)
+        result = self.env.cr.fetchall()
+        return self.browse(result[0] if result else [])
+
+    def _get_needofaction_fup_lines_domain(self, date):
+        # that part of the domain concerns the date filtering and is overwritten in account_reports_followup
+        overdue_domain = ['|', '&', ('date_maturity', '!=', False), ('date_maturity', '<=', date), '&', ('date_maturity', '=', False), ('date', '<=', date)]
+        return overdue_domain + ['|', ('next_action_date', '=', False), ('next_action_date', '<=', date)]
 
     def get_followup_lines_domain(self, date, overdue_only=False, only_unblocked=False):
+        """ returns the domain to use on account.move.line to get the partners 'in need of action' or 'with overdue invoices'.
+        This is used by the followup_status computed field"""
         domain = super(ResPartner, self).get_followup_lines_domain(date, overdue_only=overdue_only, only_unblocked=only_unblocked)
-        overdue_domain = ['|', '&', ('date_maturity', '!=', False), ('date_maturity', '<=', date), '&', ('date_maturity', '=', False), ('date', '<=', date)]
         if not overdue_only:
-            domain += ['|', '&', ('next_action_date', '=', False)] + overdue_domain + ['&', ('next_action_date', '!=', False), ('next_action_date', '<=', date)]
+            domain += self._get_needofaction_fup_lines_domain(date)
         return domain
 
     def get_next_action(self):

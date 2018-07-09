@@ -17,7 +17,7 @@ class TestReleaseToPayInvoice(AccountingTestCase):
             'name': 'VR Computer',
             'standard_price': 2500.0,
             'list_price': 2899.0,
-            'type': 'consu',
+            'type': 'service',
             'default_code': 'VR-01',
             'weight': 1.0,
             'purchase_method': 'receive',
@@ -39,9 +39,8 @@ class TestReleaseToPayInvoice(AccountingTestCase):
         })
         purchase_order.button_confirm()
 
-        back_orders_stack = []
         invoices_list = []
-        total_qty_received = 0
+        purchase_line = purchase_order.order_line[-1]
         for (action, params) in scenario:
             if action == 'invoice':
                 new_invoice = self.env['account.invoice'].create({
@@ -63,17 +62,7 @@ class TestReleaseToPayInvoice(AccountingTestCase):
                 self.assertEquals(new_invoice.release_to_pay, params['rslt'], "Wrong invoice release to pay status for scenario " + str(scenario))
 
             elif action == 'receive':
-                picking = purchase_order.picking_ids[0] if not back_orders_stack else self.env['stock.picking'].search([('backorder_id', '=', back_orders_stack.pop(-1))])
-                picking.move_line_ids.write({'qty_done': params['qty']})
-                picking.button_validate()
-
-                total_qty_received += params['qty']
-                if total_qty_received != ordered_qty:
-                    back_order_confirmation = self.env['stock.backorder.confirmation'].create({
-                        'pick_ids': [(4, picking.id)]
-                    })
-                    back_order_confirmation.process()
-                    back_orders_stack.append(picking)
+                purchase_line.write({'qty_received': params['qty']})  # as the product is a service, its recieved quantity is set manually
 
                 if 'rslt' in params:
                     for (invoice_index, status) in params['rslt']:
