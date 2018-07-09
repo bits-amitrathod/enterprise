@@ -77,9 +77,8 @@ var CohortView = AbstractView.extend({
             _findView(params.action && params.action.views, 'form'),
         ];
         function _findView(views, viewType) {
-            return _.find(views, function (view) {
-                return view[1] === viewType;
-            }) || [false, viewType];
+            var result = _.findWhere(views, {type: viewType});
+            return result ? [result.viewID, viewType] : [false, viewType];
         }
     },
 });

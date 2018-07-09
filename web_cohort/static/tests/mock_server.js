@@ -120,6 +120,7 @@ MockServer.include({
                 columns.push({
                     'value': remainingValue,
                     'percentage': percentage,
+                    'domain': [],
                 });
             }
             rows.push({
