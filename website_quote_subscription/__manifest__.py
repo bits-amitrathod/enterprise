@@ -13,11 +13,4 @@ Subscription integration  the Online Quotes
 
 Categorize the lines per subscription template when an online quote contains subscription products.
     """,
-
-    'data': [
-        'views/templates.xml',
-    ],
-    'demo': [
-        'demo/demo.xml',
-    ],
 }

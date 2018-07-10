@@ -16,7 +16,7 @@ class StockPicking(models.Model):
     @api.one
     def _ebay_update_carrier(self, transfered=False):
         so = self.env['sale.order'].search([('name', '=', self.origin), ('origin', 'like', 'eBay')])
-        if so.product_id.product_tmpl_id.ebay_use:
+        if so.order_line.filtered(lambda line: line.product_id.product_tmpl_id.ebay_use):
             call_data = {
                 'OrderLineItemID': so.client_order_ref,
             }
