@@ -106,6 +106,11 @@ class Base(models.AbstractModel):
 
                 columns_avg[col_index]['percentage'] += percentage
                 columns_avg[col_index]['count'] += 1
+                # For 'week' interval, we display a better tooltip (range like : '02 Jul - 08 Jul')
+                if interval == 'week':
+                    period = "%s - %s" % (col_start_date.strftime('%d %b'), (col_end_date - relativedelta(days=1)).strftime('%d %b'))
+                else:
+                    period = col_start_date.strftime(DISPLAY_FORMATS[interval])
                 columns.append({
                     'value': col_remaining_value,
                     'churn_value': col_value + (columns[-1]['churn_value'] if col_index > 0 else initial_churn_value),
@@ -113,7 +118,7 @@ class Base(models.AbstractModel):
                     'domain': [
                         (date_stop, ">=", col_start_date.strftime(DEFAULT_SERVER_DATE_FORMAT)),
                         (date_stop, "<", col_end_date.strftime(DEFAULT_SERVER_DATE_FORMAT))],
-                    'period': col_start_date.strftime(DISPLAY_FORMATS[interval]),
+                    'period': period,
                 })
 
             rows.append({
