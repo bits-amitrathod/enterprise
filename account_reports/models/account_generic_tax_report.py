@@ -105,12 +105,14 @@ class generic_tax_report(models.AbstractModel):
             groups[tax['obj'].type_tax_use][key] = tax
         line_id = 0
         for tp in types:
+            if not any([tax.get('show') for key, tax in groups[tp].items()]):
+                continue
             sign = tp == 'sale' and -1 or 1
             lines.append({
                     'id': tp,
                     'name': self._get_type_tax_use_string(tp),
                     'unfoldable': False,
-                    'columns': [{} for k in range(0, 2*(period_number+1) or 2)],
+                    'columns': [{} for k in range(0, 2 * (period_number + 1) or 2)],
                     'level': 1,
                 })
             for key, tax in sorted(groups[tp].items(), key=lambda k: k[1]['obj'].sequence):
