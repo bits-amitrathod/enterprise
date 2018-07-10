@@ -62,7 +62,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content:      "wait refresh",
-            trigger:    ".o_account_reports_level2.total:last() .o_account_report_column_value:contains(0.00)"
+            trigger:    ".o_account_reports_level2:last() .o_account_report_column_value:contains(0.00)"
         },
         {
             content:      "change comparison filter",
