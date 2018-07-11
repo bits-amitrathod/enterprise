@@ -108,7 +108,12 @@ ImageWidget.include({
         }
         UnsplashAPI.getImages(self._unsplash.query, this.IMAGES_PER_PAGE, this.page).then(function (res) {
             self._unsplash.isMaxed = res.isMaxed;
-            self.$('.unsplash_img_container').html(QWeb.render('web_unsplash.dialog.image.content', { rows: res.images }));
+            var rows = _(res.images).chain()
+                .groupBy(function (a, index) { return Math.floor(index / self.IMAGES_PER_ROW); })
+                .values()
+                .value();
+
+            self.$('.unsplash_img_container').html(QWeb.render('web_unsplash.dialog.image.content', { rows: rows }));
             self._highlightSelectedImages();
         }).fail(function (err) {
             self.$('.unsplash_img_container').html(QWeb.render('web_unsplash.dialog.error.content', err));
