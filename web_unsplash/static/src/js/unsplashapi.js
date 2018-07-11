@@ -40,6 +40,15 @@ var UnsplashCore = Class.extend({
             });
         });
     },
+    /**
+     * Notify Unsplash from an image download
+     *
+     * @public
+     */
+    notifyDownload: function (url) {
+        // Unsplash Guidelines require to notify their server on a specific URL once we perform a download
+        $.get(url, { client_id: this.clientId });
+    },
 
     //--------------------------------------------------------------------------
     // Private

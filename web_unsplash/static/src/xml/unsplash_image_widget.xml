@@ -19,10 +19,10 @@
     <div class="row mt16">
         <t t-if="rows.length > 0">
             <div class="col-sm-2 o_unsplash_img_cell" t-as="img" t-foreach="rows">
-                <div class="o_image o_webimage" t-att-data-imgid="img.id" t-att-data-url="img.urls.full">
+                <div class="o_image o_webimage" t-att-data-imgid="img.id" t-att-data-url="img.urls.full" t-att-data-download-url="img.links.download_location">
                     <img class="img-responsive" t-att-src="img.urls.thumb" />
-                    <div class="author_name"> <t t-esc="img.user.name"/> </div>
                 </div>
+                <div class="author_name text-center"><a t-att-href="img.user.links.html" target="_blank"><t t-esc="img.user.name"/></a></div>
             </div>
         </t>
         <t t-else="">

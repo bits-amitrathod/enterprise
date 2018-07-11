@@ -63,6 +63,10 @@ ImageWidget.include({
                 res_id: self.options.res_id,
             }
         }).then(function (images) {
+            for (var img in self._unsplash.selectedImages) {
+                UnsplashAPI.notifyDownload(self._unsplash.selectedImages[img].download_url);
+            }
+
             _.each(images, function (image) {
                 image.src = _.str.sprintf('/web/image/%s', image.id);
                 image.isDocument = !(/gif|jpe|jpg|png/.test(image.mimetype));
@@ -161,13 +165,14 @@ ImageWidget.include({
     _onUnsplashImgClick: function (ev) {
         var imgid = $(ev.currentTarget).data('imgid');
         var url = $(ev.currentTarget).data('url');
+        var download_url = $(ev.currentTarget).data('download-url');
         if (!this.multiImages) {
             this._unsplash.selectedImages = {};
         }
         if (imgid in this._unsplash.selectedImages) {
             delete this._unsplash.selectedImages[imgid];
         } else {
-            this._unsplash.selectedImages[imgid] = url;
+            this._unsplash.selectedImages[imgid] = {url: url, download_url: download_url};
         }
         this._highlightSelectedImages();
     },

@@ -33,7 +33,7 @@ class Web_Unsplash(http.Controller):
         Attachments = request.env['ir.attachment']
 
         for key in unsplashurls:
-            url = unsplashurls[key]
+            url = unsplashurls[key].get('url')
             try:
                 req = requests.get(url)
                 if req.status_code != requests.codes.ok:
