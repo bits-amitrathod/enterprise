@@ -3,6 +3,7 @@ odoo.define('web_enterprise.Menu', function (require) {
 
 var config = require('web.config');
 var core = require('web.core');
+var dom = require('web.dom');
 var Widget = require('web.Widget');
 var SystrayMenu = require('web.SystrayMenu');
 var UserMenu = require('web.UserMenu');
@@ -68,7 +69,12 @@ var Menu = Widget.extend({
         this.systray_menu = new SystrayMenu(this);
         this.systray_menu.attachTo(this.$('.o_menu_systray'));
 
-        core.bus.on("resize", this, _.debounce(this._handle_extra_items, 500));
+        dom.initAutoMoreMenu(this.$section_placeholder, {
+            maxWidth: function () {
+                return self.$el.width() - (self.$menu_toggle.outerWidth(true) + self.$menu_brand_placeholder.outerWidth(true) + self.systray_menu.$el.outerWidth(true));
+            },
+            sizeClass: 'MD',
+        });
 
         return this._super.apply(this, arguments);
     },
@@ -111,7 +117,7 @@ var Menu = Widget.extend({
         this.$menu_sections[primary_menu_id].appendTo(this.$section_placeholder);
         this.current_primary_menu = primary_menu_id;
 
-        this._handle_extra_items();
+        core.bus.trigger('resize');
     },
     _trigger_menu_clicked: function(menu_id, action_id) {
         this.trigger_up('menu_clicked', {
@@ -169,37 +175,6 @@ var Menu = Widget.extend({
             }
         }
         return undefined;
-    },
-    _handle_extra_items: function () {
-        if (!this.$el.is(":visible")) return;
-
-        if (this.$extraItemsToggle) {
-            this.$extraItemsToggle.find("> ul > *").appendTo(this.$section_placeholder);
-            this.$extraItemsToggle.remove();
-        }
-        if (config.device.isMobile) {
-            return;
-        }
-
-        var width = this.$el.width();
-        var menuItemWidth = this.$section_placeholder.outerWidth(true);
-        var othersWidth = this.$menu_toggle.outerWidth(true) + this.$menu_brand_placeholder.outerWidth(true) + this.systray_menu.$el.outerWidth(true);
-
-        if (width < menuItemWidth + othersWidth) {
-            var $items = this.$section_placeholder.children();
-            var nbItems = $items.length;
-            menuItemWidth += 46; // $odoo-navbar-height (width of the "+" button)
-            do {
-                nbItems--;
-                menuItemWidth -= $items.eq(nbItems).outerWidth(true);
-            } while (width < menuItemWidth + othersWidth);
-
-            var $extraItems = $items.slice(nbItems).detach();
-            this.$extraItemsToggle = $("<li/>", {"class": "o_extra_menu_items"});
-            this.$extraItemsToggle.append($("<a/>", {href: "#", "class": "dropdown-toggle fa fa-plus", "data-toggle": "dropdown"}));
-            this.$extraItemsToggle.append($("<div/>", {"class": "dropdown-menu"}).append($extraItems)); // FIXME
-            this.$extraItemsToggle.appendTo(this.$section_placeholder);
-        }
     },
 
     //--------------------------------------------------------------------------
