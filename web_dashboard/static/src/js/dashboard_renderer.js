@@ -7,13 +7,14 @@ var Domain = require('web.Domain');
 var fieldUtils = require('web.field_utils');
 var FormRenderer = require('web.FormRenderer');
 var viewRegistry = require('web.view_registry');
+var pyUtils = require('web.py_utils');
 
 var QWeb = core.qweb;
 
 var DashboardRenderer = FormRenderer.extend({
     className: "o_dashboard_view",
     events: {
-        'click .o_aggregate': '_onAggregateClicked',
+        'click .o_aggregate.o_clickable': '_onAggregateClicked',
     },
     // override the defaul col attribute for groups as in the dashbard view,
     // labels and fields are displayed vertically, thus allowing to display
@@ -193,7 +194,10 @@ var DashboardRenderer = FormRenderer.extend({
      * @returns {jQueryElement}
      */
     _renderTagAggregate: function (node) {
-        var $aggregate = this._renderStatistic(node).addClass('o_aggregate'); // make it clickable
+        var $aggregate = this._renderStatistic(node).addClass('o_aggregate');
+        var isClickable = node.attrs.clickable === undefined || pyUtils.py_eval(node.attrs.clickable); 
+        $aggregate.toggleClass('o_clickable', isClickable);
+
         var $result = $('<div>').append($aggregate);
         this._registerModifiers(node, this.state, $result);
         return $result;

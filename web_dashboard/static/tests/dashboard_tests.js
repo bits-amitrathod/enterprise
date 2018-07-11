@@ -1892,6 +1892,43 @@ QUnit.module('Views', {
 
         actionManager.destroy();
     });
+
+    QUnit.test('render aggregate node using clickable attribute', function (assert) {
+        assert.expect(4);
+
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard>' +
+                    '<view type="graph" ref="xml_id"/>' +
+                    '<group>' +
+                        '<aggregate name="a" field="categ_id"/>' +
+                        '<aggregate name="b" field="sold" clickable="true"/>' +
+                        '<aggregate name="c" field="untaxed" clickable="false"/>' +
+                    '</group>' +
+                  '</dashboard>',
+            archs: {
+                'test_report,xml_id,graph' : '<graph>' +
+                            '<field name="categ_id"/>' +
+                            '<field name="sold" type="measure"/>' +
+                        '</graph>'
+            },
+        });
+
+        assert.ok(dashboard.$('div[name="a"]').hasClass('o_clickable'),
+                    "By default aggregate should be clickable");
+        assert.ok(dashboard.$('div[name="b"]').hasClass('o_clickable'),
+                    "Clickable = true aggregate should be clickable");
+        assert.notOk(dashboard.$('div[name="c"]').hasClass('o_clickable'),
+                    "Clickable = false aggregate should not be clickable");
+
+        dashboard.$('div[name="c"]').click();
+        assert.ok(dashboard.$('.o_graph_measures_list li[data-field="sold"]').hasClass('selected'),
+                    "Measure on graph should not have changed")
+
+        dashboard.destroy();
+    });
 });
 
 });
