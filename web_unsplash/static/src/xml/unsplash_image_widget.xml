@@ -16,7 +16,7 @@
 <t t-name="web_unsplash.dialog.image.content">
     <div class="row mt16" t-as="row" t-foreach="rows">
         <div class="col-sm-2 o_unsplash_img_cell" t-as="img" t-foreach="row">
-            <div class="o_image o_webimage" t-att-data-imgid="img.id" t-att-data-url="img.urls.full" t-att-data-download-url="img.links.download_location">
+            <div class="o_image o_webimage" t-att-data-imgid="img.id" t-att-data-url="img.urls.regular" t-att-data-download-url="img.links.download_location">
                 <img class="img-responsive" t-att-src="img.urls.thumb" />
             </div>
             <div class="author_name text-center"><a t-att-href="img.user.links.html" target="_blank"><t t-esc="img.user.name"/></a></div>
@@ -37,7 +37,7 @@
                     Access key is not set
                 </p>
                 <div class="details">
-                    <a href="https://unsplash.com/documentation" target="_blank"><i class="fa fa-arrow-right"/> Generate an access key</a>
+                    <a href="https://unsplash.com/oauth/applications" target="_blank"><i class="fa fa-arrow-right"/> Generate an access key</a>
                     <div>
                         <div class="form-group btn-group access_key_box">
                             <input type="text" class="form-control pull-left" id="accessKeyInput" placeholder="Paste your access key here"/>

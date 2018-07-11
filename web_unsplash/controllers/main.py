@@ -18,7 +18,7 @@ class Web_Unsplash(http.Controller):
     # add unsplash image url
     # ------------------------------------------------------
     @http.route('/web_unsplash/attachment/add', type='json', auth='user', methods=['POST'])
-    def save_unsplash_url(self, unsplashurls=None, res_id=None, res_model=None, **kwargs):
+    def save_unsplash_url(self, unsplashurls=None, **kwargs):
         """
             unsplashurls = {
                 image_id1: image_url1,
@@ -31,6 +31,12 @@ class Web_Unsplash(http.Controller):
 
         uploads = []
         Attachments = request.env['ir.attachment']
+
+        res_model = kwargs.get('res_model', 'ir.ui.view')
+        if res_model != 'ir.ui.view' and kwargs.get('res_id'):
+            res_id = int(kwargs['res_id'])
+        else:
+            res_id = None
 
         for key in unsplashurls:
             url = unsplashurls[key].get('url')
