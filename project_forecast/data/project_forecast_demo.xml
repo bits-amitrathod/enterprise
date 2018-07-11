@@ -7,15 +7,10 @@
 
         <record id="project.project_project_2" model="project.project">
             <field name="allow_forecast" eval="True"/>
-            <field name="date_start" eval="(datetime.now().date().replace(day=1) + relativedelta(months=-3)).isoformat()"/>
-            <field name="date" eval="(datetime.now().date().replace(day=1) + relativedelta(months=4, days=-1)).isoformat()"/>
-        </record>
-        <record id="project.project_project_2" model="project.project">
-            <field name="allow_forecast" eval="True"/>
             <field name="date_start" eval="(datetime.now().date().replace(day=1) + relativedelta(months=1)).isoformat()"/>
             <field name="date" eval="(datetime.now().date().replace(day=1) + relativedelta(months=18, days=-1)).isoformat()"/>
         </record>
-        <record id="project.project_project_3" model="project.project">
+        <record id="project.project_project_1" model="project.project">
             <field name="allow_forecast" eval="True"/>
             <field name="date_start" eval="datetime.now().date().replace(day=1).isoformat()"/>
             <field name="date" eval="(datetime.now().date().replace(day=1) + relativedelta(months=3, days=-1)).isoformat()"/>
@@ -25,8 +20,8 @@
       <record id="project_forecast_1" model="project.forecast">
         <field name="start_date" eval="DateTime.today().strftime('%Y-%m-01')"/>
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=1, day=1, days=-1)).strftime('%Y-%m-%d')"/>
-        <field name="project_id" ref="project.project_project_3"/>
-        <field name="task_id" ref="project.project_task_14"/>
+        <field name="project_id" ref="project.project_project_1"/>
+        <field name="task_id" ref="project.project_task_1"/>
         <field name="resource_hours">18</field>
         <field name="user_id" ref="base.user_root"/>
         <field name="employee_id" ref="hr.employee_root"/>
@@ -52,8 +47,8 @@
       <record id="project_forecast_3" model="project.forecast">
         <field name="start_date" eval="DateTime.today().strftime('%Y-%m-01')"/>
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=2, day=1, days=-1)).strftime('%Y-%m-%d')"/>
-        <field name="project_id" ref="project.project_project_3"/>
-        <field name="task_id" ref="project.project_task_14"/>
+        <field name="project_id" ref="project.project_project_1"/>
+        <field name="task_id" ref="project.project_task_1"/>
         <field name="resource_hours">10</field>
         <field name="user_id" ref="base.user_demo"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -61,8 +56,8 @@
       <record id="project_forecast_4" model="project.forecast">
         <field name="start_date" eval="(DateTime.today() + relativedelta(months=1)).strftime('%Y-%m-01')"/>
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=2, day=1, days=-1)).strftime('%Y-%m-%d')"/>
-        <field name="project_id" ref="project.project_project_3"/>
-        <field name="task_id" ref="project.project_task_13"/>
+        <field name="project_id" ref="project.project_project_1"/>
+        <field name="task_id" ref="project.project_task_2"/>
         <field name="resource_hours">20</field>
         <field name="user_id" ref="base.user_demo"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -70,7 +65,7 @@
       <record id="project_forecast_5" model="project.forecast">
         <field name="start_date" eval="(DateTime.today() + relativedelta(months=2)).strftime('%Y-%m-06')"/>
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=3, day=1, days=-1)).strftime('%Y-%m-%d')"/>
-        <field name="project_id" ref="project.project_project_3"/>
+        <field name="project_id" ref="project.project_project_1"/>
         <field name="resource_hours">20</field>
         <field name="user_id" ref="base.user_demo"/>
       </record>

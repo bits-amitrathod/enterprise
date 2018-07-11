@@ -10,9 +10,6 @@
         - Allow to set project for Helpdesk team
         - Track timesheet for task from ticket
     """,
-    'demo': [
-        #'demo/project_demo.xml',
-    ],
     'data': [
         'security/ir.model.access.csv',
         'security/helpdesk_timesheet_security.xml',

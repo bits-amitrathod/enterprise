@@ -163,7 +163,7 @@
         <field name="start_date" eval="(DateTime.today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=42, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" ref="sale_timesheet.project_task_internal"/>
-        <field name="project_id" ref="sale_timesheet.project_support"/>
+        <field name="project_id" ref="project.project_project_1"/>
         <field name="resource_time">16</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_demo"/>

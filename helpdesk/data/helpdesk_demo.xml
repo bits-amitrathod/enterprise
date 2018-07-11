@@ -10,4 +10,15 @@
     <record id="group_helpdesk_user" model="res.groups">
         <field name="users" eval="[(4,ref('base.user_demo'))]"/>
     </record>
+    <record id="helpdesk_ticket_1" model="helpdesk.ticket">
+        <field name="name">Kitchen collapsing</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="priority">3</field>
+        <field name="stage_id" ref="helpdesk.stage_in_progress"/>
+    </record>
+    <record id="helpdesk_ticket_2" model="helpdesk.ticket">
+        <field name="name">Where can I download a catalog ?</field>
+        <field name="priority">0</field>
+        <field name="ticket_type_id" ref="helpdesk.type_question"/>
+    </record>
 </odoo>

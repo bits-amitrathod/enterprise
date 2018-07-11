@@ -18,10 +18,10 @@ O-CMD.PAGER-LAST
 BARCODES
 
 barcode -t 2x7+40+40 -m 50x30 -p "210x297mm" -e code128b > barcodes_demo_barcode.ps  << BARCODES
-054398267125
-204539674215
-420196872340
 601647855631
+601647855640
+601647855644
+601647855638
 LOC-01-00-00
 LOC-01-01-00
 LOC-01-01-01
@@ -51,10 +51,10 @@ BARCODES
 
 cat > barcodes_demo_header.ps << HEADER
 /showTitle { /Helvetica findfont 12 scalefont setfont moveto show } def
-(Large Cabinet) 89 705 showTitle
-(USB Adapter) 348 705 showTitle
-(Processor Core i5 2.70Ghz) 89 596 showTitle
-(Ice Cream) 348 596 showTitle
+(Cable Management Box) 89 705 showTitle
+(Corner Desk Black) 348 705 showTitle
+(Desk Combination) 89 596 showTitle
+(Desk Stand with Screen) 348 596 showTitle
 (WH/Stock) 89 487 showTitle
 (WH/Stock/Shelf 1) 348 487 showTitle
 (WH/Stock/Shelf 1/Small Refrigerator) 89 378 showTitle
