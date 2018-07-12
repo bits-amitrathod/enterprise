@@ -62,13 +62,15 @@ class ReportPartnerLedger(models.AbstractModel):
         account_types = [a.get('id') for a in options.get('account_type') if a.get('selected', False)]
         if not account_types:
             account_types = [a.get('id') for a in options.get('account_type')]
-        results = self.do_query(options, line_id)
-        initial_bal_date_to = datetime.strptime(self.env.context['date_from_aml'], DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
-        initial_bal_results = self.with_context(date_to=initial_bal_date_to.strftime(DEFAULT_SERVER_DATE_FORMAT)).do_query(options, line_id)
+
+        date_from = options['date']['date_from']
+        results = self.with_context(date_from=False).do_query(options, line_id)
+        initial_bal_date_to = datetime.strptime(date_from, DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
+        initial_bal_results = self.with_context(date_from=False, date_to=initial_bal_date_to.strftime(DEFAULT_SERVER_DATE_FORMAT)).do_query(options, line_id)
+
         context = self.env.context
         base_domain = [('date', '<=', context['date_to']), ('company_id', 'in', context['company_ids']), ('account_id.internal_type', 'in', account_types)]
-        if context['date_from_aml']:
-            base_domain.append(('date', '>=', context['date_from_aml']))
+        base_domain.append(('date', '>=', date_from))
         if context['state'] == 'posted':
             base_domain.append(('move_id.state', '=', 'posted'))
         for partner_id, result in results.items():
@@ -90,8 +92,8 @@ class ReportPartnerLedger(models.AbstractModel):
         if line_id:
             line_id = line_id.replace('partner_', '')
         context = self.env.context
-        company_id = context.get('company_id') or self.env.user.company_id
-        grouped_partners = self.with_context(date_from_aml=context['date_from'], date_from=context['date_from'] and company_id.compute_fiscalyear_dates(datetime.strptime(context['date_from'], DEFAULT_SERVER_DATE_FORMAT))['date_from'] or None).group_by_partner_id(options, line_id)  # Aml go back to the beginning of the user chosen range but the amount on the partner line should go back to either the beginning of the fy or the beginning of times depending on the partner
+
+        grouped_partners = self.group_by_partner_id(options, line_id)
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name)
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines')
         for partner in sorted_partners:
