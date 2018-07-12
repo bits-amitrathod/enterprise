@@ -91,7 +91,10 @@ p.o_account_reports_contact_info {
 // -----------------------------------------
 .o_account_reports_body {
     text-align: center;
-    overflow: auto;
+    /* fix thead overlapping. Due to this 'page-break-inside:avoid' unable to work*/
+    .o_account_reports_no_print {
+        overflow: auto;
+    }
 }
 
 .o_account_reports_page {
