@@ -118,39 +118,39 @@
         <div class="row">
             <div class="o_dial_keypad_button_small col-xs-3 text-center">
               <a href="#" class="o_dial_email">
-                <p class="feature text-center"><i class="fa fa-send-o fa-2x"></i>Send mail</p>
+                <i class="fa fa-send-o fa-2x" aria-label="Send mail"></i><p class="feature text-center">Send mail</p>
               </a>
             </div>
             <div class="o_dial_keypad_button_small col-xs-3 text-center">
               <a href="#" class="o_dial_to_partner">
-                <p class="feature text-center"><i class="fa fa-user fa-2x"></i>Customer</p>
+                <i class="fa fa-user fa-2x" aria-label="Customer"></i><p class="feature text-center">Customer</p>
               </a>
             </div>
             <div t-if="widget.activity_res_id &amp;&amp; widget.activity_res_id != widget.partner_id" class="o_dial_keypad_button_small col-xs-3 text-center">
               <a href="#" class="o_dial_to_record">
-                <p class="feature text-center"><i role="img" class="fa fa-circle-o fa-2x" aria-label="Activity" title="Activity"></i><t t-esc="widget.activity_model_name"/></p>
+                <i role="img" class="fa fa-circle-o fa-2x" aria-label="Activity" title="Activity"></i><p class="feature text-center"><t t-esc="widget.activity_model_name"/></p>
               </a>
             </div>
             <div t-if="widget.activity_res_id" class="o_dial_keypad_button_small col-xs-3 text-center">
               <a href="#" class="o_dial_reschedule_activity">
-                <p class="feature text-center"><i class="fa fa-calendar fa-2x"></i>Schedule <br/> Next</p>
+                <i class="fa fa-calendar fa-2x" aria-label="Schedule Next"></i><p class="feature text-center">Schedule <br/> Next</p>
               </a>
             </div>
         </div>
         <div class="row" t-if="widget.activity_id">
             <div class="o_dial_keypad_button_small col-xs-4 text-center">
               <a href="#" class="o_dial_log">
-                <p class="feature text-center"><i class="fa fa-pencil fa-2x"></i>Log</p>
+                <i class="fa fa-pencil fa-2x" aria-label="Log"></i><p class="feature text-center">Log</p>
               </a>
             </div>
             <div class="o_dial_keypad_button_small col-xs-4 text-center">
               <a href="#" class="o_dial_activity_done o_phonecall_activity_button">
-                <p class="feature text-center"><i class="fa fa-check fa-2x"></i>Mark as done</p>
+                <i class="fa fa-check fa-2x" aria-label="Mark as done"></i><p class="feature text-center">Mark as done</p>
               </a>
             </div>
             <div class="o_dial_keypad_button_small col-xs-4 text-center">
               <a href="#" class="o_dial_activity_cancel o_phonecall_activity_button">
-                <p class="feature text-center"><i class="fa fa-close fa-2x"></i>Cancel</p>
+                <i class="fa fa-close fa-2x" aria-label="Cancel"></i><p class="feature text-center">Cancel</p>
               </a>
             </div>
         </div>
