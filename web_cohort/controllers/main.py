@@ -63,7 +63,7 @@ class WebCohort(http.Controller):
 
         response = request.make_response(
             None,
-            headers=[('Content-Type', 'application/vnd.ms-excel'), ('Content-Disposition', 'attachment; filename=%sCohort.xls;' % result['title'])],
+            headers=[('Content-Type', 'application/vnd.ms-excel'), ('Content-Disposition', 'attachment; filename=%sCohort.xls' % result['title'])],
             cookies={'fileToken': token}
         )
         workbook.save(response.stream)
