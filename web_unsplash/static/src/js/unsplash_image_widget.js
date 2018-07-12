@@ -3,8 +3,11 @@ odoo.define('web_unsplash.image_widgets', function (require) {
 
 var core = require('web.core');
 var UnsplashAPI = require('unsplash.api');
+
 var ImageWidget = require('web_editor.widget').ImageWidget;
 var QWeb = core.qweb;
+
+var unsplashAPI = null;
 
 ImageWidget.include({
     xmlDependencies: ImageWidget.prototype.xmlDependencies.concat(
@@ -25,7 +28,29 @@ ImageWidget.include({
             isMaxed: false,
             query: false,
         };
-        return this._super.apply(this, arguments);
+        // TODO This is a `hack` to prevent the UnsplashAPI to be destroyed every time
+        //      the media dialog is closed.
+        //      Indeed, UnsplashAPI has a cache system to recude unsplash call, it is
+        //      then better to keep its state to benefic from it from one media dialog
+        //      call to another.
+        //      Unsplash API will either be (it's still being discussed):
+        //      * a service (ideally coming with an improvement to not auto load the service)
+        //      * initialized in the website_root (trigger_up)
+        var def = this._super.apply(this, arguments);
+        if (unsplashAPI === null) {
+            this.unsplashAPI = new UnsplashAPI(this);
+            unsplashAPI = this.unsplashAPI;
+        } else {
+            this.unsplashAPI = unsplashAPI;
+            this.unsplashAPI.setParent(this);
+        }
+        return def;
+    },
+    destroy: function () {
+        // TODO See `hack` explained in `init`. This prevent the media dialog destroy
+        //      to destroy unsplashAPI when destroying the children
+        this.unsplashAPI.setParent(undefined);
+        this._super.apply(this, arguments);
     },
 
     // --------------------------------------------------------------------------
@@ -64,7 +89,7 @@ ImageWidget.include({
             }
         }).then(function (images) {
             for (var img in self._unsplash.selectedImages) {
-                UnsplashAPI.notifyDownload(self._unsplash.selectedImages[img].download_url);
+                self.unsplashAPI.notifyDownload(self._unsplash.selectedImages[img].download_url);
             }
 
             _.each(images, function (image) {
@@ -75,12 +100,13 @@ ImageWidget.include({
             return _super.apply(self, args);
         });
     },
+
     //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
 
     /**
-     * use to highlight selected image on click and when pager change
+     * Highlights selected image, when an image is clicked and when pager change
      *
      * @private
      */
@@ -97,8 +123,6 @@ ImageWidget.include({
         return $select;
     },
     /**
-     * overriden this metod for separate rendering of unsplash images
-     *
      * @override
      */
     _renderImages: function () {
@@ -106,7 +130,7 @@ ImageWidget.include({
         if (!this._unsplash.query) {
             return this._super.apply(this, arguments);
         }
-        UnsplashAPI.getImages(self._unsplash.query, this.IMAGES_PER_PAGE, this.page).then(function (res) {
+        this.unsplashAPI.getImages(self._unsplash.query, this.IMAGES_PER_PAGE, this.page).then(function (res) {
             self._unsplash.isMaxed = res.isMaxed;
             var rows = _(res.images).chain()
                 .groupBy(function (a, index) { return Math.floor(index / self.IMAGES_PER_ROW); })
@@ -133,6 +157,7 @@ ImageWidget.include({
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
+
     /**
      * @private
      */
@@ -145,7 +170,7 @@ ImageWidget.include({
                 method: 'set_param',
                 args: ['unsplash.access_key', key],
             }).then(function () {
-                UnsplashAPI.clientId = key;
+                self.unsplashAPI.clientId = key;
                 self._renderImages();
             });
         }
@@ -154,6 +179,8 @@ ImageWidget.include({
      * @private
      */
     _onChangeUnsplashSearch: _.debounce(function () {
+        // oldPage saves the original image widget pager.
+        // Emptying the unsplash search will set the pager to its previous state
         this._unsplash.query = this.$('.unsplash_search').val().trim();
         if (this._unsplash.query) {
             this.oldPage = this.page;

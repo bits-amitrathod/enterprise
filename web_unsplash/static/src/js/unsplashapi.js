@@ -1,15 +1,20 @@
-odoo.define('unsplash.core', function (require) {
+odoo.define('unsplash.api', function (require) {
 'use strict';
 
 var Class = require('web.Class');
 var rpc = require('web.rpc');
+var Mixins = require('web.mixins');
+var ServicesMixin = require('web.ServicesMixin');
 
-var UnsplashCore = Class.extend({
+var UnsplashCore = Class.extend(Mixins.EventDispatcherMixin, ServicesMixin, {
     /**
      * @constructor
      */
-    init: function () {
-        this._catch = {};
+    init: function (parent) {
+        Mixins.EventDispatcherMixin.init.call(this, arguments);
+        this.setParent(parent);
+
+        this._cache = {};
         this.clientId = false;
     },
 
@@ -18,18 +23,20 @@ var UnsplashCore = Class.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * get unsplash images from query
+     * Gets unsplash images from query string.
      *
-     * @public
+     * @param {String} query search terms
+     * @param {Integer} pageSize number of image to display per page
+     * @param {Integer} pageNumber page number to retrieve
      */
     getImages: function (query, pageSize, pageNumber) {
         var self = this;
         var to = pageSize * pageNumber;
         var from = to - pageSize;
-        var cachedData = this._catch[query];
+        var cachedData = this._cache[query];
 
         if (cachedData && (cachedData.images.length >= to || (cachedData.totalImages !== 0 && cachedData.totalImages < to))) {
-            return $.Deferred().resolve({ images: cachedData.images.slice(from, to), isMaxed: to > cachedData.totalImages });
+            return $.when({ images: cachedData.images.slice(from, to), isMaxed: to > cachedData.totalImages });
         }
         return this._getAPIKey().then(function (clientID) {
             if (!clientID) {
@@ -41,12 +48,11 @@ var UnsplashCore = Class.extend({
         });
     },
     /**
-     * Notify Unsplash from an image download
+     * Notifies Unsplash from an image download. (API requirement)
      *
-     * @public
+     * @param {String} url url of the image to notify
      */
     notifyDownload: function (url) {
-        // Unsplash Guidelines require to notify their server on a specific URL once we perform a download
         $.get(url, { client_id: this.clientId });
     },
 
@@ -55,7 +61,7 @@ var UnsplashCore = Class.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * check and retrive unsplash api key
+     * Checks and retrieves the unsplash API key
      *
      * @private
      */
@@ -64,7 +70,7 @@ var UnsplashCore = Class.extend({
         if (this.clientId) {
             return $.Deferred().resolve(self.clientId);
         }
-        return rpc.query({
+        return this._rpc({
             model: 'ir.config_parameter',
             method: 'get_param',
             args: ['unsplash.access_key'],
@@ -74,20 +80,21 @@ var UnsplashCore = Class.extend({
         });
     },
     /**
-     * fetch images from unsplash api and store in catch
+     * Fetches images from unsplash and stores it in cache
      *
+     * @param {String} query search terms
      * @private
      */
     _fetchImages: function (query) {
-        if (!this._catch[query]) {
-            this._catch[query] = {
+        if (!this._cache[query]) {
+            this._cache[query] = {
                 images: [],
                 maxPages: 0,
                 totalImages: 0,
                 pageCached: 0
             };
         }
-        var cachedData = this._catch[query];
+        var cachedData = this._cache[query];
         var payload = {
             query: query,
             page: cachedData.pageCached + 1,
@@ -105,14 +112,5 @@ var UnsplashCore = Class.extend({
 });
 
 return UnsplashCore;
-
-});
-
-odoo.define('unsplash.api', function (require) {
-'use strict';
-
-var UnsplashCore = require('unsplash.core');
-
-return new UnsplashCore();
 
 });
