@@ -1488,11 +1488,12 @@ can no longer be modified. Please create a new line with eg. a negative quantity
     });
 
     models.load_models({
-        'model': "pos.order",
-        'domain': function (self) { return [['config_id', '=', self.config.id]]; },
-        'fields': ['name', 'hash_chain'],
-        'order': "-date_order",
-        'loaded': function (self, params) {
+        model: "pos.order",
+        domain: function (self) { return [['config_id', '=', self.config.id]]; },
+        fields: ['name', 'hash_chain'],
+        order:  _.map(['date_order'], function (name) { return {name: name, asc: false}; }),
+        limit: 1,  // TODO this works?
+        loaded: function (self, params) {
             self.config.backend_sequence_number = self._extract_order_number(params);
             self.config.blackbox_most_recent_hash = self._get_hash_chain(params);
         }
@@ -1502,11 +1503,12 @@ can no longer be modified. Please create a new line with eg. a negative quantity
 
     // pro forma and regular orders share numbers, so we also need to check the pro forma orders and pick the max
     models.load_models({
-        'model': "pos.order_pro_forma",
-        'domain': function (self) { return [['config_id', '=', self.config.id]]; },
-        'fields': ['name', 'hash_chain'],
-        'order': "-date_order",
-        'loaded': function (self, params) {
+        model: "pos.order_pro_forma",
+        domain: function (self) { return [['config_id', '=', self.config.id]]; },
+        fields: ['name', 'hash_chain'],
+        order:  _.map(['date_order'], function (name) { return {name: name, asc: false}; }),
+        limit: 1,
+        loaded: function (self, params) {
             var pro_forma_number = self._extract_order_number(params);
 
             if (pro_forma_number > self.config.backend_sequence_number) {
