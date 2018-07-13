@@ -23,13 +23,13 @@ class account_bank_reconciliation_report(models.AbstractModel):
             {'name': _("Amount"), 'class': 'number'},
         ]
 
-    def add_title_line(self, options, title, amount=None, level=0, display_date=True):
+    def add_title_line(self, options, title, amount=None, level=0, date=False):
         self.line_number += 1
         line_currency = self.env.context.get('line_currency', False)
         return {
             'id': 'line_' + str(self.line_number),
             'name': title,
-            'columns': [{'name': v} for v in [display_date and options['date']['date'] or '', '', amount and self.format_value(amount, line_currency)]],
+            'columns': [{'name': v} for v in [date or '', '', amount and self.format_value(amount, line_currency)]],
             'level': level,
         }
 
@@ -40,7 +40,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             'id': 'line_' + str(self.line_number),
             'name': _('Total Virtual GL Balance'),
             'columns': [{'name': v} for v in ["", "", self.format_value(amount, line_currency)]],
-            'level': 2,
+            'level': 1,
             'class': 'total',
         }
 
@@ -52,7 +52,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             'caret_options': 'account.bank.statement.line',
             'name': len(name) >= 85 and name[0:80] + '...' or name,
             'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(amount, line_currency)]],
-            'level': 3,
+            'class': 'o_account_reports_level3',
         }
 
     def print_pdf(self, options):
@@ -107,6 +107,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
         last_statement = self.env['account.bank.statement'].search([('journal_id', '=', journal_id),
                                        ('date', '<=', self.env.context['date_to']), ('company_id', 'in', self.env.context['company_ids'])], order="date desc, id desc", limit=1)
         rslt['last_st_balance'] = last_statement.balance_end
+        rslt['last_st_end_date'] = last_statement.date
 
         return rslt
 
@@ -125,7 +126,11 @@ class account_bank_reconciliation_report(models.AbstractModel):
         # Build report
         lines = []
 
-        lines.append(self.add_title_line(options, _("Virtual GL Balance"), level=1))
+        lines.append(self.add_title_line(
+            options,
+            _("Virtual GL Balance"),
+            amount=None if self.env.user.company_id.totals_below_sections else computed_stmt_balance,
+            level=0))
 
         gl_title = _("Current balance of account %s")
         if len(report_data['account_ids']) > 1:
@@ -133,12 +138,12 @@ class account_bank_reconciliation_report(models.AbstractModel):
 
         accounts = self.env['account.account'].browse(report_data['account_ids'])
         accounts_string = ', '.join(accounts.mapped('code'))
-        lines.append(self.add_title_line(options, gl_title % accounts_string, level=2, amount=report_data['odoo_balance']))
+        lines.append(self.add_title_line(options, gl_title % accounts_string, level=1, amount=report_data['odoo_balance'], date=options['date']['date']))
 
-        lines.append(self.add_title_line(options, _("Operations to Process"), level=2, display_date=False))
+        lines.append(self.add_title_line(options, _("Operations to Process"), level=1))
 
         if report_data.get('not_reconciled_st_positive') or report_data.get('not_reconciled_st_negative'):
-            lines.append(self.add_title_line(options, _("Unreconciled Bank Statement Lines"), level=3, display_date=False))
+            lines.append(self.add_title_line(options, _("Unreconciled Bank Statement Lines"), level=2))
             for line in report_data.get('not_reconciled_st_positive', []):
                 lines.append(self.add_bank_statement_line(line, line.amount))
 
@@ -146,25 +151,32 @@ class account_bank_reconciliation_report(models.AbstractModel):
                 lines.append(self.add_bank_statement_line(line, line.amount))
 
         if report_data.get('not_reconciled_pmts'):
-            lines.append(self.add_title_line(options, _("Validated Payments not Linked with a Bank Statement Line"), level=3, display_date=False))
+            lines.append(self.add_title_line(options, _("Validated Payments not Linked with a Bank Statement Line"), level=2))
             for line in report_data['not_reconciled_pmts']:
                     self.line_number += 1
                     lines.append({
                         'id': str(line.id),
                         'name': line.name,
                         'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(-line.balance, report_data['line_currency'])]],
-                        'level': 4,
+                        'class': 'o_account_reports_level3',
                         'caret_options': 'account.payment',
                     })
 
-        lines.append(self.add_total_line(computed_stmt_balance))
+        if self.env.user.company_id.totals_below_sections:
+            lines.append(self.add_total_line(computed_stmt_balance))
 
-        lines.append(self.add_title_line(options, _("Last Bank Statement Ending Balance"), level=1, amount=report_data['last_st_balance']))
-        last_line = self.add_title_line(options, _("Unexplained Difference"), level=1, amount=difference)
-        last_line['title_hover'] = _("Difference between Virtual GL Balance and Last Bank Statement Ending Balance. "
-            "If non-zero, it is probably due to the fact some bank statements have not been encoded into Odoo. You should "
-            "check the start and end balance of each of your encoded bank statements, and make sure that there is no gap "
-            "between them.")
+        lines.append(self.add_title_line(options, _("Last Bank Statement Ending Balance"), level=0, amount=report_data['last_st_balance'], date=report_data['last_st_end_date']))
+        last_line = self.add_title_line(options, _("Unexplained Difference"), level=0, amount=difference)
+        last_line['title_hover'] = _("""Difference between Virtual GL Balance and Last Bank Statement Ending Balance.\n
+If non-zero, it could be due to
+  1) some bank statements being not yet encoded into Odoo
+  2) payments double-encoded""")
+        #NOTE: anyone trying to explain the 'unexplained difference' should check
+        # * the list of 'validated payments not linked with a statement line': maybe an operation was recorded
+        #   as a new payment when processing a statement, instead of choosing the blue line corresponding to
+        #   an already existing payment
+        # * the starting and ending balance of the bank statements, to make sure there is no gap between them.
+        # * there's no 'draft' move linked with a bank statement
         line_currency = self.env.context.get('line_currency', False)
         last_line['columns'][-1]['title'] = self.format_value(computed_stmt_balance, line_currency) + " - " + self.format_value(report_data['last_st_balance'], line_currency)
         lines.append(last_line)
