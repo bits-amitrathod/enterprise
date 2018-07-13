@@ -19,10 +19,10 @@ class SaleOrder(models.Model):
 
     def _compute_subscription_count(self):
         """Compute the number of distinct subscriptions linked to the order."""
-        order_line_data = self.env['sale.order.line'].read_group([('subscription_id', '!=', False), ('order_id', 'in', self.ids)], ['subscription_id', 'order_id'], ['subscription_id', 'order_id'])
-        subscription_count = len([data['subscription_id'][0] for data in order_line_data])
         for order in self:
-            order.subscription_count = subscription_count
+            sub_count = len(self.env['sale.order.line'].read_group([('order_id', '=', order.id), ('subscription_id', '!=', False)],
+                                                    ['subscription_id'], ['subscription_id']))
+            order.subscription_count = sub_count
 
     def action_open_subscriptions(self):
         """Display the linked subscription and adapt the view to the number of records to display."""
