@@ -282,6 +282,14 @@ class FedexRequest():
 
         return formatted_response
 
+    def _get_labels(self, file_type):
+        labels = [self.get_label()]
+        if file_type.upper() in ['PNG'] and self.response.CompletedShipmentDetail.CompletedPackageDetails[0].PackageDocuments:
+            for auxiliary in self.response.CompletedShipmentDetail.CompletedPackageDetails[0].PackageDocuments[0].Parts:
+                labels.append(binascii.a2b_base64(auxiliary.Image))
+
+        return labels
+
     def get_label(self):
         return binascii.a2b_base64(self.response.CompletedShipmentDetail.CompletedPackageDetails[0].Label.Parts[0].Image)
 
