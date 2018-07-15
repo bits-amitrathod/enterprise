@@ -3,16 +3,16 @@
 # * web_studio
 # 
 # Translators:
-# Dorin Hongu <dhongu@gmail.com>, 2017
-# Cozmin Candea <office@terrabit.ro>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2018
+# Dorin Hongu <dhongu@gmail.com>, 2018
+# Cozmin Candea <office@terrabit.ro>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 09:24+0000\n"
-"PO-Revision-Date: 2017-10-24 09:24+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Cozmin Candea <office@terrabit.ro>, 2018\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,28 +21,58 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:421
+#: code:addons/web_studio/controllers/main.py:103
+#, python-format
+msgid ""
+" <p class=\"o_view_nocontent_empty_report\">\n"
+"                Add a new report\n"
+"            </p>\n"
+"            "
+msgstr ""
+
+#. module: web_studio
+#: code:addons/web_studio/controllers/main.py:67
+#, python-format
+msgid ""
+" <p class=\"o_view_nocontent_smiling_face\">\n"
+"                Add a new automated action\n"
+"            </p>\n"
+"            "
+msgstr ""
+
+#. module: web_studio
+#: code:addons/web_studio/controllers/main.py:85
+#, python-format
+msgid ""
+" <p class=\"o_view_nocontent_smiling_face\">\n"
+"                Add a new filter\n"
+"            </p>\n"
+"            "
+msgstr ""
+
+#. module: web_studio
+#: code:addons/web_studio/controllers/main.py:424
 #, python-format
 msgid "%s Report"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/studio_report_kanban.js:92
+#: code:addons/web_studio/static/src/js/studio_report_kanban.js:89
 #, python-format
 msgid "(e.g. Sales order)"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/studio_report_kanban.js:96
+#: code:addons/web_studio/static/src/js/studio_report_kanban.js:93
 #, python-format
 msgid "(empty report with footer and header)"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:390
+#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:403
 #, python-format
 msgid ""
 "<div><p>The <strong>%s</strong> property is only applied to records matching"
@@ -50,19 +80,36 @@ msgid ""
 msgstr ""
 
 #. module: web_studio
-#: model:ir.model.fields,field_description:web_studio.field_ir_model_abstract
+#: code:addons/web_studio/controllers/main.py:49
+#, python-format
+msgid ""
+"<p class=\"o_view_nocontent_smiling_face\">\n"
+"                Add a new access control list\n"
+"            </p>\n"
+"            "
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:562
+#, python-format
+msgid "A field with the same name already exists."
+msgstr ""
+
+#. module: web_studio
+#: model:ir.model.fields,field_description:web_studio.field_ir_model__abstract
 msgid "Abstract"
 msgstr ""
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:44
+#: code:addons/web_studio/controllers/main.py:39
 #, python-format
 msgid "Access Control Lists"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/submenu.xml:37
+#: code:addons/web_studio/static/src/xml/submenu.xml:40
 #, python-format
 msgid "Access Controls"
 msgstr "Controale Acces"
@@ -74,13 +121,6 @@ msgstr "Acces Grupuri"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/web_client.js:24
-#, python-format
-msgid "Access error"
-msgstr ""
-
-#. module: web_studio
-#. openerp-web
 #: code:addons/web_studio/static/src/xml/sidebar.xml:42
 #, python-format
 msgid "Action's title"
@@ -88,7 +128,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/new_view_dialog.js:30
+#: code:addons/web_studio/static/src/js/new_view_dialog.js:31
 #: code:addons/web_studio/static/src/xml/action_editor.xml:31
 #, python-format
 msgid "Activate View"
@@ -102,25 +142,25 @@ msgid "Add"
 msgstr "Adaugă"
 
 #. module: web_studio
-#: model:ir.model.fields,field_description:web_studio.field_ir_cron_channel_ids
+#: model:ir.model.fields,field_description:web_studio.field_ir_cron__channel_ids
 msgid "Add Channels"
 msgstr "Adaugă canale"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editors/form_editor.js:204
+#: code:addons/web_studio/static/src/js/view_editors/form_editor.js:226
 #, python-format
 msgid "Add Chatter Widget"
 msgstr ""
 
 #. module: web_studio
-#: model:ir.model.fields,field_description:web_studio.field_ir_cron_partner_ids
+#: model:ir.model.fields,field_description:web_studio.field_ir_cron__partner_ids
 msgid "Add Followers"
 msgstr "Adaugă interesați"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/tour.js:93
+#: code:addons/web_studio/static/src/js/tour.js:96
 #, python-format
 msgid ""
 "Add a <b>chatter widget</b> to allow discussions on your document: by email "
@@ -136,21 +176,21 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/new_field_dialog.js:28
+#: code:addons/web_studio/static/src/js/view_editors/form_editor.js:263
 #, python-format
-msgid "Add a field"
+msgid "Add a pipeline status bar"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:200
+#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:201
 #, python-format
 msgid "Add a priority"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:222
+#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:223
 #, python-format
 msgid "Add an image"
 msgstr ""
@@ -164,7 +204,14 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:131
+#: code:addons/web_studio/static/src/xml/new_field_dialog.xml:37
+#, python-format
+msgid "Add new value"
+msgstr "Adaugă valoare nouă"
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:132
 #, python-format
 msgid "Add tags"
 msgstr ""
@@ -184,15 +231,17 @@ msgid "Allow Link to List View"
 msgstr ""
 
 #. module: web_studio
-#: model:ir.model.fields,field_description:web_studio.field_res_company_background_image
-msgid "App Switcher Background Image"
+#. openerp-web
+#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:509
+#, python-format
+msgid "Are you sure you want to remove this %s from the view?"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:481
+#: code:addons/web_studio/static/src/js/menu.js:253
 #, python-format
-msgid "Are you sure you want to remove this %s from the view?"
+msgid "Are you sure you want to reset the background image?"
 msgstr ""
 
 #. module: web_studio
@@ -208,21 +257,21 @@ msgid "Automated Action"
 msgstr ""
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:62
+#: code:addons/web_studio/controllers/main.py:57
 #, python-format
 msgid "Automated Actions"
 msgstr "Acțiuni Automate"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/submenu.xml:35
+#: code:addons/web_studio/static/src/xml/submenu.xml:38
 #, python-format
 msgid "Automations"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:438
+#: code:addons/web_studio/static/src/xml/sidebar.xml:441
 #, python-format
 msgid "Bold"
 msgstr ""
@@ -251,10 +300,11 @@ msgstr ""
 #. module: web_studio
 #. openerp-web
 #: code:addons/web_studio/static/src/js/edit_menu.js:82
-#: code:addons/web_studio/static/src/js/edit_menu.js:282
-#: code:addons/web_studio/static/src/js/new_field_dialog.js:35
-#: code:addons/web_studio/static/src/js/new_view_dialog.js:34
-#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:378
+#: code:addons/web_studio/static/src/js/edit_menu.js:297
+#: code:addons/web_studio/static/src/js/home_menu.js:130
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:49
+#: code:addons/web_studio/static/src/js/new_view_dialog.js:35
+#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:379
 #: code:addons/web_studio/static/src/js/view_editors/new_buttonbox_dialog.js:34
 #: model:ir.ui.view,arch_db:web_studio.simplified_form_view_import_module
 #, python-format
@@ -270,7 +320,7 @@ msgstr "Schimbă fundal"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:638
+#: code:addons/web_studio/static/src/xml/sidebar.xml:661
 #, python-format
 msgid "Change Image"
 msgstr ""
@@ -290,7 +340,7 @@ msgid "Checkbox"
 msgstr ""
 
 #. module: web_studio
-#: model:ir.model.fields,help:web_studio.field_ir_model_data_studio
+#: model:ir.model.fields,help:web_studio.field_ir_model_data__studio
 msgid "Checked if it has been edited with Studio."
 msgstr ""
 
@@ -317,14 +367,15 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/tour.js:97
+#: code:addons/web_studio/static/src/js/tour.js:100
 #, python-format
 msgid "Click to edit."
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/menu.js:95
+#: code:addons/web_studio/static/src/js/menu.js:98
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:197
 #: model:ir.ui.view,arch_db:web_studio.simplified_form_view_import_module
 #, python-format
 msgid "Close"
@@ -351,16 +402,16 @@ msgstr "Companii"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:249
+#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:262
 #, python-format
 msgid "Components"
 msgstr "Componente"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:406
-#: code:addons/web_studio/static/src/xml/sidebar.xml:419
-#: code:addons/web_studio/static/src/xml/sidebar.xml:429
+#: code:addons/web_studio/static/src/xml/sidebar.xml:409
+#: code:addons/web_studio/static/src/xml/sidebar.xml:422
+#: code:addons/web_studio/static/src/xml/sidebar.xml:432
 #, python-format
 msgid "Conditional"
 msgstr ""
@@ -368,9 +419,11 @@ msgstr ""
 #. module: web_studio
 #. openerp-web
 #: code:addons/web_studio/static/src/js/edit_menu.js:78
-#: code:addons/web_studio/static/src/js/edit_menu.js:278
-#: code:addons/web_studio/static/src/js/new_field_dialog.js:31
-#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:374
+#: code:addons/web_studio/static/src/js/edit_menu.js:293
+#: code:addons/web_studio/static/src/js/home_menu.js:126
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:45
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:186
+#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:375
 #: code:addons/web_studio/static/src/js/view_editors/new_buttonbox_dialog.js:30
 #, python-format
 msgid "Confirm"
@@ -385,14 +438,14 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:505
+#: code:addons/web_studio/static/src/xml/sidebar.xml:525
 #, python-format
 msgid "Context"
 msgstr "Context"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/edit_menu.js:275
+#: code:addons/web_studio/static/src/js/edit_menu.js:290
 #, python-format
 msgid "Create a new Menu"
 msgstr ""
@@ -402,8 +455,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/js/tour.js:85
 #, python-format
 msgid ""
-"Create your <b>drop down list</b>, one value per line. (e.g.: Romance, "
-"Polar, Fantasy, etc.)"
+"Create your <b>selection values</b> (e.g.: Romance, Polar, Fantasy, etc.)"
 msgstr ""
 
 #. module: web_studio
@@ -415,7 +467,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/app_creator.js:100
+#: code:addons/web_studio/static/src/js/app_creator.js:110
 #, python-format
 msgid "Create your app"
 msgstr ""
@@ -458,7 +510,7 @@ msgstr "Dată"
 #: code:addons/web_studio/static/src/js/view_components.js:119
 #, python-format
 msgid "Date & Time"
-msgstr ""
+msgstr "Dată & oră"
 
 #. module: web_studio
 #. openerp-web
@@ -476,7 +528,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:443
+#: code:addons/web_studio/static/src/xml/sidebar.xml:446
 #, python-format
 msgid "Default"
 msgstr "Implicit"
@@ -498,7 +550,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editor_manager.js:1232
+#: code:addons/web_studio/static/src/js/view_editor_manager.js:1488
 #: code:addons/web_studio/static/src/xml/sidebar.xml:349
 #, python-format
 msgid "Default Values"
@@ -506,10 +558,10 @@ msgstr "Valori implicite"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:482
+#: code:addons/web_studio/static/src/xml/sidebar.xml:502
 #, python-format
 msgid "Default value"
-msgstr ""
+msgstr "Valoare implicită"
 
 #. module: web_studio
 #. openerp-web
@@ -521,7 +573,8 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/icon_creator.xml:15
+#: code:addons/web_studio/static/src/xml/icon_creator.xml:9
+#: code:addons/web_studio/static/src/xml/icon_creator.xml:23
 #, python-format
 msgid "Design your Icon"
 msgstr ""
@@ -535,14 +588,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/icon_creator.xml:9
-#, python-format
-msgid "Discard Upload"
-msgstr ""
-
-#. module: web_studio
-#. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:441
+#: code:addons/web_studio/static/src/xml/sidebar.xml:444
 #, python-format
 msgid "Display"
 msgstr "Afișare"
@@ -555,20 +601,29 @@ msgid "Display Count"
 msgstr ""
 
 #. module: web_studio
-#: model:ir.model.fields,field_description:web_studio.field_studio_mixin_display_name
+#: model:ir.model.fields,field_description:web_studio.field_studio_mixin__display_name
 msgid "Display Name"
 msgstr "Nume afișat"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:184
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:207
+#, python-format
+msgid ""
+"Do you really want to remove this value? All the records with this value "
+"will be updated accordingly."
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:185
 #, python-format
 msgid "Do you want to add a dropdown with colors?"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:500
+#: code:addons/web_studio/static/src/xml/sidebar.xml:520
 #, python-format
 msgid "Domain"
 msgstr "Domeniu"
@@ -597,6 +652,13 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
+#: code:addons/web_studio/static/src/js/home_menu.js:123
+#, python-format
+msgid "Edit Application Icon"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
 #: code:addons/web_studio/static/src/xml/view_editor_manager.xml:5
 #, python-format
 msgid "Edit Form View"
@@ -619,6 +681,20 @@ msgstr "Editează meniul"
 
 #. module: web_studio
 #. openerp-web
+#: code:addons/web_studio/static/src/xml/sidebar.xml:536
+#, python-format
+msgid "Edit Possible Values"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:179
+#, python-format
+msgid "Edit Value"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
 #: code:addons/web_studio/static/src/xml/sidebar.xml:160
 #, python-format
 msgid "Editable"
@@ -626,13 +702,13 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:585
+#: code:addons/web_studio/static/src/xml/sidebar.xml:608
 #, python-format
 msgid "Email Alias"
 msgstr "Email Alias"
 
 #. module: web_studio
-#: model:ir.model.fields,field_description:web_studio.field_ir_cron_template_id
+#: model:ir.model.fields,field_description:web_studio.field_ir_cron__template_id
 msgid "Email Template"
 msgstr "Șablon email"
 
@@ -657,42 +733,35 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:676
-#, python-format
-msgid "Enter one value per line:"
-msgstr ""
-
-#. module: web_studio
-#. openerp-web
-#: code:addons/web_studio/static/src/js/main.js:398
+#: code:addons/web_studio/static/src/js/main.js:455
 #, python-format
 msgid "Error"
 msgstr "Eroare"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:284
+#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:297
 #, python-format
 msgid "Existing Fields"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/submenu.xml:22
+#: code:addons/web_studio/static/src/xml/submenu.xml:25
 #, python-format
 msgid "Export"
 msgstr "Export"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:623
+#: code:addons/web_studio/static/src/xml/sidebar.xml:646
 #, python-format
 msgid "Fadeout Speed"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:625
+#: code:addons/web_studio/static/src/xml/sidebar.xml:648
 #, python-format
 msgid "Fast"
 msgstr "Rapid"
@@ -712,6 +781,13 @@ msgid "Field"
 msgstr "Câmp"
 
 #. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:42
+#, python-format
+msgid "Field Properties"
+msgstr ""
+
+#. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_model_fields
 msgid "Fields"
 msgstr "Câmpuri"
@@ -724,6 +800,12 @@ msgid "File"
 msgstr "Fișier"
 
 #. module: web_studio
+#: code:addons/web_studio/controllers/main.py:630
+#, python-format
+msgid "Filename for %s"
+msgstr ""
+
+#. module: web_studio
 #. openerp-web
 #: code:addons/web_studio/static/src/js/view_components.js:57
 #, python-format
@@ -732,15 +814,15 @@ msgstr "Filtru"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:573
+#: code:addons/web_studio/static/src/xml/sidebar.xml:596
 #, python-format
 msgid "Filter Domain"
 msgstr "Domeniu filtru"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/controllers/main.py:80
-#: code:addons/web_studio/static/src/xml/submenu.xml:38
+#: code:addons/web_studio/controllers/main.py:75
+#: code:addons/web_studio/static/src/xml/submenu.xml:41
 #, python-format
 msgid "Filter Rules"
 msgstr ""
@@ -755,7 +837,14 @@ msgstr "Filtre"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/studio_report_kanban.js:63
+#: code:addons/web_studio/static/src/js/view_editors/form_editor.js:274
+#, python-format
+msgid "First Status"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/studio_report_kanban.js:60
 #, python-format
 msgid ""
 "First, quit Odoo Studio to create a new entity. Then, open Odoo Studio to "
@@ -764,7 +853,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:445
+#: code:addons/web_studio/static/src/xml/sidebar.xml:448
 #, python-format
 msgid "Full Width"
 msgstr ""
@@ -785,7 +874,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/new_view_dialog.js:27
+#: code:addons/web_studio/static/src/js/new_view_dialog.js:28
 #, python-format
 msgid "Generate %s View"
 msgstr ""
@@ -812,8 +901,13 @@ msgid "Group by"
 msgstr "Grupează după"
 
 #. module: web_studio
+#: model:ir.model,name:web_studio.model_ir_http
+msgid "HTTP routing"
+msgstr "Rutare HTTP"
+
+#. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:454
+#: code:addons/web_studio/static/src/xml/sidebar.xml:457
 #, python-format
 msgid "Help Tooltip"
 msgstr ""
@@ -825,6 +919,11 @@ msgstr ""
 msgid ""
 "Here, you can <b>name</b> your field (e.g. Book reference, ISBN, Internal "
 "Note, etc.)."
+msgstr ""
+
+#. module: web_studio
+#: model:ir.model.fields,field_description:web_studio.field_res_company__background_image
+msgid "Home Menu Background Image"
 msgstr ""
 
 #. module: web_studio
@@ -864,28 +963,35 @@ msgid ""
 msgstr ""
 
 #. module: web_studio
-#: model:ir.model.fields,field_description:web_studio.field_studio_mixin_id
+#: model:ir.model.fields,field_description:web_studio.field_studio_mixin__id
 msgid "ID"
 msgstr "ID"
 
 #. module: web_studio
 #. openerp-web
 #: code:addons/web_studio/static/src/xml/new_buttonbox_dialog.xml:10
-#: code:addons/web_studio/static/src/xml/sidebar.xml:603
+#: code:addons/web_studio/static/src/xml/sidebar.xml:626
 #, python-format
 msgid "Icon"
 msgstr "Pictogramă"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_components.js:198
+#: code:addons/web_studio/static/src/js/view_components.js:195
 #, python-format
 msgid "Image"
 msgstr "Imagine"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/submenu.xml:21
+#: code:addons/web_studio/static/src/xml/sidebar.xml:492
+#, python-format
+msgid "Image Size"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/xml/submenu.xml:24
 #: model:ir.ui.view,arch_db:web_studio.simplified_form_view_import_module
 #, python-format
 msgid "Import"
@@ -900,7 +1006,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:405
+#: code:addons/web_studio/static/src/xml/sidebar.xml:408
 #, python-format
 msgid "Invisible"
 msgstr "Invizibil"
@@ -908,36 +1014,45 @@ msgstr "Invizibil"
 #. module: web_studio
 #. openerp-web
 #: code:addons/web_studio/static/src/xml/new_buttonbox_dialog.xml:6
-#: code:addons/web_studio/static/src/xml/sidebar.xml:449
-#: code:addons/web_studio/static/src/xml/sidebar.xml:528
-#: code:addons/web_studio/static/src/xml/sidebar.xml:538
-#: code:addons/web_studio/static/src/xml/sidebar.xml:667
+#: code:addons/web_studio/static/src/xml/new_field_dialog.xml:46
+#: code:addons/web_studio/static/src/xml/sidebar.xml:452
+#: code:addons/web_studio/static/src/xml/sidebar.xml:551
+#: code:addons/web_studio/static/src/xml/sidebar.xml:561
+#: code:addons/web_studio/static/src/xml/sidebar.xml:683
+#: code:addons/web_studio/static/src/xml/sidebar.xml:702
 #, python-format
 msgid "Label"
 msgstr "Eticheta"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:554
-#: code:addons/web_studio/static/src/xml/sidebar.xml:570
+#: code:addons/web_studio/static/src/xml/sidebar.xml:577
+#: code:addons/web_studio/static/src/xml/sidebar.xml:593
 #, python-format
 msgid "Label Text"
 msgstr ""
 
 #. module: web_studio
-#: model:ir.model.fields,field_description:web_studio.field_studio_mixin___last_update
+#. openerp-web
+#: code:addons/web_studio/static/src/xml/sidebar.xml:497
+#, python-format
+msgid "Large"
+msgstr "Larg"
+
+#. module: web_studio
+#: model:ir.model.fields,field_description:web_studio.field_studio_mixin____last_update
 msgid "Last Modified on"
 msgstr "Ultima modificare la"
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:819
+#: code:addons/web_studio/controllers/main.py:910
 #, python-format
 msgid "Left Title"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/tour.js:105
+#: code:addons/web_studio/static/src/js/tour.js:108
 #, python-format
 msgid ""
 "Let’s check the result. Close Odoo Studio to get an <b>overview of your "
@@ -948,35 +1063,36 @@ msgstr ""
 #. openerp-web
 #: code:addons/web_studio/static/src/xml/sidebar.xml:50
 #: code:addons/web_studio/static/src/xml/sidebar.xml:96
-#: code:addons/web_studio/static/src/xml/sidebar.xml:512
+#: code:addons/web_studio/static/src/xml/sidebar.xml:532
 #, python-format
 msgid "Limit visibility to groups"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_components.js:140
+#: code:addons/web_studio/static/src/js/view_components.js:139
 #, python-format
 msgid "Many2many"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_components.js:150
+#: code:addons/web_studio/static/src/js/view_components.js:149
 #, python-format
 msgid "Many2one"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:626
+#: code:addons/web_studio/static/src/xml/sidebar.xml:496
+#: code:addons/web_studio/static/src/xml/sidebar.xml:649
 #, python-format
 msgid "Medium"
 msgstr "Mediu"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:619
+#: code:addons/web_studio/static/src/xml/sidebar.xml:642
 #, python-format
 msgid "Message"
 msgstr "Mesaj"
@@ -1084,7 +1200,7 @@ msgstr "Câmp nou"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:262
+#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:275
 #, python-format
 msgid "New Fields"
 msgstr ""
@@ -1098,8 +1214,8 @@ msgstr "Meniu nou"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/app_creator.js:78
-#: code:addons/web_studio/static/src/js/app_creator.js:171
+#: code:addons/web_studio/static/src/js/app_creator.js:88
+#: code:addons/web_studio/static/src/js/app_creator.js:179
 #, python-format
 msgid "Next"
 msgstr "Înainte"
@@ -1115,28 +1231,28 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:628
+#: code:addons/web_studio/static/src/xml/sidebar.xml:651
 #, python-format
 msgid "No"
 msgstr "Nu"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/studio_report_kanban.js:61
+#: code:addons/web_studio/static/src/js/studio_report_kanban.js:58
 #, python-format
 msgid "No record to display."
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/menu.js:112
+#: code:addons/web_studio/static/src/js/menu.js:115
 #, python-format
 msgid "Notes"
 msgstr "Note"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/tour.js:130
+#: code:addons/web_studio/static/src/js/tour.js:133
 #, python-format
 msgid "Now you’re on your own. Enjoy your <b>super power</b>."
 msgstr ""
@@ -1164,7 +1280,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_components.js:145
+#: code:addons/web_studio/static/src/js/view_components.js:144
 #, python-format
 msgid "One2many"
 msgstr ""
@@ -1178,14 +1294,14 @@ msgstr "Format hârtie"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:467
+#: code:addons/web_studio/static/src/xml/sidebar.xml:470
 #, python-format
 msgid "Placeholder"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:469
+#: code:addons/web_studio/static/src/xml/sidebar.xml:472
 #, python-format
 msgid "Placeholder Text"
 msgstr ""
@@ -1198,21 +1314,21 @@ msgid "Planning"
 msgstr "Planificare"
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:1085
+#: code:addons/web_studio/controllers/main.py:1176
 #, python-format
 msgid "Please specify a field."
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/studio_report_kanban.js:95
+#: code:addons/web_studio/static/src/js/studio_report_kanban.js:92
 #, python-format
 msgid "Preview Blank Document"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/studio_report_kanban.js:91
+#: code:addons/web_studio/static/src/js/studio_report_kanban.js:88
 #, python-format
 msgid "Preview Business Document"
 msgstr ""
@@ -1226,7 +1342,7 @@ msgstr "Nume raport tipărit"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_components.js:210
+#: code:addons/web_studio/static/src/js/view_components.js:207
 #, python-format
 msgid "Priority"
 msgstr "Prioritate"
@@ -1240,7 +1356,7 @@ msgstr "Proprietăți"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:444
+#: code:addons/web_studio/static/src/xml/sidebar.xml:447
 #, python-format
 msgid "Pull Right"
 msgstr ""
@@ -1255,43 +1371,43 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:615
+#: code:addons/web_studio/static/src/xml/sidebar.xml:638
 #, python-format
 msgid "Rainbow Effect"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:608
+#: code:addons/web_studio/static/src/xml/sidebar.xml:631
 #, python-format
 msgid "Rainbow Man"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:428
+#: code:addons/web_studio/static/src/xml/sidebar.xml:431
 #, python-format
 msgid "Read only"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/submenu.xml:69
+#: code:addons/web_studio/static/src/xml/submenu.xml:72
 #, python-format
 msgid "Redo"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_components.js:216
-#: code:addons/web_studio/static/src/xml/sidebar.xml:460
+#: code:addons/web_studio/static/src/js/view_components.js:213
+#: code:addons/web_studio/static/src/xml/sidebar.xml:463
 #, python-format
 msgid "Related Field"
 msgstr "Câmp Relație"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:685
+#: code:addons/web_studio/static/src/xml/new_field_dialog.xml:14
 #, python-format
 msgid "Relation:"
 msgstr "Relație:"
@@ -1319,42 +1435,70 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/controllers/main.py:98
-#: code:addons/web_studio/static/src/xml/submenu.xml:36
+#: code:addons/web_studio/controllers/main.py:93
+#: code:addons/web_studio/static/src/xml/submenu.xml:39
 #, python-format
 msgid "Reports"
 msgstr "Rapoarte"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:418
+#: code:addons/web_studio/static/src/xml/sidebar.xml:421
 #, python-format
 msgid "Required"
 msgstr "Necesar"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:639
+#: code:addons/web_studio/static/src/xml/submenu.xml:22
+#, python-format
+msgid "Reset Default Background"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/xml/sidebar.xml:662
 #, python-format
 msgid "Reset Image"
 msgstr ""
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:820
+#: code:addons/web_studio/controllers/main.py:911
 #, python-format
 msgid "Right Title"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/tour.js:113
+#: code:addons/web_studio/static/src/js/tour.js:116
 #, python-format
 msgid "Save."
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:372
+#: code:addons/web_studio/static/src/js/view_editor_manager.js:270
+#, python-format
+msgid "Saved"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/view_editor_manager.js:196
+#, python-format
+msgid "Saving..."
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/view_editors/form_editor.js:275
+#, python-format
+msgid "Second Status"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:373
 #, python-format
 msgid "Select a Field"
 msgstr ""
@@ -1375,21 +1519,21 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:681
+#: code:addons/web_studio/static/src/xml/new_field_dialog.xml:10
 #, python-format
 msgid "Select a related field:"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/studio_report_kanban.js:84
+#: code:addons/web_studio/static/src/js/studio_report_kanban.js:81
 #, python-format
 msgid "Select a report template"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/main.js:368
+#: code:addons/web_studio/static/src/js/main.js:425
 #, python-format
 msgid "Select a view"
 msgstr "Selectează o vizualizare"
@@ -1403,7 +1547,7 @@ msgstr "Selecție"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:591
+#: code:addons/web_studio/static/src/xml/sidebar.xml:614
 #, python-format
 msgid "Send a"
 msgstr ""
@@ -1417,7 +1561,7 @@ msgstr "Separator"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/tour.js:101
+#: code:addons/web_studio/static/src/js/tour.js:104
 #, python-format
 msgid ""
 "Set an <b>email alias</b>. Then, try to send an email to this address; it "
@@ -1447,14 +1591,28 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:627
+#: code:addons/web_studio/static/src/xml/sidebar.xml:650
 #, python-format
 msgid "Slow"
 msgstr "Lent"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editor_manager.js:901
+#: code:addons/web_studio/static/src/xml/sidebar.xml:495
+#, python-format
+msgid "Small"
+msgstr "Mic"
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/xml/new_field_dialog.xml:21
+#, python-format
+msgid "Specify all possible values."
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/view_editor_manager.js:992
 #, python-format
 msgid "Stage"
 msgstr "Etapă"
@@ -1479,8 +1637,8 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/main.js:71
-#: model:ir.model.fields,field_description:web_studio.field_ir_model_data_studio
+#: code:addons/web_studio/static/src/js/main.js:70
+#: model:ir.model.fields,field_description:web_studio.field_ir_model_data__studio
 #, python-format
 msgid "Studio"
 msgstr ""
@@ -1502,14 +1660,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/web_client.js:23
-#, python-format
-msgid "Studio is only available for the Administrator"
-msgstr ""
-
-#. module: web_studio
-#. openerp-web
-#: code:addons/web_studio/static/src/js/submenu.js:65
+#: code:addons/web_studio/static/src/js/submenu.js:279
 #, python-format
 msgid "Subview "
 msgstr ""
@@ -1523,10 +1674,17 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_components.js:204
+#: code:addons/web_studio/static/src/js/view_components.js:201
 #, python-format
 msgid "Tags"
 msgstr "Etichete"
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/xml/sidebar.xml:475
+#, python-format
+msgid "Technical Name"
+msgstr "Nume tehnic:"
 
 #. module: web_studio
 #. openerp-web
@@ -1543,40 +1701,49 @@ msgid "The fastest way to create a web application."
 msgstr ""
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:1092
-#: code:addons/web_studio/controllers/main.py:1133
+#: code:addons/web_studio/controllers/main.py:1183
+#: code:addons/web_studio/controllers/main.py:1224
 #, python-format
-msgid "The field %s does not exist.field"
+msgid "The field %s does not exist."
 msgstr ""
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:227
+#: code:addons/web_studio/controllers/main.py:247
 #, python-format
 msgid "The icon has not a correct format"
 msgstr ""
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:222
+#: code:addons/web_studio/controllers/main.py:242
 #, python-format
 msgid "The icon is not linked to an attachment"
 msgstr ""
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:1082
-#: code:addons/web_studio/controllers/main.py:1125
+#: code:addons/web_studio/controllers/main.py:1173
+#: code:addons/web_studio/controllers/main.py:1216
 #, python-format
 msgid "The model %s does not exist."
 msgstr ""
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:863
+#. openerp-web
+#: code:addons/web_studio/static/src/js/view_editor_sidebar.js:556
+#, python-format
+msgid ""
+"The new name can contain only a to z lower letters, numbers and _, with a "
+"maximum of 53 characters."
+msgstr ""
+
+#. module: web_studio
+#: code:addons/web_studio/controllers/main.py:954
 #, python-format
 msgid "The related field of a button has to be a many2one to %s."
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/main.js:25
+#: code:addons/web_studio/static/src/js/main.js:23
 #, python-format
 msgid ""
 "The requested change caused an error in the view. It could be because a "
@@ -1585,7 +1752,14 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/web_client.js:325
+#: code:addons/web_studio/static/src/js/view_editors/form_editor.js:276
+#, python-format
+msgid "Third Status"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/web_client.js:230
 #, python-format
 msgid "This action is not editable by Studio"
 msgstr ""
@@ -1601,21 +1775,14 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editor_manager.js:630
+#: code:addons/web_studio/static/src/js/view_editor_manager.js:817
 #, python-format
 msgid "This field type cannot be dropped on this model."
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/app_creator.js:137
-#, python-format
-msgid "This model already exists. Please specify another model."
-msgstr ""
-
-#. module: web_studio
-#. openerp-web
-#: code:addons/web_studio/static/src/js/main.js:24
+#: code:addons/web_studio/static/src/js/main.js:22
 #, python-format
 msgid "This operation caused an error, probably because a xpath was broken"
 msgstr ""
@@ -1650,14 +1817,14 @@ msgid "Toggle Studio"
 msgstr ""
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:156
+#: code:addons/web_studio/controllers/main.py:151
 #, python-format
 msgid "Translate view"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/submenu.xml:33
+#: code:addons/web_studio/static/src/xml/submenu.xml:36
 #, python-format
 msgid "Translations"
 msgstr "Traduceri"
@@ -1671,7 +1838,7 @@ msgstr "Tip"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/submenu.xml:70
+#: code:addons/web_studio/static/src/xml/submenu.xml:73
 #, python-format
 msgid "Undo"
 msgstr ""
@@ -1685,13 +1852,10 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:677
+#: code:addons/web_studio/static/src/xml/new_field_dialog.xml:52
 #, python-format
-msgid ""
-"Value A\n"
-"Value B\n"
-"Value C"
-msgstr ""
+msgid "Value"
+msgstr "Valoare"
 
 #. module: web_studio
 #. openerp-web
@@ -1702,15 +1866,15 @@ msgstr "Vizualizare"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/submenu.js:153
-#: code:addons/web_studio/static/src/xml/submenu.xml:31
+#: code:addons/web_studio/static/src/js/submenu.js:129
+#: code:addons/web_studio/static/src/xml/submenu.xml:34
 #, python-format
 msgid "Views"
 msgstr "Vizualizări"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/tour.js:122
+#: code:addons/web_studio/static/src/js/tour.js:125
 #, python-format
 msgid "Want more fun? Let’s create more <b>views</b>."
 msgstr ""
@@ -1721,6 +1885,13 @@ msgstr ""
 #, python-format
 msgid "Want to customize the background? Let’s activate <b>Odoo Studio</b>."
 msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:212
+#, python-format
+msgid "Warning"
+msgstr "Atenție"
 
 #. module: web_studio
 #. openerp-web
@@ -1738,33 +1909,33 @@ msgstr "Bun venit la"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/tour.js:126
+#: code:addons/web_studio/static/src/js/tour.js:129
 #, python-format
 msgid "What about a <b>Kanban view</b>?"
 msgstr ""
 
 #. module: web_studio
-#: model:ir.model.fields,help:web_studio.field_ir_model_abstract
+#: model:ir.model.fields,help:web_studio.field_ir_model__abstract
 msgid "Wheter this model is abstract"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:472
+#: code:addons/web_studio/static/src/xml/sidebar.xml:483
 #, python-format
 msgid "Widget"
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/web_client.js:96
+#: code:addons/web_studio/static/src/js/web_client.js:53
 #, python-format
 msgid "Wizards are not editable with Studio."
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/tour.js:118
+#: code:addons/web_studio/static/src/js/tour.js:121
 #, python-format
 msgid ""
 "Wow, nice! And I’m sure you can make it even better! Use this icon to open "
@@ -1794,25 +1965,33 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/new_field_dialog.js:129
-#, python-format
-msgid "You cannot create an empty related field."
-msgstr ""
-
-#. module: web_studio
-#. openerp-web
-#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:139
+#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:140
 #, python-format
 msgid "You first need to create a many2many field in the form view."
 msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:230
+#: code:addons/web_studio/static/src/js/view_editors/kanban_record_editor.js:231
 #, python-format
 msgid ""
 "You first need to create a many2one field to Partner or User in the form "
 "view."
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:231
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:247
+#, python-format
+msgid "You must select a related field"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/js/new_field_dialog.js:237
+#, python-format
+msgid "You must select a relation"
 msgstr ""
 
 #. module: web_studio
@@ -1868,7 +2047,7 @@ msgstr "ir.actions.act_window.view"
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_actions_report
 msgid "ir.actions.report"
-msgstr ""
+msgstr "ir.actions.report"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_actions_server
@@ -1909,13 +2088,14 @@ msgstr "luna"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/icon_creator.xml:28
+#: code:addons/web_studio/static/src/xml/icon_creator.xml:9
+#: code:addons/web_studio/static/src/xml/icon_creator.xml:36
 #, python-format
 msgid "or"
 msgstr "sau"
 
 #. module: web_studio
-#: code:addons/web_studio/controllers/main.py:1222
+#: code:addons/web_studio/controllers/main.py:1321
 #, python-format
 msgid "stages"
 msgstr ""
@@ -1927,7 +2107,7 @@ msgstr ""
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/sidebar.xml:592
+#: code:addons/web_studio/static/src/xml/sidebar.xml:615
 #, python-format
 msgid "test email"
 msgstr ""
@@ -1941,9 +2121,16 @@ msgstr "sus"
 
 #. module: web_studio
 #. openerp-web
-#: code:addons/web_studio/static/src/xml/icon_creator.xml:28
+#: code:addons/web_studio/static/src/xml/icon_creator.xml:36
 #, python-format
 msgid "upload it"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/xml/icon_creator.xml:9
+#, python-format
+msgid "upload one"
 msgstr ""
 
 #. module: web_studio
@@ -1951,4 +2138,11 @@ msgstr ""
 #: code:addons/web_studio/static/src/xml/sidebar.xml:256
 #, python-format
 msgid "week"
+msgstr ""
+
+#. module: web_studio
+#. openerp-web
+#: code:addons/web_studio/static/src/xml/sidebar.xml:477
+#, python-format
+msgid "x_studio_"
 msgstr ""
