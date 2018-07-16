@@ -30,6 +30,15 @@ var MainMenu = AbstractAction.extend({
         this.message_demo_barcodes = action.params.message_demo_barcodes;
     },
 
+    willStart: function () {
+        var self = this;
+        return this._super.apply(this, arguments).then(function () {
+            return Session.user_has_group('stock.group_stock_multi_locations').then(function (has_group) {
+                self.group_stock_multi_location = has_group;
+            });
+        });
+    },
+
     start: function() {
         var self = this;
         core.bus.on('barcode_scanned', this, this._onBarcodeScanned);
