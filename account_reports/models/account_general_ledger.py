@@ -371,8 +371,8 @@ class report_account_general_ledger(models.AbstractModel):
             lines.append({
                 'id': 'general_ledger_total_%s' % company_id.id,
                 'name': _('Total'),
-                'class': 'o_account_reports_domain_total',
-                'level': 0,
+                'class': 'total',
+                'level': 1,
                 'columns': [{'name': v} for v in ['', '', '', '', self.format_value(sum_debit), self.format_value(sum_credit), self.format_value(sum_balance)]],
             })
 

@@ -26,18 +26,18 @@ class report_account_coa(models.AbstractModel):
 
     def get_columns_name(self, options):
         columns = [
-            {'name': ''},
+            {'name': '', 'style': 'width:40%'},
             {'name': _('Debit'), 'class': 'number'},
-            {'name': _('Credit'), 'class': 'number'},
+            {'name': _('Credit'), 'class': 'number', 'style': 'padding-right: 35px'},
         ]
         if options.get('comparison') and options['comparison'].get('periods'):
             columns += [
                 {'name': _('Debit'), 'class': 'number'},
-                {'name': _('Credit'), 'class': 'number'},
+                {'name': _('Credit'), 'class': 'number', 'style': 'padding-right: 35px'},
             ] * len(options['comparison']['periods'])
         return columns + [
             {'name': _('Debit'), 'class': 'number'},
-            {'name': _('Credit'), 'class': 'number'},
+            {'name': _('Credit'), 'class': 'number', 'style': 'padding-right: 35px'},
             {'name': _('Debit'), 'class': 'number'},
             {'name': _('Credit'), 'class': 'number'},
         ]
@@ -77,7 +77,7 @@ class report_account_coa(models.AbstractModel):
             sum_columns[1] += -initial_balance if initial_balance < 0 else 0
             cols = [
                 {'name': initial_balance > 0 and self.format_value(initial_balance) or zero_value, 'no_format_name': initial_balance > 0 and initial_balance or 0},
-                {'name': initial_balance < 0 and self.format_value(-initial_balance) or zero_value, 'no_format_name': initial_balance < 0 and abs(initial_balance) or 0},
+                {'name': initial_balance < 0 and self.format_value(-initial_balance) or zero_value, 'no_format_name': initial_balance < 0 and abs(initial_balance) or 0, 'style': 'padding-right: 35px'},
             ]
             total_periods = 0
             for period in range(len(comparison_table)):
@@ -86,7 +86,7 @@ class report_account_coa(models.AbstractModel):
                 credit = grouped_accounts[account][period]['credit']
                 total_periods += amount
                 cols += [{'name': debit > 0 and self.format_value(debit) or zero_value, 'no_format_name': debit > 0 and debit or 0},
-                         {'name': credit > 0 and self.format_value(credit) or zero_value, 'no_format_name': credit > 0 and abs(credit) or 0}]
+                         {'name': credit > 0 and self.format_value(credit) or zero_value, 'no_format_name': credit > 0 and abs(credit) or 0, 'style': 'padding-right: 35px'}]
                 # In sum_columns, the first 2 elements are the initial balance's Debit and Credit
                 # index of the credit of previous column generally is:
                 p_indice = period * 2 + 1
@@ -110,9 +110,9 @@ class report_account_coa(models.AbstractModel):
         lines.append({
              'id': 'grouped_accounts_total',
              'name': _('Total'),
-             'class': 'o_account_reports_domain_total',
+             'class': 'total',
              'columns': [{'name': self.format_value(v)} for v in sum_columns],
-             'level': 0,
+             'level': 1,
         })
         return lines
 
