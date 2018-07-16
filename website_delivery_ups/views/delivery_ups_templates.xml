@@ -56,6 +56,9 @@
         <xpath expr="//div[@id='delivery_method']" position="before">
             <t t-call="website_delivery_ups.ups_bill_my_account_dialog"/>
         </xpath>
+    </template>
+
+    <template id="payment_delivery_methods_inherit_website_sale_delivery" inherit_id="website_sale_delivery.payment_delivery_methods">
         <xpath expr="//label[@t-field='delivery.name']" position="after">
             <t t-if="delivery.delivery_type == 'ups' and delivery.ups_bill_my_account">
                 <span id="ups_bill_my_account" class="ml4">
