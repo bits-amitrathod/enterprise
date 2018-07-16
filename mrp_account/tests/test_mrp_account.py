@@ -26,6 +26,8 @@ class TestMrpAccount(common.TransactionCase):
         self.product_screw.categ_id = self.categ_standard.id
         self.env['stock.move'].search([('product_id', 'in', [self.product_bolt.id, self.product_screw.id])])._do_unreserve()
         (self.product_bolt + self.product_screw).write({'type': 'product'})
+        self.product_desk = self.env.ref('mrp.product_product_computer_desk')
+        self.product_desk.tracking = 'none'
 
     def test_00_production_order_with_accounting(self):
         self.product_table_sheet.standard_price = 20.0
