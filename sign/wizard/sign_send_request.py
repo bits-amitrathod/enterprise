@@ -22,7 +22,7 @@ class SignSendRequest(models.TransientModel):
         }) for role in roles]
         return res
 
-    template_id = fields.Many2one('sign.template', required=True)
+    template_id = fields.Many2one('sign.template', required=True, ondelete='cascade')
     signer_ids = fields.One2many('sign.send.request.signer', 'sign_send_request_id', string="Signers")
     signer_id = fields.Many2one('res.partner', string="Signer")
     signers_count = fields.Integer()

@@ -3,7 +3,8 @@
 
 import re
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 from odoo.tools import pycompat
 
 
@@ -43,6 +44,12 @@ class SignTemplate(models.Model):
     def toggle_favorited(self):
         self.ensure_one()
         self.write({'favorited_ids': [(3 if self.env.user in self[0].favorited_ids else 4, self.env.user.id)]})
+
+    @api.multi
+    def unlink(self):
+        if self.filtered(lambda template: template.sign_request_ids):
+            raise UserError(_("You can't delete a template for which signature requests exist but you can archive it instead."))
+        return super(SignTemplate, self).unlink()
 
     @api.model
     def upload_template(self, name=None, dataURL=None, active=True):
