@@ -998,6 +998,26 @@ class TestViewNormalization(TransactionCase):
             </data>
         """)
 
+    # Move two consequentive existing elements
+    def test_view_normalization_30_3(self):
+        self._test_view_normalization("""
+            <data>
+              <xpath expr="//field[@name='email']" position="after">
+                <field name="function" position="move"/>
+              </xpath>
+              <xpath expr="//field[@name='function']" position="after">
+                <field name="lang" position="move"/>
+              </xpath>
+            </data>
+        """, """
+            <data>
+              <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="after">
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='function']" position="move"/>
+                <xpath expr="//field[@name='lang']" position="move"/>
+              </xpath>
+            </data>
+        """)
+
     # xpath based on a moved element
     def test_view_normalization_31(self):
         self._test_view_normalization("""
@@ -1058,6 +1078,31 @@ class TestViewNormalization(TransactionCase):
                 <xpath expr="//field[@name='category_id']" position="move"/>
               </xpath>
             </data>
+        """)
+
+    def test_view_normalization_34(self):
+        self._test_view_normalization("""
+          <data>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+              <page name="my_new_page">
+                <group name="my_new_group"/>
+              </page>
+            </xpath>
+            <xpath expr="//group[@name='my_new_group']" position="inside">
+              <field name="lang" position="move"/>
+            </xpath>
+          </data>
+        """, """
+          <data>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+              <page name="my_new_page">
+                <group name="my_new_group"/>
+              </page>
+            </xpath>
+            <xpath expr="//group[@name='my_new_group']" position="inside">
+              <xpath expr="//field[@name='lang']" position="move"/>
+            </xpath>
+          </data>
         """)
 
     def tearDown(self):

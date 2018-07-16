@@ -386,7 +386,7 @@ class HelpdeskTicket(models.Model):
             self.message_subscribe(partner_ids)
         return super(HelpdeskTicket, self).message_update(msg, update_vals=update_vals)
 
-    def _message_post_after_hook(self, message, values, notif_layout, notif_values):
+    def _message_post_after_hook(self, message, *args, **kwargs):
         if self.partner_email and self.partner_id and not self.partner_id.email:
             self.partner_id.email = self.partner_email
 
@@ -400,7 +400,7 @@ class HelpdeskTicket(models.Model):
                     ('partner_id', '=', False),
                     ('partner_email', '=', new_partner.email),
                     ('stage_id.fold', '=', False)]).write({'partner_id': new_partner.id})
-        return super(HelpdeskTicket, self)._message_post_after_hook(message, values, notif_layout, notif_values)
+        return super(HelpdeskTicket, self)._message_post_after_hook(message, *args, **kwargs)
 
     @api.multi
     def _track_template(self, tracking):

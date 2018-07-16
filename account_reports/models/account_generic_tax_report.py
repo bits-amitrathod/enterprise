@@ -76,6 +76,9 @@ class generic_tax_report(models.AbstractModel):
     def _get_type_tax_use_string(self, value):
         return [option[1] for option in self.env['account.tax']._fields['type_tax_use'].selection if option[0] == value][0]
 
+    def _get_type_tax_use_string(self, value):
+        return [option[1] for option in self.env['account.tax']._fields['type_tax_use'].selection if option[0] == value][0]
+
     @api.model
     def get_lines(self, options, line_id=None):
         taxes = {}

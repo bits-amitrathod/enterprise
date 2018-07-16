@@ -25,12 +25,12 @@ class MailMessage(models.Model):
     _inherit = 'mail.message'
 
     @api.multi
-    def _notify(self, layout=False, force_send=False, send_after_commit=True, values=None):
+    def _notify(self, **kwargs):
         """ We want to send a Cloud notification for every mentions of a partner and every direct
         message. We have to take into account the risk of duplicated notifications in case of a
         mention in a channel of `chat` type.
         """
-        super(MailMessage, self)._notify(layout=layout, force_send=force_send, send_after_commit=send_after_commit, values=values)
+        super(MailMessage, self)._notify(**kwargs)
 
         self_sudo = self.sudo()
 

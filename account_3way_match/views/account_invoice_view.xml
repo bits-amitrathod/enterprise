@@ -9,9 +9,8 @@
                 <div class="oe_row" colspan="2">
                     <label for="release_to_pay" style="width: 20% ; font-weight: bold" class="o_light_label"/>
                     <field name="release_to_pay" attrs="{'invisible': [('force_release_to_pay', '=', True)]}" style="width: 20%"/>
-                    <label for="release_to_pay_manual" string="Should be paid"/>
                     <field name="release_to_pay_manual" attrs="{'invisible': [('force_release_to_pay', '!=', True)]}" style="width: 20%"/>
-                    <span class="o_form_label">   </span><!--Little "hack" so that the label below does not touch the release_to_pay_manual field in the view.-->
+                    <span class="o_form_label" style="width: 2%">   </span><!--Little "hack" so that the label below does not touch the release_to_pay_manual field in the view.-->
                     <label for="force_release_to_pay" style="width: 20% ; font-weight: bold" class="o_light_label"/>
                     <field name="force_release_to_pay" style="width: 20%"/>
                 </div>
