@@ -1,0 +1,88 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="customer-requests.list">
+      <field name="name">customer-requests list</field>
+      <field name="model">customer-requests.customer-requests</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="customer-requests.action_window">
+      <field name="name">customer-requests window</field>
+      <field name="res_model">customer-requests.customer-requests</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="customer-requests.action_server">
+      <field name="name">customer-requests server</field>
+      <field name="model_id" ref="model_customer-requests_customer-requests"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+   <!-- <menuitem name="Order Reports" id="sales-order.reports" parent="sale.menu_sale_report"/>-->
+
+
+
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="customer-requests" id="customer-requests.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="customer-requests.menu_1" parent="customer-requests.menu_root"/>
+    <menuitem name="Menu 2" id="customer-requests.menu_2" parent="customer-requests.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="customer-requests.menu_1_list" parent="customer-requests.menu_1"
+              action="customer-requests.action_window"/>
+    <menuitem name="Server to list" id="customer-requests" parent="customer-requests.menu_2"
+              action="customer-requests.action_server"/>
+    -->
+
+    <record model="ir.ui.view" id="view_partner_form122">
+        <field name="name">res.partner.form.inherit122</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Import Template">
+                   <group string="Upload File" name="mapping">
+                       <field name="file" widget='file'></field>
+                   </group>
+                   <group string="Map Columns" name="mapping">
+                       <field name="customer_sku" />
+                       <field name="required_quantity" />
+                       <field name="quantity" />
+                       <field name="uom" />
+                       <field name="frequency_of_refill" />
+                   </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+  </data>
+</odoo>
