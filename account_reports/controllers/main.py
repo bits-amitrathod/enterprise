@@ -11,13 +11,12 @@ import json
 
 class FinancialReportController(http.Controller):
 
-
     @http.route('/account_reports', type='http', auth='user', methods=['POST'], csrf=False)
     def get_report(self, model, options, output_format, token, financial_id=None, **kw):
         uid = request.session.uid
         report_obj = request.env[model].sudo(uid)
         options = json.loads(options)
-        if financial_id:
+        if financial_id and financial_id != 'null':
             report_obj = report_obj.browse(int(financial_id))
         report_name = report_obj.get_report_filename(options)
         try:
