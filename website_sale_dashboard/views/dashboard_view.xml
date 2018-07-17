@@ -32,7 +32,7 @@
             <field name="model">sale.report</field>
             <field name="mode">primary</field>
             <field name="arch" type="xml">
-                <dashboard js_class="website_sale_dashboard">
+                <dashboard js_class="website_sale_dashboard" banner_route="/website_sale_dashboard/website_sale_dashboard_onboarding">
                     <view type="graph" ref="website_sale_dashboard.view_online_sales_graph"/>
                     <group col="1" string="At A Glance">
                         <group col="3">
@@ -71,5 +71,20 @@
             <field name="search_view_id" ref="sale_dashboard_search_view"/>
             <field name="context">{'search_default_month':1}</field>
         </record>
+        <!-- ONBOARDING -->
+        <template id="website_sale_dashboard_onboarding_panel" name="website.sale.dashboard.onboarding.panel">
+            <t t-call="base.onboarding_container">
+                <t t-set="classes">o_onboarding_orange</t>
+                <t t-set="bg_image">/website_sale_dashboard/static/src/img/website_sale_dashboard_onboarding_bg.jpg</t>
+                <t t-set="close_method">action_close_website_sale_dashboard_onboarding</t>
+                <t t-set="close_model">res.company</t>
+                <t t-set="fold_method">action_toggle_fold_website_sale_dashboard_onboarding</t>
+                <t t-set="fold_model">res.company</t>
+                <t t-set="folded_by_default" t-value="company.website_sale_dashboard_onboarding_folded" />
+                <t t-call="base.onboarding_company_step" name="company_step" />
+                <t t-call="website_theme_install.onboarding_website_theme_step" name="website_theme_step" />
+                <t t-call="website_sale.website_sale_onboarding_payment_acquirer_step" name="payment_acquirer_step" />
+            </t>
+        </template>
     </data>
 </odoo>

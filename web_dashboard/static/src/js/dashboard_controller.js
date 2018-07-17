@@ -86,7 +86,7 @@ var DashboardController = AbstractController.extend({
         ev.stopPropagation();
         var self = this;
         var newFilters = [];
-        if (ev.data.domain.length) {
+        if (ev.data.domain && ev.data.domain.length) {
             newFilters.push({domain: ev.data.domain, help: ev.data.domainLabel});
         }
         this.trigger_up('update_filters', {
