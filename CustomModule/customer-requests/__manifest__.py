@@ -28,7 +28,6 @@
         'views/views.xml',
         'views/templates.xml',
     ],
-    
     'application' : True,
     'installable' : True,
     'auto_install' : True
