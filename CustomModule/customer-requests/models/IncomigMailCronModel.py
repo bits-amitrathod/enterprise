@@ -278,32 +278,27 @@ class IncomingMailCronModel(models.Model):
 
                                                                             sps_product_id = sps_product.id
 
-                                                                            req.update({'customer_id': user_id,
-                                                                                        'product_id': sps_product_id,
-                                                                                        'document_id': document_id,
-                                                                                        'sps_sku': sps_product.sps_sku,
-                                                                                        'uom': sps_product.uom,
-                                                                                        'status': 'draft'})
-
-                                                                            sps_customer_request = {
-                                                                                'document_id': document_id,
-                                                                                'customer_id': user_id,
-                                                                                'status': 'draft',
-                                                                                'create_uid': 1,
-                                                                                'create_date': today_date,
-                                                                                'write_uid': 1,
-                                                                                'write_date': today_date}
-
-                                                                            for key in req.keys():
-                                                                                sps_customer_request.update(
-                                                                                    {key: req[key]})
-
-                                                                            self.env[
-                                                                                'sps.customer.requests'].create(
-                                                                                sps_customer_request)
+                                                                            req.update({'product_id' : sps_product_id, 'status': 'new'})
 
                                                                         else:
-                                                                            _logger.info('Voided Product')
+                                                                            req.update({'product_id': sps_product_id,
+                                                                                        'status': 'voided'})
+
+                                                                        sps_customer_request = {
+                                                                            'document_id': document_id,
+                                                                            'customer_id': user_id,
+                                                                            'create_uid': 1,
+                                                                            'create_date': today_date,
+                                                                            'write_uid': 1,
+                                                                            'write_date': today_date}
+
+                                                                        for key in req.keys():
+                                                                            sps_customer_request.update(
+                                                                                {key: req[key]})
+
+                                                                        self.env[
+                                                                            'sps.customer.requests'].create(
+                                                                            sps_customer_request)
                                                                 else:
                                                                     _logger.info(
                                                                         'file is not acceptable or zero records in the file')
