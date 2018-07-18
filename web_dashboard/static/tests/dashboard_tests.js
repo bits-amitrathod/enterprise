@@ -2,6 +2,7 @@ odoo.define('web_dashboard.dashboard_tests', function (require) {
 "use strict";
 
 var BasicFields = require('web.basic_fields');
+var concurrency = require('web.concurrency');
 var DashboardView = require('web_dashboard.DashboardView');
 var fieldRegistry = require('web.field_registry');
 var testUtils = require('web.test_utils');
@@ -9,6 +10,7 @@ var Widget = require('web.Widget');
 var widgetRegistry = require('web.widget_registry');
 
 var createActionManager = testUtils.createActionManager;
+var createAsyncView = testUtils.createAsyncView;
 var createView = testUtils.createView;
 var patchDate = testUtils.patchDate;
 
@@ -121,6 +123,59 @@ QUnit.module('Views', {
 
         dashboard.destroy();
         delete widgetRegistry.map.test;
+    });
+
+    QUnit.test('basic rendering of a pie chart widget', function (assert) {
+        // Pie Chart is rendered asynchronously.
+        // concurrency.delay is a fragile way that we use to wait until the
+        // graph is rendered.
+        // Roughly: 2 concurrency.delay = 2 levels of inner async calls.
+        var done = assert.async();
+        assert.expect(7);
+
+        var self = this;
+        createAsyncView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard>' +
+                      '<widget name="pie_chart" attrs="{\'measure\': \'sold\', \'groupby\': \'categ_id\'}"/>' +
+                  '</dashboard>',
+            mockRPC: function (route, args){
+                if (route == '/web/dataset/call_kw/test_report/read_group') {
+                    assert.deepEqual(args.args, []);
+                    assert.deepEqual(args.model,"test_report");
+                    assert.deepEqual(args.method,"read_group");
+                    assert.deepEqual(args.kwargs, {
+                      domain: [],
+                      fields: ["sold"],
+                      groupby: ["categ_id"],
+                      lazy: false,
+                    });
+                }
+
+                return this._super.apply(this, arguments);
+            }
+
+        })
+        .then(function (dashboard) {
+            self.dashboard = dashboard;
+        })
+        .then(concurrency.delay.bind(concurrency, 0))
+        .then(concurrency.delay.bind(concurrency, 0))
+        .then(function () {
+            assert.strictEqual($('.o_widget').length, 1,
+                "there should be a node with o_widget class");
+
+            var texts = $('svg text');
+            assert.deepEqual(texts.length, 4,
+                "texts must contain exactly 4 elements");
+            assert.strictEqual(texts.text(), "63%38%FirstSecond",
+                "there should be 4 texts visible");
+            self.dashboard.destroy();
+            delete widgetRegistry.map.test;
+            done();
+        });
     });
 
     QUnit.test('basic rendering of an aggregate tag inside a group', function (assert) {

@@ -50,6 +50,7 @@ var DashboardRenderer = FormRenderer.extend({
         this._super.apply(this, arguments);
         this.isInDOM = true;
         _.invoke(this.subControllers, 'on_attach_callback');
+        _.invoke(this.widgets, 'on_attach_callback');
     },
     /**
      * @override

@@ -101,6 +101,31 @@
 
         }
 
+        .o_widget, .o_pie_chart {
+            margin-bottom: $padding-small;
+            display: flex;
+            flex-flow: row wrap;
+            align-items: flex-start;
+            flex : 1 1 auto;
+            > label:empty {
+                display: none;
+
+                + .o_value {
+                    font-size: 2.5em;
+                }
+            }
+
+            @include media-breakpoint-between(vsm, md, $o-extra-grid-breakpoints) {
+                width: 100%;
+                flex: 1 0 100%;
+            }
+
+            @include media-breakpoint-up(lg) {
+                flex: 1 1 auto;
+                margin-right: -$padding-small*0.5;
+            }
+        }
+
         .o_aggregate.o_clickable {
             .o_value {
                 // .btn-link(); FIXME
@@ -152,6 +177,8 @@
     .o_subview {
         .o_view_nocontent {
             position: relative;
+            flex: 1 1 auto;
+            top: inherit;
         }
 
         .o_view_controller {
@@ -166,8 +193,12 @@
                 min-height: 300px;
                 position: relative;
 
-                .o_graph_svg_container {
+                .o_graph_container {
+                    display: flex;
                     @include o-position-absolute(0, 0, 0, 0);
+                }
+                .o_graph_svg_container {
+                    flex: 1 1 auto;
                 }
             }
         }
