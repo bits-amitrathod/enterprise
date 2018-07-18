@@ -7,3 +7,4 @@ from . import SpsCustomerUploadedDocument
 from . import SpsCustomerRequest
 from . import SpsProduct
 from . import SpsCustomerTemplateMapper
+from . import SpsCustomerProductPriority

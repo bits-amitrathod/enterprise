@@ -82,6 +82,8 @@ class IncomingMailCronModel(models.Model):
 
                                 email_to = str(match.group(0))
 
+                                _logger.info('Email %r', email_to );
+
                                 if email_to == INCOMING_EMAIL_ID :
 
                                     _Attachment = namedtuple('Attachment', ('fname', 'content', 'info'))
@@ -272,16 +274,32 @@ class IncomingMailCronModel(models.Model):
                                                                              ['customer_sku', '=',
                                                                               req['customer_sku']]])
 
+                                                                        high_priority_product = False
+
                                                                         if len(sps_products) >= 1:
 
                                                                             sps_product = sps_products[0]
 
                                                                             sps_product_id = sps_product.id
 
-                                                                            req.update({'product_id' : sps_product_id, 'status': 'new'})
+                                                                            sps_customer_product_priority = self.env[
+                                                                                'sps.customer.product.priority'].search(
+                                                                                [['product_id', '=', sps_product_id],
+                                                                                 ['customer_id', '=', user_id],
+                                                                                 ['product_priority', '=', 0]])
+
+                                                                            if sps_customer_product_priority:
+                                                                                high_priority_product = True
+                                                                                req.update(
+                                                                                    {'product_id': sps_product_id,
+                                                                                     'status': 'inprocess'})
+                                                                            else :
+                                                                                req.update(
+                                                                                    {'product_id': sps_product_id,
+                                                                                     'status': 'new'})
 
                                                                         else:
-                                                                            req.update({'product_id': sps_product_id,
+                                                                            req.update({'product_id': None,
                                                                                         'status': 'voided'})
 
                                                                         sps_customer_request = {
@@ -296,9 +314,14 @@ class IncomingMailCronModel(models.Model):
                                                                             sps_customer_request.update(
                                                                                 {key: req[key]})
 
-                                                                        self.env[
+                                                                        saved_sps_customer_request = self.env[
                                                                             'sps.customer.requests'].create(
                                                                             sps_customer_request)
+
+                                                                        if high_priority_product:
+                                                                            self.send_sps_customer_request_for_processing(
+                                                                                saved_sps_customer_request)
+
                                                                 else:
                                                                     _logger.info(
                                                                         'file is not acceptable or zero records in the file')
@@ -312,7 +335,7 @@ class IncomingMailCronModel(models.Model):
                                             _logger.info("No attachements found")
 
                                     else:
-                                        _logger.info('Not a Multipart email');
+                                        _logger.info('Not a Multipart email')
 
                                 pop_server.dele(num)
 
@@ -381,6 +404,10 @@ class IncomingMailCronModel(models.Model):
     @staticmethod
     def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
         return ''.join(random.choice(chars) for _ in range(size))
+
+    def send_sps_customer_request_for_processing(self, customer_product_request):
+        _logger.info('inside processing %r', customer_product_request.id)
+        return None
 
 
 

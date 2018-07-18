@@ -104,8 +104,9 @@ class FileUploadController(Controller):
 
                     for req in requests:
 
-                        sps_products = request.env['sps.product'].sudo().search(
-                            [['customer_id', '=', user_id], ['customer_sku', '=', req['customer_sku']]])
+                        sps_products = request.env['sps.product'].sudo().search([['customer_id', '=', user_id], ['customer_sku', '=', req['customer_sku']]])
+
+                        high_priority_product = False
 
                         if len(sps_products) >= 1:
 
@@ -113,8 +114,14 @@ class FileUploadController(Controller):
 
                             sps_product_id = sps_product.product_id
 
-                            req.update(
-                                {'product_id': sps_product_id, 'status': 'new'})
+                            sps_customer_product_priority = request.env['sps.customer.product.priority'].sudo().search([['product_id', '=', sps_product_id], ['customer_id', '=', user_id], ['product_priority', '=', 0]])
+
+                            if sps_customer_product_priority:
+                                high_priority_product = True
+                                req.update({'product_id': sps_product_id, 'status': 'inprocess'})
+
+                            else:
+                                req.update({'product_id': sps_product_id, 'status': 'new'})
 
                         else:
                             req.update({'product_id': None, 'status': 'voided'})
@@ -125,7 +132,11 @@ class FileUploadController(Controller):
                         for key in req.keys():
                             sps_customer_request.update({key: req[key]})
 
-                        request.env['sps.customer.requests'].sudo().create(sps_customer_request)
+                        saved_sps_customer_request = request.env['sps.customer.requests'].sudo().create(sps_customer_request)
+
+                        if high_priority_product:
+                            self.send_sps_customer_request_for_processing(saved_sps_customer_request)
+
                 else:
                     _logger.info('file is not acceptable')
                     response = {'errorCode': 2, 'message': 'File is not CSV nor Excel' }
@@ -173,3 +184,8 @@ class FileUploadController(Controller):
             file_acceptable = False
             _logger.info(str(ue))
         return requests, file_acceptable
+
+
+    def send_sps_customer_request_for_processing(self, customer_product_request):
+        _logger.info('inside processing %r', customer_product_request.id)
+        return None
