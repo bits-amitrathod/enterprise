@@ -71,9 +71,7 @@ var UnsplashCore = Class.extend(Mixins.EventDispatcherMixin, ServicesMixin, {
             return $.Deferred().resolve(self.clientId);
         }
         return this._rpc({
-            model: 'ir.config_parameter',
-            method: 'get_param',
-            args: ['unsplash.access_key'],
+            route: '/web_unsplash/get_client_id',
         }).then(function (res) {
             self.clientId = res;
             return res;

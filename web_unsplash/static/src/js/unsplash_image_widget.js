@@ -166,9 +166,10 @@ ImageWidget.include({
         var key = this.$('#accessKeyInput').val().trim();
         if (key) {
             this._rpc({
-                model: 'ir.config_parameter',
-                method: 'set_param',
-                args: ['unsplash.access_key', key],
+                route: '/web_unsplash/set_client_id',
+                params: {
+                    'key': key,
+                },
             }).then(function () {
                 self.unsplashAPI.clientId = key;
                 self._renderImages();

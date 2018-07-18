@@ -4,6 +4,7 @@ import base64
 import io
 import logging
 import requests
+import werkzeug.utils
 
 from PIL import Image
 from odoo import http, tools
@@ -80,3 +81,15 @@ class Web_Unsplash(http.Controller):
             uploads.extend(attachment.read(['name', 'mimetype', 'checksum', 'res_id', 'res_model', 'access_token']))
 
         return uploads
+
+    @http.route("/web_unsplash/get_client_id", type='json', auth="user")
+    def get_unsplash_client_id(self, **post):
+        if request.env.user._has_unsplash_key_rights():
+            return request.env['ir.config_parameter'].sudo().get_param('unsplash.secret_key')
+        raise werkzeug.exceptions.NotFound()
+
+    @http.route("/web_unsplash/set_client_id", type='json', auth="user")
+    def set_unsplash_client_id(self, key, **post):
+        if request.env.user._has_unsplash_key_rights():
+            return request.env['ir.config_parameter'].sudo().set_param('unsplash.secret_key', key)
+        raise werkzeug.exceptions.NotFound()
