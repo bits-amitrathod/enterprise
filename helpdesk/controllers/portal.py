@@ -15,6 +15,8 @@ class CustomerPortal(CustomerPortal):
         user = request.env.user
         domain = ['|', ('user_id', '=', user.id), ('partner_id', 'child_of', user.partner_id.commercial_partner_id.id)]
         values['ticket_count'] = request.env['helpdesk.ticket'].sudo().search_count(domain)
+        if values.get('sales_user', False):
+            values['title'] = _("Salesperson")
         return values
 
     @http.route(['/my/tickets', '/my/tickets/page/<int:page>'], type='http', auth="user", website=True)
