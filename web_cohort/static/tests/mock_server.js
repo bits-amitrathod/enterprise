@@ -37,6 +37,7 @@ MockServer.include({
         };
         var rows = [];
         var totalValue = 0;
+        var initialChurnValue = 0;
         var columnsAvg = {};
 
         var groups = this._mockReadGroup(model, {
@@ -131,10 +132,11 @@ MockServer.include({
                             });
                         }
                     }
+                    initialChurnValue = value - initialValue;
                 }
                 var previousValue = column === 0 ? initialValue : columns[column - 1]['value'];
                 var remainingValue = previousValue - colValue;
-                var previousChurnValue = column === 0 ? 0 : columns[column - 1]['churn_value'];
+                var previousChurnValue = column === 0 ? initialChurnValue : columns[column - 1]['churn_value'];
                 var churnValue = colValue + previousChurnValue;
                 var percentage = value ? parseFloat(remainingValue / value) : 0;
                 if (kwargs.mode === 'churn') {

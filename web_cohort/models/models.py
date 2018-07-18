@@ -36,6 +36,7 @@ class Base(models.AbstractModel):
         rows = []
         columns_avg = defaultdict(lambda: dict(percentage=0, count=0))
         total_value = 0
+        initial_churn_value = 0
         for group in self._read_group_raw(domain=domain, fields=[date_start], groupby=date_start + ':' + interval):
             dates = group['%s:%s' % (date_start, interval)]
             if not dates:
@@ -94,6 +95,7 @@ class Base(models.AbstractModel):
                         initial_value = len(col_records)
                     else:
                         initial_value = sum([record[measure] for record in col_records])
+                    initial_churn_value = value - initial_value
                 previous_col_remaining_value = initial_value if col_index == 0 else columns[-1]['value']
                 col_remaining_value = previous_col_remaining_value - col_value
                 percentage = value and (col_remaining_value) / value or 0
@@ -106,7 +108,7 @@ class Base(models.AbstractModel):
                 columns_avg[col_index]['count'] += 1
                 columns.append({
                     'value': col_remaining_value,
-                    'churn_value': col_value + (columns[-1]['churn_value'] if col_index > 0 else 0),
+                    'churn_value': col_value + (columns[-1]['churn_value'] if col_index > 0 else initial_churn_value),
                     'percentage': percentage,
                     'domain': [
                         (date_stop, ">=", col_start_date.strftime(DEFAULT_SERVER_DATE_FORMAT)),
