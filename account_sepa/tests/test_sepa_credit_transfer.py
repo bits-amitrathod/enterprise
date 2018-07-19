@@ -15,8 +15,8 @@ class TestSEPACreditTransfer(AccountingTestCase):
         super(TestSEPACreditTransfer, self).setUp()
 
         # Get some records
-        self.asustek_sup = self.env['res.partner'].search([('name', 'ilike', 'asustek'), ('supplier', '=', True)])
-        self.suppliers = self.env['res.partner'].search([('name', 'not ilike', 'asustek'), ('supplier', '=', True)])
+        self.asustek_sup = self.env['res.partner'].search([('name', 'ilike', 'Wood Corner'), ('supplier', '=', True)])
+        self.suppliers = self.env['res.partner'].search([('name', 'not ilike', 'Wood Corner'), ('supplier', '=', True)])
         self.sepa_ct = self.env.ref('account_sepa.account_payment_method_sepa_ct')
 
         # Create an IBAN bank account and its journal

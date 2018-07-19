@@ -115,14 +115,14 @@ odoo.define('sale_subscription_dashboard.sale_subscription_tests', function (req
                     currency_id: 3,
                     default_salesman: {
                         id: 1,
-                        name: "Administrator"
+                        name: "Mitchell Stephens"
                     },
                     salesman_ids: [{
                         id: 1,
-                        name: "Administrator"
+                        name: "Mitchell Stephens"
                     }, {
                         id: 5,
-                        name: "Demo User"
+                        name: "Marc Brown"
                     }]
                 },
                 salesman_values: {
@@ -142,7 +142,7 @@ odoo.define('sale_subscription_dashboard.sale_subscription_tests', function (req
                     }],
                     nrr: 1195,
                     nrr_invoices: [{
-                        partner: "Demo Portal User",
+                        partner: "Joel Willis",
                         account_analytic_template: "Odoo Monthly",
                         nrr: "20.0",
                         account_analytic: false
