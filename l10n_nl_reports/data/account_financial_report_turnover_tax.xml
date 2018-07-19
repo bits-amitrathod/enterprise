@@ -134,7 +134,7 @@
         <field name="name">3b. Leveringen naar/diensten in landen binnen de EU (omzet)</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_nl.tag_nl_13'), ref('l10n_nl.tag_nl_40'), ref('l10n_nl.tag_nl_41')])]"/>
+        <field name="domain" eval="[('tax_ids.tag_ids', 'in', [ref('l10n_nl.tag_nl_40'), ref('l10n_nl.tag_nl_41')])]"/>
         <field name="formulas">balance = - sum.balance</field>
         <field name="parent_id" ref="financial_report_line_nl_01_03"/>
         <field name="show_domain">never</field>
@@ -331,18 +331,8 @@
         <field name="sequence" eval="2"/>
         <field name="level" eval="2"/>
         <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_nl.tag_nl_33')])]"/>
-        <field name="formulas">balance = sum.balance + NLTAX_B5bb.balance</field>
-        <field name="parent_id" ref="financial_report_line_nl_02_04"/>
-        <field name="show_domain">never</field>
-        <field name="special_date_changer">strict_range</field>
-    </record>
-    <record id="financial_report_line_nl_02_04_02b" model="account.financial.html.report.line">
-        <field name="code">NLTAX_B5bb</field>
-        <field name="name">Voorbelasting (BTW) bis</field>
-        <field name="sequence" eval="2"/>
-        <field name="level" eval="2"/>
-        <field name="domain" eval="[('tax_line_id.tag_ids', 'in', [ref('l10n_nl.tag_nl_34')])]"/>
         <field name="formulas">balance = sum.balance</field>
+        <field name="parent_id" ref="financial_report_line_nl_02_04"/>
         <field name="show_domain">never</field>
         <field name="special_date_changer">strict_range</field>
     </record>

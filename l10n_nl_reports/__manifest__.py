@@ -75,7 +75,6 @@
     'website': 'http://www.veritos.nl',
     'depends': ['l10n_nl', 'account_reports'],
     'data': [
-        'data/account_account_tag.xml',
         'data/account_financial_report_profit_loss.xml',
         'data/account_financial_report_turnover_tax.xml',
         'data/account_financial_report_intrastat.xml',
