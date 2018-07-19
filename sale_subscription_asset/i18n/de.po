@@ -4,17 +4,18 @@
 # 
 # Translators:
 # Rudolf Schnapka <rs@techno-flex.de>, 2017
-# Thorsten Vocks <thorsten.vocks@openbig.org>, 2017
+# Gab_Odoo <gab@odoo.com>, 2017
 # Fabian Liesch <fabian.liesch@gmail.com>, 2017
-# Wolfgang Taferner <wolfgang.transifex@service.wt-io-it.at>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Wolfgang Taferner, 2017
+# Martin Trigaux, 2017
+# e2f FFE <e2f_de_FFE@outlook.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: e2f FFE <e2f_de_FFE@outlook.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,8 +24,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_subscription_asset
-#: model:ir.model.fields,field_description:sale_subscription_asset.field_sale_subscription_asset_category_id
-#: model:ir.model.fields,field_description:sale_subscription_asset.field_sale_subscription_template_template_asset_category_id
+#: model:ir.model.fields,field_description:sale_subscription_asset.field_sale_subscription__asset_category_id
+#: model:ir.model.fields,field_description:sale_subscription_asset.field_sale_subscription_template__template_asset_category_id
 msgid "Deferred Revenue Category"
 msgstr "Umsatzabgrenzungs-Kategorie"
 
@@ -32,7 +33,7 @@ msgstr "Umsatzabgrenzungs-Kategorie"
 #: model:ir.ui.view,arch_db:sale_subscription_asset.sale_subscription_template_view_form_inherit_sale_subscription_asset
 #: model:ir.ui.view,arch_db:sale_subscription_asset.sale_subscription_view_form_inherit_sale_subscription_asset
 msgid "Deferred Revenue Type"
-msgstr "Umsatzabgrenzungstyp"
+msgstr "Abgrenzungsart"
 
 #. module: sale_subscription_asset
 #: model:ir.model,name:sale_subscription_asset.model_sale_order
@@ -42,7 +43,7 @@ msgstr "Angebot"
 #. module: sale_subscription_asset
 #: model:ir.ui.view,arch_db:sale_subscription_asset.res_config_settings_view_form
 msgid "Revenue Types"
-msgstr ""
+msgstr "Umsatztypen"
 
 #. module: sale_subscription_asset
 #: model:ir.model,name:sale_subscription_asset.model_sale_subscription
@@ -52,7 +53,7 @@ msgstr "Verkauf über Abonnement"
 #. module: sale_subscription_asset
 #: model:ir.model,name:sale_subscription_asset.model_sale_subscription_template
 msgid "Sale Subscription Template"
-msgstr ""
+msgstr "Vorlage für Verkaufsabonnement"
 
 #. module: sale_subscription_asset
 #: model:ir.model,name:sale_subscription_asset.model_sale_order_line
@@ -60,15 +61,19 @@ msgid "Sales Order Line"
 msgstr "Auftragsposition"
 
 #. module: sale_subscription_asset
-#: model:ir.model.fields,help:sale_subscription_asset.field_sale_subscription_asset_category_id
+#: model:ir.model.fields,help:sale_subscription_asset.field_sale_subscription__asset_category_id
 msgid ""
 "This asset category will be applied to the lines of the subscription's "
 "invoices."
 msgstr ""
+"Diese Anlagenkategorie wird bei den abzurechnenden Abonnementspositionen "
+"ergänzt. "
 
 #. module: sale_subscription_asset
-#: model:ir.model.fields,help:sale_subscription_asset.field_sale_subscription_template_template_asset_category_id
+#: model:ir.model.fields,help:sale_subscription_asset.field_sale_subscription_template__template_asset_category_id
 msgid ""
 "This asset category will be set on the subscriptions that have this "
 "template."
 msgstr ""
+"Diese Anlagenkategorie wird für jene Abonnements festgelegt, die über diese "
+"Vorlage verfügen."

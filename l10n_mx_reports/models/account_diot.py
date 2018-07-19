@@ -27,7 +27,8 @@ class MxReportPartnerLedger(models.AbstractModel):
             {'name': _('Importation 16%'), 'class': 'number'},
             {'name': _('Paid 0%'), 'class': 'number'},
             {'name': _('Exempt'), 'class': 'number'},
-            {'name': _('Withheld'), 'class': 'number'}
+            {'name': _('Withheld'), 'class': 'number'},
+            {'name': _('Paid 16% - Non-Creditable'), 'class': 'number'},
         ]
 
     def do_query(self, options, line_id):
@@ -144,6 +145,7 @@ class MxReportPartnerLedger(models.AbstractModel):
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines')
         tag_16 = self.env.ref('l10n_mx.tag_diot_16')
         tag_imp = self.env.ref('l10n_mx.tag_diot_16_imp')
+        tag_non_cre = self.env.ref('l10n_mx.tag_diot_16_non_cre', raise_if_not_found=False) or self.env['account.account.tag']
         tag_0 = self.env.ref('l10n_mx.tag_diot_0')
         tag_ret = self.env.ref('l10n_mx.tag_diot_ret')
         tag_exe = self.env.ref('l10n_mx.tag_diot_exento')
@@ -151,6 +153,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             ('type_tax_use', '=', 'purchase')])
         tax16 = tax_ids.search([('id', 'in', tax_ids.ids),
                                 ('tag_ids', 'in', tag_16.ids)])
+        taxnoncre = tax_ids.search([('id', 'in', tax_ids.ids), ('tag_ids', 'in', tag_non_cre.ids)]) if tag_non_cre else self.env['account.tax']
         taximp = tax_ids.search([('id', 'in', tax_ids.ids),
                                 ('tag_ids', 'in', tag_imp.ids)])
         tax0 = tax_ids.search([('id', 'in', tax_ids.ids),
@@ -179,7 +182,7 @@ class MxReportPartnerLedger(models.AbstractModel):
                 partner.l10n_mx_nationality or '']
             partner_data = grouped_partners[partner]
             total_tax16 = total_taximp = 0
-            total_tax0 = 0
+            total_tax0 = total_taxnoncre = 0
             exempt = 0
             withh = 0
             for tax in tax16.ids:
@@ -196,6 +199,9 @@ class MxReportPartnerLedger(models.AbstractModel):
             withh += sum([abs(partner_data.get(ret.id, 0) / (100 / ret.amount))
                           for ret in tax_ret])
             p_columns.append(withh)
+            for tax in taxnoncre.ids:
+                total_taxnoncre += partner_data.get(tax, 0)
+            p_columns.append(self.format_value(total_taxnoncre))
             unfolded = 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all
             lines.append({
                 'id': 'partner_' + str(partner.id),
@@ -227,7 +233,7 @@ class MxReportPartnerLedger(models.AbstractModel):
                 columns = ['', '', '', '']
                 columns.append('')
                 total_tax16 = total_taximp = 0
-                total_tax0 = 0
+                total_tax0 = total_taxnoncre = 0
                 exempt = 0
                 withh = 0
                 total_tax16 += sum([
@@ -251,6 +257,10 @@ class MxReportPartnerLedger(models.AbstractModel):
                     for ret in tax_ret
                     if ret.id in line.tax_ids.ids])
                 columns.append(self.format_value(withh))
+                total_taxnoncre += sum([
+                    line.debit or line.credit * -1
+                    for tax in taxnoncre.ids if tax in line.tax_ids.ids])
+                columns.append(self.format_value(total_taxnoncre))
                 caret_type = 'account.move'
                 if line.invoice_id:
                     caret_type = 'account.invoice.in' if line.invoice_id.type in ('in_refund', 'in_invoice') else 'account.invoice.out'

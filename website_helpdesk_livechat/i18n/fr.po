@@ -3,21 +3,21 @@
 # * website_helpdesk_livechat
 # 
 # Translators:
-# Eloïse Stilmant <est@odoo.com>, 2017
 # Jeanjean Noname <monsieur.spock@gmail.com>, 2017
 # Francis Ndong <francissimel@hotmail.com>, 2017
 # Quentin THEURET <odoo@kerpeo.com>, 2017
 # Jérémy Donas <LeDistordu@users.noreply.github.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Richard Mathot <rim@odoo.com>, 2017
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
+# Richard Mathot <rim@odoo.com>, 2017
+# Eloïse Stilmant <est@odoo.com>, 2017
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,17 +77,17 @@ msgid "Helpdesk Team"
 msgstr "Equipe Helpdesk"
 
 #. module: website_helpdesk_livechat
-#: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team_is_canned_response
+#: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team__is_canned_response
 msgid "Is Canned Response"
-msgstr ""
+msgstr "Est une réponse standardisée"
 
 #. module: website_helpdesk_livechat
-#: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team_feature_livechat_channel_id
+#: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team__feature_livechat_channel_id
 msgid "Live Chat Channel"
 msgstr "Canal de discussion instantanée"
 
 #. module: website_helpdesk_livechat
-#: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team_feature_livechat_web_page
+#: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team__feature_livechat_web_page
 msgid "Live Chat Test Page"
 msgstr "Page de Test du Live Chat"
 
@@ -114,6 +114,10 @@ msgid ""
 "the live website chatter. Simply ype ':' followed by the shortcut label to "
 "get selectable canned reponses."
 msgstr ""
+"Définissez des raccourcis pour des réponses prédéfinies. Cela fonctionne "
+"dans l'outil d'envoi d'e-mail et la zone de discussion en direct du site "
+"Web. Tapez simplement « : » suivi de l'étiquette de raccourci pour obtenir "
+"des réponses standardisées parmi lesquelles vous pouvez faire votre choix."
 
 #. module: website_helpdesk_livechat
 #: model:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
@@ -133,7 +137,7 @@ msgid "Test the livechat widget from this page:<br/>"
 msgstr "Testez le widget de livechat de cette page:<br/>"
 
 #. module: website_helpdesk_livechat
-#: model:ir.model.fields,help:website_helpdesk_livechat.field_helpdesk_team_feature_livechat_web_page
+#: model:ir.model.fields,help:website_helpdesk_livechat.field_helpdesk_team__feature_livechat_web_page
 msgid ""
 "URL to a static page where you client can discuss with the operator of the "
 "channel."
@@ -144,7 +148,7 @@ msgstr ""
 #. module: website_helpdesk_livechat
 #: model:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
 msgid "Use predefined answers in the mail composer"
-msgstr "Utilisez les réponses enregistrées dans l'envoi des emails"
+msgstr "Utilisez les réponses enregistrées dans l'envoi des courriels"
 
 #. module: website_helpdesk_livechat
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:99
@@ -178,3 +182,5 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
 msgid "channel to define auto-popup rules and geolocation filters"
 msgstr ""
+"Salon pour définir les règles d'affichage automatique de fenêtres "
+"contextuelles et les filtres de géolocalisation"
