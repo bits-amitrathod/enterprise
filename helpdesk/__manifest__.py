@@ -15,6 +15,7 @@
         'web_tour',
         'resource',
         'portal',
+        'digest',
     ],
     'description': """
 Helpdesk - Ticket Management App
@@ -37,12 +38,14 @@ Features:
     'data': [
         'security/helpdesk_security.xml',
         'security/ir.model.access.csv',
+        'data/digest_data.xml',
         'data/mail_data.xml',
         'data/helpdesk_data.xml',
         'data/helpdesk_cron.xml',
         'views/helpdesk_views.xml',
         'views/helpdesk_team_views.xml',
         'views/assets.xml',
+        'views/digest_views.xml',
         'views/helpdesk_portal_templates.xml',
         'views/res_partner_views.xml',
         'views/mail_activity_views.xml',

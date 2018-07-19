@@ -17,8 +17,10 @@ It assigns manager and user access rights to the Administrator for the accountin
     'depends': ['account_invoicing', 'web_tour', 'account_reports'],
     'data': [
         'data/account_accountant_data.xml',
+        'data/digest_data.xml',
         'security/account_accountant_security.xml',
         'views/account_accountant_templates.xml',
+        'views/digest_views.xml',
         'views/res_config_settings_views.xml',
         'views/product_views.xml',
         'wizard/account_change_lock_date.xml',
