@@ -231,6 +231,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice = self.create_invoice()
         invoice.action_invoice_open()
         ctx = {'active_model': 'account.invoice', 'active_ids': [invoice.id]}
+        bank_journal = self.env['account.journal'].search([
+            ('type', '=', 'bank')], limit=1)
         register_payments = self.env['account.register.payments'].with_context(
             ctx).create({
                 'payment_date': invoice.date,
@@ -238,7 +240,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
                     'l10n_mx_edi.payment_method_efectivo').id,
                 'payment_method_id': self.env.ref(
                     "account.account_payment_method_manual_in").id,
-                'journal_id': invoice.journal_id.id,
+                'journal_id': bank_journal.id,
                 'communication': invoice.number,
                 'amount': invoice.amount_total, })
         payment = register_payments.create_payments()
