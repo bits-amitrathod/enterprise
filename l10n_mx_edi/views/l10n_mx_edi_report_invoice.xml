@@ -56,22 +56,22 @@
         </xpath>
 
         <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[1]" position="before">
-            <th t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')">Product code</th>
+            <th t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')">
+                <span>Product code</span>
+                <t t-set="colspan" t-value="colspan+1"/>
+            </th>
         </xpath>
         <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[4]" position="after">
-            <th class="text-right" t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')">Unit code</th>
+            <th class="text-right" t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')">
+                <span>Unit code</span>
+                <t t-set="colspan" t-value="colspan+1"/>
+            </th>
         </xpath>
-        <xpath expr="//table[@name='invoice_line_table']/tbody/tr[1]/td[1]" position="before">
+        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[1]" position="before">
             <td t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')"><span t-field="l.product_id.l10n_mx_edi_code_sat_id.code"/></td>
         </xpath>
-        <xpath expr="//table[@name='invoice_line_table']/tbody/tr[1]/td[4]" position="after">
+        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[4]" position="after">
             <td class="text-right" t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')"><span t-field="l.uom_id.l10n_mx_edi_code_sat_id.code"/></td>
-        </xpath>
-        <xpath expr="//table[@name='invoice_line_table']/tbody/tr[2]" position="inside">
-            <t t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')">
-                <td></td>
-                <td></td>
-            </t>
         </xpath>
 
         <xpath expr="//p[@t-if='o.comment']" position="before">
