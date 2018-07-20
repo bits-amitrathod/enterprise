@@ -4,18 +4,18 @@
 # 
 # Translators:
 # Sergey Vilizhanin <sv@grimmette.ru>, 2017
-# Max Belyanin <maxbelyanin@gmail.com>, 2017
-# Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
+# Martin Trigaux, 2017
+# Collex100, 2017
 # Максим Дронь <dronmax@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Max Belyanin <maxbelyanin@gmail.com>, 2017
 # Gennady Marchenko <gennadym@gmail.com>, 2017
 # Evgeny <transingularity@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 09:23+0000\n"
-"PO-Revision-Date: 2017-10-24 09:23+0000\n"
+"POT-Creation-Date: 2018-06-25 08:34+0000\n"
+"PO-Revision-Date: 2018-06-25 08:34+0000\n"
 "Last-Translator: Evgeny <transingularity@gmail.com>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgid "A SEPA communication cannot exceed 140 characters"
 msgstr "SEPA сообщение не может превышать 140 символов"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_bank_account_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__bank_account_id
 msgid "Bank Account"
 msgstr "Банковский счёт"
 
@@ -66,17 +66,17 @@ msgid "Create SEPA credit transfer files"
 msgstr "Создать файлы кредитного перевода SEPA"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_create_uid
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__create_uid
 msgid "Created by"
 msgstr "Создано"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_create_date
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__create_date
 msgid "Created on"
 msgstr "Создан"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_display_name
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__display_name
 msgid "Display Name"
 msgstr "Отображаемое Имя"
 
@@ -86,7 +86,7 @@ msgid "Download SEPA Credit Transfer File"
 msgstr "Загрузить файл кредитного перевода SEPA"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_company_sepa_orgid_issr
+#: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_issr
 msgid ""
 "Entity that assigns the identification (eg. KBE-BCO or Finanzamt Muenchen "
 "IV)."
@@ -95,7 +95,7 @@ msgstr ""
 "налоговое управление Мюнхена IV)."
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_filename
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__filename
 msgid "Filename"
 msgstr "Имя файла"
 
@@ -115,19 +115,19 @@ msgid "German Version"
 msgstr "Немецкая версия"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__id
 msgid "ID"
 msgstr "Номер"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
-#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_orgid_id
+#: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_id
+#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_orgid_id
 msgid "Identification"
 msgstr "Идентификация"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_company_sepa_orgid_id
-#: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_orgid_id
+#: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_id
+#: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_id
 msgid "Identification assigned by an institution (eg. VAT number)."
 msgstr "Идентификатор, присваиваемый учреждением (например. VAT номер)."
 
@@ -142,39 +142,39 @@ msgstr ""
 "выберите платежи, принадлежащие тому же самому журналу банка."
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__is_generic
 msgid "Is Generic"
 msgstr ""
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
-#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_orgid_issr
+#: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_issr
+#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_orgid_issr
 msgid "Issuer"
 msgstr "Эмитент"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_journal
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_journal_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__journal_id
 msgid "Journal"
 msgstr "Журнал"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer___last_update
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer____last_update
 msgid "Last Modified on"
 msgstr "Последнее изменение"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_write_uid
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__write_uid
 msgid "Last Updated by"
 msgstr "Последний раз обновил"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_write_date
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__write_date
 msgid "Last Updated on"
 msgstr "Последнее обновление"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_initiating_party_name
+#: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_initiating_party_name
 msgid ""
 "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
 "in length."
@@ -213,8 +213,8 @@ msgid "Payments to send via SEPA"
 msgstr "Платежи отправить через систему SEPA"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_payment_partner_bank_account_id
-#: model:ir.model.fields,field_description:account_sepa.field_account_register_payments_partner_bank_account_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_payment__partner_bank_account_id
+#: model:ir.model.fields,field_description:account_sepa.field_account_register_payments__partner_bank_account_id
 msgid "Recipient Bank Account"
 msgstr "Банковский Счет Получателя"
 
@@ -240,19 +240,19 @@ msgid "SEPA Credit Transfers to Send"
 msgstr "Кредитные Переводы SEPA Отправить"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
-#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_pain_version
+#: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_pain_version
+#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_pain_version
 msgid "SEPA Pain Version"
 msgstr "SEPA Версия боли"
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_file
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__file
 msgid "SEPA XML File"
 msgstr "SEPA XML Файл"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_company_sepa_pain_version
-#: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_pain_version
+#: model:ir.model.fields,help:account_sepa.field_res_company__sepa_pain_version
+#: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_pain_version
 msgid ""
 "SEPA may be a generic format, some countries differ from the SEPA "
 "recommandations made by the EPC (European Payment Councile) and thus the XML"
@@ -268,7 +268,7 @@ msgid "Swiss Version"
 msgstr "Швейцарский версия"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_account_sepa_credit_transfer_is_generic
+#: model:ir.model.fields,help:account_sepa.field_account_sepa_credit_transfer__is_generic
 msgid ""
 "Technical feature used during the file creation. A SEPA message is said to "
 "be 'generic' if it cannot be considered as a standard european credit "
@@ -425,13 +425,13 @@ msgid "Too many transactions for a single file."
 msgstr "Слишком много транзакций для одного файла."
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_warning_message
+#: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer__warning_message
 msgid "Warning"
 msgstr "Предупреждение"
 
 #. module: account_sepa
-#: model:ir.model.fields,help:account_sepa.field_res_company_sepa_initiating_party_name
-#: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_orgid_issr
+#: model:ir.model.fields,help:account_sepa.field_res_company__sepa_initiating_party_name
+#: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_issr
 msgid ""
 "Will appear in SEPA payments as the name of the party initiating the "
 "payment. Limited to 70 characters."
@@ -440,8 +440,8 @@ msgstr ""
 "70 символами."
 
 #. module: account_sepa
-#: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_initiating_party_name
-#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_initiating_party_name
+#: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_initiating_party_name
+#: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_initiating_party_name
 msgid "Your Company Name"
 msgstr "Наименование Вашей Компании"
 

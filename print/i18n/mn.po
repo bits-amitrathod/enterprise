@@ -2,12 +2,21 @@
 # This file contains the translation of the following modules:
 # * print
 # 
+# Translators:
+# Martin Trigaux, 2018
+# Otgonbayar.A <gobi.mn@gmail.com>, 2018
+# nasaaskii <nasaaskii@gmail.com>, 2018
+# Batzul B <batzul.active@gmail.com>, 2018
+# Khishigbat Ganbold <khishigbat@asterisk-tech.mn>, 2018
+# Tsogjav <Tsogjav2007@yahoo.com>, 2018
+# Onii Onii <onii0223@yahoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-25 08:34+0000\n"
 "PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Onii Onii <onii0223@yahoo.com>, 2018\n"
 "Language-Team: Mongolian (https://www.transifex.com/odoo/teams/41243/mn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,6 +47,25 @@ msgid ""
 "              \n"
 "            "
 msgstr ""
+"\n"
+"                <body>\n"
+"                      <p>Хүндэт ${object.partner_id.name},</p>\n"
+"\n"
+"                      <p>Баримт бичгийг \"Хэвлээд илгээх\" сүүлийн явцад зарим алдаа гарлаа. Дараах нь таны илгээсэн амжилтгүй болсон Хэвлэх захиалгын жагсаалт. </p>\n"
+"                      <p>Уучлаарай, алдаа илэрсэн. <i>Тохиргоо > Хэвлэх захиалгууд</i> руу орж харна уу.</p>\n"
+"\n"
+"                      % if ctx.get('print_errors'):\n"
+"                            <p>\n"
+"                            Хэвлэх захиалгын дугаар  |    Алдааны зурвас <br/>\n"
+"                            -------------------------------------- <br/>\n"
+"                                  % for print_order_id, error_text in ctx.get('print_errors'):\n"
+"                                        ${print_order_id}    |    ${error_text} <br/>\n"
+"                                  % endfor\n"
+"                            </p>\n"
+"                      % endif\n"
+"                </body>\n"
+"              \n"
+"            "
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
@@ -45,6 +73,8 @@ msgid ""
 "<b> Credit error :</b> Your Provider Credit account is negative. Please "
 "refill your provider account to send documents."
 msgstr ""
+"<b> Зээлийн алдаа :</b> Таны зээлээр нийлүүлэгч данс сөрөг байна. Баримт "
+"илгээхийн тулд нийлүүлэгчийн дансыг цэнэглэнэ үү."
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
@@ -54,7 +84,7 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
 msgid "<strong>Name</strong>"
-msgstr ""
+msgstr "<strong>Нэр</strong>"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.view_print_provider_kanban
@@ -65,53 +95,53 @@ msgstr ""
 #: code:addons/print/wizard/print_order_wizard.py:70
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
-msgstr ""
+msgstr "Таны илгээхийг хүссэн баримтуудаас ядаж нэг нь алдаатай байна."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__user_id
 msgid "Author"
-msgstr ""
+msgstr "Зохиогч"
 
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Black & White"
-msgstr ""
+msgstr "Хар, Цагаан"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Цуцлах"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__partner_city
 msgid "City"
-msgstr ""
+msgstr "Сум/Дүүрэг"
 
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Colour"
-msgstr ""
+msgstr "Өнгө"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Compute price"
-msgstr ""
+msgstr "Үнэ тооцоолох"
 
 #. module: print
 #: model:ir.model,name:print.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Холбох хаяг"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__price
 msgid "Cost to Deliver"
-msgstr ""
+msgstr "Хүргэлтийн зардал"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__partner_country_id
 msgid "Country"
-msgstr ""
+msgstr "Улс"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__create_uid
@@ -120,7 +150,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__create_uid
 #: model:ir.model.fields,field_description:print.field_print_provider__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Үүсгэгч"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard__create_date
@@ -128,24 +158,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__create_date
 #: model:ir.model.fields,field_description:print.field_print_provider__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Үүсгэсэн"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__create_date
 msgid "Creation Date"
-msgstr ""
+msgstr "Үүсгэсэн Огноо"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_provider__balance
 msgid "Credit"
-msgstr ""
+msgstr "Кредит"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__currency_id
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_currency_id
 #: model:ir.model.fields,field_description:print.field_print_provider__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Валют"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin__display_name
@@ -155,12 +185,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__display_name
 #: model:ir.model.fields,field_description:print.field_print_provider__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Дэлгэцийн Нэр"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard__res_name
 msgid "Document"
-msgstr ""
+msgstr "Баримт"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard__res_sendable
@@ -170,43 +200,43 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Document Detail"
-msgstr ""
+msgstr "Баримтын дэлгэрэнгүй мэдээлэл"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Ноорог"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_environment
 #: model:ir.model.fields,field_description:print.field_print_provider__environment
 msgid "Environment"
-msgstr ""
+msgstr "Орчин"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__error_message
 msgid "Error"
-msgstr ""
+msgstr "Алдаа"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__error_message
 msgid "Error Message"
-msgstr ""
+msgstr "Алдааны мэссэж"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Failed"
-msgstr ""
+msgstr "Амжилтгүй"
 
 #. module: print
 #: model:mail.template,subject:print.print_user_notify_failed_email_template
 msgid "Failed Print Orders"
-msgstr ""
+msgstr "Амжилтгүй болсон хэвлэх захиалгууд"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Group By..."
-msgstr ""
+msgstr "Бүлэглэх..."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin__id
@@ -216,30 +246,30 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__id
 #: model:ir.model.fields,field_description:print.field_print_provider__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__ink
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__ink
 msgid "Ink"
-msgstr ""
+msgstr "Бэх"
 
 #. module: print
 #: model:ir.model,name:print.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Нэхэмжлэл"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_res_partner__has_address
 #: model:ir.model.fields,field_description:print.field_res_users__has_address
 msgid "Is address valid"
-msgstr ""
+msgstr "Хаяг зөв үү"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_account_invoice__print_is_sendable
 #: model:ir.model.fields,field_description:print.field_print_mixin__print_is_sendable
 msgid "Is sendable"
-msgstr ""
+msgstr "Илгээх боломжтой"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_mixin____last_update
@@ -249,18 +279,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard____last_update
 #: model:ir.model.fields,field_description:print.field_print_provider____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Сүүлийн засвар хийсэн огноо"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_account_invoice__print_sent_date
 #: model:ir.model.fields,field_description:print.field_print_mixin__print_sent_date
 msgid "Last Postal Sent Date"
-msgstr ""
+msgstr "Сүүлийн шуудан илгээсэн огноо"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard__last_send_date
 msgid "Last Send Date"
-msgstr ""
+msgstr "Сүүлийн илгээсэн огноо"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__write_uid
@@ -269,7 +299,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__write_uid
 #: model:ir.model.fields,field_description:print.field_print_provider__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Сүүлийн засвар хийсэн"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__write_date
@@ -278,74 +308,74 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__write_date
 #: model:ir.model.fields,field_description:print.field_print_provider__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Сүүлийн засвар хийсэн огноо"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__print_order_line_wizard_ids
 msgid "Lines"
-msgstr ""
+msgstr "Мөрүүд"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__res_model
 msgid "Model Name"
-msgstr ""
+msgstr "Моделийн Нэр"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "My Print Orders"
-msgstr ""
+msgstr "Миний хэвлэх захиалгууд"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__partner_name
 #: model:ir.model.fields,field_description:print.field_print_provider__name
 msgid "Name"
-msgstr ""
+msgstr "Нэр"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__nbr_pages
 msgid "Number of Pages"
-msgstr ""
+msgstr "Хуудасны тоо"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__res_id
 msgid "Object ID"
-msgstr ""
+msgstr "Объектын дугаар"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Order Information"
-msgstr ""
+msgstr "Захиалгын мэдээлэл"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 msgid "Orders"
-msgstr ""
+msgstr "Захиалгууд"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Orders Failed"
-msgstr ""
+msgstr "Амжилтгүй болсон захиалгууд"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Orders Waiting"
-msgstr ""
+msgstr "Хүлээгдэж буй захиалгууд"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__attachment_id
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__paper_weight
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__paper_weight
 msgid "Paper Weight"
-msgstr ""
+msgstr "Цаасны жин"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Partner"
-msgstr ""
+msgstr "Харилцагч"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard__partner_has_address
@@ -363,53 +393,53 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Postal Order"
-msgstr ""
+msgstr "Шуудангийн захиалга"
 
 #. module: print
 #: model:ir.ui.menu,name:print.root_print_menu
 msgid "Postal Printings"
-msgstr ""
+msgstr "Шуудангийн хэвлэлүүд"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 #: model:ir.ui.view,arch_db:print.print_provider_view_tree
 msgid "Postal Provider"
-msgstr ""
+msgstr "Шуудангийн үйлчилгээ үзүүлэгч"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Postal Wizard Order"
-msgstr ""
+msgstr "Шуудангийн цонхны захиалга"
 
 #. module: print
 #: model:ir.model,name:print.model_print_mixin
 msgid "Print Mixin (Printable Object)"
-msgstr ""
+msgstr "Хэвлэх Mixin (Хэвлэх боломжтой объект)"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order
 #: model:ir.model.fields,field_description:print.field_print_order_sendnow_wizard__print_order_ids
 msgid "Print Order"
-msgstr ""
+msgstr "Хэвлэх захиалга"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_line_wizard_view_tree
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Print Order Lines"
-msgstr ""
+msgstr "Хэвлэх захиалгын мөрүүд"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_wizard
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard__print_order_wizard_id
 msgid "Print Order Wizard"
-msgstr ""
+msgstr "Хэвлэх захиалгын визард"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_action
 #: model:ir.ui.menu,name:print.print_order_menu
 #: model:ir.ui.view,arch_db:print.print_order_view_tree
 msgid "Print Orders"
-msgstr ""
+msgstr "Хэвлэх захиалгууд"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_provider_action
@@ -418,7 +448,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_id
 #: model:ir.ui.menu,name:print.print_provider_menu
 msgid "Print Provider"
-msgstr ""
+msgstr "Хэвлэх үйлчилгээ үзүүлэгч"
 
 #. module: print
 #: model:ir.actions.server,name:print.ir_cron_print_scheduler_action_ir_actions_server
@@ -430,142 +460,142 @@ msgstr ""
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Printing Detail"
-msgstr ""
+msgstr "Хэвлэлтийн дэлгэрэнгүй"
 
 #. module: print
 #: selection:print.provider,environment:0
 msgid "Production"
-msgstr ""
+msgstr "Үйлдвэрлэл"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_provider__provider
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Provider"
-msgstr ""
+msgstr "Нийлүүлэгч"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__provider_balance
 msgid "Provider Credit"
-msgstr ""
+msgstr "Зээлээр Нийлүүлэгч"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 msgid "Provider Information"
-msgstr ""
+msgstr "Үйлчилгээ үзүүлэгчийн мэдээлэл"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Ready"
-msgstr ""
+msgstr "Бэлэн"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Recipient Address"
-msgstr ""
+msgstr "Хүлээн авагчийн хаяг"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__partner_id
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard__partner_id
 msgid "Recipient partner"
-msgstr ""
+msgstr "Хүлээн авагч хамтрагч"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__report_id
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__report_id
 msgid "Report"
-msgstr ""
+msgstr "Тайлан"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Reset to Draft"
-msgstr ""
+msgstr "Ноороглох"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard__res_id
 msgid "Resource ID"
-msgstr ""
+msgstr "Нөөц ID"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard__res_model
 msgid "Resource Model"
-msgstr ""
+msgstr "Нөөц модел"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Send"
-msgstr ""
+msgstr "Илгээх"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action_multi_print
 msgid "Send Invoices by post"
-msgstr ""
+msgstr "Нэхэмжлэлүүдийг шуудангаар илгээх"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.account_invoice_view_form_inherit_print
 msgid "Send Letter"
-msgstr ""
+msgstr "Захидал илгээх"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Send Now"
-msgstr ""
+msgstr "Одоо илгээх"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 msgid "Send Now Postal Wizard Order"
-msgstr ""
+msgstr "Шуудангийн цонхны захиалгыг одоо илгээх"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_sendnow_action_multi
 msgid "Send Now by post"
-msgstr ""
+msgstr "Одоо шуудангаар илгээх"
 
 #. module: print
 #: model:ir.actions.act_window,name:print.print_order_wizard_action
 msgid "Send by Post"
-msgstr ""
+msgstr "Бичлэгээр Илгээх"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__sent_date
 msgid "Sending Date"
-msgstr ""
+msgstr "Илгээх огноо"
 
 #. module: print
 #: selection:print.order,state:0
 msgid "Sent"
-msgstr ""
+msgstr "Илгээгдсэн"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__partner_state_id
 msgid "State"
-msgstr ""
+msgstr "Муж"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__state
 #: model:ir.ui.view,arch_db:print.print_order_view_search
 msgid "Status"
-msgstr ""
+msgstr "Төлөв"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__partner_street
 msgid "Street"
-msgstr ""
+msgstr "Гудамж"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__partner_street2
 msgid "Street2"
-msgstr ""
+msgstr "Гудамж2"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "Technical Informations"
-msgstr ""
+msgstr "Техник мэдээлэл"
 
 #. module: print
 #: selection:print.provider,environment:0
 msgid "Test"
-msgstr ""
+msgstr "Тест"
 
 #. module: print
 #: model:ir.model.fields,help:print.field_print_order_wizard__provider_currency_id
@@ -582,6 +612,8 @@ msgid ""
 "The document has no associated PDF : you have to give select an Attachment "
 "file, or set up the Object ID and Model Name fields."
 msgstr ""
+"Баримтад холбоотой PDF алга : та хавсралт файлыг сонгох эсвэл баримтын "
+"дугаар ба загварын нэр талбаруудыг тохируулах ёстой."
 
 #. module: print
 #: code:addons/print/models/print_provider.py:221
@@ -606,28 +638,32 @@ msgid ""
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
+"Энэ нэхэмжлэлийг %(provider_name)s үйлчилгээ үзүүлэгчээр дараах хаяг руу "
+"шуудангаар илгээсэн.                     <br/><br/> %(partner_name)s <br/> "
+"%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
+"                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_provider_view_form
 msgid "Update"
-msgstr ""
+msgstr "Шинэчлэлт"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
 msgid "When the error is resolved, please click on 'Reset to draft'."
-msgstr ""
+msgstr "Алдааг зассаны дараа 'Ноорог болгох' дээр дарна уу."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order__partner_zip
 msgid "Zip"
-msgstr ""
+msgstr "Зип код"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_line_wizard
 msgid "print.order.line.wizard"
-msgstr ""
+msgstr "print.order.line.wizard"
 
 #. module: print
 #: model:ir.model,name:print.model_print_order_sendnow_wizard
 msgid "print.order.sendnow.wizard"
-msgstr ""
+msgstr "print.order.sendnow.wizard"
