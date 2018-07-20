@@ -85,11 +85,11 @@ class Web_Unsplash(http.Controller):
     @http.route("/web_unsplash/get_client_id", type='json', auth="user")
     def get_unsplash_client_id(self, **post):
         if request.env.user._has_unsplash_key_rights():
-            return request.env['ir.config_parameter'].sudo().get_param('unsplash.secret_key')
+            return request.env['ir.config_parameter'].sudo().get_param('unsplash.access_key')
         raise werkzeug.exceptions.NotFound()
 
     @http.route("/web_unsplash/set_client_id", type='json', auth="user")
     def set_unsplash_client_id(self, key, **post):
         if request.env.user._has_unsplash_key_rights():
-            return request.env['ir.config_parameter'].sudo().set_param('unsplash.secret_key', key)
+            return request.env['ir.config_parameter'].sudo().set_param('unsplash.access_key', key)
         raise werkzeug.exceptions.NotFound()
