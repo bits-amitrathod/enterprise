@@ -28,7 +28,7 @@ msgid ""
 "All payments to print as a deposit slip must belong to the same journal."
 msgstr ""
 "Всички плащания, които трябва да се разпечатат като бланки за депозити, "
-"следва да принадлежат на един и същ счетоводен регистър."
+"следва да принадлежат на един и същ журнал."
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_amount
@@ -49,7 +49,7 @@ msgstr "Банка"
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Bank Journal"
-msgstr "Банков счетоводен регистър"
+msgstr "Банков журнал"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement
@@ -102,7 +102,7 @@ msgid ""
 msgstr ""
 "Партидните депозити Ви позволяват да групирате получените чекове преди да ги депозирате в банката.\n"
 "                    Тогава сумата, депозирана във Вашата банка, ще се появи като самостоятелна транзакция върху банковото Ви извлечение.\n"
-"                    Когато пристъпите към съгласуване, просто изберете съответния партиден депозит, за да съгласувате плащанията."
+"                    Когато пристъпите към обединяване, просто изберете съответния партиден депозит, за да обедините плащанията."
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_journal.py:68
@@ -165,7 +165,7 @@ msgstr "Неправилна операция"
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_journal
 msgid "Journal"
-msgstr "Счетоводен регистър"
+msgstr "Журнал"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit___last_update
@@ -210,7 +210,7 @@ msgid ""
 msgstr ""
 "Плащанията, които трябва да се разпечатат като бланка за влог, трябва да "
 "притежават 'партиден депозит', подбран като метод на раз/плащане, а не да са"
-" част от съществуващ партиден депозит и вече да не са били съгласувани."
+" част от съществуващ партиден депозит и вече да не са били обединени."
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
@@ -235,7 +235,7 @@ msgstr "Отпечатан"
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
 msgid "Reconciled"
-msgstr "Съгласуван"
+msgstr "Обединен"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_name
@@ -262,8 +262,8 @@ msgid ""
 "Some journal items from the selected batch deposit are already selected in "
 "another reconciliation : "
 msgstr ""
-"Някои пунктове в счетоводния регистър от подбрания партиден депозит вече са "
-"избрани при друго съгласуване:"
+"Някои статии в журнал от подбрания партиден депозит вече са избрани при "
+"друго обединяване:"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_state
@@ -288,7 +288,7 @@ msgstr "Общо"
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Unreconciled"
-msgstr "Отсъгласуван"
+msgstr "Необединен/и"
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form

@@ -77,6 +77,11 @@ msgid ""
 "                        Use this feature to store any files, like drawings or specifications.\n"
 "                    </p>"
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                        Bấm để tải tập tin vào sản phẩm của bạn.\n"
+"                    </p><p>\n"
+"                        Sử dụng tính năng này để lưu trữ các loại tập tin như bản vẽ kỹ thuật, bản đặc tả tính năng, v.v.\n"
+"                    </p>"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -214,7 +219,7 @@ msgstr ""
 #. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
 msgid "As soon as possible"
-msgstr ""
+msgstr "Càng sớm càng tốt"
 
 #. module: mrp_plm
 #: selection:mrp.eco,effectivity:0
@@ -547,7 +552,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "Edit Task"
-msgstr ""
+msgstr "Sửa Nhiệm vụ"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_effectivity
@@ -647,11 +652,13 @@ msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
 msgstr ""
+"ID của bản ghi cha mà chứa bí danh (ví dụ: dự án chứa bí danh để tạo nhiệm "
+"vụ)"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "Important Messages"
-msgstr ""
+msgstr "Thông điệp Quan trọng"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -682,7 +689,7 @@ msgstr "Kanban State"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_kanban
 msgid "Kit"
-msgstr ""
+msgstr "Bộ"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco___last_update
@@ -815,6 +822,9 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
+"ID tuỳ chọn của một chủ đề/bản ghi (thread) mà tất cả các thông điệp đến sẽ "
+"được gắn/đính vào, thâm chí nếu người ta không reply nó. Nếu được thiết lập,"
+" điều này sẽ vô hiệu hoàn toàn việc tạo mới bản ghi."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -835,12 +845,12 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_parent_model_id
 msgid "Parent Model"
-msgstr ""
+msgstr "Model cha"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr ""
+msgstr "Parent Record Thread ID"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_parent_model_id
@@ -849,6 +859,9 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
+"Parent model holding the alias. The model holding the alias reference is not"
+" necessarily the model given by alias_model_id (example: project "
+"(parent_model) and task (model))"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_contact
@@ -858,6 +871,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"Cho sách cho phép post các thông điệp lên tài liệu sử dụng.\n"
+"- mọi người: Mọi người có thể post\n"
+"- đối tác: Chỉ các đối tác đã xác thực\n"
+"- đối tượng dõi theo: Chỉ những người ở trong danh sách dõi theo của tài liệu hoặc thành viên của các kênh sau đây\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_previous_bom_id
@@ -911,7 +928,7 @@ msgstr "Số lượng"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "Record Thread ID"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_name
@@ -921,12 +938,12 @@ msgstr "Tham chiếu"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Reject"
-msgstr ""
+msgstr "Từ chối"
 
 #. module: mrp_plm
 #: selection:mrp.eco.approval,status:0
 msgid "Rejected"
-msgstr ""
+msgstr "Bị từ chối"
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -1008,14 +1025,14 @@ msgstr "Trình tự"
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "Set Cover Image"
-msgstr ""
+msgstr "Đặt hình Đại diện"
 
 #. module: mrp_plm
 #. openerp-web
 #: code:addons/mrp_plm/static/src/xml/mrp_plm_templates.xml:9
 #, python-format
 msgid "Set a Cover Image"
-msgstr ""
+msgstr "Đặt một hình Đại diện"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_kanban
@@ -1123,6 +1140,10 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"Model (Kiểu Tài liệu Hệ thống) mà bí danh này ứng với nó. Bất kỳ thông điệp "
+"email mà không đáp lại (reply) một bản ghi có sẵn sẽ làm cho Hệ thống tự "
+"động tạo một bản ghi mới cho model này (vd: tạo mới một Nhiệm vụ Dự án nếu "
+"model là project.task)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_name
@@ -1130,6 +1151,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"Tên của bí danh email, vd 'vieclam' nếu bạn muốn bắt thông điệp gửi đến địa "
+"chỉ email <vieclam@tencongty.com>"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -1139,6 +1162,10 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"The owner of records created upon receiving emails on this alias. If this "
+"field is not set the system will attempt to find the right owner based on "
+"the sender (From) address, or will use the Administrator account if no "
+"system user is found for that address."
 
 #. module: mrp_plm
 #. openerp-web
@@ -1220,12 +1247,12 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change_workcenter_id
 msgid "Work Center"
-msgstr ""
+msgstr "Năng lực Sản xuất"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_workcenters
 msgid "Work Centers"
-msgstr ""
+msgstr "Năng lực Sản xuất"
 
 #. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:460
