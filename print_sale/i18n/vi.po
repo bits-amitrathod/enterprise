@@ -3,18 +3,19 @@
 # * print_sale
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # son dang <son.dang@doda100.com>, 2017
 # Hoang Loc Le Huu <loclhh@gmail.com>, 2017
 # fanha99 <fanha99@hotmail.com>, 2017
 # Phạm Lân <phamquanglan@gmail.com>, 2017
+# Duy BQ <duybq86@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Phạm Lân <phamquanglan@gmail.com>, 2017\n"
+"Last-Translator: Duy BQ <duybq86@gmail.com>, 2018\n"
 "Language-Team: Vietnamese (https://www.transifex.com/odoo/teams/41243/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,6 +29,8 @@ msgid ""
 "<b> Credit error :</b> Your Provider Credit account is negative. Please "
 "refill your provider account to send documents."
 msgstr ""
+"<b>Lỗi tín dụng:</b> Tài khoản Tín dụng nhà cung cấp của bạn là số âm. Vui "
+"lòng nạp tiền vào tài khoản nhà cung cấp của bạn để gửi tài liệu."
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
@@ -36,11 +39,14 @@ msgid ""
 " one of the document you want to send has not a correct postal "
 "address.</span>"
 msgstr ""
+"<span class=\"oe_form_field oe_inline\"><b>Địa chỉ Bưu điện Không hợp "
+"lệ:</b> Ít nhất một trong các tài liệu bạn muốn gửi không có địa chỉ bưu "
+"chính chính xác.</span>"
 
 #. module: print_sale
 #: selection:print.document.partner.wizard,ink:0
 msgid "Black & White"
-msgstr ""
+msgstr "Trắng & Đen"
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
@@ -50,7 +56,7 @@ msgstr "Hủy"
 #. module: print_sale
 #: selection:print.document.partner.wizard,ink:0
 msgid "Colour"
-msgstr ""
+msgstr "Màu"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_create_uid
@@ -84,7 +90,7 @@ msgstr "Tài liệu"
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_environment
 msgid "Environment"
-msgstr ""
+msgstr "Môi trường"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_id
@@ -95,13 +101,13 @@ msgstr "ID"
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_ink
 msgid "Ink"
-msgstr ""
+msgstr "Mực"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_is_sendable
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_is_sendable
 msgid "Is sendable"
-msgstr ""
+msgstr "Có thể gửi được"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard___last_update
@@ -130,22 +136,22 @@ msgstr "Lines"
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_paper_weight
 msgid "Paper Weight"
-msgstr ""
+msgstr "Trọng lượng giấy"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_print_document_partner_wizard_id
 msgid "Print Order Wizard"
-msgstr ""
+msgstr "Trình tự in"
 
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_id
 msgid "Print Provider"
-msgstr ""
+msgstr "Nhà cung cấp dịch vụ in"
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
 msgid "Printing details"
-msgstr ""
+msgstr "Chi tiết in"
 
 #. module: print_sale
 #: selection:print.document.partner.wizard,provider_environment:0
@@ -155,7 +161,7 @@ msgstr "Sản xuất"
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_wizard_provider_balance
 msgid "Provider Credit"
-msgstr ""
+msgstr "Tín dụng nhà cung cấp"
 
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_sale_order
@@ -165,7 +171,7 @@ msgstr "Báo giá"
 #. module: print_sale
 #: model:ir.model.fields,field_description:print_sale.field_print_document_partner_line_wizard_partner_id
 msgid "Recipient partner"
-msgstr ""
+msgstr "Người nhận đối tác"
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
@@ -180,27 +186,27 @@ msgstr "Gửi"
 #. module: print_sale
 #: model:ir.actions.act_window,name:print_sale.print_document_partner_action_multi
 msgid "Send Documents by post"
-msgstr ""
+msgstr "Gửi tài liệu bằng đường bưu điện"
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.sale_order_view_form_inherit_print_sale
 msgid "Send Letter"
-msgstr ""
+msgstr "Gửi thư"
 
 #. module: print_sale
 #: model:ir.actions.act_window,name:print_sale.print_order_wizard_action_print_sale
 msgid "Send by Post"
-msgstr ""
+msgstr "Gửi qua đường bưu điện"
 
 #. module: print_sale
 #: model:ir.actions.act_window,name:print_sale.print_order_wizard_action_multi_print_sale
 msgid "Send by post"
-msgstr ""
+msgstr "Gửi qua đường bưu điện"
 
 #. module: print_sale
 #: model:ir.ui.view,arch_db:print_sale.print_document_partner_wizard_view_form
 msgid "Send documents to partner Wizard"
-msgstr ""
+msgstr "Gửi tài liệu cho đối tác Wizard"
 
 #. module: print_sale
 #: selection:print.document.partner.wizard,provider_environment:0
@@ -216,6 +222,9 @@ msgid ""
 "%(partner_street)s <br/> %(partner_city)s %(partner_zip)s"
 "                     <br/>%(partner_country)sprovider_name<i>%s</i>"
 msgstr ""
+"Đơn đặt hàng này được gửi qua bưu điện với nhà cung cấp "
+"%(provider_name)stheo địa chỉ sau. "
+"<br/><br/>%(partner_name)s<br/>%(partner_street)s<br/>%(partner_city)s%(partner_zip)s<br/>%(partner_country)sprovider_name<i>%s</i>"
 
 #. module: print_sale
 #: code:addons/print_sale/wizard/print_document_partner_wizard.py:67
@@ -224,13 +233,16 @@ msgid ""
 "Your credit provider is too small. Please, configure your account (> "
 "Settings > Print Provider), and put some credit on your account."
 msgstr ""
+"Nhà cung cấp tín dụng của bạn quá nhỏ. Vui lòng định cấu hình tài khoản của "
+"bạn (> Cài đặt> Nhà cung cấp dịch vụ in) và đặt một số tín dụng vào tài "
+"khoản của bạn."
 
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_document_partner_line_wizard
 msgid "print.document.partner.line.wizard"
-msgstr ""
+msgstr "print.document.partner.line.wizard"
 
 #. module: print_sale
 #: model:ir.model,name:print_sale.model_print_document_partner_wizard
 msgid "print.document.partner.wizard"
-msgstr ""
+msgstr "print.document.partner.wizard"
