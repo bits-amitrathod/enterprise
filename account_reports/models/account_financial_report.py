@@ -79,9 +79,7 @@ class ReportAccountFinancialReport(models.Model):
         if not options.get('groups', {}).get('ids'):
             return False
 
-        date_to = options['date'].get('date_to') or options['date'].get('date')
-        date_from = options['date'].get('date_from', False)
-        periods = [{'string': self.format_date(date_to, date_from, options), 'class': 'number'}] + options['comparison']['periods']
+        periods = [{'string': self.format_date(options), 'class': 'number'}] + options['comparison']['periods']
 
         # generate specific groups for each period
         groups = []
