@@ -447,7 +447,7 @@ odoo.define('sign.template', function(require) {
 
                 _.each(_.keys(self.customPopovers), function(keyId) {
                     if (keyId != itemId && self.customPopovers[keyId] && ((keyId && itemId) || (keyId != 'undefined' && !itemId))) {
-                        self.customPopovers[keyId].hide();
+                        self.customPopovers[keyId].$currentTarget.popover('hide');
                         self.customPopovers[keyId] = false;
                     }
                 });
@@ -707,7 +707,7 @@ odoo.define('sign.template', function(require) {
             return this._super();
 
             function init_iframe() {
-                if(this.$el.parents('html').length) {
+                if(this.$el.parents('html').length && !this.$el.parents('html').find('.modal-dialog').length) {
                     var self = this;
                     framework.blockUI({overlayCSS: {opacity: 0}, blockMsgClass: 'o_hidden'});
                     this.iframeWidget = new EditablePDFIframe(this,
