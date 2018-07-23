@@ -80,23 +80,36 @@ class account_bank_reconciliation_report(models.AbstractModel):
         journal = self.env['account.journal'].browse(journal_id)
         lines = []
         #Start amount
-        use_foreign_currency = journal.currency_id and journal.currency_id != journal.company_id.currency_id or False
+        use_foreign_currency = \
+                journal.currency_id != journal.company_id.currency_id \
+                if journal.currency_id else False
         account_ids = list(set([journal.default_debit_account_id.id, journal.default_credit_account_id.id]))
-        line_currency = use_foreign_currency and journal.currency_id or False
+        line_currency = journal.currency_id if use_foreign_currency else False
         self = self.with_context(line_currency=line_currency)
-        lines_already_accounted = self.env['account.move.line'].search([('account_id', 'in', account_ids),
-                                                                        ('date', '<=', self.env.context['date_to']),
-                                                                        ('company_id', 'in', self.env.context['company_ids'])])
-        start_amount = sum([line.amount_currency if use_foreign_currency else line.balance for line in lines_already_accounted])
+        lines_already_accounted = self.env['account.move.line'].search(
+                [
+                    ('account_id', 'in', account_ids),
+                    ('date', '<=', self.env.context['date_to']),
+                    ('company_id', 'in', self.env.context['company_ids'])
+                    ])
+        start_amount = sum(
+                [
+                    line.amount_currency if use_foreign_currency else line.balance 
+                    for line in lines_already_accounted
+                ])
         lines.append(self.add_title_line(options, _("Current Balance in GL"), start_amount))
 
         # Un-reconcilied bank statement lines
-        move_lines = self.env['account.move.line'].search([('move_id.journal_id', '=', journal_id),
-                                                           '|', ('statement_line_id', '=', False), ('statement_line_id.date', '>', self.env.context['date_to']),
-                                                           ('user_type_id.type', '=', 'liquidity'),
-                                                           ('full_reconcile_id', '=', False),
-                                                           ('date', '<=', self.env.context['date_to']),
-                                                           ('company_id', 'in', self.env.context['company_ids'])])
+        move_lines = self.env['account.move.line'].search(
+                [
+                    ('move_id.journal_id', '=', journal_id),
+                    '|', ('statement_line_id', '=', False), 
+                    ('statement_line_id.date', '>', self.env.context['date_to']),
+                    ('user_type_id.type', '=', 'liquidity'),
+                    ('full_reconcile_id', '=', False),
+                    ('date', '<=', self.env.context['date_to']),
+                    ('company_id', 'in', self.env.context['company_ids'])
+                ])
         unrec_tot = 0
         if move_lines:
             tmp_lines = []
@@ -108,7 +121,15 @@ class account_bank_reconciliation_report(models.AbstractModel):
                     #'type': 'move_line_id',
                     #'action': line.get_model_id_and_name(),
                     'name': line.name,
-                    'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(-line.balance, line_currency)]],
+                    'columns': [
+                        {'name': v} for v in [
+                            line.date, 
+                            line.ref, 
+                            self.format_value(
+                                 -line.amount_currency
+                                 if use_foreign_currency else -line.balance,
+                                 line_currency)
+                            ]],
                     'level': 1,
                 })
                 unrec_tot -= line.amount_currency if use_foreign_currency else line.balance
@@ -121,11 +142,13 @@ class account_bank_reconciliation_report(models.AbstractModel):
             lines.append(self.add_total_line(unrec_tot))
 
         # Outstanding plus
-        not_reconcile_plus = self.env['account.bank.statement.line'].search([('statement_id.journal_id', '=', journal_id),
-                                                                             ('date', '<=', self.env.context['date_to']),
-                                                                             ('journal_entry_ids', '=', False),
-                                                                             ('amount', '>', 0),
-                                                                             ('company_id', 'in', self.env.context['company_ids'])])
+        not_reconcile_plus = self.env['account.bank.statement.line'].search(
+                [
+                    ('statement_id.journal_id', '=', journal_id),
+                    ('date', '<=', self.env.context['date_to']),
+                    ('journal_entry_ids', '=', False),
+                    ('amount', '>', 0),
+                    ('company_id', 'in', self.env.context['company_ids'])])
         outstanding_plus_tot = 0
         if not_reconcile_plus:
             lines.append(self.add_subtitle_line(_("Plus Unreconciled Statement Lines")))
@@ -135,11 +158,13 @@ class account_bank_reconciliation_report(models.AbstractModel):
             lines.append(self.add_total_line(outstanding_plus_tot))
 
         # Outstanding less
-        not_reconcile_less = self.env['account.bank.statement.line'].search([('statement_id.journal_id', '=', journal_id),
-                                                                             ('date', '<=', self.env.context['date_to']),
-                                                                             ('journal_entry_ids', '=', False),
-                                                                             ('amount', '<', 0),
-                                                                             ('company_id', 'in', self.env.context['company_ids'])])
+        not_reconcile_less = self.env['account.bank.statement.line'].search(
+                [
+                    ('statement_id.journal_id', '=', journal_id),
+                    ('date', '<=', self.env.context['date_to']),
+                    ('journal_entry_ids', '=', False),
+                    ('amount', '<', 0),
+                    ('company_id', 'in', self.env.context['company_ids'])])
         outstanding_less_tot = 0
         if not_reconcile_less:
             lines.append(self.add_subtitle_line(_("Minus Unreconciled Statement Lines")))
@@ -150,8 +175,12 @@ class account_bank_reconciliation_report(models.AbstractModel):
 
         # Final
         computed_stmt_balance = start_amount + outstanding_plus_tot + outstanding_less_tot + unrec_tot
-        last_statement = self.env['account.bank.statement'].search([('journal_id', '=', journal_id),
-                                       ('date', '<=', self.env.context['date_to']), ('company_id', 'in', self.env.context['company_ids'])], order="date desc, id desc", limit=1)
+        last_statement = self.env['account.bank.statement'].search(
+                [
+                    ('journal_id', '=', journal_id),
+                    ('date', '<=', self.env.context['date_to']), 
+                    ('company_id', 'in', self.env.context['company_ids'])
+                ], order="date desc, id desc", limit=1)
         real_last_stmt_balance = last_statement.balance_end
         if computed_stmt_balance != real_last_stmt_balance:
             if real_last_stmt_balance - computed_stmt_balance > 0:

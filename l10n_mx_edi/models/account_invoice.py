@@ -765,10 +765,10 @@ class AccountInvoice(models.Model):
 
         values['decimal_precision'] = precision_digits
         subtotal_wo_discount = lambda l: float_round(
-            l.quantity * l.price_unit, int(precision_digits))
+            l.price_subtotal / (1 - l.discount/100), int(precision_digits))
         values['subtotal_wo_discount'] = subtotal_wo_discount
         get_discount = lambda l, d: ('%.*f' % (
-            int(d), l.quantity * l.price_unit * l.discount / 100)) if l.discount else False
+            int(d), subtotal_wo_discount(l) - l.price_subtotal)) if l.discount else False
         values['total_discount'] = get_discount
         total_discount = sum([float(get_discount(p, precision_digits)) for p in self.invoice_line_ids])
         values['amount_untaxed'] = '%.*f' % (
