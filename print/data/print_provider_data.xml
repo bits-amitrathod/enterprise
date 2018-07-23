@@ -47,16 +47,26 @@
                 <tr><td valign="top" style="font-size: 13px;">
                     <div>
                         Dear ${object.partner_id.name},<br/><br/>
-                        During the last process of "Print and Send" documents, some mistakes appear. Here is a list of the failed Print Order you authored.<br/>
-                        Please, some errors have been detected. You can find them in <i>Settings > Print Orders</i>.
+                        During the last process of "Print and Send" documents, some errors have been
+                        detected. You can find them in <i>Settings &gt; Print Orders</i>.<br /><br />
                         % if ctx.get('print_errors'):
-                            <p>
-                                Print Order ID  |    Error Message <br/>
-                                -------------------------------------- <br/>
-                                % for print_order_id, error_text in ctx.get('print_errors'):<br/>
-                                    ${print_order_id}    |    ${error_text} <br/>
-                                % endfor
-                            </p>
+                        Here is a list of print orders you authored that failed
+                        <table>
+                            <tr>
+                                <td style="width: 35%">Print Order ID</td>
+                                <td style="width: 65%">Error</td>
+                            </tr>
+                            % for print_order_id, error_text in ctx.get('print_errors'):
+                            <tr>
+                                <td style="width: 35%">${print_order_id}</td>
+                                <td style="width: 65%">${error_text}</td>
+                            </tr>
+                            % endfor
+                        </table>
+                        % endif
+                        Thanks<br />
+                        % if user.signature
+                        ${user.signature | safe}
                         % endif
                     </div>
                 </td></tr>
@@ -101,6 +111,7 @@
 </table>
             </field>
             <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
         </record>
 
     </data>
