@@ -15,7 +15,6 @@
     'data': [
         'security/ir.model.access.csv',
         'views/online_sync_views.xml',
-        'views/onboarding_templates.xml',
     ],
     'qweb': [
         'views/online_sync_templates.xml',
