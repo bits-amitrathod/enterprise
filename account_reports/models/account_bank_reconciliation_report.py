@@ -15,7 +15,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
     #used to enumerate the 'layout' lines with a distinct ID
     line_number = 0
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [
             {'name': ''},
             {'name': _("Date")},
@@ -23,7 +23,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             {'name': _("Amount"), 'class': 'number'},
         ]
 
-    def add_title_line(self, options, title, amount=None, level=0, date=False):
+    def _add_title_line(self, options, title, amount=None, level=0, date=False):
         self.line_number += 1
         line_currency = self.env.context.get('line_currency', False)
         return {
@@ -33,7 +33,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             'level': level,
         }
 
-    def add_total_line(self, amount):
+    def _add_total_line(self, amount):
         self.line_number += 1
         line_currency = self.env.context.get('line_currency', False)
         return {
@@ -44,7 +44,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             'class': 'total',
         }
 
-    def add_bank_statement_line(self, line, amount):
+    def _add_bank_statement_line(self, line, amount):
         name = line.name
         line_currency = self.env.context.get('line_currency', False)
         return {
@@ -112,7 +112,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
         return rslt
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         # Fetch data
         report_data = self._get_bank_rec_report_data(options, line_id)
 
@@ -126,7 +126,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
         # Build report
         lines = []
 
-        lines.append(self.add_title_line(
+        lines.append(self._add_title_line(
             options,
             _("Virtual GL Balance"),
             amount=None if self.env.user.company_id.totals_below_sections else computed_stmt_balance,
@@ -138,20 +138,20 @@ class account_bank_reconciliation_report(models.AbstractModel):
 
         accounts = self.env['account.account'].browse(report_data['account_ids'])
         accounts_string = ', '.join(accounts.mapped('code'))
-        lines.append(self.add_title_line(options, gl_title % accounts_string, level=1, amount=report_data['odoo_balance'], date=options['date']['date']))
+        lines.append(self._add_title_line(options, gl_title % accounts_string, level=1, amount=report_data['odoo_balance'], date=options['date']['date']))
 
-        lines.append(self.add_title_line(options, _("Operations to Process"), level=1))
+        lines.append(self._add_title_line(options, _("Operations to Process"), level=1))
 
         if report_data.get('not_reconciled_st_positive') or report_data.get('not_reconciled_st_negative'):
-            lines.append(self.add_title_line(options, _("Unreconciled Bank Statement Lines"), level=2))
+            lines.append(self._add_title_line(options, _("Unreconciled Bank Statement Lines"), level=2))
             for line in report_data.get('not_reconciled_st_positive', []):
-                lines.append(self.add_bank_statement_line(line, line.amount))
+                lines.append(self._add_bank_statement_line(line, line.amount))
 
             for line in report_data.get('not_reconciled_st_negative', []):
-                lines.append(self.add_bank_statement_line(line, line.amount))
+                lines.append(self._add_bank_statement_line(line, line.amount))
 
         if report_data.get('not_reconciled_pmts'):
-            lines.append(self.add_title_line(options, _("Validated Payments not Linked with a Bank Statement Line"), level=2))
+            lines.append(self._add_title_line(options, _("Validated Payments not Linked with a Bank Statement Line"), level=2))
             for line in report_data['not_reconciled_pmts']:
                     self.line_number += 1
                     lines.append({
@@ -163,10 +163,10 @@ class account_bank_reconciliation_report(models.AbstractModel):
                     })
 
         if self.env.user.company_id.totals_below_sections:
-            lines.append(self.add_total_line(computed_stmt_balance))
+            lines.append(self._add_total_line(computed_stmt_balance))
 
-        lines.append(self.add_title_line(options, _("Last Bank Statement Ending Balance"), level=0, amount=report_data['last_st_balance'], date=report_data['last_st_end_date']))
-        last_line = self.add_title_line(options, _("Unexplained Difference"), level=0, amount=difference)
+        lines.append(self._add_title_line(options, _("Last Bank Statement Ending Balance"), level=0, amount=report_data['last_st_balance'], date=report_data['last_st_end_date']))
+        last_line = self._add_title_line(options, _("Unexplained Difference"), level=0, amount=difference)
         last_line['title_hover'] = _("""Difference between Virtual GL Balance and Last Bank Statement Ending Balance.\n
 If non-zero, it could be due to
   1) some bank statements being not yet encoded into Odoo
@@ -184,7 +184,7 @@ If non-zero, it could be due to
         return lines
 
     @api.model
-    def get_report_name(self):
+    def _get_report_name(self):
         journal_id = self._context.get('active_id')
         if journal_id:
             journal = self.env['account.journal'].browse(journal_id)

@@ -13,7 +13,7 @@ from odoo.tools.translate import _
 class CertificationReport(models.AbstractModel):
     _name = 'report.l10n_co_reports.report_certification'
 
-    def get_report_values(self, docids, data=None):
+    def _get_report_values(self, docids, data=None):
         docs = []
         partner_doc = {}
 
@@ -126,7 +126,7 @@ class ReportCertificationReport(models.AbstractModel):
 
         return lines
 
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         lines = []
         domain = []
 
@@ -156,7 +156,7 @@ class ReportCertificationReport(models.AbstractModel):
         return lines
 
     def print_pdf(self, options):
-        lines = self.get_lines(options)
+        lines = self._get_lines(options)
 
         return {
             'type': 'ir.actions.act_window',
@@ -175,10 +175,10 @@ class ReportCertificationReportIca(models.AbstractModel):
     _description = 'Colombian ICA certification report'
     _inherit = 'l10n_co_reports.certification_report'
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return u'Retención en ICA'
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [
             {'name': 'Nombre'},
             {'name': 'Bimestre'},
@@ -217,10 +217,10 @@ class ReportCertificationReportIva(models.AbstractModel):
     _description = 'Colombian IVA certification report'
     _inherit = 'l10n_co_reports.certification_report'
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return u'Retención en IVA'
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [
             {'name': 'Nombre'},
             {'name': 'Bimestre'},
@@ -267,10 +267,10 @@ class ReportCertificationReportFuente(models.AbstractModel):
     _description = 'Colombian Fuente certification report'
     _inherit = 'l10n_co_reports.certification_report'
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return u'Retención por Terceros'
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [
             {'name': u'Nombre'},
             {'name': u'Concepto de retención'},

@@ -85,7 +85,7 @@ class AccountReport(models.AbstractModel):
             # We have a user with multi-company
             options['multi_company'] = [{'id': c.id, 'name': c.name, 'selected': True if c.id == self.env.user.company_id.id else False} for c in self.env.user.company_ids]
         if options.get('journals'):
-            options['journals'] = self.get_journals()
+            options['journals'] = self._get_journals()
 
         options['unfolded_lines'] = []
         # Merge old options with default from this report
@@ -113,7 +113,7 @@ class AccountReport(models.AbstractModel):
         return options
 
     @api.model
-    def get_options(self, previous_options=None):
+    def _get_options(self, previous_options=None):
         # Be sure that user has group analytic if a report tries to display analytic
         if self.filter_analytic:
             self.filter_analytic_accounts = [] if self.env.user.id in self.env.ref('analytic.group_analytic_accounting').users.ids else None
@@ -128,7 +128,7 @@ class AccountReport(models.AbstractModel):
 
     def get_header(self, options):
         if not options.get('groups', {}).get('ids'):
-            return [self.get_columns_name(options)]
+            return [self._get_columns_name(options)]
         return self._get_columns_name_hierarchy(options)
 
     #TO BE OVERWRITTEN
@@ -136,15 +136,15 @@ class AccountReport(models.AbstractModel):
         return []
 
     #TO BE OVERWRITTEN
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return []
 
     #TO BE OVERWRITTEN
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         return []
 
     #TO BE OVERWRITTEN
-    def get_templates(self):
+    def _get_templates(self):
         return {
                 'main_template': 'account_reports.main_template',
                 'line_template': 'account_reports.line_template',
@@ -153,12 +153,12 @@ class AccountReport(models.AbstractModel):
         }
 
     #TO BE OVERWRITTEN
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('General Report')
 
     def get_report_filename(self, options):
         """The name that will be used for the file when downloading pdf,xlsx,..."""
-        return self.get_report_name().lower().replace(' ', '_')
+        return self._get_report_name().lower().replace(' ', '_')
 
     def execute_action(self, options, params=None):
         action_id = int(params.get('actionId'))
@@ -327,7 +327,7 @@ class AccountReport(models.AbstractModel):
             inv_values.reverse()
         return inv_values
 
-    def set_context(self, options):
+    def _set_context(self, options):
         """This method will set information inside the context based on the options dict as some options need to be in context for the query_get method defined in account_move_line"""
         ctx = self.env.context.copy()
         if options.get('cash_basis'):
@@ -359,9 +359,9 @@ class AccountReport(models.AbstractModel):
         '''
         return a dictionary of informations that will be needed by the js widget, manager_id, footnotes, html of report and searchview, ...
         '''
-        options = self.get_options(options)
+        options = self._get_options(options)
         # apply date and date_comparison filter
-        self.apply_date_filter(options)
+        self._apply_date_filter(options)
 
         searchview_dict = {'options': options, 'context': self.env.context}
         # Check if report needs analytic
@@ -383,20 +383,20 @@ class AccountReport(models.AbstractModel):
             period_domain = [('state', '=', 'draft'), ('date', '<=', date_to)]
             options['unposted_in_period'] = bool(self.env['account.move'].search_count(period_domain))
 
-        report_manager = self.get_report_manager(options)
+        report_manager = self._get_report_manager(options)
         info = {'options': options,
                 'context': self.env.context,
                 'report_manager_id': report_manager.id,
                 'footnotes': [{'id': f.id, 'line': f.line, 'text': f.text} for f in report_manager.footnotes_ids],
-                'buttons': self.get_reports_buttons(),
+                'buttons': self._get_reports_buttons(),
                 'main_html': self.get_html(options),
-                'searchview_html': self.env['ir.ui.view'].render_template(self.get_templates().get('search_template', 'account_report.search_template'), values=searchview_dict),
+                'searchview_html': self.env['ir.ui.view'].render_template(self._get_templates().get('search_template', 'account_report.search_template'), values=searchview_dict),
                 }
         return info
 
-    def create_hierarchy(self, lines):
+    def _create_hierarchy(self, lines):
         """This method is called when the option 'hiearchy' is enabled on a report.
-        It receives the lines (as computed by get_lines()) in argument, and will add
+        It receives the lines (as computed by _get_lines()) in argument, and will add
         a hiearchy in those lines by using the account.group of accounts. If not set,
         it will fallback on creating a hierarchy based on the account's code first 3
         digits.
@@ -463,6 +463,24 @@ class AccountReport(models.AbstractModel):
         return lines
 
     @api.multi
+    def _check_report_security(self, options):
+        '''The security check must be done in this method. It ensures no-one can by-passing some access rules
+        (e.g. falsifying the options).
+
+        :param options:     The report options.
+        '''
+        # Check the options has not been falsified in order to access not allowed companies.
+        user_company_ids = self.env.user.company_ids.ids
+        if options.get('multi_company'):
+            group_multi_company = self.env.ref('base.group_multi_company')
+            if self.env.user.id not in group_multi_company.users.ids:
+                options.pop('multi_company')
+            else:
+                for c in options['multi_company']:
+                    if c['selected'] and c['id'] not in user_company_ids:
+                        c['selected'] = False
+
+    @api.multi
     def get_html(self, options, line_id=None, additional_context=None):
         '''
         return the html value of report, or html value of unfolded line
@@ -470,15 +488,21 @@ class AccountReport(models.AbstractModel):
         otherwise it uses the main_template. Reason is for efficiency, when unfolding a line in the report
         we don't want to reload all lines, just get the one we unfolded.
         '''
-        templates = self.get_templates()
-        report_manager = self.get_report_manager(options)
-        report = {'name': self.get_report_name(),
+        # Check the security before updating the context to make sure the options are safe.
+        self._check_report_security(options)
+
+        # Prevent inconsistency between options and context.
+        self = self.with_context(self._set_context(options))
+
+        templates = self._get_templates()
+        report_manager = self._get_report_manager(options)
+        report = {'name': self._get_report_name(),
                 'summary': report_manager.summary,
                 'company_name': self.env.user.company_id.name,}
-        lines = self.with_context(self.set_context(options)).get_lines(options, line_id=line_id)
+        lines = self._get_lines(options, line_id=line_id)
 
         if options.get('hierarchy'):
-            lines = self.create_hierarchy(lines)
+            lines = self._create_hierarchy(lines)
 
         footnotes_to_render = []
         if self.env.context.get('print_mode', False):
@@ -509,7 +533,7 @@ class AccountReport(models.AbstractModel):
             values=dict(rcontext),
         )
         if self.env.context.get('print_mode', False):
-            for k,v in self.replace_class().items():
+            for k,v in self._replace_class().items():
                 html = html.replace(k, v)
             # append footnote as well
             html = html.replace(b'<div class="js_account_report_footnotes"></div>', self.get_html_footnotes(footnotes_to_render))
@@ -517,15 +541,15 @@ class AccountReport(models.AbstractModel):
 
     @api.multi
     def get_html_footnotes(self, footnotes):
-        template = self.get_templates().get('footnotes_template', 'account_reports.footnotes_template')
+        template = self._get_templates().get('footnotes_template', 'account_reports.footnotes_template')
         rcontext = {'footnotes': footnotes, 'context': self.env.context}
         html = self.env['ir.ui.view'].render_template(template, values=dict(rcontext))
         return html
 
-    def get_reports_buttons(self):
+    def _get_reports_buttons(self):
         return [{'name': _('Print Preview'), 'action': 'print_pdf'}, {'name': _('Export (XLSX)'), 'action': 'print_xlsx'}]
 
-    def get_report_manager(self, options):
+    def _get_report_manager(self, options):
         domain = [('report_name', '=', self._name)]
         domain = (domain + [('financial_report_id', '=', self.id)]) if 'id' in dir(self) else domain
         selected_companies = []
@@ -541,7 +565,7 @@ class AccountReport(models.AbstractModel):
     def _get_filter_journals(self):
         return self.env['account.journal'].search([('company_id', 'in', self.env.user.company_ids.ids or [self.env.user.company_id.id])], order="company_id, name")
 
-    def get_journals(self):
+    def _get_journals(self):
         journals_read = self._get_filter_journals()
         journals = []
         previous_company = False
@@ -705,7 +729,7 @@ class AccountReport(models.AbstractModel):
 
         return self._get_dates_period(options, dt_from, dt_to)['string']
 
-    def apply_date_filter(self, options):
+    def _apply_date_filter(self, options):
         def create_vals(period_vals):
             vals = {'string': period_vals['string']}
             if self.has_single_date_filter(options):
@@ -798,7 +822,7 @@ class AccountReport(models.AbstractModel):
                          }
                 }
 
-    def replace_class(self):
+    def _replace_class(self):
         """When printing pdf, we sometime want to remove/add/replace class for the report to look a bit different on paper
         this method is used for this, it will replace occurence of value key by the dict value in the generated pdf
         """
@@ -908,7 +932,7 @@ class AccountReport(models.AbstractModel):
     def get_xlsx(self, options, response):
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        sheet = workbook.add_worksheet(self.get_report_name()[:31])
+        sheet = workbook.add_worksheet(self._get_report_name()[:31])
 
         def_style = workbook.add_format({'font_name': 'Arial'})
         title_style = workbook.add_format({'font_name': 'Arial', 'bold': True, 'bottom': 2})
@@ -960,12 +984,12 @@ class AccountReport(models.AbstractModel):
                     sheet.merge_range(y_offset, x, y_offset, x + colspan - 1, header_label, title_style)
                 x += colspan
             y_offset += 1
-        ctx = self.set_context(options)
+        ctx = self._set_context(options)
         ctx.update({'no_format':True, 'print_mode':True})
-        lines = self.with_context(ctx).get_lines(options)
+        lines = self.with_context(ctx)._get_lines(options)
 
         if options.get('hierarchy'):
-            lines = self.create_hierarchy(lines)
+            lines = self._create_hierarchy(lines)
 
         if lines:
             max_width = max([len(l['columns']) for l in lines])

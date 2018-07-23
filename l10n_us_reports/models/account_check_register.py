@@ -29,14 +29,14 @@ class ReportCheckRegister(models.AbstractModel):
         return self.env['account.account'].search([('user_type_id', '=', liquidity_type_id.id)])
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         # Override to filter liquidity accounts using the context
         liquidity_account_ids = self._l10n_us_reports_liquidity_accounts()
         context = dict(self._context, account_ids=liquidity_account_ids)
-        return super(ReportCheckRegister, self.with_context(context)).get_lines(options, line_id=line_id)
+        return super(ReportCheckRegister, self.with_context(context))._get_lines(options, line_id=line_id)
 
     @api.model
-    def get_report_name(self):
+    def _get_report_name(self):
         '''Override to change the report name.
         '''
         return _('Check Register')

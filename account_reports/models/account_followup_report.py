@@ -20,7 +20,7 @@ class AccountFollowupReport(models.AbstractModel):
 
     filter_partner_id = False
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         """
         Override
         Return the name of the columns of the follow-ups report
@@ -38,7 +38,7 @@ class AccountFollowupReport(models.AbstractModel):
             headers = headers[:5] + headers[7:]  # Remove the 'Expected Date' and 'Excluded' columns
         return headers
 
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         """
         Override
         Compute and return the lines of the columns of the follow-ups report.
@@ -126,7 +126,7 @@ class AccountFollowupReport(models.AbstractModel):
             })
         return lines
 
-    def get_default_summary(self, options):
+    def _get_default_summary(self, options):
         """
         Override
         Return the overdue message of the company as the summary of the report
@@ -136,7 +136,7 @@ class AccountFollowupReport(models.AbstractModel):
         return self.env.user.company_id.with_context(lang=lang).overdue_msg or\
             self.env['res.company'].with_context(lang=lang).default_get(['overdue_msg'])['overdue_msg']
 
-    def get_report_manager(self, options):
+    def _get_report_manager(self, options):
         """
         Override
         Compute and return the report manager for the partner_id in options
@@ -144,13 +144,13 @@ class AccountFollowupReport(models.AbstractModel):
         domain = [('report_name', '=', 'account.followup.report'), ('partner_id', '=', options.get('partner_id')), ('company_id', '=', self.env.user.company_id.id)]
         existing_manager = self.env['account.report.manager'].search(domain, limit=1)
         if existing_manager and not options.get('keep_summary'):
-            existing_manager.write({'summary': self.get_default_summary(options)})
+            existing_manager.write({'summary': self._get_default_summary(options)})
         if not existing_manager:
             existing_manager = self.env['account.report.manager'].create({
                 'report_name': 'account.followup.report',
                 'company_id': self.env.user.company_id.id,
                 'partner_id': options.get('partner_id'),
-                'summary': self.get_default_summary(options)})
+                'summary': self._get_default_summary(options)})
         return existing_manager
 
     @api.multi
@@ -168,26 +168,26 @@ class AccountFollowupReport(models.AbstractModel):
         additional_context['today'] = fields.date.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
         return super(AccountFollowupReport, self).get_html(options, line_id=line_id, additional_context=additional_context)
 
-    def get_report_name(self):
+    def _get_report_name(self):
         """
         Override
         Return the name of the report
         """
         return _('Followup Report')
 
-    def get_reports_buttons(self):
+    def _get_reports_buttons(self):
         """
         Override
         Return an empty list because this report doesn't contain any buttons
         """
         return []
 
-    def get_templates(self):
+    def _get_templates(self):
         """
         Override
         Return the templates of the report
         """
-        templates = super(AccountFollowupReport, self).get_templates()
+        templates = super(AccountFollowupReport, self)._get_templates()
         templates['main_template'] = 'account_reports.template_followup_report'
         templates['line_template'] = 'account_reports.line_template_followup_report'
         return templates
@@ -201,7 +201,7 @@ class AccountFollowupReport(models.AbstractModel):
         - the state of the next_action
         """
         options['partner_id'] = partner_id
-        report_manager_id = self.get_report_manager(options).id
+        report_manager_id = self._get_report_manager(options).id
         html = self.get_html(options)
         next_action = False
         if not options.get('keep_summary'):

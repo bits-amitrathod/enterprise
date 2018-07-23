@@ -14,7 +14,7 @@ class report_account_aged_partner(models.AbstractModel):
     filter_unfold_all = False
     filter_partner = True
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         columns = [{}]
         columns += [
             {'name': v, 'class': 'number', 'style': 'white-space:nowrap;'}
@@ -23,8 +23,8 @@ class report_account_aged_partner(models.AbstractModel):
         ]
         return columns
 
-    def get_templates(self):
-        templates = super(report_account_aged_partner, self).get_templates()
+    def _get_templates(self):
+        templates = super(report_account_aged_partner, self)._get_templates()
         templates['main_template'] = 'account_reports.template_aged_partner_balance_report'
         try:
             self.env['ir.ui.view'].get_view_id('account_reports.template_aged_partner_balance_line_report')
@@ -34,7 +34,7 @@ class report_account_aged_partner(models.AbstractModel):
         return templates
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         sign = -1.0 if self.env.context.get('aged_balance') else 1.0
         lines = []
         account_types = [self.env.context.get('account_type')]
@@ -89,16 +89,16 @@ class report_account_aged_receivable(models.AbstractModel):
     _description = "Aged Receivable"
     _inherit = "account.aged.partner"
 
-    def set_context(self, options):
-        ctx = super(report_account_aged_receivable, self).set_context(options)
+    def _set_context(self, options):
+        ctx = super(report_account_aged_receivable, self)._set_context(options)
         ctx['account_type'] = 'receivable'
         return ctx
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return _("Aged Receivable")
 
-    def get_templates(self):
-        templates = super(report_account_aged_receivable, self).get_templates()
+    def _get_templates(self):
+        templates = super(report_account_aged_receivable, self)._get_templates()
         templates['main_template'] = 'account_reports.template_aged_receivable_report'
         templates['line_template'] = 'account_reports.line_template_aged_receivable_report'
         return templates
@@ -109,17 +109,17 @@ class report_account_aged_payable(models.AbstractModel):
     _description = "Aged Payable"
     _inherit = "account.aged.partner"
 
-    def set_context(self, options):
-        ctx = super(report_account_aged_payable, self).set_context(options)
+    def _set_context(self, options):
+        ctx = super(report_account_aged_payable, self)._set_context(options)
         ctx['account_type'] = 'payable'
         ctx['aged_balance'] = True
         return ctx
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return _("Aged Payable")
 
-    def get_templates(self):
-        templates = super(report_account_aged_payable, self).get_templates()
+    def _get_templates(self):
+        templates = super(report_account_aged_payable, self)._get_templates()
         templates['main_template'] = 'account_reports.template_aged_payable_report'
         templates['line_template'] = 'account_reports.line_template_aged_payable_report'
         return templates

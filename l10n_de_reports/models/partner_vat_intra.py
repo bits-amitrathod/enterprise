@@ -13,7 +13,7 @@ class ReportL10nDePartnerVatIntra(models.AbstractModel):
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         lines = []
         context = self.env.context
         if not context.get('company_ids'):
@@ -70,8 +70,8 @@ class ReportL10nDePartnerVatIntra(models.AbstractModel):
                 })
         return lines
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('Zusammenfassende Meldung')
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [{}, {'name': _('Länderkennzeichen')}, {'name': _('Ust-IdNr.')}, {'name': _('Summe der Bemessungsgrundlagen'), 'class': 'number'}, {'name': _('Sonstige Leistungen (1) <br/>/ Dreiecksgeschäfte (2)')}]

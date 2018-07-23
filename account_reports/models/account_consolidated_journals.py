@@ -15,46 +15,46 @@ class report_account_consolidated_journal(models.AbstractModel):
     filter_unfold_all = False
 
     @api.model
-    def get_options(self, previous_options=None):
-        options = super(report_account_consolidated_journal, self).get_options(previous_options=previous_options)
+    def _get_options(self, previous_options=None):
+        options = super(report_account_consolidated_journal, self)._get_options(previous_options=previous_options)
         # We do not want multi company for this report
         if options.get('multi_company'):
             options.pop('multi_company')
         return options
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return _("Consolidated Journals")
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         columns = [{'name': _('Journal Name (Code)')}, {'name': _('Debit'), 'class': 'number'}, {'name': _('Credit'), 'class': 'number'}, {'name': _('Balance'), 'class': 'number'}]
         return columns
 
-    def get_sum(self, value, field, results):
+    def _get_sum(self, value, field, results):
         sum_debit = self.format_value(sum([int(r['debit']) for r in results if r[field] == value]))
         sum_credit = self.format_value(sum([int(r['credit']) for r in results if r[field] == value]))
         sum_balance = self.format_value(sum([int(r['balance']) for r in results if r[field] == value]))
         return [sum_debit, sum_credit, sum_balance]
 
-    def get_total(self, current_journal, results):
+    def _get_total(self, current_journal, results):
         return {
                 'id': 'total_%s' % (current_journal,),
                 'name': _('Total'),
                 'class': 'o_account_reports_domain_total',
-                'columns': [{'name': v} for v in self.get_sum(current_journal, 'journal_id', results)],
+                'columns': [{'name': v} for v in self._get_sum(current_journal, 'journal_id', results)],
                 'parent_id': current_journal,
             }
 
-    def get_main_line(self, options, current_journal, results, record):
+    def _get_main_line(self, options, current_journal, results, record):
         return {
                 'id': current_journal,
                 'name': '%s (%s)' % (record['name'], record['code']),
                 'level': 2,
-                'columns': [{'name': n} for n in self.get_sum(current_journal, 'journal_id', results)],
+                'columns': [{'name': n} for n in self._get_sum(current_journal, 'journal_id', results)],
                 'unfoldable': True,
                 'unfolded': True if current_journal in options.get('unfolded_lines') else False,
             }
 
-    def get_line_total_per_month(self, options, current_company, results):
+    def _get_line_total_per_month(self, options, current_company, results):
         convert_date = self.env['ir.qweb.field.date'].value_to_html
         lines = []
         lines.append({
@@ -62,7 +62,7 @@ class report_account_consolidated_journal(models.AbstractModel):
                     'name': _('Total'),
                     'class': 'total',
                     'level': 1,
-                    'columns': [{'name': n} for n in self.get_sum(current_company, 'company_id', results)]
+                    'columns': [{'name': n} for n in self._get_sum(current_company, 'company_id', results)]
         })
         # get range of date for company_id
         dates = []
@@ -91,7 +91,7 @@ class report_account_consolidated_journal(models.AbstractModel):
         return lines
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         lines = []
         convert_date = self.env['ir.qweb.field.date'].value_to_html
         select = """SELECT to_char("account_move_line".date, 'MM') as month, to_char("account_move_line".date, 'YYYY') as yyyy,
@@ -111,14 +111,14 @@ class report_account_consolidated_journal(models.AbstractModel):
         if not results:
             return lines
         current_journal = results[0]['journal_id']
-        lines.append(self.get_main_line(options, current_journal, results, results[0]))
+        lines.append(self._get_main_line(options, current_journal, results, results[0]))
         for values in results:
             if values['journal_id'] != current_journal:
                 # We are on a new journal, so add a total line before that and create a new line unfoldable for the next journal
                 if (current_journal in options.get('unfolded_lines')):
-                    lines.append(self.get_total(current_journal, results))
+                    lines.append(self._get_total(current_journal, results))
                 current_journal = values['journal_id']
-                lines.append(self.get_main_line(options, current_journal, results, values))
+                lines.append(self._get_main_line(options, current_journal, results, values))
             # If we need to unfold the line
             if (values['journal_id'] in options.get('unfolded_lines')):
                 vals = {
@@ -131,7 +131,7 @@ class report_account_consolidated_journal(models.AbstractModel):
                 }
                 lines.append(vals)
         if (values['journal_id'] in options.get('unfolded_lines')):
-            lines.append(self.get_total(current_journal, results))
+            lines.append(self._get_total(current_journal, results))
         if not line_id:
-            lines.extend(self.get_line_total_per_month(options, values['company_id'], results))
+            lines.extend(self._get_line_total_per_month(options, values['company_id'], results))
         return lines

@@ -10,7 +10,7 @@ class AEATAccountFinancialReport(models.Model):
 
     CASILLA_FIELD_PREFIX = 'casilla_'
 
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         """ Overridden in order to add the 'financial_report_line_values' attribute
         to the context before calling super() in case some AEAT wizard was used
         to generate this report. This allows transmitting the values manually
@@ -30,4 +30,4 @@ class AEATAccountFinancialReport(models.Model):
                 line_code = 'aeat_mod_' + aeat_wizard._modelo + '_' + attr.replace(self.CASILLA_FIELD_PREFIX, '')
                 context_line_values[line_code] = getattr(aeat_wizard, attr)
 
-        return super(AEATAccountFinancialReport, self.with_context(self.env.context, financial_report_line_values=context_line_values)).get_lines(options, line_id)
+        return super(AEATAccountFinancialReport, self.with_context(self.env.context, financial_report_line_values=context_line_values))._get_lines(options, line_id)

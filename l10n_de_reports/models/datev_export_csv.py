@@ -62,8 +62,8 @@ class AccountMoveL10NDe(models.Model):
 class DatevExportCSV(models.AbstractModel):
     _inherit = 'account.general.ledger'
 
-    def get_reports_buttons(self):
-        buttons = super(DatevExportCSV, self).get_reports_buttons()
+    def _get_reports_buttons(self):
+        buttons = super(DatevExportCSV, self)._get_reports_buttons()
         buttons += [{'name': _('Export Datev (csv)'), 'action': 'print_csv'}]
         return buttons
 
@@ -80,7 +80,7 @@ class DatevExportCSV(models.AbstractModel):
     def get_csv(self, options):
         header = u'"Währungskennung";"Soll-/Haben-Kennzeichen";"Umsatz (ohne Soll-/Haben-Kennzeichen)";"BU-Schlüssel";"Gegenkonto (ohne BU-Schlüssel)";"Belegfeld 1";"Belegfeld 2";"Datum";"Konto";"EU-Land und UStID";"Kurs"'
 
-        move_line_ids = self.with_context(self.set_context(options), print_mode=True, aml_only=True).get_lines(options)
+        move_line_ids = self.with_context(self._set_context(options), print_mode=True, aml_only=True)._get_lines(options)
         lines = [header]
         for aml in self.env['account.move.line'].browse(move_line_ids):
             if aml.debit == aml.credit:

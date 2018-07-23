@@ -27,4 +27,4 @@ class TestAccountReports(common.TransactionCase):
 
     def test_03_general_ledger(self):
         context = self.env['account.context.general.ledger'].create({})
-        self.env['account.general.ledger'].get_lines(context.id)
+        self.env['account.general.ledger']._get_lines(context.id)

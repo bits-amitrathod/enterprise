@@ -19,13 +19,13 @@ class report_account_general_ledger(models.AbstractModel):
     filter_analytic = True
     filter_unfold_all = False
 
-    def get_templates(self):
-        templates = super(report_account_general_ledger, self).get_templates()
+    def _get_templates(self):
+        templates = super(report_account_general_ledger, self)._get_templates()
         templates['main_template'] = 'account_reports.template_general_ledger_report'
         templates['line_template'] = 'account_reports.line_template_general_ledger_report'
         return templates
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [{'name': ''},
                 {'name': _("Date"), 'class': 'date'},
                 {'name': _("Communication")},
@@ -92,7 +92,7 @@ class report_account_general_ledger(models.AbstractModel):
             params = [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)]
         return sql, params
 
-    def do_query_unaffected_earnings(self, options, line_id):
+    def _do_query_unaffected_earnings(self, options, line_id):
         ''' Compute the sum of ending balances for all accounts that are of a type that does not bring forward the balance in new fiscal years.
             This is needed to balance the trial balance and the general ledger reports (to have total credit = total debit)
         '''
@@ -138,7 +138,7 @@ class report_account_general_ledger(models.AbstractModel):
         results = self.env.cr.fetchall()
         return results
 
-    def do_query(self, options, line_id):
+    def _do_query_group_by_account(self, options, line_id):
         results = self._do_query(options, line_id, group_by_account=True, limit=False)
         used_currency = self.env.user.company_id.currency_id
         compute_table = {
@@ -155,17 +155,17 @@ class report_account_general_ledger(models.AbstractModel):
         ) for k in results])
         return results
 
-    def group_by_account_id(self, options, line_id):
+    def _group_by_account_id(self, options, line_id):
         accounts = {}
-        results = self.do_query(options, line_id)
+        results = self._do_query_group_by_account(options, line_id)
         initial_bal_date_to = datetime.strptime(self.env.context['date_from_aml'], "%Y-%m-%d") + timedelta(days=-1)
-        initial_bal_results = self.with_context(date_to=initial_bal_date_to.strftime('%Y-%m-%d')).do_query(options, line_id)
+        initial_bal_results = self.with_context(date_to=initial_bal_date_to.strftime('%Y-%m-%d'))._do_query_group_by_account(options, line_id)
         unaffected_earnings_xml_ref = self.env.ref('account.data_unaffected_earnings')
         unaffected_earnings_line = True  # used to make sure that we add the unaffected earning initial balance only once
         if unaffected_earnings_xml_ref:
             #compute the benefit/loss of last year to add in the initial balance of the current year earnings account
             last_day_previous_fy = self.env.user.company_id.compute_fiscalyear_dates(datetime.strptime(self.env.context['date_from_aml'], "%Y-%m-%d"))['date_from'] + timedelta(days=-1)
-            unaffected_earnings_results = self.with_context(date_to=last_day_previous_fy.strftime('%Y-%m-%d'), date_from=False).do_query_unaffected_earnings(options, line_id)
+            unaffected_earnings_results = self.with_context(date_to=last_day_previous_fy.strftime('%Y-%m-%d'), date_from=False)._do_query_unaffected_earnings(options, line_id)
             unaffected_earnings_line = False
         context = self.env.context
         base_domain = [('date', '<=', context['date_to']), ('company_id', 'in', context['company_ids'])]
@@ -252,7 +252,7 @@ class report_account_general_ledger(models.AbstractModel):
         return self.env.cr.dictfetchone()
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         lines = []
         context = self.env.context
         company_id = self.env.user.company_id
@@ -260,7 +260,7 @@ class report_account_general_ledger(models.AbstractModel):
         line_id = line_id and int(line_id.split('_')[1]) or None
         aml_lines = []
         # Aml go back to the beginning of the user chosen range but the amount on the account line should go back to either the beginning of the fy or the beginning of times depending on the account
-        grouped_accounts = self.with_context(date_from_aml=dt_from, date_from=dt_from and company_id.compute_fiscalyear_dates(datetime.strptime(dt_from, "%Y-%m-%d"))['date_from'] or None).group_by_account_id(options, line_id)
+        grouped_accounts = self.with_context(date_from_aml=dt_from, date_from=dt_from and company_id.compute_fiscalyear_dates(datetime.strptime(dt_from, "%Y-%m-%d"))['date_from'] or None)._group_by_account_id(options, line_id)
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
         unfold_all = context.get('print_mode') and len(options.get('unfolded_lines')) == 0
         sum_debit = sum_credit = sum_balance = 0
@@ -419,7 +419,7 @@ class report_account_general_ledger(models.AbstractModel):
         return lines
 
     @api.model
-    def get_report_name(self):
+    def _get_report_name(self):
         return _("General Ledger")
 
     def view_all_journal_items(self, options, params):

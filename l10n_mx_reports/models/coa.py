@@ -28,16 +28,16 @@ class MXReportAccountCoa(models.AbstractModel):
     filter_hierarchy = None
     filter_journals = None
 
-    def get_templates(self):
-        templates = super(MXReportAccountCoa, self).get_templates()
+    def _get_templates(self):
+        templates = super(MXReportAccountCoa, self)._get_templates()
         #use the main template instead of the trial balance with 2 header lines
         templates['main_template'] = 'account_reports.main_template'
         return templates
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [{'name': ''}, {'name': _('Nature')}]
 
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         options['coa_only'] = True
         lines = self._post_process({}, {}, options, [])
         if lines:
@@ -93,8 +93,8 @@ class MXReportAccountCoa(models.AbstractModel):
                 })
         return lines
 
-    def get_coa_dict(self, options):
-        xml_data = self.get_lines(options)
+    def _get_coa_dict(self, options):
+        xml_data = self._get_lines(options)
         accounts = []
         account_lines = [l for l in xml_data
                          if l.get('level') in [2, 3]]
@@ -132,7 +132,7 @@ class MXReportAccountCoa(models.AbstractModel):
                 'level': '2',
                 'nature': tag.nature,
             })
-        ctx = self.set_context(options)
+        ctx = self._set_context(options)
         date = fields.datetime.strptime(
             ctx['date_from'], DEFAULT_SERVER_DATE_FORMAT)
         chart = {
@@ -146,28 +146,19 @@ class MXReportAccountCoa(models.AbstractModel):
     def get_xml(self, options):
         qweb = self.env['ir.qweb']
         version = '1.3'
-        values = self.get_coa_dict(options)
+        values = self._get_coa_dict(options)
         cfdicoa = qweb.render(CFDICOA_TEMPLATE, values=values)
         for key, value in MX_NS_REFACTORING.items():
             cfdicoa = cfdicoa.replace(key.encode('UTF-8'),
                                       value.encode('UTF-8') + b':')
-        cfdicoa = self.l10n_mx_edi_add_digital_stamp(
+        cfdicoa = self._l10n_mx_edi_add_digital_stamp(
             CFDICOA_XSLT_CADENA % version, cfdicoa)
 
         with tools.file_open(CFDICOA_XSD % version, "rb") as xsd:
             _check_with_xsd(cfdicoa, xsd)
         return cfdicoa
 
-    def get_html(self, options, line_id=None, additional_context=None):
-        return super(MXReportAccountCoa, self.with_context(
-            self.set_context(options))).get_html(
-                options, line_id, additional_context)
-
-    def get_report_filename(self, options):
-        return super(MXReportAccountCoa, self.with_context(
-            self.set_context(options))).get_report_filename(options)
-
-    def get_report_name(self):
+    def _get_report_name(self):
         """The structure to name the CoA reports is:
         VAT + YEAR + MONTH + CT"""
         context = self.env.context

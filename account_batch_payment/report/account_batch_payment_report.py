@@ -30,7 +30,7 @@ class PrintBatchPayment(models.AbstractModel):
         } for payments in payment_slices]
 
     @api.model
-    def get_report_values(self, docids, data=None):
+    def _get_report_values(self, docids, data=None):
         report_name = 'account_batch_payment.print_batch_payment'
         report = self.env['ir.actions.report']._get_report_from_name(report_name)
         return {

@@ -14,15 +14,15 @@ class generic_tax_report(models.AbstractModel):
     filter_all_entries = False
     filter_comparison = {'date_from': '', 'date_to': '', 'filter': 'no_comparison', 'number_period': 1}
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         columns_header = [{}, {'name': '%s \n %s' % (_('NET'), self.format_date(options)), 'class': 'number', 'style': 'white-space: pre;'}, {'name': _('TAX'), 'class': 'number'}]
         if options.get('comparison') and options['comparison'].get('periods'):
             for p in options['comparison']['periods']:
                 columns_header += [{'name': '%s \n %s' % (_('NET'), p.get('string')), 'class': 'number', 'style': 'white-space: pre;'}, {'name': _('TAX'), 'class': 'number'}]
         return columns_header
 
-    def set_context(self, options):
-        ctx = super(generic_tax_report, self).set_context(options)
+    def _set_context(self, options):
+        ctx = super(generic_tax_report, self)._set_context(options)
         ctx['strict_range'] = True
         return ctx
 
@@ -80,7 +80,7 @@ class generic_tax_report(models.AbstractModel):
         return [option[1] for option in self.env['account.tax']._fields['type_tax_use'].selection if option[0] == value][0]
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         taxes = {}
         for tax in self.env['account.tax'].with_context(active_test=False).search([]):
             taxes[tax.id] = {'obj': tax, 'show': False, 'periods': [{'net': 0, 'tax': 0}]}
@@ -147,5 +147,5 @@ class generic_tax_report(models.AbstractModel):
         return lines
 
     @api.model
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('Tax Report')

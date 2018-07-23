@@ -20,13 +20,13 @@ class ReportPartnerLedger(models.AbstractModel):
     filter_unreconciled = False
     filter_partner = True
 
-    def get_templates(self):
-        templates = super(ReportPartnerLedger, self).get_templates()
+    def _get_templates(self):
+        templates = super(ReportPartnerLedger, self)._get_templates()
         templates['line_template'] = 'account_reports.line_template_partner_ledger_report'
         templates['main_template'] = 'account_reports.template_partner_ledger_report'
         return templates
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         columns = [
             {},
             {'name': _('JRNL')},
@@ -45,12 +45,12 @@ class ReportPartnerLedger(models.AbstractModel):
 
         return columns
 
-    def set_context(self, options):
-        ctx = super(ReportPartnerLedger, self).set_context(options)
+    def _set_context(self, options):
+        ctx = super(ReportPartnerLedger, self)._set_context(options)
         ctx['strict_range'] = True
         return ctx
 
-    def do_query(self, options, line_id):
+    def _do_query_group_by_account(self, options, line_id):
         account_types = [a.get('id') for a in options.get('account_type') if a.get('selected', False)]
         if not account_types:
             account_types = [a.get('id') for a in options.get('account_type')]
@@ -68,15 +68,15 @@ class ReportPartnerLedger(models.AbstractModel):
         results = dict([(k[0], {'balance': k[1], 'debit': k[2], 'credit': k[3]}) for k in results])
         return results
 
-    def group_by_partner_id(self, options, line_id):
+    def _group_by_partner_id(self, options, line_id):
         partners = {}
         account_types = [a.get('id') for a in options.get('account_type') if a.get('selected', False)]
         if not account_types:
             account_types = [a.get('id') for a in options.get('account_type')]
         date_from = options['date']['date_from']
-        results = self.do_query(options, line_id)
+        results = self._do_query_group_by_account(options, line_id)
         initial_bal_date_to = datetime.strptime(date_from, DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
-        initial_bal_results = self.with_context(date_from=False, date_to=initial_bal_date_to.strftime(DEFAULT_SERVER_DATE_FORMAT)).do_query(options, line_id)
+        initial_bal_results = self.with_context(date_from=False, date_to=initial_bal_date_to.strftime(DEFAULT_SERVER_DATE_FORMAT))._do_query_group_by_account(options, line_id)
         context = self.env.context
         base_domain = [('date', '<=', context['date_to']), ('company_id', 'in', context['company_ids']), ('account_id.internal_type', 'in', account_types)]
         base_domain.append(('date', '>=', date_from))
@@ -111,7 +111,7 @@ class ReportPartnerLedger(models.AbstractModel):
         return partners
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         lines = []
         if line_id:
             line_id = line_id.replace('partner_', '')
@@ -121,7 +121,7 @@ class ReportPartnerLedger(models.AbstractModel):
         if options.get('partner_id'):
             line_id = options['partner_id']
 
-        grouped_partners = self.group_by_partner_id(options, line_id)
+        grouped_partners = self._group_by_partner_id(options, line_id)
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name or '')
         unfold_all = context.get('print_mode') and not options.get('unfolded_lines') or options.get('partner_id')
         total_initial_balance = total_debit = total_credit = total_balance = 0.0
@@ -211,5 +211,5 @@ class ReportPartnerLedger(models.AbstractModel):
         return lines
 
     @api.model
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('Partner Ledger')

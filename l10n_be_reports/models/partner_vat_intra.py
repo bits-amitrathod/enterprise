@@ -15,7 +15,7 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         lines = []
         context = self.env.context
         if not context.get('company_ids'):
@@ -72,14 +72,14 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
             return {'lines': lines, 'clientnbr': str(seq), 'amountsum': round(amount_sum, 2), 'partner_wo_vat': p_count}
         return lines
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('Partner VAT Intra')
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [{}, {'name': _('VAT Number')}, {'name': _('Code')}, {'name': _('Intra Code')}, {'name': _('Amount'), 'class': 'number'}]
 
-    def get_reports_buttons(self):
-        buttons = super(ReportL10nBePartnerVatIntra, self).get_reports_buttons()
+    def _get_reports_buttons(self):
+        buttons = super(ReportL10nBePartnerVatIntra, self)._get_reports_buttons()
         buttons += [{'name': _('Export (XML)'), 'action': 'print_xml'}]
         return buttons
 
@@ -126,9 +126,9 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
         date_from = options['date'].get('date_from')
         date_to = options['date'].get('date_to')
 
-        ctx = self.set_context(options)
+        ctx = self._set_context(options)
         ctx.update({'no_format': True, 'date_from': date_from, 'date_to': date_to, 'get_xml_data': True})
-        xml_data = self.with_context(ctx).get_lines(options)
+        xml_data = self.with_context(ctx)._get_lines(options)
 
         ctx_date_from = date_from[5:10]
         ctx_date_to = date_to[5:10]
@@ -159,7 +159,7 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
             'year': date_from[0:4],
             'month': month,
             'quarter': quarter,
-            'comments': self.get_report_manager(options).summary or '',
+            'comments': self._get_report_manager(options).summary or '',
             'issued_by': issued_by,
             'dnum': dnum,
         })

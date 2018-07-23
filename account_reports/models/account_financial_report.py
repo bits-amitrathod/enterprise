@@ -130,7 +130,7 @@ class ReportAccountFinancialReport(models.Model):
 
         return column_hierarchy
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         columns = [{'name': ''}]
         if self.debit_credit and not options.get('comparison', {}).get('periods', False):
             columns += [{'name': _('Debit'), 'class': 'number'}, {'name': _('Credit'), 'class': 'number'}]
@@ -180,7 +180,7 @@ class ReportAccountFinancialReport(models.Model):
         return options
 
     @api.model
-    def get_options(self, previous_options=None):
+    def _get_options(self, previous_options=None):
         if self.date_range:
             self.filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_year'}
             if self.comparison:
@@ -207,9 +207,9 @@ class ReportAccountFinancialReport(models.Model):
         self.filter_hierarchy = True if self.hierarchy_option else None
         self.filter_ir_filters = self.applicable_filters_ids or None
 
-        return super(ReportAccountFinancialReport, self).get_options(previous_options)
+        return super(ReportAccountFinancialReport, self)._get_options(previous_options)
 
-    def create_action_and_menu(self, parent_id):
+    def _create_action_and_menu(self, parent_id):
         # create action and menu with corresponding external ids, in order to
         # remove those entries when deinstalling the corresponding module
         module = self._context.get('install_module', 'account_reports')
@@ -217,7 +217,7 @@ class ReportAccountFinancialReport(models.Model):
         for report in self:
             if not report.generated_menu_id:
                 action_vals = {
-                    'name': report.get_report_name(),
+                    'name': report._get_report_name(),
                     'tag': 'account_report',
                     'context': {
                         'model': 'account.financial.html.report',
@@ -227,7 +227,7 @@ class ReportAccountFinancialReport(models.Model):
                 action_id = IMD._update('ir.actions.client', module, action_vals,
                                     xml_id='account_financial_html_report_action_' + str(report.id), noupdate=True)
                 menu_vals = {
-                    'name': report.get_report_name(),
+                    'name': report._get_report_name(),
                     'parent_id': parent_id or IMD.xmlid_to_res_id('account.menu_finance_reports'),
                     'action': 'ir.actions.client,%s' % (action_id,),
                 }
@@ -240,7 +240,7 @@ class ReportAccountFinancialReport(models.Model):
     def create(self, vals):
         parent_id = vals.pop('parent_id', False)
         res = super(ReportAccountFinancialReport, self).create(vals)
-        res.create_action_and_menu(parent_id)
+        res._create_action_and_menu(parent_id)
         return res
 
     @api.multi
@@ -250,7 +250,7 @@ class ReportAccountFinancialReport(models.Model):
         if parent_id:
             # this keeps external ids "alive" when upgrading the module
             for report in self:
-                report.create_action_and_menu(parent_id)
+                report._create_action_and_menu(parent_id)
         return res
 
     @api.multi
@@ -310,7 +310,7 @@ class ReportAccountFinancialReport(models.Model):
         return domain, group_by
 
     @api.multi
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         line_obj = self.line_ids
         if line_id:
             line_obj = self.env['account.financial.html.report.line'].search([('id', '=', line_id)])
@@ -334,10 +334,10 @@ class ReportAccountFinancialReport(models.Model):
         res = line_obj.with_context(
             cash_basis=options.get('cash_basis') or self.cash_basis,
             filter_domain=domain,
-        ).get_lines(self, currency_table, options, linesDicts)
+        )._get_lines(self, currency_table, options, linesDicts)
         return res
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return self.name
 
     @api.multi
@@ -367,7 +367,7 @@ class ReportAccountFinancialReport(models.Model):
         default.update({'name': self._get_copied_name()})
         copied_report_id = super(ReportAccountFinancialReport, self).copy(default=default)
         for line in self.line_ids:
-            line.copy_hierarchy(report_id=self, copied_report_id=copied_report_id)
+            line._copy_hierarchy(report_id=self, copied_report_id=copied_report_id)
         return copied_report_id
 
 
@@ -425,7 +425,7 @@ class AccountFinancialReportLine(models.Model):
         return code
 
     @api.multi
-    def copy_hierarchy(self, report_id=None, copied_report_id=None, parent_id=None, code_mapping=None):
+    def _copy_hierarchy(self, report_id=None, copied_report_id=None, parent_id=None, code_mapping=None):
         ''' Copy the whole hierarchy from this line by copying each line children recursively and adapting the
         formulas with the new copied codes.
 
@@ -453,7 +453,7 @@ class AccountFinancialReportLine(models.Model):
             code_mapping[self.code] = copy_line_id.code
         # Copy children
         for line in self.children_ids:
-            line.copy_hierarchy(parent_id=copy_line_id, code_mapping=code_mapping)
+            line._copy_hierarchy(parent_id=copy_line_id, code_mapping=code_mapping)
         # Update formulas
         if self.formulas:
             copied_formulas = self.formulas
@@ -694,7 +694,7 @@ class AccountFinancialReportLine(models.Model):
         return res
 
     @api.one
-    def get_balance(self, linesDict, currency_table, financial_report, field_names=None):
+    def _get_balance(self, linesDict, currency_table, financial_report, field_names=None):
         if not field_names:
             field_names = ['debit', 'credit', 'balance']
         res = dict((fn, 0.0) for fn in field_names)
@@ -713,7 +713,7 @@ class AccountFinancialReportLine(models.Model):
                             raise err
         return res
 
-    def get_rows_count(self):
+    def _get_rows_count(self):
         groupby = self.groupby or 'id'
         if groupby not in self.env['account.move.line']:
             raise ValueError(_('Groupby should be a field from account.move.line'))
@@ -727,7 +727,7 @@ class AccountFinancialReportLine(models.Model):
         self.env.cr.execute(query, where_params)
         return self.env.cr.dictfetchall()[0]['count']
 
-    def get_value_from_context(self):
+    def _get_value_from_context(self):
         if self.env.context.get('financial_report_line_values'):
             return self.env.context.get('financial_report_line_values').get(self.code, 0)
         return 0
@@ -807,9 +807,9 @@ class AccountFinancialReportLine(models.Model):
             if self.code and self.code in linesDict:
                 line = linesDict[self.code]
             elif formulas and formulas['balance'].strip() == 'count_rows' and self.groupby:
-                line_res_per_group.append({'line': {'balance': self_for_group.get_rows_count()}})
+                line_res_per_group.append({'line': {'balance': self_for_group._get_rows_count()}})
             elif formulas and formulas['balance'].strip() == 'from_context':
-                line_res_per_group.append({'line': {'balance': self_for_group.get_value_from_context()}})
+                line_res_per_group.append({'line': {'balance': self_for_group._get_value_from_context()}})
             else:
                 line = FormulaLine(self_for_group, currency_table, financial_report, linesDict=linesDict)
 
@@ -913,7 +913,7 @@ class AccountFinancialReportLine(models.Model):
         return [line1, line2]
 
     @api.multi
-    def get_lines(self, financial_report, currency_table, options, linesDicts):
+    def _get_lines(self, financial_report, currency_table, options, linesDicts):
         final_result_table = []
         comparison_table = [options.get('date')]
         comparison_table += options.get('comparison') and options['comparison'].get('periods', []) or []
@@ -1003,7 +1003,7 @@ class AccountFinancialReportLine(models.Model):
                     vals['columns'] = [{'name': ''} for k in vals['columns']]
 
             if len(lines) == 1:
-                new_lines = line.children_ids.get_lines(financial_report, currency_table, options, linesDicts)
+                new_lines = line.children_ids._get_lines(financial_report, currency_table, options, linesDicts)
                 if new_lines and line.formulas:
                     if self.env.user.company_id.totals_below_sections:
                         divided_lines = self._divide_line(lines[0])
@@ -1025,7 +1025,7 @@ class FormulaLine(object):
             linesDict = {}
         fields = dict((fn, 0.0) for fn in ['debit', 'credit', 'balance'])
         if type == 'balance':
-            fields = obj.get_balance(linesDict, currency_table, financial_report)[0]
+            fields = obj._get_balance(linesDict, currency_table, financial_report)[0]
             linesDict[obj.code] = self
         elif type in ['sum', 'sum_if_pos', 'sum_if_neg']:
             if type == 'sum_if_neg':
@@ -1093,9 +1093,9 @@ class FormulaContext(dict):
             self['NDays'] = res
             return res
         if item == 'count_rows':
-            return self.curObj.get_rows_count()
+            return self.curObj._get_rows_count()
         if item == 'from_context':
-            return self.curObj.get_value_from_context()
+            return self.curObj._get_value_from_context()
         line_id = self.reportLineObj.search([('code', '=', item)], limit=1)
         if line_id:
             date_from, date_to, strict_range = line_id._compute_date_range()

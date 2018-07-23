@@ -57,7 +57,7 @@ class AccountFollowupReport(models.AbstractModel):
             return followup_line
         return False
 
-    def get_default_summary(self, options):
+    def _get_default_summary(self, options):
         followup_line = self.get_followup_line(options)
         partner = self.env['res.partner'].browse(options.get('partner_id'))
         lang = partner.lang or self.env.user.lang or 'en_US'
@@ -75,7 +75,7 @@ class AccountFollowupReport(models.AbstractModel):
                           % (partner.lang, followup_line.id, exception)
                 raise ValueError(message)
             return summary
-        return super(AccountFollowupReport, self).get_default_summary(options)
+        return super(AccountFollowupReport, self)._get_default_summary(options)
 
     @api.model
     def do_manual_action(self, options):

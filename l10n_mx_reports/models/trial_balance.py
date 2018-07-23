@@ -38,19 +38,19 @@ class MxReportAccountTrial(models.AbstractModel):
 
     filter_hierarchy = None
 
-    def get_reports_buttons(self):
+    def _get_reports_buttons(self):
         """Create the buttons to be used to download the required files"""
-        buttons = super(MxReportAccountTrial, self).get_reports_buttons()
+        buttons = super(MxReportAccountTrial, self)._get_reports_buttons()
         buttons += [{'name': _('Export For SAT (XML)'), 'action': 'print_xml'}]
         return buttons
 
-    def get_templates(self):
+    def _get_templates(self):
         """Get this template for better fit of columns"""
-        templates = super(MxReportAccountTrial, self).get_templates()
+        templates = super(MxReportAccountTrial, self)._get_templates()
         templates['main_template'] = 'l10n_mx_reports.template_coa_report'
         return templates
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         """Get more specific columns to use in SAT report"""
         columns = [{'name': ''}, {'name': _('Initial Balance'), 'class': 'number'}]
         if options.get('comparison') and options['comparison'].get('periods'):
@@ -229,7 +229,7 @@ class MxReportAccountTrial(models.AbstractModel):
             })
         return lines
 
-    def l10n_mx_edi_add_digital_stamp(self, path_xslt, cfdi):
+    def _l10n_mx_edi_add_digital_stamp(self, path_xslt, cfdi):
         """Add digital stamp certificate attributes in XML report"""
         company_id = self.env.user.company_id
         certificate_ids = company_id.l10n_mx_edi_certificate_ids
@@ -248,7 +248,7 @@ class MxReportAccountTrial(models.AbstractModel):
 
     def get_bce_dict(self, options):
         company = self.env.user.company_id
-        xml_data = self.get_lines(options)
+        xml_data = self._get_lines(options)
         accounts = []
         account_lines = [l for l in xml_data
                          if l.get('level') in [2, 3] and l.get('show', True)]
@@ -281,7 +281,7 @@ class MxReportAccountTrial(models.AbstractModel):
     def get_xml(self, options):
         qweb = self.env['ir.qweb']
         version = '1.3'
-        ctx = self.set_context(options)
+        ctx = self._set_context(options)
         if not ctx.get('date_to'):
             return False
         ctx['no_format'] = True
@@ -290,7 +290,7 @@ class MxReportAccountTrial(models.AbstractModel):
         for key, value in MX_NS_REFACTORING.items():
             cfdicoa = cfdicoa.replace(key.encode('UTF-8'),
                                       value.encode('UTF-8') + b':')
-        cfdicoa = self.l10n_mx_edi_add_digital_stamp(
+        cfdicoa = self._l10n_mx_edi_add_digital_stamp(
             CFDIBCE_XSLT_CADENA % version, cfdicoa)
 
         with tools.file_open(CFDIBCE_XSD % version, "rb") as xsd:
@@ -299,14 +299,14 @@ class MxReportAccountTrial(models.AbstractModel):
 
     def get_html(self, options, line_id=None, additional_context=None):
         return super(MxReportAccountTrial, self.with_context(
-            self.set_context(options))).get_html(
+            self._set_context(options))).get_html(
                 options, line_id, additional_context)
 
     def get_report_filename(self, options):
         return super(MxReportAccountTrial, self.with_context(
-            self.set_context(options))).get_report_filename(options)
+            self._set_context(options))).get_report_filename(options)
 
-    def get_report_name(self):
+    def _get_report_name(self):
         """The structure to name the Trial Balance reports is:
         VAT + YEAR + MONTH + ReportCode
         ReportCode:

@@ -12,7 +12,7 @@ class ReportL10nNLIntrastat(models.AbstractModel):
 
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_year'}
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [
             {'name': _('Partner')},
             {'name': _('VAT')},
@@ -21,11 +21,11 @@ class ReportL10nNLIntrastat(models.AbstractModel):
             {'name': _('Amount Service'), 'class': 'number'},
         ]
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('Intrastat (ICP)')
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         lines = []
         company_id = self.env.user.company_id
 

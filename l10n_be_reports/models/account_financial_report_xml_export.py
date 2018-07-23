@@ -33,8 +33,8 @@ class AccountFinancialReportXMLReportExport(models.TransientModel):
 class AccountFinancialReportXMLExport(models.AbstractModel):
     _inherit = "account.financial.html.report"
 
-    def get_reports_buttons(self):
-        buttons = super(AccountFinancialReportXMLExport, self).get_reports_buttons()
+    def _get_reports_buttons(self):
+        buttons = super(AccountFinancialReportXMLExport, self)._get_reports_buttons()
         if self.id == self.env['ir.model.data'].xmlid_to_res_id('l10n_be_reports.account_financial_report_l10n_be_tva0'):
             buttons += [{'name': _('Export (XML)'), 'action': 'print_xml'}]
         return buttons
@@ -79,9 +79,9 @@ class AccountFinancialReportXMLExport(models.AbstractModel):
 
         date_from = dt_from[0:7] + '-01'
         date_to = dt_to[0:7] + '-' + str(calendar.monthrange(int(dt_to[0:4]), int(ending_month))[1])
-        ctx = self.set_context(options)
+        ctx = self._set_context(options)
         ctx.update({'no_format': True, 'date_from': date_from, 'date_to': date_to})
-        lines = self.with_context(ctx).get_lines(options)
+        lines = self.with_context(ctx)._get_lines(options)
 
         data = {'client_nihil': options.get('client_nihil'), 'ask_restitution': options.get('ask_restitution', False), 'ask_payment': options.get('ask_payment', False)}
 
@@ -103,7 +103,7 @@ class AccountFinancialReportXMLExport(models.AbstractModel):
                         'client_nihil': (data['client_nihil'] and 'YES' or 'NO'),
                         'ask_restitution': (data['ask_restitution'] and 'YES' or 'NO'),
                         'ask_payment': (data['ask_payment'] and 'YES' or 'NO'),
-                        'comments': self.get_report_manager(options).summary or '',
+                        'comments': self._get_report_manager(options).summary or '',
                      }
 
         data_of_file = """<?xml version="1.0"?>

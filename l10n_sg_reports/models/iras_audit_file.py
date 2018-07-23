@@ -179,7 +179,7 @@ class IrasAuditFile(models.AbstractModel):
             ])
 
         initial_bal_date_to = datetime.strptime(date_from, DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
-        initial_bal_results = self.with_context(date_to=initial_bal_date_to.strftime(DEFAULT_SERVER_DATE_FORMAT)).do_query({}, None)
+        initial_bal_results = self.with_context(date_to=initial_bal_date_to.strftime(DEFAULT_SERVER_DATE_FORMAT))._do_query_group_by_account({}, None)
 
         all_accounts = self.env['account.account'].search([
             ('company_id', '=', company_id.id)
@@ -338,7 +338,7 @@ class IrasAuditFile(models.AbstractModel):
         return txt
 
     @api.model
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('IRAS Audit File')
 
     @api.multi

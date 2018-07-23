@@ -56,7 +56,7 @@ class ResPartner(models.Model):
         """
         Compute the fields 'total_due', 'total_overdue' and 'followup_status'
         """
-        partners_in_need_of_action = self.get_partners_in_need_of_action().ids
+        partners_in_need_of_action = self._get_partners_in_need_of_action().ids
         for record in self:
             total_due = 0
             total_overdue = 0
@@ -87,7 +87,7 @@ class ResPartner(models.Model):
             else:
                 record.partner_ledger_label = _('Customer Ledger')
 
-    def get_partners_in_need_of_action(self, overdue_only=False):
+    def _get_partners_in_need_of_action(self, overdue_only=False):
         """
         Return a list of partners which are in status 'in_need_of_action'.
         If 'overdue_only' is set to True, partners in status 'with_overdue_invoices' are included in the list

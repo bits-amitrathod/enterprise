@@ -15,7 +15,7 @@ class ReportL10nBePartnerVatListing(models.AbstractModel):
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         lines = []
         context = self.env.context
         if not context.get('company_ids'):
@@ -88,14 +88,14 @@ class ReportL10nBePartnerVatListing(models.AbstractModel):
                 })
         return lines
 
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('Partner VAT Listing')
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [{}, {'name': _('VAT Number')}, {'name': _('Turnover'), 'class': 'number'}, {'name': _('VAT Amount'), 'class': 'number'}]
 
-    def get_reports_buttons(self):
-        buttons = super(ReportL10nBePartnerVatListing, self).get_reports_buttons()
+    def _get_reports_buttons(self):
+        buttons = super(ReportL10nBePartnerVatListing, self)._get_reports_buttons()
         buttons += [{'name': _('Export (XML)'), 'action': 'print_xml'}]
         return buttons
 
@@ -146,7 +146,7 @@ class ReportL10nBePartnerVatListing(models.AbstractModel):
             'phone': phone,
             'SenderId': SenderId,
             'period': options['date'].get('date_from')[0:4],
-            'comments': self.get_report_manager(options).summary or '',
+            'comments': self._get_report_manager(options).summary or '',
         }
 
         data_file = """<?xml version="1.0" encoding="ISO-8859-1"?>
@@ -167,9 +167,9 @@ class ReportL10nBePartnerVatListing(models.AbstractModel):
         """ % annual_listing_data
 
         # Turnover and Farmer tags are not included
-        ctx = self.set_context(options)
+        ctx = self._set_context(options)
         ctx.update({'no_format': True, 'date_from': ctx['date_from'][0:4] + '-01-01', 'date_to': ctx['date_from'][0:4] + '-12-31'})
-        lines = self.with_context(ctx).get_lines(options)
+        lines = self.with_context(ctx)._get_lines(options)
 
         data_client_info = ''
         seq = 0

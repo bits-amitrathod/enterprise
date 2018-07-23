@@ -15,7 +15,7 @@ class MxReportPartnerLedger(models.AbstractModel):
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
     filter_all_entries = None
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [
             {},
             {'name': _('Type of Third')},
@@ -31,7 +31,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             {'name': _('Paid 16% - Non-Creditable'), 'class': 'number'},
         ]
 
-    def do_query(self, options, line_id):
+    def _do_query_group_by_account(self, options, line_id):
         select = ',\"account_move_line_account_tax_rel\".account_tax_id, SUM(\"account_move_line\".debit - \"account_move_line\".credit)'  # noqa
         if options.get('cash_basis'):
             select = select.replace('debit', 'debit_cash_basis').replace(
@@ -65,9 +65,9 @@ class MxReportPartnerLedger(models.AbstractModel):
             result.setdefault(res[0], {}).setdefault(res[1], res[2])
         return result
 
-    def group_by_partner_id(self, options, line_id):
+    def _group_by_partner_id(self, options, line_id):
         partners = {}
-        results = self.do_query(options, line_id)
+        results = self._do_query_group_by_account(options, line_id)
         mx_country = self.env.ref('base.mx')
         context = self.env.context
         journal_ids = []
@@ -131,13 +131,13 @@ class MxReportPartnerLedger(models.AbstractModel):
         return partners
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         lines = []
         if line_id:
             line_id = line_id.replace('partner_', '')
         context = self.env.context
         grouped_partners = self.with_context(date_from_aml=context[
-            'date_from']).group_by_partner_id(options, line_id)
+            'date_from'])._group_by_partner_id(options, line_id)
         # Aml go back to the beginning of the user chosen range but the
         # amount on the partner line should go back to either the beginning of
         # the fy or the beginning of times depending on the partner
@@ -296,21 +296,21 @@ class MxReportPartnerLedger(models.AbstractModel):
         return lines
 
     @api.model
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('DIOT')
 
-    def get_reports_buttons(self):
-        buttons = super(MxReportPartnerLedger, self).get_reports_buttons()
+    def _get_reports_buttons(self):
+        buttons = super(MxReportPartnerLedger, self)._get_reports_buttons()
         buttons += [{'name': _('Print DIOT (TXT)'), 'action': 'print_txt'}]
         return buttons
 
     def get_txt(self, options):
-        ctx = self.set_context(options)
+        ctx = self._set_context(options)
         ctx.update({'no_format':True, 'print_mode':True, 'raise': True})
         return self.with_context(ctx)._l10n_mx_diot_txt_export(options)
 
     def _l10n_mx_diot_txt_export(self, options):
-        txt_data = self.get_lines(options)
+        txt_data = self._get_lines(options)
         lines = ''
         for line in txt_data:
             if not line.get('id').startswith('partner_'):

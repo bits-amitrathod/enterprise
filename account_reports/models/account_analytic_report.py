@@ -17,14 +17,14 @@ class analytic_report(models.AbstractModel):
     filter_hierarchy = False
     filter_unfold_all = False
 
-    def get_columns_name(self, options):
+    def _get_columns_name(self, options):
         return [{'name': ''},
                 {'name': _('Reference')},
                 {'name': _('Partner')},
                 {'name': _('Balance'), 'class': 'number'}]
 
     @api.model
-    def get_report_name(self):
+    def _get_report_name(self):
         return _('Analytic Report')
 
     def open_analytic_entries(self, options, params):
@@ -101,7 +101,7 @@ class analytic_report(models.AbstractModel):
         return lines
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def _get_lines(self, options, line_id=None):
         AccountAnalyticGroup = self.env['account.analytic.group']
         lines = []
         parent_group = AccountAnalyticGroup
@@ -169,14 +169,14 @@ class analytic_report(models.AbstractModel):
         if line_id != self.DUMMY_GROUP_ID:
             for group in AccountAnalyticGroup.search(domain):
                 if group.id in options.get('unfolded_lines') or options.get('unfold_all'):
-                    lines += self.get_lines(options, line_id=str(group.id))
+                    lines += self._get_lines(options, line_id=str(group.id))
                 else:
                     lines.append(self._generate_analytic_group_line(group, analytic_entries_domain))
 
         # finally append a 'dummy' group which contains the accounts that do not have an analytic group
         if not line_id and any(not account.group_id for account in analytic_accounts):
             if self.DUMMY_GROUP_ID in options.get('unfolded_lines'):
-                lines += self.get_lines(options, line_id=self.DUMMY_GROUP_ID)
+                lines += self._get_lines(options, line_id=self.DUMMY_GROUP_ID)
             else:
                 lines.append(self._generate_analytic_group_line(AccountAnalyticGroup, analytic_entries_domain))
 
