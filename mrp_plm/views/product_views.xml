@@ -41,4 +41,19 @@
             </group>
         </field>
     </record>
+
+    <record id="product_product_view_form_inherit_plm" model="ir.ui.view">
+        <field name="name">product.product.view.form.inherit.plm</field>
+        <field name="inherit_id" ref="mrp.product_product_form_view_bom_button"/>
+        <field name="model">product.product</field>
+        <field name="groups_id" eval="[(4, ref('mrp_plm.group_plm_user'))]"/>
+        <field name="arch" type="xml">
+            <button name="action_used_in_bom" position="after">
+                <button class="oe_stat_button" name="action_see_attachments" type="object" icon="fa-book" groups="mrp.group_mrp_user">
+                    <field string="Attachments" name="product_attachment_count" widget="statinfo"/>
+                </button>
+            </button>
+        </field>
+    </record>
+
 </odoo>
