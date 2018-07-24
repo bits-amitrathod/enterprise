@@ -163,13 +163,13 @@ class HrAppraisal(models.Model):
                         'public': 'email_private',
                         'partner_ids': employee.related_partner_id and [(4, employee.related_partner_id.id)] or False,
                         'multi_email': email,
-                        'subject': survey.title,
+                        'subject': '%s appraisal: %s' % (appraisal.employee_id.name, survey.title),
                         'body': render_template[appraisal.id]['body'],
                         'date_deadline': appraisal.date_close,
                         'model': appraisal._name,
                         'res_id': appraisal.id,
                     }
-                    compose_message_wizard = ComposeMessage.with_context(active_id=appraisal.id, active_model=appraisal._name).create(values)
+                    compose_message_wizard = ComposeMessage.with_context(active_id=appraisal.id, active_model=appraisal._name, notif_layout="mail.mail_notification_light").create(values)
                     compose_message_wizard.send_mail()  # Sends a mail and creates a survey.user_input
                     if employee.user_id:
                         appraisal.activity_schedule(
