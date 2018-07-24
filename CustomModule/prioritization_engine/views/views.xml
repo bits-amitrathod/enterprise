@@ -52,7 +52,7 @@
       <record id="view_tree_prioritization_normal" model="ir.ui.view">
             <field name="sequence" eval="1"/>
             <field name="name">Prioritization normal tree</field>
-            <field name="model">sps.prioritization</field>
+            <field name="model">prioritization_engine.prioritization</field>
             <field name="mode">primary</field>
             <field name="arch" type="xml">
               <tree editable="bottom">
@@ -74,40 +74,6 @@
                 </tree>
             </field>
       </record>
-
-     <!-- <record id="view_tree_customer_order" model="ir.ui.view">
-            <field name="name">sale.order.tree</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_tree"/>
-            <field name="arch" type="xml">
-                <tree position="attributes">
-                   <attribute name="editable">bottom</attribute>
-               </tree>
-              &lt;!&ndash;<tree string="Sales Orders for Customer" editable="bottom">
-                    <field name="message_needaction" invisible="1"/>
-                    <field name="name" string="Order Number"/>&ndash;&gt;
-                    <field name="partner_id" position="replace">
-                         <field name="cust_po"/>
-                    </field>
-                   &lt;!&ndash; <field name="user_id"/>
-                    <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
-                    <field name="currency_id" invisible="1"/>
-                    <field name="invoice_status" invisible="1"/>
-                    <field name="state" invisible="1"/>
-              </tree>&ndash;&gt;
-            </field>
-      </record>-->
-<!--      <record id="view_form_prioritization_product" model="ir.ui.view">
-            <field name="name">Prioritization product form</field>
-            <field name="model">product.product</field>
-            <field name="mode">primary</field>
-            <field name="inherit_id" ref="product.product_normal_form_view"/>
-            <field name="arch" type="xml">
-                <field name="barcode" position="after">
-                    <field name="manufacturer"/>
-                </field>
-            </field>
-      </record>-->
 
       <record id="action_sps_customer" model="ir.actions.act_window">
             <field name="name">Create Customer</field>
@@ -157,23 +123,23 @@
         </record>
 
     <!-- Top menu item -->
-    <menuitem name="Prioritization Engine" id="sps.menu_root"/>
+    <menuitem name="Prioritization Engine" id="prioritization_engine.menu_root"/>
     <!-- menu categories -->
-    <menuitem name="Customer" id="sps.prioritization_cmenu" parent="sps.menu_root"/>
+    <menuitem name="Customer" id="prioritization_engine.prioritization_cmenu" parent="prioritization_engine.menu_root"/>
     <!-- actions -->
-    <menuitem name="Customer" id="sps.prioritization_cust_menu" parent="sps.prioritization_cmenu"
+    <menuitem name="Customer" id="prioritization_engine.prioritization_cust_menu" parent="prioritization_engine.prioritization_cmenu"
               action="action_sps_customer"/>
 
       <!-- menu categories -->
-    <menuitem name="Product" id="sps.prioritization_pmenu" parent="sps.menu_root"/>
+    <menuitem name="Product" id="prioritization_engine.prioritization_pmenu" parent="prioritization_engine.menu_root"/>
     <!-- actions -->
-    <menuitem name="Product" id="sps.prioritization_pro_menu" parent="sps.prioritization_pmenu"
+    <menuitem name="Product" id="prioritization_engine.prioritization_pro_menu" parent="prioritization_engine.prioritization_pmenu"
               action="product.product_template_action"/>
 
          <!-- menu categories -->
-    <menuitem name="Import Document" id="sps.prioritization_imenu" parent="sps.menu_root"/>
+    <menuitem name="Import Document" id="prioritization_engine.prioritization_imenu" parent="prioritization_engine.menu_root"/>
     <!-- actions -->
-    <menuitem name="Import Document" id="sps.prioritization_import_menu" parent="sps.prioritization_imenu"
+    <menuitem name="Import Document" id="prioritization_engine.prioritization_import_menu" parent="prioritization_engine.prioritization_imenu"
               action="action_sps_customer"/>
   </data>
 </odoo>

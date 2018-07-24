@@ -34,7 +34,7 @@ class ProductTemplate(models.Model):
 
 
 class Prioritization(models.Model):
-    _name = 'sps.prioritization'
+    _name = 'prioritization_engine.prioritization'
     _inherits = {'product.product':'product_id'}
     sps_sku = fields.Char("SPS SKU",readonly=False)
     threshold = fields.Integer("Product Threshold",readonly=False)
@@ -52,31 +52,29 @@ class Prioritization(models.Model):
         ('sps_company_uniq', 'unique(customer_id,product_id)', 'Product must be unique for customer!!!!'),
        ]
 
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+    cust_po = fields.Char("Customer PO", readonly=False)
+    state = fields.Selection([
+        ('draft', 'Quotation'),
+        ('sent', 'Quotation Sent'),
+        ('sale', 'Sales Order'),
+        ('done', 'Locked'),
+        ('cancel', 'Cancelled'),
+        ('void', 'Voided'),
+    ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
 
+    @api.multi
+    def action_void(self):
+        return self.write({'state': 'void'})
 
-    class SaleOrder(models.Model):
-        _inherit = "sale.order"
-        cust_po = fields.Char("Customer PO", readonly=False)
-        state = fields.Selection([
-            ('draft', 'Quotation'),
-            ('sent', 'Quotation Sent'),
-            ('sale', 'Sales Order'),
-            ('done', 'Locked'),
-            ('cancel', 'Cancelled'),
-            ('void', 'Voided'),
-        ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
-
-        @api.multi
-        def action_void(self):
-            return self.write({'state': 'void'})
-
-        @api.multi
-        def unlink(self):
-            for order in self:
-                if order.state not in ('draft', 'cancel','void'):
-                   raise UserError(
-                        'You can not delete a sent quotation or a sales order! Try to cancel or void it before.')
-            return models.Model.unlink(self)
+    @api.multi
+    def unlink(self):
+        for order in self:
+            if order.state not in ('draft', 'cancel','void'):
+               raise UserError(
+                    'You can not delete a sent quotation or a sales order! Try to cancel or void it before.')
+        return models.Model.unlink(self)
 
     #class SaleOrderLine(models.Model):
         #_inherit = 'sale.order.line'
