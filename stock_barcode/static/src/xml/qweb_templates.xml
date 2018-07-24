@@ -13,12 +13,12 @@
 
     <t t-name="stock_barcode_settings_widget">
         <div class="barcode_settings">
-            <button t-if="widget.model == 'stock.picking'" class="o_button_barcode_standard o_print_picking">Print Picking Operations</button>
-            <button t-if="widget.model == 'stock.picking'" class="o_button_barcode_standard o_print_delivery_slip">Print Delivery Slip</button>
-            <button t-if="widget.model == 'stock.picking' &amp;&amp; (widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel')" class="o_button_barcode_standard o_scrap">Scrap</button>
-            <button t-if="widget.model == 'stock.inventory'" class="o_button_barcode_standard o_print_inventory">Print Inventory</button>
-            <button t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_button_barcode_standard o_validate">Validate</button>
-            <button t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_button_barcode_standard o_cancel">Cancel</button>
+            <button t-if="widget.model == 'stock.picking'" class="o_button_settings o_print_picking">Print Picking Operations</button>
+            <button t-if="widget.model == 'stock.picking'" class="o_button_settings o_print_delivery_slip">Print Delivery Slip</button>
+            <button t-if="widget.model == 'stock.picking' &amp;&amp; (widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel')" class="o_button_settings o_scrap">Scrap</button>
+            <button t-if="widget.model == 'stock.inventory'" class="o_button_settings o_print_inventory">Print Inventory</button>
+            <button t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_button_settings o_validate">Validate</button>
+            <button t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_button_settings o_cancel">Cancel</button>
         </div>
     </t>
 
