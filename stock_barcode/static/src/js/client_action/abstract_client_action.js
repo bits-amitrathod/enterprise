@@ -322,19 +322,26 @@ var ClientAction = AbstractAction.extend({
         }
         pages = _.sortBy(pages, 'location_name');
 
+        // Create a new page if the pair scanned location / default destination location doesn't
+        // exist yet and the scanned location isn't the one of current page.
         var currentPage = this.pages[this.currentPageIndex];
-        // FIXME: what if already present in pages?
         if (this.scanned_location && currentPage.location_id !== this.scanned_location.id) {
-            var pageValues = {
-                location_id: this.scanned_location.id,
-                location_name: this.scanned_location.display_name,
-                lines: [],
-            };
-            if (self.actionParams.model === 'stock.picking') {
-                pageValues.location_dest_id = this.currentState.location_dest_id.id;
-                pageValues.location_dest_name = this.currentState.location_dest_id.display_name;
+            var alreadyInPages = _.find(pages, function (page) {
+                return page.location_id === self.scanned_location.id && 
+                    (self.actionParams.model === 'stock.inventory' || page.location_dest_id === self.currentState.location_dest_id.id);
+            });
+            if (! alreadyInPages) {
+                var pageValues = {
+                    location_id: this.scanned_location.id,
+                    location_name: this.scanned_location.display_name,
+                    lines: [],
+                };
+                if (self.actionParams.model === 'stock.picking') {
+                    pageValues.location_dest_id = this.currentState.location_dest_id.id;
+                    pageValues.location_dest_name = this.currentState.location_dest_id.display_name;
+                }
+                pages.push(pageValues);
             }
-            pages.push(pageValues);
         }
 
         if (pages.length === 0) {
