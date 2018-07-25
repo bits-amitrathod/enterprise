@@ -16,6 +16,22 @@ DEFAULT_MONTH_RANGE = 3
 
 class TimesheetForecastController(SaleTimesheetController):
 
+    def _table_get_line_values(self, projects):
+        result = super(TimesheetForecastController, self)._table_get_line_values(projects)
+
+        if any(projects.mapped('allow_forecast')):
+            # add headers
+            result['header'] += [{
+                'label': _('Remaining \n (Forecasts incl.)'),
+                'tooltip': _('What is still to deliver based on sold hours, hours already done and forecasted hours. Equals to sold hours - done hours - forecasted hours.'),
+            }]
+
+            # add last column to compute the second remaining with forecast
+            for row in result['rows']:
+                # Sold - Done (current month excl.) - MAX (Done and Forecasted for this month) - Forecasted (current month excl.)
+                row += [row[-2] - (row[5] - row[4]) - max(row[4], row[6]) - (row[10] - row[6])]
+        return result
+
     def _table_header(self, projects):
         header = super(TimesheetForecastController, self)._table_header(projects)
 
@@ -26,7 +42,15 @@ class TimesheetForecastController(SaleTimesheetController):
         if any(projects.mapped('allow_forecast')):
             initial_date = fields.Date.from_string(fields.Date.today())
             fc_months = sorted([fields.Date.to_string(initial_date + relativedelta(months=i, day=1)) for i in range(0, DEFAULT_MONTH_RANGE)])  # M3, M4, M5
-            header = header[0:-2] + [_to_short_month_name(date) for date in fc_months] + [_('After'), _('Forecasted')] + header[-2:]
+
+            new_header = header[0:-2]
+            for header_name in [_to_short_month_name(date) for date in fc_months] + [_('After'), _('Forecasted')]:
+                new_header.append({
+                    'label': header_name,
+                    'tooltip': '',
+                })
+            header = new_header + header[-2:]
+
         return header
 
     def _table_row_default(self, projects):
