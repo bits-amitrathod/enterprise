@@ -29,8 +29,8 @@ class InvoiceTransactionCase(AccountingTestCase):
             'amount': 16,
             'amount_type': 'percent',
             'type_tax_use': 'sale',
-            'tag_ids': [self.tax_tag_iva.id],
         })
+        self.tax_positive.tag_ids |= self.tax_tag_iva
         self.tax_positive.l10n_mx_cfdi_tax_type = 'Tasa'
         self.tax_negative = self.tax_model.create({
             'name': 'ISR',

@@ -31,6 +31,7 @@ class MXReportAccountCoa(models.AbstractModel):
     def _get_templates(self):
         templates = super(MXReportAccountCoa, self)._get_templates()
         #use the main template instead of the trial balance with 2 header lines
+        templates['main_table_header_template'] = 'account_reports.main_table_header'
         templates['main_template'] = 'account_reports.main_template'
         return templates
 

@@ -47,7 +47,7 @@ class MxReportAccountTrial(models.AbstractModel):
     def _get_templates(self):
         """Get this template for better fit of columns"""
         templates = super(MxReportAccountTrial, self)._get_templates()
-        templates['main_template'] = 'l10n_mx_reports.template_coa_report'
+        templates['main_table_header_template'] = 'l10n_mx_reports.template_coa_table_header'
         return templates
 
     def _get_columns_name(self, options):

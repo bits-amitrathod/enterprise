@@ -2,8 +2,8 @@
 <odoo>
     <data>
         <!-- trial balance templates -->
-        <template id="template_coa_report" inherit_id="account_reports.main_template" primary="True">
-            <xpath expr="//thead/tr" position="before">
+        <template id="template_coa_table_header" inherit_id="account_reports.main_table_header" primary="True">
+            <xpath expr="//thead//tr[hasclass('o_account_report_column_header')]" position="before">
                 <tr>
                     <th t-att-class="'o_account_report_column_header'" colspan="2"></th>
                     <t t-foreach="model.reverse(options['comparison'].get('periods'))" t-as="column_header">
