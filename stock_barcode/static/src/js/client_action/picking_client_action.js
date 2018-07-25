@@ -136,7 +136,11 @@ var PickingClientAction = ClientAction.extend({
                 'args': [[self.actionParams.pickingId]],
             }).then(function (res) {
                 var def = $.when();
-                var exitCallback = function () { self.trigger_up('exit');};
+                var exitCallback = function (infos) {
+                    if (infos !== 'special') {
+                        self.trigger_up('exit');
+                    }
+                };
                 if (_.isObject(res)) {
                     var options = {
                         on_close: exitCallback,
