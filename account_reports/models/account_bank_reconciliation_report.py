@@ -50,6 +50,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
         return {
             'id': str(line.id),
             'caret_options': 'account.bank.statement.line',
+            'model': 'account.bank.statement.line',
             'name': len(name) >= 85 and name[0:80] + '...' or name,
             'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(amount, line_currency)]],
             'class': 'o_account_reports_level3',

@@ -14,20 +14,20 @@
 <template id="line_caret_options">
     <li t-if="line['caret_options'] == 'account.account'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_general_ledger">General Ledger</a></li>
     <li t-if="line['caret_options'] == 'account.account'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_journal_items">Journal Items</a></li>
-    <li t-if="line['caret_options'] == 'account.invoice.out'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Invoice</a></li>
-    <li t-if="line['caret_options'] == 'account.invoice.in'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.invoice" action="open_document">View Bill</a></li>
-    <li t-if="line['caret_options'] == 'account.payment'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.payment" action="open_document">View Payment</a></li>
+    <li t-if="line['caret_options'] == 'account.invoice.out'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" t-att-data-model="line.get('model', 'account.move.line')" data-object="account.invoice" action="open_document">View Invoice</a></li>
+    <li t-if="line['caret_options'] == 'account.invoice.in'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" t-att-data-model="line.get('model', 'account.move.line')" data-object="account.invoice" action="open_document">View Bill</a></li>
+    <li t-if="line['caret_options'] == 'account.payment'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" t-att-data-model="line.get('model', 'account.move.line')" data-object="account.payment" action="open_document">View Payment</a></li>
     <li t-if="line['caret_options'] == 'account.tax'">
         <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_tax">Audit</a>
     </li>
     <li t-if="line['caret_options'] == 'tax.report.line'">
         <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_tax_report_line">Audit</a>
     </li>
-    <li t-if="line['caret_options'] == 'account.bank.statement.line'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" data-object="account.bank.statement" action="open_document">View Bank Statement</a></li>
+    <li t-if="line['caret_options'] == 'account.bank.statement.line'"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" t-att-data-model="line.get('model', 'account.move.line')" data-object="account.bank.statement" action="open_document">View Bank Statement</a></li>
     <li t-if="line['caret_options'] == 'account.analytic.account'">
         <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" action="open_analytic_entries">Analytic Entries</a>
     </li>
-
+    <li t-if="line['caret_options'] == 'res.partner'" role="presentation"><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" t-att-data-model="line.get('model', 'account.move.line')" data-object="res.partner" action="open_document">View Partner</a></li>
 </template>
 
 <template id="filter_info_template">

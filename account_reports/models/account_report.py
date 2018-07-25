@@ -81,7 +81,7 @@ class AccountReport(models.AbstractModel):
             options[filter_name] = getattr(self, element)
 
         group_multi_company = self.env['ir.model.data'].xmlid_to_object('base.group_multi_company')
-        if self.env.user.id in group_multi_company.users.ids:
+        if self.env.user.id in group_multi_company.users.ids and 'multi_company' not in options:
             # We have a user with multi-company
             options['multi_company'] = [{'id': c.id, 'name': c.name, 'selected': True if c.id == self.env.user.company_id.id else False} for c in self.env.user.company_ids]
         if options.get('journals'):
@@ -187,43 +187,92 @@ class AccountReport(models.AbstractModel):
             action_read['context'] = context
         return action_read
 
+    @api.model
+    def _resolve_caret_option_document(self, model, res_id, document):
+        '''Retrieve the target record of the caret option.
+
+        :param model:       The source model of the report line, 'account.move.line' by default.
+        :param res_id:      The source id of the report line.
+        :param document:    The target model of the redirection.
+        :return: The target record.
+        '''
+        if model == 'account.invoice':
+            if document == 'account.move':
+                return self.env[model].browse(res_id).move_id
+            if document == 'res.partner':
+                return self.env[model].browse(res_id).partner_id.commercial_partner_id
+        if model == 'account.invoice.line':
+            if document == 'account.move':
+                return self.env[model].browse(res_id).invoice_id.move_id
+            if document == 'account.invoice':
+                return self.env[model].browse(res_id).invoice_id
+        if model == 'account.bank.statement.line' and document == 'account.bank.statement':
+            return self.env[model].browse(res_id).statement_id
+
+        # model == 'account.move.line' by default.
+        if document == 'account.move':
+            return self.env[model].browse(res_id).move_id
+        if document == 'account.invoice':
+            return self.env[model].browse(res_id).invoice_id
+        if document == 'account.payment':
+            return self.env[model].browse(res_id).payment_id
+
+        return self.env[model].browse(res_id)
+
+    @api.model
+    def _resolve_caret_option_view(self, target):
+        '''Retrieve the target view name of the caret option.
+
+        :param target:  The target record of the redirection.
+        :return: The target view name as a string.
+        '''
+        if target._name == 'account.invoice':
+            if target.type in ('in_refund', 'in_invoice'):
+                return 'account.invoice_supplier_form'
+            if target.type in ('out_refund', 'out_invoice'):
+                return 'account.invoice_form'
+        if target._name == 'account.payment':
+            return 'account.view_account_payment_form'
+        if target._name == 'res.partner':
+            return 'base.view_partner_form'
+        if target._name == 'account.bank.statement':
+            return 'account.view_bank_statement_form'
+
+        # document == 'account.move' by default.
+        return 'view_move_form'
+
     @api.multi
     def open_document(self, options, params=None):
         if not params:
             params = {}
+
         ctx = self.env.context.copy()
         ctx.pop('id', '')
-        line_id = params.get('id')
+
+        # Decode params
+        model = params.get('model', 'account.move.line')
+        res_id = params.get('id')
         document = params.get('object', 'account.move')
-        if line_id:
-            if document == 'account.bank.statement':
-                statement_line = self.env['account.bank.statement.line'].browse(line_id)
-                view_name = 'view_bank_statement_form'
-                res_id = statement_line.statement_id.id
-            else:
-                aml = self.env['account.move.line'].browse(line_id)
-                view_name = 'view_move_form'
-                res_id = aml.move_id.id
-                if document == 'account.invoice' and aml.invoice_id.id:
-                    res_id = aml.invoice_id.id
-                    if aml.invoice_id.type in ('in_refund', 'in_invoice'):
-                        view_name = 'invoice_supplier_form'
-                    elif aml.invoice_id.type in ('out_refund', 'out_invoice'):
-                        view_name = 'invoice_form'
-                elif document == 'account.payment' and aml.payment_id.id:
-                    view_name = 'view_account_payment_form'
-                    res_id = aml.payment_id.id
-            view_id = self.env['ir.model.data'].get_object_reference('account', view_name)[1]
-            return {
-                'type': 'ir.actions.act_window',
-                'view_type': 'tree',
-                'view_mode': 'form',
-                'views': [(view_id, 'form')],
-                'res_model': document,
-                'view_id': view_id,
-                'res_id': res_id,
-                'context': ctx,
-            }
+
+        # Redirection data
+        target = self._resolve_caret_option_document(model, res_id, document)
+        view_name = self._resolve_caret_option_view(target)
+        module = 'account'
+        if '.' in view_name:
+            module, view_name = view_name.split('.')
+
+        # Redirect
+        view_id = self.env['ir.model.data'].get_object_reference(module, view_name)[1]
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'tree',
+            'view_mode': 'form',
+            'views': [(view_id, 'form')],
+            'res_model': document,
+            'view_id': view_id,
+            'res_id': target.id,
+            'context': ctx,
+        }
 
     def open_action(self, options, domain):
         assert isinstance(domain, (list, tuple))
