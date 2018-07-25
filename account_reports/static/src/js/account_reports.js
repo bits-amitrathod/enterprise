@@ -25,6 +25,7 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
         'click .js_account_reports_add_footnote': 'add_edit_footnote',
         'click .js_account_report_foldable': 'fold_unfold',
         'click [action]': 'trigger_action',
+        'click .o_account_reports_load_more span': 'load_more',
     },
 
     init: function(parent, action) {
@@ -483,6 +484,26 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
                     self._add_line_classes();
                 });
         }
+    },
+    load_more: function (ev) {
+        var $line = $(ev.target).parents('td');
+        var id = $line.data('id');
+        var offset = $line.data('offset') || 0;
+        var progress = $line.data('progress') || 0;
+        var options = _.extend({}, this.report_options, {lines_offset: offset, lines_progress: progress});
+        var self = this;
+        this._rpc({
+                model: this.report_model,
+                method: 'get_html',
+                args: [this.financial_id, options, id],
+                context: this.odoo_context,
+            })
+            .then(function (result){
+                var $tr = $line.parents('.o_account_reports_load_more');
+                $tr.after(result);
+                $tr.remove();
+                self._add_line_classes();
+            });
     },
     unfold_all: function(bool) {
         var self = this;

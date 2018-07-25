@@ -8,7 +8,7 @@ data.params.data["account.reconciliation.widget"].get_batch_payments_data = func
 };
 
 data.params.data["account.reconciliation.widget"].get_move_lines_by_batch_payment = function (args) {
-    return $.when(data.params.mv_lines['[5,"b",0,6]']);
+    return $.when(data.params.mv_lines['[5,"b",0,5]']);
 };
 
 data.params.data_preprocess.batch_payments = [{

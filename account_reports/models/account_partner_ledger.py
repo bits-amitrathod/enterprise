@@ -91,10 +91,12 @@ class ReportPartnerLedger(models.AbstractModel):
             partners[partner]['initial_bal'] = initial_bal_results.get(partner.id, {'balance': 0, 'debit': 0, 'credit': 0})
             partners[partner]['balance'] += partners[partner]['initial_bal']['balance']
             if not context.get('print_mode'):
-                #  fetch the 81 first amls. The report only displays the first 80 amls. We will use the 81st to know if there are more than 80 in which case a link to the list view must be displayed.
-                partners[partner]['lines'] = self.env['account.move.line'].search(domain, order='date', limit=81)
+                partners[partner]['total_lines'] = self.env['account.move.line'].search_count(domain)
+                offset = int(options.get('lines_offset', 0))
+                limit = self.MAX_LINES
+                partners[partner]['lines'] = self.env['account.move.line'].search(domain, order='date,id', limit=limit, offset=offset)
             else:
-                partners[partner]['lines'] = self.env['account.move.line'].search(domain, order='date')
+                partners[partner]['lines'] = self.env['account.move.line'].search(domain, order='date,id')
 
         # Add partners with an initial balance != 0 but without any AML in the selected period.
         prec = self.env.user.company_id.currency_id.rounding
@@ -111,9 +113,10 @@ class ReportPartnerLedger(models.AbstractModel):
 
     @api.model
     def _get_lines(self, options, line_id=None):
+        offset = int(options.get('lines_offset', 0))
         lines = []
         if line_id:
-            line_id = line_id.replace('partner_', '')
+            line_id = int(line_id.split('_')[1]) or None
         context = self.env.context
 
         #If a default partner is set, we only want to load the line referring to it.
@@ -137,24 +140,30 @@ class ReportPartnerLedger(models.AbstractModel):
             if self.user_has_groups('base.group_multi_currency'):
                 columns.append('')
             columns.append(self.format_value(balance))
-            lines.append({
-                'id': 'partner_' + str(partner.id),
-                'name': partner.name,
-                'columns': [{'name': v} for v in columns],
-                'level': 2,
-                'trust': partner.trust,
-                'unfoldable': True,
-                'unfolded': 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all,
-                'colspan': 6,
-            })
+            # don't add header for `load more`
+            if offset == 0:
+                lines.append({
+                    'id': 'partner_' + str(partner.id),
+                    'name': partner.name,
+                    'columns': [{'name': v} for v in columns],
+                    'level': 2,
+                    'trust': partner.trust,
+                    'unfoldable': True,
+                    'unfolded': 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all,
+                    'colspan': 6,
+                })
             if 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all:
-                progress = initial_balance
+                if offset == 0:
+                    progress = initial_balance
+                else:
+                    progress = float(options.get('lines_progress', initial_balance))
                 domain_lines = []
                 amls = grouped_partners[partner]['lines']
-                too_many = False
-                if len(amls) > 80 and not context.get('print_mode'):
-                    amls = amls[-80:]
-                    too_many = True
+
+                remaining_lines = 0
+                if not context.get('print_mode'):
+                    remaining_lines = grouped_partners[partner]['total_lines'] - offset - len(amls)
+
                 for line in amls:
                     if options.get('cash_basis'):
                         line_debit = line.debit_cash_basis
@@ -184,17 +193,21 @@ class ReportPartnerLedger(models.AbstractModel):
                         'caret_options': caret_type,
                         'level': 4,
                     })
-                if too_many:
+
+                # load more
+                if remaining_lines > 0:
                     domain_lines.append({
-                        'id': 'too_many_' + str(partner.id),
-                        'parent_id': 'partner_' + str(partner.id),
-                        'action': 'view_too_many',
-                        'action_id': 'partner,%s' % (partner.id,),
-                        'name': _('There are more than 80 items in this list, click here to see all of them'),
+                        'id': 'loadmore_%s' % partner.id,
+                        'offset': offset + self.MAX_LINES,
+                        'progress': progress,
+                        'class': 'o_account_reports_load_more text-center',
+                        'parent_id': 'partner_%s' % partner.id,
+                        'name': _('Load more... (%s remaining)' % remaining_lines),
                         'colspan': 10 if self.user_has_groups('base.group_multi_currency') else 9,
                         'columns': [{}],
                     })
                 lines += domain_lines
+
         if not line_id:
             total_columns = ['', '', '', '', '', self.format_value(total_initial_balance), self.format_value(total_debit), self.format_value(total_credit)]
             if self.user_has_groups('base.group_multi_currency'):

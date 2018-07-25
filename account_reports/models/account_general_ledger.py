@@ -201,6 +201,15 @@ class report_account_general_ledger(models.AbstractModel):
                 }
             aml_ids = self.with_context(**aml_ctx)._do_query(options, account_id, group_by_account=False)
             aml_ids = [x[0] for x in aml_ids]
+
+            accounts[account]['total_lines'] = len(aml_ids)
+            offset = int(options.get('lines_offset', 0))
+            if self.MAX_LINES:
+                stop = offset + self.MAX_LINES
+            else:
+                stop = None
+            aml_ids = aml_ids[offset:stop]
+
             accounts[account]['lines'] = self.env['account.move.line'].browse(aml_ids)
         #if the unaffected earnings account wasn't in the selection yet: add it manually
         user_currency = self.env.user.company_id.currency_id
@@ -252,6 +261,7 @@ class report_account_general_ledger(models.AbstractModel):
 
     @api.model
     def _get_lines(self, options, line_id=None):
+        offset = int(options.get('lines_offset', 0))
         lines = []
         context = self.env.context
         company_id = self.env.user.company_id
@@ -271,34 +281,45 @@ class report_account_general_ledger(models.AbstractModel):
             sum_credit += credit
             sum_balance += balance
             amount_currency = '' if not account.currency_id else self.format_value(grouped_accounts[account]['amount_currency'], currency=account.currency_id)
-            lines.append({
-                'id': 'account_%s' % (account.id,),
-                'name': account.code + " " + account.name,
-                'columns': [{'name': v} for v in [amount_currency, self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
-                'level': 2,
-                'unfoldable': True,
-                'unfolded': 'account_%s' % (account.id,) in options.get('unfolded_lines') or unfold_all,
-                'colspan': 4,
-            })
+            # don't add header for `load more`
+            if offset == 0:
+                lines.append({
+                    'id': 'account_%s' % (account.id,),
+                    'name': account.code + " " + account.name,
+                    'columns': [{'name': v} for v in [amount_currency, self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
+                    'level': 2,
+                    'unfoldable': True,
+                    'unfolded': 'account_%s' % (account.id,) in options.get('unfolded_lines') or unfold_all,
+                    'colspan': 4,
+                })
             if 'account_%s' % (account.id,) in options.get('unfolded_lines') or unfold_all:
                 initial_debit = grouped_accounts[account]['initial_bal']['debit']
                 initial_credit = grouped_accounts[account]['initial_bal']['credit']
                 initial_balance = grouped_accounts[account]['initial_bal']['balance']
                 initial_currency = '' if not account.currency_id else self.format_value(grouped_accounts[account]['initial_bal']['amount_currency'], currency=account.currency_id)
-                domain_lines = [{
-                    'id': 'initial_%s' % (account.id,),
-                    'class': 'o_account_reports_initial_balance',
-                    'name': _('Initial Balance'),
-                    'parent_id': 'account_%s' % (account.id,),
-                    'columns': [{'name': v} for v in ['', '', '', initial_currency, self.format_value(initial_debit), self.format_value(initial_credit), self.format_value(initial_balance)]],
-                }]
-                progress = initial_balance
-                amls = amls_all = grouped_accounts[account]['lines']
-                too_many = False
-                if len(amls) > 80 and not context.get('print_mode'):
-                    amls = amls[:80]
-                    too_many = True
+
+                domain_lines = []
+                if offset == 0:
+                    domain_lines.append({
+                        'id': 'initial_%s' % (account.id,),
+                        'class': 'o_account_reports_initial_balance',
+                        'name': _('Initial Balance'),
+                        'parent_id': 'account_%s' % (account.id,),
+                        'columns': [{'name': v} for v in ['', '', '', initial_currency, self.format_value(initial_debit), self.format_value(initial_credit), self.format_value(initial_balance)]],
+                    })
+                    progress = initial_balance
+                else:
+                    # for load more:
+                    progress = float(options.get('lines_progress', initial_balance))
+
+                amls = grouped_accounts[account]['lines']
+
+                remaining_lines = 0
+                if not context.get('print_mode'):
+                    remaining_lines = grouped_accounts[account]['total_lines'] - offset - len(amls)
+
                 used_currency = self.env.user.company_id.currency_id
+
                 for line in amls:
                     if options.get('cash_basis'):
                         line_debit = line.debit_cash_basis
@@ -311,7 +332,7 @@ class report_account_general_ledger(models.AbstractModel):
                     line_credit = line.company_id.currency_id._convert(line_credit, used_currency, line.company_id, date)
                     progress = progress + line_debit - line_credit
                     currency = "" if not line.currency_id else self.with_context(no_format=False).format_value(line.amount_currency, currency=line.currency_id)
-                    name = []
+
                     name = line.name and line.name or ''
                     if line.ref:
                         name = name and name + ' - ' + line.ref or line.ref
@@ -347,23 +368,31 @@ class report_account_general_ledger(models.AbstractModel):
                     }
                     aml_lines.append(line.id)
                     domain_lines.append(line_value)
-                domain_lines.append({
-                    'id': 'total_' + str(account.id),
-                    'class': 'o_account_reports_domain_total',
-                    'parent_id': 'account_%s' % (account.id,),
-                    'name': _('Total '),
-                    'columns': [{'name': v} for v in ['', '', '', amount_currency, self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
-                })
-                if too_many:
+
+                # load more
+                if remaining_lines > 0:
                     domain_lines.append({
-                        'id': 'too_many' + str(account.id),
+                        'id': 'loadmore_%s' % account.id,
+                        # if MAX_LINES is None, there will be no remaining lines
+                        # so this should not cause a problem
+                        'offset': offset + self.MAX_LINES,
+                        'progress': progress,
+                        'class': 'o_account_reports_load_more text-center',
                         'parent_id': 'account_%s' % (account.id,),
-                        'name': _('There are more than 80 items in this list, click here to see all of them'),
+                        'name': _('Load more... (%s remaining)' % remaining_lines),
                         'colspan': 7,
                         'columns': [{}],
-                        'action': 'view_too_many',
-                        'action_id': 'account,%s' % (account.id,),
                     })
+                # don't add total line for `load more`
+                if offset == 0:
+                    domain_lines.append({
+                        'id': 'total_' + str(account.id),
+                        'class': 'o_account_reports_domain_total',
+                        'parent_id': 'account_%s' % (account.id,),
+                        'name': _('Total '),
+                        'columns': [{'name': v} for v in ['', '', '', amount_currency, self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
+                    })
+
                 lines += domain_lines
 
         if not line_id:

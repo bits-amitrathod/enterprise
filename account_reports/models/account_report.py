@@ -52,6 +52,7 @@ class AccountReportFootnote(models.Model):
 class AccountReport(models.AbstractModel):
     _name = 'account.report'
 
+    MAX_LINES = 80
     filter_date = None
     filter_cash_basis = None
     filter_all_entries = None

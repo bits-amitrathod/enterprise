@@ -146,7 +146,9 @@
             t-att-data-pagebreak="'before' if (line.get('page_break') and context.get('print_mode')) else None"
             t-att-data-parent-id="line.get('parent_id', False)"
             t-att-style="line.get('style', '')">
-            <td t-att-data-id="line['id']" t-att-class="'o_account_report_line ' + (line.get('unfoldable') and 'js_account_report_foldable' or '')" t-att-data-unfolded="line.get('unfolded', False)" t-att-colspan="line.get('colspan', '1')">
+            <td t-att-data-id="line['id']" t-att-class="'o_account_report_line ' + (line.get('unfoldable') and 'js_account_report_foldable' or '')" t-att-data-unfolded="line.get('unfolded', False)" t-att-colspan="line.get('colspan', '1')"
+            t-att-data-offset="line.get('offset', False)" t-att-data-progress="line.get('progress', False)"
+            >
                     <t t-if="line.get('unfoldable')">
                         <span t-att-data-id="line['id']" class="o_account_reports_caret_icon">
                             <i class="fa fa-caret-down" t-if="line.get('unfolded')" role="img" aria-label="Unfolded" title="Unfolded"/>
