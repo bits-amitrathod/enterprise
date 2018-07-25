@@ -16,7 +16,7 @@
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
     # for the full list
     'category': 'Sale',
-    'version': '0.1',
+    'version': '1.0',
 
     # any module necessary for this one to work correctly
     'depends': ['base','product','product_manufacturer','sale_management'],
@@ -24,8 +24,8 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+        'views/saleorder_views.xml',
+        'views/prioritization_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -111,18 +111,7 @@
             </field>
         </record>
 
-      <record id="view_order_form_ex" model="ir.ui.view">
-            <field name="name">sale.order.form_ex</field>
-            <field name="model">sale.order</field>
-             <field name="inherit_id" ref="sale.view_order_form"/>
-            <field name="arch" type="xml">
-                  <button name="action_cancel" position="after" >
-                         <button name="action_void" string="Voided" type="object" states="draft,sent,sale"/>
-                 </button>
-            </field>
-        </record>
-
-    <!-- Top menu item -->
+      <!-- Top menu item -->
     <menuitem name="Prioritization Engine" id="prioritization_engine.menu_root"/>
     <!-- menu categories -->
     <menuitem name="Customer" id="prioritization_engine.prioritization_cmenu" parent="prioritization_engine.menu_root"/>
@@ -130,15 +119,15 @@
     <menuitem name="Customer" id="prioritization_engine.prioritization_cust_menu" parent="prioritization_engine.prioritization_cmenu"
               action="action_sps_customer"/>
 
-      <!-- menu categories -->
+         <!-- menu categories -->
     <menuitem name="Product" id="prioritization_engine.prioritization_pmenu" parent="prioritization_engine.menu_root"/>
-    <!-- actions -->
+          <!-- actions -->
     <menuitem name="Product" id="prioritization_engine.prioritization_pro_menu" parent="prioritization_engine.prioritization_pmenu"
               action="product.product_template_action"/>
 
          <!-- menu categories -->
     <menuitem name="Import Document" id="prioritization_engine.prioritization_imenu" parent="prioritization_engine.menu_root"/>
-    <!-- actions -->
+         <!-- actions -->
     <menuitem name="Import Document" id="prioritization_engine.prioritization_import_menu" parent="prioritization_engine.prioritization_imenu"
               action="action_sps_customer"/>
   </data>
