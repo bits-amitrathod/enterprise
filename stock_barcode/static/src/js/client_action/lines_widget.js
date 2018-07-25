@@ -385,6 +385,7 @@ var LinesWidget = Widget.extend({
      * @param {MouseEvent} ev
      */
      _onClickAddLine: function (ev) {
+        ev.preventDefault();
         ev.stopPropagation();
         this.trigger_up('add_line');
     },
