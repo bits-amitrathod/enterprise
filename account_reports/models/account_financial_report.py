@@ -393,6 +393,7 @@ class AccountFinancialReportLine(models.Model):
     groupby = fields.Char("Group by", default=False)
     figure_type = fields.Selection([('float', 'Float'), ('percents', 'Percents'), ('no_unit', 'No Unit')],
                                    'Type', default='float', required=True)
+    print_on_new_page = fields.Boolean('Print On New Page', help='When checked this line and everything after it will be printed on a new page.')
     green_on_positive = fields.Boolean('Is growth good when positive', default=True)
     level = fields.Integer(required=True)
     special_date_changer = fields.Selection([
@@ -906,6 +907,7 @@ class AccountFinancialReportLine(models.Model):
             'columns': [{'name': ''}] * len(line['columns']),
             'unfoldable': line['unfoldable'],
             'unfolded': line['unfolded'],
+            'page_break': line['page_break'],
         }
         line2 = {
             'id': line['id'],
@@ -961,6 +963,7 @@ class AccountFinancialReportLine(models.Model):
                 'columns': [{'name': l} for l in res['line']],
                 'unfoldable': len(domain_ids) > 1 and line.show_domain != 'always',
                 'unfolded': line.id in options.get('unfolded_lines', []) or line.show_domain == 'always',
+                'page_break': line.print_on_new_page,
             }
 
             if financial_report.tax_report and line.domain and not line.action_id:

@@ -23,7 +23,6 @@ class ReportPartnerLedger(models.AbstractModel):
     def _get_templates(self):
         templates = super(ReportPartnerLedger, self)._get_templates()
         templates['line_template'] = 'account_reports.line_template_partner_ledger_report'
-        templates['main_template'] = 'account_reports.template_partner_ledger_report'
         return templates
 
     def _get_columns_name(self, options):

@@ -147,6 +147,7 @@ class AccountReport(models.AbstractModel):
     def _get_templates(self):
         return {
                 'main_template': 'account_reports.main_template',
+                'main_table_header_template': 'account_reports.main_table_header',
                 'line_template': 'account_reports.line_template',
                 'footnotes_template': 'account_reports.footnotes_template',
                 'search_template': 'account_reports.search_template',
