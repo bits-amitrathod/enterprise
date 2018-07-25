@@ -186,7 +186,7 @@ var InventoryClientAction = ClientAction.extend({
             return self._save().then(function () {
                 self._rpc({
                     'model': self.actionParams.model,
-                    'method': 'action_done',
+                    'method': 'action_validate',
                     'args': [[self.currentState.id]],
                 }).then(function () {
                     self.do_notify(_t("Success"), _t("The inventory adjustment has been validated"));
