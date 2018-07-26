@@ -22,7 +22,7 @@ class SignSendRequest(models.TransientModel):
         }) for role in roles]
         return res
 
-    template_id = fields.Many2one('sign.template', required=True)
+    template_id = fields.Many2one('sign.template', required=True, ondelete='cascade')
     signer_ids = fields.One2many('sign.send.request.signer', 'sign_send_request_id', string="Signers")
     signer_id = fields.Many2one('res.partner', string="Signer")
     signers_count = fields.Integer()
@@ -53,7 +53,7 @@ class SignSendRequest(models.TransientModel):
         if self.signers_count:
             signers = [{'partner_id': signer.partner_id.id, 'sms_number': signer.partner_id.mobile, 'role': signer.role_id.id} for signer in self.signer_ids]
         else:
-            signers = [{'partner_id': self.signer_id.id, 'sms_number': self.signer_id.phone_number, 'role': False}]
+            signers = [{'partner_id': self.signer_id.id, 'sms_number': self.signer_id.mobile, 'role': False}]
         followers = self.follower_ids.ids
         reference = self.filename
         subject = self.subject

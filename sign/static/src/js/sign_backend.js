@@ -25,6 +25,25 @@ odoo.define('sign.views_custo', function(require) {
         },
     });
 
+    KanbanRecord.include({
+        //--------------------------------------------------------------------------
+        // Private
+        //--------------------------------------------------------------------------
+
+        /**
+         * On click of kanban open send signature wizard
+         * @override
+         * @private
+         */
+        _openRecord: function () {
+            if (this.modelName === 'sign.template') {
+                this.$('button.o_kanban_sign_send_request').click();
+            } else {
+                this._super.apply(this, arguments);
+            }
+        }
+    });
+
     function _make_custo(selector_button) {
         return {
             renderButtons: function () {
@@ -120,6 +139,7 @@ odoo.define('sign.template', function(require) {
     var AbstractAction = require('web.AbstractAction');
     var ControlPanelMixin = require('web.ControlPanelMixin');
     var core = require('web.core');
+    var config = require('web.config');
     var Dialog = require('web.Dialog');
     var framework = require('web.framework');
     var session = require('web.session');
@@ -136,6 +156,9 @@ odoo.define('sign.template', function(require) {
                 this.$currentTarget.popover("hide");
                 this.$currentTarget.trigger('itemDelete');
             },
+            'click .o_sign_validate_field_button': function (e) {
+                this.hide();
+            }
         },
 
         init: function(parent, parties, options) {
@@ -145,6 +168,7 @@ odoo.define('sign.template', function(require) {
             this._super(parent, options);
             //TODO: Add buttons for save, discard and remove.
             this.parties = parties;
+            this.debug = config.debug;
         },
 
         start: function() {
@@ -178,9 +202,9 @@ odoo.define('sign.template', function(require) {
                     },
                     html: true,
                     placement: 'auto',
-                    trigger:'click',
+                    trigger:'focus',
                 };
-                self.$currentTarget.popover(options).popover("show");
+                self.$currentTarget.popover(options).popover("toggle");
             });
         },
         hide: function() {
@@ -422,16 +446,16 @@ odoo.define('sign.template', function(require) {
                 $signatureItem.addClass('ui-selected');
 
                 _.each(_.keys(self.customPopovers), function(keyId) {
-                    if (keyId != itemId && self.customPopovers[keyId]) {
-                        self.customPopovers[keyId].hide();
+                    if (keyId != itemId && self.customPopovers[keyId] && ((keyId && itemId) || (keyId != 'undefined' && !itemId))) {
+                        self.customPopovers[keyId].$currentTarget.popover('hide');
                         self.customPopovers[keyId] = false;
                     }
                 });
                 if (self.customPopovers[itemId]) {
-                    self.customPopovers[itemId].hide();
+                    self.customPopovers[itemId].$currentTarget.popover('hide');
                     self.customPopovers[itemId] = false;
                 } else {
-                    self.customPopovers[itemId] = new SignItemCustomPopover(self, self.parties);
+                    self.customPopovers[itemId] = new SignItemCustomPopover(self, self.parties, {'field_type': $signatureItem[0]['field-type']});
                     self.customPopovers[itemId].create($signatureItem);
                 }
             });
@@ -683,7 +707,7 @@ odoo.define('sign.template', function(require) {
             return this._super();
 
             function init_iframe() {
-                if(this.$el.parents('html').length) {
+                if(this.$el.parents('html').length && !this.$el.parents('html').find('.modal-dialog').length) {
                     var self = this;
                     framework.blockUI({overlayCSS: {opacity: 0}, blockMsgClass: 'o_hidden'});
                     this.iframeWidget = new EditablePDFIframe(this,
@@ -730,7 +754,9 @@ odoo.define('sign.template', function(require) {
 
         refresh_cp: function() {
             this.update_control_panel({
-                cp_content: this.cp_content
+                cp_content: this.cp_content,
+                search_view_hidden: true,
+                clear: true
             });
         },
 
@@ -883,6 +909,8 @@ odoo.define('sign.DocumentBackend', function (require) {
         refresh_cp: function () {
             this.update_control_panel({
                 cp_content: this.cp_content,
+                search_view_hidden: true,
+                clear: true
             });
         },
     });
@@ -903,9 +931,8 @@ odoo.define('sign.document_edition', function(require) {
 
     var EditableDocumentBackend = DocumentBackend.extend({
         events: {
-            'click .o_sign_resend_access_button.fa': function(e) {
+            'click .o_sign_resend_access_button': function(e) {
                 var $envelope = $(e.target);
-                $envelope.removeClass('fa fa-envelope').html('...');
                 this._rpc({
                         model: 'sign.request.item',
                         method: 'resend_access',
@@ -946,10 +973,13 @@ odoo.define('sign.document_edition', function(require) {
             return this._super.apply(this, arguments).then(function () {
                 if(self.is_author && self.is_sent) {
                     self.$('.o_sign_signer_status').each(function(i, el) {
-                        $(el).prepend($('<button/>', {
+                        $(el).append($('<button/>', {
                             type: 'button',
                             title: _t("Resend the invitation"),
-                        }).addClass('o_sign_resend_access_button btn btn-link fa fa-envelope pull-right'));
+                            text: _t('Resend'),
+                            class: 'o_sign_resend_access_button btn btn-link ml8',
+                            style: 'vertical-align: baseline;',
+                        }));
                     });
                 }
             });

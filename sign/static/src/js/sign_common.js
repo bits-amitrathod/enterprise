@@ -318,7 +318,7 @@ odoo.define('sign.utils', function (require) {
                 placeholder: _t("Select the responsible"),
                 allowClear: false,
                 width: '100%',
-                minimumInputLength: 3,
+                minimumInputLength: 1,
 
                 formatResult: function(data, resultElem, searchObj) {
                     if(!data.text) {
@@ -489,6 +489,7 @@ odoo.define('sign.document_signing', function(require) {
 
             options.title = options.title || _t("Adopt Your Signature");
             options.size = options.size || 'medium';
+            options.technical = false;
 
             if(!options.buttons) {
                 options.buttons = [];
@@ -730,6 +731,7 @@ odoo.define('sign.document_signing', function(require) {
 
             options.title = options.title || _t("Final Validation");
             options.size = options.size || "medium";
+            options.technical = false;
 
             if(!options.buttons) {
                 options.buttons = [];
@@ -856,6 +858,7 @@ odoo.define('sign.document_signing', function(require) {
             options.title = options.title || _t("Thank You !") + "<br/>";
             options.subtitle = options.subtitle || _t("Your signature has been saved.");
             options.size = options.size || "medium";
+            options.technical = false;
 
             if(!options.buttons) {
                 options.buttons = [];

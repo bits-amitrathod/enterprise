@@ -23,7 +23,7 @@ class SignTemplateShare(models.TransientModel):
             res['url'] = "%s/sign/%s" % (base_url, template.share_link)
         return res
 
-    template_id = fields.Many2one('sign.template', required=True)
+    template_id = fields.Many2one('sign.template', required=True, ondelete='cascade')
     url = fields.Char(string="Link to Share")
     is_one_responsible = fields.Boolean()
 
