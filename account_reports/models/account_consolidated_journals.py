@@ -78,9 +78,9 @@ class report_account_consolidated_journal(models.AbstractModel):
                         })
             for date in sorted(dates):
                 year, month = date.split('-')
-                sum_debit = self.format_value(sum([int(r['debit']) for r in results if (r['month'] == month and r['yyyy'] == year) and r['company_id'] == current_company]))
-                sum_credit = self.format_value(sum([int(r['credit']) for r in results if (r['month'] == month and r['yyyy'] == year) and r['company_id'] == current_company]))
-                sum_balance = self.format_value(sum([int(r['balance']) for r in results if (r['month'] == month and r['yyyy'] == year) and r['company_id'] == current_company]))
+                sum_debit = self.format_value(sum([r['debit'] for r in results if (r['month'] == month and r['yyyy'] == year) and r['company_id'] == current_company]))
+                sum_credit = self.format_value(sum([r['credit'] for r in results if (r['month'] == month and r['yyyy'] == year) and r['company_id'] == current_company]))
+                sum_balance = self.format_value(sum([r['balance'] for r in results if (r['month'] == month and r['yyyy'] == year) and r['company_id'] == current_company]))
                 vals = {
                         'id': 'Total_month_%s_%s' % (date, current_company),
                         'name': convert_date('%s-01' % (date), {'format': 'MMM YYYY'}),
