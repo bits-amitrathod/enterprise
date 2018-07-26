@@ -19,7 +19,7 @@ class sale_order(models.Model):
                 continue
             # if company allow to create a Purchase Order from Sales Order, then do it !
             company = self.env['res.company']._find_company_from_partner(order.partner_id.id)
-            if company and company.applicable_on in ('purchase', 'sale_purchase') and (not order.auto_generated):
+            if company and company.applicable_on in ('sale', 'sale_purchase') and (not order.auto_generated):
                 order.inter_company_create_purchase_order(company)
         return res
 

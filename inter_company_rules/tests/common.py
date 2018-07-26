@@ -14,7 +14,6 @@ class TestInterCompanyRulesCommon(common.SavepointCase):
             'name': 'Company A',
             'parent_id': cls.env.ref('base.main_company').id,
             'currency_id': cls.env.ref('base.EUR').id,
-            'applicable_on': 'sale_purchase',
         })
 
         # Set warehouse on company A
@@ -25,7 +24,6 @@ class TestInterCompanyRulesCommon(common.SavepointCase):
             'name': 'Company B',
             'parent_id': cls.env.ref('base.main_company').id,
             'currency_id': cls.env.ref('base.EUR').id,
-            'applicable_on': 'sale_purchase',
         })
 
         # Set warehouse on company B
