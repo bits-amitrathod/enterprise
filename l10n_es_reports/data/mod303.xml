@@ -3,7 +3,8 @@
     <data>
 
         <record id="mod_303" model="account.financial.html.report">
-            <field name="name">Modelo 303 report</field>
+            <field name="name">Tax Report(Mod 303)</field>
+            <field name="l10n_es_reports_modelo_number">303</field>
             <field name="debit_credit" eval="False"/>
             <field name="analytic" eval="False"/>
             <field name="date_range" eval="True"/>
@@ -724,11 +725,29 @@
             <field name="level" eval="3"/>
         </record>
 
+        <record id="mod_303_casilla_70" model="account.financial.html.report.line">
+            <field name="name">[70] A deducir</field>
+            <field name="code">aeat_mod_303_70</field>
+            <field name="parent_id" ref="mod_303_title_18"/>
+            <field name="formulas">balance = from_context</field>
+            <field name="sequence" eval="72"/>
+            <field name="level" eval="3"/>
+        </record>
+
+        <record id="mod_303_casilla_71" model="account.financial.html.report.line">
+            <field name="name">[71] Resultado de la liquidación</field>
+            <field name="code">aeat_mod_303_71</field>
+            <field name="parent_id" ref="mod_303_title_18"/>
+            <field name="formulas">balance = aeat_mod_303_69.balance - aeat_mod_303_70.balance</field>
+            <field name="sequence" eval="73"/>
+            <field name="level" eval="3"/>
+        </record>
+
         <record id="mod_303_title_19" model="account.financial.html.report.line">
             <field name="name">Importe de las adquisiciones de bienes y servicios a las que sea de aplicación o afecte el régimen especial del criterio de caja</field>
             <field name="code">aeat_mod_303_title_19</field>
             <field name="parent_id" ref="mod_303_title_18"/>
-            <field name="sequence" eval="72"/>
+            <field name="sequence" eval="74"/>
             <field name="level" eval="3"/>
         </record>
 
@@ -737,7 +756,7 @@
             <field name="code">aeat_mod_303_74</field>
             <field name="parent_id" ref="mod_303_title_19"/>
             <field name="formulas">balance = from_context</field>
-            <field name="sequence" eval="73"/>
+            <field name="sequence" eval="75"/>
             <field name="level" eval="4"/>
         </record>
 
@@ -746,7 +765,7 @@
             <field name="code">aeat_mod_303_75</field>
             <field name="parent_id" ref="mod_303_title_19"/>
             <field name="formulas">balance = from_context</field>
-            <field name="sequence" eval="74"/>
+            <field name="sequence" eval="76"/>
             <field name="level" eval="4"/>
         </record>
 
@@ -755,7 +774,7 @@
             <field name="code">aeat_mod_303_77</field>
             <field name="parent_id" ref="mod_303_title_18"/>
             <field name="formulas">balance = from_context</field>
-            <field name="sequence" eval="75"/>
+            <field name="sequence" eval="77"/>
             <field name="level" eval="3"/>
         </record>
 

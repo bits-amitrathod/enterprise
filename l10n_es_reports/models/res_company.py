@@ -7,6 +7,12 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     @api.model
+    def create(self, vals):
+        rslt = super(ResCompany, self).create(vals)
+        rslt._create_mod_boe_sequences()
+        return rslt
+
+    @api.model
     def balance_sheet_menu_item_clicked(self):
         current_company = self.env['res.company']._company_default_get('account.financial.html.report')
 
@@ -41,3 +47,22 @@ class ResCompany(models.Model):
                 'res_id': report_wizard.id,
                 'target': 'new'
             }
+
+    def _create_mod_boe_sequences(self):
+        """ Creates two sequences for each element of the record set:
+        one for mod 347 BOE, and another one for mod 349 BOE.
+        """
+        sequence_model = self.env['ir.sequence']
+        for record in self:
+            sequence_model.create({
+                    'name': "Mod 347 BOE sequence for company " + record.name,
+                    'code': "l10n_es.boe.mod_347",
+                    'padding': 10,
+                    'company_id': record.id,
+            })
+            sequence_model.create({
+                    'name': "Mod 349 BOE sequence for company " + record.name,
+                    'code': "l10n_es.boe.mod_349",
+                    'padding': 10,
+                    'company_id': record.id,
+            })
