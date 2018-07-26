@@ -264,8 +264,6 @@ class HelpdeskTicket(models.Model):
         if ticket.user_id:
             ticket.assign_date = ticket.create_date
             ticket.assign_hours = 0
-        if ticket.deadline:
-            ticket.activity_update()
 
         return ticket
 
@@ -278,8 +276,6 @@ class HelpdeskTicket(models.Model):
             assigned_tickets = self.filtered(lambda ticket: not ticket.assign_date)
         if vals.get('stage_id') and self.env['helpdesk.stage'].browse(vals.get('stage_id')).is_close:
             closed_tickets = self.filtered(lambda ticket: not ticket.close_date)
-        # classify by deadline
-        ticket_to_dl = dict((ticket.id, ticket.deadline) for ticket in self)
 
         now = datetime.datetime.now()
         res = super(HelpdeskTicket, self - assigned_tickets - closed_tickets).write(vals)
@@ -293,7 +289,6 @@ class HelpdeskTicket(models.Model):
             'assign_date': now,
             'close_date': now,
         }))
-        self.filtered(lambda ticket: ticket.deadline != ticket_to_dl[ticket.id] or ticket in closed_tickets).activity_update()
 
         if vals.get('partner_id'):
             self.message_subscribe([vals['partner_id']])
@@ -482,26 +477,6 @@ class HelpdeskTicket(models.Model):
                     'res_id': self.id,
                 }
         return super(HelpdeskTicket, self).get_access_action(access_uid)
-
-    # ------------------------------------------------------------
-    # Activities management
-    # ------------------------------------------------------------
-
-    def activity_update(self):
-        """ Update automated activities. Consider that all tickets in the record
-        set have a modified deadline, therefore deleting old activities and
-        creating new one if necessary. Closed tickets have their activities
-        set as done. """
-        for ticket in self:
-            if ticket.stage_id.is_close:
-                ticket.activity_feedback(['helpdesk.mail_act_helpdesk_handle'])
-            else:
-                ticket.activity_unlink(['helpdesk.mail_act_helpdesk_handle'])
-                if ticket.deadline:
-                    ticket.activity_schedule(
-                        'helpdesk.mail_act_helpdesk_handle',
-                        ticket.deadline,
-                        user_id=ticket.user_id.id or self.env.uid)
 
     # ------------------------------------------------------------
     # Rating Mixin
