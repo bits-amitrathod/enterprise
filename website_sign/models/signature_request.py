@@ -3,7 +3,7 @@ import base64
 import StringIO
 import time
 import uuid
-import urlparse
+from werkzeug.urls import url_join
 from pyPdf import PdfFileReader, PdfFileWriter
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
@@ -182,7 +182,7 @@ class SignatureRequest(models.Model):
     @api.one
     def send_follower_accesses(self, followers, subject=None, message=None):
         base_context = self.env.context
-        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         template_id = self.env.ref('website_sign.website_sign_mail_template').id
         mail_template = self.env['mail.template'].browse(template_id)
 
@@ -198,7 +198,7 @@ class SignatureRequest(models.Model):
                 email_from_mail = email_from_mail,
                 email_from = email_from,
                 email_to = follower.email,
-                link = urlparse.urljoin(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}),
+                link = url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}),
                 subject = subject or ("Signature request - " + self.reference),
                 msgbody = (message or "").replace("\n", "<br/>")
             )
@@ -215,6 +215,7 @@ class SignatureRequest(models.Model):
             self.generate_completed_document()
 
         base_context = self.env.context
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         template_id = self.env.ref('website_sign.website_sign_mail_template').id
         mail_template = self.env['mail.template'].browse(template_id)
 
@@ -236,7 +237,7 @@ class SignatureRequest(models.Model):
             template = mail_template.with_context(
                 lang = signer.partner_id.lang,
                 email_to = signer.partner_id.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': signer.access_token}
+                link = url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': signer.access_token})
             )
             template.send_mail(self.id, force_send=True)
 
@@ -244,13 +245,13 @@ class SignatureRequest(models.Model):
             template = mail_template.with_context(
                 lang = follower.lang,
                 email_to = follower.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}
+                link = url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token})
             )
             template.send_mail(self.id, force_send=True)
 
         mail_template.with_context( # Send copy to request creator
             email_to = email_from_mail,
-            link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token}
+            link = url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': self.id, 'access_token': self.access_token})
         ).send_mail(self.id, force_send=True)
 
         return True
@@ -449,6 +450,7 @@ class SignatureRequestItem(models.Model):
     @api.multi
     def send_signature_accesses(self, subject=None, message=None):
         base_context = self.env.context
+        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
         template_id = self.env.ref('website_sign.website_sign_mail_template').id
         mail_template = self.env['mail.template'].browse(template_id)
 
@@ -466,7 +468,7 @@ class SignatureRequestItem(models.Model):
                 email_from_mail = email_from_mail,
                 email_from = email_from,
                 email_to = signer.partner_id.email,
-                link = "sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token},
+                link = url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token}),
                 subject = subject or ("Signature request - " + signer.signature_request_id.reference),
                 msgbody = (message or "").replace("\n", "<br/>")
             )
