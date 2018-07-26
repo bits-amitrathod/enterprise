@@ -51,7 +51,6 @@ class SDDTest(AccountingTestCase):
 
         invoice = self.env['account.invoice'].with_context({'uid': current_uid}).create({
             'partner_id': partner.id,
-            'reference_type': 'none',
             'currency_id': currency.id,
             'name': 'invoice to client',
             'account_id': account_receivable.id,
