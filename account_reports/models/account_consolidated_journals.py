@@ -30,9 +30,9 @@ class report_account_consolidated_journal(models.AbstractModel):
         return columns
 
     def get_sum(self, value, field, results):
-        sum_debit = self.format_value(sum([int(r['debit']) for r in results if r[field] == value]))
-        sum_credit = self.format_value(sum([int(r['credit']) for r in results if r[field] == value]))
-        sum_balance = self.format_value(sum([int(r['balance']) for r in results if r[field] == value]))
+        sum_debit = self.format_value(sum([r['debit'] for r in results if r[field] == value]))
+        sum_credit = self.format_value(sum([r['credit'] for r in results if r[field] == value]))
+        sum_balance = self.format_value(sum([r['balance'] for r in results if r[field] == value]))
         return [sum_debit, sum_credit, sum_balance]
 
     def get_total(self, current_journal, results):
