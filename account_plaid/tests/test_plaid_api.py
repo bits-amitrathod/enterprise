@@ -39,6 +39,8 @@ class TestPlaidApi(AccountingTestCase):
         self.db_name = self.env.cr.dbname
         self.db_uid = self.env['ir.config_parameter'].get_param('database.uuid')
         self.url = 'https://onlinesync.odoo.com/plaid/api/2'
+        self.payment_meta = False
+        self.online_identifier = "lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDje"
 
     def create_account_provider(self):
         return self.env['account.online.provider'].create({
@@ -115,7 +117,7 @@ class TestPlaidApi(AccountingTestCase):
              }],
              "transactions": [{
                 "account_id": "456",
-                "amount": -2307.21,
+                "amount": 2307.21,
                 "category": [
                   "Shops",
                   "Computers and Electronics"
@@ -125,17 +127,16 @@ class TestPlaidApi(AccountingTestCase):
                 "location": {
                  "address": "300 Post St",
                  "city": "San Francisco",
-                 "state": "CA",
                  "zip": "94108",
                  "lat": "0",
                  "lon": "0"
                 },
                 "name": "Damdoum Store",
-                "payment_meta": False,
+                "payment_meta": self.payment_meta,
                 "pending": False,
                 "pending_transaction_id": False,
                 "account_owner": False,
-                "transaction_id": str(offset)+"lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDje",
+                "transaction_id": str(offset)+self.online_identifier,
                 "transaction_type": "place"
                }],
               "item": {'id': 'M5eVJqLnv3tbzdngLDp9FL5OlDNxlNhlE55op'},
@@ -223,7 +224,7 @@ class TestPlaidApi(AccountingTestCase):
             # No localization installed, so skip test
             return True
 
-         # Patch request.post with defined method
+        # Patch request.post with defined method
         patcher = patch('odoo.addons.account_plaid.models.plaid.requests.post', side_effect=self.plaid_post)
         patcher.start()
 
@@ -238,8 +239,9 @@ class TestPlaidApi(AccountingTestCase):
         self.assertEqual(bank_stmt.journal_id.id, bank_journal.id)
         for i in range(0,3):
             self.assertEqual(bank_stmt.line_ids[i].name, 'Damdoum Store')
-            self.assertEqual(bank_stmt.line_ids[i].amount, 2307.21)
+            self.assertEqual(bank_stmt.line_ids[i].amount, -2307.21)
             self.assertTrue(bank_stmt.line_ids[i].online_identifier.endswith("lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDje"))
+            self.assertEqual(bank_stmt.line_ids[i].partner_id, self.env['res.partner']) #No partner defined on line
         self.assertEqual(account_online_journal.last_sync, datetime.strftime(datetime.today(), '%Y-%m-%d'))
             
         # Call again and check that we don't have any new transactions
@@ -304,6 +306,84 @@ class TestPlaidApi(AccountingTestCase):
         with self.assertRaises(UserError) as e:
             acc_online_provider.plaid_fetch('/pokemon', {})
         self.assertEqual(acc_online_provider.status, 'SUCCESS', 'state of account_online_provider should still be SUCCESS')
+
+        patcher.stop()
+        return True
+
+    def test_assign_partner_automatically(self):
+        """ Test receiving some transactions with plaid and assigning partner"""
+        # Create fake account.online.provider
+        bank_journal = self.env['account.journal'].search([('type', '=', 'bank')], limit=1) or False
+        acc_online_provider = self.create_account_provider()
+        if bank_journal:
+            account_online_journal = self.env['account.online.journal'].search([], limit=1)
+            bank_journal.write({'account_online_journal_id': account_online_journal.id})
+        else:
+            # No localization installed, so skip test
+            return True
+
+        self.payment_meta = {'payee_name': '123'}
+
+        agrolait = self.env.ref("base.res_partner_2")
+
+        # set online data on partner to simulate previous synchronization linked to agrolait
+        agrolait.write({'online_partner_vendor_name': '123'})
+
+        # Patch request.post with defined method
+        patcher = patch('odoo.addons.account_plaid.models.plaid.requests.post', side_effect=self.plaid_post)
+        patcher.start()
+
+        ret = acc_online_provider.manual_sync()
+        # Check that we've a bank statement with 3 lines (we assumed that the demo data have been loaded and a
+        # bank statement has already been created, otherwise the statement should have 4 lines as a new one for
+        # opening entry will be created)
+        bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc")
+        self.assertEqual(len(bank_stmt), 1, 'There should be at least one bank statement created')
+        self.assertEqual(len(bank_stmt.line_ids), 3, 'The statement should have 3 lines')
+        self.assertEqual(bank_stmt.state, 'open')
+        self.assertEqual(bank_stmt.journal_id.id, bank_journal.id)
+        for i in range(0,3):
+            self.assertTrue(bank_stmt.line_ids[i].online_identifier.endswith("lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDje"))
+            self.assertEqual(bank_stmt.line_ids[i].partner_id, agrolait)
+        bank_stmt.unlink()
+
+        # Check that partner assignation also work with location
+        self.payment_meta = False
+        self.online_identifier = 'lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDjf'
+        ASUSTeK = self.env.ref("base.res_partner_1")
+        ASUSTeK.write({'street': '300 Post St', 'city': 'San Francisco', 'zip': '94108'})
+        acc_online_provider.account_online_journal_ids[0].write({'last_sync': datetime.today() - relativedelta(days=15)})
+        ret = acc_online_provider.manual_sync()
+        bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc", limit=1)
+        self.assertEqual(len(bank_stmt.line_ids), 3, 'The statement should have 3 lines')
+        for i in range(0,3):
+            self.assertTrue(bank_stmt.line_ids[i].online_identifier.endswith("lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDjf"))
+            self.assertEqual(bank_stmt.line_ids[i].partner_id, ASUSTeK)
+        bank_stmt.unlink()
+
+        # Check that if we have both partner with same info, no partner is displayed
+        self.payment_meta = {'payee_name': '123'}
+        self.online_identifier = 'lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDja'
+        ASUSTeK.write({'online_partner_vendor_name': '123', 'street': False, 'city': False, 'zip': False})
+        acc_online_provider.account_online_journal_ids[0].write({'last_sync': datetime.today() - relativedelta(days=15)})
+        ret = acc_online_provider.manual_sync()
+        bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc", limit=1)
+        self.assertEqual(len(bank_stmt.line_ids), 3, 'The statement should have 3 lines')
+        for i in range(0,3):
+            self.assertTrue(bank_stmt.line_ids[i].online_identifier.endswith("lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDja"))
+            self.assertEqual(bank_stmt.line_ids[i].partner_id, self.env['res.partner'])
+        bank_stmt.unlink()
+
+        # Check that vendor name take precedence over location
+        ASUSTeK.write({'street': '300 Post St', 'city': 'San Francisco', 'zip': '94108', 'online_partner_vendor_name': False})
+        self.online_identifier = 'lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDjb'
+        acc_online_provider.account_online_journal_ids[0].write({'last_sync': datetime.today() - relativedelta(days=15)})
+        ret = acc_online_provider.manual_sync()
+        bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc", limit=1)
+        self.assertEqual(len(bank_stmt.line_ids), 3, 'The statement should have 3 lines')
+        for i in range(0,3):
+            self.assertTrue(bank_stmt.line_ids[i].online_identifier.endswith("lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDjb"))
+            self.assertEqual(bank_stmt.line_ids[i].partner_id, agrolait)
 
         patcher.stop()
         return True

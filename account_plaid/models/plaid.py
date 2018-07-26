@@ -217,14 +217,17 @@ class PlaidAccount(models.Model):
             for transaction in resp_json.get('transactions'):
                 if transaction.get('pending') == False:
                     trans = {
-                        'id': transaction.get('transaction_id'),
+                        'online_identifier': transaction.get('transaction_id'),
                         'date': transaction.get('date'),
-                        'description': transaction.get('name'),
+                        'name': transaction.get('name'),
                         'amount': -1 * transaction.get('amount'), #https://plaid.com/docs/api/#transactions amount positive if purchase
                         'end_amount': end_amount,
                     }
-                    if 'location' in transaction:
-                        trans['location'] = transaction.get('location')
+                    if transaction.get('payment_meta') and transaction['payment_meta'].get('payee_name', False) and transaction.get('amount') > 0:
+                        trans['online_partner_vendor_name'] = transaction['payment_meta']['payee_name']
+                        trans['partner_id'] = self._find_partner([('online_partner_vendor_name', '=', transaction['payment_meta']['payee_name'])])
+                    if 'location' in transaction and not trans.get('partner_id'):
+                        trans['partner_id'] = self._find_partner_from_location(transaction.get('location'))
                     transactions.append(trans)
             if resp_json.get('total_transactions', 0) <= offset + 500:
                 break

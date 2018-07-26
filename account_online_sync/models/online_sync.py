@@ -200,6 +200,44 @@ class OnlineAccount(models.Model):
         # This method must be implemented by plaid and yodlee services
         raise UserError(_("Unimplemented"))
 
+    @api.model
+    def _find_partner_from_location(self, location):
+        """
+        Return a recordset of partner if the address of the transaction exactly match the address of a partner
+        location : a dictionary of type:
+                   {'state': x, 'address': y, 'city': z, 'zip': w}
+                   state and zip are optional
+
+        """
+        partners = self.env['res.partner']
+        domain = []
+        if 'address' in location and 'city' in location:
+            domain.append(('street', '=', location['address']))
+            domain.append(('city', '=', location['city']))
+            if 'state' in location:
+                domain.append(('state_id.name', '=', location['state']))
+            if 'zip' in location:
+                domain.append(('zip', '=', location['zip']))
+            return self._find_partner(domain)
+        return False
+
+    @api.model
+    def _find_partner(self, domain):
+        """
+        Return a recordset of partner iff we have only one partner associated to the value passed as parameter
+        value : a String send by Yodlee to identify the account or merchant from which the transaction was made
+        field: name of the field where to search for the information
+        """
+        partners = self.env['res.partner'].search(domain)
+        if len(partners) == 1:
+            return partners.id
+        else:
+            # It is possible that all partners share the same commercial partner, in that case, use the commercial partner
+            commercial_partner = list(set([p.commercial_partner_id for p in partners]))
+            if len(commercial_partner) == 1:
+                return commercial_partner[0].id
+        return False
+
 class OnlineAccountLinkWizard(models.TransientModel):
     _name = 'account.online.link.wizard'
     _description = 'Link a particular synchronized account to a journal'
@@ -354,6 +392,20 @@ class AccountJournal(models.Model):
 class AccountBankStatement(models.Model):
     _inherit = "account.bank.statement"
 
+    @api.multi
+    def button_confirm_bank(self):
+        super(AccountBankStatement, self).button_confirm_bank()
+        for statement in self:
+            for line in statement.line_ids:
+                if line.partner_id and (line.online_partner_vendor_name or line.online_partner_bank_account):
+                    # write value for account and merchant on partner only if partner has no value, in case value are different write False
+                    value_acc = line.partner_id.online_partner_bank_account or line.online_partner_bank_account
+                    value_acc = value_acc if value_acc == line.online_partner_bank_account else False
+                    value_merchant = line.partner_id.online_partner_vendor_name or line.online_partner_vendor_name
+                    value_merchant = value_merchant if value_merchant == line.online_partner_vendor_name else False
+                    line.partner_id.online_partner_vendor_name = value_merchant
+                    line.partner_id.online_partner_bank_account = value_acc
+
     @api.model
     def online_sync_bank_statement(self, transactions, journal):
         """
@@ -362,10 +414,16 @@ class AccountBankStatement(models.Model):
              The format is : [{
                  'id': online id,                  (unique ID for the transaction)
                  'date': transaction date,         (The date of the transaction)
-                 'description': transaction description,  (The description)
+                 'name': transaction description,  (The description)
                  'amount': transaction amount,     (The amount of the transaction. Negative for debit, positive for credit)
                  'end_amount': total amount on the account
-                 'location': optional field used to find the partner (see _find_partner for more info)
+                 'partner_id': optional field used to define the partner
+                 'online_partner_vendor_name': optional field used to store information on the statement line under the
+                    online_partner_vendor_name field (typically information coming from plaid/yodlee). This is use to find partner
+                    for next statements
+                 'online_partner_bank_account': optional field used to store information on the statement line under the
+                    online_partner_bank_account field (typically information coming from plaid/yodlee). This is use to find partner
+                    for next statements
              }, ...]
          :param journal: The journal (account.journal) of the new bank statement
 
@@ -381,22 +439,15 @@ class AccountBankStatement(models.Model):
         last_date = journal.account_online_journal_id.last_sync
         end_amount = 0
         for transaction in transactions:
-            if all_lines.search_count([('online_identifier', '=', transaction['id'])]) > 0 or transaction['amount'] == 0.0:
+            if all_lines.search_count([('online_identifier', '=', transaction['online_identifier'])]) > 0 or transaction['amount'] == 0.0:
                 continue
-            line = {
-                'date': transaction['date'],
-                'name': transaction['description'],
-                'amount': transaction['amount'],
-                'online_identifier': transaction['id'],
-            }
-            total += transaction['amount']
-            end_amount = transaction['end_amount']
-            # Partner from address
-            if 'location' in transaction:
-                line['partner_id'] = self._find_partner(transaction['location'])
+            line = transaction.copy()
+            total += line['amount']
+            end_amount = line['end_amount']
+            line.pop('end_amount')
             # Get the last date
-            if not last_date or transaction['date'] > last_date:
-                last_date = transaction['date']
+            if not last_date or line['date'] > last_date:
+                last_date = line['date']
             lines.append((0, 0, line))
 
         # Search for previous transaction end amount
@@ -463,28 +514,16 @@ class AccountBankStatement(models.Model):
         journal.account_online_journal_id.last_sync = last_date
         return len(lines)
 
-    @api.model
-    def _find_partner(self, location):
-        """
-        Return a recordset of partner if the address of the transaction exactly match the address of a partner
-        location : a dictionary of type:
-                   {'state': x, 'address': y, 'city': z, 'zip': w}
-                   state and zip are optional
-
-        """
-        partners = self.env['res.partner']
-        domain = []
-        if 'address' in location and 'city' in location:
-            domain.append(('street', '=', location['address']))
-            domain.append(('city', '=', location['city']))
-            if 'state' in location:
-                domain.append(('state_id.name', '=', location['state']))
-            if 'zip' in location:
-                domain.append(('zip', '=', location['zip']))
-            return partners.search(domain, limit=1)
-        return partners
-
 class AccountBankStatementLine(models.Model):
     _inherit = 'account.bank.statement.line'
 
     online_identifier = fields.Char("Online Identifier")
+    online_partner_vendor_name = fields.Char(readonly=True, help='Technical field used to store information from plaid/yodlee to match partner (used when a purchase is made)')
+    online_partner_bank_account = fields.Char(readonly=True, help='Technical field used to store information from plaid/yodlee to match partner')
+
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    online_partner_vendor_name = fields.Char(readonly=True, help='Technical field used to store information from plaid/yodlee to match partner (used when a purchase is made)')
+    online_partner_bank_account = fields.Char(readonly=True, help='Technical field used to store information from plaid/yodlee to match partner')

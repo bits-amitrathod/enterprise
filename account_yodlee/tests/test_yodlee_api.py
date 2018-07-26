@@ -40,6 +40,9 @@ class TestYodleeApi(AccountingTestCase):
         self.url = 'https://onlinesync.odoo.com/yodlee/api/2'
         self.no_account = False
         self.journal_id = self.env['account.journal'].search([('type', '=', 'bank')], limit=1).id or False
+        self.online_identifier = '2829798'
+        self.online_bank_number = '836726'
+        self.online_vendor_name = False
 
     def create_account_provider(self):
         return self.env['account.online.provider'].create({
@@ -171,7 +174,7 @@ class TestYodleeApi(AccountingTestCase):
                "transaction": [
                {
                   "CONTAINER": "bank",
-                  "id": 2829798,
+                  "id": self.online_identifier,
                   "amount": {
                     "amount": 12345.12,
                     "currency": "USD"
@@ -196,11 +199,11 @@ class TestYodleeApi(AccountingTestCase):
                   },
                   "isManual": False,
                   "status": "POSTED",
-                  "accountId": 836726,
+                  "accountId": self.online_bank_number,
                   "type":"DEBIT",
                   "subType": "DEBIT_CARD_WITHDRAWAL_AT_STORE",
                   "merchant":{
-                    "id": "walgreensdanburyctus",
+                    "id": self.online_vendor_name,
                     "source": "FACTUAL",
                     "name": "Amazon"
                   }
@@ -331,6 +334,7 @@ class TestYodleeApi(AccountingTestCase):
         self.assertEqual(bank_stmt.line_ids.name, '0150 Amazon  Santa Ana CA 55.73USD')
         self.assertEqual(bank_stmt.line_ids.amount, -12345.12)
         self.assertEqual(bank_stmt.line_ids.online_identifier, "2829798:bank")
+        self.assertEqual(bank_stmt.line_ids.partner_id, self.env['res.partner']) #No partner defined on line
         self.assertEqual(account_online_journal.last_sync, datetime.strftime(datetime.today(), '%Y-%m-%d'))
             
         # Call again and check that we don't have any new transactions
@@ -377,6 +381,84 @@ class TestYodleeApi(AccountingTestCase):
         self.assertEqual(bank_stmt.line_ids.amount, -12345.12)
         self.assertEqual(bank_stmt.line_ids.online_identifier, "2829798:bank")
         self.assertEqual(account_online_journal.last_sync, datetime.strftime(datetime.today(), '%Y-%m-%d'))
+
+        patcher_post.stop()
+        patcher_get.stop()
+        return True
+
+    def test_assign_partner_automatically(self):
+        """ Test receiving some transactions with yodlee and assigning automatically to correct partner """
+
+        # Create fake account.online.provider
+        bank_journal = self.env['account.journal'].search([('type', '=', 'bank')], limit=1) or False
+        acc_online_provider = self.create_account_provider()
+        if bank_journal:
+            account_online_journal = self.env['account.online.journal'].search([], limit=1)
+            bank_journal.write({'account_online_journal_id': account_online_journal.id})
+        else:
+            # No localization installed, so skip test
+            return True
+
+        agrolait = self.env.ref("base.res_partner_2")
+
+        # set online data on previous statement line to simulate previous synchronization linked to agrolait
+        agrolait.write({'online_partner_bank_account': '836726'})
+
+        patcher_post = patch('odoo.addons.account_yodlee.models.yodlee.requests.post', side_effect=self.yodlee_post)
+        patcher_get = patch('odoo.addons.account_yodlee.models.yodlee.requests.get', side_effect=self.yodlee_get)
+        patcher_post.start()
+        patcher_get.start()
+
+        informations = json.dumps([{"providerAccountId":123,"bankName":"Dag Site","status":"SUCCESS","providerId":16441}])
+        ret = self.env['account.online.provider'].callback_institution(informations, 'add', self.journal_id)
+
+        # Check that we've a bank statement with 3 lines (we assumed that the demo data have been loaded and a
+        # bank statement has already been created, otherwise the statement should have 4 lines as a new one for
+        # opening entry will be created)
+        bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc")
+        self.assertEqual(len(bank_stmt), 1, 'There should be at least one bank statement created')
+        self.assertEqual(len(bank_stmt.line_ids), 1, 'The statement should have 1 lines')
+        self.assertEqual(bank_stmt.state, 'open')
+        self.assertEqual(bank_stmt.journal_id.id, bank_journal.id)
+        self.assertEqual(bank_stmt.line_ids.amount, -12345.12)
+        self.assertEqual(bank_stmt.line_ids.online_identifier, "2829798:bank")
+        self.assertEqual(bank_stmt.line_ids.partner_id, agrolait)
+        bank_stmt.unlink()
+
+        # Check that partner assignation also work with vendor name
+        self.online_bank_number = False
+        self.online_vendor_name = "123"
+        self.online_identifier = 'lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDjf'
+        ASUSTeK = self.env.ref("base.res_partner_1")
+        ASUSTeK.write({'online_partner_vendor_name': '123'})
+        acc_online_provider.account_online_journal_ids[0].write({'last_sync': datetime.today() - relativedelta(days=15)})
+        ret = self.env['account.online.provider'].callback_institution(informations, 'add', self.journal_id)
+        bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc", limit=1)
+        self.assertEqual(len(bank_stmt.line_ids), 1, 'The statement should have 1 lines')
+        self.assertTrue(bank_stmt.line_ids.online_identifier.startswith("lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDjf"))
+        self.assertEqual(bank_stmt.line_ids.partner_id, ASUSTeK)
+        bank_stmt.unlink()
+
+        # Check that if we have both partner with same info, no partner is displayed
+        self.online_identifier = 'lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDja'
+        agrolait.write({'online_partner_vendor_name': '123'})
+        acc_online_provider.account_online_journal_ids[0].write({'last_sync': datetime.today() - relativedelta(days=15)})
+        ret = self.env['account.online.provider'].callback_institution(informations, 'add', self.journal_id)
+        bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc", limit=1)
+        self.assertEqual(len(bank_stmt.line_ids), 1, 'The statement should have 1 lines')
+        self.assertTrue(bank_stmt.line_ids.online_identifier.startswith("lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDja"))
+        self.assertEqual(bank_stmt.line_ids.partner_id, self.env['res.partner'])
+        bank_stmt.unlink()
+
+        # Check that bank account number take precedence over vendor name
+        self.online_bank_number = "836726"
+        self.online_identifier = 'lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDjb'
+        acc_online_provider.account_online_journal_ids[0].write({'last_sync': datetime.today() - relativedelta(days=15)})
+        ret = self.env['account.online.provider'].callback_institution(informations, 'add', self.journal_id)
+        bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc", limit=1)
+        self.assertEqual(len(bank_stmt.line_ids), 1, 'The statement should have 1 lines')
+        self.assertTrue(bank_stmt.line_ids.online_identifier.startswith("lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDjb"))
+        self.assertEqual(bank_stmt.line_ids.partner_id, agrolait)
 
         patcher_post.stop()
         patcher_get.stop()

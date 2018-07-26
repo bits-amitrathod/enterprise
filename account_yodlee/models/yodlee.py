@@ -407,13 +407,22 @@ class YodleeAccount(models.Model):
                     # ignore transaction with 0
                     if amount == 0:
                         continue
-                    transactions.append({
-                        'id': str(tr.get('id')) + ':' + tr.get('CONTAINER'),
+                    vals = {
+                        'online_identifier': str(tr.get('id')) + ':' + tr.get('CONTAINER'),
                         'date': date,
-                        'description': tr.get('description',{}).get('original', 'No description'),
+                        'name': tr.get('description',{}).get('original', 'No description'),
                         'amount': amount * -1 if tr.get('baseType') == 'DEBIT' else amount,
                         'end_amount': self.balance,
-                        })
+                    }
+                    if tr.get('accountId'):
+                        vals['partner_id'] = self._find_partner([('online_partner_bank_account', '=', tr.get('accountId'))])
+                        vals['online_partner_bank_account'] = tr.get('accountId')
+                    if tr.get('merchant') and tr.get('merchant', {}).get('id', False) and vals['amount'] < 0:
+                        vals['online_partner_vendor_name'] = tr['merchant']['id']
+                        if not vals.get('partner_id'):
+                            vals['partner_id'] = self._find_partner([('online_partner_vendor_name', '=', tr['merchant']['id'])])
+
+                    transactions.append(vals)
             if len(resp_json.get('transactions', [])) <= 500:
                 break
             else:

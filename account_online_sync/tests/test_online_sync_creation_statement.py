@@ -21,7 +21,7 @@ class TestSynchStatementCreation(AccountingTestCase):
         })
 
         # Create an account.online.provider and account.online.journal and associate to journal bank
-        self.bank_journal = self.env['account.journal'].create({'name': 'Bank_Online', 'type': 'bank', 'code': 'BNKonl'})
+        self.bank_journal = self.env['account.journal'].create({'name': 'Bank_Online', 'type': 'bank', 'code': 'BNKonl', 'currency_id': self.env.ref('base.EUR').id})
         self.provider_account = self.env['account.online.provider'].create({'name': 'Test Bank'})
         self.online_account = self.env['account.online.journal'].create({
             'name': 'MyBankAccount',
@@ -29,6 +29,11 @@ class TestSynchStatementCreation(AccountingTestCase):
             'journal_ids': [(6, 0, [self.bank_journal.id])]
         })
         self.transaction_id = 1
+        self.account = self.env['account.account'].create({
+            'name': 'toto',
+            'code': 'bidule',
+            'user_type_id': self.env.ref('account.data_account_type_fixed_assets').id
+        })
 
     def create_bank_statement_date(self, date):
         bank_statement_line_vals = {'name': 'test_line', 'date': date, 'amount': 50}
@@ -46,21 +51,49 @@ class TestSynchStatementCreation(AccountingTestCase):
 
     def create_transaction(self, date1, date2):
         tr1 = {
-                'id': self.transaction_id,
+                'online_identifier': self.transaction_id,
                 'date': date1,
-                'description': 'transaction',
+                'name': 'transaction',
                 'amount': 50,
                 'end_amount': 1900,
             }
         tr2 = {
-                'id': self.transaction_id + 1,
+                'online_identifier': self.transaction_id + 1,
                 'date': date2,
-                'description': 'transaction2',
+                'name': 'transaction2',
                 'amount': 50,
                 'end_amount': 1900,
             }
         self.transaction_id += 2
         return [tr1, tr2]
+
+    def create_transaction_partner(self, partner_id=False, vendor_name=False, account_number=False):
+        tr = {
+            'online_identifier': self.transaction_id,
+            'date': '2016-01-10',
+            'name': 'transaction_p',
+            'amount': 50,
+            'end_amount': 50
+        }
+        if partner_id:
+            tr['partner_id'] = partner_id
+        if vendor_name:
+            tr['online_partner_vendor_name'] = vendor_name
+        if account_number:
+            tr['online_partner_bank_account'] = account_number
+        self.transaction_id += 1
+        return [tr]
+
+    def confirm_bank_statement(self, statement):
+        
+        statement.line_ids[0].process_reconciliation(new_aml_dicts=[{
+            'credit': 50,
+            'debit': 0,
+            'name': 'toto',
+            'account_id': self.account.id,
+        }])
+        statement.button_confirm_bank()
+        return statement
 
     def test_creation_every_sync(self):
         self.create_bank_statement_date('2016-01-01')
@@ -193,3 +226,43 @@ class TestSynchStatementCreation(AccountingTestCase):
         self.assertEqual(created_bnk_stmt[1].balance_start, 200, 'Newly bank statement balance start should be 200')
         #remove bank statement
         self.delete_bank_statement(created_bnk_stmt)
+
+    def test_assign_partner_auto_bank_stmt(self):
+        self.bank_journal.write({'bank_statement_creation': 'day'})
+        agrolait = self.env.ref("base.res_partner_2")
+        self.assertEqual(agrolait.online_partner_vendor_name, False)
+        self.assertEqual(agrolait.online_partner_bank_account, False)
+        transactions = self.create_transaction_partner(vendor_name='test_vendor_name')
+        self.bnk_stmt.online_sync_bank_statement(transactions, self.bank_journal)
+        created_bnk_stmt = self.bnk_stmt.search([('journal_id','=',self.bank_journal.id)], order='id desc', limit=1)
+        # Ensure that bank statement has no partner set
+        self.assertEqual(created_bnk_stmt.line_ids[0].partner_id, self.env['res.partner'])
+        # Assign partner and Validate bank statement
+        created_bnk_stmt.line_ids[0].write({'partner_id': agrolait.id})
+        # process the bank statement line
+        self.confirm_bank_statement(created_bnk_stmt)
+        # Check that partner has correct vendor_name associated to it
+        self.assertEqual(agrolait.online_partner_vendor_name, 'test_vendor_name')
+        self.assertEqual(agrolait.online_partner_bank_account, False)
+        
+        # Create another statement with a partner
+        transactions = self.create_transaction_partner(partner_id=agrolait.id, vendor_name='test_other_vendor_name', account_number='123')
+        self.bnk_stmt.online_sync_bank_statement(transactions, self.bank_journal)
+        created_bnk_stmt = self.bnk_stmt.search([('journal_id','=',self.bank_journal.id)], order='id desc', limit=1)
+        # Ensure that statement has a partner set
+        self.assertEqual(created_bnk_stmt.line_ids[0].partner_id, agrolait)
+        # Validate and check that partner has no vendor_name set and has an account_number set instead
+        self.confirm_bank_statement(created_bnk_stmt)
+        self.assertEqual(agrolait.online_partner_vendor_name, False)
+        self.assertEqual(agrolait.online_partner_bank_account, '123')
+
+        # Create another statement with same information
+        transactions = self.create_transaction_partner(partner_id=agrolait.id, account_number='123')
+        self.bnk_stmt.online_sync_bank_statement(transactions, self.bank_journal)
+        created_bnk_stmt = self.bnk_stmt.search([('journal_id','=',self.bank_journal.id)], order='id desc', limit=1)
+        # Ensure that statement has a partner set
+        self.assertEqual(created_bnk_stmt.line_ids[0].partner_id, agrolait)
+        # Validate and check that partner has no vendor_name set and has same account_number as previous
+        self.confirm_bank_statement(created_bnk_stmt)
+        self.assertEqual(agrolait.online_partner_vendor_name, False)
+        self.assertEqual(agrolait.online_partner_bank_account, '123')
