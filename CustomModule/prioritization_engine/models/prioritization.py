@@ -9,9 +9,10 @@ class Customer(models.Model):
     prioritization = fields.Boolean("Prioritization setting")
     sku_preconfig=fields.Char("SKU PreConfig")
     sku_postconfig = fields.Char("SKU PostConfig")
-    prioritization_ids = fields.One2many('prioritization_engine.prioritization', 'customer_id')
+    prioritization_ids = fields.Many2many('prioritization_engine.prioritization', 'customer_id')
     sps_sku = fields.Char("SPS SKU", readonly=False)
-    threshold = fields.Integer("Product Threshold", readonly=False)
+    threshold_min = fields.Integer("Product Min Threshold", readonly=False)
+    threshold_max = fields.Integer("Product Max Threshold", readonly=False)
     priority = fields.Integer("Product Priority", readonly=False)
     cooling_period = fields.Integer("Cooling Period in days", readonly=False)
     auto_allocate = fields.Boolean("Allow Auto Allocation?", readonly=False)
@@ -22,6 +23,12 @@ class Customer(models.Model):
     order_ids = fields.One2many('sale.order', 'partner_id')
     gl_account=fields.Char("GL Account")
     on_hold= fields.Boolean("On Hold")
+    is_broker=fields.Boolean("Is a Broker?")
+    carrier_info=fields.Char("Carrier Info")
+    carrier_acc_no = fields.Char("Carrier Account No")
+    quickbook_id=fields.Char("Quickbook Id")
+    having_carrier = fields.Boolean("Having Carrier ?")
+    notification_email=fields.Char("Notification Email")
 
 
 class ProductTemplate(models.Model):
