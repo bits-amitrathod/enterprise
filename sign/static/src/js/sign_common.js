@@ -859,13 +859,7 @@ odoo.define('sign.document_signing', function(require) {
             options.subtitle = options.subtitle || _t("Your signature has been saved.");
             options.size = options.size || "medium";
             options.technical = false;
-
-            if(!options.buttons) {
-                options.buttons = [];
-                options.buttons.push({text: _t("Start Using Odoo Sign Now"), click: function(e) {
-                    window.location.href = "https://www.odoo.com/page/sign";
-                }});
-            }
+            options.buttons = [];
 
             this._super(parent, options);
 
