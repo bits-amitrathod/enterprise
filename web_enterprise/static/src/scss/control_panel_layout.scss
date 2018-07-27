@@ -7,7 +7,7 @@
     max-height: 1000px;
 }
 
-@media (max-width: $screen-sm-max) {
+@include media-breakpoint-down(md) {
     .o_control_panel {
         padding-right: 0;
         .breadcrumb  {
@@ -44,7 +44,7 @@
 
         .o_cp_left, .o_cp_right {
             width: auto; // override desktop rule width: 50%
-            @include o-flex(1, 1, auto);
+            flex: 1 1 auto;
         }
 
         .o_cp_sidebar {
@@ -54,8 +54,8 @@
         .o_cp_switch_buttons {
             margin-right: 10px;
             &.open > ul.dropdown-menu {
+                display: inline-flex;
                 min-width: 0px;
-                @include o-inline-flex-display;
             }
         }
 

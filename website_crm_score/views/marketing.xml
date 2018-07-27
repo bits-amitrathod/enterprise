@@ -101,22 +101,22 @@
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_card oe_kanban_global_click">
                                 <div class="row mb4">
-                                    <div class="col-xs-5">
+                                    <div class="col-5">
                                         <strong><span><field name="name"/></span></strong>
                                     </div>
-                                    <div class="col-xs-3">
+                                    <div class="col-3">
                                         <strong><span><field name="value"/></span></strong>
                                     </div>
-                                    <div class="col-xs-4 pull-right text-right">
+                                    <div class="col-4 float-right text-right">
                                         <strong><i class="fa fa-fw fa-tags" aria-label="Number of leads" title="Number of leads" role="img"></i><field name="leads_count"/> leads</strong>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-8 text-muted">
+                                    <div class="col-8 text-muted">
                                         <field name="domain"/>
                                     </div>
-                                    <div class="col-xs-4">
-                                        <span class="pull-right text-right">
+                                    <div class="col-4">
+                                        <span class="float-right text-right">
                                             <field name="rule_type" widget="kanban_label_selection" options="{'classes': {'score': 'info', 'active': 'default',
                                             'unlink': 'warning'}}"/>
                                         </span>
@@ -223,20 +223,20 @@
                             <div class="o_assignation_kanban_record">
                                 <div class="o_kanban_record_top">
                                     <ul class="nav">
-                                        <li>
-                                            <a type="open">
+                                        <li class="nav-item">
+                                            <a type="open" class="nav-link">
                                                 <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" class="oe_kanban_image" alt="Avatar"/>
                                             </a>
                                         </li>
-                                        <li t-att-class="button_state">
-                                            <button name="toggle_active" type="object">
+                                        <li t-attf-class="nav-item #{button_state}">
+                                            <button name="toggle_active" type="object" class="nav-link">
                                                 <span t-attf-class="fa {{button_icon}}"/>
                                             </button>
                                         </li>
                                     </ul>
                                     <ul class="nav o_assignation_body">
-                                        <li><a type="open"><b><field name="name"/></b></a></li>
-                                        <li><a type="open"><field name="team_id"/></a></li>
+                                        <li class="nav-item"><a type="open" class="nav-link"><b><field name="name"/></b></a></li>
+                                        <li class="nav-item"><a type="open" class="nav-link"><field name="team_id"/></a></li>
                                     </ul>
                                     <div class="o_assignation_leads_count">
                                         <field name="maximum_user_leads" invisible="1"/>

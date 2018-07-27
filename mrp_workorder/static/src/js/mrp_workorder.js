@@ -36,7 +36,7 @@ var BackArrow = FieldInteger.extend({
         'click': '_onClick',
     },
     _render: function () {
-        this.$el.html('<button class="btn btn-default o_workorder_icon_btn o_workorder_icon_back"><i class="fa fa-arrow-left"/></button>');
+        this.$el.html('<button class="btn btn-secondary o_workorder_icon_btn o_workorder_icon_back"><i class="fa fa-arrow-left"/></button>');
     },
     _onClick: function() {
         var self = this;
@@ -60,7 +60,7 @@ var TabletImage = FieldBinaryImage.extend({
 function tabletRenderButtons ($node) {
         var self = this;
         this.$buttons = $('<div/>');
-        this.$buttons.html('<button class="btn btn-default back-button"><i class="fa fa-arrow-left"/></button>');
+        this.$buttons.html('<button class="btn btn-secondary back-button"><i class="fa fa-arrow-left"/></button>');
         this.$buttons.on('click', function () {
             self.do_action('mrp.mrp_workcenter_kanban_action', {clear_breadcrumbs: true});
         });

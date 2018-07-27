@@ -20,7 +20,7 @@ tour.register('web_studio_home_menu_background_tour', {
     content: _t('Click here.'),
     position: 'right',
 }, {
-    trigger: '.o_web_studio_home_studio_menu ul.dropdown-menu li:eq(0)',
+    trigger: '.o_web_studio_home_studio_menu .dropdown-menu .dropdown-item:eq(0)',
     content: _t('Change the <b>background</b>, make it yours.'),
     position: 'bottom',
 }]);
@@ -61,7 +61,7 @@ tour.register('web_studio_new_app_tour', {
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_char',
     content: _t('Nicely done! Let’s build your screen now; <b>drag</b> a <i>text field</i> and <b>drop</b> it in your view, on the right.'),
     position: 'bottom',
-    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_inner_group',
 }, {
     trigger: '.o_web_studio_form_view_editor td.o_td_label',
     content: _t('To <b>customize a field</b>, click on its <i>label</i>.'),
@@ -79,7 +79,7 @@ tour.register('web_studio_new_app_tour', {
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_selection',
     content: _t('Drag & drop <b>another field</b>. Let’s try with a <i>selection field</i>.'),
     position: 'bottom',
-    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_inner_group',
 }, {
     trigger: '.o_web_studio_field_dialog_form > .o_web_studio_selection_new_value > input',
     content: _t("Create your <b>selection values</b> (e.g.: Romance, Polar, Fantasy, etc.)"),
@@ -185,7 +185,7 @@ tour.register('web_studio_tests_tour', {
     extra_trigger: '.o_web_studio_form_view_editor',
     // add an existing field (display_name)
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_char',
-    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_inner_group',
 }, {
     // click on the field
     trigger: '.o_web_studio_form_view_editor td.o_td_label:first',
@@ -203,7 +203,7 @@ tour.register('web_studio_tests_tour', {
 }, {
     // add a new field
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_char',
-    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_inner_group',
 }, {
     // click on the new field
     trigger: '.o_web_studio_form_view_editor td.o_td_label:eq(1)',
@@ -225,7 +225,7 @@ tour.register('web_studio_tests_tour', {
 }, {
     // add a monetary field --> create a currency field
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_monetary',
-    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_inner_group',
 }, {
     trigger: '.modal-footer .btn.btn-primary',
 }, {
@@ -235,13 +235,13 @@ tour.register('web_studio_tests_tour', {
 }, {
     // add a monetary field
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_monetary',
-    run: 'drag_and_drop .o_web_studio_form_view_editor .o_group',
+    run: 'drag_and_drop .o_web_studio_form_view_editor .o_inner_group',
 }, {
     // verify that the monetary field is in the view
     extra_trigger: '.o_web_studio_form_view_editor td.o_td_label:eq(1):contains("New Monetary")',
     // switch the two first fields
-    trigger: '.o_web_studio_form_view_editor .o_group:first .ui-draggable:eq(1)',
-    run: 'drag_and_drop .o_group:first .o_web_studio_hook:first',
+    trigger: '.o_web_studio_form_view_editor .o_inner_group:first .ui-draggable:eq(1)',
+    run: 'drag_and_drop .o_inner_group:first .o_web_studio_hook:first',
 }, {
     // verify that the fields have been switched
     extra_trigger: '.o_web_studio_form_view_editor td.o_td_label:eq(0):contains("New Monetary")',

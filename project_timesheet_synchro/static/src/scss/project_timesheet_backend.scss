@@ -19,10 +19,10 @@
 
     .o_project_timesheet_app_links {
 
-        @include o-flex-display;
-        @include o-align-items(center);
+        display: flex;
+        align-items: center;
 
-        @media (min-width: 992px) {
+        @include media-breakpoint-up(lg) {
             height: 700px;
         }
 

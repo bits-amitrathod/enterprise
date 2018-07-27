@@ -28,7 +28,7 @@
                 </field>
                 <footer>
                         <button name="validate_lot" type="object" string="Validate Lot" class="btn-primary" barcode_trigger="validate"/>
-                        <button string="Cancel" class="btn-default" special="cancel" />
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
         </field>
@@ -43,10 +43,10 @@
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_card oe_kanban_global_click">
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-6">
                                     <field name="lot_name"/>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-6">
                                     <field name="qty_done"/>
                                 </div>
                             </div>

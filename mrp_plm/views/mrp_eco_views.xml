@@ -157,40 +157,40 @@
                             </div>
                             <div class="container o_kanban_card_content">
                                 <div class="row">
-                                    <div class="col-xs-6 o_kanban_primary_left">
+                                    <div class="col-6 o_kanban_primary_left">
                                         <button class="btn btn-primary" name="%(mrp_eco_action)d" type="action">
                                             <span><t t-esc="record.nb_ecos.value"/> Engineering Changes</span>
                                         </button>
                                     </div>
-                                    <div class="col-xs-6 o_kanban_primary_right">
+                                    <div class="col-6 o_kanban_primary_right">
                                         <div t-if="record.nb_approvals_my.raw_value > 0" class="row">
-                                            <div class="col-xs-9">
+                                            <div class="col-9">
                                                 <a class="oe_kanban_stock_picking_type_list" name="%(mrp_eco_action_approval_my)d" type="action">
                                                     My Validations
                                                 </a>
                                             </div>
-                                            <div class="col-xs-3">
+                                            <div class="col-3">
                                                 <field name="nb_approvals_my"/>
                                             </div>
                                         </div>
 
                                         <div t-if="record.nb_approvals.raw_value > 0" class="row">
-                                            <div class="col-xs-9">
+                                            <div class="col-9">
                                                 <a class="oe_kanban_stock_picking_type_list" name="%(mrp_eco_action_approval)d" type="action">
                                                     All Validations
                                                 </a>
                                             </div>
-                                            <div class="col-xs-3">
+                                            <div class="col-3">
                                                 <field name="nb_approvals"/>
                                             </div>
                                         </div>
                                         <div t-if="record.nb_validation.raw_value > 0" class="row">
-                                            <div class="col-xs-9">
+                                            <div class="col-9">
                                                 <a class="oe_kanban_stock_picking_type_list" name="%(mrp_eco_action_late)d" type="action">
                                                     To Apply
                                                 </a>
                                             </div>
-                                            <div class="col-xs-3">
+                                            <div class="col-3">
                                                 <field name="nb_validation"/>
                                             </div>
                                         </div>
@@ -199,7 +199,7 @@
                                 </div>
                             </div><div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
                                 <div class="row">
-                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_view">
+                                    <div class="col-6 o_kanban_card_manage_section o_kanban_manage_view">
                                         <div role="menuitem" class="o_kanban_card_manage_title">
                                             <span>View</span>
                                         </div>
@@ -207,7 +207,7 @@
                                             <a name="%(mrp_eco_action)d" type="action">All</a>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_new">
+                                    <div class="col-6 o_kanban_card_manage_section o_kanban_manage_new">
                                         <div role="menuitem" class="o_kanban_card_manage_title">
                                             <span>New</span>
                                         </div>
@@ -217,10 +217,10 @@
                                     </div>
                                 </div>
                                 <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
-                                    <div role="menuitem" aria-haspopup="true" class="col-xs-8">
+                                    <div role="menuitem" aria-haspopup="true" class="col-8">
                                         <ul role="menu" class="oe_kanban_colorpicker" data-field="color"/>
                                     </div>
-                                    <div role="menuitem" class="col-xs-4 text-right">
+                                    <div role="menuitem" class="col-4 text-right">
                                         <a type="edit">Settings</a>
                                     </div>
                                 </div>
@@ -354,15 +354,15 @@
                          <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
                             <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
                             <div class="o_dropdown_kanban dropdown" groups="base.group_user">
-                                <a role="button" class="dropdown-toggle btn" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
                                     <span class="fa fa-ellipsis-v"/>
                                 </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <t t-if="widget.editable"><li><a role="menuitem" type="set_cover">Set Cover Image</a></li></t>
-                                    <t t-if="widget.editable"><li><a role="menuitem" type="edit">Edit Task</a></li></t>
-                                    <t t-if="widget.deletable"><li><a role="menuitem" type="delete">Delete</a></li></t>
-                                    <li role="menuitem" aria-haspopup="true"><ul role="menu" class="oe_kanban_colorpicker" data-field="color"/></li>
-                                </ul>
+                                <div class="dropdown-menu" role="menu">
+                                    <t t-if="widget.editable"><a type="set_cover" class="dropdown-item" role="menuitem">Set Cover Image</a></t>
+                                    <t t-if="widget.editable"><a type="edit" class="dropdown-item" role="menuitem">Edit Task</a></t>
+                                    <t t-if="widget.deletable"><a type="delete" class="dropdown-item" role="menuitem">Delete</a></t>
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
                             </div>
                             <div class="oe_kanban_content">
                                 <div class="o_kanban_record_title">
@@ -394,7 +394,7 @@
                                 </div>
                                 <div class="oe_kanban_bottom_right">
                                     <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar"/>
-                                    <div class="pull-left mr4" groups="base.group_user">
+                                    <div class="float-left mr4" groups="base.group_user">
                                         <field name="activity_ids" widget="kanban_activity"/>
                                         <span t-if="record.kanban_state.raw_value == 'normal'" class="o_status o_status_grey" title="Waiting for Approvals" role="img" aria-label="Waiting for Approvals"/>
                                         <span t-if="record.kanban_state.raw_value == 'done'" class="o_status o_status_green" title="All Approvals have be done" role="img" aria-label="All Approvals have be done"/>

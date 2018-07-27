@@ -7,7 +7,7 @@
             t-attf-style="background-image: url('#{widget.uploaded_image}');"/>
         <div class="o_web_studio_upload">
             <a href="#" class="js_discard_upload">Design your Icon</a> <span class="text-muted">or</span> <a href="#" class="js_upload">upload one</a>
-            <span class="hide">
+            <span class="d-none">
                 <t t-call="HiddenInputFile">
                     <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
                     <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
@@ -34,7 +34,7 @@
             <div class="clearfix"/>
             <div class="o_web_studio_upload">
                 <span class="text-muted">or</span> <a href="#" class="js_upload">upload it</a>
-                <span class="hide">
+                <span class="d-none">
                     <t t-call="HiddenInputFile">
                         <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
                         <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>

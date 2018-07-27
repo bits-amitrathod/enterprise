@@ -9,8 +9,8 @@
 }
 
 .o_burger_menu {
-    @include o-flex-display;
-    @include o-flex-flow(column, nowrap);
+    display: flex;
+    flex-flow: column nowrap;
     position: fixed;
     top: 0px;
     bottom: 0px;
@@ -20,9 +20,9 @@
     z-index: 10;
 
     .o_burger_menu_topbar {
-        @include o-flex(0, 0, $o-navbar-height);
+        flex: 0 0 $o-navbar-height;
         padding: 10px 16px;
-        background: darken($o-brand-primary, 10%);
+        background: darken($o-brand-odoo, 10%);
         color: white;
         .o_burger_menu_avatar {
             height: 26px;
@@ -37,11 +37,11 @@
     }
 
     .o_burger_menu_content {
-        @include o-flex(1, 1, auto);
+        flex: 1 1 auto;
         overflow: auto;
         background: white;
         &.o_burger_menu_dark {
-            background-color: $o-brand-primary;
+            background-color: $o-brand-odoo;
         }
 
         .o_burger_menu_app {
@@ -60,14 +60,14 @@
                     ul {
                         display: none;
                     }
-                    &.open {
+                    &.show {
                         > ul {
                             display: block;
                         }
                     }
                 }
                 @for $index from 1 through 5 {
-                    > li .o_menu_entry_lvl_#{$index} {
+                    .o_menu_entry_lvl_#{$index} {
                         padding-left: ($index - 1) * 16px;
                     }
                 }
@@ -98,7 +98,7 @@
                 padding: 16px;
                 list-style: none;
                 > li {
-                    &.divider {
+                    &.divider { // FIXME ?
                         background-color: $o-main-color-muted;
                         height: 1px;
                         margin: 10px -16px;

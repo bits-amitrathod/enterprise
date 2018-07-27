@@ -42,7 +42,7 @@ var SalaryPackageWidget = Widget.extend({
         this._super(parent);
         this.dp = new concurrency.DropPrevious();
         this.update_gross_to_net_computation();
-        $("div#company_car select").val() === 'new' ? $("div#new_company_car").removeClass('hidden') : $("div#new_company_car").addClass('hidden')
+        $("div#company_car select").val() === 'new' ? $("div#new_company_car").removeClass('d-none') : $("div#new_company_car").addClass('d-none')
         this.onchange_mobile();
         this.onchange_internet();
         this.onchange_holidays();
@@ -53,7 +53,7 @@ var SalaryPackageWidget = Widget.extend({
         this.onchange_other_dependent_people();
         $('body').attr('id', 'hr_contract_salary');
         this.onchange_mobility();
-        $("a[name='recompute']").addClass("hidden");
+        $("a[name='recompute']").addClass('d-none');
         $("#hr_contract_salary select").select2({
             minimumResultsForSearch: -1
         });
@@ -221,30 +221,30 @@ var SalaryPackageWidget = Widget.extend({
         var withholding_tax_reduction_div = $("div[name='withholding_tax_reduction']");
         var miscellaneous_onss_div = $("div[name='m_onss_div']");
         var representation_fees_div = $("div[name='representation_fees_div']");
-        data['ATN.MOB.2'] ? mobile_atn_div.removeClass('hidden') : mobile_atn_div.addClass('hidden');
-        data['ATN.INT.2'] ? internet_atn_div.removeClass('hidden') : internet_atn_div.addClass('hidden');
-        data['ATN.CAR.2'] ? company_car_atn_div.removeClass('hidden') : company_car_atn_div.addClass('hidden');
-        data['EMP.BONUS'] ? employment_bonus_div.removeClass('hidden') : employment_bonus_div.addClass('hidden');
-        data['PP.RED'] ? withholding_tax_reduction_div.removeClass('hidden') : withholding_tax_reduction_div.addClass('hidden');
-        data['M.ONSS'] ? miscellaneous_onss_div.removeClass('hidden') : miscellaneous_onss_div.addClass('hidden');
-        data['REP.FEES'] ? representation_fees_div.removeClass('hidden') : representation_fees_div.addClass('hidden');
-        $("div[name='compute_loading']").addClass("hidden");
-        $("div[name='net']").removeClass("hidden").hide().slideDown( "slow" );
+        data['ATN.MOB.2'] ? mobile_atn_div.removeClass('d-none') : mobile_atn_div.addClass('d-none');
+        data['ATN.INT.2'] ? internet_atn_div.removeClass('d-none') : internet_atn_div.addClass('d-none');
+        data['ATN.CAR.2'] ? company_car_atn_div.removeClass('d-none') : company_car_atn_div.addClass('d-none');
+        data['EMP.BONUS'] ? employment_bonus_div.removeClass('d-none') : employment_bonus_div.addClass('d-none');
+        data['PP.RED'] ? withholding_tax_reduction_div.removeClass('d-none') : withholding_tax_reduction_div.addClass('d-none');
+        data['M.ONSS'] ? miscellaneous_onss_div.removeClass('d-none') : miscellaneous_onss_div.addClass('d-none');
+        data['REP.FEES'] ? representation_fees_div.removeClass('d-none') : representation_fees_div.addClass('d-none');
+        $("div[name='compute_loading']").addClass('d-none');
+        $("div[name='net']").removeClass('d-none').hide().slideDown( "slow" );
         $("input[name='NET']").removeClass('o_outdated');
         $("input[name='IP']").val(data['IP']);
         $("input[name='IP.DED']").val(-data['IP.DED']);
         var ip_div = $("div[name='ip_div']");
-        data['IP'] ? ip_div.removeClass('hidden') : ip_div.addClass('hidden');
+        data['IP'] ? ip_div.removeClass('d-none') : ip_div.addClass('d-none');
         $("input[name='TAXED']").val(data['TAXED']);
         var taxed_div = $("div[name='taxed_div']");
-        data['TAXED'] !== data['NET'] ? taxed_div.removeClass('hidden') : taxed_div.addClass('hidden');
+        data['TAXED'] !== data['NET'] ? taxed_div.removeClass('d-none') : taxed_div.addClass('d-none');
     },
 
     onchange_advantage: function() {
-        $("div[name='net']").addClass("hidden");
-        $("div[name='compute_net']").removeClass("hidden");
-        $("a[name='details']").addClass("hidden");
-        $("a[name='recompute']").removeClass("hidden");
+        $("div[name='net']").addClass('d-none');
+        $("div[name='compute_net']").removeClass('d-none');
+        $("a[name='details']").addClass('d-none');
+        $("a[name='recompute']").removeClass('d-none');
         $("input[name='NET']").addClass('o_outdated');
         this.update_gross();
     },
@@ -262,28 +262,28 @@ var SalaryPackageWidget = Widget.extend({
     },
 
     compute_net: function() {
-        $("a[name='recompute']").addClass("hidden");
-        $("a[name='details']").removeClass("hidden");
+        $("a[name='recompute']").addClass('d-none');
+        $("a[name='details']").removeClass('d-none');
         return this.update_gross_to_net_computation();
     },
 
     onchange_mobility: function(event) {
-        $(".mobility-options").addClass('hidden');
+        $(".mobility-options").addClass('d-none');
         var fuel_card_div = $("div[name='fuel_card']");
         if ($("input[name='transport_mode_car']")[0].checked) {
-            $(".mobility-options#company_car").removeClass('hidden');
-            fuel_card_div.removeClass("hidden");
+            $(".mobility-options#company_car").removeClass('d-none');
+            fuel_card_div.removeClass('d-none');
         } else {
             $("input[name='fuel_card_input']").val(0.0);
             $("input[name='fuel_card_slider']").val(0.0);
-            fuel_card_div.addClass("hidden");
+            fuel_card_div.addClass('d-none');
 
         }
         if ($("input[name='transport_mode_public']")[0].checked){
-            $(".mobility-options#public_transport").removeClass('hidden');
+            $(".mobility-options#public_transport").removeClass('d-none');
         }
         if ($("input[name='transport_mode_others']")[0].checked){
-            $(".mobility-options#others").removeClass('hidden');
+            $(".mobility-options#others").removeClass('d-none');
         }
 
         if (!$("input[name='transport_mode_car']")[0].checked) {
@@ -293,9 +293,9 @@ var SalaryPackageWidget = Widget.extend({
     onchange_waiting_list: function() {
         var select_waiting_list_model = $("select[name='select_waiting_list_model']");
         if ($("input[name='waiting_list']")[0].checked) {
-            select_waiting_list_model.removeClass('hidden');
+            select_waiting_list_model.removeClass('d-none');
         } else {
-            select_waiting_list_model.addClass('hidden');
+            select_waiting_list_model.addClass('d-none');
         }
     },
 
@@ -312,9 +312,9 @@ var SalaryPackageWidget = Widget.extend({
         $("input[name='holidays_input']").val(amount_days);
         $("span[name='holidays_amount']").html(amount_days);
         if ($("input[name='holidays_slider']").val() < 20.0) {
-            $("div[name='holidays_20_days']").removeClass("hidden");
+            $("div[name='holidays_20_days']").removeClass('d-none');
         } else {
-            $("div[name='holidays_20_days']").addClass("hidden");
+            $("div[name='holidays_20_days']").addClass('d-none');
         }
     },
 
@@ -322,7 +322,7 @@ var SalaryPackageWidget = Widget.extend({
     onchange_mobile: function(event) {
         var has_mobile = $("input[name='mobile']")[0].checked;
         var tooltip = $("span#mobile_tooltip");
-        has_mobile ? tooltip.removeClass("hidden") : tooltip.addClass("hidden");
+        has_mobile ? tooltip.removeClass('d-none') : tooltip.addClass('d-none');
         var label = $("label[name='international_communication']");
         $("input[name='mobile']")[0].checked ? label.removeClass('invisible') : label.addClass('invisible');
         ajax.jsonRpc('/salary_package/onchange_mobile/', 'call', {
@@ -336,7 +336,7 @@ var SalaryPackageWidget = Widget.extend({
     onchange_internet: function(event) {
         var internet = $("input[name='internet']")[0].value;
         var tooltip = $("span#internet_tooltip");
-        internet ? tooltip.removeClass("hidden") : tooltip.addClass("hidden");
+        internet ? tooltip.removeClass('d-none') : tooltip.addClass('d-none');
         $("input[name='internet_amount']").val(internet);
     },
 
@@ -351,17 +351,17 @@ var SalaryPackageWidget = Widget.extend({
             for(var key in data) {
                 if (data[key]) {
                     $("span[name='" + key + "']").html(data[key]);
-                    $("li[name='" + key + "']").removeClass('hidden');
+                    $("li[name='" + key + "']").removeClass('d-none');
                 } else {
-                    $("li[name='" + key + "']").addClass('hidden');
+                    $("li[name='" + key + "']").addClass('d-none');
                 }
             }
         });
-        $("span[name='car_info']").removeClass("hidden");
+        $("span[name='car_info']").removeClass('d-none');
         if (car_option === 'new') {
-            $("span[name='new_car_message']").removeClass('hidden');
+            $("span[name='new_car_message']").removeClass('d-none');
         } else {
-            $("span[name='new_car_message']").addClass('hidden');
+            $("span[name='new_car_message']").addClass('d-none');
             this.onchange_advantage();
         }
     },
@@ -378,47 +378,47 @@ var SalaryPackageWidget = Widget.extend({
     onchange_marital: function(event) {
         var marital = $("select[name='marital']").val();
         var spouse_info_div = $("div[name='spouse_information']");
-        $("div[name='spouse_fiscal_status']").addClass("hidden");
+        $("div[name='spouse_fiscal_status']").addClass('d-none');
         var spouse_professional_situation_div = $("div[name='spouse_professional_situation']");
         if (marital === 'married' || marital === 'cohabitant') {
-            spouse_info_div.removeClass('hidden');
+            spouse_info_div.removeClass('d-none');
             $("input[name='spouse_birthdate']").attr('required', '');
             $("input[name='spouse_complete_name']").attr('required', '');
             $("input[name='spouse_professional_situation']").attr('required', '');
             $("input[name='disabled_spouse_bool']").attr('required', '');
-            spouse_professional_situation_div.removeClass('hidden');
+            spouse_professional_situation_div.removeClass('d-none');
         } else {
-            spouse_info_div.addClass('hidden');
+            spouse_info_div.addClass('d-none');
             $("input[name='spouse_birthdate']").removeAttr('required');
             $("input[name='spouse_complete_name']").removeAttr('required');
             $("input[name='spouse_professional_situation']").removeAttr('required');
             $("input[name='disabled_spouse_bool']").removeAttr('required');
-            spouse_professional_situation_div.addClass('hidden');
+            spouse_professional_situation_div.addClass('d-none');
         }
     },
 
     onchange_spouse_fiscal_status: function(event) {
         var fiscal_status = $("select[name='spouse_fiscal_status']").val();
         var spouse_revenue_info_div = $("div[name='spouse_revenue_information']");
-        spouse_revenue_info_div.addClass("hidden");
+        spouse_revenue_info_div.addClass('d-none');
     },
 
     onchange_disabled_children: function(event) {
         var disabled_children = $("input[name='disabled_children']")[0].checked;
         var disabled_children_div = $("div[name='disabled_children_info']");
-        disabled_children ? disabled_children_div.removeClass('hidden') : disabled_children_div.addClass('hidden');
+        disabled_children ? disabled_children_div.removeClass('d-none') : disabled_children_div.addClass('d-none');
     },
 
     onchange_other_dependent_people: function(event) {
         var other_dependent_people = $("input[name='other_dependent_people']")[0].checked;
         var other_dependent_people_div = $("div[name='other_dependent_people_info']");
-        other_dependent_people ? other_dependent_people_div.removeClass('hidden') : other_dependent_people_div.addClass('hidden');
+        other_dependent_people ? other_dependent_people_div.removeClass('d-none') : other_dependent_people_div.addClass('d-none');
     },
 
     onchange_ip: function(event) {
         var has_ip = $("input[name='ip']")[0].checked;
         var tooltip = $("span#ip_tooltip");
-        has_ip ? tooltip.removeClass("hidden") : tooltip.addClass("hidden");
+        has_ip ? tooltip.removeClass("d-none") : tooltip.addClass("d-none");
     },
 
     onchange_others: function() {
@@ -450,8 +450,8 @@ var SalaryPackageWidget = Widget.extend({
     },
 
     recompute: function(event) {
-        $("a[name='details']").removeClass("hidden");
-        $("a[name='recompute']").addClass("hidden");
+        $("a[name='details']").removeClass('d-none');
+        $("a[name='recompute']").addClass('d-none');
         $("input[name='NET']").removeClass('o_outdated');
     },
 
@@ -535,7 +535,7 @@ var SalaryPackageWidget = Widget.extend({
     },
 
     toggle_personal_information: function() {
-        $("button[name='toggle_personal_information']").toggleClass('hidden');
+        $("button[name='toggle_personal_information']").toggleClass('d-none');
         $("div[name='personal_info']").toggle(500);
         $("div[name='personal_info_withholding_taxes']").toggle(500);
     }

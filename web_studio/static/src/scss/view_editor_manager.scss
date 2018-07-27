@@ -1,10 +1,10 @@
 .o_web_studio_client_action {
     .o_web_studio_view_editor {
-        @include o-flex-display;
+        display: flex;
         height: 100%;
 
         .o_web_studio_view_renderer {
-            @include o-flex(1, 1, auto);
+            flex: 1 1 auto;
             overflow: auto;
             min-width: 0;
 
@@ -40,11 +40,11 @@
         }
 
         .o_web_studio_sidebar {
-            @include o-flex(0, 0, $o-web-studio-sidebar-width);
+            flex: 0 0 $o-web-studio-sidebar-width;
             overflow: auto;
         }
         .o_ace_view_editor {
-            @include o-flex(0, 0, auto);
+            flex: 0 0 auto;
         }
 
         // drag & drop
@@ -60,14 +60,14 @@
                 display: none;
             }
             &.ui-draggable-dragging {
-                @include o-transform(rotate(-5deg));
+                transform: rotate(-5deg);
                 box-shadow: 0 5px 25px -10px black;
-                @include transition(transform 0.6s, box-shadow 0.3s);
+                transition: transform 0.6s, box-shadow 0.3s;
             }
             &.ui-draggable-helper-ready {
                 opacity: 1!important;
                 line-height: 2;
-                border: 2px solid $o-brand-optional;
+                border: 2px solid $o-brand-primary;
             }
         }
     }

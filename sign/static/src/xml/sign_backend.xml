@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="offset-lg-2 col-lg-10">
                     <div class="checkbox">
                         <label for="o_sign_required_field">
                             <input type="checkbox" id="o_sign_required_field"/> Mandatory field
@@ -45,15 +45,15 @@
             <button type="button" class="o_sign_duplicate_sign_template btn btn-link">Duplicate</button>
         </div>
 
-        <div t-att-class="!(widget.has_sign_requests &amp;&amp; widget.isPDF) ? 'text-center' : 'hidden text-center'">
-            <div class="o_sign_template_saved_info alert alert-success pull-right" role="status"><span class="fa fa-check"/> Saved</div>
+        <div t-att-class="!(widget.has_sign_requests &amp;&amp; widget.isPDF) ? 'text-center' : 'd-none text-center'">
+            <div class="o_sign_template_saved_info alert alert-success float-right" role="status"><span class="fa fa-check"/> Saved</div>
             <span t-if="!widget.has_sign_requests" class="fa fa-pencil" title="Edit template name" role="img" aria-label="Edit template name"/>
             <input type="text" class="o_sign_template_name_input o_input" t-att-value="widget.sign_template.attachment_id.name"/>
         </div>
 
         <div t-if="!widget.isPDF" class="o_sign_image_document">
             <t t-set="webimage" t-value="new RegExp('image.*(gif|jpe|jpg|png)').test(widget.sign_template.attachment_id.mimetype)"/>
-            <img t-if="webimage" class="img img-responsive" t-attf-src="/web/image/{{widget.sign_template.attachment_id.id}}" alt="Signature"/>
+            <img t-if="webimage" class="img img-fluid" t-attf-src="/web/image/{{widget.sign_template.attachment_id.id}}" alt="Signature"/>
             <div t-if="!webimage" class="o_image" t-att-data-mimetype="widget.sign_template.attachment_id.mimetype"/>
         </div>
 

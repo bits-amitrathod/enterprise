@@ -1,11 +1,11 @@
 .o_searchview {
-    @media (min-width: $screen-sm-min) {
+    @include media-breakpoint-up(md) {
         border-bottom: 1px solid $o-brand-secondary;
     }
 
     .o_searchview_facet {
-        @media (max-width: $screen-xs-max) {
-            @include o-flex-flow(row, wrap);
+        @include media-breakpoint-down(sm) {
+            flex-flow: row wrap;
         }
 
         border: 1px solid $o-brand-secondary;
@@ -13,7 +13,7 @@
         color: $o-brand-secondary;
 
         .o_searchview_facet_label {
-            background-color: $o-brand-primary;
+            background-color: $o-brand-odoo;
         }
 
         .o_facet_remove:hover {
@@ -29,7 +29,7 @@
         @include o-position-absolute($top: 4px, $right: 0);
     }
     .o_searchview_autocomplete li.o-selection-focus {
-        background-color: $table-bg-accent;
+        background-color: $table-accent-bg;
     }
 }
 

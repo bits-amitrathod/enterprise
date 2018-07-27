@@ -20,26 +20,18 @@
       </div>
         <div class="btn-group" t-if="isMobile">
             <a role="button" class="btn btn-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><span class="dropdown_gantt_content mr4">Month</span><i class="fa fa-caret-down" role="img" aria-label="Dropdown menu" title="Dropdown menu"></i></a>
-            <ul class="dropdown-menu" role="menu">
-                <li role="menuitem">
-                    <a role="button" class="o_gantt_button_scale btn btn-sm btn-default" data-value="day">Day</a>
-                </li>
-                <li role="menuitem">
-                    <a role="button" class="o_gantt_button_scale btn btn-sm btn-default" data-value="week">Week</a>
-                </li>
-                <li role="menuitem">
-                    <a role="button" class="o_gantt_button_scale btn btn-sm btn-default active" data-value="month">Month</a>
-                </li>
-                <li role="menuitem">
-                    <a role="button" class="o_gantt_button_scale btn btn-sm btn-default" data-value="year">Year</a>
-                </li>
-            </ul>
+            <div class="dropdown-menu" role="menu">
+                <a role="menuitem" class="o_gantt_button_scale btn btn-secondary dropdown-item" data-value="day">Day</a>
+                <a role="menuitem" class="o_gantt_button_scale btn btn-secondary dropdown-item" data-value="week">Week</a>
+                <a role="menuitem" class="o_gantt_button_scale btn btn-secondary dropdown-item active" data-value="month">Month</a>
+                <a role="menuitem" class="o_gantt_button_scale btn btn-secondary dropdown-item" data-value="year">Year</a>
+            </div>
         </div>
         <div t-attf-class="btn-group" t-else="" role="toolbar" aria-label="Period">
-            <button class="o_gantt_button_scale btn btn-sm btn-default" type="button" data-value="day">Day</button>
-            <button class="o_gantt_button_scale btn btn-sm btn-default" type="button" data-value="week">Week</button>
-            <button class="o_gantt_button_scale btn btn-sm btn-default" type="button" data-value="month">Month</button>
-            <button class="o_gantt_button_scale btn btn-sm btn-default" type="button" data-value="year">Year</button>
+            <button class="o_gantt_button_scale btn btn-secondary" type="button" data-value="day">Day</button>
+            <button class="o_gantt_button_scale btn btn-secondary" type="button" data-value="week">Week</button>
+            <button class="o_gantt_button_scale btn btn-secondary" type="button" data-value="month">Month</button>
+            <button class="o_gantt_button_scale btn btn-secondary" type="button" data-value="year">Year</button>
         </div>
     </t>
 </templates>

@@ -28,26 +28,26 @@ var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
     displayState: function() {
         var self = this;
         if (this.state === 'error') {
-            self.$('.sync_error').removeClass('hidden');
+            self.$('.sync_error').removeClass('d-none');
             self.renderSyncError();
         }
         else if (this.state === 'dashboard' && this.country === 'worldwide') {
-            self.$('.favorite_institutions_no_result').removeClass('hidden');
-            self.$('.institutions_search').addClass('hidden');
+            self.$('.favorite_institutions_no_result').removeClass('d-none');
+            self.$('.institutions_search').addClass('d-none');
         }
         else {
-            self.$('.institution_search').removeClass('hidden');
-            self.$('.favorite_institutions_no_result').addClass('hidden');
+            self.$('.institution_search').removeClass('d-none');
+            self.$('.favorite_institutions_no_result').addClass('d-none');
             if (self.results.length > 0) {
                 // Display results
-                self.$('.institution_no_result').addClass('hidden');
-                self.$('.institution_result').removeClass('hidden');
+                self.$('.institution_no_result').addClass('d-none');
+                self.$('.institution_result').removeClass('d-none');
                 self.renderSearchResult();
             }
             else {
                 // Show no results
-                self.$('.institution_no_result').removeClass('hidden');
-                self.$('.institution_result').addClass('hidden');
+                self.$('.institution_no_result').removeClass('d-none');
+                self.$('.institution_result').addClass('d-none');
             }
         }
     },
@@ -158,18 +158,18 @@ var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
                 self.selected = false;
                 self.$('.js_institution[data-inst-id='+instId+']').removeClass('selected');
                 self.$buttons.find('.js_select_institution').prop('disabled', true);
-                self.$buttons.find('.js_select_institution').toggleClass('btn-primary btn-default');
+                self.$buttons.find('.js_select_institution').toggleClass('btn-primary btn-secondary');
             }
             else {
                 self.selected = instId;
                 self.$buttons.find('.js_select_institution').prop('disabled', false);
                 self.$('.js_institution').removeClass('selected');
                 self.$('.js_institution[data-inst-id='+instId+']').addClass('selected');
-                self.$buttons.find('.js_select_institution').removeClass('btn-default');
+                self.$buttons.find('.js_select_institution').removeClass('btn-secondary');
                 self.$buttons.find('.js_select_institution').addClass('btn-primary');
             }
-            self.$('.js_institution_detail:not(.hidden):not(#'+instId+')').addClass('hidden');
-            self.$('#'+instId+'').toggleClass('hidden');
+            self.$('.js_institution_detail:not(.d-none):not(#'+instId+')').addClass('d-none');
+            self.$('#'+instId+'').toggleClass('d-none');
         });
         // Append to view
         $searchResults.appendTo(self.$('.institution_result'));

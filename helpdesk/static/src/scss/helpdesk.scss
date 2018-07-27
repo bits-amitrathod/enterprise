@@ -8,7 +8,7 @@
 
     .o_helpdesk_dashboard {
         margin: (0 - $o-kanban-record-margin) ($o-kanban-record-margin - $o-horizontal-padding) $o-kanban-record-margin;
-        @include o-flex(1, 0, 100%);
+        flex: 1 0 100%;
         padding: 10px ($o-horizontal-padding - $sale-table-spacing);
 
         background-color: $o-view-background-color;
@@ -17,8 +17,8 @@
         .o_welcome_message {
             width: 100%;
             @include o-position-absolute($left: 0, $top: 0);
-            @include o-flex-display;
-            @include o-justify-content(center);
+            display: flex;
+            justify-content: center;
 
             .o_welcome_image {
                 padding: 20px;
@@ -36,7 +36,7 @@
         > div {
             display: inline-block;
             vertical-align: top;
-            @media (min-width: $screen-sm-min) {
+            @include media-breakpoint-up(md) {
                 width: 50%;
             }
 
@@ -62,9 +62,9 @@
                     }
 
                     &.o_main {
-                        background-color: $o-brand-optional;
+                        background-color: $o-brand-primary;
                         &:hover {
-                            background-color: darken($o-brand-optional, 10%);
+                            background-color: darken($o-brand-primary, 10%);
                         }
                         a {
                             color: white;
@@ -106,5 +106,5 @@
     height: 12px;
     width: 12px;
     border-radius: 6px;
-    color: $brand-danger;
+    color: theme-color('danger');
 }

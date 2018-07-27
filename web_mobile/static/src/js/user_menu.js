@@ -18,12 +18,12 @@ UserMenu.include({
         var self = this;
         return this._super.apply(this, arguments).then(function () {
             if (mobile.methods.switchAccount) {
-                self.$('a[data-menu="logout"]').addClass('hidden');
-                self.$('a[data-menu="account"]').addClass('hidden');
-                self.$('a[data-menu="switch"]').removeClass('hidden');
+                self.$('a[data-menu="logout"]').addClass('d-none');
+                self.$('a[data-menu="account"]').addClass('d-none');
+                self.$('a[data-menu="switch"]').removeClass('d-none');
             }
             if (mobile.methods.addHomeShortcut) {
-                self.$('a[data-menu="shortcut"]').removeClass('hidden');
+                self.$('a[data-menu="shortcut"]').removeClass('d-none');
             }
         });
     },

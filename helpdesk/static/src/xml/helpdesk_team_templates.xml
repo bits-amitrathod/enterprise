@@ -7,7 +7,7 @@
     <t t-name="helpdesk.HelpdeskDashboard">
         <div t-if="show_demo or values" class="o_helpdesk_dashboard">
             <div t-attf-class="#{show_demo ? 'o_demo' : ''}">
-                <table class="table table-condensed">
+                <table class="table table-sm">
                     <tr>
                         <td class="o_text">
                             <div class="o_highlight">My Tickets</div>
@@ -68,7 +68,7 @@
                 </table>
 
             </div><div t-attf-class="#{show_demo ? 'o_demo' : ''}">
-                <table class="hidden-xs table table-condensed">
+                <table class="d-none d-md-table table table-sm">
                     <tr>
                         <td class="o_text">
                             <div class="o_highlight">My Performance</div>

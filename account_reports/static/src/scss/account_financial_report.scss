@@ -34,7 +34,7 @@ $o-afr-cell-bottom: 3px;
         padding: 10px 0;
 
         &, > span, .o_input, .o_account_reports_edit_summary_pencil {
-            @include o-transition(all, .2s);
+            transition: all .2s ease 0s;
         }
 
         > span {
@@ -46,7 +46,7 @@ $o-afr-cell-bottom: 3px;
     }
 
     .o_input {
-        background-color: $gray-lighter;
+        background-color: gray('200');
         border: none;
         padding: 10px;
     }
@@ -75,7 +75,7 @@ $o-afr-cell-bottom: 3px;
     padding-top: 10px;
 
     textarea {
-        border: 1px solid $gray-light;
+        border: 1px solid gray('600');
         resize: vertical;
         width: 100%;
     }
@@ -107,15 +107,15 @@ p.o_account_reports_contact_info {
         display: inline-block;
         padding-bottom: $o-horizontal-padding*3;
 
-        @media screen and (min-width: $screen-sm-min) {
+        @include media-breakpoint-up(md) {
             margin: $o-horizontal-padding auto;
-            border: 1px solid $gray-lighter-dark;
+            border: 1px solid gray('300');
             min-width: 800px;
         }
 
-        @media screen and (min-width: $screen-lg-min) {
+        @include media-breakpoint-up(xl) {
             margin: $o-horizontal-padding auto;
-            max-width: $screen-lg-min;
+            max-width: map-get($grid-breakpoints, 'xl');
         }
 
     }
@@ -168,7 +168,7 @@ p.o_account_reports_contact_info {
         p.footnote {
             position: relative;
             padding-right: 20px;
-            @include o-transition(padding, 0.2s);
+            transition: padding 0.2s ease 0s;
 
             &:first-child {
                 margin-top: 32px;
@@ -223,7 +223,7 @@ p.o_account_reports_contact_info {
     .number, .o_account_report_column_value {
         text-align: right;
 
-        @media (max-width: $screen-md-max) {
+        @include media-breakpoint-down(lg) {
             width: 1%;
         }
     }
@@ -239,7 +239,7 @@ p.o_account_reports_contact_info {
     // Set the default lines style
     .o_account_reports_default_style td {
         border: none;
-        border-top: 1px solid $gray-lighter-dark;
+        border-top: 1px solid gray('300');
     }
 
     // Assign default style from level 2 to 9
@@ -256,7 +256,7 @@ p.o_account_reports_contact_info {
     // Hover State from level 1 to 9
     @for $i from 1 through 9 {
         tr.o_account_reports_level#{$i}:hover{
-            background-color: $gray-lighter;
+            background-color: gray('200');
         }
     }
 
@@ -264,7 +264,7 @@ p.o_account_reports_contact_info {
     .o_js_account_report_inner_row,
     .o_js_account_report_parent_row_unfolded {
         &:hover {
-            background-color: darken($gray-lighter, 3%);
+            background-color: darken(gray('200'), 3%);
         }
     }
 
@@ -325,7 +325,7 @@ p.o_account_reports_contact_info {
             display: block;
             padding-top: $o-afr-cell-top;
             padding-right: 5px;
-            border-top: 1px solid $gray-lighter-dark;
+            border-top: 1px solid gray('300');
         }
     }
 
@@ -336,7 +336,7 @@ p.o_account_reports_contact_info {
         span.account_report_line_name, span.o_account_report_column_value {
             padding: $o-afr-cell-top $o-afr-cell-horizontal;
             display: block;
-            border: 1px hidden $gray;
+            border: 1px hidden gray('700');
             border-top-style: solid;
         }
 
@@ -352,7 +352,7 @@ p.o_account_reports_contact_info {
     // Totals that close sub-sections
     tr.o_account_reports_level1.total td,
     tr.o_account_reports_level2.total td {
-        border: 1px hidden $gray;
+        border: 1px hidden gray('700');
         border-top-style: solid;
     }
 
@@ -361,7 +361,7 @@ p.o_account_reports_contact_info {
     }
 
     tr.o_account_reports_level2.total td {
-        border-color: $text-color;
+        border-color: $body-color;
     }
 
 
@@ -441,7 +441,7 @@ p.o_account_reports_contact_info {
     }
 
     .o_js_account_report_inner_row td {
-        border-top: 1px solid $gray-lighter-dark;
+        border-top: 1px solid gray('300')
 
         &:last-child {
             padding-right: 5px;
@@ -458,7 +458,7 @@ p.o_account_reports_contact_info {
     }
 
     .o_js_account_report_parent_row_unfolded, .o_js_account_report_inner_row {
-        background-color: $gray-lighter;
+        background-color: gray('200');
     }
 
     .folded .o_journal_entries {
@@ -486,11 +486,11 @@ p.o_account_reports_contact_info {
         margin: 0 1px 0 5px;
 
         &.color-red {
-            color: $brand-danger;
+            color: $danger;
         }
 
         &.color-green {
-            color: $brand-success;
+            color: $success;
         }
 
         &.color-transparent {

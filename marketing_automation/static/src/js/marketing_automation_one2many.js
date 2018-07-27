@@ -206,8 +206,8 @@ var HierarchyKanbanRecord = KanbanRecord.extend({
         $(event.currentTarget).addClass('active');
         var mode = $(event.currentTarget).data('mode');
         this._renderDomainSelector().then(function () {
-            self.$('.o_ma_card:first > [class*="o_pane_"]').addClass('hidden');
-            self.$('.o_ma_card:first > .o_pane_' + mode).removeClass('hidden');
+            self.$('.o_ma_card:first > [class*="o_pane_"]').addClass('d-none');
+            self.$('.o_ma_card:first > .o_pane_' + mode).removeClass('d-none');
         });
     }
 });

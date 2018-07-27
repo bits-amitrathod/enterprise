@@ -3,23 +3,23 @@
     height: 100%;
 
     > header {
-        @include o-flex(0, 0, auto);
-        height: $navbar-height;
+        flex: 0 0 auto;
+        height: $nav-link-height;
         background-color: $o-brand-lightsecondary;
         > div {
             height: 100%;
-            @include o-flex-display;
-            @include o-align-items(center);
+            display: flex;
+            align-items: center;
             a {
-                @include o-flex(0, 0, auto);
+                flex: 0 0 auto;
                 > img {
-                    height: $navbar-height - 10;
+                    height: $nav-link-height - 10;
                 }
             }
 
             .o_sign_header_instruction {
                 font-size: 1.2em;
-                @include o-flex(1, 1, auto);
+                flex: 1 1 auto;
             }
         }
     }
@@ -31,15 +31,15 @@
         .btn {
             border-radius: 0;
             border: none;
-            color: $o-brand-optional;
+            color: $o-brand-primary;
         }
         .btn-primary {
-            background-color: $o-brand-optional;
+            background-color: $o-brand-primary;
             color: white;
         }
 
         .modal-header {
-            background-color: $o-brand-primary;
+            background-color: $o-brand-odoo;
             color: #fff;
             .modal-title {
                 line-height: 1;
@@ -68,7 +68,7 @@
                 margin-top: 40px;
                 padding: 0 0 10px 0;
                 h4 {
-                    color: $o-brand-primary;
+                    color: $o-brand-odoo;
                 }
                 img {
                     padding-top: 20px;

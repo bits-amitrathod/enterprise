@@ -8,12 +8,12 @@
                 <div class="o_form_sheet">
                     <div class="h2">MPS in Main Warehouse</div>
                     <t t-foreach="products" t-as="product">
-                        <table class="table table-condensed mps_table">
+                        <table class="table table-sm mps_table">
                             <thead>
                                 <tr class="active">
-                                    <td class="col-sm-4">
+                                    <td class="col-md-4">
                                         <t t-if="product[0].apply_active">
-                                            <a role="button" class="btn btn-xs btn-primary pull-right o_mps_apply" t-att-data-product="product[0].id">Apply</a>
+                                            <a role="button" class="btn btn-sm btn-primary float-right o_mps_apply" t-att-data-product="product[0].id">Apply</a>
                                         </t>
                                         <strong class="oe_link o_mps_product_name" t-att-data-product="product[0].id" style="cursor:pointer;" t-esc="product[0].name_get()[0][1]"/>
                                         <span class="text-muted"> by</span> <i t-esc="product[0].uom_id.name"/>
@@ -48,7 +48,7 @@
                                     <span class="fa fa-fw">+</span>
                                     <t t-esc="product[1][0]['route_type']"/>
                                     <span title="Launch Procurement" role="img" aria-label="Launch Procurement" class="fa fa-bullseye fa-lg o_mps_generate_procurement text-success o_invisible_modifier" t-att-data-product="product[0].id"></span>
-                                    <a class="pull-right text-muted open_forecast_wizard" t-att-data-product="product[0].id" style="cursor:pointer;">
+                                    <a class="float-right text-muted open_forecast_wizard" t-att-data-product="product[0].id" style="cursor:pointer;">
                                         <t t-if="product[0].mps_min_supply or product[0].mps_max_supply">
                                             <span t-esc="(product[0].mps_min_supply % 1) and product[0].mps_min_supply or int(product[0].mps_min_supply)"/>
                                             &lt;&amp;hellip;&lt;
@@ -79,7 +79,7 @@
                             <tr class="forecast_inventory">
                                 <td><span class="fa fa-fw">=</span> 
                                     Forecasted Inventory
-                                    <button class="oe_link pull-right open_forecast_wizard" t-att-data-product="product[0].id">
+                                    <button class="oe_link float-right open_forecast_wizard" t-att-data-product="product[0].id">
                                         <t t-if="product[0].mps_forecasted">
                                             <span class="fa fa-map-marker text-muted fa-fw" role="img" aria-label="Forecasted" title="Forecasted"/>
                                             <span t-esc="(product[0].mps_forecasted) %1 and product[0].mps_forecasted or int(product[0].mps_forecasted)" class="text-muted"/>
@@ -97,7 +97,7 @@
                             </tr>
                         </table>
                     </t>
-                    <button type="button" class='btn btn-link btn-sm o_mps_add_product'>Add a Product</button>
+                    <button type="button" class='btn btn-link o_mps_add_product'>Add a Product</button>
                 </div>
             </div>
         </div>

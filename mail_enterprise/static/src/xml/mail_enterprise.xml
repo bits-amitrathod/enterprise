@@ -3,9 +3,9 @@
 
     <div t-name="AttachmentPreview" class="o_attachment_preview_container">
         <div t-if="attachment.type == 'image'" class="o_attachment_preview_img">
-            <a role="button" class="btn btn-link pull-right" t-att-href="attachment.url"><i class="fa fa-download"/> Download</a>
+            <a role="button" class="btn btn-link float-right" t-att-href="attachment.url"><i class="fa fa-download"/> Download</a>
             <h3 class="mt0 mb16 text-muted"> <t t-esc="attachment.filename"/> </h3>
-            <img alt="Attachment" class="img img-responsive" t-attf-src="/web/image/#{attachment.id}?unique=1"/>
+            <img alt="Attachment" class="img img-fluid" t-attf-src="/web/image/#{attachment.id}?unique=1"/>
         </div>
         <iframe t-if="attachment.type == 'pdf'" class="mb48" t-attf-src="/web/static/lib/pdfjs/web/viewer.html?file=/web/content/#{attachment.id}"/>
     </div>

@@ -290,15 +290,15 @@ class WebStudioController(http.Controller):
                         <t t-call="web.external_layout">
                             <div class="page">
                                 <div class="row">
-                                    <div name="address" class="col-xs-5 col-xs-offset-7"/>
+                                    <div name="address" class="col-5 offset-7"/>
                                 </div>
                                 <h2 name="title"/>
                                 <div class="row mt32 mb32">
-                                    <div name="date" class="col-xs-3">
+                                    <div name="date" class="col-3">
                                         <strong>Subtitle 1:</strong>
                                     </div>
                                 </div>
-                                <table class="table table-condensed">
+                                <table class="table table-sm">
                                     <thead>
                                         <tr>
                                             <th/>
@@ -1137,14 +1137,14 @@ class WebStudioController(http.Controller):
         # add the dropdown before the rest
         dropdown_node = etree.fromstring("""
             <div class="o_dropdown_kanban dropdown">
-                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" >
                     <span class="fa fa-bars fa-lg"/>
                 </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
-                    <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
-                    <li><ul class="oe_kanban_colorpicker" data-field="%(field)s"/></li>
-                </ul>
+                <div class="dropdown-menu" role="menu">
+                    <t t-if="widget.editable"><a type="edit" class="dropdown-item">Edit</a></t>
+                    <t t-if="widget.deletable"><a type="delete" class="dropdown-item">Delete</a></t>
+                    <ul class="oe_kanban_colorpicker" data-field="%(field)s"/>
+                </div>
             </div>
         """ % {'field': color_field_name})
         etree.SubElement(arch, 'xpath', {
@@ -1202,7 +1202,7 @@ class WebStudioController(http.Controller):
                     <img
                         t-att-src="kanban_image('%(model)s', 'image_small', record.%(field)s.raw_value)"
                         t-att-title="record.%(field)s.value"
-                        width="24" height="24" class="oe_kanban_avatar pull-right"
+                        width="24" height="24" class="oe_kanban_avatar float-right"
                     />
                 </div>
             """ % {'model': field_id.relation, 'field': field_id.name})

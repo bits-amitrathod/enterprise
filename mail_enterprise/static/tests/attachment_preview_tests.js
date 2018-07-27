@@ -79,7 +79,7 @@ QUnit.module('MailAttachmentOnSide', {
             res_id: 2,
             config: {
                 device: {
-                    size_class: config.device.SIZES.XL,
+                    size_class: config.device.SIZES.XXL,
                 },
             },
             mockRPC: function (route, args) {
@@ -172,7 +172,7 @@ QUnit.module('MailAttachmentOnSide', {
                 '</form>',
             config: {
                 device: {
-                    size_class: config.device.SIZES.XL,
+                    size_class: config.device.SIZES.XXL,
                 },
             },
             services: this.services,
@@ -228,7 +228,7 @@ QUnit.module('MailAttachmentOnSide', {
             res_id: 2,
             config: {
                 device: {
-                    size_class: config.device.SIZES.LG,
+                    size_class: config.device.SIZES.XL,
                 },
             },
             mockRPC: function (route, args) {

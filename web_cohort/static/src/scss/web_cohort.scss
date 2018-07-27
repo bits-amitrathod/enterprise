@@ -8,7 +8,7 @@
 // ------------------------------------------------------------------
 // Cohort View
 // ------------------------------------------------------------------
-$o-cohort-heading-bg-color: darken($o-color-silver, 4%);
+$o-cohort-heading-bg-color: darken(theme-color('light'), 4%);
 $o-cohort-border-color: darken($o-cohort-heading-bg-color, 6%);
 $o-cohort-hover-color: lighten($o-cohort-heading-bg-color, 2%);
 
@@ -29,7 +29,7 @@ $o-cohort-hover-color: lighten($o-cohort-heading-bg-color, 2%);
                             cursor: pointer;
                         }
                         background-color: $o-cohort-hover-color;
-                        @media (min-width: $screen-md-min) {
+                        @include media-breakpoint-up(lg) {
                             td:first-child {
                                 position: relative;
                                 &:before {
@@ -37,7 +37,7 @@ $o-cohort-hover-color: lighten($o-cohort-heading-bg-color, 2%);
                                     @include o-position-absolute($top: 0px, $left: 0px);
                                     height: 100%;
                                     width: 3px;
-                                    background-color: $o-brand-optional;
+                                    background-color: $o-brand-primary;
                                 }
                             }
                         }

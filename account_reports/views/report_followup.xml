@@ -36,7 +36,7 @@
         <template id="followup_filter_info_template">
             <div t-if='context.get("mail") != True' class="print_only" style='margin-bottom: 20px;'>
                 <div class="row">
-                    <div class="col-xs-5 col-xs-offset-7" style='margin-top: 15px;'>
+                    <div class="col-5 offset-7" style='margin-top: 15px;'>
                         <div t-field="partner.self"
                             t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'/>
                         <span t-field="partner.vat"/>
@@ -50,12 +50,12 @@
         </template>
 
         <template id="line_template_followup_report" inherit_id="account_reports.line_template" primary="True">
-            <xpath expr="//ul" position="replace">
-                <ul t-if='context.get("print_mode") != True' class="dropdown-menu o_account_reports_domain_dropdown" role="menu">
-                    <li><a role="menuitem" tabindex="-1" t-att-data-id="line['invoice_id']" t-att-view-id="line['view_invoice_id']" action="open_invoice">View Invoice</a></li>
-                    <li><a role="menuitem" tabindex="-1" t-att-data-id="line['move_id']" action="open_move" groups="account.group_account_user">View Journal Entry</a></li>
-                    <li><a role="menuitem" tabindex="-1" t-att-data-id="line['id']" class="o_change_expected_date">Change expected payment date</a></li>
-                </ul>
+            <xpath expr="//div[hasclass('dropdown-menu')]" position="replace">
+                <div t-if='context.get("print_mode") != True' class="dropdown-menu o_account_reports_domain_dropdown" role="menu">
+                    <a role="menuitem" tabindex="-1" t-att-data-id="line['invoice_id']" t-att-view-id="line['view_invoice_id']" action="open_invoice" class="dropdown-item">View Invoice</a>
+                    <a role="menuitem" tabindex="-1" t-att-data-id="line['move_id']" action="open_move" groups="account.group_account_user" class="dropdown-item">View Journal Entry</a>
+                    <a role="menuitem" tabindex="-1" t-att-data-id="line['id']" class="o_change_expected_date dropdown-item">Change expected payment date</a>
+                </div>
             </xpath>
             <xpath expr="//span[hasclass('o_account_report_column_value')]" position="replace">
                 <span class="'o_account_report_column_value'">
@@ -99,7 +99,7 @@
             <xpath expr="//t[@t-call='account_reports.filter_info_template']" position="replace"><t t-call="account_reports.followup_filter_info_template"/></xpath>
             <xpath expr="//h2" position="replace">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-xl-6">
                         <h2 t-if='context.get("print_mode") != True' class="no_print">
                             <span>
                                 <span class="dropdown" t-att-data-partner='partner.id'>
@@ -108,29 +108,29 @@
                                         <i t-if="partner.trust == 'normal'" class="fa fa-circle oe-account_followup-trust" style="color: grey; font-size: 0.8em;" role="img" aria-label="Normal debtor" title="Normal debtor"></i>
                                         <i t-if="partner.trust == 'bad'" class="fa fa-circle oe-account_followup-trust" style="color: red; font-size: 0.8em;" role="img" aria-label="Bad debtor" title="Bad debtor"></i>
                                     </span>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="trustDropdown">
-                                        <li><a role='menuitem' class='o_change_trust' data-new-trust='good'><i class="fa fa-circle" style="color: green;"></i> Good Debtor</a></li>
-                                        <li><a role='menuitem' class='o_change_trust' data-new-trust='normal'><i class="fa fa-circle" style="color: grey;"></i> Normal Debtor</a></li>
-                                        <li><a role='menuitem' class='o_change_trust' data-new-trust='bad'><i class="fa fa-circle" style="color: red;"></i> Bad Debtor</a></li>
-                                    </ul>
+                                    <div class="dropdown-menu" role="menu" aria-labelledby="trustDropdown">
+                                        <a role='menuitem' class="dropdown-item o_change_trust" data-new-trust='good'><i class="fa fa-circle" style="color: green;"></i> Good Debtor</a>
+                                        <a role='menuitem' class="dropdown-item o_change_trust" data-new-trust='normal'><i class="fa fa-circle" style="color: grey;"></i> Normal Debtor</a>
+                                        <a role='menuitem' class="dropdown-item o_change_trust" data-new-trust='bad'><i class="fa fa-circle" style="color: red;"></i> Bad Debtor</a>
+                                    </div>
                                 </span>
                                 <a action="open_partner_form"><t t-esc='partner.name' /></a>
                                 <span t-if="partner.country_id"><small>(<t t-esc='partner.country_id.name' />)</small></span>
                             </span>
                         </h2>
                     </div>
-                    <div class="col-lg-6 no_print mb16" t-if='context.get("print_mode") != True' id='followup-mode'>
+                    <div class="col-xl-6 no_print mb16" t-if='context.get("print_mode") != True' id='followup-mode'>
                         <div class="row">
-                            <div class="col-lg-4 visible-lg"></div>
-                            <div class="col-sm-3 col-md-2 col-lg-4" data-toggle='tooltip' title='Date at which Odoo will remind you to take care of that follow-up if you choose "remind me later" button.'>
+                            <div class="col-xl-4 d-none d-xl-block"></div>
+                            <div class="col-md-3 col-lg-2 col-xl-4" data-toggle='tooltip' title='Date at which Odoo will remind you to take care of that follow-up if you choose "remind me later" button.'>
                                 <b>Next Reminder Date:</b>
                                 <b><div class='o_account_reports_next_action_date'><t t-esc='partner.payment_next_action_date'/></div></b>
                                 <b><div class='o_account_reports_next_action_date_picker' /></b>
                             </div>
-                            <div class="col-sm-7 col-md-4">
+                            <div class="col-md-7 col-lg-4">
                                 <div class='btn-group'>
-                                    <button class='btn btn-sm o_account_reports_followup_auto' data-toggle='tooltip' title='The next reminder date is computed based on what you have defined in the accounting settings.'>Auto</button>
-                                    <button class='btn btn-sm o_account_reports_followup_manual' data-toggle='tooltip' title='Select this option if you want to manually define the next reminder date.'>Manual</button>
+                                    <button class='btn o_account_reports_followup_auto' data-toggle='tooltip' title='The next reminder date is computed based on what you have defined in the accounting settings.'>Auto</button>
+                                    <button class='btn o_account_reports_followup_manual' data-toggle='tooltip' title='Select this option if you want to manually define the next reminder date.'>Manual</button>
                                 </div>
                             </div>
                         </div>
@@ -161,12 +161,11 @@
                     <t t-if="options.get('type_followup', '') != 'action'">
                         With Overdue Invoices
                     </t>
-                    <span class="caret"/>
                 </a>
-                <ul class="dropdown-menu o_filters_menu" role="menu">
-                    <li title="In Need of Action" data-filter="type_followup" data-id="action" class="js_account_reports_one_choice_filter"><a role="menuitem">In Need of Action</a></li>
-                    <li title="With Overdue Invoices" data-filter="type_followup" data-id="all" class="js_account_reports_one_choice_filter"><a role="menuitem">With Overdue Invoices</a></li>
-                </ul>
+                <div class="dropdown-menu o_filters_menu" role="menu">
+                    <a role="menuitem" class="dropdown-item js_account_reports_one_choice_filter" title="In Need of Action" data-filter="type_followup" data-id="action">In Need of Action</a>
+                    <a role="menuitem" class="dropdown-item js_account_reports_one_choice_filter" title="With Overdue Invoices" data-filter="type_followup" data-id="all">With Overdue Invoices</a>
+                </div>
             </div>
         </template>
 

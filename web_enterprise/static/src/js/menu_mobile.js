@@ -83,7 +83,7 @@ Menu.include({
         ev.preventDefault();
         ev.stopPropagation();
         var $target = $(ev.currentTarget);
-        $target.toggleClass('open');
+        $target.toggleClass('show');
         $target.find('> a .toggle_icon').toggleClass('fa-chevron-down fa-chevron-right');
     },
     /**

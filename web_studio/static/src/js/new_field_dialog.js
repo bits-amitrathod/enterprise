@@ -65,7 +65,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 containment: '.o_web_studio_field_dialog_form',
                 items: '> li',
                 helper: 'clone',
-                handle: 'div',
+                handle: '.input-group',
                 opacity: 0.6,
                 stop: this._resequenceSelection.bind(this),
            });

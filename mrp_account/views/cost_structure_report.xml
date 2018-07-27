@@ -18,7 +18,7 @@
 
                         <!-- Cost Structure table -->
                         <h3>Cost Structure</h3>
-                        <table class="table table-condensed">
+                        <table class="table table-sm">
                             <thead>
                                 <tr>
                                     <th>Code</th>
@@ -60,7 +60,7 @@
                         <!-- Cost of Operations table -->
                         <t t-if="line['operations']">
                             <h3>Cost of Operations</h3>
-                            <table class="table table-condensed">
+                            <table class="table table-sm">
                                 <thead>
                                     <tr>
                                         <th>Operator</th>
@@ -105,7 +105,7 @@
                         <!-- Cost of Scraps table -->
                         <t t-if="line['scraps']">
                             <h3>Cost of Scraps</h3>
-                            <table class="table table-condensed">
+                            <table class="table table-sm">
                                 <thead>
                                     <tr>
                                         <th>Scraps</th>
@@ -145,8 +145,8 @@
 
                         <!-- Cost table -->
                         <div class="row">
-                            <div class="col-xs-6 col-xs-offset-6">
-                                <table class="table table-condensed">
+                            <div class="col-6 offset-6">
+                                <table class="table table-sm">
                                     <tr t-if="line['mo_qty'] &gt; 1">
                                         <td class="text-right">
                                             <strong>Cost for <t t-esc="line['mo_qty']"/> <t t-esc="line['mo_uom'].name"/></strong>

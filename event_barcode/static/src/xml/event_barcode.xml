@@ -5,11 +5,11 @@
     <t t-name="event_barcode_template">
         <div class="o_event_barcode_bg o_home_menu_background">
             <div class="o_event_barcode_detail text-center mt32">
-                <div class="col-md-3 col-xs-12 o_event_date">
+                <div class="col-lg-3 col-12 o_event_date">
                     <span class="o_event_day mt24"><t t-esc="widget.data.date"/></span>
                     <span class="o_event_month"><t t-esc="widget.data.month"/></span>
                 </div>
-                <div class="col-md-6 col-xs-9 o_event_info text-center">
+                <div class="col-lg-6 col-9 o_event_info text-center">
                     <div class="o_event_info_name text-center">
                         <h2 class="o_event_title"><t t-esc="widget.data.name"/></h2>
                         <p class="o_event_desc">
@@ -21,7 +21,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-md-3 col-xs-3 o_event_social">
+                <div class="col-lg-3 col-3 o_event_social">
                     <div class="o_event_reg_attendee">0</div>
                     <div class="o_event_total_attendee">
                         <t t-esc="widget.data.total_attendee"/>
@@ -38,7 +38,7 @@
 
     <t t-name="event_registration_summary">
         <div class="row">
-          <div class="col-md-8 col-md-offset-2">
+          <div class="col-lg-8 offset-lg-2">
             <div class="text-center" style="margin-bottom: 18px;"><img t-att-src="registration.image" alt="Registration"/></div>
             <div t-if="success" class="alert alert-success text-center" role="status"><t t-esc="success"/></div>
             <div t-if="warning" class="alert alert-warning text-center" role="alert"><t t-esc="warning"/></div>
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div id="registration_information" class="row">
-          <div class="col-md-12">
+          <div class="col-lg-12">
             <table class="table table-striped">
               <tr t-foreach="registration.information" t-as="info">
                 <td><t t-esc="info[0]"/></td><td t-att-class="info[2] ? ('text-' + info[2]) : undefined"><t t-esc="info[1]"/></td>

@@ -6,8 +6,8 @@
             padding: 0;
         }
         .o_form_sheet_bg {
-            @include o-flex-display;
-            @include o-flex-flow(column, nowrap);
+            display: flex;
+            flex-flow: column nowrap;
             padding: 16px;
         }
         .o_form_sheet, .oe_chatter {
@@ -21,7 +21,7 @@
             position: relative;
             .o_web_studio_overlay {
                 @include o-position-absolute(0, 0, 0, 0);
-                @include o-transition(all, 0.2s);
+                transition: all 0.2s ease 0s;
                 &:hover {
                     background-color: rgba(white, 0.4);
                 }
@@ -29,14 +29,14 @@
         }
         .o_web_studio_statusbar_hook {
             text-align: center;
-            color: $o-brand-optional;
+            color: $o-brand-primary;
             background-color: lightgray;
             font-weight: bold;
             cursor: pointer;
             height: 42px;
             line-height: 42px;
             opacity: 0.6;
-            @include o-transition(opacity, 0.3s);
+            transition: opacity 0.3s ease 0s;
 
             &:hover {
                 opacity: 1;
@@ -46,7 +46,7 @@
             > .o_arrow_button {
                 // make the buttons look inactive in Studio
                 &:hover, &:active, &:focus {
-                    color: $gray;
+                    color: gray('700');
                     background-color: white;
                 }
             }
@@ -64,15 +64,15 @@
                     display: block;
                     position: relative;
                     border: 0px dashed transparent;
-                    @include o-transition(all, 0.2s, 0s, cubic-bezier(0.215, 0.610, 0.355, 1.000));
+                    transition: all 0.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0s;
                 }
             }
             .o_web_studio_hook.o_web_studio_nearest_hook {
                 cursor: pointer !important;
                 outline: none;
                 span.o_web_studio_hook_separator {
-                    background-color: rgba($o-brand-optional, 0.02);
-                    border: 1px dashed rgba($o-brand-optional, 0.5);
+                    background-color: rgba($o-brand-primary, 0.02);
+                    border: 1px dashed rgba($o-brand-primary, 0.5);
                     padding: 20px;
                     margin: 4px 0;
                 }
@@ -81,7 +81,7 @@
                 transition: border-color 0.5s;
                 padding: $-web-studio-form-edition-gap*0.5;
                 border-collapse: separate;
-                border: $-web-studio-form-edition-gap*0.5 solid rgba($o-brand-optional, 0.1);
+                border: $-web-studio-form-edition-gap*0.5 solid rgba($o-brand-primary, 0.1);
 
                 tr:not(.o_web_studio_hovered) td > *:not(.o_horizontal_separator) {
                     opacity: 0.5;
@@ -101,7 +101,7 @@
             // drag&drop
             td.ui-draggable-helper-ready {
                 // border doesn't work because of border-collapse
-                outline: 2px solid $o-brand-optional;
+                outline: 2px solid $o-brand-primary;
             }
         }
         .o_field_image img {
@@ -114,15 +114,15 @@
         }
         .o_web_studio_hovered {
             cursor: pointer;
-            outline: 1px dashed $o-brand-optional;
+            outline: 1px dashed $o-brand-primary;
             &:not(.o_statusbar_status) {
                 outline-offset: -1px;
             }
         }
         .o_web_studio_clicked {
-            outline: 2px solid $o-brand-optional;
+            outline: 2px solid $o-brand-primary;
             &.btn {
-                outline: 2px solid darken($o-brand-optional, 5%);
+                outline: 2px solid darken($o-brand-primary, 5%);
             }
             &:not(.o_statusbar_status) {
                 outline-offset: -2px;
@@ -140,7 +140,7 @@
             content: "\f0fe";
             font-family: FontAwesome;
             font-size: 16px;
-            color: $o-brand-optional;
+            color: $o-brand-primary;
         }
         .o_notebook li {
             margin-right: 3px;
@@ -150,19 +150,19 @@
             margin: 16px -16px;
             cursor: pointer;
             color: $o-web-studio-text-light;
-            @include o-transition(all, 0.2s);
+            transition: all 0.2s ease 0s;
             > .o_chatter_topbar {
                 padding: 16px;
                 max-width: 90%;
                 opacity: 0;
                 pointer-events: none;
-                @include o-transition(all, 0.2s);
+                transition: all 0.2s ease 0s;
             }
             > span {
                 position: relative;
                 max-width: 100%;
                 display: block;
-                @include o-transition(width, 0.2s, ease, .1s);
+                transition: width 0.2s ease .1s;
                 > span {
                     @include o-position-absolute($left:0);
                     @include size(100%, 52px);
@@ -175,12 +175,12 @@
                 width: auto;
                 background-color: rgba(white, 0.9);
                 color: transparent;
-                @include o-transition(all, .2s, ease, .2s);
+                transition: all .2s ease .2s;
                 > span {
                     width: 100%;
                 }
                 > .o_chatter_topbar {
-                    @include o-transition(all, .8s, ease, .1s);
+                    transition: all .8s ease .1s;
                     max-width: 100%;
                     opacity: 1;
                 }
@@ -218,7 +218,7 @@ table.o_web_studio_new_elements {
         font-size: medium;
 
         &.o_selected {
-            outline: 1px solid $o-brand-optional;
+            outline: 1px solid $o-brand-primary;
         }
     }
 }

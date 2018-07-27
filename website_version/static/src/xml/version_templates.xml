@@ -4,7 +4,7 @@
     <t t-name="website_version.all_versions">
         <t t-foreach="versions" t-as="item">
             <li class="o_version_choice" t-att-data-version_id="item.id">
-                <a href="#" data-action="delete_version" style="position: absolute; right: 0px;" class="pull-right" aria-label="Delete version" title="Delete version"><i class="fa fa-trash-o fa-fw"></i></a>
+                <a href="#" data-action="delete_version" style="position: absolute; right: 0px;" class="float-right" aria-label="Delete version" title="Delete version"><i class="fa fa-trash-o fa-fw"></i></a>
                 <a href="#" data-action="change_version">
                     <t t-if="item.bold == 0 "><t t-esc="item.name"></t></t>
                     <t t-if="item.bold == 1 "><b><t t-esc="item.name"></t></b></t>
@@ -16,24 +16,21 @@
     <t t-extend="web_editor.editorbar">
         <t t-jquery="form button:last" t-operation="replace">
             <div class="btn-group">
-                <button type="button" data-action="save" class="btn btn-primary btn-xs">Save</button>
-                <button type="button" class="btn btn-primary btn-xs dropdown-toggle option_choice" data-toggle="dropdown">
-                    <span class="caret"></span>
+                <button type="button" data-action="save" class="btn btn-primary btn-sm">Save</button>
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle option_choice" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li class="o_first_choice" role="menuitem"><a href="#" id="save_as_new_version" data-action="save_as_new_version" 
-                        role="button" class="btn btn-link btn-xs o_version">Save as New Version</a>
-                    </li>
-                </ul>
+                <div class="dropdown-menu" role="menu">
+                    <a href="#" id="save_as_new_version" data-action="save_as_new_version" class="btn btn-link btn-sm dropdown-item o_first_choice o_version" role="menuitem">Save as New Version</a>
+                </div>
             </div>
         </t>
     </t>
 
-    <t t-name="website_version.all_options">    
+    <t t-name="website_version.all_options">
         <li class="o_second_choice">
-            <a href="#" id="save_and_publish" data-action="save_and_publish" 
-                role="button" class="btn btn-link btn-xs o_version"><t t-esc="version"></t></a>
+            <a href="#" id="save_and_publish" role="button" data-action="save_and_publish"
+                class="btn btn-link btn-sm o_version"><t t-esc="version"></t></a>
         </li>
     </t>
 
@@ -57,20 +54,19 @@
                 <h4 class="modal-title">Launch A/B Tests</h4>
               </header>
                 <main class="modal-body">
-                    <t t-if="versions.length != 0 and config == 1">  
-                        <form id="productForm" class="form-horizontal" role="form">
-                            <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">Experiment Name</label>
-                                <div class="col-sm-8">
+                    <t t-if="versions.length != 0 and config == 1">
+                        <form id="productForm" role="form">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Experiment Name</label>
+                                <div class="col-md-8">
                                     <input type="text" class="form-control form-field-label o_name o_required_field"/>
                                 </div>
-
                             </div>
 
-                            <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">Objective: </label>
-                                <div class="col-sm-8 ">
-                                    <select class="form-control col-sm-2 box">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Objective: </label>
+                                <div class="col-md-8 ">
+                                    <select class="form-control col-md-2 box">
                                         <t t-foreach="goals" t-as="item">
                                             <option t-att-value="item.id"><t t-esc="item.name"></t></option>
                                         </t>
@@ -78,22 +74,22 @@
                                 </div>
                             </div>
 
-                            <div class="form-group form-group">
-                                <div class="col-sm-3"></div>
-                                <div class="checkbox col-sm-8">
+                            <div class="form-group row">
+                                <div class="col-md-3"></div>
+                                <div class="checkbox col-md-8">
                                     <label>
                                         <input type="checkbox" checked="checked" disabled="disabled"/> Master
                                     </label>
                                 </div>
                             </div>
-                            
+
                             <div class="o_versions">
-                                <t t-foreach="versions" t-as="item">  
-                                    <div class="form-group form-group-lg"> 
-                                        <div class="col-sm-3"></div>    
-                                        <div class="checkbox col-sm-8">
+                                <t t-foreach="versions" t-as="item">
+                                    <div class="form-group row">
+                                        <div class="col-md-3"></div>
+                                        <div class="checkbox col-md-8">
                                             <label>
-                                                <input type="checkbox" class="o_version" t-att-data-version_id="item.id"/> <t t-esc="item.name"></t> 
+                                                <input type="checkbox" class="o_version" t-att-data-version_id="item.id"/> <t t-esc="item.name"></t>
                                             </label>
                                         </div>
                                     </div>
@@ -114,19 +110,17 @@
                         <div class="o_configure_ab">
                             <p>Odoo uses Google Analytics to track the performances of an A/B testing experiment comparing several versions.</p>
                         </div>
-                        <form id="productForm" class="form-horizontal" role="form"> 
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                              <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                  <h4 class="panel-title">
+                        <form id="productForm" role="form">
+                            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                              <div class="card">
+                                <h4 class="card-header" role="tab" id="headingOne">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                       To get your GA Key and your View ID
                                       <span class="fa fa-info-circle" />
                                     </a>
-                                  </h4>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" style="overflow: hidden">
-                                    <div class="panel-body">
+                                </h4>
+                                <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="overflow: hidden">
+                                    <div class="card-body">
                                         <ul>
                                             <li> Go to <a href='https://www.google.com/analytics/' target='_blank'>https://www.google.com/analytics/</a>
                                             and connect you.
@@ -140,51 +134,49 @@
                                             </li>
                                             <li>
                                                 Click on <b>"Tracking Code"</b>.
-                                                <br/><br/><img alt="Tracking code" src='/website_version/static/src/img/GA/GA_tracking_code.png' class='analytics_img_tuto'/>   
+                                                <br/><br/><img alt="Tracking code" src='/website_version/static/src/img/GA/GA_tracking_code.png' class='analytics_img_tuto'/>
                                             </li>
                                             <li>
                                                 Copy the <b>"Tracking ID"</b> and paste it in the field Google Analytics key.
-                                                <br/><br/><img alt="Tracking ID" src='/website_version/static/src/img/GA/GA_tracking_id.png' class='analytics_img_tuto'/>   
+                                                <br/><br/><img alt="Tracking ID" src='/website_version/static/src/img/GA/GA_tracking_id.png' class='analytics_img_tuto'/>
                                             </li>
                                             <li>
                                                 Click on <b>"Admin"</b> and click on <b>"View Settings"</b>.
-                                                <br/><br/><img alt="Admin" src='/website_version/static/src/img/GA/GA_view_settings.png' class='analytics_img_tuto'/>  
+                                                <br/><br/><img alt="Admin" src='/website_version/static/src/img/GA/GA_view_settings.png' class='analytics_img_tuto'/>
                                             </li>
                                             <li>
                                                 Copy the <b>"View ID"</b> and paste it in the field View ID.
-                                                <br/><br/><img alt="View ID" src='/website_version/static/src/img/GA/GA_view_id.png' class='analytics_img_tuto'/>  
+                                                <br/><br/><img alt="View ID" src='/website_version/static/src/img/GA/GA_view_id.png' class='analytics_img_tuto'/>
                                             </li>
-                                        </ul> 
+                                        </ul>
                                     </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">GA Key</label>
-                                <div class="col-sm-8">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">GA Key</label>
+                                <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_ga_key o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_ga_key o_required_field" disabled="disabled"/>
                                 </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">View ID</label>
-                                <div class="col-sm-8">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">View ID</label>
+                                <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_view_id o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_view_id o_required_field" disabled="disabled"/>
                                 </div>
                             </div>
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                              <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                  <h4 class="panel-title">
+                            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                              <div class="card">
+                                <h4 class="card-header" role="tab" id="headingOne">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                       To get your Client ID and your Client Secret, follow these steps
                                       <span class="fa fa-info-circle" />
                                     </a>
-                                  </h4>
-                                </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" style="overflow: hidden">
-                                    <div class="panel-body">
+                                </h4>
+                                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="overflow: hidden">
+                                    <div class="card-body">
                                         <ul>
                                             <li> Connect on your google account and go to <a href='https://console.developers.google.com' target='_blank'>https://console.developers.google.com</a> </li>
                                             <li>
@@ -196,13 +188,13 @@
                                             </li>
                                             <li> In the menu on left side, select the sub menu APIs (from menu APIs and auth) and activate <b>"Analytics API"</b> by clicking on button "OFF".
                                                 <br/> When it's done, check that the button of <b>"Calendar API"</b> is well in green and with text "ON"
-                                                <br/><br/><img alt="API" src='/website_version/static/src/img/GC/GC_API.png' 
+                                                <br/><br/><img alt="API" src='/website_version/static/src/img/GC/GC_API.png'
                                                 class='analytics_img_tuto'/>
-                                                <br/><br/><img alt="Turning off" src='/website_version/static/src/img/GC/GC_off_api.png' 
+                                                <br/><br/><img alt="Turning off" src='/website_version/static/src/img/GC/GC_off_api.png'
                                                 class='analytics_img_tuto'/>
                                                 <br/><br/><img alt="Turning on" src='/website_version/static/src/img/GC/GC_on_api.png' 
                                                 class='analytics_img_tuto'/>
-                                            </li> 
+                                            </li>
                                             <li>
                                                 In the menu on left side, select the sub menu <b>'Credentials'</b> (from menu APIs and auth) and click on button <b>'Create New Client ID'</b>
                                                 <br/><br/><img alt="Credentials" src='/website_version/static/src/img/GC/GC_credentials.png' 
@@ -216,7 +208,7 @@
                                                 <br/> You can now click on <b>'Create Client ID'</b>
                                                 <br/><br/><img alt="Client ID" src='/website_version/static/src/img/GC/GC_client_id.png' 
                                                 class='analytics_img_tuto'/>
-                                            </li> 
+                                            </li>
                                             <li>Once done, you will have the both informations (<b>Client ID</b> and <b>Client Secret</b>) that you need to insert in the 2 fields below !
                                                 <br/><br/><img alt="Copy client ID" src='/website_version/static/src/img/GC/GC_copy.png' 
                                                 class='analytics_img_tuto'/>
@@ -226,16 +218,16 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">Client ID</label>
-                                <div class="col-sm-8">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Client ID</label>
+                                <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_client_id o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_client_id o_required_field" disabled="disabled"/>
                                 </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">Client Secret</label>
-                                <div class="col-sm-8">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Client Secret</label>
+                                <div class="col-md-8">
                                     <input t-if="has_config_rights" type="text" class="form-control form-field-label o_client_secret o_required_field"/>
                                     <input t-if="!has_config_rights" type="text" class="form-control form-field-label o_client_secret o_required_field" disabled="disabled"/>
                                 </div>
@@ -247,16 +239,16 @@
                         <div class="o_configure_ab">
                             <p>Odoo uses Google Analytics to track the performances of an A/B testing experiment comparing several versions.</p>
                         </div>
-                        <form id="productForm" class="form-horizontal" role="form">              
-                            <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">GA Key</label>
-                                <div class="col-sm-8">
+                        <form id="productForm" role="form">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">GA Key</label>
+                                <div class="col-md-8">
                                     <input type="text" class="form-control form-field-label o_ga_key o_required_field"/>
                                 </div>
                             </div>
-                            <div class="form-group form-group">
-                                <label class="col-sm-3 control-label">View ID</label>
-                                <div class="col-sm-8">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">View ID</label>
+                                <div class="col-md-8">
                                     <input type="text" class="form-control form-field-label o_view_id o_required_field"/>
                                 </div>
                             </div>
@@ -280,15 +272,14 @@
                             <button type="button" class="btn btn-primary o_validate_2" data-dismiss="modal">Validate</button>
                         </t>
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
+                            <span class="sr-only">Toggle Dropdown</span>
                         </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="menuitem"><a href="#" role="button" class="btn btn-link btn-xs o_configure">Configure</a></li>
-                        </ul>
+                        <div class="dropdown-menu" role="menu">
+                            <a role="menuitem" href="#" class="btn btn-link btn-sm o_configure dropdown-item">Configure</a>
+                        </div>
                     </div>
                 </t>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
               </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -343,11 +334,11 @@
                                 <li><a t-att-href="item.url"> <b><t t-esc="item.name"></t></b> </a></li>
                             </t>
                         </ul>
-                        <p>List of pages that have been modified in version <t t-esc="version_name"></t> 
+                        <p>List of pages that have been modified in version <t t-esc="version_name"></t>
                             compared to master. If you publish this version, all pages will be updated at once.
                         </p>
                     </t>
-                    <t t-if="list.length == 0"> 
+                    <t t-if="list.length == 0">
                         <p>There is no difference with Master</p>
                     </t>
                 </main>
@@ -369,7 +360,7 @@
               </header>  
               <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_confirm" data-dismiss="modal">Delete Version</button>
-                <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
               </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -386,7 +377,7 @@
               </header>  
               <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_confirm" data-dismiss="modal">Publish</button>
-                <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
               </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -402,36 +393,31 @@
               </header>
               <main class="modal-body">
                 <p>By publishing this version, you will overwrite the following master pages:</p>
-                <t t-if="list.length != 0"> 
+                <t t-if="list.length != 0">
                     <ul>
-                        <t t-foreach="list" t-as="item">      
-                            <li><t t-esc="item.name"></t> </li>            
+                        <t t-foreach="list" t-as="item">
+                            <li><t t-esc="item.name"></t> </li>
                         </t>
                     </ul>
                 </t>
-                <t t-if="list.length == 0"> 
+                <t t-if="list.length == 0">
                     <p>There is no difference with Master</p>
                 </t>
-                <form id="productForm" class="form-horizontal" role="form">
-
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="checked"/>
-                            Publish version
-                        </label>
-                    </div>              
-                    <div class="radio">
-                        <label>
-                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" class="o_check"/>
-                          Publish and copy the current version
-                          <input type="text" class="form-control o_name o_required_field" style="display: none;"/>
-                        </label>
+                <form id="productForm" role="form">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="checked"/>
+                        <label for="optionsRadios1" class="custom-control-label">Publish version</label>
                     </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input o_check" name="optionsRadios" id="optionsRadios2" value="option2"/>
+                        <label for="optionsRadios2" class="custom-control-label">Publish and copy the current version</label>
+                    </div>
+                    <input type="text" class="form-control o_name o_required_field" style="display: none;"/>
                 </form>
               </main>
               <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_confirm">Publish</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
               </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -450,19 +436,19 @@
                     A version allows to modify several pages, without publishing the changes directly.
                     You can also launch A/B tests to analyse the performance of different versions.
                 </p>
-                <form id="productForm" class="form-horizontal" role="form">
-                    <div class="form-group form-group">
-                        <label class="col-sm-3 control-label">New Version</label>
-                        <div class="col-sm-8">
+                <form id="productForm" role="form">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">New Version</label>
+                        <div class="col-md-8">
                             <input type="text" class="form-control form-field-label o_version_name o_required_field" t-attf-value="{{default_name}}"/>
                         </div>
-                    </div>             
+                    </div>
 
                 </form>
               </main>
               <footer class="modal-footer">
                 <button type="button" class="btn btn-primary o_create">Create</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
               </footer>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->

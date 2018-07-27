@@ -2,11 +2,11 @@
 <templates>
 
 <t t-name="web_studio.Sidebar.Parameters" t-if="widget.debug">
-    <button class="btn btn-sm btn-default o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
+    <button class="btn btn-secondary o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
 </t>
 
 <t t-name="web_studio.Sidebar.Remove">
-    <button class="btn btn-sm btn-danger pull-right o_web_studio_remove">Remove from View</button>
+    <button class="btn btn-danger float-right o_web_studio_remove">Remove from View</button>
 </t>
 
 <div t-name="web_studio.Sidebar.Warning.Groups" class="o_web_studio_remove_warning_groups">
@@ -22,7 +22,7 @@
 </div>
 
 <t t-name="web_studio.Sidebar.XMLEditor" t-if="widget.debug">
-    <button class="btn btn-sm btn-default o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
+    <button class="btn btn-secondary o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
 </t>
 
 <t t-name="web_studio.Sidebar.Toolbox">
@@ -77,20 +77,18 @@
             <div class="o_paperformat_id"/>
         </div>
         <div class="o_web_studio_sidebar_checkbox">
-            <div class="o_checkbox">
-                <input id="display_in_print" name="display_in_print" type="checkbox"
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" id="display_in_print" name="display_in_print" class="custom-control-input"
                     t-att-checked="widget.report.binding_model_id ? 'checked' : undefined"/>
-                <span/>
+                <label for="display_in_print" class="custom-control-label">Add in the print menu</label>
             </div>
-            <label for="display_in_print">Add in the print menu</label>
         </div>
         <div class="o_web_studio_sidebar_checkbox" t-if="widget.debug">
-            <div class="o_checkbox">
-                <input id="attachment_use" name="attachment_use" type="checkbox"
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" id="attachment_use" name="attachment_use" class="custom-control-input"
                     t-att-checked="widget.report.attachment_use ? 'checked' : undefined"/>
-                <span/>
+                <label for="attachment_use" class="custom-control-label">Reload from attachment</label>
             </div>
-            <label for="attachment_use">Reload from attachment</label>
         </div>
         <div class="o_web_studio_sidebar_tags">
             <label for="groups">Limit visibility to groups</label>
@@ -121,38 +119,34 @@
     <div class="o_web_studio_sidebar_content o_display_view" t-if="!(widget.mode === 'properties')">
         <t t-if="widget.state.mode === 'view'">
             <div t-if="_.contains(['list', 'form', 'kanban'], widget.view_type)" class="o_web_studio_sidebar_checkbox">
-                <div class="o_checkbox">
-                    <input id="create" name="create" type="checkbox"
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="create" name="create" class="custom-control-input"
                         t-att-checked="widget.isTrue(widget.state.attrs.create) ? 'checked' : undefined"/>
-                    <span/>
+                    <label for="create" class="custom-control-label">Can Create</label>
                 </div>
-                <label for="create">Can Create</label>
             </div>
             <div t-if="_.contains(['list', 'form'], widget.view_type)" class="o_web_studio_sidebar_checkbox">
-                <div class="o_checkbox">
-                    <input id="edit" name="edit" type="checkbox"
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="edit" name="edit" class="custom-control-input"
                         t-att-checked="widget.isTrue(widget.state.attrs.edit) ? 'checked' : undefined"/>
-                    <span/>
+                    <label for="edit" class="custom-control-label">Can Edit</label>
                 </div>
-                <label for="edit">Can Edit</label>
             </div>
             <div t-if="_.contains(['list', 'form'], widget.view_type)" class="o_web_studio_sidebar_checkbox">
-                <div class="o_checkbox">
-                    <input id="delete" name="delete" type="checkbox"
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="delete" name="delete" class="custom-control-input"
                         t-att-checked="widget.isTrue(widget.state.attrs.delete) ? 'checked' : undefined"/>
-                    <span/>
+                    <label for="delete" class="custom-control-label">Can Delete</label>
                 </div>
-                <label for="delete">Can Delete</label>
             </div>
             <t t-if="_.contains(['list', 'form'], widget.view_type)">
                 <div class="o_web_studio_sidebar_separator"/>
                 <div class="o_web_studio_sidebar_checkbox">
-                    <div class="o_checkbox">
-                        <input id="show_invisible" type="checkbox"
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" id="show_invisible" class="custom-control-input"
                             t-att-checked="widget.state.show_invisible ? 'checked' : undefined"/>
-                        <span/>
+                        <label for="show_invisible" class="custom-control-label">Show invisible elements</label>
                     </div>
-                    <label for="show_invisible">Show invisible elements</label>
                 </div>
             </t>
             <t t-if="widget.view_type === 'list'">
@@ -168,20 +162,18 @@
             <!-- Kanban view settings -->
             <t t-if="widget.view_type === 'kanban'">
                 <div class="o_web_studio_sidebar_checkbox">
-                    <div class="o_checkbox">
-                        <input id="quick_create" name="quick_create" type="checkbox" data-leave-empty='checked'
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" id="quick_create" name="quick_create" class="custom-control-input" data-leave-empty='checked'
                             t-att-checked="widget.state.attrs.quick_create ? undefined : 'checked'"/>
-                        <span/>
+                        <label for="quick_create" class="custom-control-label">Quick Create</label>
                     </div>
-                    <label for="quick_create">Quick Create</label>
                 </div>
                 <div class="o_web_studio_sidebar_checkbox">
-                    <div class="o_checkbox">
-                        <input id="enable_stage" name="enable_stage" type="checkbox" data-leave-empty='checked'
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" id="enable_stage" name="enable_stage" class="custom-control-input" data-leave-empty='checked'
                             t-att-checked="widget.state.attrs.default_group_by ? 'checked' : undefined"/>
-                        <span/>
+                        <label for="enable_stage" class="custom-control-label">Enable Stages</label>
                     </div>
-                    <label for="enable_stage">Enable Stages</label>
                 </div>
                 <div class="o_web_studio_sidebar_select">
                     <label for="default_group_by">Default Group by</label>
@@ -196,12 +188,11 @@
             <!-- Calendar view settings -->
             <t t-if="widget.view_type === 'calendar'">
                 <div class="o_web_studio_sidebar_checkbox">
-                    <div class="o_checkbox">
-                        <input id="quick_add" name="quick_add" type="checkbox" data-leave-empty='checked'
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" id="quick_add" name="quick_add" class="custom-control-input" data-leave-empty='checked'
                             t-att-checked="widget.isTrue(widget.state.attrs.quick_add) ? 'checked' : undefined"/>
-                        <span/>
+                        <label for="quick_add" class="custom-control-label">Quick Create</label>
                     </div>
-                    <label for="quick_add">Quick Create</label>
                 </div>
                 <div class="o_web_studio_sidebar_select">
                     <label for="date_start">Start Date Field</label>
@@ -360,21 +351,19 @@
             <t t-if="widget.view_type === 'pivot'">
 
                 <div class="o_web_studio_sidebar_checkbox">
-                    <div class="o_checkbox">
+                    <div class="custom-control custom-checkbox">
                         <!-- Disable linking is presented as a positive sentence for easier understanding (hence inverse) -->
-                        <input id="disable_linking" name="disable_linking" type="checkbox" data-inverse="1" data-leave-empty='unchecked'
+                        <input type="checkbox" id="disable_linking" name="disable_linking" class="custom-control-input" data-inverse="1" data-leave-empty='unchecked'
                             t-att-checked="widget.state.attrs.disable_linking ? undefined : 'checked'"/>
-                        <span/>
+                        <label for="disable_linking" class="custom-control-label">Allow Link to List View</label>
                     </div>
-                    <label for="disable_linking">Allow Link to List View</label>
                 </div>
                 <div class="o_web_studio_sidebar_checkbox">
-                    <div class="o_checkbox">
-                        <input id="display_quantity" name="display_quantity" type="checkbox" data-leave-empty='unchecked'
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" id="display_quantity" name="display_quantity" class="custom-control-input" data-leave-empty='unchecked'
                             t-att-checked="widget.state.attrs.display_quantity ? 'checked' : undefined"/>
-                        <span/>
+                        <label for="display_quantity" class="custom-control-label">Display Count</label>
                     </div>
-                    <label for="display_quantity">Display Count</label>
                 </div>
             </t>
             <t t-call="web_studio.Sidebar.Toolbox" t-if="widget.debug">
@@ -384,7 +373,7 @@
                 </t>
 
                 <t t-if="_.contains(['list', 'form'], widget.view_type)">
-                    <button class="btn btn-sm btn-default o_web_studio_defaults">Default Values</button>
+                    <button class="btn btn-secondary o_web_studio_defaults">Default Values</button>
                 </t>
             </t>
         </t>
@@ -438,45 +427,41 @@
 <t t-name="web_studio.ViewEditorSidebar.field">
     <div class="clearfix o_web_studio_sidebar_checkbox">
         <t t-set="attrs_invisible" t-value="widget.state.modifiers.invisible and widget.state.modifiers.invisible !== true"/>
-        <div t-attf-class="o_checkbox#{attrs_invisible ? ' o_web_studio_checkbox_inactive' : ''}">
-            <input id="invisible" name="invisible" type="checkbox" data-type="attributes"
+        <div t-attf-class="custom-control custom-checkbox#{attrs_invisible ? ' o_web_studio_checkbox_inactive' : ''}">
+            <input type="checkbox" id="invisible" name="invisible" class="custom-control-input" data-type="attributes"
                 t-att-checked="widget.state.attrs.invisible ? 'checked' : undefined"/>
-            <span/>
+            <label for="invisible" class="custom-control-label">Invisible</label>
         </div>
-        <label for="invisible">Invisible</label>
-        <a href="#" data-type="invisible" role="button" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
+        <a role="button" href="#" data-type="invisible" class="btn btn-link o_web_studio_attrs">Conditional</a>
     </div>
     <t t-if="widget.state.modifiers.invisible !== true">
         <t t-if="_.contains(['list', 'form'], widget.view_type)">
             <div class="clearfix o_web_studio_sidebar_checkbox">
                 <t t-set="attrs_required" t-value="widget.state.modifiers.required and widget.state.modifiers.required !== true"/>
-                <div t-attf-class="o_checkbox#{attrs_required ? ' o_web_studio_checkbox_inactive' : ''}">
-                    <input id="required" name="required" type="checkbox" data-type="attributes"
+                <div t-attf-class="custom-control custom-checkbox#{attrs_required ? ' o_web_studio_checkbox_inactive' : ''}">
+                    <input type="checkbox" id="required" name="required" class="custom-control-input" data-type="attributes"
                         t-att-checked="widget.state.attrs.required ? 'checked' : undefined"
                         t-att-disabled="widget.state.field.required ? 'disabled' : undefined"/>
-                    <span/>
+                    <label for="required" class="custom-control-label">Required</label>
                 </div>
-                <label for="required">Required</label>
-                <a href="#" data-type="required" role="button" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
+                <a role="button" href="#" data-type="required" class="btn btn-link o_web_studio_attrs">Conditional</a>
             </div>
             <div class="clearfix o_web_studio_sidebar_checkbox">
                 <t t-set="attrs_readonly" t-value="widget.state.modifiers.readonly and widget.state.modifiers.readonly !== true"/>
-                <div t-attf-class="o_checkbox#{attrs_readonly ? ' o_web_studio_checkbox_inactive' : ''}">
-                    <input id="readonly" name="readonly" type="checkbox" data-type="attributes"
+                <div t-attf-class="custom-control custom-checkbox#{attrs_readonly ? ' o_web_studio_checkbox_inactive' : ''}">
+                    <input type="checkbox" id="readonly" name="readonly" class="custom-control-input" data-type="attributes"
                         t-att-checked="widget.state.attrs.readonly ? 'checked' : undefined"/>
-                    <span/>
+                    <label for="readonly" class="custom-control-label">Read only</label>
                 </div>
-                <label for="readonly">Read only</label>
-                <a href="#" data-type="readonly" role="button" class="btn btn-sm btn-link o_web_studio_attrs">Conditional</a>
+                <a role="button" href="#" data-type="readonly" class="btn btn-link o_web_studio_attrs">Conditional</a>
             </div>
         </t>
         <div t-if="widget.view_type === 'kanban'" class="o_web_studio_sidebar_checkbox">
-            <div class="o_checkbox">
-                <input id="bold" name="bold" type="checkbox" data-type="attributes"
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" id="bold" name="bold" class="custom-control-input" data-type="attributes"
                     data-leave-empty="unchecked" t-att-checked="widget.state.attrs.bold ? 'checked' : undefined"/>
-                <span/>
+                <label for="bold" class="custom-control-label">Bold</label>
             </div>
-            <label for="bold">Bold</label>
         </div>
         <div t-if="widget.view_type === 'kanban'" class="o_web_studio_sidebar_select">
             <label for="display">Display</label>
@@ -512,7 +497,9 @@
         <div class="o_web_studio_sidebar_text" t-if="widget.debug">
             <label for="name">Technical Name</label>
             <div class="input-group">
-                <span class="input-group-addon" t-if="widget.isRenamingAllowed(widget.state.attrs.name)">x_studio_</span>
+                <div class="input-group-prepend">
+                    <span class="input-group-text" t-if="widget.isRenamingAllowed(widget.state.attrs.name)">x_studio_</span>
+                </div>
                 <input t-if="widget.isRenamingAllowed(widget.state.attrs.name)" id="id" name="name" type="text" data-type="field_name" t-att-value="widget.state.attrs.name.replace('x_studio_', '')"/>
                 <span t-else="1"><t t-esc="widget.state.attrs.name"/></span>
             </div>
@@ -571,7 +558,7 @@
         <div class="o_groups"/>
     </div>
     <div t-if="widget.state.field.manual and widget.state.field.type === 'selection'">
-        <a href="#" role="button" class="btn btn-sm btn-link o_web_studio_edit_selection_values"><i class="fa fa-pencil"/> Edit Possible Values</a>
+        <a href="#" role="button" class="btn btn-link o_web_studio_edit_selection_values"><i class="fa fa-pencil"/> Edit Possible Values</a>
     </div>
     <t t-call="web_studio.Sidebar.Toolbox">
         <t t-call="web_studio.Sidebar.Parameters"/>
@@ -647,7 +634,9 @@
         <div class="input-group">
             <input id="email_alias" name="email_alias" type="text" data-type="email_alias"
                 t-att-value="widget.state.email_alias"/>
-            <div class="input-group-addon">@<t t-if="widget.state.alias_domain" t-esc="widget.state.alias_domain"/></div>
+            <div class="input-group-append">
+                <div class="input-group-text">@<t t-if="widget.state.alias_domain" t-esc="widget.state.alias_domain"/></div>
+            </div>
         </div>
         <div t-if="widget.state.email_alias and widget.state.alias_domain" class="mt8">
             Send a <a t-att-href="'mailto:' + widget.state.email_alias + '@' + widget.state.alias_domain + '?subject=test'">test email</a>.
@@ -669,11 +658,10 @@
         <h3>Rainbow Man</h3>
         <t t-set="rainbow" t-value="widget.state.attrs.effect"/>
         <div class="o_web_studio_sidebar_checkbox">
-            <div class="o_checkbox">
-                <input id="rainbow" name="rainbow" type="checkbox" t-att-checked="rainbow ? 'checked' : undefined"/>
-                <span/>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" id="rainbow" name="rainbow" class="custom-control-input" t-att-checked="rainbow ? 'checked' : undefined"/>
+                <label for="rainbow" class="custom-control-label">Rainbow Effect</label>
             </div>
-            <label for="rainbow">Rainbow Effect</label>
         </div>
         <t t-if="rainbow">
             <div class="o_web_studio_sidebar_text">
@@ -692,14 +680,14 @@
             <div>
                 <input id="rainbow_img_url" name="rainbow_img_url" type="hidden" t-att-value="rainbow.img_url"/>
                 <div class="mb8 ml64 mr64">
-                    <img t-att-src="rainbow.img_url or '/web/static/src/img/smile.svg'" class="img img-responsive" alt="Great !"/>
+                    <img t-att-src="rainbow.img_url or '/web/static/src/img/smile.svg'" class="img img-fluid" alt="Great !"/>
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-sm btn-default o_img_upload"><i class="fa fa-upload"/> Change Image</button>
-                <button t-if="rainbow.img_url" class="btn btn-sm btn-default o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
+                <button class="btn btn-secondary o_img_upload"><i class="fa fa-upload"/> Change Image</button>
+                <button t-if="rainbow.img_url" class="btn btn-secondary o_img_reset"><i class="fa fa-undo"/>Reset Image</button>
             </div>
-            <span class="hide">
+            <span class="d-none">
                 <t t-call="HiddenInputFile">
                     <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
                     <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>

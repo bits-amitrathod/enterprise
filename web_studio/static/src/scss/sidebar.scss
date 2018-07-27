@@ -1,18 +1,18 @@
 .o_web_studio_client_action .o_web_studio_sidebar {
-    @include o-flex-display;
-    @include o-flex-flow(column, nowrap);
+    display: flex;
+    flex-flow: column nowrap;
     color: white;
     background-color: $o-web-studio-bg-medium;
     border-right: 3px solid $o-web-studio-bg-dark;
 
     .o_web_studio_sidebar_header {
-        @include o-flex-display;
-        @include o-flex(0, 0, auto);
+        display: flex;
+        flex: 0 0 auto;
         margin-bottom: $o-web-studio-sidebar-margin;
         background-color: $o-web-studio-bg-dark;
 
         > div {
-            @include o-flex(1, 0, auto);
+            flex: 1 0 auto;
             text-align: center;
             padding: 14px 0;
             color: $o-web-studio-bg-light;
@@ -72,8 +72,8 @@
                 border: 1px solid transparent;
                 background-color: $o-web-studio-bg-dark;
                 padding: 4px 9px;
-                @include o-transition(all, 0.3s);
-                @include transition-property(background, border);
+                transition: all 0.3s ease 0s;
+                transition-property: background, border;
                 &:focus {
                     border-color: $o-web-studio-color-info;
                     box-shadow: 0 0 1px 0 $o-web-studio-color-info;
@@ -122,12 +122,12 @@
 
             &.o_web_studio_sidebar_tags {
                 .o_field_widget {
-                    @include o-flex-display;
-                    @include o-flex-flow(row, wrap);
+                    display: flex;
+                    flex-flow: row wrap;
                     width: 100%;
                 }
                 .o_field_many2one {
-                    @include o-flex(0, 0, 100%);
+                    flex: 0 0 100%;
                     > .o_input_dropdown {
                         > .o_dropdown_button {
                             right: 18px;
@@ -153,7 +153,7 @@
                     }
                 }
                 .badge {
-                    @include o-flex-display;
+                    display: flex;
                     align-items: baseline;
                     max-width: $o-web-studio-sidebar-width - 2*$o-web-studio-sidebar-margin;
                     margin: 5px 5px 5px 0px;
@@ -179,9 +179,9 @@
             }
         }
         .o_web_studio_field_type_container {
-            @include o-flex-display;
-            @include o-flex-flow(row, wrap);
-            @include o-justify-content(space-between);
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
         }
         .o_web_studio_component {
             @include o-text-overflow;
@@ -194,7 +194,7 @@
             background-color: $o-web-studio-bg-light;
             box-shadow: 0 1px 1px black;
             color: $o-web-studio-bg-dark;
-            font: bold 11px/2.4 $font-family-serif;
+            font: bold 11px/2.4 $font-family-base;
             cursor: pointer;
             &:hover {
                 background-color: white;
@@ -227,10 +227,10 @@
         }
 
         .o_web_studio_sidebar_toolbox {
-            @include o-flex(1, 0, 100%);
+            flex: 1 0 100%;
 
             > button.btn {
-                @include o-flex(1, 1, auto);
+                flex: 1 1 auto;
             }
         }
 

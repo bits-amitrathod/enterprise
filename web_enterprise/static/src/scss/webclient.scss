@@ -22,7 +22,7 @@ select { // FIXME buggy 'padding-left'
     background-color: transparent;
     min-width: 50px;
 
-    @include o-appearance(none);
+    appearance: none;
     background-image: url("/web_enterprise/static/src/img/down-arrow.png");
     background-repeat: no-repeat;
     background-position: right center;
@@ -50,10 +50,28 @@ select { // FIXME buggy 'padding-left'
 }
 
 //------------------------------------------------------------------------------
+// Buttons
+//------------------------------------------------------------------------------
+
+.btn-secondary {
+    // Bootstrap variables do not control the color for btn-secondary text
+    // anymore. All buttons are either assigned the chosen dark or the chosen
+    // light color, automatically according to their background color. Setting
+    // the dark color to be our Odoo green is not a solution as BS would choose
+    // that green as text color for btn-warning / btn-info / ... which is not
+    // what we want.
+    color: $primary;
+
+    &.fa {
+        color: $yiq-text-dark;
+    }
+}
+
+//------------------------------------------------------------------------------
 // Misc.
 //------------------------------------------------------------------------------
 .o_loading {
-    background-color: $o-brand-primary;
+    background-color: $o-brand-odoo;
     color: white;
     padding: 4px;
 }
@@ -63,9 +81,9 @@ select { // FIXME buggy 'padding-left'
 }
 
 //== Titles
-@media (max-width: $screen-xs-max) {
+@include media-breakpoint-down(sm) {
     h1 {
-        font-size: $font-size-h1 * 3 / 4;
+        font-size: $h1-font-size * 3 / 4;
     }
     h2, h3, h4, h5, h6 {
         font-size: $o-font-size-base-touch;
@@ -83,28 +101,17 @@ select { // FIXME buggy 'padding-left'
 }
 
 //== Well
-.well {
+.card {
     box-shadow: none;
 }
 
 //== Badges
 .badge {
-    border: 1px solid $o-brand-optional;
+    border: 1px solid $o-brand-primary;
 }
 
 //== Buttons
-.btn-icon {
-    @include button-variant($btn-icon-color, $btn-icon-bg, $btn-icon-border);
-
-    &.active {
-        &, &:hover, &:focus {
-            background-color: $gray-lighter-dark;
-            color: $headings-color;
-        }
-    }
-}
-
-.btn, .btn-sm, .btn-group > .btn {
+.btn, .btn-group > .btn {
     border-radius: 0px;
     border: none;
     &:hover, &:active, &:focus, &:active:focus {
@@ -112,11 +119,11 @@ select { // FIXME buggy 'padding-left'
     }
 }
 
-.btn-primary.active, .btn-default.active, .btn-icon.active {
-    @include box-shadow(none);
+.btn-primary.active, .btn-secondary.active {
+    box-shadow: none;
 }
 
-.btn-primary, .btn-default {
+.btn-primary, .btn-secondary {
     text-transform: uppercase;
 }
 
@@ -133,5 +140,5 @@ select { // FIXME buggy 'padding-left'
 
 //== Popover
 .popover {
-    border-radius: $border-radius-base;
+    border-radius: $border-radius;
 }

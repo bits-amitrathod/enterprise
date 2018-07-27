@@ -5,11 +5,11 @@
         <p t-if="slides">
             <p class="question-block" t-foreach="slides" t-as="slide" >
                 <div class="media">
-                    <a class="media-left pull-left" t-attf-href="/slides/slide/#{slug(slide)}">
-                            <img class="media-object oe_slides_apart_small" t-attf-src="/web/image/slide.slide/#{slide.id}/image_thumb" alt="Slide image"/>
+                    <a t-attf-href="/slides/slide/#{slug(slide)}">
+                        <img class="oe_slides_apart_small" t-attf-src="/web/image/slide.slide/#{slide.id}/image_thumb" alt="Slide image"/>
                     </a>
-                    <div class="media-body" style="padding-top:5px">
-                        <a t-attf-href="/slides/slide/#{slug(slide)}"><h5 class="media-heading" t-esc="slide.name"/></a>
+                    <div class="media-body pt-1">
+                        <a t-attf-href="/slides/slide/#{slug(slide)}"><h5 t-esc="slide.name"/></a>
                         <small class="text-muted">
                             <t t-esc="slide.total_views"/> Views . <timeago class="timeago" t-att-datetime="slide.create_date"></timeago>
                         </small>
@@ -25,9 +25,9 @@
     <template id="website_helpdesk_slides_team_page" inherit_id="website_helpdesk.team">
         <xpath expr="//h2[@id='team-page']" position="after">
             <t t-if="channel or team.use_website_helpdesk_slides">
-                <div class="col-md-6" id="slides_posts">
+                <div class="col-lg-6" id="slides_posts">
                     <h2>Popular Presentations</h2>
-                    <div class="col-md-10" id="slides_posts" style="padding-left:0px;">
+                    <div class="col-lg-10" id="slides_posts" style="padding-left:0px;">
                         <p t-if="not slides" class="text-muted">
                             No presentations yet.
                         </p>

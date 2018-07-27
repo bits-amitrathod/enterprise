@@ -14,10 +14,10 @@ odoo.define('website_delivery_ups.delivery_ups', function (require) {
             ajax.jsonRpc('/shop/ups_check_service_type', 'call', {'sale_id': sale_id, 'ups_service_type': value}).done(function (data) {
                 var ups_service_error = $('#ups_service_error');
                 if(data.error){
-                    ups_service_error.html('<strong>' +data.error+ '</strong>').removeClass('hidden');
+                    ups_service_error.html('<strong>' +data.error+ '</strong>').removeClass('d-none');
                 }
                 else {
-                    ups_service_error.addClass('hidden');
+                    ups_service_error.addClass('d-none');
                     apply_button.prop("disabled", false);
                 }
             });

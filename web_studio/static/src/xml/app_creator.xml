@@ -42,11 +42,10 @@
     </div>
     <t t-if="widget.debug">
         <div class="o_web_studio_app_creator_model_choice">
-            <div class="o_checkbox">
-                <input id="model_choice" name="model_choice" type="checkbox"/>
-                <span/>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" id="model_choice" name="model_choice" class="custom-control-input"/>
+                <label for="model_choice" class="custom-control-label">Use an existing Model</label>
             </div>
-            <label for="model_choice">Use an existing Model</label>
         </div>
         <div class="o_web_studio_app_creator_model mt8">
             <label for="name">Model</label>

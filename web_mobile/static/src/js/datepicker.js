@@ -21,9 +21,7 @@ web_datepicker.DateWidget.include({
         if (mobile.methods.requestDateTimePicker) {
             // `super` will initiate bootstrap date-picker object which is not
             // required in mobile application.
-            if (this.picker) {
-                this.picker.destroy();
-            }
+            this.$input.datetimepicker('destroy');
             this._setReadonly(true);
             this._setupMobilePicker();
         }

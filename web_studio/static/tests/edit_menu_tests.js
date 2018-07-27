@@ -137,7 +137,7 @@ QUnit.module('Studio', {
         assert.strictEqual($('.o_web_studio_add_menu_modal .o_field_many2one').length, 1,
             "there should be a many2one for the model in the dialog");
         // close the modal
-        $('.o_web_studio_add_menu_modal .btn-default').click();
+        $('.o_web_studio_add_menu_modal .btn-secondary').click();
 
         // move submenu above root menu
         testUtils.dragAndDrop(dialog.$('li li .input-group:first'), dialog.$('.input-group:first'));

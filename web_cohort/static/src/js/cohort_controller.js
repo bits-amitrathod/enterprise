@@ -72,7 +72,7 @@ var CohortController = AbstractController.extend({
             this.$measureList = this.$buttons.find('.o_cohort_measures_list');
             this.$buttons.appendTo($node);
             this._updateButtons();
-            this.$buttons.click(this._onButtonClick.bind(this));
+            this.$buttons.on('click', 'button', this._onButtonClick.bind(this));
         }
     },
 
@@ -137,7 +137,7 @@ var CohortController = AbstractController.extend({
         }
         var data = this.model.get();
         // Hide download button if no cohort data
-        this.$buttons.find('.o_cohort_download_button').toggleClass('hidden', !data.report.rows.length);
+        this.$buttons.find('.o_cohort_download_button').toggleClass('d-none', !data.report.rows.length);
         if (config.device.isMobile) {
             var $activeInterval = this.$buttons
                 .find('.o_cohort_interval_button[data-interval="' + data.interval + '"]');
@@ -147,9 +147,9 @@ var CohortController = AbstractController.extend({
         this.$buttons
             .find('.o_cohort_interval_button[data-interval="' + data.interval + '"]')
             .addClass('active');
-        this.$measureList.find('li').each(function () {
-            var $li = $(this);
-            $li.toggleClass('selected', $li.data('field') === data.measure);
+        _.each(this.$measureList.find('.dropdown-item'), function (el) {
+            var $el = $(el);
+            $el.toggleClass('selected', $el.data('field') === data.measure);
         });
     },
 
@@ -161,20 +161,18 @@ var CohortController = AbstractController.extend({
      * Do what need to be done when a button from the control panel is clicked.
      *
      * @private
-     * @param {MouseEvent} event
+     * @param {MouseEvent} ev
      */
-    _onButtonClick: function (event) {
-        var $target = $(event.target);
-        if ($target.hasClass('o_cohort_interval_button')) {
-            this._setInterval($target.data('interval'));
-        } else if ($target.hasClass('o_cohort_download_button')) {
+    _onButtonClick: function (ev) {
+        var $btn = $(ev.currentTarget);
+        if ($btn.hasClass('o_cohort_interval_button')) {
+            this._setInterval($btn.data('interval'));
+        } else if ($btn.hasClass('o_cohort_download_button')) {
             this._downloadExcel();
-        } else if ($target.parents('.o_cohort_measures_list').length) {
-            event.preventDefault();
-            event.stopPropagation();
-            var $parent = $target.parent();
-            var field = $parent.data('field');
-            this._setMeasure(field);
+        } else if ($btn.closest('.o_cohort_measures_list').length) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            this._setMeasure($btn.data('field'));
         }
     },
     /**

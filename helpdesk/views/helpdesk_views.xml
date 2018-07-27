@@ -349,7 +349,7 @@
                     <field name="user_id" options="{'no_open': True}"/>
                     <field name="partner_id" options="{'no_open': True}"/>
                     <field name="priority" nolabel="1" widget="priority"/>
-                    <div class="pull-right"><field name="kanban_state" widget="state_selection"/></div>
+                    <div class="float-right"><field name="kanban_state" widget="state_selection"/></div>
                 </group>
             </form>
         </field>
@@ -383,16 +383,16 @@
                         <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
                             <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
                             <div class="o_dropdown_kanban dropdown">
-                                <a class="dropdown-toggle btn" role="button" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
                                     <span class="fa fa-bars fa-lg"/>
                                 </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <t t-if="widget.editable"><li><a role="menuitem" type="edit">Edit</a></li></t>
-                                    <t t-if="widget.deletable"><li><a role="menuitem" type="delete">Delete</a></li></t>
-                                    <li t-if="! record.active.value"><a role="menuitem" name="toggle_active" type="object">Restore</a></li>
-                                    <li t-if="record.active.value"><a role="menuitem" name="toggle_active" type="object">Archive</a></li>
-                                    <li role="menuitem" aria-haspopup="true"><ul role="menu" class="oe_kanban_colorpicker" data-field="color"/></li>
-                                </ul>
+                                <div class="dropdown-menu" role="menu">
+                                    <t t-if="widget.editable"><a type="edit" class="dropdown-item" role="menuitem">Edit</a></t>
+                                    <t t-if="widget.deletable"><a type="delete" class="dropdown-item" role="menuitem">Delete</a></t>
+                                    <a name="toggle_active" type="object" class="dropdown-item" role="menuitem" t-if="! record.active.value">Restore</a>
+                                    <a name="toggle_active" type="object" class="dropdown-item" role="menuitem" t-if="record.active.value">Archive</a>
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
                             </div>
                             <div class="oe_kanban_content">
                                 <div>
@@ -415,9 +415,9 @@
                                     <t t-if="record.message_needaction_counter.raw_value">
                                         <span class='oe_kanban_mail_new' title='Important Messages'><i class='fa fa-comments' role="img" aria-label="Messages"/><t t-raw="record.message_needaction_counter.raw_value"/></span>
                                     </t>
-                                    <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
-                                    <span class="o_helpdesk_sla_failed pull-right fa fa-times-circle" style="margin: 6px" t-attf-title="Failed SLA: {{record.sla_name.raw_value}}" role="img" t-attf-aria-label="Failed SLA: {{record.sla_name.raw_value}}" t-if="record.sla_fail &amp;&amp; record.sla_fail.raw_value"></span>
-                                    <div class="pull-right">
+                                    <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar float-right"/>
+                                    <span class="o_helpdesk_sla_failed float-right fa fa-times-circle" style="margin: 6px" t-attf-title="Failed SLA: {{record.sla_name.raw_value}}" role="img" t-attf-aria-label="Failed SLA: {{record.sla_name.raw_value}}" t-if="record.sla_fail &amp;&amp; record.sla_fail.raw_value"></span>
+                                    <div class="float-right">
                                         <field name="activity_ids" widget="kanban_activity"/>
                                         <field name="kanban_state" widget="state_selection" groups="base.group_user"/>
                                     </div>
@@ -463,7 +463,7 @@
                             type="object" attrs="{'invisible': ['|', ('partner_id', '=', False), ('partner_tickets', '&lt;=', 1)]}">
                             <field name="partner_tickets" string="Customer Tickets" widget="statinfo" />
                         </button>
-                        <button name="action_get_attachment_tree_view" class="oe_stat_button" icon="fa-book" 
+                        <button name="action_get_attachment_tree_view" class="oe_stat_button" icon="fa-book"
                             type="object" attrs="{'invisible':  [('attachment_number', '=', 0)]}">
                             <field name="attachment_number" widget="statinfo" string="Documents"/>
                         </button>
@@ -474,7 +474,7 @@
                     <field name="kanban_state" widget="state_selection"/>
                     <div class="oe_title">
                         <h1><field name="name" class="field_name" placeholder="Subject..."/></h1>
-                        <field name="sla_name" class="label label-danger oe_inline" attrs="{'invisible': [('sla_active','=',False)]}"/>
+                        <field name="sla_name" class="badge badge-danger oe_inline" attrs="{'invisible': [('sla_active','=',False)]}"/>
                     </div>
                     <group>
                         <group>

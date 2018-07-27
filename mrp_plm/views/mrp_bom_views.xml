@@ -37,9 +37,9 @@
                                     <field name="display_name"/>
                                 </strong>
                                 <div>
-                                    <span class="pull-left label label-default" t-if="record.type.raw_value == 'phantom'">Kit</span>
-                                    <span class="pull-left" t-if="record.type.raw_value == 'phantom' and record.eco_inprogress_count.value>0">&amp;nbsp;</span>
-                                    <span class="pull-left label label-default" t-if="record.eco_inprogress_count.value>0">Eco</span>
+                                    <span class="float-left badge badge-secondary" t-if="record.type.raw_value == 'phantom'">Kit</span>
+                                    <span class="float-left" t-if="record.type.raw_value == 'phantom' and record.eco_inprogress_count.value>0">&amp;nbsp;</span>
+                                    <span class="float-left badge badge-secondary" t-if="record.eco_inprogress_count.value>0">Eco</span>
                                 </div>
                             </div>
                         </div>

@@ -28,13 +28,13 @@
 .o_in_studio_xml_editor {
     > nav {
         position: relative;
-        @include user-select(none);
+        user-select: none;
 
         &:after {
             content: '';
             z-index: 1;
             background-color: rgba($o-web-studio-bg-darker, 0.6);
-            @include user-select(none);
+            user-select: none;
             @include o-position-absolute(0,0,0,0);
         }
     }
@@ -62,7 +62,7 @@
             .select2-highlighted {
                 color: inherit;
                 font-weight: bold;
-                border-left: 2px solid $o-brand-optional;
+                border-left: 2px solid $o-brand-primary;
                 background-color: $o-web-studio-bg-lighter;
             }
             .select2-no-results {

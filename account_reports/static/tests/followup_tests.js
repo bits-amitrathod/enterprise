@@ -88,8 +88,8 @@ QUnit.module('Views', {
         var $buttons = followupFormView.$buttons;
         var $buttonDoItLater = $buttons.find('button.o_account_reports_followup_do_it_later_button');
         var $buttonDone = $buttons.find('button.o_account_reports_followup_done_button');
-        assert.ok($buttonDoItLater.hasClass('btn-default'),
-            "Do It Later button should have class 'btn-default'");
+        assert.ok($buttonDoItLater.hasClass('btn-secondary'),
+            "Do It Later button should have class 'btn-secondary'");
         assert.strictEqual($buttonDone.css('display'), 'none',
             "Done button should be invisible");
         assert.strictEqual(followupFormView.$searchview.find('span.o_account-progress-bar-content')[0].innerHTML, '0/1',

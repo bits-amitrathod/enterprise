@@ -71,12 +71,12 @@
                         <div t-if="['incoming', 'outgoing', 'internal'].indexOf(record.code.raw_value) > -1" t-attf-class="oe_kanban_card #{kanban_color(record.color.raw_value)} oe_kanban_global_click">
                             <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
                             <div class="row">
-                                <div class="col-xs-12">
+                                <div class="col-12">
                                     <strong><span><t t-esc="record.display_name.value"/></span></strong>
                                 </div>
                             </div>
                             <div class="row text-muted">
-                                <div class="col-xs-12">
+                                <div class="col-12">
                                     <button class="btn btn-primary" name="get_action_picking_tree_ready_kanban" type="object">
                                         <span t-if="record.code.raw_value =='incoming'"><t t-esc="record.count_picking_ready.value"/> To Receive</span>
                                         <span t-if="record.code.raw_value =='outgoing'"><t t-esc="record.count_picking_ready.value"/> To Do</span>

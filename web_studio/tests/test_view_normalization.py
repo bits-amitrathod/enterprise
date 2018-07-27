@@ -721,14 +721,14 @@ class TestViewNormalization(TransactionCase):
               </xpath>
               <xpath expr="//templates//div" position="inside">
                 <div class="o_dropdown_kanban dropdown">
-                            <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#">
                                 <span class="fa fa-bars fa-lg"/>
                             </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
-                                <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
-                                <li><ul class="oe_kanban_colorpicker" data-field="lang"/></li>
-                            </ul>
+                            <div class="dropdown-menu" role="menu">
+                                <t t-if="widget.editable"><a type="edit" class="dropdown-item">Edit</a></t>
+                                <t t-if="widget.deletable"><a type="delete" class="dropdown-item">Delete</a></t>
+                                <ul class="oe_kanban_colorpicker" data-field="lang"/>
+                            </div>
                         </div>
               </xpath>
               <xpath expr="//templates//div" position="attributes">
@@ -745,24 +745,18 @@ class TestViewNormalization(TransactionCase):
               </xpath>
               <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[1]/div[1]/field[@name='name']" position="after">
                 <div class="o_dropdown_kanban dropdown" name="studio_div_302a40">
-                  <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                  <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#">
                     <span class="fa fa-bars fa-lg"/>
                   </a>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" name="studio_ul_4e2ccd">
+                  <div class="dropdown-menu" role="menu" name="studio_div_4e2ccd">
                     <t t-if="widget.editable">
-                      <li name="studio_li_ff8328">
-                        <a type="edit">Edit</a>
-                      </li>
+                      <a type="edit" class="dropdown-item">Edit</a>
                     </t>
                     <t t-if="widget.deletable">
-                      <li name="studio_li_277a32">
-                        <a type="delete">Delete</a>
-                      </li>
+                      <a type="delete" class="dropdown-item">Delete</a>
                     </t>
-                    <li name="studio_li_4f9d39">
-                      <ul class="oe_kanban_colorpicker" data-field="lang" name="studio_ul_857488"/>
-                    </li>
-                  </ul>
+                    <ul class="oe_kanban_colorpicker" data-field="lang"/>
+                  </div>
                 </div>
               </xpath>
             </data>

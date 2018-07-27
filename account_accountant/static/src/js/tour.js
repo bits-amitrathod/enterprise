@@ -57,7 +57,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content:      "change date filter",
-            trigger:    ".js_account_report_date_filter[data-filter='last_year'] > a",
+            trigger:    ".dropdown-item.js_account_report_date_filter[data-filter='last_year']",
             run: 'click'
         },
         {
@@ -70,7 +70,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content:      "change comparison filter",
-            trigger:    ".js_foldable_trigger[data-filter='previous_period_filter'] > a"
+            trigger:    ".dropdown-item.js_foldable_trigger[data-filter='previous_period_filter']"
         },
         {
             content:      "change comparison filter",
@@ -107,7 +107,7 @@ tour.register('account_reports_widgets', {
         },
         {
             content:      "change cash basis filter",
-            trigger:    ".js_account_report_bool_filter[data-filter='cash_basis'] > a",
+            trigger:    ".dropdown-item.js_account_report_bool_filter[data-filter='cash_basis']",
             run: 'click'
         },
         {
@@ -130,7 +130,7 @@ tour.register('account_accountant_tour', {
     content:  _t("Let\'s start with a new customer invoice."),
     position: "bottom"
 }, {
-    trigger: ".breadcrumb li:not(.active):last",
+    trigger: ".breadcrumb-item:not(.active):last",
     extra_trigger: "[data-id='open'].btn-primary, [data-id='open'].oe_active",
     content:  _t("Use the path to quickly click back to <b>previous screens</b>, without reloading the page."),
     position: "bottom"

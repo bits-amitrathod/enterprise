@@ -1,12 +1,12 @@
 .o_kanban_view.o_kanban_dashboard.o_subscription_kanban {
 
     .o_kanban_record {
-        @include o-flex-display;
+        display: flex;
         position: relative;
     }
 
     .o_subscription_kanban_main {
-        @include o-flex(0, 0, auto);
+        flex: 0 0 auto;
         padding: $o-horizontal-padding;
         width: 70%; // for IE11 overflow issue
 

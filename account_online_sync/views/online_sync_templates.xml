@@ -6,36 +6,36 @@
     <t t-if="institutions.length > 0">
       <t t-foreach="institutions" t-as="inst">
         <div class="row institutionLine">
-          <div class="col-xs-12">
+          <div class="col-12">
             <hr class="searchSeparator"/>
             <div class="pointer js_institution" t-att-data-inst-id="inst.institution_identifier" t-att-data-provider="inst.provider"
               t-att-data-beta="inst.beta">
               <!-- Line containing basic information on institution (img, name, country, beta) -->
               <div class="row">
-                <div class="col-xs-7 col-sm-7">
+                <div class="col-7 col-md-7">
                   <h4><t t-esc="inst.name"></t></h4>
                 </div>
-                <div class="col-xs-1 col-sm-1">
+                <div class="col-1 col-md-1">
                   <h4><strong><t t-esc="inst.country"></t></strong></h4>
                 </div>
-                <div class="col-sm-2 hidden-xs">
+                <div class="col-md-2 d-none d-md-block">
                   <t t-if="inst.picture">
                     <div class="inst_icon" t-att-style="'background-image: url('+inst.picture+')'">
                     </div>
                   </t>
                 </div>
-                <div class="col-sm-2 col-xs-3">
+                <div class="col-md-2 col-3">
                   <t t-if="inst.beta">
-                    <img class="img-responsive pull-right beta-img" src="/account_online_sync/static/src/img/beta_icon.png" alt="Beta"/>
+                    <img class="img-fluid float-right beta-img" src="/account_online_sync/static/src/img/beta_icon.png" alt="Beta"/>
                   </t>
                 </div>
               </div>
               <!-- Detail of institution -->
-              <div class="row hidden js_institution_detail" t-att-id="inst.institution_identifier">
-                <div class="col-xs-12">
+              <div class="row d-none js_institution_detail" t-att-id="inst.institution_identifier">
+                <div class="col-12">
                   <div class="border-info">
                     <div class="row">
-                      <div class="col-sm-5 col-xs-12">
+                      <div class="col-md-5 col-12">
                       <h6 title="The third party provider used to synchronize with your account">Provider: <small><t t-esc="inst.provider"/></small></h6>
                       <h6 title="This id is used to identy the institution with our third party provider">Online identifier: <small><t t-esc="inst.institution_identifier"/></small></h6>
                       <t t-if="inst.site_url">
@@ -60,7 +60,7 @@
 
   <t t-name="OnlineSyncErrorMessage">
     <div>
-      <div class="col-xs-12 text-center no_result">
+      <div class="col-12 text-center no_result">
         <h4>Synchronization error!</h4>
         <h6>Bank synchronization returned the following error message:</h6>
         <p><t t-raw="sync_error_message"/></p>
@@ -71,9 +71,9 @@
 
   <t t-name="OnlineSyncSearchBankFooter">
     <div>
-      <button class="btn btn-default js_select_institution" disabled="true">Connect</button>
-      <button class="btn btn-default js_cancel">Cancel</button>
-      <div class="pull-right">
+      <button class="btn btn-secondary js_select_institution" disabled="true">Connect</button>
+      <button class="btn btn-secondary js_cancel">Cancel</button>
+      <div class="float-right">
         <span>Your bank is not there?</span>
         <button class="btn-link js_configure_manually">Create it</button>
       </div>
@@ -82,12 +82,12 @@
 
   <t t-name="OnlineSyncSearchBank">
     <div class="o_inst_search">
-      <div class="sync_error hidden">
+      <div class="sync_error d-none">
       </div>
 
-      <div class="institution_search hidden">
+      <div class="institution_search d-none">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-lg-8">
             <form id="search_form" target="#" method="post">
             <div class="input-group o_input_group">
               <input type="text" id="search_institution" class="o_input form-control o_input_search" placeholder="Search for a bank institution..." aria-describedby="click_search_institution" autocomplete="off">
@@ -107,20 +107,20 @@
         </div>
       </div>
 
-      <div class="favorite_institutions_no_result hidden">
+      <div class="favorite_institutions_no_result d-none">
         <div class="row">
-          <div class="col-xs-12 text-center no_result">
+          <div class="col-12 text-center no_result">
             <span><i class="fa fa-university fa-2" role="img" aria-label="Institution" title="Institution"></i></span>
             <h4>Search through thousands<br/> of institutions</h4>
           </div>
         </div>
       </div>
-      <div class="institutions_search hidden">
+      <div class="institutions_search d-none">
         <div class="institution_result">
         </div>
-        <div class="institution_no_result hidden">
+        <div class="institution_no_result d-none">
           <div class="row">
-            <div class="col-xs-12 text-center no_result">
+            <div class="col-12 text-center no_result">
               <span><i class="fa fa-search fa-2" role="img" aria-label="No result" title="No result"></i></span>
               <h4>No result found!</h4>
               <h6>Automated synchronization is not available yet</h6>

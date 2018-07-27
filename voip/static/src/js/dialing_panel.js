@@ -420,7 +420,7 @@ var DialingPanel = Widget.extend({
             this.$('.blockOverlay').on("click", function () {self._onSipErrorResolved();});
             this.$('.blockOverlay').attr('title', _t('Click to unblock'));
         } else {
-            this.$().block({message: message + '<br/><button type="button" class="btn btn-danger btn-sm btn-configuration">Configuration</button>'});
+            this.$().block({message: message + '<br/><button type="button" class="btn btn-danger btn-configuration">Configuration</button>'});
             this.$('.btn-configuration').on("click", function () {
                 //Call in order to get the id of the user's preference view instead of the user's form view
                 self._rpc({
