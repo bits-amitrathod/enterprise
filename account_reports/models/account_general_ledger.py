@@ -21,7 +21,6 @@ class report_account_general_ledger(models.AbstractModel):
 
     def _get_templates(self):
         templates = super(report_account_general_ledger, self)._get_templates()
-        templates['main_template'] = 'account_reports.template_general_ledger_report'
         templates['line_template'] = 'account_reports.line_template_general_ledger_report'
         return templates
 
