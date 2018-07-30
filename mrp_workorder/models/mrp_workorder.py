@@ -44,7 +44,8 @@ class MrpProductionWorkcenterLine(models.Model):
     @api.depends('qty_producing', 'qty_remaining')
     def _compute_is_last_lot(self):
         for wo in self:
-            wo.is_last_lot = wo.qty_producing >= wo.qty_remaining
+            precision = wo.production_id.product_uom_id.rounding
+            wo.is_last_lot = float_compare(wo.qty_producing, wo.qty_remaining, precision_rounding=precision) >= 0
 
     @api.depends('check_ids')
     def _compute_finished_product_check_ids(self):

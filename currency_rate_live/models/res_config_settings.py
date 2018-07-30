@@ -248,11 +248,13 @@ class ResCompany(models.Model):
         """
         def update_rate(currency, rate, date):
             #  Deleting current rate values because we can only have one
-            currency.rate_ids.filtered(lambda r: date == r.name).unlink()
+            company_id = currency._context.get('company_id') or self.env['res.users']._get_company().id
+            currency.rate_ids.filtered(lambda r: date == r.name and r.company_id.id == company_id).unlink()
             currency.rate_ids.create({
                 'rate': rate,
                 'currency_id': currency.id,
                 'name': date,
+                'company_id': company_id,
             })
             # Update cached rate field
             currency._compute_current_rate()
@@ -265,12 +267,12 @@ class ResCompany(models.Model):
         ns = xml.nsmap
         # nsmap don't support "None" key then deleting
         ns.pop(None, None)
-        serie = xml.xpath("bm:DataSet/bm:Series[@IDSERIE='SF43718']/bm:Obs", namespaces=ns)[0]
+        serie = xml.xpath("bm:DataSet/bm:Series[@IDSERIE='SF60653']/bm:Obs", namespaces=ns)[0]
         usd_mxn = float(serie.get('OBS_VALUE'))
         date = datetime.datetime.strptime(
             serie.get('TIME_PERIOD'), BANXICO_DATE_FORMAT).strftime(DEFAULT_SERVER_DATE_FORMAT)
-        mxn = self.env.ref('base.MXN')
-        usd = self.env.ref('base.USD')
+        mxn = self.env.ref('base.MXN').with_context(company_id=self.id)
+        usd = self.env.ref('base.USD').with_context(company_id=self.id)
         base_currency = mxn
         currency_to_update = usd
         rate = 1.0 / usd_mxn
