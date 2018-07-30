@@ -23,6 +23,7 @@ var LinesWidget = Widget.extend({
         this.mode = parent.mode;
         this.groups = parent.groups;
         this.model = parent.actionParams.model;
+        this.show_entire_packs = parent.show_entire_packs;
     },
 
     start: function () {
@@ -154,6 +155,40 @@ var LinesWidget = Widget.extend({
         }
     },
 
+    getProductLines: function (lines) {
+        if (! this.show_entire_packs) {
+            return lines;
+        }
+
+        return _.filter(lines, function (line) {
+            return ! line.package_id;
+        });
+    },
+
+    getPackageLines: function (lines) {
+        if (! this.show_entire_packs) {
+            return [];
+        }
+
+        lines = _.filter(lines, function (line) {
+            return line.package_id;
+        });
+        var groupedLines = _.groupBy(lines, function (line) {
+            return line.package_id[0] === line.result_package_id[0] && line.package_id[0];
+        });
+        var packageLines = [];
+        for (var key in groupedLines) {
+            if (groupedLines.hasOwnProperty(key)) {
+                packageLines.push(groupedLines[key][0]);
+            }
+        }
+        return packageLines;
+    },
+
+    reload: function () {
+        this.trigger_up('reload');
+    },
+
     //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
@@ -199,7 +234,8 @@ var LinesWidget = Widget.extend({
         var $body = this.$el.filter('.barcode_lines');
         if (this.page.lines.length) {
             var $lines = $(QWeb.render('stock_barcode_lines_template', {
-                lines: this.page.lines,
+                lines: this.getProductLines(this.page.lines),
+                packageLines: this.getPackageLines(this.page.lines),
                 model: this.model,
                 groups: this.groups,
             }));

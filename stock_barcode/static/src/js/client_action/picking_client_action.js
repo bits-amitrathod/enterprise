@@ -90,7 +90,7 @@ var PickingClientAction = ClientAction.extend({
     /**
      * @override
      */
-    _makeNewLine: function (product, barcode, qty_done) {
+    _makeNewLine: function (product, barcode, qty_done, package_id, result_package_id) {
         var virtualId = this._getNewVirtualId();
         var currentPage = this.pages[this.currentPageIndex];
         var newLine = {
@@ -114,6 +114,8 @@ var PickingClientAction = ClientAction.extend({
                 'id': currentPage.location_dest_id,
                 'display_name': currentPage.location_dest_name,
             },
+            'package_id': package_id,
+            'result_package_id': result_package_id,
             'state': 'assigned',
             'reference': this.name,
             'virtual_id': virtualId,
@@ -209,6 +211,7 @@ var PickingClientAction = ClientAction.extend({
                     'location_dest_id': line.location_dest_id.id,
                     'lot_id': line.lot_id && line.lot_id[0],
                     'lot_name': line.lot_name,
+                    'package_id': line.package_id ? line.package_id[0] : false,
                     'result_package_id': line.result_package_id ? line.result_package_id[0] : false,
                 }];
                 formattedCommands.push(cmd);
@@ -224,6 +227,7 @@ var PickingClientAction = ClientAction.extend({
                     'lot_name': line.lot_name,
                     'lot_id': line.lot_id && line.lot_id[0],
                     'state': 'assigned',
+                    'package_id': line.package_id ? line.package_id[0] : false,
                     'result_package_id': line.result_package_id ? line.result_package_id[0] : false,
                 }];
                 formattedCommands.push(cmd);
@@ -292,8 +296,8 @@ var PickingClientAction = ClientAction.extend({
                                    line.id  === idOrVirtualId;
                         });
                         currentStateLine.result_package_id = [package_id, package_name];
-                        self.trigger_up('reload');
                     });
+                    self.trigger_up('reload');
                 });
             });
         }
