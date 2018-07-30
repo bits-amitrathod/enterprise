@@ -16,30 +16,24 @@ class SaleReport(models.Model):
         ('no', 'Nothing to Invoice')
         ], string="Invoice Status", readonly=True)
 
-    def _select(self):
-        select_term = """
-            , s.id as order_id
-            , s.date_order <= (timezone('utc', now()) - ((COALESCE(config.value, '1.0') || ' hour')::INTERVAL))
-            AND team.team_type = 'website'
-            AND s.state = 'draft'
-            AND s.partner_id != %s
-            AS is_abandoned_cart
-            , s.invoice_status as invoice_status
-        """ % self.env.ref('base.public_partner').id
-        return super(SaleReport, self)._select() + select_term
+    def _query(self, with_clause='', fields={}, groupby='', from_clause=''):
+        fields['order_id'] = ", s.id as order_id"
+        fields['is_abandoned_cart'] = """, s.date_order <= (timezone('utc', now()) - ((COALESCE(config.value, '1.0') || ' hour')::INTERVAL))
+        AND team.team_type = 'website'
+        AND s.state = 'draft'
+        AND s.partner_id != %s
+        AS is_abandoned_cart""" % self.env.ref('base.public_partner').id
+        fields['invoice_status'] = ', s.invoice_status as invoice_status'
 
-    def _from(self):
-        from_term = """
+        from_clause += """
             left join crm_team team on team.id = s.team_id
             left join ir_config_parameter config on config.key = 'website_sale.cart_abandoned_delay'
         """
-        return super(SaleReport, self)._from() + from_term
 
-    def _group_by(self):
-        group_by_term = """
+        groupby += """
             , s.id
             , config.value
             , team.team_type
             , s.invoice_status
             """
-        return super(SaleReport, self)._group_by() + group_by_term
+        return super(SaleReport, self)._query(with_clause, fields, groupby, from_clause)
