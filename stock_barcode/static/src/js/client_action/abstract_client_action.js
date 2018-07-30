@@ -716,6 +716,7 @@ var ClientAction = AbstractAction.extend({
      * @returns {Deferred}
      */
     _step_product: function (barcode, linesActions) {
+        var self = this;
         this.currentStep = 'product';
         var errorMessage;
 
@@ -726,7 +727,24 @@ var ClientAction = AbstractAction.extend({
             }
             var res = this._incrementLines({'product': product, 'barcode': barcode});
             if (res.isNewLine) {
-                linesActions.push([this.linesWidget.addProduct, [res.lineDescription, this.actionParams.model]]);
+                if (this.actionParams.model === 'stock.inventory') {
+                    // FIXME sle: add owner_id, prod_lot_id, owner_id, product_uom_id
+                    return this._rpc({
+                        model: 'product.product',
+                        method: 'get_theoretical_quantity',
+                        args: [
+                            res.lineDescription.product_id.id,
+                            res.lineDescription.location_id.id,
+                        ],
+                    }).then(function (theoretical_qty) {
+                        res.lineDescription.theoretical_qty = theoretical_qty;
+                        linesActions.push([self.linesWidget.addProduct, [res.lineDescription, self.actionParams.model]]);
+                        self.scannedLines.push(res.id || res.virtualId);
+                        return $.when({linesActions: linesActions});
+                    });
+                } else {
+                    linesActions.push([this.linesWidget.addProduct, [res.lineDescription, this.actionParams.model]]);
+                }
             } else {
                 if (product.tracking === 'none') {
                     linesActions.push([this.linesWidget.incrementProduct, [res.id || res.virtualId, product.qty || 1, this.actionParams.model]]);
