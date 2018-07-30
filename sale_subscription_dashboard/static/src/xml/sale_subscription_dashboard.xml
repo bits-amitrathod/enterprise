@@ -274,7 +274,7 @@
 
         <!-- Tags -->
         <div t-if="widget.tags &amp;&amp; widget.tags.length > 1" class="o_dropdown dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">Filter on tags</a>
+            <a class="dropdown-toggle" data-toggle="dropdown">Filter on categories</a>
             <div class="dropdown-menu o_filters_menu" role="menu">
                 <t t-foreach="widget.tags" t-as="tag">
                     <a role="menuitem" href="#" class="dropdown-item o_tags_filter js_tag" t-att-data-id="tag.id"><t t-esc="tag.name"/></a>
@@ -290,6 +290,16 @@
                     <a role="menuitem" href="#" class="dropdown-item o_companies_filter js_tag" t-att-data-id="company.id"><t t-esc="company.name"/></a>
                 </t>
             </div>
+        </div>
+
+        <!-- Sales Team -->
+        <div t-if="widget.sales_team &amp;&amp; widget.sales_team.length > 1" class="o_dropdown dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Filter on sales team<span class="caret"/></a>
+            <ul class="dropdown-menu o_filters_menu" role="menu">
+                <li t-foreach="widget.sales_team" t-as="sale_team">
+                    <a href="#" class="o_sales_team_filter js_tag" t-att-data-id="sale_team.id"><t t-esc="sale_team.name"/></a>
+                </li>
+            </ul>
         </div>
     </t>
 

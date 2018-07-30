@@ -244,7 +244,7 @@ class SaleSubscription(models.Model):
     def name_get(self):
         res = []
         for sub in self:
-            name = '%s - %s' % (sub.code, sub.partner_id.sudo().name) if sub.code else sub.partner_id.name
+            name = '%s - %s' % (sub.code, sub.partner_id.sudo().display_name) if sub.code else sub.partner_id.display_name
             res.append((sub.id, '%s/%s' % (sub.template_id.sudo().code, name) if sub.template_id.sudo().code else name))
         return res
 
@@ -566,7 +566,7 @@ class SaleSubscription(models.Model):
                                     new_invoice.unlink()
                             if tx is None or tx.state != 'done':
                                 amount = subscription.recurring_total
-                                date_close = datetime.datetime.strptime(subscription.recurring_next_date, "%Y-%m-%d") + relativedelta(days=15)
+                                date_close = datetime.datetime.strptime(subscription.recurring_next_date, "%Y-%m-%d") + relativedelta(days=subscription.template_id.auto_close_limit or 15)
                                 close_subscription = current_date >= date_close.strftime('%Y-%m-%d')
                                 email_context = self.env.context.copy()
                                 email_context.update({
@@ -805,6 +805,8 @@ class SaleSubscriptionTemplate(models.Model):
     product_count = fields.Integer(compute='_compute_product_count')
     subscription_count = fields.Integer(compute='_compute_subscription_count')
     color = fields.Integer()
+    auto_close_limit = fields.Integer(string="Automatic closing limit", default=15,
+        help="Number of days before a subscription gets closed when automatic payments is set and are not fulfilled by the customer.")
 
     def _compute_subscription_count(self):
         subscription_data = self.env['sale.subscription'].read_group(domain=[('template_id', 'in', self.ids), ('state', 'in', ['open', 'pending'])],
