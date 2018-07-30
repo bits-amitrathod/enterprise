@@ -318,7 +318,6 @@ odoo.define('sign.utils', function (require) {
                 placeholder: _t("Select the responsible"),
                 allowClear: false,
                 width: '100%',
-                minimumInputLength: 1,
 
                 formatResult: function(data, resultElem, searchObj) {
                     if(!data.text) {

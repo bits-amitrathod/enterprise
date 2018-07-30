@@ -182,12 +182,6 @@ odoo.define('sign.template', function(require) {
 
                 self.$('#o_sign_name').val(self.$currentTarget.data('name') );
                 self.title = self.title + ' <span class="fa fa-long-arrow-right"/> ' + self.$currentTarget.prop('field-type') + ' Field';
-                // Fix for select2 dropdown position offset issue inside iframe.
-                self.$responsibleSelect.on("select2-open select2-highlight select2-loaded select2-selecting", function(e) {
-                    var dropdown = $("#select2-drop");
-                    // Iframe top + dropdown top offset
-                    dropdown.css("top", dropdown.offset().top + $("iframe").offset().top);
-                });
             });
         },
 
