@@ -18,25 +18,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
+from odoo import api, models
 
-{
-    'name': 'Sales Report By Saleperson',
-    'category': 'sale',
-    'version': '11.0.0.1',
-    'summary': 'This module provides Sales Report By Saleperson and group.',
-    'author': 'Tushar Godase',
-    'description': '''This module provides Sales Report By Saleperson.
-                      With the help of this moudule you can print sales report with groupby sale person.
-                      '''
-                   ,
-    'depends': ['base', 'sale_management'],
-    'data': [
-        'views/sale_view.xml',
-        'report/saleperson_report.xml',
-        'report/saleperson_temp.xml'
-    ],
-    'images': ['static/description/banner.png'],
-    'auto_install': False,
-    'installable': True,
-    'application': False,
-}
+
+class ReportSalesSalespersonWise(models.AbstractModel):
+    _name = 'report.sr_sales_report_compmonth.salesbymonth_temp'
+
+    @api.model
+    def get_report_values(self, docids, data=None):
+        return {
+            'doc_ids': data.get('ids'),
+            'doc_model': data.get('model'),
+            'data': data['form'],
+            'start_date': data['start_date'],
+            'end_date': data['end_date'],
+        }

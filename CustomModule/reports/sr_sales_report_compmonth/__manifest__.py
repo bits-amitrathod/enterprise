@@ -20,13 +20,13 @@
 ##############################################################################
 
 {
-    'name': 'Sales Report By Saleperson',
+    'name': 'Sales Report Compare By Month',
     'category': 'sale',
     'version': '11.0.0.1',
-    'summary': 'This module provides Sales Report By Saleperson and group.',
+    'summary': 'This module provides Sales Report Compare By Month.',
     'author': 'Tushar Godase',
-    'description': '''This module provides Sales Report By Saleperson.
-                      With the help of this moudule you can print sales report with groupby sale person.
+    'description': '''This module provides Sales Report By Month.
+                      With the help of this moudule you can print sales report Compare By Month Wise .
                       '''
                    ,
     'depends': ['base', 'sale_management'],

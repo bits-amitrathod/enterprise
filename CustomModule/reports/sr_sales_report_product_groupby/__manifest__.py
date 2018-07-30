@@ -23,7 +23,7 @@
     'name': 'Sales Report By Product',
     'category': 'sale',
     'version': '11.0.0.1',
-    'summary': 'This module provides Sales Report By product',
+    'summary': 'This module provides Sales Report By product group',
     'author': 'Tushar Godase',
     'description': '''This module provides Sales Report By Product.
                       With the help of this moudule you can print sales report with groupby Product.

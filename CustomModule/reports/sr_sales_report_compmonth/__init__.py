@@ -19,24 +19,5 @@
 #
 ##############################################################################
 
-{
-    'name': 'Sales Report By Saleperson',
-    'category': 'sale',
-    'version': '11.0.0.1',
-    'summary': 'This module provides Sales Report By Saleperson and group.',
-    'author': 'Tushar Godase',
-    'description': '''This module provides Sales Report By Saleperson.
-                      With the help of this moudule you can print sales report with groupby sale person.
-                      '''
-                   ,
-    'depends': ['base', 'sale_management'],
-    'data': [
-        'views/sale_view.xml',
-        'report/saleperson_report.xml',
-        'report/saleperson_temp.xml'
-    ],
-    'images': ['static/description/banner.png'],
-    'auto_install': False,
-    'installable': True,
-    'application': False,
-}
+from . import models
+from . import report
