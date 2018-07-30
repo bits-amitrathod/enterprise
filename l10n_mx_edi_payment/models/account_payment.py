@@ -20,18 +20,14 @@ class AccountPayment(models.Model):
         help="Keep empty to use the current Mexico central time")
 
     @api.multi
-    def post(self):
-        date_mx = self.env['l10n_mx_edi.certificate'].sudo().get_mx_current_datetime() # noqa
-        self.filtered(lambda r: r.l10n_mx_edi_is_required()).write({
-            'l10n_mx_edi_expedition_date': date_mx,
-            'l10n_mx_edi_time_payment': date_mx.strftime(
-                DEFAULT_SERVER_TIME_FORMAT)
-        })
-        return super(AccountPayment, self).post()
-
-    @api.multi
     def _l10n_mx_edi_create_cfdi_payment(self):
         res = super(AccountPayment, self)._l10n_mx_edi_create_cfdi_payment()
+        date_mx = self.env['l10n_mx_edi.certificate'].sudo().get_mx_current_datetime() # noqa
+        if not self.l10n_mx_edi_expedition_date:
+            self.l10n_mx_edi_expedition_date = date_mx
+        if not self.l10n_mx_edi_time_payment:
+            self.l10n_mx_edi_time_payment = date_mx.strftime(
+                DEFAULT_SERVER_TIME_FORMAT)
         time_invoice = datetime.strptime(
             self.l10n_mx_edi_time_payment, DEFAULT_SERVER_TIME_FORMAT).time()
         cfdi_date = datetime.combine(

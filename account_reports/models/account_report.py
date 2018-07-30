@@ -326,6 +326,7 @@ class AccountReport(models.AbstractModel):
                 }
         return info
 
+    @api.model
     def create_hierarchy(self, lines):
         """This method is called when the option 'hiearchy' is enabled on a report.
         It receives the lines (as computed by get_lines()) in argument, and will add
@@ -333,66 +334,149 @@ class AccountReport(models.AbstractModel):
         it will fallback on creating a hierarchy based on the account's code first 3
         digits.
         """
-        AccountAccount = self.env['account.account']
-        hierarchy_list = {}
-        current_position = 0
+        # Avoid redundant browsing.
+        accounts_cache = {}
 
-        for line in lines:
-            columns = line.get('columns', [{}])
-            is_grouped_by_account = line.get('caret_options') == 'account.account'
-            account_id = AccountAccount.browse(line.get('id')) if is_grouped_by_account else AccountAccount
-            group_id = account_id.group_id
-            if group_id:
-                group_prefix = group_id.code_prefix
-                group_name = group_id.name
-                group_key = group_id
+        MOST_SORT_PRIO = 0
+        LEAST_SORT_PRIO = 99
+
+        # Retrieve account either from cache, either by browsing.
+        def get_account(id):
+            if id not in accounts_cache:
+                accounts_cache[id] = self.env['account.account'].browse(id)
+            return accounts_cache[id]
+
+        # Create codes path in the hierarchy based on account.
+        def get_account_codes(account):
+            # A code is tuple(sort priority, actual code)
+            codes = []
+            if account.group_id:
+                group = account.group_id
+                while group:
+                    code = '%s %s' % (group.code_prefix or '', group.name)
+                    codes.append((MOST_SORT_PRIO, code))
+                    group = group.parent_id
             else:
-                group_name = ''
-                group_prefix = account_id.code and account_id.code[0:3] or False
-                group_key = group_prefix
+                # Limit to 3 levels.
+                code = account.code[:3]
+                while code:
+                    codes.append((MOST_SORT_PRIO, code))
+                    code = code[:-1]
+            return list(reversed(codes))
 
-            current_group_level = is_grouped_by_account and 4 or line.get('level', 4)
-            while group_key:
-                #create hierarchy leaves if needed
-                if group_key not in hierarchy_list:
-                    current_group_level -= 1
-                    hierarchy_list[group_key] = {
-                        'position': (current_position, current_group_level),  # will be used to insert at the good place
-                        'values': {
-                            'id': 'hierarchy_%s_%s' % (current_position, current_group_level),
-                            'name': '%s %s' % (group_prefix, group_name) if group_prefix else group_name,
-                            'unfoldable': False,
-                            'unfolded': True,
-                            'parent_id': line.get('parent_id'),  # to make these fold when the original parent gets folded
-                            'level': current_group_level,
-                            'columns': [0 for l in range(len(columns))],
-                        }
-                    }
+        # Add the report line to the hierarchy recursively.
+        def add_line_to_hierarchy(line, codes, level_dict, depth=None):
+            # Recursively build a dict where:
+            # 'children' contains only subcodes
+            # 'lines' contains the lines at this level
+            # This > lines [optional, i.e. not for topmost level]
+            #      > children > [codes] "That" > lines
+            #                                  > metadata
+            #                                  > children
+            #      > metadata(depth, parent ...)
 
-                #sum line values in hierarchy leaves
-                hierarchy_list[group_key]['values']['columns'] = [sum(x) for x in pycompat.izip(hierarchy_list[group_key]['values']['columns'], [c.get('no_format_name', 0) for c in columns])]
+            if not codes:
+                return
+            if not depth:
+                depth = line.get('level', 1)
+            level_dict.setdefault('depth', depth)
+            level_dict.setdefault('parent_id', line.get('parent_id'))
+            level_dict.setdefault('children', {})
+            code = codes[0]
+            codes = codes[1:]
+            level_dict['children'].setdefault(code, {})
 
-                #loop on
-                if account_id.group_id:
-                    group_key = group_key.parent_id
-                    group_prefix = group_key.code_prefix
-                    group_name = group_key.name
+            if codes:
+                add_line_to_hierarchy(line, codes, level_dict['children'][code], depth=depth + 1)
+            else:
+                level_dict['children'][code].setdefault('lines', [])
+                level_dict['children'][code]['lines'].append(line)
+
+        # Merge a list of columns together and take care about str values.
+        def merge_columns(columns):
+            return ['n/a' if any(isinstance(i, str) for i in x) else sum(x) for x in pycompat.izip(*columns)]
+
+        # Get_lines for the newly computed hierarchy.
+        def get_hierarchy_lines(values, depth=1):
+            lines = []
+            sum_sum_columns = []
+            for base_line in values.get('lines', []):
+                lines.append(base_line)
+                sum_sum_columns.append([c.get('no_format_name', c['name']) for c in base_line['columns']])
+
+            # For the last iteration, there might not be the children key (see add_line_to_hierarchy)
+            for key in sorted(values.get('children', {}).keys()):
+                sum_columns, sub_lines = get_hierarchy_lines(values['children'][key], depth=values['depth'])
+                header_line = {
+                    'id': 'hierarchy',
+                    'name': key[1],  # second member of the tuple
+                    'unfoldable': False,
+                    'unfolded': True,
+                    'level': values['depth'],
+                    'parent_id': values['parent_id'],
+                    'columns': [{'name': self.format_value(c) if not isinstance(c, str) else c} for c in sum_columns],
+                }
+                if key[0] == LEAST_SORT_PRIO:
+                    header_line['style'] = 'font-style:italic;'
+                lines += [header_line] + sub_lines
+                sum_sum_columns.append(sum_columns)
+            return merge_columns(sum_sum_columns), lines
+
+        def deep_merge_dict(source, destination):
+            for key, value in source.items():
+                if isinstance(value, dict):
+                    # get node or create one
+                    node = destination.setdefault(key, {})
+                    deep_merge_dict(value, node)
                 else:
-                    group_prefix = group_prefix[:-1]
-                    group_name = ''
-                    group_key = group_prefix
+                    destination[key] = value
 
-            #count the number of lines passed
-            current_position += 1
+            return destination
 
-        #build the final list that will be return
-        already_inserted = 0
-        for key in sorted(hierarchy_list, key=lambda x:hierarchy_list[x]['position']):
-            value = hierarchy_list[key]
-            value['values']['columns'] = [{'name': self.format_value(v)} for v in value['values']['columns']]
-            lines.insert(value['position'][0] + already_inserted, value['values'])
-            already_inserted += 1
-        return lines
+        # Hierarchy of codes.
+        accounts_hierarchy = {}
+
+        new_lines = []
+        no_group_lines = []
+        # If no account.group at all, we need to pass once again in the loop to dispatch
+        # all the lines across their account prefix, hence the None
+        for line in lines + [None]:
+            # Only deal with lines grouped by accounts.
+            # And discriminating sections defined by account.financial.html.report.line
+            is_grouped_by_account = line and line.get('caret_options') == 'account.account'
+            if not is_grouped_by_account or not line:
+
+                # No group code found in any lines, compute it automatically.
+                no_group_hierarchy = {}
+                for no_group_line in no_group_lines:
+                    codes = [(LEAST_SORT_PRIO, _('(No Group)'))]
+                    if not accounts_hierarchy:
+                        account = get_account(no_group_line.get('id'))
+                        codes = get_account_codes(account)
+                    add_line_to_hierarchy(no_group_line, codes, no_group_hierarchy)
+                no_group_lines = []
+
+                deep_merge_dict(no_group_hierarchy, accounts_hierarchy)
+
+                # Merge the newly created hierarchy with existing lines.
+                if accounts_hierarchy:
+                    new_lines += get_hierarchy_lines(accounts_hierarchy)[1]
+                    accounts_hierarchy = {}
+
+                if line:
+                    new_lines.append(line)
+                continue
+
+            # Exclude lines having no group.
+            account = get_account(line.get('id'))
+            if not account.group_id:
+                no_group_lines.append(line)
+                continue
+
+            codes = get_account_codes(account)
+            add_line_to_hierarchy(line, codes, accounts_hierarchy)
+
+        return new_lines
 
     @api.multi
     def get_html(self, options, line_id=None, additional_context=None):
