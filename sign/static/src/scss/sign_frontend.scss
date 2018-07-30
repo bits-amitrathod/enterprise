@@ -25,13 +25,12 @@
     }
 
     ~ .modal .modal-content {
-        border-radius: 0;
         border: none;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
 
         .btn {
             border-radius: 0;
             border: none;
-            color: $o-brand-primary;
         }
         .btn-primary {
             background-color: $o-brand-primary;
@@ -39,6 +38,8 @@
         }
 
         .modal-header {
+            border-top-left-radius: 0.26rem;
+            border-top-right-radius: 0.26rem;
             background-color: $o-brand-odoo;
             color: #fff;
             .modal-title {
