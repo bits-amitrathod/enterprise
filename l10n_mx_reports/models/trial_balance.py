@@ -131,12 +131,18 @@ class MxReportAccountTrial(models.AbstractModel):
         """Return list of accounts found in the third level"""
         lines = []
         domain = safe_eval(line.domain or '[]')
-        domain.append((('deprecated', '=', False)))
+        domain += [
+            ('deprecated', '=', False),
+            ('company_id', 'in', self.env.context['company_ids']),
+        ]
         account_ids = self.env['account.account'].search(domain, order='code')
         tags = account_ids.mapped('tag_ids').filtered(
             lambda r: r.color == 4).sorted(key=lambda a: a.name)
         for tag in tags:
-            accounts = account_ids.search([('tag_ids', 'in', [tag.id])])
+            accounts = account_ids.search([
+                ('tag_ids', 'in', [tag.id]),
+                ('id', 'in', account_ids.ids),
+            ])
             name = tag.name
             name = name[:98] + "..." if len(name) > 100 else name
             cols = [{'name': ''}]
