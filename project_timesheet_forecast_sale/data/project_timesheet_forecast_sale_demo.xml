@@ -13,14 +13,14 @@
     <record id="sale_timesheet.project_support" model="project.project">
         <field name="allow_forecast" eval="True"/>
     </record>
-
+<data noupdate="0">
     <!-- Forecasts of projects created by sale_line_13 -->
     <record id="project_forecast_data_11" model="project.forecast">
         <field name="start_date" eval="DateTime.today().strftime('%Y-%m-01')"/>
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=1, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
-        <field name="resource_time">10</field>
+        <field name="resource_time">1.25</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_root"/>
         <field name="employee_id" ref="hr.employee_root"/>
@@ -30,7 +30,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=2, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
-        <field name="resource_time">10</field>
+        <field name="resource_time">1.25</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_root"/>
         <field name="employee_id" ref="hr.employee_root"/>
@@ -40,7 +40,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=1, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
-        <field name="resource_time">20</field>
+        <field name="resource_time">1.25</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_demo"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -50,7 +50,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=2, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
-        <field name="resource_time">20</field>
+        <field name="resource_time">0.625</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_demo"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -60,7 +60,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=3, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
-        <field name="resource_time">20</field>
+        <field name="resource_time">0.625</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_demo"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -70,7 +70,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=4, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_13'))]"/>
-        <field name="resource_time">20</field>
+        <field name="resource_time">0.625</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_demo"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -82,7 +82,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=1, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
-        <field name="resource_time">15</field>
+        <field name="resource_time">1.25</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_root"/>
         <field name="employee_id" ref="hr.employee_root"/>
@@ -92,7 +92,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=2, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
-        <field name="resource_time">15</field>
+        <field name="resource_time">1.25</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_root"/>
         <field name="employee_id" ref="hr.employee_root"/>
@@ -102,7 +102,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=3, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
-        <field name="resource_time">15</field>
+        <field name="resource_time">0.125</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_root"/>
         <field name="employee_id" ref="hr.employee_root"/>
@@ -112,7 +112,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=4, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
-        <field name="resource_time">15</field>
+        <field name="resource_time">1.25</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_root"/>
         <field name="employee_id" ref="hr.employee_root"/>
@@ -122,7 +122,7 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=3, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
         <field name="project_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_22'))]"/>
-        <field name="resource_time">10</field>
+        <field name="resource_time">0.625</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_demo"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -134,17 +134,16 @@
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=3, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="project_id" ref="sale_timesheet.project_support"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_21'))]"/>
-        <field name="resource_time">10</field>
-        <field name="forecast_uom">day</field>
+        <field name="resource_hours">10</field>
         <field name="user_id" ref="base.user_root"/>
-        <field name="employee_id" ref="hr.employee_qdp"/>
+        <field name="employee_id" ref="hr.employee_root"/>
     </record>
     <record id="project_forecast_data_32" model="project.forecast">
         <field name="start_date" eval="(DateTime.today() + relativedelta(months=3, day=1)).strftime('%Y-%m-%d')"/>
         <field name="end_date" eval="(DateTime.today() + relativedelta(months=4, days=-1, day=1)).strftime('%Y-%m-%d')"/>
         <field name="project_id" ref="sale_timesheet.project_support"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_21'))]"/>
-        <field name="resource_time">10</field>
+        <field name="resource_time">1.25</field>
         <field name="forecast_uom">day</field>
         <field name="user_id" ref="base.user_demo"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
@@ -155,19 +154,27 @@
         <field name="project_id" ref="sale_timesheet.project_support"/>
         <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_11'))]"/>
         <field name="forecast_uom">day</field>
-        <field name="resource_time">15</field>
+        <field name="resource_time">1.25</field>
         <field name="user_id" ref="base.user_root"/>
-        <field name="employee_id" ref="hr.employee_qdp"/>
+        <field name="employee_id" ref="hr.employee_root"/>
     </record>
     <record id="project_forecast_data_34" model="project.forecast">
-        <field name="start_date" eval="(DateTime.today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d')"/>
-        <field name="end_date" eval="(DateTime.today() + relativedelta(months=42, days=-1, day=1)).strftime('%Y-%m-%d')"/>
-        <field name="task_id" ref="sale_timesheet.project_task_internal"/>
+        <field name="start_date" eval="(DateTime.today() + relativedelta(months=1)).strftime('%Y-%m-01')"/>
+        <field name="end_date" eval="(DateTime.today() + relativedelta(months=2, day=1, days=-1)).strftime('%Y-%m-%d')"/>
         <field name="project_id" ref="project.project_project_1"/>
-        <field name="resource_time">16</field>
-        <field name="forecast_uom">day</field>
+        <field name="task_id" ref="project.project_task_2"/>
+        <field name="resource_hours">5</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="employee_id" ref="hr.employee_root"/>
+      </record>
+      <record id="project_forecast_data_35" model="project.forecast">
+        <field name="start_date" eval="(DateTime.today() + relativedelta(months=2, day=1)).strftime('%Y-%m-%d')"/>
+        <field name="end_date" eval="(DateTime.today() + relativedelta(months=3, days=-1, day=1)).strftime('%Y-%m-%d')"/>
+        <field name="project_id" ref="sale_timesheet.project_support"/>
+        <field name="task_id" search="[('sale_line_id', '=', ref('sale_timesheet.sale_line_21'))]"/>
+        <field name="resource_hours">10</field>
         <field name="user_id" ref="base.user_demo"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
     </record>
-
+</data>
 </odoo>
