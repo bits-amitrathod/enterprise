@@ -52,6 +52,9 @@ class report_account_followup_report(models.AbstractModel):
                     date_due = (date_due, 'color: red;')
                 if is_payment:
                     date_due = ''
+                move_line_name = aml.invoice_id.name or aml.name
+                if public:
+                    move_line_name = (move_line_name, 'display: block; white-space:normal;')
                 amount = formatLang(self.env, amount, currency_obj=currency)
                 line_num += 1
                 lines.append({
@@ -62,7 +65,7 @@ class report_account_followup_report(models.AbstractModel):
                     'type': is_payment and 'payment' or 'unreconciled_aml',
                     'footnotes': {},
                     'unfoldable': False,
-                    'columns': [formatLangDate(aml.date), date_due, aml.invoice_id.name or aml.name] + (not public and [aml.expected_pay_date and (aml.expected_pay_date, aml.internal_note) or ('', ''), aml.blocked] or []) + [amount],
+                    'columns': [formatLangDate(aml.date), date_due, move_line_name] + (not public and [aml.expected_pay_date and (aml.expected_pay_date, aml.internal_note) or ('', ''), aml.blocked] or []) + [amount],
                     'blocked': aml.blocked,
                 })
             total = formatLang(self.env, total, currency_obj=currency)
