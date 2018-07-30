@@ -1,4 +1,4 @@
-odoo.define('web_studio.Main', function (require) {
+odoo.define('web_studio.ActionEditorAction', function (require) {
 "use strict";
 
 var AbstractAction = require('web.AbstractAction');
@@ -14,14 +14,9 @@ var NewViewDialog = require('web_studio.NewViewDialog');
 var ViewEditorManager = require('web_studio.ViewEditorManager');
 
 var _t = core._t;
-var _lt = core._lt;
 
-var Main = AbstractAction.extend({
+var ActionEditorAction = AbstractAction.extend({
     className: 'o_web_studio_client_action',
-    error_messages: {
-        'wrong_xpath': _lt("This operation caused an error, probably because a xpath was broken"),
-        'view_rendering': _lt("The requested change caused an error in the view. It could be because a field was deleted, but still used somewhere else."),
-    },
     custom_events: {
         'studio_default_view': '_onSetDefaultView',
         'studio_disable_view': '_onDisableView',
@@ -29,7 +24,6 @@ var Main = AbstractAction.extend({
         'studio_new_view': '_onNewView',
         'studio_set_another_view': '_onSetAnotherView',
         'studio_edit_action': '_onEditAction',
-        'studio_error': '_onShowError',
     },
     /**
      * @constructor
@@ -225,7 +219,7 @@ var Main = AbstractAction.extend({
                 var params = {
                     fields_view: fields_views[self.viewType],
                     viewType: self.viewType,
-                    view_env: viewEnv,
+                    env: viewEnv,
                     chatter_allowed: self.chatter_allowed,
                     studio_view_id: studio_view.studio_view_id,
                     studio_view_arch: studio_view.studio_view_arch,
@@ -313,7 +307,7 @@ var Main = AbstractAction.extend({
         var self = this;
         var def = this._setAnotherViewRPC(this.action.id, view_mode, view_id);
         return def.then(function (result) {
-            return self.do_action('action_web_studio_main', {
+            return self.do_action('action_web_studio_action_editor', {
                 action: result,
                 noEdit: true,
             });
@@ -353,7 +347,7 @@ var Main = AbstractAction.extend({
             if (initial_view_mode) {
                 result.initial_view_types = initial_view_mode.split(',');
             }
-            return self.do_action('action_web_studio_main', {
+            return self.do_action('action_web_studio_action_editor', {
                 action: result,
                 noEdit: true,
             });
@@ -410,7 +404,7 @@ var Main = AbstractAction.extend({
             view_mode: view_mode,
         });
         def.then(function (result) {
-            self.do_action('action_web_studio_main', {
+            self.do_action('action_web_studio_action_editor', {
                 action: result,
                 viewType: view_type,
             });
@@ -451,15 +445,8 @@ var Main = AbstractAction.extend({
 
         this._writeViewMode(view_mode, this.action.view_mode);
     },
-    /**
-     * @private
-     * @param {OdooEvent} event
-     */
-    _onShowError: function (event) {
-        this.do_warn(_t("Error"), this.error_messages[event.data.error]);
-    },
 });
 
-core.action_registry.add('action_web_studio_main', Main);
+core.action_registry.add('action_web_studio_action_editor', ActionEditorAction);
 
 });

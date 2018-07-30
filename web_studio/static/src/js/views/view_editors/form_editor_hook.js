@@ -8,9 +8,9 @@ var FormEditorHook = Widget.extend({
     /**
      * @constructor
      * @param {Widget} parent
-     * @param {String} position
+     * @param {String} position values: inside | after | before
      * @param {Integer} hook_id
-     * @param {String} tagName
+     * @param {String} tagName values: generidTag | '' | tr | div
      */
     init: function (parent, position, hook_id, tagName) {
         this._super.apply(this, arguments);

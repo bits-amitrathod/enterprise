@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
 
-<t t-name="web_studio.Sidebar.Parameters" t-if="widget.debug">
-    <button class="btn btn-secondary o_web_studio_parameters"><i class="fa fa-cog"/> More</button>
-</t>
-
-<t t-name="web_studio.Sidebar.Remove">
-    <button class="btn btn-danger float-right o_web_studio_remove">Remove from View</button>
-</t>
-
 <div t-name="web_studio.Sidebar.Warning.Groups" class="o_web_studio_remove_warning_groups">
     <p><i class="fa fa-exclamation-triangle"/>
         This field is placed after another element that is only displayed under certain conditions.
@@ -21,85 +13,12 @@
     </ul>
 </div>
 
-<t t-name="web_studio.Sidebar.XMLEditor" t-if="widget.debug">
-    <button class="btn btn-secondary o_web_studio_xml_editor"><i class="fa fa-code"/> XML</button>
-</t>
-
 <t t-name="web_studio.Sidebar.Toolbox">
     <hr/>
     <div class="o_web_studio_sidebar_toolbox">
         <t t-raw="0"/>
     </div>
 </t>
-
-<div t-name="web_studio.ActionEditorSidebar" class="o_web_studio_sidebar">
-    <!-- Header -->
-    <div class="o_web_studio_sidebar_header"/>
-
-    <!-- Content -->
-    <div class="o_web_studio_sidebar_content">
-        <div class="o_web_studio_sidebar_text">
-            <label for="name">Action's title</label>
-            <input id="name" name="name" t-att-value="widget.action_attrs.name" type="text"/>
-        </div>
-        <div class="o_web_studio_sidebar_textarea o_web_studio_sidebar_iscode">
-            <label for="help">Empty List Message</label>
-            <textarea id="help" name="help" cols="40" rows="5"><t t-esc="widget.action_attrs.help"/></textarea>
-        </div>
-        <div class="o_web_studio_sidebar_tags">
-            <label for="groups">Limit visibility to groups</label>
-            <div class="o_groups"/>
-        </div>
-        <t t-call="web_studio.Sidebar.Toolbox" t-if="widget.debug">
-            <t t-call="web_studio.Sidebar.Parameters"/>
-        </t>
-    </div>
-</div>
-
-<div t-name="web_studio.ReportEditorSidebar" class="o_web_studio_sidebar">
-    <!-- Header -->
-    <div class="o_web_studio_sidebar_header"/>
-
-    <!-- Content -->
-    <div class="o_web_studio_sidebar_content">
-        <div class="o_web_studio_sidebar_text">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" data-type="attributes"
-                t-att-value="widget.report.name"/>
-        </div>
-        <div class="o_web_studio_sidebar_text" t-if="widget.debug">
-            <label for="print_report_name">Printed Report Name</label>
-            <input id="print_report_name" name="print_report_name" type="text" data-type="attributes"
-                t-att-value="widget.report.print_report_name or ''"/>
-        </div>
-        <div class="o_web_studio_sidebar_tags">
-            <label for="paperformat_id">Paper format</label>
-            <div class="o_paperformat_id"/>
-        </div>
-        <div class="o_web_studio_sidebar_checkbox">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" id="display_in_print" name="display_in_print" class="custom-control-input"
-                    t-att-checked="widget.report.binding_model_id ? 'checked' : undefined"/>
-                <label for="display_in_print" class="custom-control-label">Add in the print menu</label>
-            </div>
-        </div>
-        <div class="o_web_studio_sidebar_checkbox" t-if="widget.debug">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" id="attachment_use" name="attachment_use" class="custom-control-input"
-                    t-att-checked="widget.report.attachment_use ? 'checked' : undefined"/>
-                <label for="attachment_use" class="custom-control-label">Reload from attachment</label>
-            </div>
-        </div>
-        <div class="o_web_studio_sidebar_tags">
-            <label for="groups">Limit visibility to groups</label>
-            <div class="o_groups"/>
-        </div>
-        <t t-call="web_studio.Sidebar.Toolbox" t-if="widget.debug">
-            <t t-call="web_studio.Sidebar.Parameters"/>
-            <t t-call="web_studio.Sidebar.XMLEditor"/>
-        </t>
-    </div>
-</div>
 
 <div t-name="web_studio.ViewEditorSidebar" class="o_web_studio_sidebar">
     <!-- Header -->

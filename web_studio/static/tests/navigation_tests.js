@@ -103,7 +103,7 @@ QUnit.module('Studio Navigation', {
         var rpcs = ['/web/action/load', '/web/dataset/call_kw/partner', '/web/dataset/search_read'];
         assert.verifySteps(rpcs, "should have loaded the action");
 
-        actionManager.doAction('action_web_studio_main', {
+        actionManager.doAction('action_web_studio_action_editor', {
             action: actionManager.getCurrentAction(),
         });
         bus.trigger('studio_toggled', 'main');
@@ -149,7 +149,7 @@ QUnit.module('Studio Navigation', {
         });
 
         actionManager.doAction(1);  // open a act_window_action
-        actionManager.doAction('action_web_studio_main', {
+        actionManager.doAction('action_web_studio_action_editor', {
             action: actionManager.getCurrentAction(),
             viewType: 'form',
         });
@@ -181,14 +181,14 @@ QUnit.module('Studio Navigation', {
         actionManager.doAction(1);  // open a act_window_action
 
         var action = actionManager.getCurrentAction();
-        actionManager.doAction('action_web_studio_main', {
+        actionManager.doAction('action_web_studio_action_editor', {
             action: action,
         });
         bus.trigger('studio_toggled', 'main');
 
         assert.strictEqual(actionManager.$('.o_web_studio_client_action .o_web_studio_kanban_view_editor').length, 1,
             "the kanban view should be opened");
-        actionManager.doAction('action_web_studio_main', {
+        actionManager.doAction('action_web_studio_action_editor', {
             action: action,
             pushState: false,
             replace_last_action: true,
@@ -225,7 +225,7 @@ QUnit.module('Studio Navigation', {
         var rpcs = ['/web/action/load', '/web/dataset/call_kw/partner', '/web/dataset/search_read'];
         assert.verifySteps(rpcs, "should have loaded the action");
 
-        actionManager.doAction('action_web_studio_main', {
+        actionManager.doAction('action_web_studio_action_editor', {
             action: actionManager.getCurrentAction(),
         });
         bus.trigger('studio_toggled', 'main');
@@ -246,7 +246,7 @@ QUnit.module('Studio Navigation', {
         rpcs.push('/web/action/load');
         assert.verifySteps(rpcs, "should not have done any extra rpc for the new action");
 
-        actionManager.doAction('action_web_studio_main', {
+        actionManager.doAction('action_web_studio_action_editor', {
             action: actionManager.getCurrentAction(),
             studio_clear_breadcrumbs: true,  // is normally set by the webclient
         });
@@ -305,7 +305,7 @@ QUnit.module('Studio Navigation', {
         });
 
         actionManager.doAction(1);  // open a act_window_action
-        actionManager.doAction('action_web_studio_main', {
+        actionManager.doAction('action_web_studio_action_editor', {
             action: actionManager.getCurrentAction(),
         });
         bus.trigger('studio_toggled', 'main');
@@ -333,7 +333,7 @@ QUnit.module('Studio Navigation', {
         actionManager.$('.o_list_view tbody tr:first td:contains(Twilight Sparkle)').click();
 
         var action = actionManager.getCurrentAction();
-        actionManager.doAction('action_web_studio_main', {
+        actionManager.doAction('action_web_studio_action_editor', {
             action: action,
             viewType: 'form',  // is normally set by the webclient
         });

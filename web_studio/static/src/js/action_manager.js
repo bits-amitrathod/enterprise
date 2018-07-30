@@ -7,8 +7,8 @@ var bus = require('web_studio.bus');
 
 /**
  * Logic of the Studio action manager: the Studio client action (i.e.
- * "action_web_studio_main") will always be pushed on top of another controller,
- * which corresponds to the edited action by Studio.
+ * "action_web_studio_action_editor") will always be pushed on top of another
+ * controller, which corresponds to the edited action by Studio.
  */
 
 ActionManager.include({
@@ -75,6 +75,13 @@ ActionManager.include({
             options.resID = action.env.currentId;
         }
         return this.doAction(action.id, options);
+    },
+    /**
+     * Restores the first controller after Studio controller.
+     */
+    studioHistoryBack: function () {
+        var controller = this.controllerStack[this.studioControllerIndex + 1];
+        this._restoreController(controller);
     },
 
     //--------------------------------------------------------------------------
@@ -146,16 +153,17 @@ ActionManager.include({
      * @private
      */
     _pushController: function (controller, options) {
-        var action = this.actions[controller.actionID];
-        if (action && action.tag === 'action_web_studio_main') {
-            if (options.studio_clear_breadcrumbs) {
-                // we actually don't want to destroy the whole controller stack
-                // but we want to keep the last controller, which is the one
-                // associated to the action edited by Studio
-                var length = this.controllerStack.length - 1;
-                var toDestroy = this.controllerStack.splice(0, length);
-                this._removeControllers(toDestroy);
-            }
+        var length = this.controllerStack.length - 1;
+        var toDestroy;
+        if (options && options.studio_clear_breadcrumbs) {
+            // we actually don't want to destroy the whole controller stack
+            // but we want to keep the last controller, which is the one
+            // associated to the action edited by Studio
+            toDestroy = this.controllerStack.splice(0, length);
+            this._removeControllers(toDestroy);
+        } else if (options && options.studio_clear_studio_breadcrumbs) {
+            toDestroy = this.controllerStack.splice(this.studioControllerIndex + 1);
+            this._removeControllers(toDestroy);
         }
         return this._super.apply(this, arguments);
     },

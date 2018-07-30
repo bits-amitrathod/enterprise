@@ -32,13 +32,17 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
         this.model_name = model_name;
         this.type = field.type;
         this.field = field;
+        this.order = field.order;
+        this.followRelations = field.followRelations || function (field) {return true;};
+        this.filter = field.filter || function (field) {return true;};
+        this.filters = field.filters;
 
         if (this.type === 'selection') {
             this.selection = this.field.selection && this.field.selection.slice() || [];
         }
 
         this.fields = fields;
-        var options = {
+        var options = _.extend({
             title: _t('Field Properties'),
             size: 'small',
             buttons: [{
@@ -49,7 +53,7 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 text: _t("Cancel"),
                 close: true,
             }],
-        };
+        }, options);
         this._super(parent, options);
         StandaloneFieldManagerMixin.init.call(this);
     },
@@ -118,8 +122,12 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             // This restores default modal height (bootstrap) and allows field selector to overflow
             this.$el.css("overflow", "visible").closest(".modal-dialog").css("height", "auto");
             var field_options = {
-                fields: _.filter(this.fields, {type: 'many2one'}),
+                order: this.order,
+                filter: this.filter,
+                followRelations: this.followRelations,
+                fields: this.fields, //_.filter(this.fields, this.filter),
                 readonly: false,
+                filters: this.filters,
             };
             this.fieldSelector = new ModelFieldSelector(this, this.model_name, [], field_options);
             defs.push(this.fieldSelector.appendTo(this.$('.o_many2one_field')));
@@ -247,6 +255,8 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
                 this.trigger_up('warning', {title: _t('You must select a related field')});
                 return;
             }
+            values.string = selectedField.string;
+            values.model = selectedField.model;
             values.related = this.fieldSelector.chain.join('.');
             values.type = selectedField.type;
             if (_.contains(['many2one', 'many2many'], selectedField.type)) {

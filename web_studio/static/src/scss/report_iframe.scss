@@ -1,0 +1,216 @@
+/**
+ * This is CSS used inside the report iframe, which is included in another
+ * bundle (web.report_assets_common) than the usual one (web.assets_backend).
+ */
+
+.o_web_studio_report_selected {
+    outline: 1px dashed #00a09d;
+    outline-offset: -2px;
+    // make selection visible on dark/green backgrounds
+    box-shadow: inset 0 0 0 2px white;
+}
+
+.o_web_studio_report_highlight {
+    position: absolute;
+    z-index: 1;
+    display: none;
+
+    &:before {
+        content: '\27A4';
+        color: #ff0000;
+        font-size: 30px;
+        text-shadow: 0 0 10px white;
+        @include o-position-absolute(-19px, $left: -19px);
+        transform: rotate(30deg);
+        animation-name: bounce-top;
+        animation-duration: 0.6s;
+        animation-fill-mode: both;
+
+    }
+    &.o_web_studio_report_highlight_left:before {
+        left: 0;
+        top: -30px;
+        transform: rotate(130deg);
+    }
+    &.o_web_studio_report_highlight_top:before {
+        top: 30px;
+        transform: rotate(-30deg);
+    }
+    &.o_web_studio_report_highlight_left.o_web_studio_report_highlight_top:before {
+        left: 15px;
+        transform: rotate(-130deg);
+    }
+}
+
+.o_web_studio_hook {
+    background-position: right;
+    background-repeat: no-repeat;
+    display: none;
+
+    &.o_web_studio_hook_address, &.o_web_studio_hook_total, &.o_web_studio_hook_information {
+        background-position: left;
+        width: 100%;
+    }
+
+    &.o_web_studio_nearest_hook {
+        @extend .o_web_studio_report_selected;
+        padding: 20px;
+        display: block;
+
+        &.o_web_studio_hook_inline {
+            padding: 5px;
+            display: inline-block;
+            vertical-align: middle;
+            min-height: 1em;
+            line-height: 1em;
+            min-width: 20px;
+
+            &:only-child {
+                width: 100%;
+            }
+        }
+        &.o_web_studio_hook_field {
+            min-height: 1em;
+            line-height: 1em;
+            min-width: 80px;
+            padding: 0;
+            background-position: left;
+            background-image: url(/web_studio/static/src/img/report_hook_field_tbody.png);
+        }
+        &.o_web_studio_hook_address {
+            min-height: 100px;
+            padding: 5px;
+            background-image: url(/web_studio/static/src/img/report_hook_address.png);
+        }
+        &.o_web_studio_hook_total {
+            min-height: 100px;
+            background-image: url(/web_studio/static/src/img/report_hook_total.png);
+        }
+        &.o_web_studio_hook_information {
+            min-height: 50px;
+            background-position: left;
+            background-image: url(/web_studio/static/src/img/report_hook_information.png);
+        }
+    }
+
+    &:not(.o_web_studio_nearest_hook) {
+        height: 0px;
+        opacity: 0.7;
+        padding: 0;
+        margin: 0;
+        background: !important none;
+
+        &.col-3 {
+            width: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}
+
+div.row {
+  &.o_web_studio_structure_hook {
+    &:not(.o_web_studio_nearest) {
+      display: none;
+    }
+    & > div > .o_web_studio_hook {
+      height: 100%;
+    }
+  }
+  &.o_web_studio_nearest {
+    & > div {
+        box-shadow: 0 0 1px 0px #000;
+    }
+  }
+}
+
+td, th {
+  &.o_web_studio_hook {
+    display: table-cell !important;
+  }
+}
+
+span.o_web_studio_nearest_hook.o_web_studio_hook_field {
+    display: inline-block;
+    vertical-align: middle;
+}
+thead .o_web_studio_hook.o_web_studio_nearest_hook.o_web_studio_hook_field {
+    background-image: url(/web_studio/static/src/img/report_hook_field_thead.png);
+    &:last-child:nth-child(3) {
+        width: 50%;
+    }
+    &:last-child:nth-child(5) {
+        width: 33%;
+    }
+}
+tbody .o_web_studio_hook.o_web_studio_nearest_hook.o_web_studio_hook_field {
+    background-image: url(/web_studio/static/src/img/report_hook_field_tbody.png);
+}
+div.row > div > .o_web_studio_nearest_hook.o_web_studio_hook_field:only-child {
+    height: 50px;
+    background-image: url(/web_studio/static/src/img/report_hook_information.png);
+}
+
+
+/**
+ * ----------------------------------------
+ * animation bounce-top
+ * ----------------------------------------
+ */
+@-webkit-keyframes bounce-top {
+  0% {
+    margin-top: -20px;
+    opacity: 0;
+  }
+  24% {
+    opacity: 1;
+  }
+  40% {
+    margin-top: -12px;
+  }
+  65% {
+    margin-top: -6px;
+  }
+  82% {
+    margin-top: -3px;
+  }
+  93% {
+    margin-top: -2px;
+  }
+  25%, 55%, 75%, 87% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes bounce-top {
+  0% {
+    margin-top: -20px;
+    opacity: 0;
+  }
+  24% {
+    opacity: 1;
+  }
+  40% {
+    margin-top: -12px;
+  }
+  65% {
+    margin-top: -6px;
+  }
+  82% {
+    margin-top: -3px;
+  }
+  93% {
+    margin-top: -2px;
+  }
+  25%, 55%, 75%, 87% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: 0;
+    opacity: 1;
+  }
+}

@@ -1,4 +1,4 @@
-.o_web_studio_client_action .o_web_studio_sidebar {
+.o_web_studio_sidebar {
     display: flex;
     flex-flow: column nowrap;
     color: white;
@@ -40,7 +40,6 @@
     }
 
     .o_web_studio_sidebar_content {
-        overflow: auto;
         padding: 0 $o-web-studio-sidebar-margin $o-web-studio-sidebar-margin;
 
         > :first-child {
@@ -56,7 +55,9 @@
             border-width: 1px;
         }
 
-        > div {
+        > div,
+        > div > .card > .card-collapse > .card-body > div
+         {
             margin-top: 12px;
 
             // Generic style for all field types
@@ -65,6 +66,11 @@
                 font-weight: normal;
                 margin: 4px 0 3px 2px;
                 color: $o-web-studio-text-inactive;
+            }
+            .o_web_studio_toption_option.o_web_studio_required_option {
+                > label {
+                    color: theme-color('danger');
+                }
             }
 
             input, select, textarea, div.input-group-addon {
@@ -226,7 +232,6 @@
                 @include o-position-absolute(6px, auto, auto , 7px);
             }
         }
-
         .o_web_studio_sidebar_toolbox {
             flex: 1 0 100%;
 
@@ -234,9 +239,11 @@
                 flex: 1 1 auto;
             }
         }
-
         .o_web_studio_remove_warning_groups {
             color: orange;
+        }
+        .o_field_selector_chain_part {
+            background: none;
         }
     }
 }

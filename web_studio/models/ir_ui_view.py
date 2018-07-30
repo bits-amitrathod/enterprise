@@ -6,17 +6,31 @@ import io
 from collections import defaultdict
 from lxml import etree
 from lxml.builder import E
-from odoo import models
+from odoo import models, _
 import json
 import uuid
 import random
 
 from odoo.tools import pycompat
+from odoo.exceptions import UserError
 
 
 CONTAINER_TYPES = (
     'group', 'page', 'sheet', 'div', 'ul', 'li', 'notebook',
 )
+
+BLACKLIST_CLONE_TEMPLATE = [
+    'web.html_container',
+    'web.report_layout',
+    'web.external_layout',
+    'web.internal_layout',
+    'web.basic_layout',
+    'web.minimal_layout',
+    'web.external_layout_background',
+    'web.external_layout_boxed',
+    'web.external_layout_clean',
+    'web.external_layout_standard',
+]
 
 
 class View(models.Model):
@@ -719,3 +733,45 @@ class View(models.Model):
             if level and (not elem.tail or not elem.tail.strip()):
                 elem.tail = i
         return elem
+
+    def copy_qweb_template(self):
+        new = self.copy()
+
+        domain = [
+            ('type', '=', 'qweb'),
+            ('key', '!=', new.key),
+            ('key', 'like', '%s_copy_%%' % new.key),
+            ('key', 'not like', '%s_copy_%%_copy_%%' % new.key)]
+        old_copy = self.search(domain, order='key desc', limit=1)
+        copy_no = int(old_copy and old_copy.key.split('_copy_').pop() or 0) + 1
+        new_key = '%s_copy_%s' % (new.key, copy_no)
+
+        cloned_templates = self.env.context.get('cloned_templates', {})
+        self = self.with_context(cloned_templates=cloned_templates)
+        cloned_templates[new.key] = new_key
+
+        arch_tree = etree.fromstring(self._read_template(self.id))
+
+        for node in arch_tree.findall(".//t[@t-call]"):
+            tcall = node.get('t-call')
+            if '{' in tcall:
+                continue
+            if tcall in BLACKLIST_CLONE_TEMPLATE:
+                continue
+            if tcall not in cloned_templates:
+                callview = self.search([('type', '=', 'qweb'), ('key', '=', tcall)])
+                if not callview:
+                    raise UserError(_("Template '%s' not found") % tcall)
+                callview.copy_qweb_template()
+            node.set('t-call', cloned_templates[tcall])
+
+        arch_tree = arch_tree.find(".//*[@t-name]")
+        arch_tree.set('t-name', new_key)
+
+        new.write({
+            'name': '%s copy(%s)' % (new.name, copy_no),
+            'key': new_key,
+            'arch_base': etree.tostring(arch_tree, encoding='unicode'),
+        })
+
+        return new

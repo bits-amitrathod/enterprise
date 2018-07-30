@@ -47,7 +47,7 @@ var createViewEditorManager = function (params) {
     var vem = new ViewEditorManager(widget, {
         fields_view: fieldsView,
         viewType: fieldsView.type,
-        view_env: env,
+        env: env,
         studio_view_id: params.studioViewID,
         chatter_allowed: params.chatter_allowed,
     });
@@ -68,6 +68,8 @@ var createViewEditorManager = function (params) {
     });
     return vem;
 };
+
+QUnit.module('Studio', {}, function () {
 
 QUnit.module('ViewEditorManager', {
     beforeEach: function () {
@@ -2224,12 +2226,13 @@ QUnit.module('ViewEditorManager', {
         // the XML editor lazy loads its libs and its templates so its start
         // method is monkey-patched to know when the widget has started
         var XMLEditorDef = $.Deferred();
-        var aceStart = ace.prototype.start;
-        ace.prototype.start = function () {
-            return aceStart.apply(this, arguments).then(function () {
-                XMLEditorDef.resolve();
-            });
-        };
+        testUtils.patch(ace, {
+            start: function () {
+                return this._super.apply(this, arguments).then(function () {
+                    XMLEditorDef.resolve();
+                });
+            },
+        });
 
         var arch = "<form><sheet><field name='display_name'/></sheet></form>";
         var vem = createViewEditorManager({
@@ -2271,7 +2274,7 @@ QUnit.module('ViewEditorManager', {
 
             // restore monkey-patched elements
             config.debug = initialDebugMode;
-            ace.prototype.start = aceStart;
+            testUtils.unpatch(ace);
 
             vem.destroy();
             done();
@@ -3245,6 +3248,8 @@ QUnit.module('ViewEditorManager', {
 
         vem.destroy();
     });
+});
+
 });
 
 });

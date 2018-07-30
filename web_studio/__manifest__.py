@@ -27,7 +27,7 @@ Note: Only the admin user is allowed to make those customizations.
         'web_editor',
     ],
     'data': [
-        'views/web_studio_templates.xml',
+        'views/assets.xml',
         'views/actions.xml',
         'views/base_import_module_view.xml',
         'views/ir_actions_report_xml.xml',

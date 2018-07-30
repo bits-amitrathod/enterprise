@@ -130,7 +130,7 @@ var SearchRenderer = Widget.extend({
             } else if (node.tag === "group") {
                 nodesToTreat = nodesToTreat.concat(node.children);
             }
-        };
+        }
     },
     /**
      * @private

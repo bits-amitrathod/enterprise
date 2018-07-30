@@ -4,11 +4,12 @@
 from ast import literal_eval
 from copy import deepcopy
 from lxml import etree
-from odoo import http, models, _
+
+import odoo
+from odoo import http, _
 from odoo.http import content_disposition, request
 from odoo.exceptions import UserError, AccessError, ValidationError
 from odoo.addons.web_studio.controllers import export
-
 from odoo.tools import ustr
 
 
@@ -95,7 +96,7 @@ class WebStudioController(http.Controller):
             'res_model': 'ir.actions.report',
             'views': [[False, 'kanban'], [False, 'form']],
             'target': 'current',
-            'domain': [],
+            'domain': [("binding_model_id.transient","=",False)],
             'context': {
                 'default_model': model.model,
                 'search_default_model': model.model,
@@ -245,193 +246,6 @@ class WebStudioController(http.Controller):
             return {'web_icon': ','.join(icon)}
         else:
             raise UserError(_('The icon has not a correct format'))
-
-    def create_blank_report(self):
-        arch = etree.fromstring("""
-            <t t-name="report_blank">
-                <t t-call="web.html_container">
-                    <t t-foreach="docs" t-as="doc">
-                        <t t-call="web.external_layout">
-                            <div class="page"/>
-                        </t>
-                    </t>
-                </t>
-            </t>
-        """)
-        return etree.tostring(arch, encoding='utf-8', pretty_print=True)
-
-    def create_business_report(self, model_name):
-        def add_column_field(arch, hook, index, one2many_field_id):
-            added_nodes_in_table[hook] = True
-            column_tr_node_th = arch.find(".//table/thead/tr[1]/th[" + str(index) + "]")
-            column_tr_node_th.text = one2many_field_id.field_description
-            column_tr_node_td = arch.find(".//table/tbody/tr[1]/td[" + str(index) + "]")
-            column_tr_node_td_content = etree.fromstring("""
-                <span><t t-esc="line.%(field_name)s"/></span>
-            """ % {'field_name': one2many_field_id.name})
-            etree_remove_content_node(column_tr_node_td)
-            column_tr_node_td.append(column_tr_node_td_content)
-
-        def etree_remove_content_node(node_element):
-            node_element.text = None
-            for child in list(node_element):
-                node_element.remove(child)
-
-        mail_thread_fields = list(request.env['mail.thread'].fields_get())
-        mail_activity_mixin_fields = list(request.env['mail.activity.mixin'].fields_get())
-        whitelisted_fields = models.MAGIC_COLUMNS + ['display_name']
-        blacklisted_fields = set(mail_thread_fields + mail_activity_mixin_fields + ['__last_update']) - set(whitelisted_fields)
-
-        # Create view
-        arch = etree.fromstring("""
-            <t t-name="web_studio.report_business">
-                <t t-call="web.html_container">
-                    <t t-foreach="docs" t-as="doc">
-                        <t t-call="web.external_layout">
-                            <div class="page">
-                                <div class="row">
-                                    <div name="address" class="col-5 offset-7"/>
-                                </div>
-                                <h2 name="title"/>
-                                <div class="row mt32 mb32">
-                                    <div name="date" class="col-3">
-                                        <strong>Subtitle 1:</strong>
-                                    </div>
-                                </div>
-                                <table class="table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th/>
-                                            <th class="text-right"/>
-                                            <th class="text-right"/>
-                                            <th class="text-right"/>
-                                            <th class="text-right"/>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="lines_tbody">
-                                        <tr t-foreach="range(0, 3)" t-as="line">
-                                            <td></td>
-                                            <td class="text-right"></td>
-                                            <td class="text-right"></td>
-                                            <td class="text-right"></td>
-                                            <td class="text-right"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <p name="note">
-                                    <strong>Note:</strong>
-                                </p>
-                            </div>
-                        </t>
-                    </t>
-                </t>
-            </t>
-        """)
-
-        added_nodes = {
-            'address': False,
-            'title': False,
-            'date': False,
-            'table': False,
-            'note': False,
-        }
-        fields = request.env[model_name].fields_get()
-        for field_name in fields:
-            field_id = request.env['ir.model.fields'].search([('model', '=', model_name), ('name', '=', field_name)])
-            if field_id.name not in blacklisted_fields:
-                if not added_nodes['address'] and field_id.ttype == 'many2one' and field_id.relation == 'res.partner':
-                    added_nodes['address'] = True
-                    # Add address
-                    address_node = etree.fromstring("""
-                        <div t-field="doc.%(field_name_address)s" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
-                    """ % {'field_name_address': field_id.name})
-                    arch.find(".//div[@name='address']").append(address_node)
-                elif not added_nodes['title'] and field_id.name in ['name', 'x_name']:
-                    added_nodes['title'] = True
-                    # Add title
-                    title_node = etree.fromstring("""
-                        <strong><t t-esc="doc.%(field_name_title)s"/></strong>
-                    """ % {'field_name_title': field_id.name})
-                    arch.find(".//h2[@name='title']").append(title_node)
-                elif not added_nodes['date'] and field_id.ttype in ['date', 'datetime']:
-                    added_nodes['date'] = True
-                    # Add date
-                    old_date_node = arch.find(".//div[@name='date']")
-                    etree_remove_content_node(old_date_node)
-                    etree.SubElement(old_date_node, 'strong').text = field_id.field_description
-                    etree.SubElement(old_date_node, 'p').append(
-                        etree.Element('t', {'t-esc': 'doc.' + field_id.name})
-                    )
-                elif not added_nodes['note'] and field_id.ttype == 'html':
-                    added_nodes['note'] = True
-                    # Add note
-                    date_node = etree.fromstring("""
-                        <strong>Note: <t t-esc="doc.%(field_name_note)s"/></strong>
-                    """ % {'field_name_note': field_id.name})
-                    old_note_node = arch.find(".//p[@name='note']")
-                    etree_remove_content_node(old_note_node)
-                    old_note_node.append(date_node)
-                elif not added_nodes['table'] and field_id.ttype == 'one2many':
-                    added_nodes['table'] = True
-                    added_nodes_in_table = {
-                        'name': False,
-                        'description': False,
-                        'quantity': False,
-                        'price': False,
-                        'total': False,
-                    }
-                    one2many_fields = request.env[field_id.relation].fields_get()
-                    for one2many_field in one2many_fields:
-                        one2many_field_id = request.env['ir.model.fields'].search([('model', '=', field_id.relation), ('name', '=', one2many_field)])
-                        if one2many_field_id.name not in blacklisted_fields:
-                            # Edit table
-                            column_1_tr_node_tbody = arch.find(".//table/tbody/tr[1]")
-                            column_1_tr_node_tbody.attrib['t-foreach'] = 'doc.' + field_id.name
-                            if not added_nodes_in_table['name'] and one2many_field_id.ttype == 'char':
-                                add_column_field(arch, 'name', 1, one2many_field_id)
-                            elif not added_nodes_in_table['description'] and one2many_field_id.ttype == 'text':
-                                add_column_field(arch, 'description', 2, one2many_field_id)
-                            elif not added_nodes_in_table['quantity'] and one2many_field_id.ttype in ['integer', 'float']:
-                                add_column_field(arch, 'quantity', 3, one2many_field_id)
-                            elif not added_nodes_in_table['price'] and one2many_field_id.ttype == 'float':
-                                add_column_field(arch, 'price', 4, one2many_field_id)
-                            elif not added_nodes_in_table['total'] and one2many_field_id.ttype == 'monetary':
-                                add_column_field(arch, 'total', 5, one2many_field_id)
-        return etree.tostring(arch, encoding='utf-8', pretty_print=True)
-
-    @http.route('/web_studio/create_new_report', type='json', auth='user')
-    def create_new_report(self, model_name, template_name):
-        model = request.env['ir.model'].search([('model', '=', model_name)])
-
-        if template_name == 'report_business':
-            arch = self.create_business_report(model.model)
-        else:
-            arch = self.create_blank_report()
-
-        view = request.env['ir.ui.view'].create({
-            'name': 'report',
-            'type': 'qweb',
-            'arch': arch,
-        })
-        # FIXME: When website is installed, we need to set key as xmlid to search on a valid domain
-        # See '_view_obj' in 'website/model/ir.ui.view'
-        new_view_xml_id = view.get_external_id()[view.id]
-        view.name = new_view_xml_id
-        view.key = new_view_xml_id
-        # Create report
-        report = request.env['ir.actions.report'].create({
-            'name': _('%s Report') % model.name,
-            'model': model.model,
-            'report_type': 'qweb-pdf',
-            'report_name': view.name,
-        })
-        # Add in the print menu
-        report.create_action()
-
-        return {
-            'id': report.id,
-        }
 
     @http.route('/web_studio/set_background_image', type='json', auth='user')
     def set_background_image(self, attachment_id):
@@ -678,7 +492,6 @@ class WebStudioController(http.Controller):
 
         # Normalize the view
         studio_view = self._get_studio_view(view)
-        ViewModel = request.env[view.model]
         try:
             normalized_view = studio_view.normalize()
             self._set_studio_view(view, normalized_view)
@@ -689,6 +502,7 @@ class WebStudioController(http.Controller):
             # the change he would like to make.
             self._set_studio_view(view, new_arch)
 
+        ViewModel = request.env[view.model]
         fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
         view_type = 'list' if view.type == 'tree' else view.type
 
@@ -740,40 +554,24 @@ class WebStudioController(http.Controller):
                 if current_default not in [x[0] for x in selection_values]:
                     request.env['ir.default'].discard_values(model_name, field_name, [current_default])
 
-    @http.route('/web_studio/edit_report', type='json', auth='user')
-    def edit_report(self, report_id, values):
-        report = request.env['ir.actions.report'].browse(report_id)
-        if report:
-            if 'groups_id' in values:
-                values['groups_id'] = [(6, 0, values['groups_id'])]
-            if 'display_in_print' in values:
-                if values['display_in_print']:
-                    report.create_action()
-                else:
-                    report.unlink_action()
-                values.pop('display_in_print')
-            report.write(values)
-
     @http.route('/web_studio/edit_view_arch', type='json', auth='user')
     def edit_view_arch(self, view_id, view_arch):
         view = request.env['ir.ui.view'].browse(view_id)
 
         if view:
             view.write({'arch': view_arch})
-
-            if view.model:
-                ViewModel = request.env[view.model]
-                try:
-                    fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
-                    view_type = 'list' if view.type == 'tree' else view.type
-                    return {
-                        'fields_views': {
-                            view_type: fields_view,
-                        },
-                        'fields': ViewModel.fields_get(),
-                    }
-                except Exception:
-                    return False
+            ViewModel = request.env[view.model]
+            try:
+                fields_view = ViewModel.with_context({'studio': True}).fields_view_get(view.id, view.type)
+                view_type = 'list' if view.type == 'tree' else view.type
+                return {
+                    'fields_views': {
+                        view_type: fields_view,
+                    },
+                    'fields': ViewModel.fields_get(),
+                }
+            except Exception:
+                return False
 
     @http.route('/web_studio/export', type='http', auth='user')
     def export(self, token):
@@ -1026,13 +824,9 @@ class WebStudioController(http.Controller):
         xpath_node = self._get_xpath_node(arch, operation)
 
         for key, new_attr in new_attrs.items():
-            xml_node = xpath_node.find('attribute[@name="%s"]' % (key))
-            if xml_node is None:
-                xml_node = etree.Element('attribute', {'name': key})
-                xml_node.text = new_attr
-                xpath_node.insert(0, xml_node)
-            else:
-                xml_node.text = new_attr
+            xml_node = etree.Element('attribute', {'name': key})
+            xml_node.text = str(new_attr)
+            xpath_node.insert(0, xml_node)
 
             # change the field description when changing the field label (for custom fields)
             if key == 'string' and operation.get('node', {}).get('tag') == 'field':

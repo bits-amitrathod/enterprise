@@ -15,6 +15,7 @@ WebClient.include({
         'new_app_created': '_onNewAppCreated',
         'reload_menu_data': '_onReloadMenuData',
         'studio_icon_clicked': '_onStudioIconClicked',
+        'studio_history_back': '_onStudioHistoryBack',
     }),
 
     /**
@@ -283,7 +284,7 @@ WebClient.include({
             }
         }).then(function (isChatterAllowed) {
             options.chatter_allowed = isChatterAllowed;
-            return self.do_action('action_web_studio_main', options);
+            return self.do_action('action_web_studio_action_editor', options);
         });
     },
     /**
@@ -338,6 +339,9 @@ WebClient.include({
     // Handlers
     //--------------------------------------------------------------------------
 
+    _onStudioHistoryBack: function () {
+        this.action_manager.studioHistoryBack();
+    },
     /**
      * @private
      * @param {OdooEvent} ev

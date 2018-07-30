@@ -681,7 +681,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
      * @private
      */
     _onViewParameters: function () {
-        this.trigger_up('open_view_form');
+        this.trigger_up('open_record_form_view');
     },
     /**
      * @private

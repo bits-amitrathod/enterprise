@@ -1,17 +1,15 @@
 odoo.define('web_studio.ViewEditorManager', function (require) {
 "use strict";
 
-var concurrency = require('web.concurrency');
 var core = require('web.core');
 var data_manager = require('web.data_manager');
 var Dialog = require('web.Dialog');
 var dom = require('web.dom');
 var framework = require('web.framework');
-var dom = require('web.dom');
 var session = require('web.session');
 var view_registry = require('web.view_registry');
-var Widget = require('web.Widget');
 
+var AbstractEditorManager = require('web_studio.AbstractEditorManager');
 var bus = require('web_studio.bus');
 var EditorMixin = require('web_studio.EditorMixin');
 
@@ -28,7 +26,6 @@ var NewButtonBoxDialog = require('web_studio.NewButtonBoxDialog');
 var NewFieldDialog = require('web_studio.NewFieldDialog');
 var utils = require('web_studio.utils');
 var ViewEditorSidebar = require('web_studio.ViewEditorSidebar');
-var XMLEditor = require('web_studio.XMLEditor');
 
 var _t = core._t;
 var QWeb = core.qweb;
@@ -43,34 +40,23 @@ var Editors = {
     search: SearchEditor,
 };
 
-var ViewEditorManager = Widget.extend({
-    className: 'o_web_studio_view_editor',
-    custom_events: {
-        'close_xml_editor': '_onCloseXMLEditor',
-        'default_value_change': '_onDefaultValueChange',
-        'drag_component' : '_onComponentDragged',
-        'email_alias_change': '_onEmailAliasChange',
-        'field_edition': '_onFieldEdition',
-        'field_renamed': '_onFieldRenamed',
-        'node_clicked': '_onNodeClicked',
-        'open_defaults': '_onOpenDefaults',
-        'open_field_form': '_onOpenFieldForm',
-        'open_view_form': '_onOpenViewForm',
-        'open_xml_editor': '_onOpenXMLEditor',
-        'save_xml_editor': '_onSaveXMLEditor',
-        'sidebar_tab_changed': '_onSidebarTabChanged',
-        'toggle_form_invisible': '_onShowInvisibleToggled',
-        'unselect_element': '_onUnselectElement',
-        'view_change': '_onViewChange',
-    },
+var ViewEditorManager = AbstractEditorManager.extend({
+    custom_events: _.extend({}, AbstractEditorManager.prototype.custom_events, {
+        default_value_change: '_onDefaultValueChange',
+        email_alias_change: '_onEmailAliasChange',
+        field_edition: '_onFieldEdition',
+        field_renamed: '_onFieldRenamed',
+        open_defaults: '_onOpenDefaults',
+        open_field_form: '_onOpenFieldForm',
+        open_record_form_view: '_onOpenRecordFormView',
+        toggle_form_invisible: '_onShowInvisibleToggled',
+    }),
     /**
      * @override
      * @param {Widget} parent
      * @param {Object} params
      * @param {Object} params.fields_view
      * @param {string} params.viewType
-     * @param {Object} params.view_env - action environment shared between views
-     *    (id, context, etc.)
      * @param {Object} [params.chatter_allowed]
      * @param {Object} [params.studio_view_id]
      * @param {Object} [params.studio_view_arch]
@@ -88,13 +74,6 @@ var ViewEditorManager = Widget.extend({
         // server and might be `tree` sometimes
         this.view_type = params.viewType;
 
-        this.mode = 'edition';  // the other mode is 'rendering' in XML editor
-        this.editor = undefined;
-        this.sidebar = undefined;
-
-        this.operations = [];
-        this.operations_undone = [];
-
         this.renamingAllowedFields = []; // those fields can be renamed
 
         this.expr_attrs = {
@@ -106,16 +85,10 @@ var ViewEditorManager = Widget.extend({
             'filter': ['name'],
         };
 
-        this.view_env = params.view_env;
         this.chatter_allowed = params.chatter_allowed;
         this.studio_view_id = params.studio_view_id;
         this.studio_view_arch = params.studio_view_arch;
         this.x2mEditorPath = params.x2mEditorPath || [];
-
-        this._operationsMutex = new concurrency.Mutex();
-
-        bus.on('undo_clicked', this, this.undo);
-        bus.on('redo_clicked', this, this.redo);
     },
     /**
      * @override
@@ -123,58 +96,21 @@ var ViewEditorManager = Widget.extend({
     start: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function () {
-            return self.instantiateEditor().then(function (editor) {
-                var $editorFragment = $('<div>', {
-                    class: 'o_web_studio_view_renderer',
-                });
-                self.editor = editor;
-                self.editor.appendTo($editorFragment);
-                $editorFragment.appendTo(self.$el);
-
-                self.sidebar = self.instantiateSidebar();
-                return self.sidebar.prependTo(self.$el);
-            }).then(function () {
+            if (self.x2mEditorPath.length) {
+                var currentX2m = self.x2mEditorPath.slice(-1)[0];
+                self.x2mEditorPath = self.x2mEditorPath.slice(0, -1);
+                var fields_view;
+                var x2mData;
                 if (self.x2mEditorPath.length) {
-                    var currentX2m = self.x2mEditorPath.slice(-1)[0];
-                    self.x2mEditorPath = self.x2mEditorPath.slice(0, -1);
-                    var fields_view;
-                    var x2mData;
-                    if (self.x2mEditorPath.length) {
-                        x2mData = self.x2mEditorPath.slice(-1)[0].x2mData;
-                        fields_view = self._getX2mFieldsView();
-                    }
-                    return self._openX2mEditor(currentX2m.x2mField,
-                        currentX2m.x2mViewType, true, fields_view, x2mData);
+                    x2mData = self.x2mEditorPath.slice(-1)[0].x2mData;
+                    fields_view = self._getX2mFieldsView();
                 }
-                return $.when();
-            });
+                return self._openX2mEditor(currentX2m.x2mField,
+                    currentX2m.x2mViewType, true, fields_view, x2mData);
+            }
+            // TODO: useless I think
+            return $.when();
         });
-    },
-    /**
-     * @override
-     */
-    destroy: function () {
-        bus.trigger('undo_not_available');
-        bus.trigger('redo_not_available');
-        this._super.apply(this, arguments);
-    },
-    /**
-     * Called each time the view editor manager is attached to the DOM. This is
-     * important for the graph editor, which only renders itself when it is in
-     * the DOM
-     */
-    on_attach_callback: function () {
-        if (this.editor && this.editor.on_attach_callback) {
-            this.editor.on_attach_callback();
-        }
-        this.isInDOM = true;
-    },
-    /**
-     * Called each time the view editor manager is detached from the DOM.
-     * @returns {[type]} [description]
-     */
-    on_detach_callback: function () {
-        this.isInDOM = false;
     },
 
     //--------------------------------------------------------------------------
@@ -182,250 +118,26 @@ var ViewEditorManager = Widget.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * Apply the changes, i.e. the stack of operations on the Studio view.
-     *
-     * @param {Boolean} remove_last_op
-     * @param {Boolean} from_xml
-     * @returns {Deferred}
-     */
-    applyChanges: function (remove_last_op, from_xml) {
-        var self = this;
-
-        var last_op = this.operations.slice(-1)[0];
-
-        bus.trigger('toggle_snack_bar', _t('Saving...'));
-
-        var def;
-        if (from_xml) {
-            def = this._operationsMutex.exec(this._editViewArch.bind(
-                this,
-                last_op.view_id,
-                last_op.new_arch
-            )).fail(function () {
-                self.trigger_up('studio_error', {error: 'view_rendering'});
-            });
-        } else {
-            def = this._operationsMutex.exec(this._editView.bind(
-                this,
-                this.view_id,
-                this.studio_view_arch,
-                _.filter(this.operations, function (el) {return el.type !== 'replace_arch'; })
-            )).fail(function () {
-                // the operation can't be applied
-                self.trigger_up('studio_error', {error: 'wrong_xpath'});
-                return self.undo(true).then(function () {
-                    return $.Deferred().reject();
-                });
-            });
-        }
-        return def.then(function (result) {
-            if (!result.fields_views) {
-                // the operation can't be applied
-                self.trigger_up('studio_error', {error: 'wrong_xpath'});
-                return self.undo(true).then(function () {
-                    return $.Deferred().reject();
-                });
-            }
-
-            // the studio_view could have been created at the first edition so
-            // studio_view_id must be updated (but /web_studio/edit_view_arch
-            // doesn't return the view id)
-            if (result.studio_view_id) {
-                self.studio_view_id = result.studio_view_id;
-            }
-
-            if (self.x2mField) {
-                self.view_type = self.mainViewType;
-            }
-
-            // NOTE: fields & fields_view are from the base model here.
-            // fields will be updated accordingly if editing a x2m (see
-            // @_setX2mParameters).
-            self.fields = self._processFields(result.fields);
-            self.fields_view = result.fields_views[self.view_type];
-            // TODO: this processing is normally done in data_manager so we need
-            // to duplicate it here ; it should be moved in init of
-            // abstract_view to avoid the duplication
-            self.fields_view.viewFields = self.fields_view.fields;
-            self.fields_view.fields = result.fields;
-
-            // As the studio view arch is stored in this widget, if this view
-            // is updated directly with the XML editor, the arch should be updated.
-            // The operations may not have any sense anymore so they are dropped.
-            if (from_xml && last_op.view_id === self.studio_view_id) {
-                self.studio_view_arch = last_op.new_arch;
-                self.operations = [];
-                self.operations_undone = [];
-            }
-            if (remove_last_op) { self.operations.pop(); }
-
-            // fields and fields_view has been updated so let's update everything
-            // (i.e. the sidebar which displays the 'Existing Fields', etc.)
-            if (self.x2mField) {
-                return self._setX2mParameters();
-            }
-            return $.when();
-        })
-        .then(self.updateEditor.bind(self))
-        .then(function () {
-            self.updateButtons();
-            if (self.sidebar.state.mode !== 'properties') {
-                // TODO: the sidebar will be updated by clicking on the node
-                self.updateSidebar(self.sidebar.state.mode);
-            }
-            bus.trigger('toggle_snack_bar', _t('Saved'), true);
-        });
-    },
-    /**
-     * @param {Object} op
-     * @returns {Deferred}
-     */
-    do: function (op) {
-        // If we are editing an x2m field, we specify the xpath needed in front
-        // of the one generated by the default route.
-        if (this.x2mField && op.target) {
-            this._setSubViewXPath(op);
-        }
-        this.operations.push(op);
-        this.operations_undone = [];
-
-        return this.applyChanges(false, op.type === 'replace_arch');
-    },
-    /**
-     * @returns {Deferred}
-     */
-    instantiateEditor: function (params) {
-        params = params || {};
-        var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
-
-        var def;
-        // Different behaviour for the search view because
-        // it's not defined as a "real view", no inherit to abstract view.
-        // The search view in studio has its own renderer.
-        if (this.view_type === 'search') {
-            if (this.mode === 'edition') {
-                this.view = new Editors.search(this, fields_view);
-            } else {
-                this.view = new SearchRenderer(this, fields_view);
-            }
-            def = $.when(this.view);
-        } else {
-            var View = view_registry.get(this.view_type);
-            this.view = new View(fields_view, this.view_env);
-            if (this.mode === 'edition') {
-                var Editor = Editors[this.view_type];
-                if (!Editor) {
-                    // generate the Editor on the fly if it doesn't exist
-                    Editor = View.prototype.config.Renderer.extend(EditorMixin);
-                }
-                var chatterAllowed = this.x2mField ? false : this.chatter_allowed;
-                var editorParams = _.defaults(params, {
-                    mode: 'readonly',
-                    chatter_allowed: chatterAllowed,
-                    show_invisible: this.sidebar && this.sidebar.state.show_invisible,
-                    arch: this.view.arch,
-                });
-
-                if (this.view_type === 'list') {
-                    editorParams.hasSelectors = false;
-                }
-                def = this.view.createStudioEditor(this, Editor, editorParams);
-            } else {
-                def = this.view.createStudioRenderer(this, {
-                    mode: 'readonly',
-                });
-            }
-        }
-        return def;
-    },
-    /**
-     * @private
-     * @returns {Widget} A ViewEditorSidebar
-     */
-    instantiateSidebar: function (state) {
-
-        var defaultMode = this._getDefaultSidebarMode();
-        state = _.defaults(state || {}, {
-            mode: defaultMode,
-            attrs: defaultMode === 'view' ? this.view.arch.attrs : {},
-        });
-        var modelName = this.x2mModel ? this.x2mModel : this.model_name;
-        var params = {
-            view_type: this.view_type,
-            model_name: modelName,
-            fields: this.fields,
-            renamingAllowedFields: this.renamingAllowedFields,
-            state: state,
-            isEditingX2m: !!this.x2mField,
-            // In case of a search view, the editor doesn't have state
-            editorData: this.editor.state && this.editor.state.data || {},
-        };
-
-        if (_.contains(['list', 'form', 'kanban'], this.view_type)) {
-            var fields_in_view = _.pick(this.fields, this.editor.state.getFieldNames());
-            var fields_not_in_view = _.omit(this.fields, this.editor.state.getFieldNames());
-            params.fields_not_in_view = fields_not_in_view;
-            params.fields_in_view = fields_in_view;
-        } else if (this.view_type === 'search') {
-            // we return all the model fields since it's possible
-            // to have multiple times the same field defined in the search view.
-            params.fields_not_in_view = this.fields;
-            params.fields_in_view = [];
-        }
-
-        return new ViewEditorSidebar(this, params);
-    },
-    /**
-     * Redo the last operation.
-     *
-     * @returns {Deferred}
-     */
-    redo: function () {
-        if (!this.operations_undone.length) {
-            return;
-        }
-        var op = this.operations_undone.pop();
-        this.operations.push(op);
-
-        return this.applyChanges(false, op.type === 'replace_arch');
-    },
-    /**
-     * Update the undo/redo button according to the operation stack.
-     */
-    updateButtons: function () {
-        // Undo button
-        if (this.operations.length) {
-            bus.trigger('undo_available');
-        } else {
-            bus.trigger('undo_not_available');
-        }
-
-        // Redo button
-        if (this.operations_undone.length) {
-            bus.trigger('redo_available');
-        } else {
-            bus.trigger('redo_not_available');
-        }
-    },
-    /**
      * @param {Object} options
      * @returns {Deferred}
      */
     updateEditor: function (options) {
         var self = this;
-        var oldEditor;
-        var renderer_scrolltop = this.$el.scrollTop();
-        var local_state = this.editor ? this.editor.getLocalState() : false;
+        var rendererScrollTop = this.$el.scrollTop();
+        var localState = false;
+        if (this.editor && this.editor.getLocalState) {
+            localState = this.editor.getLocalState();
+        }
+        var oldEditor = this.editor;
 
-        oldEditor = this.editor;
-        return this.instantiateEditor(options).then(function (editor) {
+        return this._instantiateEditor(options).then(function (editor) {
             var def = $.Deferred();
             var fragment = document.createDocumentFragment();
             try {
                 def = editor.appendTo(fragment);
             } catch (e) {
                 self.trigger_up('studio_error', {error: 'view_rendering'});
-                self.undo(true);
+                self._undo(true);
                 def.reject();
             }
             return $.when(def).then(function () {
@@ -437,117 +149,12 @@ var ViewEditorManager = Widget.extend({
                 oldEditor.destroy();
 
                 // restore previous state
-                self.$el.scrollTop(renderer_scrolltop);
-                if (local_state) {
-                    self.editor.setLocalState(local_state);
+                self.$el.scrollTop(rendererScrollTop);
+                if (localState) {
+                    self.editor.setLocalState(localState);
                 }
             });
         });
-    },
-    /**
-     * Re-render the sidebar and destroy the old while keeping the scroll
-     * position.
-     * If mode is not specified, the sidebar will be renderered with the same
-     * state.
-     *
-     * @param {String} mode
-     * @param {Object} node
-     * @returns {Deferred}
-     */
-    updateSidebar: function (mode, node) {
-        var self = this;
-
-        // TODO: scroll top is calculated to 'o_web_studio_sidebar_content'
-        var scrolltop = this.sidebar.$el.scrollTop();
-
-        var def;
-
-        var newState;
-        if (mode) {
-            newState = {
-                renamingAllowedFields: this.renamingAllowedFields,
-                mode: mode,
-                show_invisible: this.sidebar.state.show_invisible,
-            };
-        } else {
-            newState = this.sidebar.state;
-        }
-        switch (mode) {
-            case 'view':
-                newState = _.extend(newState, {
-                    attrs: this.view.arch.attrs,
-                });
-                break;
-            case 'new':
-                break;
-            case 'properties':
-                var attrs;
-                if (node.tag === 'field' && this.view_type !== 'search') {
-                    var viewType = this.editor.state.viewType;
-                    attrs = this.editor.state.fieldsInfo[viewType][node.attrs.name];
-                } else {
-                    attrs = node.attrs;
-                }
-                newState = _.extend(newState, {
-                    node: node,
-                    attrs: attrs,
-                });
-
-                var modelName = this.x2mModel ? this.x2mModel : this.model_name;
-                if (node.tag === 'field') {
-                    def = this._getDefaultValue(modelName, node.attrs.name);
-                }
-                if (node.tag === 'div' && node.attrs.class === 'oe_chatter') {
-                    def = this._getEmailAlias(modelName);
-                }
-                break;
-        }
-
-        return $.when(def).then(function (result) {
-            _.extend(newState, result);
-            self.sidebar.destroy();
-            self.sidebar = self.instantiateSidebar(newState);
-
-            // Note: the sidebar rendering is considered synchronous here.
-            // If this changes, we will need to handle it correctly (to avoid
-            // any flickering) by using a dropmisorder for `def` and put this
-            // handler in a mutex.
-            self.sidebar.prependTo(self.$el);
-            self.sidebar.$el.scrollTop(scrolltop);
-
-            // the XML editor replaces the sidebar in this case
-            if (self.mode === 'rendering') {
-                self.sidebar.$el.detach();
-            }
-        });
-    },
-    /**
-     * Undo the last operation.
-     *
-     * @param {Boolean} forget
-     * @returns {Deferred}
-     */
-    undo: function (forget) {
-        if (!this.operations.length) {
-            return $.Deferred().resolve();
-        }
-        var op = this.operations.pop();
-        if (!forget) {
-            this.operations_undone.push(op);
-        }
-
-        if (op.type === 'replace_arch') {
-            // as the whole arch has been replace (A -> B),
-            // when undoing it, the operation (B -> A) is added and
-            // removed just after.
-            var undo_op = jQuery.extend(true, {}, op);
-            undo_op.old_arch = op.new_arch;
-            undo_op.new_arch = op.old_arch;
-            this.operations.push(undo_op);
-            return this.applyChanges(true, true);
-        } else {
-            return this.applyChanges(false, false);
-        }
     },
 
     //--------------------------------------------------------------------------
@@ -565,7 +172,7 @@ var ViewEditorManager = Widget.extend({
             if (data.add_buttonbox) {
                 this.operations.push({type: 'buttonbox'});
             }
-            this.do({
+            this._do({
                 type: data.type,
                 target: {
                     tag: 'div',
@@ -591,7 +198,7 @@ var ViewEditorManager = Widget.extend({
      * @param {Object} data
      */
     _addChatter: function (data) {
-        this.do({
+        this._do({
             type: 'chatter',
             model: this.model_name,
             remove_message_ids: data.remove_message_ids,
@@ -607,7 +214,7 @@ var ViewEditorManager = Widget.extend({
      * @param {String} tag
      */
     _addElement: function (type, node, xpath_info, position, tag) {
-        this.do({
+        this._do({
             type: type,
             target: {
                 tag: node.tag,
@@ -731,7 +338,7 @@ var ViewEditorManager = Widget.extend({
                 attrs: _.pick(node.attrs, self.expr_attrs[node.tag]),
                 xpath_info: xpath_info,
             };
-            self.do({
+            self._do({
                 type: type,
                 target: target,
                 position: position,
@@ -754,7 +361,7 @@ var ViewEditorManager = Widget.extend({
      * @param {Object} new_attrs
      */
     _addFilter: function (type, node, xpath_info, position, new_attrs) {
-        this.do({
+        this._do({
             type: type,
             target: {
                 tag: node.tag,
@@ -772,7 +379,7 @@ var ViewEditorManager = Widget.extend({
      * @private
      */
     _addKanbanDropdown: function () {
-        this.do({
+        this._do({
             type: 'kanban_dropdown',
         });
     },
@@ -781,7 +388,7 @@ var ViewEditorManager = Widget.extend({
      * @param {Object} data
      */
     _addKanbanPriority: function (data) {
-        this.do({
+        this._do({
             type: 'kanban_priority',
             field: data.field,
         });
@@ -791,7 +398,7 @@ var ViewEditorManager = Widget.extend({
      * @param {Object} data
      */
     _addKanbanImage: function (data) {
-        this.do({
+        this._do({
             type: 'kanban_image',
             field: data.field,
         });
@@ -804,7 +411,7 @@ var ViewEditorManager = Widget.extend({
      * @param {String} position
      */
     _addPage: function (type, node, xpath_info, position) {
-        this.do({
+        this._do({
             type: type,
             target: {
                 tag: node.tag,
@@ -829,7 +436,7 @@ var ViewEditorManager = Widget.extend({
      * @param {String} position
      */
     _addSeparator: function (type, node, xpath_info, position) {
-        this.do({
+        this._do({
             type: type,
             target: {
                 tag: node.tag,
@@ -846,6 +453,50 @@ var ViewEditorManager = Widget.extend({
         });
     },
     /**
+     * @override
+     */
+    _applyChangeHandling: function (result) {
+        var self = this;
+        var def;
+
+        if (!result.fields_views) {
+            // the operation can't be applied
+            this.trigger_up('studio_error', {error: 'wrong_xpath'});
+            return this._undo(true).then(function () {
+                return $.Deferred().reject();
+            });
+        }
+
+        // the studio_view could have been created at the first edition so
+        // studio_view_id must be updated (but /web_studio/edit_view_arch
+        // doesn't return the view id)
+        if (result.studio_view_id) {
+            this.studio_view_id = result.studio_view_id;
+        }
+
+        if (this.x2mField) {
+            this.view_type = this.mainViewType;
+        }
+
+        // NOTE: fields & fields_view are from the base model here.
+        // fields will be updated accordingly if editing a x2m (see
+        // @_setX2mParameters).
+        this.fields = this._processFields(result.fields);
+        this.fields_view = result.fields_views[this.view_type];
+        // TODO: this processing is normally done in data_manager so we need
+        // to duplicate it here ; it should be moved in init of
+        // abstract_view to avoid the duplication
+        this.fields_view.viewFields = this.fields_view.fields;
+        this.fields_view.fields = result.fields;
+
+        // fields and fields_view has been updated so let's update everything
+        // (i.e. the sidebar which displays the 'Existing Fields', etc.)
+        if (this.x2mField) {
+            def = this._setX2mParameters();
+        }
+        return $.when(def).then(self.updateEditor.bind(self));
+    },
+    /**
      * Find a currency field on the current model ; a monetary field can not be
      * added if such a field does not exist on the model.
      *
@@ -858,6 +509,18 @@ var ViewEditorManager = Widget.extend({
                 (field.name === 'currency_id' || field.name === 'x_currency_id');
         });
         return !!currencyField;
+    },
+    /**
+     * @override
+     */
+    _cleanOperationsStack: function (lastOp) {
+        // As the studio view arch is stored in this widget, if this view
+        // is updated directly with the XML editor, the arch should be updated.
+        // The operations may not have any sense anymore so they are dropped.
+        if (lastOp.view_id === this.studio_view_id) {
+            this.studio_view_arch = lastOp.new_arch;
+            this._super.apply(this, arguments);
+        }
     },
     /**
      * Makes a RPC to modify the studio view in order to add the x2m view
@@ -901,6 +564,18 @@ var ViewEditorManager = Widget.extend({
             });
     },
     /**
+     * @override
+     */
+    _do: function (op) {
+        // If we are editing an x2m field, we specify the xpath needed in front
+        // of the one generated by the default route.
+        if (this.x2mField && op.target) {
+            this._setSubViewXPath(op);
+        }
+
+        return this._super.apply(this, arguments);
+    },
+    /**
      * @private
      * @param {String} type
      * @param {Object} node
@@ -937,18 +612,11 @@ var ViewEditorManager = Widget.extend({
 
             this._renameField(node.attrs.name, newName);
         } else {
-            this.do(newOp);
+            this._do(newOp);
         }
     },
     /**
-     * The point of this function is to receive a list of customize operations
-     * to do.
-     *
-     * @private
-     * @param {Integer} view_id
-     * @param {String} studio_view_arch
-     * @param {Array} operations
-     * @returns {Deferred}
+     * @override
      */
     _editView: function (view_id, studio_view_arch, operations) {
         core.bus.trigger('clear_cache');
@@ -963,13 +631,7 @@ var ViewEditorManager = Widget.extend({
         });
     },
     /**
-     * This is used when the view is edited with the XML editor: the whole arch
-     * is replaced by a new one.
-     *
-     * @private
-     * @param {Integer} view_id
-     * @param {String} view_arch
-     * @returns {Deferred}
+     * @override
      */
     _editViewArch: function (view_id, view_arch) {
         core.bus.trigger('clear_cache');
@@ -988,7 +650,7 @@ var ViewEditorManager = Widget.extend({
      * @param {Object} new_attrs
      */
     _editViewAttributes: function (type, new_attrs) {
-        this.do({
+        this._do({
             type: type,
             target: {
                 tag: this.view_type === 'list' ? 'tree' : this.view_type,
@@ -1019,7 +681,7 @@ var ViewEditorManager = Widget.extend({
             },
         }).then(function (relationID) {
             var fieldName = 'x_stage_id';
-            self.do({
+            self._do({
                 type: 'add',
                 target: {
                     tag: 'templates',
@@ -1079,6 +741,55 @@ var ViewEditorManager = Widget.extend({
         });
     },
     /**
+     * @override
+     */
+    _getSidebarState: function (mode, node) {
+        var def, newState;
+        if (mode) {
+            newState = {
+                renamingAllowedFields: this.renamingAllowedFields,
+                mode: mode,
+                show_invisible: this.sidebar.state && this.sidebar.state.show_invisible || false,
+            };
+        } else {
+            newState = this.sidebar.state;
+        }
+        switch (mode) {
+            case 'view':
+                newState = _.extend(newState, {
+                    attrs: this.view.arch.attrs,
+                });
+                break;
+            case 'new':
+                break;
+            case 'properties':
+                var attrs;
+                if (node.tag === 'field' && this.view_type !== 'search') {
+                    var viewType = this.editor.state.viewType;
+                    attrs = this.editor.state.fieldsInfo[viewType][node.attrs.name];
+                } else {
+                    attrs = node.attrs;
+                }
+                newState = _.extend(newState, {
+                    node: node,
+                    attrs: attrs,
+                });
+
+                var modelName = this.x2mModel ? this.x2mModel : this.model_name;
+                if (node.tag === 'field') {
+                    def = this._getDefaultValue(modelName, node.attrs.name);
+                }
+                if (node.tag === 'div' && node.attrs.class === 'oe_chatter') {
+                    def = this._getEmailAlias(modelName);
+                }
+                break;
+        }
+
+        return $.when(def || $.when()).then(function (result) {
+            return _.extend(newState, result);
+        });
+    },
+    /**
      * @private
      * @param  {Array} x2mEditorPath
      * @return {String}
@@ -1105,7 +816,7 @@ var ViewEditorManager = Widget.extend({
         // this is a crappy way of processing the arch received as string
         // because we need a processed fields_view to find the x2m fields view
         var View = view_registry.get(this.mainViewType);
-        var view = new View(this.fields_view, this.view_env);
+        var view = new View(this.fields_view, this.env);
 
         var fields_view = view.fieldsView;
         _.each(this.x2mEditorPath, function (step) {
@@ -1114,6 +825,90 @@ var ViewEditorManager = Widget.extend({
         });
         fields_view.model = this.x2mModel;
         return fields_view;
+    },
+    /**
+     * @override
+     * @returns {Deferred<Widget>}
+     */
+    _instantiateEditor: function (params) {
+        params = params || {};
+        var fields_view = this.x2mField ? this._getX2mFieldsView() : this.fields_view;
+
+        var def;
+        // Different behaviour for the search view because
+        // it's not defined as a "real view", no inherit to abstract view.
+        // The search view in studio has its own renderer.
+        if (this.view_type === 'search') {
+            if (this.mode === 'edition') {
+                this.view = new Editors.search(this, fields_view);
+            } else {
+                this.view = new SearchRenderer(this, fields_view);
+            }
+            def = $.when(this.view);
+        } else {
+            var View = view_registry.get(this.view_type);
+            this.view = new View(fields_view, this.env);
+            if (this.mode === 'edition') {
+                var Editor = Editors[this.view_type];
+                if (!Editor) {
+                    // generate the Editor on the fly if it doesn't exist
+                    Editor = View.prototype.config.Renderer.extend(EditorMixin);
+                }
+                var chatterAllowed = this.x2mField ? false : this.chatter_allowed;
+                var editorParams = _.defaults(params, {
+                    mode: 'readonly',
+                    chatter_allowed: chatterAllowed,
+                    show_invisible: this.sidebar && this.sidebar.state.show_invisible,
+                    arch: this.view.arch,
+                });
+
+                if (this.view_type === 'list') {
+                    editorParams.hasSelectors = false;
+                }
+                def = this.view.createStudioEditor(this, Editor, editorParams);
+            } else {
+                def = this.view.createStudioRenderer(this, {
+                    mode: 'readonly',
+                });
+            }
+        }
+        return def;
+    },
+    /**
+     * @override
+     */
+    _instantiateSidebar: function (state) {
+
+        var defaultMode = this._getDefaultSidebarMode();
+        state = _.defaults(state || {}, {
+            mode: defaultMode,
+            attrs: defaultMode === 'view' ? this.view.arch.attrs : {},
+        });
+        var modelName = this.x2mModel ? this.x2mModel : this.model_name;
+        var params = {
+            view_type: this.view_type,
+            model_name: modelName,
+            fields: this.fields,
+            renamingAllowedFields: this.renamingAllowedFields,
+            state: state,
+            isEditingX2m: !!this.x2mField,
+            // In case of a search view, the editor doesn't have state
+            editorData: this.editor.state && this.editor.state.data || {},
+        };
+
+        if (_.contains(['list', 'form', 'kanban'], this.view_type)) {
+            var fields_in_view = _.pick(this.fields, this.editor.state.getFieldNames());
+            var fields_not_in_view = _.omit(this.fields, this.editor.state.getFieldNames());
+            params.fields_not_in_view = fields_not_in_view;
+            params.fields_in_view = fields_in_view;
+        } else if (this.view_type === 'search') {
+            // we return all the model fields since it's possible
+            // to have multiple times the same field defined in the search view.
+            params.fields_not_in_view = this.fields;
+            params.fields_in_view = [];
+        }
+
+        return new ViewEditorSidebar(this, params);
     },
     /**
      * Changes the environment variables before updating the editor
@@ -1171,7 +966,7 @@ var ViewEditorManager = Widget.extend({
         // will thus lost). This is why we reuse the same model and specify a
         // `parentID` (see @_onOpenOne2ManyRecord in FormController).
 
-        this.view_env = {
+        this.env = {
             currentId: data.res_id,
             context: data.getContext(),
             ids: data.res_ids,
@@ -1201,7 +996,7 @@ var ViewEditorManager = Widget.extend({
             if (!fromBreadcrumb) {
                 bus.trigger('edition_x2m_entered', viewType, self.x2mEditorPath.slice());
             }
-            self.updateSidebar('new');
+            self._updateSidebar('new');
         });
     },
     /**
@@ -1245,7 +1040,7 @@ var ViewEditorManager = Widget.extend({
 
         this.editor.unselectedElements();
         this._resetSidebarMode();
-        this.do({
+        this._do({
             type: type,
             target: {
                 tag: node.tag,
@@ -1264,7 +1059,8 @@ var ViewEditorManager = Widget.extend({
      */
     _renameField: function (oldName, newName) {
         var self = this;
-        return this._operationsMutex.exec(function () {
+
+        return this.mdp.exec(function () {
             // blockUI is used to prevent the user from doing any operation
             // because the hooks are still related to the old field name
             framework.blockUI();
@@ -1272,30 +1068,32 @@ var ViewEditorManager = Widget.extend({
             self.sidebar.$('select').attr('disabled', true);
 
             return self._rpc({
-                route: '/web_studio/rename_field',
-                params: {
-                    studio_view_id: self.studio_view_id,
-                    studio_view_arch: self.studio_view_arch,
-                    model: self.x2mModel ? self.x2mModel : self.model_name,
-                    old_name: oldName,
-                    new_name: newName,
-                },
-            }).then(function () {
-                self._updateOperations(oldName, newName);
-                var oldFieldIndex = self.renamingAllowedFields.indexOf(oldName);
-                self.renamingAllowedFields.splice(oldFieldIndex, 1);
-                self.renamingAllowedFields.push(newName);
-            }).always(function () {
-                framework.unblockUI();
-                return self.applyChanges();
-            });
+                    route: '/web_studio/rename_field',
+                    params: {
+                        studio_view_id: self.studio_view_id,
+                        studio_view_arch: self.studio_view_arch,
+                        model: self.x2mModel ? self.x2mModel : self.model_name,
+                        old_name: oldName,
+                        new_name: newName,
+                    },
+                })
+                .then(function () {
+                    self._updateOperations(oldName, newName);
+                    var oldFieldIndex = self.renamingAllowedFields.indexOf(oldName);
+                    self.renamingAllowedFields.splice(oldFieldIndex, 1);
+                    self.renamingAllowedFields.push(newName);
+                })
+                .always(function () {
+                    framework.unblockUI();
+                    return self._applyChanges();
+                });
         });
     },
     /**
      * @private
      */
     _resetSidebarMode: function () {
-        this.updateSidebar(this._getDefaultSidebarMode());
+        this._updateSidebar(this._getDefaultSidebarMode());
     },
     /**
      * @private
@@ -1404,25 +1202,20 @@ var ViewEditorManager = Widget.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * @private
-     * @param {OdooEvent} event
+     * @override
      */
     _onCloseXMLEditor: function () {
-        this.mode = 'edition';
+        this._super.apply(this, arguments);
         this.updateEditor();
-        this.XMLEditor.destroy();
-        this.sidebar.prependTo(this.$el);
-        $('body').removeClass('o_in_studio_xml_editor');
     },
     /**
      * Show nearrest hook.
      *
-     * @private
-     * @param {OdooEvent} event
+     * @override
      */
-    _onComponentDragged: function (event) {
-        var is_nearest_hook = this.editor.highlightNearestHook(event.data.$helper, event.data.position);
-        event.data.$helper.toggleClass('ui-draggable-helper-ready', is_nearest_hook);
+    _onDragComponent: function (ev) {
+        var is_nearest_hook = this.editor.highlightNearestHook(ev.data.$helper, ev.data.position);
+        ev.data.$helper.toggleClass('ui-draggable-helper-ready', is_nearest_hook);
     },
     /**
      * @private
@@ -1466,7 +1259,7 @@ var ViewEditorManager = Widget.extend({
                 }
             }).then(function () {
                 dialog.close();
-                self.applyChanges(false, false);
+                self._applyChanges(false, false);
             });
         });
     },
@@ -1480,13 +1273,12 @@ var ViewEditorManager = Widget.extend({
     /**
      * Toggle editor sidebar.
      *
-     * @private
-     * @param {OdooEvent} event
+     * @override
      */
-    _onNodeClicked: function (event) {
+    _onNodeClicked: function (ev) {
         var self = this;
-        var node = event.data.node;
-        var $node = event.data.$node;
+        var node = ev.data.node;
+        var $node = ev.data.$node;
         if (this.view_type === 'form' && node.tag === 'field') {
             var field = this.fields[node.attrs.name];
             var attrs = this.editor.state.fieldsInfo[this.editor.state.viewType][node.attrs.name];
@@ -1522,7 +1314,7 @@ var ViewEditorManager = Widget.extend({
                 });
             }
         }
-        this.updateSidebar('properties', node);
+        this._updateSidebar('properties', node);
     },
     /**
      * @private
@@ -1567,9 +1359,8 @@ var ViewEditorManager = Widget.extend({
     },
     /**
      * @private
-     * @param {OdooEvent} event
      */
-    _onOpenViewForm: function () {
+    _onOpenRecordFormView: function () {
         this.do_action({
             type: 'ir.actions.act_window',
             res_model: 'ir.ui.view',
@@ -1579,41 +1370,12 @@ var ViewEditorManager = Widget.extend({
         });
     },
     /**
-     * @private
-     * @param {OdooEvent} event
+     * @override
      */
     _onOpenXMLEditor: function () {
-        var self = this;
-
+        this._super.apply(this, arguments);
         this.renamingAllowedFields = [];
-
-        this.XMLEditor = new XMLEditor(this, this.view_id, {
-            position: 'left',
-            doNotLoadSCSS: true,
-
-        });
-        this.mode = 'rendering';
-
-        $.when(this.updateEditor(), this.XMLEditor.prependTo(this.$el)).then(function () {
-            self.sidebar.$el.detach();
-            $('body').addClass('o_in_studio_xml_editor');
-        });
-    },
-    /**
-     * @private
-     * @param {OdooEvent} event
-     */
-    _onSaveXMLEditor: function (event) {
-        this.do({
-            type: 'replace_arch',
-            view_id: event.data.view_id,
-            old_arch: event.data.old_arch,
-            new_arch: event.data.new_arch,
-        }).then(function () {
-            if (event.data.on_success) {
-                event.data.on_success();
-            }
-        });
+        this.updateEditor();  // the editor will be rendered in `rendering` mode
     },
     /**
      * @private
@@ -1621,21 +1383,6 @@ var ViewEditorManager = Widget.extend({
      */
     _onShowInvisibleToggled: function (event) {
         this.updateEditor({show_invisible: event.data.show_invisible});
-    },
-    /**
-     * @private
-     * @param {OdooEvent} event
-     */
-    _onSidebarTabChanged: function (event) {
-
-        this.updateSidebar(event.data.mode);
-        this.editor.unselectedElements();
-    },
-    /**
-     * @private
-     */
-    _onUnselectElement: function () {
-        this.editor.unselectedElements();
     },
     /**
      * @private

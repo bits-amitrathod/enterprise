@@ -28,7 +28,7 @@ var SubMenu = Widget.extend({
         this.action = action;
         this.active_view_types = this.action.view_mode.split(',');
         this.activeMenu = 'Views';
-        this.studio_actions = [{action: 'action_web_studio_main', title: 'Views'}];
+        this.studio_actions = [{action: 'action_web_studio_action_editor', title: 'Views'}];
         this.multi_lang = session.multi_lang;
 
         bus.on('action_changed', this, this._onActionChanged);
@@ -42,6 +42,9 @@ var SubMenu = Widget.extend({
 
         bus.on('edition_mode_entered', this, this._onEditionModeEntered);
         bus.on('edition_x2m_entered', this, this._onX2MEntered);
+
+        bus.on('report_template_opened', this, this._onReportTemplateOpened);
+        bus.on('report_template_closed', this, this._onReportTemplateClosed);
     },
     /**
      * @override
@@ -98,6 +101,15 @@ var SubMenu = Widget.extend({
             .toggleClass('active', is_last);
         if (!is_last) {
             $bc.click(function () {
+                if (bc.action.res_model === 'ir.actions.report') {
+                    // here we cannot do_action with replace_last_action as an
+                    // ir.act_window.action is put before the ReportEditoAction
+                    // (and the search view state will be lost)
+                    self.studio_actions.pop();
+                    self.trigger_up('studio_history_back');
+                    self.renderElement();
+                    return;
+                }
                 var options = {
                     action: self.action,
                     replace_last_action: true,
@@ -108,6 +120,9 @@ var SubMenu = Widget.extend({
                 }
                 if (bc.x2mEditorPath) {
                     options.x2mEditorPath = bc.x2mEditorPath.slice();
+                }
+                if (bc.viewName) {
+                    options.viewName = bc.viewName;
                 }
                 self._replaceAction(bc.action, bc.title, options);
             });
@@ -128,7 +143,7 @@ var SubMenu = Widget.extend({
                 this.studio_actions.length = options.index + 1;
             } else {
                 this.studio_actions = [
-                    {action: 'action_web_studio_main', title: _t('Views')},
+                    {action: 'action_web_studio_action_editor', title: _t('Views')},
                     {action: action, title: title, viewType: options.viewType},
                 ];
             }
@@ -136,11 +151,14 @@ var SubMenu = Widget.extend({
             this.studio_actions = [{action: action, title: title}];
         }
 
-        if (action === 'action_web_studio_main') {
+        if (action === 'action_web_studio_action_editor') {
             // do not open the default view in this case
             options.noEdit = !options.viewType;
         }
         this.activeMenu = title;
+        if (action._originalAction) {
+            action = JSON.parse(action._originalAction);
+        }
         this.do_action(action, options);
         this.renderElement();
     },
@@ -156,7 +174,7 @@ var SubMenu = Widget.extend({
     _onActionChanged: function (new_action) {
         this.action = new_action;
         this.active_view_types = this.action.view_mode.split(',');
-        this.studio_actions = [{action: 'action_web_studio_main', title: 'Views'}];
+        this.studio_actions = [{action: 'action_web_studio_action_editor', title: 'Views'}];
         // TODO: fwi stuff with viewManager
         this.renderElement();
     },
@@ -167,7 +185,7 @@ var SubMenu = Widget.extend({
     _onEditionModeEntered: function (viewType) {
         if (this.studio_actions.length === 1) {
             var bcOptions = {
-                action: 'action_web_studio_main',
+                action: 'action_web_studio_action_editor',
                 viewType: viewType,
                 title: viewType.charAt(0).toUpperCase() + viewType.slice(1),
             };
@@ -181,7 +199,7 @@ var SubMenu = Widget.extend({
     _onIcon: function (ev) {
         ev.preventDefault();
         var view_name = $(ev.currentTarget).data('name');
-        return this._replaceAction('action_web_studio_main', view_name, {
+        return this._replaceAction('action_web_studio_action_editor', view_name, {
             action: this.action,
             replace_last_action: true,
             viewType: view_name,
@@ -199,9 +217,9 @@ var SubMenu = Widget.extend({
         var title = $menu.text();
         var name = $menu.data('name');
         if (name === 'views') {
-            this._replaceAction('action_web_studio_main', title, {
+            this._replaceAction('action_web_studio_action_editor', title, {
                 action: this.action,
-                replace_last_action: true,
+                studio_clear_studio_breadcrumbs: true,
             });
         } else if (_.contains(['automations', 'reports', 'acl', 'filters', 'translations'], name)) {
             var self = this;
@@ -210,8 +228,11 @@ var SubMenu = Widget.extend({
                 model: this.action.res_model,
                 view_id: this.action.view_id[0],
             }).then(function (result) {
+                result.flags = _.extend({}, result.flags, {
+                    studioActionEnv: self.action.env,
+                });
                 self._replaceAction(result, title, {
-                    replace_last_action: true,
+                    studio_clear_studio_breadcrumbs: true,
                 });
             });
         }
@@ -221,6 +242,29 @@ var SubMenu = Widget.extend({
      */
     _onRedo: function () {
         bus.trigger('redo_clicked');
+    },
+    /**
+     * @private
+     */
+    _onReportTemplateClosed: function () {
+        if (this.studio_actions.length > 1) {
+            this.studio_actions.pop();
+        }
+        this.renderElement();
+    },
+    /**
+     * @private
+     * @param {string} reportName
+     */
+    _onReportTemplateOpened: function (reportName) {
+        if (this.studio_actions.length > 1) {
+            this.studio_actions.pop();
+        }
+        var bcOptions = {
+            action: 'web_studio.action_edit_report',
+            title: reportName,
+        };
+        this._addAction(bcOptions);
     },
     /**
      * @private
@@ -272,13 +316,13 @@ var SubMenu = Widget.extend({
      */
     _onX2MEntered: function (subviewType, x2mEditorPath) {
         var bcOptions = {
-            action: 'action_web_studio_main',
+            action: 'action_web_studio_action_editor',
             viewType: subviewType,
             x2mEditorPath: x2mEditorPath.slice(),
             title: _t('Subview ') + subviewType,
         };
         this._addAction(bcOptions);
-    }
+    },
 });
 
 return SubMenu;
