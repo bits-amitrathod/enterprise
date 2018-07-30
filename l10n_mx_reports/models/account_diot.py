@@ -201,7 +201,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             p_columns.append(withh)
             for tax in taxnoncre.ids:
                 total_taxnoncre += partner_data.get(tax, 0)
-            p_columns.append(self.format_value(total_taxnoncre))
+            p_columns.append(total_taxnoncre)
             unfolded = 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all
             lines.append({
                 'id': 'partner_' + str(partner.id),

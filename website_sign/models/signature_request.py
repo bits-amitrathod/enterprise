@@ -199,10 +199,11 @@ class SignatureRequest(models.Model):
 
     @api.one
     def send_follower_accesses(self, followers, subject=None, message=None):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         tpl = self.env.ref('website_sign.sign_template_mail_follower')
         body = tpl.render({
             'record': self,
-            'link': '/sign/document/%s/%s' % (self.id, self.access_token),
+            'link': url_join(base_url, 'sign/document/%s/%s' % (self.id, self.access_token)),
             'subject': subject,
             'body': message,
         }, engine='ir.qweb', minimal_qcontext=True)
@@ -227,6 +228,7 @@ class SignatureRequest(models.Model):
         if not self.completed_document:
             self.generate_completed_document()
 
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         for signer in self.request_item_ids:
             if not signer.partner_id or not signer.partner_id.email:
                 continue
@@ -234,7 +236,7 @@ class SignatureRequest(models.Model):
             tpl = self.env.ref('website_sign.sign_template_mail_completed')
             body = tpl.render({
                 'record': self,
-                'link': '/sign/document/%s/%s' % (self.id, signer.access_token),
+                'link': url_join(base_url, 'sign/document/%s/%s' % (self.id, signer.access_token)),
                 'subject': '%s signed' % self.reference,
                 'body': False,
             }, engine='ir.qweb', minimal_qcontext=True)
@@ -262,7 +264,7 @@ class SignatureRequest(models.Model):
         tpl = self.env.ref('website_sign.sign_template_mail_completed')
         body = tpl.render({
             'record': self,
-            'link': '/sign/document/%s/%s' % (self.id, self.access_token),
+            'link': url_join(base_url, 'sign/document/%s/%s' % (self.id, self.access_token)),
             'subject': '%s signed' % self.reference,
             'body': '',
         }, engine='ir.qweb', minimal_qcontext=True)
@@ -467,6 +469,7 @@ class SignatureRequestItem(models.Model):
 
     @api.multi
     def send_signature_accesses(self, subject=None, message=None):
+        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
         for signer in self:
             if not signer.partner_id or not signer.partner_id.email:
                 continue
@@ -475,7 +478,7 @@ class SignatureRequestItem(models.Model):
             tpl = self.env.ref('website_sign.sign_template_mail_request')
             body = tpl.render({
                 'record': self,
-                'link': "/sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token},
+                'link': url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.signature_request_id.id, 'access_token': signer.access_token}),
                 'subject': subject,
                 'body': message,
             }, engine='ir.qweb', minimal_qcontext=True)

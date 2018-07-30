@@ -15,8 +15,8 @@
 
     <record model="ir.ui.view" id="view_product_uom_form_inh_l10n_mx">
         <field name="name">view.product.uom.form.inh.l10n.mx</field>
-        <field name="model">product.uom</field>
-        <field name="inherit_id" ref="product.product_uom_form_view"/>
+        <field name="model">uom.uom</field>
+        <field name="inherit_id" ref="uom.product_uom_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='l10n_mx_edi_code_sat_id']" position="after">
                 <field name="l10n_mx_edi_code_aduana"/>
