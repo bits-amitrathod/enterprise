@@ -12,7 +12,7 @@
                     </tree>
                 </field>
                 <group>
-                    <field name="signer_id" attrs="{'invisible': [('signers_count', '!=', 0)]}"/>
+                    <field name="signer_id" attrs="{'invisible': [('signers_count', '!=', 0)], 'required': [('signers_count', '=', 0)]}"/>
                     <field name="signers_count" invisible="1"/>
                     <field name="is_user_signer" invisible="1"/>
                     <field name="template_id" invisible="1"/>

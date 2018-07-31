@@ -30,9 +30,9 @@ class SignSendRequest(models.TransientModel):
     extension = fields.Char(related="template_id.extension")
     is_user_signer = fields.Boolean(compute='_compute_is_user_signer')
 
-    subject = fields.Char(string="Subject")
+    subject = fields.Char(string="Subject", required=True)
     message = fields.Text("Message")
-    filename = fields.Char("Filename")
+    filename = fields.Char("Filename", required=True)
 
     @api.depends('template_id.attachment_id.datas_fname')
     def _compute_extension(self):

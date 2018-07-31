@@ -14,7 +14,7 @@ class SignTemplateShare(models.TransientModel):
         res = super(SignTemplateShare, self).default_get(fields)
         res['template_id'] = self.env.context.get('active_id')
         template = self.env['sign.template'].browse(res['template_id'])
-        if len(template.sign_item_ids.mapped('responsible_id')) > 1:
+        if template.responsible_count > 1:
             res['url'] = False
         else:
             if not template.share_link:
