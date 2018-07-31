@@ -44,8 +44,6 @@ class SignRequest(models.Model):
         ("canceled", "Canceled")
     ], default='draft', track_visibility='onchange', group_expand='_expand_states')
 
-    follower_ids = fields.Many2many('res.partner', string="Document Followers")
-
     completed_document = fields.Binary(readonly=True, string="Completed Document", attachment=True)
 
     nb_draft = fields.Integer(string="Draft Requests", compute="_compute_count", store=True)
@@ -158,7 +156,7 @@ class SignRequest(models.Model):
             included_request_items = sign_request.request_item_ids.filtered(lambda r: not r.partner_id or r.partner_id.id not in ignored_partners)
 
             if sign_request.send_signature_accesses(subject, message, ignored_partners=ignored_partners):
-                sign_request.send_follower_accesses(self.follower_ids, subject, message)
+                sign_request.send_follower_accesses(sign_request.message_follower_ids.mapped('partner_id'), subject, message)
                 included_request_items.action_sent()
             else:
                 sign_request.action_draft()
@@ -228,6 +226,7 @@ class SignRequest(models.Model):
                  'email_to': formataddr((follower.name, follower.email)),
                  'subject': subject or _('%s : Signature request') % self.reference}
             )
+            self.message_subscribe(partner_ids=follower.ids)
 
     @api.multi
     def send_completed_document(self):
@@ -278,7 +277,7 @@ class SignRequest(models.Model):
             'body': '',
         }, engine='ir.qweb', minimal_qcontext=True)
 
-        for follower in self.follower_ids:
+        for follower in self.mapped('message_follower_ids.partner_id'):
             if not follower.email:
                 continue
             self.env['sign.request']._message_send_mail(
@@ -401,7 +400,8 @@ class SignRequest(models.Model):
 
     @api.model
     def initialize_new(self, id, signers, followers, reference, subject, message, send=True):
-        sign_request = self.create({'template_id': id, 'reference': reference, 'follower_ids': [(6, 0, followers)], 'favorited_ids': [(4, self.env.user.id)]})
+        sign_request = self.create({'template_id': id, 'reference': reference, 'favorited_ids': [(4, self.env.user.id)]})
+        sign_request.message_subscribe(partner_ids=followers)
         sign_request.set_signers(signers)
         if send:
             sign_request.action_sent(subject, message)
@@ -421,8 +421,8 @@ class SignRequest(models.Model):
     @api.model
     def add_followers(self, id, followers):
         sign_request = self.browse(id)
-        old_followers = set(sign_request.follower_ids.mapped('id'))
-        sign_request.write({'follower_ids': [(6, 0, set(followers) | old_followers)]})
+        old_followers = set(sign_request.message_follower_ids.mapped('partner_id.id'))
+        sign_request.message_subscribe(partner_ids=followers)
         sign_request.send_follower_accesses(self.env['res.partner'].browse(followers))
         return sign_request.id
 
