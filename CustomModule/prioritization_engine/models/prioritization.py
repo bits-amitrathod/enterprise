@@ -3,7 +3,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError, AccessError
 
-
+# Global level setting
 class Customer(models.Model):
     _inherit = 'res.partner'
     prioritization = fields.Boolean("Prioritization setting")
@@ -19,7 +19,7 @@ class Customer(models.Model):
     length_of_hold = fields.Integer("Length Of Hold in hours", readonly=False)
     expiration_tolerance = fields.Integer("Expiration Tolerance in months", readonly=False)
     partial_ordering = fields.Boolean("Allow Partial Ordering?", readonly=False)
-    partial_UOM = fields.Integer("Allow Partial UOM?", readonly=False)
+    partial_UOM = fields.Boolean("Allow Partial UOM?", readonly=False)
     order_ids = fields.One2many('sale.order', 'partner_id')
     gl_account=fields.Char("GL Account")
     on_hold= fields.Boolean("On Hold")
@@ -46,17 +46,29 @@ class Customer(models.Model):
     def get_product_priority(self):
         return self.priority
 
+    # Return cooling period in days return type Integer
+    def get_cooling_period(self):
+        return self.cooling_period
+
     # Return Allow Auto Allocation? True/ False
     def is_auto_allocate(self):
         return self.auto_allocate
 
+    # Return Length Of Hold in hours return type Integer
+    def get_length_of_hold(self):
+        return self.length_of_hold
+
     # Return Expiration Tolerance in months return type Integer
-    def get_expiration_tolerance_in_months(self):
-       return self.expiration_tolerance_in_months
+    def get_expiration_tolerance(self):
+        return self.expiration_tolerance
 
     # Return partial_ordering? True/ False
     def is_partial_ordering(self):
         return self.partial_ordering
+
+    # Return Allow Partial UOM? True/ False
+    def is_allow_partial_uom(self):
+        return self.partial_UOM
 
     # Return GL Account return type character
     def get_gl_account(self):
@@ -104,22 +116,66 @@ class ProductTemplate(models.Model):
     class_code = fields.Char("Class Code")
 
 
+# Customer product level setting
 class Prioritization(models.Model):
     _name = 'prioritization_engine.prioritization'
     _inherits = {'product.product':'product_id'}
     sps_sku = fields.Char("SPS SKU",readonly=False)
     threshold = fields.Integer("Product Threshold",readonly=False)
-    priority=fields.Integer("Product Priority",readonly=False)
-    cooling_period=fields.Integer("Cooling Period in hours",readonly=False)
-    auto_allocate=fields.Boolean("Allow Auto Allocation?",readonly=False)
+    priority = fields.Integer("Product Priority",readonly=False)
+    cooling_period = fields.Integer("Cooling Period in days",readonly=False)
+    auto_allocate = fields.Boolean("Allow Auto Allocation?",readonly=False)
     length_of_hold = fields.Integer("Length Of Hold in hours",readonly=False)
     expiration_tolerance = fields.Integer("Expiration Tolerance in months",readonly=False)
     partial_ordering = fields.Boolean("Allow Partial Ordering?",readonly=False)
-    partial_UOM = fields.Integer("Allow Partial UOM?",readonly=False)
-    length_of_hold = fields.Date("Lenght Of Holding",readonly=False)
+    partial_UOM = fields.Boolean("Allow Partial UOM?",readonly=False)
+    length_of_holding = fields.Date("Length Of Holding",readonly=False)
     customer_id = fields.Many2one('res.partner', string='GlobalPrioritization',required=True)
     product_id = fields.Many2one('product.product', string='Prioritization Product',required=True)
     _sql_constraints = [
         ('prioritization_engine_company_uniq', 'unique(customer_id,product_id)', 'Product must be unique for customer!!!!'),
     ]
+
+    # Return product threshold return type Integer
+    def get_product_threshold(self):
+        return self.threshold
+
+    # Return product priority threshold return type Integer
+    def get_product_priority(self):
+        return self.priority
+
+    # Return cooling period in days return type Integer
+    def get_cooling_period(self):
+        return self.cooling_period
+
+    # Return Allow Auto Allocation? True/ False
+    def is_auto_allocate(self):
+        return self.auto_allocate
+
+    # Return Length Of Hold in hours return type Integer
+    def get_length_of_hold(self):
+        return self.length_of_hold
+
+    # Return Expiration Tolerance in months return type Integer
+    def get_expiration_tolerance(self):
+        return self.expiration_tolerance
+
+    # Return partial_ordering? True/ False
+    def is_partial_ordering(self):
+        return self.partial_ordering
+
+    # Return Allow Partial UOM? True/ False
+    def is_allow_partial_uom(self):
+        return self.partial_UOM
+
+    # Return customer id return type Integer
+    def get_customer_id(self):
+        return self.customer_id
+
+    # Return product id return type Integer
+    def get_product_id(self):
+        return self.product_id
+
+
+
 
