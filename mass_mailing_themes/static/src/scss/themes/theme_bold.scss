@@ -78,6 +78,7 @@ $o-mm-bold-font: Georgia, "Times New Roman", Times, serif;
     // ===== Snippets (specific) =====
     .o_mail_block_header_social, .o_mail_block_header_text_social, .o_mail_block_header_logo {
         .o_mail_snippet_general {
+            width: auto;
             margin-top: 10px;
             margin-bottom: 25px;
             padding-left: 20px;
@@ -129,9 +130,12 @@ $o-mm-bold-font: Georgia, "Times New Roman", Times, serif;
         margin-left: 20px;
         margin-right: 20px;
         background-color: transparent;
-        border-top: 3px solid $o-mm-bold-color-beta;
-        border-bottom: 3px solid $o-mm-bold-color-beta;
 
+        .o_mail_table_styles {
+            border-top: 3px solid $o-mm-bold-color-beta;
+            border-bottom: 3px solid $o-mm-bold-color-beta;
+        }
+        
         .o_mail_full_width_padding {
             padding-left: 0;
             padding-right: 0;
