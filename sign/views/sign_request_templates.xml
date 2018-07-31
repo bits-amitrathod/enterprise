@@ -129,7 +129,6 @@
                         <a href="/"><img src="/logo.png" alt="Logo"/></a>
                         <div t-if="sign_request" class="o_sign_header_instruction">
                             <t t-if="not current_request_item">Need to sign? Check your inbox to get your secure access</t>
-                            <t t-if="current_request_item and current_request_item.state == 'draft'">This document cannot be filled right now</t>
                             <t t-if="current_request_item and current_request_item.state == 'sent'">Please Review And Act On This Document</t>
                             <t t-if="current_request_item and current_request_item.state == 'completed'">You have completed the document</t>
                         </div>
