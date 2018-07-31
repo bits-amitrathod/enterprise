@@ -31,64 +31,64 @@ class Customer(models.Model):
     notification_email=fields.Char("Notification Email")
 
     # Return Customer prioritization setting ON(True)/OFF(False).
-    def prioritization_setting(self):
+    def get_prioritization_setting(self):
         return self.prioritization
 
-    # Return product minimum threshold
-    def product_min_threshold(self):
+    # Return product minimum threshold return type Integer
+    def get_product_min_threshold(self):
         return self.threshold_min
 
-    # Return product maximum threshold
-    def product_max_threshold(self):
+    # Return product maximum threshold return type Integer
+    def get_product_max_threshold(self):
         return self.threshold_max
 
-    # Return product priority threshold
-    def product_priority(self):
+    # Return product priority threshold return type Integer
+    def get_product_priority(self):
         return self.priority
 
     # Return Allow Auto Allocation? True/ False
-    def auto_allocate(self):
+    def is_auto_allocate(self):
         return self.auto_allocate
 
-    # Return Expiration Tolerance in months
-    def expiration_tolerance_in_months(self):
+    # Return Expiration Tolerance in months return type Integer
+    def get_expiration_tolerance_in_months(self):
        return self.expiration_tolerance_in_months
 
     # Return partial_ordering? True/ False
-    def partial_ordering(self):
+    def is_partial_ordering(self):
         return self.partial_ordering
 
     # Return GL Account return type character
-    def gl_account(self):
+    def get_gl_account(self):
         return self.gl_account
 
     # Return On Hold? True/ False
-    def on_hold(self):
+    def is_on_hold(self):
         return self.on_hold
 
     # Return Is a Broker? True/ False
-    def is_broker(self):
+    def is_is_broker(self):
         return self.is_broker
 
     # Return Having Carrier? True/ False
-    def having_carrier(self):
+    def is_having_carrier(self):
         return self.having_carrier
 
     # Return Carrier Account No return type character
-    def carrier_acc_no(self):
+    def get_carrier_acc_no(self):
         return self.carrier_acc_no
 
     # Return Carrier Information return type character
-    def carrier_info(self):
+    def get_carrier_info(self):
         return self.carrier_info
 
 
     # Return Quickbook Id return type character
-    def quickbook_id(self):
+    def get_quickbook_id(self):
         return self.quickbook_id
 
     # Return notification_email return type character
-    def notification_email(self):
+    def get_notification_email(self):
         return self.notification_email
 
 
