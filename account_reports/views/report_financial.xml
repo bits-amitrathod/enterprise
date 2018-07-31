@@ -100,6 +100,7 @@
         <t t-set="columns_types" t-value="context.get_columns_types()[-len(a['columns']):]"/>
         <t t-foreach="a['columns']" t-as="c">
             <t t-set="column" t-value="column + 1" />
+            <t t-set="style" />
             <t t-if="isinstance(c, tuple)"><t t-set="style" t-value="c[1]" /><t t-set="c" t-value="c[0]" /></t>
             <t t-if="a['type'] != 'total'">
                 <td t-att-class="columns_types[column - 1] == 'number' and  'text-right' or columns_types[column - 1] == 'text' and  'text-left' or 'text-center'" style="white-space: nowrap;" t-att-summary="context._get_summary(column)">
