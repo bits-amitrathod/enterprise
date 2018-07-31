@@ -5,11 +5,6 @@
     $unchecked-color: $o-web-studio-bg-dark,
     $unchecked-border: $o-web-studio-bg-dark) {
 
-    .custom-checkbox > label {
-        margin-right: 5px;
-        border: 1px solid $unchecked-border;
-        background-color: $unchecked-color;
-    }
     label {
         cursor: pointer;
         font-size: 12px;
@@ -23,10 +18,17 @@
         }
     }
     .custom-checkbox {
-        > input:checked + label {
-            background-image: url('/web_studio/static/src/img/ui/checkbox_active.svg');
+        > input {
+            &:not(:checked) + label:before {
+                border: 1px solid $unchecked-border;
+                background-color: $unchecked-color;
+            }
+            &:checked + label:after {
+                background-image: url('/web_studio/static/src/img/ui/checkbox_active.svg');
+                background-size: cover;
+            }
         }
-        &.o_web_studio_checkbox_inactive > input + label {
+        &.o_web_studio_checkbox_inactive > input + label:after {
             background-image: url('/web_studio/static/src/img/ui/checkbox_indeterminate.svg');
         }
     }
