@@ -12,6 +12,7 @@
                 <field name="create_date"/>
                 <field name="favorited_ids"/>
                 <field name="responsible_count"/>
+                <field name="create_uid"/>
 
                 <templates>
                     <div t-name="kanban-box" t-attf-class="oe_kanban_global_click {{kanban_color(record.color.raw_value)}}">
@@ -36,12 +37,19 @@
                                 class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) == 0"/>
                             <span><field name="attachment_id"/><field name="extension"/></span>
                         </div>
-                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                        <div class="oe_kanban_bottom_left">
+                        <div class="oe_kanban_content">
                             <em><field name="create_date"/></em>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </div>
-                        <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-sm mt8 o_kanban_sign_send_request">Send</button>
-                        <button name="%(sign.action_sign_template_share)d" type="action" class="btn btn-sm mt8" attrs="{'invisible': [('responsible_count', '&gt;', 1)]}">Share</button>
+                        <div class="o_kanban_record_bottom">
+                            <div class="oe_kanban_bottom_left">
+                                <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-sm mt8 o_kanban_sign_send_request">Send</button>
+                                <button name="%(sign.action_sign_template_share)d" type="action" class="btn btn-sm mt8" attrs="{'invisible': [('responsible_count', '&gt;', 1)]}">Share</button>
+                            </div>
+                            <div class="oe_kanban_bottom_right">
+                                <img t-att-src="kanban_image('res.users', 'image_small', record.create_uid.raw_value)" t-att-title="record.create_uid.value" t-att-alt="record.create_uid.value" width="24" height="24" class="oe_kanban_avatar float-right"/>
+                            </div>
+                        </div>
                     </div>
                 </templates>
             </kanban>
@@ -119,6 +127,7 @@
                 <filter name="active" string="Active" domain="[('active', '=', True)]"/>
                 <filter name="archive" string="Archived" domain="[('active', '=', False)]"/>
                 <separator/>
+                <filter name="my_templates" string="My Templates" domain="[('create_uid', '=', uid)]"/>
                 <filter name="favorite" string="Favorites" domain="[('favorited_ids', '=', uid)]"/>
             </search>
         </field>
