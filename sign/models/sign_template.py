@@ -27,6 +27,12 @@ class SignTemplate(models.Model):
 
     tag_ids = fields.Many2many('sign.template.tag', string='Tags')
     color = fields.Integer()
+    extension = fields.Char(compute='_compute_extension')
+
+    @api.depends('attachment_id.datas_fname')
+    def _compute_extension(self):
+        for template in self:
+            template.extension = '.' + template.attachment_id.datas_fname.split('.')[-1]
 
     @api.multi
     def go_to_custom_template(self):
