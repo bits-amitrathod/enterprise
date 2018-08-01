@@ -11,7 +11,7 @@
     """,
     "version": "10.0.1.0.0",
     "author": "Vauxoo",
-    "category": "Accounting",
+    "category": "Localization",
     "website": "http://www.vauxoo.com",
     "license": "OEEL-1",
     "depends": [
