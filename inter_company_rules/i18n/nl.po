@@ -30,7 +30,7 @@ msgstr "Factuur:"
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
 msgid ", generate a"
-msgstr ""
+msgstr ", genereer een"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
@@ -41,6 +41,11 @@ msgid ""
 "                                    <span attrs=\"{'invisible':[('applicable_on','!=', 'sale_purchase')]}\" class=\"ml4\"> Sale and Purchase Order</span>\n"
 "                                </strong> using"
 msgstr ""
+"<strong>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml4\">Verkooporder</span>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml4\">Inkooporder</span>\n"
+"                                    <span attrs=\"{'invisible':[('applicable_on','!=', 'sale_purchase')]}\" class=\"ml4\"> Verkoop- en inkooporder</span>\n"
+"                                </strong> gebruikt"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
@@ -78,7 +83,7 @@ msgstr "Genereer automatisch verkooporder"
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__auto_validation
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__auto_validation
 msgid "Auto Validation"
-msgstr ""
+msgstr "Automatische validatie"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_company
@@ -192,7 +197,7 @@ msgstr "Verkooporder"
 #: selection:res.company,applicable_on:0
 #: selection:res.config.settings,applicable_on:0
 msgid "Sale and Purchase Order"
-msgstr ""
+msgstr "Verkoop en inkooporder"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__rules_company_id
@@ -230,12 +235,12 @@ msgstr "Bron verkooporder"
 #. module: inter_company_rules
 #: selection:res.company,rule_type:0 selection:res.config.settings,rule_type:0
 msgid "Synchronize Invoices & Bills"
-msgstr ""
+msgstr "Synchroniseer facturen en rekeningen"
 
 #. module: inter_company_rules
 #: selection:res.company,rule_type:0 selection:res.config.settings,rule_type:0
 msgid "Synchronize Sales & Purchase Orders"
-msgstr ""
+msgstr "Synchroniseer verkoop & inkooporders"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__warehouse_id
@@ -279,12 +284,12 @@ msgstr ""
 #: selection:res.company,auto_validation:0
 #: selection:res.config.settings,auto_validation:0
 msgid "draft"
-msgstr ""
+msgstr "concept"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "generate a"
-msgstr ""
+msgstr "genereer een"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings
@@ -299,10 +304,10 @@ msgstr "tot"
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "to this company,"
-msgstr ""
+msgstr "naar dit bedrijf,"
 
 #. module: inter_company_rules
 #: selection:res.company,auto_validation:0
 #: selection:res.config.settings,auto_validation:0
 msgid "validated"
-msgstr ""
+msgstr "gevalideerd"

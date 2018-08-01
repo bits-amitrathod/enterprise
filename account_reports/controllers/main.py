@@ -77,6 +77,19 @@ class FinancialReportController(http.Controller):
                         ('Content-Length', len(content))
                     ]
                 )
+            if output_format == 'zip':
+                content = report_obj._get_zip(options)
+                response = request.make_response(
+                    content,
+                    headers=[
+                        ('Content-Type', 'application/zip'),
+                        ('Content-Disposition', 'attachment; filename=' + report_name + '.zip'),
+                    ]
+                )
+                # Adding direct_passthrough to the response and giving it a file
+                # as content means that we will stream the content of the file to the user
+                # Which will prevent having the whole file in memory
+                response.direct_passthrough = True
             response.set_cookie('fileToken', token)
             return response
         except Exception as e:

@@ -72,9 +72,11 @@ class account_bank_reconciliation_report(models.AbstractModel):
         journal_id = self._context.get('active_id') or options.get('active_id')
         journal = self.env['account.journal'].browse(journal_id)
 
-        rslt['use_foreign_currency'] = journal.currency_id and journal.currency_id != journal.company_id.currency_id or False
+        rslt['use_foreign_currency'] = \
+                journal.currency_id != journal.company_id.currency_id \
+                if journal.currency_id else False
         rslt['account_ids'] = list(set([journal.default_debit_account_id.id, journal.default_credit_account_id.id]))
-        rslt['line_currency'] = rslt['use_foreign_currency'] and journal.currency_id or False
+        rslt['line_currency'] = journal.currency_id if rslt['use_foreign_currency'] else False
         self = self.with_context(line_currency=rslt['line_currency'])
         lines_already_accounted = self.env['account.move.line'].search([('account_id', 'in', rslt['account_ids']),
                                                                         ('date', '<=', self.env.context['date_to']),
@@ -82,12 +84,16 @@ class account_bank_reconciliation_report(models.AbstractModel):
         rslt['odoo_balance'] = sum([line.amount_currency if rslt['use_foreign_currency'] else line.balance for line in lines_already_accounted])
 
         # Payments not reconciled with a bank statement line
-        move_lines = self.env['account.move.line'].search([('move_id.journal_id', '=', journal_id),
-                                                           '|', ('statement_line_id', '=', False), ('statement_line_id.date', '>', self.env.context['date_to']),
-                                                           ('user_type_id.type', '=', 'liquidity'),
-                                                           ('full_reconcile_id', '=', False),
-                                                           ('date', '<=', self.env.context['date_to']),
-                                                           ('company_id', 'in', self.env.context['company_ids'])])
+        move_lines = self.env['account.move.line'].search(
+                [
+                    ('move_id.journal_id', '=', journal_id),
+                    '|', ('statement_line_id', '=', False), 
+                    ('statement_line_id.date', '>', self.env.context['date_to']),
+                    ('user_type_id.type', '=', 'liquidity'),
+                    ('full_reconcile_id', '=', False),
+                    ('date', '<=', self.env.context['date_to']),
+                    ('company_id', 'in', self.env.context['company_ids'])
+                ])
         if move_lines:
             rslt['not_reconciled_pmts'] = move_lines
 
@@ -105,8 +111,12 @@ class account_bank_reconciliation_report(models.AbstractModel):
                                                                              ('company_id', 'in', self.env.context['company_ids'])])
 
         # Final
-        last_statement = self.env['account.bank.statement'].search([('journal_id', '=', journal_id),
-                                       ('date', '<=', self.env.context['date_to']), ('company_id', 'in', self.env.context['company_ids'])], order="date desc, id desc", limit=1)
+        last_statement = self.env['account.bank.statement'].search(
+                [
+                    ('journal_id', '=', journal_id),
+                    ('date', '<=', self.env.context['date_to']), 
+                    ('company_id', 'in', self.env.context['company_ids'])
+                ], order="date desc, id desc", limit=1)
         rslt['last_st_balance'] = last_statement.balance_end
         rslt['last_st_end_date'] = last_statement.date
 

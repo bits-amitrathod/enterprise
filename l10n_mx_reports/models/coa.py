@@ -64,7 +64,9 @@ class MXReportAccountCoa(models.AbstractModel):
         accounts.extend([account['cash_basis_base_account_id'][0] for account in basis_account_ids])
         accounts = account_obj.search([
             ('id', 'not in', list(set(accounts))),
-            ('deprecated', '=', False)])
+            ('deprecated', '=', False),
+            ('company_id', 'in', self.env.context['company_ids']),
+        ])
 
         if accounts:
             lines.append({
@@ -132,9 +134,8 @@ class MXReportAccountCoa(models.AbstractModel):
                 'level': '2',
                 'nature': tag.nature,
             })
-        ctx = self._set_context(options)
         date = fields.datetime.strptime(
-            ctx['date_from'], DEFAULT_SERVER_DATE_FORMAT)
+            self.env.context['date_from'], DEFAULT_SERVER_DATE_FORMAT)
         chart = {
             'vat': self.env.user.company_id.vat or '',
             'month': str(date.month).zfill(2),
@@ -146,7 +147,8 @@ class MXReportAccountCoa(models.AbstractModel):
     def get_xml(self, options):
         qweb = self.env['ir.qweb']
         version = '1.3'
-        values = self._get_coa_dict(options)
+        ctx = self._set_context(options)
+        values = self.with_context(ctx)._get_coa_dict(options)
         cfdicoa = qweb.render(CFDICOA_TEMPLATE, values=values)
         for key, value in MX_NS_REFACTORING.items():
             cfdicoa = cfdicoa.replace(key.encode('UTF-8'),

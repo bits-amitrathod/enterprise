@@ -271,12 +271,11 @@ class ResCompany(models.Model):
         ns = xml.nsmap
         # nsmap don't support "None" key then deleting
         ns.pop(None, None)
-
+        serie = xml.xpath("bm:DataSet/bm:Series[@IDSERIE='SF60653']/bm:Obs", namespaces=ns)[0]
         available_currency_names = available_currencies.mapped('name')
 
         rslt = {}
 
-        serie = xml.xpath("bm:DataSet/bm:Series[@IDSERIE='SF43718']/bm:Obs", namespaces=ns)[0]
         date = datetime.datetime.strptime(serie.get('TIME_PERIOD'), BANXICO_DATE_FORMAT).strftime(DEFAULT_SERVER_DATE_FORMAT)
 
         if 'MXN' in available_currency_names:
