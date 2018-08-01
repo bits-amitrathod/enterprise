@@ -13,9 +13,7 @@ class CustomerPortal(CustomerPortal):
 
     def _prepare_portal_layout_values(self):
         values = super(CustomerPortal, self)._prepare_portal_layout_values()
-        user = request.env.user
-        domain = ['|', ('user_id', '=', user.id), ('partner_id', 'child_of', user.partner_id.commercial_partner_id.id)]
-        values['ticket_count'] = request.env['helpdesk.ticket'].sudo().search_count(domain)
+        values['ticket_count'] = request.env['helpdesk.ticket'].search_count([])
         if values.get('sales_user', False):
             values['title'] = _("Salesperson")
         return values
@@ -31,7 +29,7 @@ class CustomerPortal(CustomerPortal):
     def my_helpdesk_tickets(self, page=1, date_begin=None, date_end=None, sortby=None, search=None, search_in='content', **kw):
         values = self._prepare_portal_layout_values()
         user = request.env.user
-        domain = ['|', ('user_id', '=', user.id), ('message_partner_ids', 'child_of', user.partner_id.commercial_partner_id.id)]
+        domain = []
 
         searchbar_sortings = {
             'date': {'label': _('Newest'), 'order': 'create_date desc'},
