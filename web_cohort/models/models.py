@@ -37,6 +37,7 @@ class Base(models.AbstractModel):
         columns_avg = defaultdict(lambda: dict(percentage=0, count=0))
         total_value = 0
         initial_churn_value = 0
+        measure_is_many2one = self._fields.get(measure) and self._fields.get(measure).type == 'many2one'
         for group in self._read_group_raw(domain=domain, fields=[date_start], groupby=date_start + ':' + interval):
             dates = group['%s:%s' % (date_start, interval)]
             if not dates:
@@ -48,7 +49,10 @@ class Base(models.AbstractModel):
             if measure == '__count__':
                 value = float(len(records))
             else:
-                value = float(sum([record[measure] for record in records]))
+                if measure_is_many2one:
+                    value = len(set([record[measure] for record in records]))
+                else:
+                    value = float(sum([record[measure] for record in records]))
             total_value += value
 
             columns = []
@@ -85,7 +89,10 @@ class Base(models.AbstractModel):
                 if measure == '__count__':
                     col_value = len(col_records)
                 else:
-                    col_value = sum([record[measure] for record in col_records])
+                    if measure_is_many2one:
+                        col_value = len(set([record[measure].id for record in col_records]))
+                    else:
+                        col_value = sum([record[measure] for record in col_records])
 
                 # In backward timeline, if columns are out of given range, we need
                 # to set initial value for calculating correct percentage
