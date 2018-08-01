@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-01 06:30+0000\n"
-"PO-Revision-Date: 2018-06-10 15:00+0000\n"
-"Last-Translator: Весел Карастоянов <vesel@abv.bg>\n"
+"PO-Revision-Date: 2018-07-31 17:54+0000\n"
+"Last-Translator: Maria Boyadjieva <marabo2000@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/odoo/odoo-9/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,7 +83,7 @@ msgstr ""
 msgid ""
 "<strong>Scan barcodes on picking lists:</strong> suitable if a significant "
 "percentage of your products do not have a barcode on them."
-msgstr ""
+msgstr "<strong>Сканирайте баркодове на пикинг списъци:</strong> подходящи, ако значителен процент от продуктите Ви нямат по себе си баркодове."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -110,7 +110,7 @@ msgstr "<strong>Проверете конфигурацията си:</strong>"
 msgid ""
 "<strong>The next step is to assign barcodes to your products,</strong> by "
 "setting the right value in the Barcode field of the Product form."
-msgstr ""
+msgstr "<strong>Следващата стъпка е да разпределите баркодовет към продуктите си,</strong> като заложите правилната стойност в полето с баркодове на формуляра за продукти."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -170,7 +170,7 @@ msgstr "Баркод"
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_pack_operation__barcode_scanned
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking__barcode_scanned
 msgid "Barcode Scanned"
-msgstr ""
+msgstr "Баркодът сканиран"
 
 #. module: stock_barcode
 #. openerp-web
@@ -365,7 +365,7 @@ msgstr "Нова инвентаризация"
 #: code:addons/stock_barcode/controllers/main.py:50
 #, python-format
 msgid "No internal picking type. Please configure one in warehouse settings."
-msgstr ""
+msgstr "Липсва вътрешен вид пикинг. Моля, конфигурирайте един в настройките на склада."
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:49
@@ -377,7 +377,7 @@ msgstr ""
 #: code:addons/stock_barcode/controllers/main.py:52
 #, python-format
 msgid "No picking or location corresponding to barcode %(barcode)s"
-msgstr ""
+msgstr "Няма пикинг или местонахождение, кореспондиращи с баркода %(barcode)s"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -459,12 +459,12 @@ msgstr "Операция за опаковане"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Pick up and scan each listed product."
-msgstr ""
+msgstr "Съберете и сканирайте всеки поместен в списъка продукт."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Pick up and scan the products"
-msgstr ""
+msgstr "Съберете и сканирайте продуктите"
 
 #. module: stock_barcode
 #: model:ir.actions.act_window,name:stock_barcode.stock_picking_action_form
@@ -476,7 +476,7 @@ msgstr "Избиране"
 #: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:31
 #, python-format
 msgid "Picking %s"
-msgstr ""
+msgstr "Пикинг %s"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_web_planner
@@ -488,7 +488,7 @@ msgstr "Планьор"
 msgid ""
 "Print delivery orders of the day by selecting all documents from the \"To "
 "Do\" list and print \"Picking Lists\" from the top menu."
-msgstr ""
+msgstr "Разпечатайте поръчките за доставка за деня, като изберете всички документи от списъка \"За извършване\" и разпечатайте \"Списъци с пикинги\" от горното меню."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -578,12 +578,12 @@ msgstr ""
 #: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:31
 #, python-format
 msgid "The picking is %s and cannot be edited."
-msgstr ""
+msgstr "Пикингът е %s и не може да бъде редактиран."
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_picking_type
 msgid "The picking type determines the picking view"
-msgstr ""
+msgstr "Типът пикинг определя пикинг изгледа"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -591,7 +591,7 @@ msgid ""
 "Then, scan the barcode of every product, or scan the barcode of the product "
 "on the picking line if the barcode on the product is not easily accessible, "
 "visible or is missing."
-msgstr ""
+msgstr "Тогава сканирайте баркода на всеки продукт или сканирайте баркода на продукта на пикинг реда, в случай че баркодът върху продукта не е лесно достъпет, видим или пък липсва."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -669,14 +669,14 @@ msgstr ""
 #: model:ir.model.fields,help:stock_barcode.field_stock_pack_operation__barcode_scanned
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking__barcode_scanned
 msgid "Value of the last barcode scanned."
-msgstr ""
+msgstr "Стойност на последния сканиран баркод"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid ""
 "When you've picked all the items, click the Validate button or scan the "
 "Validate barcode action to finish the Operation."
-msgstr ""
+msgstr "Когато сте избрали всичките редове, натиснете бутона за валидиране или сканирайте баркода за валидиране, за да завършите операцията."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
