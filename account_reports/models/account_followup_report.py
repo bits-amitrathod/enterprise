@@ -76,9 +76,12 @@ class AccountFollowupReport(models.AbstractModel):
                     date_due = {'name': date_due, 'class': 'color-red date', 'style': 'white-space:nowrap;text-align:center;color: red;'}
                 if is_payment:
                     date_due = ''
+                move_line_name = aml.invoice_id.name or aml.name
+                if self.env.context.get('print_mode'):
+                    move_line_name = {'name': move_line_name, 'style': 'text-align:right; white-space:normal;'}
                 amount = formatLang(self.env, amount, currency_obj=currency)
                 line_num += 1
-                columns = [format_date(self.env, aml.date, lang_code=lang_code), date_due, aml.invoice_id.origin, aml.invoice_id.name or aml.name, aml.expected_pay_date or '', {'name': aml.blocked, 'blocked': aml.blocked}, amount]
+                columns = [format_date(self.env, aml.date, lang_code=lang_code), date_due, aml.invoice_id.origin, move_line_name, aml.expected_pay_date and aml.expected_pay_date +' '+ aml.internal_note or '', {'name': aml.blocked, 'blocked': aml.blocked}, amount]
                 if self.env.context.get('print_mode'):
                     columns = columns[:4] + columns[6:]
                 lines.append({
