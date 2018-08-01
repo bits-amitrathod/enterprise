@@ -79,7 +79,6 @@ class account_analytic_line(models.Model):
             "project_id/id",
             "project_id.id",
             "name",
-            "user_id",
         ]
         tasks = task_ids.export_data(tasks_fields)
 
