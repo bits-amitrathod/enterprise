@@ -18,22 +18,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
-from odoo import api, models
-import logging
 
-log = logging.getLogger(__name__)
-
-class ReportSalesSalespersonWise(models.AbstractModel):
-    _name = 'report.sr_sales_report_compmonth.salesbymonth_temp'
-
-    @api.model
-    def get_report_values(self, docids, data=None):
-        log.info("11111111111111111111111111111111")
-
-        return {
-            'doc_ids': data.get('ids'),
-            'doc_model': data.get('model'),
-            'data': data['form'],
-            'start_date': data['start_date'],
-            'end_date': data['end_date'],
-        }
+from . import sale

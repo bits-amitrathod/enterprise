@@ -24,7 +24,7 @@ import logging
 log = logging.getLogger(__name__)
 
 class ReportSalesSalespersonWise(models.AbstractModel):
-    _name = 'report.sr_sales_report_compmonth.salesbymonth_temp'
+    _name = 'report.sales_report_discount_summary.discountsummary_temp'
 
     @api.model
     def get_report_values(self, docids, data=None):

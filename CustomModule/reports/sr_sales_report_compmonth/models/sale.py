@@ -39,13 +39,13 @@ class comparebymonth():
         for record in filtered_by_current_month:
             for r1 in record.order_line:
                 if r1.product_id.id in dict:
-                    log.info(" current_month Key available in dictionary")
+                    # log.info(" current_month Key available in dictionary")
                     data = dict[r1.product_id.id]
                     data.current_month_total_qty = data.current_month_total_qty + r1.product_uom_qty
                     data.current_month_total_amount = data.current_month_total_amount + r1.price_subtotal
                     dict[r1.product_id.id] = data
                 else:
-                    log.info(" current_month not Key available in dictionary")
+                    # log.info(" current_month not Key available in dictionary")
                     object = comparebymonth()
                     object.current_month_total_qty = r1.product_uom_qty
                     object.current_month_total_amount = r1.price_subtotal
@@ -55,19 +55,19 @@ class comparebymonth():
         for record in filtered_by_last_month:
             for r1 in record.order_line:
                 if r1.product_id.id in dict:
-                    log.info(" last_month Key available in dictionary")
+                    # log.info(" last_month Key available in dictionary")
                     data = dict[r1.product_id.id]
                     data.last_month_total_qty = data.last_month_total_qty + r1.product_uom_qty
                     data.last_month_total_amount = data.last_month_total_amount + r1.price_subtotal
                     dict[r1.product_id.id] = data
                 else:
-                    log.info(" last_month Key not available in dictionary")
+                    # log.info(" last_month Key not available in dictionary")
                     object = comparebymonth()
                     object.last_month_total_qty = r1.product_uom_qty
                     object.last_month_total_amount = r1.price_subtotal
                     object.product_name = r1.product_id.name
                     dict[r1.product_id.id] = object
-
+        log.info(" return addObject ")
         return dict
 
 class SaleSalespersonReport(models.TransientModel):
@@ -85,28 +85,27 @@ class SaleSalespersonReport(models.TransientModel):
         s_date = (datetime.datetime.now()-datetime.timedelta(days=30))
         l_date = (datetime.datetime.now())
         filtered_by_current_month = list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= s_date and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= l_date ,sale_orders))
-        log.info(filtered_by_current_month)
+        # log.info(filtered_by_current_month)
 
 
         ps_date = (datetime.datetime.now() - datetime.timedelta(days=60))
-        pl_date = (datetime.datetime.now()- datetime.timedelta(days=31))
+        pl_date = (datetime.datetime.now() - datetime.timedelta(days=31))
         filtered_by_last_month = list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= ps_date and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= pl_date ,sale_orders))
-        log.info(filtered_by_last_month)
+        # log.info(filtered_by_last_month)
 
         # dat = comparebymonth().addObject(list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= (datetime.datetime.now()-datetime.timedelta(days=30)) and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= (datetime.datetime.now()) ,sale_orders)),
         #                                  list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= (datetime.datetime.now() - datetime.timedelta(days=60)) and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= (datetime.datetime.now()- datetime.timedelta(days=31)), sale_orders)))
 
         dat = comparebymonth().addObject(filtered_by_current_month,filtered_by_last_month)
         log.info('............AAA..................')
-        log.info(dat)
+        # log.info(dat)
 
         # for user in self.product_id:
             # filtered_order = list(filter(lambda x: x.product_id == user, sale_orders))
         # filtered_by_date = list(
         #         filter(lambda x: x.date_order >= self.start_date and x.date_order <= self.end_date, sale_orders))
         groupby_dict['data'] = dat
-
-        final_dict = {} 
+        final_dict = {}
         for user in dat.keys():
             temp = []
             order= dat[user]
@@ -119,12 +118,14 @@ class SaleSalespersonReport(models.TransientModel):
             temp.append(temp_2)
             final_dict[user] = temp
         datas = {
-            'ids': self,
-            'model': 'sale.compbymonth.report',
+            'ids': self.ids,
+            'model': self._module,
             'form': final_dict,
             'start_date': datetime.datetime.now(),
             'end_date': datetime.datetime.now(),
 
         }
+        log.info('............bbb..................')
         return self.env.ref('sr_sales_report_compmonth.action_report_sales_compmonth_wise').report_action([],
                                                                                                                     data=datas)
+        log.info('............ccc..................')

@@ -18,22 +18,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
-from odoo import api, models
-import logging
 
-log = logging.getLogger(__name__)
-
-class ReportSalesSalespersonWise(models.AbstractModel):
-    _name = 'report.sr_sales_report_compmonth.salesbymonth_temp'
-
-    @api.model
-    def get_report_values(self, docids, data=None):
-        log.info("11111111111111111111111111111111")
-
-        return {
-            'doc_ids': data.get('ids'),
-            'doc_model': data.get('model'),
-            'data': data['form'],
-            'start_date': data['start_date'],
-            'end_date': data['end_date'],
-        }
+{
+    'name': 'Sales Report Discount Summary',
+    'category': 'sale',
+    'version': '11.0.0.1',
+    'summary': 'This module provides Sales Report Discount Summary.',
+    'author': 'Tushar Godase',
+    'description': '''This module provides Sales Report Discount Summary.
+                      With the help of this moudule you can print sales reportDiscount Summary.
+                      '''
+                   ,
+    'depends': ['base', 'sale_management'],
+    'data': [
+        'views/sale_view.xml',
+        'report/saleperson_report.xml',
+        'report/saleperson_temp.xml'
+    ],
+    'images': ['static/description/banner.png'],
+    'auto_install': False,
+    'installable': True,
+    'application': False,
+}
