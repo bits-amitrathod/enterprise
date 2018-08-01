@@ -208,12 +208,13 @@ var Menu = Widget.extend({
      * @param {MouseEvent} ev
      */
     _onMouseOverMenu: function (ev) {
-        if (!config.device.isMobile) {
-            var $opened = this.$('.o_menu_sections > li.show');
-            if ($opened.length) {
-                $opened.removeClass('show');
-                $(ev.currentTarget).addClass('show').find('> a').focus();
-            }
+        if (config.device.isMobile) {
+            return;
+        }
+        var $target = $(ev.currentTarget);
+        var $opened = $target.siblings('.show');
+        if ($opened.length) {
+            $target.find('[data-toggle="dropdown"]').dropdown('toggle');
         }
     },
     /**
