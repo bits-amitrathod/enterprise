@@ -63,9 +63,9 @@
               </p>
             </field>
         </record>
-                  
-        <menuitem id="customer_statements_menu" name="Follow-up Reports" parent="account.menu_finance_receivables_follow_up"
-                action="action_view_list_customer_statements"/>
+
+        <menuitem id="customer_statements_menu" name="Follow-up Reports" parent="account.menu_finance_receivables"
+                action="action_view_list_customer_statements" sequence="20"/>
 
         <record model="ir.actions.server" id="action_account_reports_customer_statements_do_followup">
             <field name="name">Process Follow-ups</field>
