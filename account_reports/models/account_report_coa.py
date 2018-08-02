@@ -21,7 +21,7 @@ class report_account_coa(models.AbstractModel):
 
     def _get_templates(self):
         templates = super(report_account_coa, self)._get_templates()
-        templates['main_template'] = 'account_reports.template_coa_report'
+        templates['main_table_header_template'] = 'account_reports.template_coa_table_header'
         return templates
 
     def _get_columns_name(self, options):
