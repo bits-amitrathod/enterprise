@@ -13,6 +13,18 @@
                 <attribute name="widget">iot</attribute>
                 <attribute name="options">{'ip_field': 'ip', 'identifier_field': 'identifier'}</attribute>
             </xpath>
+            <field name="picture" position="attributes">
+                <attribute name="widget">iot_picture</attribute>
+                <attribute name="options">{'ip_field': 'ip', 'identifier': 'identifier'}</attribute>
+            </field>
         </field>
     </record>
+
+
+    <!-- JS stuff -->
+    <template id="assets_backend" inherit_id="web.assets_backend" name="Quality MRP IoT assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/quality_mrp_iot/static/src/js/iot_picture.js"></script>
+        </xpath>
+    </template>
 </odoo>
