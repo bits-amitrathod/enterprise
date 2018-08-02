@@ -57,6 +57,12 @@ msgid ""
 "                            </strong>\n"
 "                            using"
 msgstr ""
+"<strong>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml8\">Verkooporder </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml8\">Inkooporder </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale_purchase')]}\" class=\"ml8\"> Verkoop en inkooporder </span>\n"
+"                            </strong>\n"
+"                            gebruikt"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__applicable_on
@@ -256,7 +262,7 @@ msgstr "Magazijn voor inkooporders"
 #: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "When a company validates a"
-msgstr ""
+msgstr "Wanneer een bedrijf de validatie doet van een"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
