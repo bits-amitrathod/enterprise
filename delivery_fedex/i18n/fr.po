@@ -11,17 +11,17 @@
 # Quentin THEURET <odoo@kerpeo.com>, 2016
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2016
 # Martin Trigaux, 2016
-# lap.odoo <lap@odoo.com>, 2017
+# Laura Piraux <lap@odoo.com>, 2017
 # Eloïse Stilmant <est@odoo.com>, 2017
 # e2f <projects@e2f.com>, 2018
 # Florian Hatat, 2018
 # Tony Galmiche <tony.galmiche@infosaone.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: Tony Galmiche <tony.galmiche@infosaone.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -108,7 +108,13 @@ msgid "EPL2"
 msgstr "EPL2"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:206
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "Easypost"
+msgstr ""
+
+#. module: delivery_fedex
+#: code:addons/delivery_fedex/models/delivery_fedex.py:233
 #, python-format
 msgid ""
 "Error:\n"
@@ -259,7 +265,7 @@ msgid "No carrier integration"
 msgstr "Aucune intégration avec un transporteur"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:385
+#: code:addons/delivery_fedex/models/delivery_fedex.py:440
 #, python-format
 msgid "No packages for this picking"
 msgstr "Aucun paquet pour cette sélection"
@@ -390,19 +396,19 @@ msgid "Saturday Delivery"
 msgstr "Livraison le samedi "
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:408
+#: code:addons/delivery_fedex/models/delivery_fedex.py:463
 #, python-format
 msgid "Shipment N° %s has been cancelled"
 msgstr "La livraison n° %s a été annulée"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:372
+#: code:addons/delivery_fedex/models/delivery_fedex.py:424
 #, python-format
 msgid "Shipment created into Fedex <br/> <b>Tracking Number : </b>%s"
 msgstr "Envoi créé dans Fedex  <br/> <b>Numéro de suivi : </b>%s"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:329
+#: code:addons/delivery_fedex/models/delivery_fedex.py:370
 #, python-format
 msgid ""
 "Shipment created into Fedex<br/><b>Tracking Numbers:</b> "
@@ -461,7 +467,7 @@ msgid "USPS"
 msgstr "USPS"
 
 #. module: delivery_fedex
-#: code:addons/delivery_fedex/models/delivery_fedex.py:212
+#: code:addons/delivery_fedex/models/delivery_fedex.py:239
 #, python-format
 msgid ""
 "Warning:\n"

@@ -10,19 +10,20 @@
 # Rona Lin <ssauapw@qq.com>, 2017
 # Siyuan Gu <siyuancn@hotmail.com>, 2017
 # Talway <9010446@qq.com>, 2017
-# 杜哥 <liangjia@qq.com>, 2017
+# liAnGjiA <liangjia@qq.com>, 2017
 # Eddie Lim <bhweelim@yahoo.com>, 2017
 # e2f <projects@e2f.com>, 2018
 # e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # liulixia <liu.lixia@elico-corp.com>, 2018
 # e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018
+# Xu Lei <xulei8@qq.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
-"Last-Translator: e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018\n"
+"POT-Creation-Date: 2018-08-02 11:21+0000\n"
+"PO-Revision-Date: 2018-08-02 11:21+0000\n"
+"Last-Translator: Xu Lei <xulei8@qq.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -198,6 +199,7 @@ msgstr "答案"
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.appointment
 #: model:ir.ui.view,arch_db:website_calendar.appointment_form
+#: model:website.menu,name:website_calendar.menu_appointment
 msgid "Appointment"
 msgstr "约会"
 
@@ -243,6 +245,7 @@ msgid "Appointment<span class=\"chevron\"/>"
 msgstr "<span class=\"chevron\"/>"
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_res_users__group_website_calendar_user
 #: model:ir.module.category,name:website_calendar.module_category_calendar
 #: model:ir.ui.view,arch_db:website_calendar.calendar_appointment_type_view_form
 #: model:ir.ui.view,arch_db:website_calendar.calendar_event_view_graph
@@ -459,6 +462,11 @@ msgid "If checked, new messages require your attention."
 msgstr "如果勾选此项，有新消息会提醒你。"
 
 #. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.setup
 msgid ""
 "In order to configure your first appointment, go\n"
@@ -536,6 +544,11 @@ msgid "Manager"
 msgstr "管理员"
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: website_calendar
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_ids
 #: model:ir.ui.view,arch_db:website_calendar.calendar_appointment_type_view_form
 msgid "Messages"
@@ -573,9 +586,19 @@ msgid "Number of Actions"
 msgstr "行动数量"
 
 #. module: website_calendar
+#: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: website_calendar
 #: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr "需要行动消息的数量"
+
+#. module: website_calendar
+#: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
 
 #. module: website_calendar
 #: model:ir.model.fields,help:website_calendar.field_calendar_appointment_type__message_unread_counter
@@ -603,7 +626,7 @@ msgid "Placeholder"
 msgstr "占位符"
 
 #. module: website_calendar
-#: code:addons/website_calendar/models/calendar_appointment.py:298
+#: code:addons/website_calendar/models/calendar_appointment.py:300
 #, python-format
 msgid "Please enter a valid hour between 0:00 to 24:00 for your slots."
 msgstr "请为您的插槽在0:00 至 24:00之间输入有效时间。"
@@ -671,7 +694,6 @@ msgid "Saturday"
 msgstr "周六"
 
 #. module: website_calendar
-#: model:ir.ui.view,arch_db:website_calendar.appointment_footer
 #: model:ir.ui.view,arch_db:website_calendar.calendar_appointment_type_view_form
 msgid "Schedule Appointment"
 msgstr "安排约会"
@@ -797,6 +819,11 @@ msgstr "未读消息"
 #: model:ir.model.fields,field_description:website_calendar.field_calendar_appointment_type__message_unread_counter
 msgid "Unread Messages Counter"
 msgstr "未读消息计数器"
+
+#. module: website_calendar
+#: model:ir.model,name:website_calendar.model_res_users
+msgid "Users"
+msgstr "用户"
 
 #. module: website_calendar
 #: model:ir.ui.view,arch_db:website_calendar.index

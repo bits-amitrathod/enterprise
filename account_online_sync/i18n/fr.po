@@ -26,10 +26,10 @@
 # Micky Jault <micky037@hotmail.fr>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: Micky Jault <micky037@hotmail.fr>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -66,8 +66,8 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid ""
-"<strong>Well done!</strong> Your banking institution is now synchronized "
-"with Odoo."
+"<strong>Well done!</strong> Your banking institution is now connected to "
+"Odoo."
 msgstr ""
 
 #. module: account_online_sync
@@ -125,6 +125,12 @@ msgid "Action Required"
 msgstr "Action requise"
 
 #. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:322
+#, python-format
+msgid "Add a Bank Account"
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
 msgid "Additional information"
 msgstr "Informations complémentaires"
@@ -134,6 +140,12 @@ msgstr "Informations complémentaires"
 #, python-format
 msgid "An error occurred during online synchronization"
 msgstr "Une erreur est survenue durant la synchronisation en ligne"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:279
+#, python-format
+msgid "Automated Bank Synchronization"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__balance
@@ -147,11 +159,6 @@ msgid "Bank Accounts"
 msgstr "Comptes bancaires"
 
 #. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_journal__bank_statements_source
-msgid "Bank Feeds"
-msgstr "Flux bancaires"
-
-#. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_bank_statement
 msgid "Bank Statement"
 msgstr "Relevé bancaire"
@@ -160,11 +167,6 @@ msgstr "Relevé bancaire"
 #: model:ir.model,name:account_online_sync.model_account_bank_statement_line
 msgid "Bank Statement Line"
 msgstr "Ligne de relevé bancaire"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statements_source:0
-msgid "Bank Synchronization"
-msgstr "Synchronisation bancaire"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -182,6 +184,11 @@ msgid "Code to identify problem"
 msgstr "Code pour identifier le problème"
 
 #. module: account_online_sync
+#: model:ir.model,name:account_online_sync.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__company_id
 msgid "Company"
 msgstr "Société"
@@ -193,34 +200,15 @@ msgid "Configure"
 msgstr "Configurer"
 
 #. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create bi-monthly statements"
-msgstr "Créer des relevés bimensuels"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create daily statements"
-msgstr "Créer des relevés quotidiens"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create monthly statements"
-msgstr "Créer des relevés mensuels"
+#: code:addons/account_online_sync/models/online_sync.py:161
+#, python-format
+msgid "Create a Bank Account"
+msgstr ""
 
 #. module: account_online_sync
 #: selection:account.online.link.wizard,action:0
 msgid "Create new journal"
 msgstr ""
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create one statement per synchronization"
-msgstr "Créer un relevé par synchronisation"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create weekly statements"
-msgstr "Créer des relevés hebdomadaires"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__create_uid
@@ -240,8 +228,16 @@ msgstr "Créé le"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal__bank_statement_creation
-msgid "Creation of bank statement"
-msgstr "Création du relevé bancaire"
+msgid "Creation of Bank Statements"
+msgstr ""
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_journal__bank_statement_creation
+msgid ""
+"Defines when a new bank statement\n"
+"                                               will be created when fetching new transactions\n"
+"                                               from your bank account."
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__display_name
@@ -270,11 +266,6 @@ msgstr "Échec"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__sync_date
 msgid "Fetch transaction from"
 msgstr "Rapatrier la transaction depuis"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statements_source:0
-msgid "File Import"
-msgstr "Importation de fichier"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_follower_ids
@@ -331,6 +322,11 @@ msgid "If checked, new messages require your attention."
 msgstr "Si coché, de nouveaux messages demandent votre attention."
 
 #. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__name
 msgid "Institution"
 msgstr "Institution"
@@ -358,6 +354,11 @@ msgstr "Journal"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__name
 msgid "Journal Name"
 msgstr "Nom du journal"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__journal_statements_creation
+msgid "Journal Statements Creation"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal____last_update
@@ -420,6 +421,11 @@ msgid "Message"
 msgstr "Message"
 
 #. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_ids
 msgid "Messages"
 msgstr "Messages"
@@ -441,6 +447,14 @@ msgid "Next synchronization"
 msgstr "Prochaine synchronisation"
 
 #. module: account_online_sync
+#: code:addons/account_online_sync/models/company.py:21
+#, python-format
+msgid ""
+"No bank journal could be found! Please install a chart of accounts first, in"
+" order to create one."
+msgstr ""
+
+#. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:109
 #, python-format
 msgid "No new transactions have been loaded in the system."
@@ -457,9 +471,19 @@ msgid "Number of Actions"
 msgstr "Nombre d'actions"
 
 #. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr "Nombre de messages exigeant une action"
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_unread_counter
@@ -484,15 +508,17 @@ msgid "Online Institution Accounts"
 msgstr ""
 
 #. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:337
 #: model:ir.ui.menu,name:account_online_sync.menu_action_online_provider_account
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_form_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+#, python-format
 msgid "Online Synchronization"
 msgstr "Synchronisation en ligne"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:357
+#: code:addons/account_online_sync/models/online_sync.py:410
 #, python-format
 msgid "Opening statement: first synchronization"
 msgstr "Déclaration d’ouverture : première synchronisation"
@@ -509,7 +535,7 @@ msgid "Please enter at least a character for the search"
 msgstr ""
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:223
+#: code:addons/account_online_sync/models/online_sync.py:247
 #, python-format
 msgid ""
 "Please link your accounts to a journal or select \"do not link\" as action "
@@ -545,17 +571,6 @@ msgstr "Type de fournisseur"
 #: model:ir.model,name:account_online_sync.model_account_online_provider
 msgid "Provider for online account synchronization"
 msgstr "Fournisseur de synchronisation de banque en ligne"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statements_source:0
-msgid "Record Manually"
-msgstr "Enregistrement manuel"
-
-#. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:281
-#, python-format
-msgid "Select your institution"
-msgstr ""
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:76
@@ -629,17 +644,6 @@ msgid "The following transactions have been loaded in the system."
 msgstr ""
 
 #. module: account_online_sync
-#: model:ir.model.fields,help:account_online_sync.field_account_journal__bank_statement_creation
-msgid ""
-"This field is used for the online synchronization:\n"
-"                                                    depending on the option selected, newly fetched transactions\n"
-"                                                    will be put inside previous statement or in a new one"
-msgstr ""
-"Ce champ est utilisé pour la synchronisation en ligne :\n"
-"                                                  en fonction de l’option sélectionnée, les transactions récemment\n"
-"                                                  récupérées figureront sur le relevé précédent ou sur un nouveau relevé"
-
-#. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:74
 #: code:addons/account_online_sync/models/online_sync.py:88
 #, python-format
@@ -657,12 +661,7 @@ msgid "True if user needs to take action by updating account"
 msgstr "Vrai si l’utilisateur doit intervenir, en mettant à jour le compte"
 
 #. module: account_online_sync
-#: selection:account.journal,bank_statements_source:0
-msgid "Undefined"
-msgstr "Indéfini"
-
-#. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:189
+#: code:addons/account_online_sync/models/online_sync.py:201
 #, python-format
 msgid "Unimplemented"
 msgstr "Inappliqué"
@@ -727,7 +726,7 @@ msgid ""
 msgstr ""
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:225
+#: code:addons/account_online_sync/models/online_sync.py:249
 #, python-format
 msgid "You can not link two accounts to the same journal"
 msgstr ""
@@ -761,7 +760,7 @@ msgid "name of the banking institution"
 msgstr "nom de l’établissement bancaire"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:403
+#: code:addons/account_online_sync/models/online_sync.py:456
 #, python-format
 msgid "online sync"
 msgstr "Synchronisation en ligne"
@@ -780,14 +779,14 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid ""
-"your account because of the following \n"
+"your account because of the following\n"
 "                    error during the process:"
 msgstr ""
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid ""
-"your account was not \n"
+"your account was not\n"
 "                    thoroughly completed. You can try to manually update your account by clicking the refresh button on the dashboard\n"
 "                    or in the online synchronization menu."
 msgstr ""

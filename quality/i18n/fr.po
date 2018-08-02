@@ -17,7 +17,7 @@
 # Richard Mathot <rim@odoo.com>, 2016
 # Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2017
 # Sébastien Le Ray <sebastien-github@orniz.org>, 2017
-# lap.odoo <lap@odoo.com>, 2017
+# Laura Piraux <lap@odoo.com>, 2017
 # Eloïse Stilmant <est@odoo.com>, 2017
 # fr trans <e2ftrans1@yahoo.com>, 2017
 # Lucas Deliege <lud@odoo.com>, 2017
@@ -25,10 +25,10 @@
 # Micky Jault <micky037@hotmail.fr>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: Micky Jault <micky037@hotmail.fr>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -308,6 +308,14 @@ msgid "If checked, new messages require your attention."
 msgstr "Si coché, de nouveaux messages demandent votre attention."
 
 #. module: quality
+#: model:ir.model.fields,help:quality.field_quality_alert__message_has_error
+#: model:ir.model.fields,help:quality.field_quality_alert_team__message_has_error
+#: model:ir.model.fields,help:quality.field_quality_check__message_has_error
+#: model:ir.model.fields,help:quality.field_quality_point__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Instructions"
 msgstr "Instructions"
@@ -373,6 +381,14 @@ msgid "Manager"
 msgstr "Gestionnaire"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert__message_has_error
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team__message_has_error
+#: model:ir.model.fields,field_description:quality.field_quality_check__message_has_error
+#: model:ir.model.fields,field_description:quality.field_quality_point__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__message_ids
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__message_ids
 #: model:ir.model.fields,field_description:quality.field_quality_check__message_ids
@@ -431,6 +447,14 @@ msgid "Number of Actions"
 msgstr "Nombre d'actions"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert__message_has_error_counter
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team__message_has_error_counter
+#: model:ir.model.fields,field_description:quality.field_quality_check__message_has_error_counter
+#: model:ir.model.fields,field_description:quality.field_quality_point__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert__message_needaction_counter
 #: model:ir.model.fields,help:quality.field_quality_alert_team__message_needaction_counter
 #: model:ir.model.fields,help:quality.field_quality_check__message_needaction_counter
@@ -439,12 +463,27 @@ msgid "Number of messages which requires an action"
 msgstr "Nombre de messages exigeant une action"
 
 #. module: quality
+#: model:ir.model.fields,help:quality.field_quality_alert__message_has_error_counter
+#: model:ir.model.fields,help:quality.field_quality_alert_team__message_has_error_counter
+#: model:ir.model.fields,help:quality.field_quality_check__message_has_error_counter
+#: model:ir.model.fields,help:quality.field_quality_point__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert__message_unread_counter
 #: model:ir.model.fields,help:quality.field_quality_alert_team__message_unread_counter
 #: model:ir.model.fields,help:quality.field_quality_check__message_unread_counter
 #: model:ir.model.fields,help:quality.field_quality_point__message_unread_counter
 msgid "Number of unread messages"
 msgstr "Nombre de messages non lus"
+
+#. module: quality
+#: model:ir.model.fields,help:quality.field_res_users__group_quality_user
+msgid ""
+"Officer: The quality user uses the quality process\n"
+"Manager: The quality manager manages the quality process"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -541,6 +580,7 @@ msgid "Product Variant"
 msgstr "Variante d'article"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_res_users__group_quality_user
 #: model:ir.module.category,name:quality.module_category_quality
 msgid "Quality"
 msgstr "Qualité"
@@ -729,6 +769,11 @@ msgstr "Utilisé dans la vue Kanban"
 #: model:res.groups,name:quality.group_quality_user
 msgid "User"
 msgstr "Utilisateur"
+
+#. module: quality
+#: model:ir.model,name:quality.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__partner_id

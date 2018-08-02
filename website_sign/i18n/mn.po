@@ -13,10 +13,10 @@
 # Ganbold BATKHUYAG <gbatkhuyag@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:21+0000\n"
+"PO-Revision-Date: 2018-08-02 11:21+0000\n"
 "Last-Translator: Ganbold BATKHUYAG <gbatkhuyag@gmail.com>, 2018\n"
 "Language-Team: Mongolian (https://www.transifex.com/odoo/teams/41243/mn/)\n"
 "MIME-Version: 1.0\n"
@@ -26,124 +26,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: website_sign
-#: model:mail.template,body_html:website_sign.website_sign_mail_template
-msgid ""
-"\n"
-"            <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n"
-"\n"
-"            <div style=\"width:90%; max-width:600px; margin:auto; font-size:10pt; padding:20px 0; font-family:'Lato', serif;\">\n"
-"                <div style=\"background-color:#EFEDED; padding: 20px;\">\n"
-"                    % if ctx['template_type'] == \"request\":\n"
-"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) has requested your signature on this document :\n"
-"                    % endif\n"
-"                    % if ctx['template_type'] == \"follower\":\n"
-"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) has added you as a Follower of this Signature Request :\n"
-"                    % endif\n"
-"                    % if ctx['template_type'] == \"completed\":\n"
-"                        This document has been completed and signed by everyone :\n"
-"                    % endif\n"
-"\n"
-"                    <h1 style=\"font-size:1.25em; margin:15px 0 25px 0;\">${object['reference']}</h1>\n"
-"                    \n"
-"                    <div style=\"margin:0 -15px\">\n"
-"                        <a style=\"float:left; display:inline-block; margin:0 15px 10px 15px; padding:5px 10px; border-radius: 3px; background-color:#5C6ED0; text-align:center; text-decoration:none; color:#F7FBFD;\" href=${ctx['link']}>\n"
-"                            % if ctx['template_type'] == \"request\":\n"
-"                                Sign Document Now\n"
-"                            % endif\n"
-"                            % if ctx['template_type'] == \"follower\":\n"
-"                                View Signature Request\n"
-"                            % endif\n"
-"                            % if ctx['template_type'] == \"completed\":\n"
-"                                View Signed Document\n"
-"                            % endif\n"
-"                        </a>\n"
-"                        \n"
-"                        <div style=\"font-size:0.8em; color:#999999; margin:0 15px 10px 15px\">\n"
-"                            % if ctx['template_type'] == \"request\":\n"
-"                                <strong style=\"font-weight:bold; color:black;\">Warning: do not forward this email to other people!</strong><br/>\n"
-"                                They will be able to access this document and sign it as yourself.\n"
-"                            % endif\n"
-"                            % if ctx['template_type'] == \"follower\":\n"
-"                                You will be notified once the document has been signed by everyone involved.\n"
-"                            % endif\n"
-"                        </div>\n"
-"                        <div style=\"clear:both;\"/>\n"
-"                    </div>\n"
-"                    \n"
-"                    % if ctx['msgbody']:\n"
-"                    <div style=\"background-color:white; padding:10px;\">\n"
-"                        ${ctx['msgbody']|safe}\n"
-"                    </div>\n"
-"                    % endif\n"
-"                </div>\n"
-"                \n"
-"                <div style=\"font-size:0.8em; margin-top:10px;\">\n"
-"                    <span style=\"color:#428BCA;\">Sent with <strong style=\"font-weight:bold;\">Odoo Sign</strong></span>\n"
-"                </div>\n"
-"            </div>\n"
-"        \n"
-"        "
+#: code:addons/website_sign/models/signature_request.py:219
+#, python-format
+msgid "%s : Signature request"
 msgstr ""
-"\n"
-"            <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>\n"
-"\n"
-"            <div style=\"width:90%; max-width:600px; margin:auto; font-size:10pt; padding:20px 0; font-family:'Lato', serif;\">\n"
-"                <div style=\"background-color:#EFEDED; padding: 20px;\">\n"
-"                    % if ctx['template_type'] == \"request\":\n"
-"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) дараах баримт дээр таны гарын үсгийг хүссэн :\n"
-"                    % endif\n"
-"                    % if ctx['template_type'] == \"follower\":\n"
-"                        ${ctx['email_from_usr']} (<a href=\"mailto:${ctx['email_from']}?subject=Re: ${ctx['subject']|safe}\" style=\"color:#428BCA; text-decoration:none;\" target=\"_blank\">${ctx['email_from_mail']}</a>) таныг дараах Гарын үсэг хүсэлтийн дагагчаар нэмсэн :\n"
-"                    % endif\n"
-"                    % if ctx['template_type'] == \"completed\":\n"
-"                        Энэ баримт нь дууссан ба бүгд гарын үсгээ зурсан байна :\n"
-"                    % endif\n"
-"\n"
-"                    <h1 style=\"font-size:1.25em; margin:15px 0 25px 0;\">${object['reference']}</h1>\n"
-"                    \n"
-"                    <div style=\"margin:0 -15px\">\n"
-"                        <a style=\"float:left; display:inline-block; margin:0 15px 10px 15px; padding:5px 10px; border-radius: 3px; background-color:#5C6ED0; text-align:center; text-decoration:none; color:#F7FBFD;\" href=${ctx['link']}>\n"
-"                            % if ctx['template_type'] == \"request\":\n"
-"                                Баримт дээр одоо гарын үсэг зурах\n"
-"                            % endif\n"
-"                            % if ctx['template_type'] == \"follower\":\n"
-"                                Гарын үсгийн хүсэлтийг үзэх\n"
-"                            % endif\n"
-"                            % if ctx['template_type'] == \"completed\":\n"
-"                                Гарын үсэг зурсан баримтыг үзэх\n"
-"                            % endif\n"
-"                        </a>\n"
-"                        \n"
-"                        <div style=\"font-size:0.8em; color:#999999; margin:0 15px 10px 15px\">\n"
-"                            % if ctx['template_type'] == \"request\":\n"
-"                                <strong style=\"font-weight:bold; color:black;\">Анхаар: Энэ имэйлийг өөр хүмүүс рүү илгээхийг хориглоно!</strong><br/>\n"
-"                                Тэд энэ баримт руу хандаж таны өмнөөс гарын үсэг зурах боломжтой болно.\n"
-"                            % endif\n"
-"                            % if ctx['template_type'] == \"follower\":\n"
-"                                Баримтад хамаатай бүх хүмүүс гарын үсэг зурж дуусмагц танд мэдэгдэх болно.\n"
-"                            % endif\n"
-"                        </div>\n"
-"                        <div style=\"clear:both;\"/>\n"
-"                    </div>\n"
-"                    \n"
-"                    % if ctx['msgbody']:\n"
-"                    <div style=\"background-color:white; padding:10px;\">\n"
-"                        ${ctx['msgbody']|safe}\n"
-"                    </div>\n"
-"                    % endif\n"
-"                </div>\n"
-"                \n"
-"                <div style=\"font-size:0.8em; margin-top:10px;\">\n"
-"                    <span style=\"color:#428BCA;\"><strong style=\"font-weight:bold;\">Odoo Sign</strong>-аас илгээв</span>\n"
-"                </div>\n"
-"            </div>\n"
-"        \n"
-"        "
 
 #. module: website_sign
-#: model:mail.template,subject:website_sign.website_sign_mail_template
-msgid "${ctx['subject']|safe}"
-msgstr "${ctx['subject']|safe}"
+#: code:addons/website_sign/models/signature_request.py:281
+#: code:addons/website_sign/models/signature_request.py:291
+#, python-format
+msgid "%s has been signed"
+msgstr ""
+
+#. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_follower
+msgid ") has added you as a follower of the document"
+msgstr ""
+
+#. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_request
+msgid ") has requested your signature on the document"
+msgstr ""
 
 #. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
@@ -154,6 +57,14 @@ msgstr "<br/>(имэйлийн хандалт илгээгдээгүй)"
 #: model:ir.ui.view,arch_db:website_sign.signature_item_type_view_form
 msgid "<span>(1.0 = full page size)</span>"
 msgstr "<span>(1.0 = бүрэн хуудсын хэмжээ)</span>"
+
+#. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_completed
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_request
+msgid ""
+"<strong>Warning</strong> do not forward this email to other people!<br/>\n"
+"            They will be able to access this document and sign it as yourself."
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
@@ -278,7 +189,7 @@ msgid "Canceled"
 msgstr "Цуцлагдсан"
 
 #. module: website_sign
-#: code:addons/website_sign/models/signature_request.py:386
+#: code:addons/website_sign/models/signature_request.py:408
 #, python-format
 msgid "Canceled."
 msgstr "Цуцласан."
@@ -440,6 +351,11 @@ msgstr "Баримтын Хуудас"
 #, python-format
 msgid "Document Sign"
 msgstr "Баримтын гарын үсэг"
+
+#. module: website_sign
+#: model:ir.model.fields,field_description:website_sign.field_res_users__group_website_sign_user
+msgid "Document Signatures"
+msgstr ""
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_item__template_id
@@ -668,6 +584,11 @@ msgid "If checked, new messages require your attention."
 msgstr "Хэрэв сонгосон бол, шинэ зурвасуудад анхаарал хандуулахыг шаардана."
 
 #. module: website_sign
+#: model:ir.model.fields,help:website_sign.field_signature_request__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:41
 #, python-format
@@ -772,6 +693,11 @@ msgid "Longitude"
 msgstr "Уртраг"
 
 #. module: website_sign
+#: model:res.groups,name:website_sign.group_website_sign_manager
+msgid "Manager"
+msgstr "Менежер"
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:21
 #, python-format
@@ -784,6 +710,11 @@ msgstr "Шаардлагатай талбар"
 #, python-format
 msgid "Message"
 msgstr "Зурвас"
+
+#. module: website_sign
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__message_has_error
+msgid "Message Delivery error"
+msgstr ""
 
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request__message_ids
@@ -868,14 +799,29 @@ msgid "Number of Actions"
 msgstr "Үйлдлийн тоо"
 
 #. module: website_sign
+#: model:ir.model.fields,field_description:website_sign.field_signature_request__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: website_sign
 #: model:ir.model.fields,help:website_sign.field_signature_request__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr "Үйлдэл шаардлагатай зурвасын тоо"
 
 #. module: website_sign
+#: model:ir.model.fields,help:website_sign.field_signature_request__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: website_sign
 #: model:ir.model.fields,help:website_sign.field_signature_request__message_unread_counter
 msgid "Number of unread messages"
 msgstr "Уншаагүй зурвасын тоо"
+
+#. module: website_sign
+#: model:res.groups,name:website_sign.group_website_sign_user
+msgid "Officer"
+msgstr "Мэргэжилтэн"
 
 #. module: website_sign
 #. openerp-web
@@ -1144,6 +1090,11 @@ msgid "Sign Document"
 msgstr "Баримт дээр гарын үсэг зурах"
 
 #. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_request
+msgid "Sign document now"
+msgstr ""
+
+#. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item__signature
 #: model:signature.item.type,name:website_sign.signature_item_type_signature
 #: selection:signature.item.type,type:0
@@ -1325,6 +1276,11 @@ msgid "Thank You !"
 msgstr "Баярлалаа !"
 
 #. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_completed
+msgid "The document"
+msgstr ""
+
+#. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign.deleted_sign_request
 msgid ""
 "The signature access you are trying to reach does not exist. Maybe the signature request has been deleted or modified. <br/>\n"
@@ -1412,6 +1368,11 @@ msgid "Upload a PDF of contract to sign"
 msgstr ""
 
 #. module: website_sign
+#: model:ir.model,name:website_sign.model_res_users
+msgid "Users"
+msgstr "Хэрэглэгчид"
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/js/website_sign_common.js:912
 #, python-format
@@ -1442,6 +1403,16 @@ msgid "View History"
 msgstr "Түүхийг харах"
 
 #. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_completed
+msgid "View document now"
+msgstr ""
+
+#. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_follower
+msgid "View signature request"
+msgstr ""
+
+#. module: website_sign
 #: model:ir.ui.view,arch_db:website_sign._doc_sign
 msgid "Waiting Signatures ("
 msgstr "Хүлээгдсэн гарын үсгүүд ("
@@ -1452,7 +1423,7 @@ msgid "Waiting for completion"
 msgstr "Дуусахыг хүлээж байна"
 
 #. module: website_sign
-#: code:addons/website_sign/models/signature_request.py:376
+#: code:addons/website_sign/models/signature_request.py:398
 #, python-format
 msgid "Waiting for signatures."
 msgstr "Гарын үсгүүдийг хүлээж байна."
@@ -1499,6 +1470,12 @@ msgstr "Имэйл хаягийг бичнэ үү эсвэл холбогчий�
 #: model:ir.ui.view,arch_db:website_sign.doc_sign
 msgid "You have completed the document"
 msgstr "Та баримтыг дуусгасан"
+
+#. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_follower
+msgid ""
+"You will be notified once the document has been signed by everyone involved."
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
@@ -1558,6 +1535,11 @@ msgstr "сэтгэгдэл"
 #: model:signature.item.type,tip:website_sign.signature_item_type_phone
 #: model:signature.item.type,tip:website_sign.signature_item_type_text
 msgid "fill in"
+msgstr ""
+
+#. module: website_sign
+#: model:ir.ui.view,arch_db:website_sign.sign_template_mail_completed
+msgid "has been completed and signed by everyone."
 msgstr ""
 
 #. module: website_sign

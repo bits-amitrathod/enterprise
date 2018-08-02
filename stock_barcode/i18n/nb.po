@@ -9,10 +9,10 @@
 # Viktor Basso <viktor@voit.no>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: Viktor Basso <viktor@voit.no>, 2018\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/odoo/teams/41243/nb/)\n"
 "MIME-Version: 1.0\n"
@@ -26,10 +26,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line__product_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_inventory_line__product_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__product_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_scrap__product_barcode
 #: model:ir.ui.menu,name:stock_barcode.stock_barcode_menu
+#: model:ir.ui.view,arch_db:stock_barcode.stock_inventory_form_view_inherit
 msgid "Barcode"
 msgstr "Strekkode"
+
+#. module: stock_barcode
+#: model:ir.actions.client,name:stock_barcode.stock_barcode_inventory_client_action
+msgid "Barcode Inventory Adjustment Client Action"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.actions.client,name:stock_barcode.stock_barcode_picking_client_action
+msgid "Barcode Picking Client Action"
+msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot___barcode_scanned
@@ -48,7 +60,10 @@ msgid "Barcode Scanning"
 msgstr "Strekkodeavlesing"
 
 #. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:21
 #: model:ir.ui.view,arch_db:stock_barcode.view_barcode_lot_form
+#, python-format
 msgid "Cancel"
 msgstr "Kanseller"
 
@@ -56,6 +71,13 @@ msgstr "Kanseller"
 #: model:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "Configure Product Barcodes"
 msgstr "Sett opp produkt-strekkoder"
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:104
+#, python-format
+msgid "Confirm"
+msgstr "Bekreft"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot__create_uid
@@ -73,6 +95,13 @@ msgstr "Opprettet"
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot__default_move_id
 msgid "Default Move"
 msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:103
+#, python-format
+msgid "Discard"
+msgstr "Forkast"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot__display_name
@@ -97,6 +126,13 @@ msgid "Don't show this message again"
 msgstr "Ikke vis denne meldingen igjen"
 
 #. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:48
+#, python-format
+msgid "From"
+msgstr "Fra"
+
+#. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot__id
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line__id
 msgid "ID"
@@ -118,9 +154,19 @@ msgid "Inventory"
 msgstr "Lagerbeholdning"
 
 #. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.stock_inventory_barcode2
+msgid "Inventory Details"
+msgstr ""
+
+#. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_inventory_line
 msgid "Inventory Line"
 msgstr "Beholdningslinje"
+
+#. module: stock_barcode
+#: model:ir.model,name:stock_barcode.model_stock_location
+msgid "Inventory Locations"
+msgstr "Lagersteder"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot____last_update
@@ -163,7 +209,7 @@ msgid "Lot"
 msgstr "Lot"
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/models/inherited_stock_picking.py:44
+#: code:addons/stock_barcode/models/stock_picking.py:67
 #, python-format
 msgid "Lot/Serial Number Details"
 msgstr ""
@@ -179,22 +225,42 @@ msgid "New Inventory"
 msgstr "Ny lagerbeholdning"
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/controllers/main.py:69
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:40
+#, python-format
+msgid "Next"
+msgstr "Neste"
+
+#. module: stock_barcode
+#: code:addons/stock_barcode/controllers/main.py:93
 #, python-format
 msgid ""
 "No internal operation type. Please configure one in warehouse settings."
 msgstr ""
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/controllers/main.py:23
+#: code:addons/stock_barcode/controllers/main.py:27
 #, python-format
 msgid "No picking corresponding to barcode %(barcode)s"
 msgstr ""
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/controllers/main.py:21
+#: code:addons/stock_barcode/controllers/main.py:25
 #, python-format
 msgid "No picking or location corresponding to barcode %(barcode)s"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.actions.act_window,name:stock_barcode.open_picking
+msgid "Open a picking"
+msgstr ""
+
+#. module: stock_barcode
+#: code:addons/stock_barcode/controllers/main.py:106
+#: code:addons/stock_barcode/models/stock_picking.py:271
+#: code:addons/stock_barcode/models/stock_picking.py:289
+#, python-format
+msgid "Open picking form"
 msgstr ""
 
 #. module: stock_barcode
@@ -219,19 +285,53 @@ msgstr "Plukking"
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:86
+#: code:addons/stock_barcode/static/src/js/forms/picking_barcode_handler.js:86
 #, python-format
 msgid "Picking %s"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.stock_picking_barcode
+msgid "Picking Details"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:39
+#, python-format
+msgid "Previous"
+msgstr "Forrige"
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:17
+#, python-format
+msgid "Print Delivery Slip"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:19
+#, python-format
+msgid "Print Inventory"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:16
+#, python-format
+msgid "Print Picking Operations"
 msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
 #: code:addons/stock_barcode/static/src/xml/stock_barcode.xml:19
 #, python-format
-msgid "Print the barcode commands."
-msgstr "Skriv ut strekkode-kommandoer."
+msgid "Print the barcode commands for Inventory."
+msgstr ""
 
 #. module: stock_barcode
+#: model:ir.model,name:stock_barcode.model_product_product
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot__product_id
 msgid "Product"
 msgstr "Produkt"
@@ -253,6 +353,11 @@ msgid "Qty Reserved"
 msgstr "Antall reservert"
 
 #. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.stock_move_line_product_selector
+msgid "Quantity"
+msgstr "Antall"
+
+#. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line__qty_done
 #: model:ir.ui.view,arch_db:stock_barcode.view_barcode_lot_form
 msgid "Quantity Done"
@@ -262,6 +367,11 @@ msgstr "Ferdig antall"
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot_line__qty_reserved
 msgid "Quantity Reserved"
 msgstr "Antall reservert"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.stock_inventory_line_barcode
+msgid "Real Quantity"
+msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
@@ -285,8 +395,55 @@ msgid "Scan a location to create a new transfer from this location."
 msgstr ""
 
 #. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:33
+#, python-format
+msgid "Scan more products, or scan a new source location"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:32
+#, python-format
+msgid "Scan more products, or scan the destination location"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:31
+#, python-format
+msgid "Scan products"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:34
+#, python-format
+msgid "Scan the serial or lot number of the product"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:35
+#, python-format
+msgid "Scan the source location"
+msgstr ""
+
+#. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_inventory__scan_location_id
 msgid "Scanned Location"
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:18
+#, python-format
+msgid "Scrap"
+msgstr "Vrak"
+
+#. module: stock_barcode
+#: model:ir.ui.view,arch_db:stock_barcode.stock_move_line_product_selector
+msgid "Select a Product"
 msgstr ""
 
 #. module: stock_barcode
@@ -300,7 +457,7 @@ msgid "Stock Barcode Lot Line"
 msgstr ""
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/models/inherited_stock_picking.py:238
+#: code:addons/stock_barcode/models/stock_picking.py:261
 #, python-format
 msgid ""
 "The barcode \"%(barcode)s\" doesn't correspond to a proper product, package "
@@ -314,10 +471,32 @@ msgstr ""
 
 #. module: stock_barcode
 #. openerp-web
-#: code:addons/stock_barcode/static/src/js/picking_barcode_handler.js:87
+#: code:addons/stock_barcode/static/src/js/forms/picking_barcode_handler.js:87
 #, python-format
 msgid "The picking is %s and cannot be edited."
 msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/js/client_action/abstract_client_action.js:800
+#, python-format
+msgid "The scanned lot does not match an existing one."
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/js/client_action/abstract_client_action.js:683
+#: code:addons/stock_barcode/static/src/js/client_action/abstract_client_action.js:851
+#, python-format
+msgid "This location is not a child of the main location."
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:48
+#, python-format
+msgid "To"
+msgstr "Til"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.stock_picking_type_kanban
@@ -340,6 +519,14 @@ msgid "Transfers"
 msgstr "Overføringer"
 
 #. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:20
+#: code:addons/stock_barcode/static/src/xml/qweb_templates.xml:41
+#, python-format
+msgid "Validate"
+msgstr "Valider"
+
+#. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.view_barcode_lot_form
 msgid "Validate Lot"
 msgstr ""
@@ -352,6 +539,13 @@ msgstr ""
 #: model:ir.model.fields,help:stock_barcode.field_stock_scrap___barcode_scanned
 msgid "Value of the last barcode scanned."
 msgstr "Verdien fra siste avleste strekkode."
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/js/client_action/abstract_client_action.js:503
+#, python-format
+msgid "Warning"
+msgstr "Advarsel"
 
 #. module: stock_barcode
 #. openerp-web
@@ -368,10 +562,31 @@ msgid "Wizard to scan SN/LN for specific product"
 msgstr ""
 
 #. module: stock_barcode
-#: code:addons/stock_barcode/models/inherited_stock_picking.py:237
+#: code:addons/stock_barcode/models/stock_picking.py:260
 #, python-format
 msgid "Wrong barcode"
 msgstr "Feil strekkode"
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/js/client_action/abstract_client_action.js:696
+#, python-format
+msgid "You are expected to scan a source location."
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/js/client_action/abstract_client_action.js:738
+#, python-format
+msgid "You are expected to scan more products or a destination location."
+msgstr ""
+
+#. module: stock_barcode
+#. openerp-web
+#: code:addons/stock_barcode/static/src/js/client_action/abstract_client_action.js:731
+#, python-format
+msgid "You are expected to scan one or more products."
+msgstr ""
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/wizard/stock_barcode_lot.py:58

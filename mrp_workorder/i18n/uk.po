@@ -9,10 +9,10 @@
 # ТАрас <tratatuta@i.ua>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: ТАрас <tratatuta@i.ua>, 2018\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -30,6 +30,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point_test_type__allow_registration
 msgid "Allow Registration"
 msgstr "Дозволити реєстрацію"
+
+#. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder___barcode_scanned
+msgid "Barcode Scanned"
+msgstr "Штрихкод проскановано"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet_menu
@@ -88,13 +93,6 @@ msgid "Date"
 msgstr "Дата"
 
 #. module: mrp_workorder
-#: model:ir.model.fields,help:mrp_workorder.field_quality_check__component_uom_id
-msgid "Default Unit of Measure used for all stock operation."
-msgstr ""
-"Одиниця вимірювання за замовчуванням, що використовується для всіх операцій "
-"складу."
-
-#. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_quality_point__test_type_id
 msgid "Defines the type of the quality control point."
 msgstr ""
@@ -105,7 +103,7 @@ msgid "Do not update page"
 msgstr "Не оновлюйте сторінку"
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/quality.py:113
+#: code:addons/mrp_workorder/models/quality.py:93
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__qty_done
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__qty_done
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
@@ -173,8 +171,8 @@ msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
-msgid "Lot:"
-msgstr "Партія:"
+msgid "Lot Number:"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_mrp_production
@@ -198,7 +196,7 @@ msgid "Mark as Done and Close MO"
 msgstr ""
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:299
+#: code:addons/mrp_workorder/models/mrp_workorder.py:301
 #, python-format
 msgid "Menu"
 msgstr "Меню"
@@ -277,8 +275,8 @@ msgid "Planning by Workcenter"
 msgstr "Планування робочого центру"
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:176
-#: code:addons/mrp_workorder/models/mrp_workorder.py:200
+#: code:addons/mrp_workorder/models/mrp_workorder.py:178
+#: code:addons/mrp_workorder/models/mrp_workorder.py:202
 #, python-format
 msgid ""
 "Please ensure the quantity to produce is nonnegative and does not exceed the"
@@ -288,13 +286,13 @@ msgstr ""
 " і не перевищує залишкову кількість."
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:180
+#: code:addons/mrp_workorder/models/mrp_workorder.py:182
 #, python-format
 msgid "Please enter a Lot/SN."
 msgstr "Будь ласка, введіть партію/серійний номер."
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:182
+#: code:addons/mrp_workorder/models/mrp_workorder.py:184
 #, python-format
 msgid "Please enter a positive quantity."
 msgstr "Будь ласка, введіть кількість вище нуля."
@@ -303,6 +301,13 @@ msgstr "Будь ласка, введіть кількість вище нуля
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Previous"
 msgstr "Попередній"
+
+#. module: mrp_workorder
+#. openerp-web
+#: code:addons/mrp_workorder/static/src/xml/mrp_workorder_barcode.xml:8
+#, python-format
+msgid "Print the barcode commands for Manufacturing."
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
@@ -373,7 +378,7 @@ msgid "Register a by product"
 msgstr ""
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/quality.py:107
+#: code:addons/mrp_workorder/models/quality.py:87
 #, python-format
 msgid "Register component(s)"
 msgstr "Реєстр компонентів"
@@ -392,11 +397,6 @@ msgstr "Відповідальний"
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__result
 msgid "Result"
 msgstr "Результат"
-
-#. module: mrp_workorder
-#: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
-msgid "SN:"
-msgstr "SN:"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_production_view_form_inherit_planning
@@ -427,6 +427,11 @@ msgstr "Перейдіть до конкретної сторінки"
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Serial Number"
 msgstr "Серійний номер"
+
+#. module: mrp_workorder
+#: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
+msgid "Serial Number:"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -500,7 +505,7 @@ msgid "Title"
 msgstr "Заголовок"
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/quality.py:113
+#: code:addons/mrp_workorder/models/quality.py:93
 #, python-format
 msgid "To Do"
 msgstr "Зробити"
@@ -545,9 +550,20 @@ msgid "Validate"
 msgstr "Підтвердити"
 
 #. module: mrp_workorder
+#: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder___barcode_scanned
+msgid "Value of the last barcode scanned."
+msgstr "Значення останнього відсканованого штрихкоду."
+
+#. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_production_pending
 msgid "Waiting for Material Availability"
 msgstr "Очікування наявності матеріалів"
+
+#. module: mrp_workorder
+#: code:addons/mrp_workorder/models/mrp_workorder.py:478
+#, python-format
+msgid "Warning"
+msgstr "Попередження"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_alert__workcenter_id
@@ -559,12 +575,6 @@ msgstr "Робочий центр"
 #: model:ir.model,name:mrp_workorder.model_mrp_workorder
 msgid "Work Order"
 msgstr "Наряд"
-
-#. module: mrp_workorder
-#: code:addons/mrp_workorder/models/quality.py:61
-#, python-format
-msgid "Work Order Messages"
-msgstr "Повідомлення робочого замовлення"
 
 #. module: mrp_workorder
 #: model:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
@@ -598,13 +608,21 @@ msgid "Worksheet page"
 msgstr "Сторінка робочого стола"
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:410
+#: code:addons/mrp_workorder/models/mrp_workorder.py:479
+#, python-format
+msgid ""
+"You are using components from another lot. \n"
+"Please validate the components from the first lot before using another lot."
+msgstr ""
+
+#. module: mrp_workorder
+#: code:addons/mrp_workorder/models/mrp_workorder.py:412
 #, python-format
 msgid "You should provide a lot for the final product"
 msgstr "Ви повинні багато чого зробити для кінцевого товару"
 
 #. module: mrp_workorder
-#: code:addons/mrp_workorder/models/mrp_workorder.py:408
+#: code:addons/mrp_workorder/models/mrp_workorder.py:410
 #, python-format
 msgid "You still need to do the quality checks!"
 msgstr "Вам досі потрібно перевірити якість!"
