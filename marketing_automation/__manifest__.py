@@ -3,7 +3,8 @@
 {
     'name': "Marketing Automation",
     'version': "1.0",
-    'summary': "Automate Marketing Campaigns",
+    'summary': "Build automated mailing campaigns",
+    'website': 'https://www.odoo.com/page/marketing-automation',
     'category': "Marketing",
     'depends': ['mass_mailing'],
     'data': [

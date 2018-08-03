@@ -1,14 +1,11 @@
 {
     'name': 'Website Sale Dashboard With Margin',
-    'category': 'Website',
+    'category': 'Technical Settings',
     'sequence': 55,
     'summary': 'Get margin information in your e-commerce dashboard',
     'version': '1.0',
     'description': """
-
-Adds the average margin of your online sales to the statistics displayed in
-the Website application new dashboard view.
-
+This module adds the average margin of your online sales to the statistics displayed in the Website application new dashboard view.
     """,
     'depends': ['website_sale', 'web_dashboard', 'sale_margin'],
     'data': [

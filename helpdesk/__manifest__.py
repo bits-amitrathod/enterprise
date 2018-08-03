@@ -6,7 +6,8 @@
     'version': '1.2',
     'category': 'Helpdesk',
     'sequence': 57,
-    'summary': 'Ticketing, Support, Issues',
+    'summary': 'Track help tickets',
+    'website': 'https://www.odoo.com/page/helpdesk',
     'depends': [
         'base_setup',
         'mail',

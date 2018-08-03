@@ -2,20 +2,16 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Website Form Helpdesk',
-    'category': 'Helpdesk',
+    'name': 'Online Ticket Submission',
+    'category': 'Website',
     'sequence': 58,
-    'summary': 'Allow website visitors to submit tickets through a form',
+    'summary': 'Qualify helpdesk queries with a website form',
     'depends': [
         'website_form_editor',
         'website_helpdesk',
     ],
     'description': """
-Website form integration for the helpdesk module
-================================================
-
-    Allow customers to easily submit tickets through a form on your website.
-
+Generate tickets in Helpdesk app from a form published on your website. This form can be customized thanks to the *Form Builder* module (available in Odoo Enterprise).
     """,
     'data': [
         'data/website_helpdesk.xml',

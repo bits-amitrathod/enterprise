@@ -2,11 +2,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Employee Appraisals',
+    'name': 'Appraisal',
     'version': '1.0',
     'category': 'Human Resources',
     'sequence': 31,
-    'summary': 'Periodical Appraisal',
+    'summary': 'Assess your employees',
+    'website': 'https://www.odoo.com/page/appraisal',
     'depends': ['hr', 'calendar', 'survey'],
     'description': """
 Periodical Employees appraisal

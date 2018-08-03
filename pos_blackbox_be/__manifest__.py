@@ -26,7 +26,6 @@ requests for on-premise installations.
 No modified version is certified and supported by Odoo SA.
     """,
     'depends': ['web', 'point_of_sale', 'pos_restaurant'],
-    'website': '',
     'data': [
         'security/pos_blackbox_be_security.xml',
         'security/ir.model.access.csv',

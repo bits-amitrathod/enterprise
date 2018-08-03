@@ -2,11 +2,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Quality Control',
+    'name': 'Quality',
     'version': '1.0',
     'category': 'Manufacturing',
     'sequence': 50,
-    'summary': 'Quality Alerts and Control Points',
+    'summary': 'Control the quality of your products',
+    'website': 'https://www.odoo.com/page/quality-management-software',
     'depends': ['quality'],
     'description': """
 Quality Control

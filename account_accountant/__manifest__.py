@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Accounting and Finance',
+    'name': 'Accounting',
     'version': '1.1',
     'category': 'Accounting',
     'sequence': 35,
-    'summary': 'Financial and Analytic Accounting',
+    'summary': 'Manage financial and analytic accounting',
     'description': """
 Accounting Access Rights
 ========================
