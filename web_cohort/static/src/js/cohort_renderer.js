@@ -28,8 +28,28 @@ var CohortRenderer = AbstractRenderer.extend({
         this.intervals = params.intervals;
         this.dateStartString = params.dateStartString;
         this.dateStopString = params.dateStopString;
+        this.timeRangeDescription = params.timeRangeDescription;
+        this.comparisonTimeRangeDescription = params.comparisonTimeRangeDescription;
         this.mode = params.mode;
         this.timeline = params.timeline;
+    },
+    /**
+     * @override
+     * @param {Object} state
+     * @param {Object} params
+     */
+    updateState: function (state, params) {
+        if (params.context !== undefined) {
+            var timeRangeMenuData = params.context.timeRangeMenuData;
+            if (timeRangeMenuData) {
+                this.timeRangeDescription = timeRangeMenuData.timeRangeDescription;
+                this.comparisonTimeRangeDescription = timeRangeMenuData.comparisonTimeRangeDescription;
+            } else {
+                this.timeRangeDescription = undefined;
+                this.comparisonTimeRangeDescription = undefined;
+            }
+        }
+        return this._super.apply(this, arguments);
     },
 
     //--------------------------------------------------------------------------
@@ -45,10 +65,13 @@ var CohortRenderer = AbstractRenderer.extend({
         var self = this;
         this.$el.empty().append(qweb.render('CohortView', {
             report: this.state.report,
+            comparisonReport: this.state.comparisonReport,
             measure: this.measures[this.state.measure],
             interval: this.intervals[this.state.interval],
             date_start_string: this.dateStartString,
             date_stop_string: this.dateStopString,
+            timeRangeDescription: this.timeRangeDescription,
+            comparisonTimeRangeDescription: this.comparisonTimeRangeDescription,
             mode: this.mode,
             timeline: this.timeline,
         }));
@@ -79,7 +102,10 @@ var CohortRenderer = AbstractRenderer.extend({
         }
         var rowIndex = $(event.currentTarget).data().row;
         var colIndex = $(event.target).data().col;
-        var row = this.state.report.rows[rowIndex];
+        var dataType = $(event.target).data().type;
+        var row = (dataType === 'data') ?
+                    this.state.report.rows[rowIndex] :
+                    this.state.comparisonReport.rows[rowIndex];
         var rowDomain = row ? row.domain : [];
         var cellContent = row ? row.columns[colIndex] : false;
         var cellDomain = cellContent ? cellContent.domain : [];

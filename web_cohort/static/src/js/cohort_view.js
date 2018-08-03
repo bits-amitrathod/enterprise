@@ -28,6 +28,7 @@ var CohortView = AbstractView.extend({
     },
     viewType: 'cohort',
     groupable: false,
+    enableTimeRangeMenu: 'true',
     /**
      * @override
      */
@@ -64,8 +65,8 @@ var CohortView = AbstractView.extend({
         this.rendererParams.intervals = intervals;
         this.rendererParams.mode = this.loadParams.mode;
         this.rendererParams.timeline = this.loadParams.timeline;
-        this.rendererParams.dateStartString = fields[this.loadParams.dateStart]['string'];
-        this.rendererParams.dateStopString = fields[this.loadParams.dateStop]['string'];
+        this.rendererParams.dateStartString = fields[this.loadParams.dateStart].string;
+        this.rendererParams.dateStopString = fields[this.loadParams.dateStop].string;
 
         // Controller Parameters
         this.controllerParams.measures = _.omit(measures, '__count__');

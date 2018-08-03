@@ -141,7 +141,13 @@ var CohortController = AbstractController.extend({
         }
         var data = this.model.get();
         // Hide download button if no cohort data
-        this.$buttons.find('.o_cohort_download_button').toggleClass('d-none', !data.report.rows.length);
+        var noData = !data.report.rows.length &&
+                    (!data.comparisonReport ||
+                    !data.comparisonReport.rows.length);
+        this.$buttons.find('.o_cohort_download_button').toggleClass(
+            'd-none',
+            noData
+        );
         if (config.device.isMobile) {
             var $activeInterval = this.$buttons
                 .find('.o_cohort_interval_button[data-interval="' + data.interval + '"]');
