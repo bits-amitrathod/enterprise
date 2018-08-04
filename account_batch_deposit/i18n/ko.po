@@ -5,15 +5,16 @@
 # Translators:
 # 종현 엄 <whd5367@naver.com>, 2017
 # 최재호 <hwangtog@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Spike Lee <rurouni24@gmail.com>, 2017
+# Linkup <link-up@naver.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-03 14:36+0000\n"
 "PO-Revision-Date: 2017-02-03 14:36+0000\n"
-"Last-Translator: Spike Lee <rurouni24@gmail.com>, 2017\n"
+"Last-Translator: Linkup <link-up@naver.com>, 2018\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +27,7 @@ msgstr ""
 #, python-format
 msgid ""
 "All payments to print as a deposit slip must belong to the same journal."
-msgstr ""
+msgstr "예금 전표로 인쇄할 모든 결제는 동일한 분개장에 속해야 합니다."
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_amount
@@ -37,7 +38,7 @@ msgstr "금액"
 #. module: account_batch_deposit
 #: model:ir.model.fields,help:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
 msgid "Automatically generates references for batch deposits."
-msgstr ""
+msgstr "일괄 예금에 대한 참조가 자동으로 생성됩니다."
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_journal_id
@@ -47,7 +48,7 @@ msgstr "은행"
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Bank Journal"
-msgstr ""
+msgstr "은행 분개장"
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_account_bank_statement
@@ -68,18 +69,18 @@ msgstr "예금 거래 명세"
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Batch Deposit"
-msgstr ""
+msgstr "일괄 예금"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
 msgid "Batch Deposit Sequence"
-msgstr ""
+msgstr "일괄 예금 순서"
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_journal.py:43
 #, python-format
 msgid "Batch Deposits Sequence"
-msgstr ""
+msgstr "일괄 예금 순서"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_payment_batch_deposit_id
@@ -98,13 +99,16 @@ msgid ""
 "                    The amount deposited to your bank will then appear as a single transaction on your bank statement.\n"
 "                    When you proceed with the reconciliation, simply select the corresponding batch deposit to reconcile the payments."
 msgstr ""
+"일괄 예금은 수령한 대금을 은행에 예금을 예치하기 전에 묶을 수 있습니다.\n"
+"                    그 후 은행에 예치된 금액은 예금거래 명세서에 하나의 거래로 표시됩니다.\n"
+"                    조정이 필요할 경우, 해당 일괄 예금을 선택해서 금액을 조정하면 됩니다."
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_journal.py:68
 #: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
 #, python-format
 msgid "Create Batch Deposit"
-msgstr ""
+msgstr "일괄 예금 생성"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_create_uid
@@ -203,6 +207,7 @@ msgid ""
 "payment method, not be part of an existing batch deposit and not have "
 "already been reconciled"
 msgstr ""
+"예금 전표로 인쇄할 지급금은 '일괄 예금'을 지급 방법으로 선택해야 하고, 기존 일괄 예금에 포함되거나 조정된 상태여서는 안 됩니다."
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
@@ -212,12 +217,12 @@ msgstr "인쇄"
 #. module: account_batch_deposit
 #: model:ir.actions.report.xml,name:account_batch_deposit.action_print_batch_deposit
 msgid "Print Batch Deposit"
-msgstr ""
+msgstr "일괄 예금 인쇄"
 
 #. module: account_batch_deposit
 #: model:ir.actions.server,name:account_batch_deposit.action_account_print_batch_deposit
 msgid "Print Batch Deposits"
-msgstr ""
+msgstr "일괄 예금 인쇄"
 
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
@@ -244,7 +249,7 @@ msgstr "지불 등록"
 #: code:addons/account_batch_deposit/static/src/xml/account_reconciliation.xml:8
 #, python-format
 msgid "Select a Batch Deposit"
-msgstr ""
+msgstr "일괄 예금 선택"
 
 #. module: account_batch_deposit
 #. openerp-web
@@ -253,7 +258,7 @@ msgstr ""
 msgid ""
 "Some journal items from the selected batch deposit are already selected in "
 "another reconciliation : "
-msgstr ""
+msgstr "선택한 일괄 예금의 일부 분개장 항목이 다른 조정에서 이미 선택되어 있습니다:"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_state
@@ -266,7 +271,7 @@ msgstr "주/도"
 msgid ""
 "Technical feature used to know whether batch deposit was enabled as payment "
 "method."
-msgstr ""
+msgstr "일괄 예금이 결제 방법으로 활성화되어 있는지 확인하는 데 사용하는 기술 기능입니다."
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
@@ -281,9 +286,9 @@ msgstr "비조정됨"
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 msgid "auto ..."
-msgstr ""
+msgstr "자동..."
 
 #. module: account_batch_deposit
 #: model:ir.model,name:account_batch_deposit.model_report_account_batch_deposit_print_batch_deposit
 msgid "report.account_batch_deposit.print_batch_deposit"
-msgstr ""
+msgstr "report.account_batch_deposit.print_batch_deposit"
