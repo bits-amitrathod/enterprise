@@ -240,6 +240,61 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
+"\n"
+"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
+"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
+"                <div>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
+"                </div>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>\n"
+"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                <p>Шановний ${object.subscription_id.partner_id.name},</p>\n"
+"                <p>Ваша підписка ${object.subscription_id.name} активна!</p>\n"
+"\n"
+"                <p>Ви можете переглянути свою підписку онлайн, перейшовши до нашого <a style=\"text-decoration:none; color: #875A7B;\" href=\"/my/home\">Онлайн Порталу</a> або переходячи за цим посиланням\n"
+"                <p style=\"text-align: center;\"><a style=\"padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px\" href=\"/my/subscription/${object.subscription_id.id}/${object.subscription_id.uuid}\">Переглянути підписку</a></p>\n"
+"\n"
+"                <p>З цією сторінкою ви легко можете управляти підпискою:</p>\n"
+"                <ul>\n"
+"                    <li>Додати або видалити опції</li>\n"
+"                    <li>Змінюйте свій період з місяця на рік</li>\n"
+"                    <li>Зверніться до свого торгового представника</li>\n"
+"                </ul>\n"
+"                <p>Ви можете отримати доступ до цього посилання загальнодоступно або поділитися ним з кимось іншим, щоб надати йому право керувати цією підпискою.</p>\n"
+"\n"
+"                <p>Якщо у вас виникли питання, не соромтеся звертатися до нас.</p>\n"
+"                <p>Дякуємо за вибір ${object.subscription_id.company_id.name or 'us'}!</p>\n"
+"            </td>\n"
+"        </tr><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                % if user.signature\n"
+"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"                </p>\n"
+"                % endif\n"
+"                <p style=\"font-size: 11px;\"><strong>Надіслано\n"
+"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                    <strong>${user.company_id.name}</strong>\n"
+"                </a> за допомогою <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </strong></p>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_close
@@ -305,6 +360,66 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
+"\n"
+"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
+"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
+"                <div>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
+"                </div>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>\n"
+"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                <p>Вітаємо ${object.partner_id.name},</p>\n"
+"                <p>\n"
+"                % if ctx.get('payment_token') and ctx.get('total_amount'):\n"
+"                  Наша заключна спроба обробити платіж за вашу передплату, використовуючи спосіб оплати\n"
+"                  ${ctx['payment_token']}\n"
+"                  for ${ctx['total_amount']} ${ctx.get('currency')} failed.\n"
+"                  % if ctx.get('error'):\n"
+"                   Ваш банк або кредитна установа надали наступну інформацію про проблему: <pre>${ctx['error']}</pre>.\n"
+"                  %endif\n"
+"                % else:\n"
+"                 Наша остання спроба обробити плату за вашу підписку не вдалася, тому що для вас не зареєстровано спосіб оплати.\n"
+"                % endif \n"
+"                </p>\n"
+"\n"
+"                <p>\n"
+"                  Оскільки ваш платіж повинен був бути зроблений <strong>15 днів тому</strong>, вашу підписку було припинено.\n"
+"                </p>\n"
+"\n"
+"                <br/>\n"
+"                <p>Якщо ви хочете вирішити цю проблему, не соромтеся звертатися до нас.</p>\n"
+"                <p>Дякуємо за вибір ${object.company_id.name or 'us'}!</p>\n"
+"            </td>\n"
+"        </tr><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                % if user.signature\n"
+"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"                </p>\n"
+"                % endif\n"
+"                <p style=\"font-size: 11px;\"><strong>Надіслано\n"
+"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                    <strong>${user.company_id.name}</strong>\n"
+"                </a> використовуючи <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </strong></p>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.email_payment_reminder
@@ -461,6 +576,8 @@ msgid ""
 "<abbr title=\"You need to be logged in as this subscription's customer to "
 "change country\">Taxes</abbr>:"
 msgstr ""
+"<abbr title=\"You need to be logged in as this subscription's customer to "
+"change country\">Податки</abbr>:"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
@@ -510,7 +627,7 @@ msgstr "<span class=\"o_label\">Підписки</span>"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "<strong>Next Billing Amount:</strong>"
-msgstr ""
+msgstr "<strong>Наступна сума платежу:</strong>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -552,6 +669,7 @@ msgstr "Додати в передплату"
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Add options to the subscription directly or through a quotation"
 msgstr ""
+"Додайте параметри підписки безпосередньо або через комерційну пропозицію"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:45
@@ -569,7 +687,7 @@ msgstr "Аналітичний рахунок"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 msgid "Analyze revenues &amp; renewals of subscriptions"
-msgstr ""
+msgstr "Аналізуйте доходи та оновлення підписки"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_search
@@ -593,6 +711,8 @@ msgid ""
 "Billing:\n"
 "                            Every"
 msgstr ""
+"Платіж:\n"
+"                            Кожен"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_form
@@ -616,7 +736,7 @@ msgstr "Скасовано"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Cancelled subscriptions"
-msgstr ""
+msgstr "Закриті підписки"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
@@ -626,12 +746,12 @@ msgstr "Категорія"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Change Payment Method"
-msgstr ""
+msgstr "Змінити метод оплати"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Change payment method"
-msgstr ""
+msgstr "Змінити метод оплати"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -643,7 +763,7 @@ msgstr "Змінити план"
 #: code:addons/sale_subscription/static/src/js/tour.js:68
 #, python-format
 msgid "Choose a product name.<br/><i>(e.g. eLearning Access)</i>"
-msgstr ""
+msgstr "Вибрати назву товару.<br/><i>(напр., Доступ eLearning)</i>"
 
 #. module: sale_subscription
 #. openerp-web
@@ -652,13 +772,14 @@ msgstr ""
 msgid ""
 "Choose the recurrence for this template.<br/><i>(e.g. 1 time per Year)</i>"
 msgstr ""
+"Виберіть повторення для цього шаблону.<br/><i>(напр., 1 раз на рік)</i>"
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:22
 #, python-format
 msgid "Click here to create <b>your first subscription template</b>"
-msgstr ""
+msgstr "Натисніть тут, щоб створити <b>ваш перший шаблон підписки</b>"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_template_action
@@ -669,7 +790,7 @@ msgstr "Натисніть тут, щоб створити шаблон підп
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_filtered
 msgid "Click to create a new subscription."
-msgstr ""
+msgstr "Натисніть, щоб створити нову підписку."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
@@ -679,7 +800,7 @@ msgstr "Натисніть, щоб створити новий товар."
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
 msgid "Click to define a new subscription."
-msgstr ""
+msgstr "Натисніть, щоб визначити нову підписку."
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_user_closable
@@ -714,7 +835,7 @@ msgstr "Закрити рахунок"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Close your subscription"
-msgstr ""
+msgstr "Закрийте свою підписку"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_close_reason_wizard_action
@@ -733,7 +854,7 @@ msgstr "Завершено"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Closed subscriptions"
-msgstr ""
+msgstr "Закриті підписки"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:224
@@ -772,7 +893,7 @@ msgstr "Налаштування"
 #: code:addons/sale_subscription/static/src/js/tour.js:18
 #, python-format
 msgid "Configure your subscription templates here"
-msgstr ""
+msgstr "Налаштуйте свої шаблони підписки тут"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -802,6 +923,8 @@ msgid ""
 "Create a sale order that will overwrite this subscription when confirmed "
 "(renewal quotation)"
 msgstr ""
+"Створіть замовлення на продаж, яке буде перезаписувати цю підписку, коли "
+"буде підтверджено (оновлення пропозиції)"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
@@ -810,13 +933,16 @@ msgid ""
 "                be either for an undefined or a limited period. In case of a limited period, it will\n"
 "                be flagged as to renew one month before the end date."
 msgstr ""
+"Створення підписок для керування повторюваним рахунком-фактурою та платіжками Підписки можуть\n"
+"                 бути невизначеним або обмеженими періодом. У випадку обмеженого періоду це буде\n"
+"                 відмічено, як відновити за місяць до дати закінчення."
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:57
 #, python-format
 msgid "Create your first subscription product here"
-msgstr ""
+msgstr "Створіть ваш перший товар підписки тут"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_create_uid
@@ -888,7 +1014,7 @@ msgstr ""
 #: model:product.product,name:sale_subscription.odoo_custom_domain_yearly
 #: model:product.template,name:sale_subscription.odoo_custom_domain_yearly_product_template
 msgid "Custom Domain (Yearly)"
-msgstr ""
+msgstr "Клієнтський домен (щорічно)"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_partner_id
@@ -918,7 +1044,7 @@ msgstr ""
 #: model:product.product,name:sale_subscription.odoo_custom_module_yearly
 #: model:product.template,name:sale_subscription.odoo_custom_module_yearly_product_template
 msgid "Customized Module (Yearly)"
-msgstr ""
+msgstr "Клієнтський модуль (щорічно)"
 
 #. module: sale_subscription
 #: model:product.product,description_sale:sale_subscription.odoo_custom_view
@@ -942,7 +1068,7 @@ msgstr "Створені види"
 #: model:product.product,name:sale_subscription.odoo_custom_view_yearly
 #: model:product.template,name:sale_subscription.odoo_custom_view_yearly_product_template
 msgid "Customized Views (Yearly)"
-msgstr ""
+msgstr "Індивідуальні перегляди (щорічно)"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
@@ -973,12 +1099,12 @@ msgstr "День(і)"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 msgid "Deferred Revenue"
-msgstr ""
+msgstr "Доходи майбутніх періодів"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings_module_sale_subscription_asset
 msgid "Deferred revenue management for subscriptions"
-msgstr ""
+msgstr "Управління доходами майбутніх періодів для підписки"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_description
@@ -1035,6 +1161,7 @@ msgstr "Кінцева дата минула"
 #, python-format
 msgid "Enter a name for this template.<br/><i>(e.g. eLearning Yearly)</i>"
 msgstr ""
+"Введіть назву для цього шаблону.<br/><i>(наприклад, eLearning щороку)</i>"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -1056,7 +1183,7 @@ msgstr "Майбутня діяльність"
 #: code:addons/sale_subscription/static/src/js/tour.js:62
 #, python-format
 msgid "Go ahead and create a new product"
-msgstr ""
+msgstr "Ідіть вперед і створіть новий товар"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -1076,7 +1203,7 @@ msgstr "Історія"
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_4
 msgid "I don't use it"
-msgstr ""
+msgstr "Я цим не користуюся"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_id_6476
@@ -1159,6 +1286,8 @@ msgid ""
 "If you confirm, you subscription will be closed right away. Your current "
 "invoicing period is valid until"
 msgstr ""
+"Якщо ви підтвердите, ваша підписка буде негайно закрита. Ваш поточний період"
+" виставлення рахунку дійсний до"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1188,7 +1317,7 @@ msgstr "В процесі"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_industry_id
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Industry"
-msgstr ""
+msgstr "Промисловість"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.wizard_form_view
@@ -1204,7 +1333,7 @@ msgstr "Рахунок"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_invoice_count
 msgid "Invoice Count"
-msgstr ""
+msgstr "Підрахунок рахунку"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_account_invoice_line
@@ -1241,12 +1370,12 @@ msgstr "Рахунки"
 #: code:addons/sale_subscription/models/sale_order.py:152
 #, python-format
 msgid "Invoicing period: %s - %s"
-msgstr ""
+msgstr "Період виставлення рахунку: %s - %s"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.res_config_settings_view_form
 msgid "Keeps track of the revenue recognition installments"
-msgstr ""
+msgstr "Відстежує розстрочку на доходи майбутніх періодів"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription___last_update
@@ -1292,21 +1421,21 @@ msgstr "Останні дії"
 #: code:addons/sale_subscription/static/src/js/tour.js:27
 #, python-format
 msgid "Let's create your first subscription template."
-msgstr ""
+msgstr "Давайте створимо ваш перший шаблон підписки."
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:52
 #, python-format
 msgid "Let's go to the catalog to create our first subscription product"
-msgstr ""
+msgstr "Давайте перейдемо до каталогу, щоб створити наш перший товар підписки"
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:75
 #, python-format
 msgid "Link your product to a subscription template in this tab"
-msgstr ""
+msgstr "Об'єднайте ваш товар із шаблоном підписки на цій вкладці"
 
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_manager
@@ -1355,7 +1484,7 @@ msgstr "Нова"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "New Subscriptions"
-msgstr ""
+msgstr "Нові підписки"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:41
@@ -1375,6 +1504,8 @@ msgid ""
 "Odoo Custom Module\n"
 "        A custom module tailored especifically for your company"
 msgstr ""
+"Індивідуальний модуль Odoo\n"
+"         Індивідуальний модуль спеціально розроблений для вашої компанії"
 
 #. module: sale_subscription
 #: model:product.product,description_sale:sale_subscription.odoo_saas_yearly
@@ -1390,7 +1521,7 @@ msgstr ""
 #: model:product.product,name:sale_subscription.odoo_saas_yearly
 #: model:product.template,name:sale_subscription.odoo_saas_yearly_product_template
 msgid "Odoo SAAS (Yearly)"
-msgstr ""
+msgstr "Odoo SAAS (щороку)"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -1399,16 +1530,18 @@ msgid ""
 "            state. After the negociation, the salesman should close or renew\n"
 "            pending subscriptions."
 msgstr ""
+"Odoo автоматично встановлює підписку на оновлення в очікуваному стані. Після"
+" переговорів продавець повинен закрити або відновити незакінчені підписки."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "Online Management"
-msgstr ""
+msgstr "Управління Online"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Online Preview"
-msgstr ""
+msgstr "Попередній перегляд Online "
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_wizard_option_lines
@@ -1449,7 +1582,7 @@ msgstr "Платіжні операції"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Payment method:"
-msgstr ""
+msgstr "Метод оплати:"
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_reminder
@@ -1459,13 +1592,13 @@ msgstr "Нагадування про абонентську плату ${object
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Pending subscriptions"
-msgstr ""
+msgstr "Очікувані підписки"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:294
 #, python-format
 msgid "Please define Date of Next Invoice of \"%s\"."
-msgstr ""
+msgstr "Будь ласка, визначте дату наступного рахунку\"%s\"."
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:290
@@ -1496,7 +1629,7 @@ msgstr "Категорія товару"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_product_count
 msgid "Product Count"
-msgstr ""
+msgstr "Підрахунок товару"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_product_template
@@ -1508,7 +1641,7 @@ msgstr "Шаблон товару"
 #: model:ir.model.fields,help:sale_subscription.field_product_product_subscription_template_id
 #: model:ir.model.fields,help:sale_subscription.field_product_template_subscription_template_id
 msgid "Product will be included in a selected template"
-msgstr ""
+msgstr "Товар буде включений у вибраний шаблон"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.product_template_action_subscription
@@ -1527,7 +1660,7 @@ msgstr "Кількість"
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_line_quantity
 msgid "Quantity that will be invoiced."
-msgstr ""
+msgstr "Кількість що буде виставлено на рахунок."
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_order
@@ -1549,7 +1682,7 @@ msgstr "Повторення"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "Recurrence:"
-msgstr ""
+msgstr "Рецидив:"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_total
@@ -1574,7 +1707,7 @@ msgstr "Довідка:"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Register a payment method with"
-msgstr ""
+msgstr "Зареєструйте метод оплати з"
 
 #. module: sale_subscription
 #: selection:sale.order,subscription_management:0
@@ -1584,7 +1717,7 @@ msgstr "Оновлення"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Renewal Quotation"
-msgstr ""
+msgstr "Оновити комерційну пропозицію"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_interval
@@ -1607,7 +1740,7 @@ msgstr "Звітування"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_sale_order_count
 msgid "Sale Order Count"
-msgstr ""
+msgstr "Підрахунок замовлення на продаж"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription
@@ -1617,7 +1750,7 @@ msgstr "Продаж передплати"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings_module_sale_subscription_dashboard
 msgid "Sale Subscription Dashboard"
-msgstr ""
+msgstr "Інформаційна панель підписки продажу"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_template
@@ -1629,14 +1762,14 @@ msgstr "Шаблон підпису на продаж"
 #: model:ir.cron,cron_name:sale_subscription.account_analytic_cron_for_invoice
 #: model:ir.cron,name:sale_subscription.account_analytic_cron_for_invoice
 msgid "Sale Subscription: generate recurring invoices and payments"
-msgstr ""
+msgstr "Підписка на продаж: генерує регулярні рахунки-фактури та платежі"
 
 #. module: sale_subscription
 #: model:ir.actions.server,name:sale_subscription.account_analytic_cron_ir_actions_server
 #: model:ir.cron,cron_name:sale_subscription.account_analytic_cron
 #: model:ir.cron,name:sale_subscription.account_analytic_cron
 msgid "Sale Subscription: subscriptions expiration"
-msgstr ""
+msgstr "Підписка на продаж: закінчення підписки"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_list
@@ -1678,13 +1811,15 @@ msgid ""
 "Save and you're all set!<br/>Simply sell this product to create a "
 "subscription automatically or create a subscription manually!"
 msgstr ""
+"Збережіть, і ви все налаштували!<br/>Просто продайте цей товар, щоб "
+"автоматично створити підписку або створити підписку вручну!"
 
 #. module: sale_subscription
 #. openerp-web
 #: code:addons/sale_subscription/static/src/js/tour.js:47
 #, python-format
 msgid "Save this template and the modifications you've made to it."
-msgstr ""
+msgstr "Збережіть цей шаблон та внесені до нього зміни."
 
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_view
@@ -1699,6 +1834,8 @@ msgid ""
 "Select your newly created template. Every sale of this product will generate"
 " a new subscription!"
 msgstr ""
+"Виберіть нещодавно створений шаблон. Кожен продаж цього товару буде "
+"генерувати нову підписку!"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_sequence
@@ -1786,19 +1923,19 @@ msgstr "Аналіз підписки"
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_close_reason
 msgid "Subscription Close Reason"
-msgstr ""
+msgstr "Причина закриття підписки"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order_subscription_count
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_subscription_count
 msgid "Subscription Count"
-msgstr ""
+msgstr "Підрахунок підписки"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_line
 msgid "Subscription Line"
-msgstr ""
+msgstr "Рядок підписки"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1813,7 +1950,7 @@ msgstr "Керування передплатою"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Subscription Manager"
-msgstr ""
+msgstr "Менеджер підписки"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product_recurring_invoice
@@ -1851,12 +1988,12 @@ msgstr "Шаблони підписки"
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_2
 msgid "Subscription does not meet my requirements"
-msgstr ""
+msgstr "Підписка не відповідає моїм вимогам"
 
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_1
 msgid "Subscription is too expensive"
-msgstr ""
+msgstr "Підписка - занадто дорога"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.product_template_search_view_inherit_sale_subscription
@@ -1866,7 +2003,7 @@ msgstr "Товари підписки"
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_3
 msgid "Subscription reached its end date"
-msgstr ""
+msgstr "Підписка досягла кінцевої дати"
 
 #. module: sale_subscription
 #: model:mail.message.subtype,description:sale_subscription.subtype_state_change
@@ -1905,21 +2042,23 @@ msgid ""
 "Subscriptions can be automatically generated from sales orders of Sales or eCommerce\n"
 "                apps. To do so, set a Subscription Template on your Subscription Products."
 msgstr ""
+"Підписки можуть автоматично генеруватися за замовленнями на продаж з додатку продажі або електронної комерції.\n"
+"                 Для цього встановіть шаблон підписки на товарах підписки."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Subscriptions in progress"
-msgstr ""
+msgstr "Підписки в процесі"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Subscriptions not assigned"
-msgstr ""
+msgstr "Підписки не призначені"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Subscriptions that are not assigned to an account manager."
-msgstr ""
+msgstr "Підписки, які не призначені для менеджера обліку."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_pending
@@ -1998,6 +2137,9 @@ msgid ""
 "ratio between the full invoicing period of the subscription and the period "
 "between this date and the next invoicing date."
 msgstr ""
+"Знижка, яка застосовується при створенні замовлення на продаж, буде "
+"розрахована як співвідношення між повним періодом рахунку-фактури підписки "
+"та періодом від цієї дати до наступної дати виставлення рахунку."
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_website_url
@@ -2026,7 +2168,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_view
 msgid "The user will have read access to subscriptions."
-msgstr ""
+msgstr "Користувач буде мати доступ до підписок для читання."
 
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_manager
@@ -2094,7 +2236,7 @@ msgstr "Одиниця виміру"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Upsell Subscription"
-msgstr ""
+msgstr "Підписка на допродаж"
 
 #. module: sale_subscription
 #: selection:sale.order,subscription_management:0
@@ -2108,6 +2250,9 @@ msgid ""
 "                work done, expenses and/or sales orders. Odoo will automatically manage\n"
 "                the alerts for the renewal of the subscriptions to the right salesperson."
 msgstr ""
+"Використовуйте підписки для завдань, проблем, табелю та рахунків-фактур на основі\n"
+"                 виконаної роботи, витрат та/або замовлення на продаж. Odoo автоматично керуватиме\n"
+"                 сповіщення про поновлення підписки на потрібного продавця."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2122,6 +2267,8 @@ msgid ""
 "Want recurring billing via subscription management ? Get started by clicking"
 " here"
 msgstr ""
+"Бажаєте повторювати виставлення рахунків за допомогою підписки? Почніть, "
+"натиснувши тут"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2192,7 +2339,7 @@ msgstr "Спочатку потрібно вибрати замовника дл
 #: model:ir.actions.act_window,help:sale_subscription.product_template_action_subscription
 msgid ""
 "You will find here all the products related to this subscription template."
-msgstr ""
+msgstr "Тут ви знайдете всі товари, пов'язані з цим шаблоном підписки."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -2201,6 +2348,9 @@ msgid ""
 "            end date is passed or the working effort is higher than the\n"
 "            maximum authorized one."
 msgstr ""
+"Ви знайдете тут підписки, які потрібно оновити, оскільки\n"
+"             закінчується дата, або робоче зусилля перевищує\n"
+"             максимально дозволене."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2241,7 +2391,7 @@ msgstr "місяць(-і)"
 #: model:product.product,name:sale_subscription.odoo_saas
 #: model:product.template,name:sale_subscription.odoo_saas_product_template
 msgid "odoo_custom_module"
-msgstr ""
+msgstr "odoo_custom_module"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_payment_token
