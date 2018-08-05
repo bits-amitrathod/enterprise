@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Mrp Workorder',
+    'name': 'MRP II',
     'version': '1.0',
     'category': 'Manufacturing',
     'sequence': 51,
