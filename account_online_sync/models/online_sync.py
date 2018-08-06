@@ -5,7 +5,7 @@ import json
 from odoo import api, fields, models, _
 from odoo.tools.translate import _
 from odoo.exceptions import UserError
-from odoo.tools import float_is_zero, DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools import float_is_zero
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -261,7 +261,7 @@ class OnlineAccountWizard(models.TransientModel):
     status = fields.Selection([('success', 'Success'), ('failed', 'Failed'), ('cancelled', 'Cancelled')], readonly=True)
     method = fields.Selection([('add', 'add'), ('edit', 'edit'), ('refresh', 'refresh')], readonly=True)
     message = fields.Char(readonly=True)
-    sync_date = fields.Date('Fetch transaction from', default=lambda a: datetime.today() - relativedelta(days=15))
+    sync_date = fields.Date('Fetch transaction from', default=lambda a: fields.Date.context_today(a) - relativedelta(days=15))
     account_ids = fields.One2many('account.online.link.wizard', 'account_online_wizard_id', 'Synchronized accounts')
     hide_table = fields.Boolean(help='Technical field to hide table in view')
 
@@ -473,8 +473,8 @@ class AccountBankStatement(models.Model):
                 if not previous_statement or previous_statement.state == 'confirm':
                     to_create = lines
                     break
-                line_date = datetime.strptime(line[2]['date'], DEFAULT_SERVER_DATE_FORMAT)
-                p_stmt = datetime.strptime(previous_statement.date, DEFAULT_SERVER_DATE_FORMAT)
+                line_date = line[2]['date']
+                p_stmt = previous_statement.date
                 if journal.bank_statement_creation == 'day' and previous_statement.date != line[2]['date']:
                     create = True
                 elif journal.bank_statement_creation == 'week' and line_date.isocalendar()[1] != p_stmt.isocalendar()[1]:

@@ -59,7 +59,7 @@ class TestHelpdeskSLA(HelpdeskTransactionCase):
         # we verify the SLA is failed
         self.assertFalse(ticket1.sla_active)
         self.assertTrue(ticket1.sla_fail)
-        self.assertEqual(ticket1.deadline, ticket_expected_deadline)
+        self.assertEqual(str(ticket1.deadline), ticket_expected_deadline)
 
         # helpdesk user creates a second ticket and closes it without SLA fail
         ticket2 = self.env['helpdesk.ticket'].sudo(self.helpdesk_user.id).create({

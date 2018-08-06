@@ -71,7 +71,7 @@ class MarketingParticipant(models.Model):
         res = super(MarketingParticipant, self).create(values)
         # prepare first traces related to begin activities
         primary_activities = res.campaign_id.marketing_activity_ids.filtered(lambda act: act.trigger_type == 'begin')
-        now = Datetime.from_string(Datetime.now())
+        now = Datetime.now()
         trace_ids = [
             (0, 0, {
                 'activity_id': activity.id,

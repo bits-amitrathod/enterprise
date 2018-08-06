@@ -56,12 +56,11 @@ class ReportAccountGeneralLedger(models.AbstractModel):
             return 'C' if move_line_id.credit else 'D'
 
         def compute_period_number(date_str):
-            date = datetime.strptime(date_str, DEFAULT_SERVER_DATE_FORMAT)
+            date = fields.Date.from_string(date_str)
             return date.strftime('%y%m')[1:]
 
         def change_date_time(record):
-            date = datetime.strptime(record.write_date, DEFAULT_SERVER_DATETIME_FORMAT)
-            return date.strftime('%Y-%m-%dT%H:%M:%S')
+            return record.write_date.strftime('%Y-%m-%dT%H:%M:%S')
 
         company_id = self.env.user.company_id
 
@@ -130,7 +129,7 @@ class ReportAccountGeneralLedger(models.AbstractModel):
             'fiscal_year': date_from[0:4],
             'date_from': date_from,
             'date_to': date_to,
-            'date_created': fields.Datetime.now()[:10],
+            'date_created': fields.Date.context_today(),
             'software_version': release.version,
             'moves_count': moves_count,
             'moves_debit': moves_debit,

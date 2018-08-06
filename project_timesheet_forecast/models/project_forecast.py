@@ -21,8 +21,8 @@ class Forecast(models.Model):
     @api.depends('employee_id', 'employee_id.resource_calendar_id', 'start_date', 'end_date')
     def _compute_working_days_count(self):
         for forecast in self:
-            start_dt = datetime.datetime.combine(fields.Datetime.from_string(forecast.start_date), datetime.time.min)
-            stop_dt = datetime.datetime.combine(fields.Datetime.from_string(forecast.end_date), datetime.time.max)
+            start_dt = datetime.datetime.combine(forecast.start_date, datetime.time.min)
+            stop_dt = datetime.datetime.combine(forecast.end_date, datetime.time.max)
             forecast.working_days_count = forecast.employee_id.get_work_days_data(start_dt, stop_dt)['days']
 
     @api.depends('resource_hours', 'effective_hours')

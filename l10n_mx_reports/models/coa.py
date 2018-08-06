@@ -5,7 +5,6 @@ from odoo import models, _, fields, tools
 from openerp.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.xml_utils import _check_with_xsd
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 MX_NS_REFACTORING = {
     'catalogocuentas__': 'catalogocuentas',
@@ -135,8 +134,8 @@ class MXReportAccountCoa(models.AbstractModel):
                 'level': '2',
                 'nature': tag.nature,
             })
-        date = fields.datetime.strptime(
-            self.env.context['date_from'], DEFAULT_SERVER_DATE_FORMAT)
+        ctx = self._set_context(options)
+        date = fields.Date.from_string(ctx['date_from'])
         chart = {
             'vat': self.env.user.company_id.vat or '',
             'month': str(date.month).zfill(2),
@@ -165,8 +164,7 @@ class MXReportAccountCoa(models.AbstractModel):
         """The structure to name the CoA reports is:
         VAT + YEAR + MONTH + CT"""
         context = self.env.context
-        date_report = fields.datetime.strptime(
-            context['date_from'], DEFAULT_SERVER_DATE_FORMAT) if context.get(
+        date_report = fields.Date.from_string(context['date_from']) if context.get(
                 'date_from') else fields.date.today()
         return '%s%s%sCT' % (
             self.env.user.company_id.vat or '',

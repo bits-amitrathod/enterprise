@@ -46,5 +46,5 @@ class TestCSVFile(TransactionCase):
 
         # Check an imported bank statement line
         line = bank_st_record.line_ids.filtered(lambda r: r.name == 'ACH CREDIT"CHECKFLUID INC -013015')
-        self.assertEqual(line.date, '2015-02-03')
+        self.assertEqual(str(line.date), '2015-02-03')
         self.assertEqual(line.amount, 2500.00)

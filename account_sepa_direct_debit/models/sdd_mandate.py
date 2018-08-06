@@ -132,7 +132,7 @@ class SDDMandate(models.Model):
     @api.constrains('end_date', 'start_date')
     def validate_end_date(self):
         for record in self:
-            if record.end_date and record.start_date and datetime.strptime(record.end_date,'%Y-%m-%d') < datetime.strptime(record.start_date,'%Y-%m-%d'):
+            if record.end_date and record.start_date and record.end_date < record.start_date:
                 raise UserError(_("The end date of the mandate must be posterior or equal to its start date."))
 
     @api.constrains('payment_journal_id')

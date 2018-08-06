@@ -7,7 +7,7 @@ import logging
 from odoo import models, api, fields
 from odoo.tools.translate import _
 from odoo.exceptions import UserError
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, date_utils
 
 _logger = logging.getLogger(__name__)
 
@@ -68,7 +68,8 @@ class PlaidProviderAccount(models.Model):
                 data['access_token'] = self.provider_account_identifier
             # This is only intended to work with Odoo proxy, if user wants to use his own plaid account
             # replace the query by requests.post(url, json=data, timeout=60)
-            resp = requests.post(url, data=json.dumps(data), timeout=60)
+            resp = requests.post(url, data=json.dumps(data, default=date_utils.json_default),
+                                 timeout=60)
         except requests.exceptions.Timeout:
             raise UserError(_('Timeout: the server did not reply within 60s'))
         self.check_plaid_error(resp)
@@ -218,7 +219,7 @@ class PlaidAccount(models.Model):
                 if transaction.get('pending') == False:
                     trans = {
                         'online_identifier': transaction.get('transaction_id'),
-                        'date': transaction.get('date'),
+                        'date': fields.Date.from_string(transaction.get('date')),
                         'name': transaction.get('name'),
                         'amount': -1 * transaction.get('amount'), #https://plaid.com/docs/api/#transactions amount positive if purchase
                         'end_amount': end_amount,

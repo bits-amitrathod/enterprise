@@ -136,7 +136,7 @@ class AccountPayment(models.Model):
         InstdAmt.attrib['Ccy'] = self.currency_id.name
 
         MndtRltdInf = create_xml_node_chain(DrctDbtTxInf, ['DrctDbtTx','MndtRltdInf','MndtId'], self.sdd_mandate_id.name)[-2]
-        create_xml_node(MndtRltdInf, 'DtOfSgntr', self.sdd_mandate_id.start_date)
+        create_xml_node(MndtRltdInf, 'DtOfSgntr', fields.Date.to_string(self.sdd_mandate_id.start_date))
         create_xml_node_chain(DrctDbtTxInf, ['DbtrAgt','FinInstnId','BIC'], self.sdd_mandate_id.partner_bank_id.bank_id.bic)
         Dbtr = create_xml_node_chain(DrctDbtTxInf, ['Dbtr','Nm'], self.sdd_mandate_id.partner_bank_id.acc_holder_name or partner.name)[0]
 

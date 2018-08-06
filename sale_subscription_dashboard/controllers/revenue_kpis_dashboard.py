@@ -3,11 +3,11 @@
 
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
-from datetime import datetime, timedelta
+from datetime import timedelta
 from math import floor
-from odoo import http, _
+from odoo import http, _, fields
 from odoo.http import request
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat
+from odoo.tools import pycompat
 from .stat_types import STAT_TYPES, FORECAST_STAT_TYPES, compute_mrr_growth_values
 
 
@@ -72,7 +72,7 @@ class RevenueKPIsDashboard(http.Controller):
     @http.route('/sale_subscription_dashboard/get_default_values_forecast', type='json', auth='user')
     def get_default_values_forecast(self, forecast_type, end_date, filters):
 
-        end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
+        end_date = fields.Date.from_string(end_date)
 
         net_new_mrr = compute_mrr_growth_values(end_date, end_date, filters)['net_new_mrr']
         revenue_churn = self.compute_stat('revenue_churn', end_date, end_date, filters)
@@ -99,8 +99,8 @@ class RevenueKPIsDashboard(http.Controller):
     @http.route('/sale_subscription_dashboard/get_stats_history', type='json', auth='user')
     def get_stats_history(self, stat_type, start_date, end_date, filters):
 
-        start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
-        end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
+        start_date = fields.Date.from_string(start_date)
+        end_date = fields.Date.from_string(end_date)
 
         results = {}
 
@@ -151,8 +151,8 @@ class RevenueKPIsDashboard(http.Controller):
 
         # By default, points_limit = 0 mean every points
 
-        start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
-        end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
+        start_date = fields.Date.from_string(start_date)
+        end_date = fields.Date.from_string(end_date)
         delta = end_date - start_date
 
         ticks = self._get_pruned_tick_values(range(delta.days + 1), points_limit)
@@ -190,8 +190,8 @@ class RevenueKPIsDashboard(http.Controller):
     @http.route('/sale_subscription_dashboard/compute_graph', type='json', auth='user')
     def compute_graph(self, stat_type, start_date, end_date, filters, points_limit=30):
 
-        start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
-        end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
+        start_date = fields.Date.from_string(start_date)
+        end_date = fields.Date.from_string(end_date)
         delta = end_date - start_date
 
         ticks = self._get_pruned_tick_values(range(delta.days + 1), points_limit)
@@ -212,8 +212,8 @@ class RevenueKPIsDashboard(http.Controller):
 
     def _compute_stat_trend(self, stat_type, start_date, end_date, filters):
 
-        start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
-        end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
+        start_date = fields.Date.from_string(start_date)
+        end_date = fields.Date.from_string(end_date)
         start_date_delta = start_date - relativedelta(months=+1)
         end_date_delta = end_date - relativedelta(months=+1)
 
@@ -233,9 +233,9 @@ class RevenueKPIsDashboard(http.Controller):
     def compute_stat(self, stat_type, start_date, end_date, filters):
 
         if isinstance(start_date, pycompat.string_types):
-            start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
+            start_date = fields.Date.from_string(start_date)
         if isinstance(end_date, pycompat.string_types):
-            end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
+            end_date = fields.Date.from_string(end_date)
 
         return STAT_TYPES[stat_type]['compute'](start_date, end_date, filters)
 

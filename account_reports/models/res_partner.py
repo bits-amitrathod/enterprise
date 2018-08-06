@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 from odoo import api, fields, models, _
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo.tools.misc import format_date
 
 _FOLLOWUP_STATUS = [('in_need_of_action', 'In need of action'), ('with_overdue_invoices', 'With overdue invoices'), ('no_action_needed', 'No action needed')]
@@ -61,7 +60,7 @@ class ResPartner(models.Model):
             total_due = 0
             total_overdue = 0
             followup_status = "no_action_needed"
-            today = datetime.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
+            today = fields.Date.today()
             for aml in record.unreconciled_aml_ids:
                 if aml.company_id == self.env.user.company_id:
                     amount = aml.amount_residual

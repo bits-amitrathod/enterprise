@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, api
+from odoo import models, api, fields
 from odoo.exceptions import UserError, AccessError
 
 import datetime
-from odoo import tools
 
 
 class account_analytic_line(models.Model):
@@ -223,7 +222,7 @@ class account_analytic_line(models.Model):
                     aals_on_hold.append(str(ls_aal['id']))
             elif ls_aal.get('to_sync') and sv_project:
                 if sv_aal:
-                    if(datetime.datetime.strptime(ls_aal['write_date'], tools.DEFAULT_SERVER_DATETIME_FORMAT) > datetime.datetime.strptime(sv_aal['write_date'], tools.DEFAULT_SERVER_DATETIME_FORMAT)):
+                    if(fields.Datetime.from_string(ls_aal['write_date']) > fields.Datetime.from_string(sv_aal['write_date'])):
                         new_ls_aals.append(ls_aal)
                 else:
                     new_ls_aals.append(ls_aal)

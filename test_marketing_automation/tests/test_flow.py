@@ -14,9 +14,8 @@ class MarketingCampaignTest(MarketingCampaignTestBase):
     @mute_logger('odoo.addons.base.models.ir_model', 'odoo.models')
     def test_simple_flow(self):
         date = Datetime.from_string('2014-08-01 15:02:32')  # so long, little task
-        date_str = Datetime.to_string(date)
-        self.mock_datetime.now.return_value = date_str
-        self.mock_datetime2.now.return_value = date_str
+        self.mock_datetime.now.return_value = date
+        self.mock_datetime2.now.return_value = date
 
         Campaign = self.env['marketing.campaign'].sudo(self.user_market)
         Activity = self.env['marketing.activity'].sudo(self.user_market)
@@ -86,7 +85,7 @@ for record in records:
             campaign.participant_ids,
         )
         self.assertEqual(set(act_0.trace_ids.mapped('state')), set(['scheduled']))
-        self.assertEqual(set(act_0.trace_ids.mapped('schedule_date')), set([date_str]))
+        self.assertEqual(set(act_0.trace_ids.mapped('schedule_date')), set([date]))
 
         # No other trace should have been created as the first one are waiting to be processed
         self.assertEqual(act_1.trace_ids, self.env['marketing.trace'])
@@ -101,7 +100,7 @@ for record in records:
             set((self.test_rec1 | self.test_rec2 | self.test_rec3 | self.test_rec4).ids)
         )
         self.assertEqual(set(act_1.trace_ids.mapped('state')), set(['scheduled']))
-        self.assertEqual(set(act_1.trace_ids.mapped('schedule_date')), set([Datetime.to_string(date + relativedelta(hours=1))]))
+        self.assertEqual(set(act_1.trace_ids.mapped('schedule_date')), set([date + relativedelta(hours=1)]))
 
         # Traces are processed, but this is not the time to execute child traces
         campaign.execute_activities()
@@ -109,9 +108,8 @@ for record in records:
 
         # Time is coming, a bit like the winter
         date = Datetime.from_string('2014-08-01 17:02:32')  # wow, a two hour span ! so much incredible !
-        date_str = Datetime.to_string(date)
-        self.mock_datetime.now.return_value = date_str
-        self.mock_datetime2.now.return_value = date_str
+        self.mock_datetime.now.return_value = date
+        self.mock_datetime2.now.return_value = date
 
         campaign.execute_activities()
         # There should be one rejected activity not matching the filter

@@ -148,7 +148,7 @@ class BanxicoTest(TransactionCase):
         currency.rate_ids = self.env['res.currency.rate'].create({
             'rate': rate,
             'currency_id': currency.id,
-            'name': fields.Date.today() + ' 00:00:00',
+            'name': fields.Datetime.now().replace(hour=0, minute=0, second=0),
             'company_id': self.company.id,
         })
 

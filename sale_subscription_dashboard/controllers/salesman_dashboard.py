@@ -5,9 +5,8 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from itertools import groupby
 
-from odoo import http
+from odoo import http, fields
 from odoo.http import request
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 class SalemanDashboard(http.Controller):
@@ -38,8 +37,8 @@ class SalemanDashboard(http.Controller):
     @http.route('/sale_subscription_dashboard/get_values_salesman', type='json', auth='user')
     def get_values_salesman(self, salesman_id, start_date, end_date):
 
-        start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
-        end_date = datetime.strptime(end_date, DEFAULT_SERVER_DATE_FORMAT)
+        start_date = fields.Date.from_string(start_date)
+        end_date = fields.Date.from_string(end_date)
 
         contract_modifications = []
 
@@ -68,7 +67,7 @@ class SalemanDashboard(http.Controller):
 
             next_il_ids = request.env['account.invoice.line'].search([
                 ('asset_start_date', '>=', previous_il_id.asset_end_date),
-                ('asset_start_date', '<', (datetime.strptime(previous_il_id.asset_end_date, DEFAULT_SERVER_DATE_FORMAT) + relativedelta(months=+1))),
+                ('asset_start_date', '<', previous_il_id.asset_end_date + relativedelta(months=+1)),
                 ('subscription_id', '=', previous_il_id.subscription_id.id)
             ])
             if not next_il_ids:
@@ -99,7 +98,7 @@ class SalemanDashboard(http.Controller):
             # Was there any invoice_line in the last 30 days for this subscription ?
             previous_il_ids = request.env['account.invoice.line'].search([
                 ('asset_end_date', '<=', next_il_id.asset_start_date),
-                ('asset_end_date', '>', (datetime.strptime(next_il_id.asset_start_date, DEFAULT_SERVER_DATE_FORMAT) - relativedelta(months=+1))),
+                ('asset_end_date', '>', next_il_id.asset_start_date - relativedelta(months=+1)),
                 ('subscription_id', '=', next_il_id.subscription_id.id)]
             )
             # Careful : what happened if invoice_lines from multiple invoices during last 30 days ?

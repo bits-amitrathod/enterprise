@@ -9,7 +9,6 @@ import re
 from odoo import models, api, fields
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
 _logger = logging.getLogger(__name__)
 
@@ -238,9 +237,8 @@ class YodleeProviderAccount(models.Model):
                 }
                 account_search = self.env['account.online.journal'].search([('account_online_provider_id', '=', self.id), ('online_identifier', '=', account.get('id'))], limit=1)
                 if len(account_search) == 0:
-                    dt = datetime.datetime
                     # Since we just create account, set last sync to 15 days in the past to retrieve transaction from latest 15 days
-                    last_sync = dt.strftime(dt.strptime(self.last_refresh, DEFAULT_SERVER_DATETIME_FORMAT) - datetime.timedelta(days=15), DEFAULT_SERVER_DATE_FORMAT)
+                    last_sync = self.last_refresh - datetime.timedelta(days=15)
                     vals.update({
                         'name': account.get('accountName', _('Account')),
                         'online_identifier': account.get('id'),
@@ -387,7 +385,7 @@ class YodleeAccount(models.Model):
             return 0
         params = {
             'accountId': self.online_identifier,
-            'fromDate': min(self.last_sync, self.account_online_provider_id.last_refresh[:10]),
+            'fromDate': min(self.last_sync, self.account_online_provider_id.last_refresh.date()),
             'toDate': fields.Date.today(),
             'top': 500,
         }
@@ -401,8 +399,7 @@ class YodleeAccount(models.Model):
                 # We only take posted transaction into account
                 if tr.get('status') == 'POSTED':
                     date = tr.get('date') or tr.get('postDate') or tr.get('transactionDate')
-                    dt = datetime.datetime
-                    date = dt.strftime(dt.strptime(date, '%Y-%m-%d'), DEFAULT_SERVER_DATE_FORMAT)
+                    date = fields.Date.from_string(date)
                     amount = tr.get('amount', {}).get('amount')
                     # ignore transaction with 0
                     if amount == 0:

@@ -7,9 +7,9 @@ import pytz
 
 from werkzeug.urls import url_encode
 
-from odoo import http, _
+from odoo import http, _, fields
 from odoo.http import request
-from odoo.tools import html2plaintext, DEFAULT_SERVER_DATE_FORMAT as df, DEFAULT_SERVER_DATETIME_FORMAT as dtf
+from odoo.tools import html2plaintext, DEFAULT_SERVER_DATETIME_FORMAT as dtf
 
 
 class WebsiteCalendar(http.Controller):
@@ -80,7 +80,7 @@ class WebsiteCalendar(http.Controller):
         return request.render("website_calendar.appointment_form", {
             'partner_data': partner_data,
             'appointment_type': appointment_type,
-            'datetime': datetime.strptime(date_time, dtf),
+            'datetime': date_time,
             'datetime_str': date_time,
             'employee_id': employee_id,
             'countries': request.env['res.country'].search([]),
@@ -90,7 +90,7 @@ class WebsiteCalendar(http.Controller):
     def calendar_appointment_submit(self, appointment_type, datetime_str, employee_id, name, phone, email, country_id=False, **kwargs):
         timezone = request.session['timezone']
         tz_session = pytz.timezone(timezone)
-        date_start = tz_session.localize(datetime.strptime(datetime_str, dtf)).astimezone(pytz.utc)
+        date_start = tz_session.localize(fields.Datetime.from_string(datetime_str)).astimezone(pytz.utc)
         date_end = date_start + relativedelta(hours=appointment_type.appointment_duration)
 
         # check availability of the employee again (in case someone else booked while the client was entering the form)
@@ -169,12 +169,12 @@ class WebsiteCalendar(http.Controller):
         tz_session = pytz.timezone(timezone)
 
         if not event.allday:
-            url_date_start = datetime.strptime(event.start_datetime, dtf).strftime('%Y%m%dT%H%M%SZ')
-            url_date_stop = datetime.strptime(event.stop_datetime, dtf).strftime('%Y%m%dT%H%M%SZ')
-            date_start = datetime.strptime(event.start_datetime, dtf).replace(tzinfo=pytz.utc).astimezone(tz_session).strftime('%A, %x %X')
+            url_date_start = fields.Datetime.from_string(event.start_datetime).strftime('%Y%m%dT%H%M%SZ')
+            url_date_stop = fields.Datetime.from_string(event.stop_datetime).strftime('%Y%m%dT%H%M%SZ')
+            date_start = fields.Datetime.from_string(event.start_datetime).replace(tzinfo=pytz.utc).astimezone(tz_session).strftime('%A, %x %X')
         else:
-            url_date_start = url_date_stop = datetime.strptime(event.start_date, df).strftime('%Y%m%d')
-            date_start = datetime.strptime(event.start_date, df).strftime('%A, %x') + _(', All Day')
+            url_date_start = url_date_stop = fields.Date.from_string(event.start_date).strftime('%Y%m%d')
+            date_start = fields.Date.from_string(event.start_date).strftime('%A, %x') + _(', All Day')
         details = event.appointment_type_id and event.appointment_type_id.message_confirmation or event.description or ''
         params = url_encode({
             'action': 'TEMPLATE',
@@ -197,7 +197,7 @@ class WebsiteCalendar(http.Controller):
         event = request.env['calendar.event'].sudo().search([('access_token', '=', access_token)], limit=1)
         if not event:
             return request.not_found()
-        if datetime.strptime(event.allday and event.start or event.start_datetime, dtf) < datetime.now() + relativedelta(hours=event.appointment_type_id.min_cancellation_hours):
+        if fields.Datetime.from_string(event.allday and event.start or event.start_datetime) < datetime.now() + relativedelta(hours=event.appointment_type_id.min_cancellation_hours):
             return request.redirect('/website/calendar/view/' + access_token + '?message=no-cancel')
         appointment_type_id = event.appointment_type_id.id
         event.unlink()

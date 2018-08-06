@@ -652,11 +652,11 @@ class AccountFinancialReportLine(models.Model):
         if self.special_date_changer == 'from_beginning':
             date_from = False
         if self.special_date_changer == 'to_beginning_of_period' and date_from:
-            date_tmp = datetime.strptime(self._context['date_from'], "%Y-%m-%d") - relativedelta(days=1)
+            date_tmp = fields.Date.from_string(self._context['date_from']) - relativedelta(days=1)
             date_to = date_tmp.strftime('%Y-%m-%d')
             date_from = False
         if self.special_date_changer == 'from_fiscalyear' and date_to:
-            date_tmp = datetime.strptime(date_to, '%Y-%m-%d')
+            date_tmp = fields.Date.from_string(date_to)
             date_tmp = self.env.user.company_id.compute_fiscalyear_dates(date_tmp)['date_from']
             date_from = date_tmp.strftime('%Y-%m-%d')
             strict_range = True
@@ -1094,8 +1094,8 @@ class FormulaContext(dict):
             self['sum_if_neg'] = res
             return res
         if item == 'NDays':
-            d1 = datetime.strptime(self.curObj.env.context['date_from'], "%Y-%m-%d")
-            d2 = datetime.strptime(self.curObj.env.context['date_to'], "%Y-%m-%d")
+            d1 = fields.Date.from_string(self.curObj.env.context['date_from'])
+            d2 = fields.Date.from_string(self.curObj.env.context['date_to'])
             res = (d2 - d1).days
             self['NDays'] = res
             return res

@@ -111,7 +111,7 @@ class AccountBatchPayment(models.Model):
 
             return {
                 'file': base64.encodestring(xml_doc),
-                'filename': "SCT-" + self.journal_id.code + "-" + fields.Datetime.now() + ".xml",
+                'filename': "SCT-" + self.journal_id.code + "-" + str(fields.Datetime.now()) + ".xml",
                 'warning': self.sct_warning,
             }
 
@@ -197,7 +197,7 @@ class AccountBatchPayment(models.Model):
             CtrlSum.text = self._get_CtrlSum(payments_list)
             PmtInf.append(self._get_PmtTpInf())
             ReqdExctnDt = etree.SubElement(PmtInf, "ReqdExctnDt")
-            ReqdExctnDt.text = time.strftime('%Y-%m-%d', time.strptime(payment_date, DEFAULT_SERVER_DATE_FORMAT))
+            ReqdExctnDt.text = fields.Date.to_string(payment_date)
             PmtInf.append(self._get_Dbtr())
             PmtInf.append(self._get_DbtrAcct())
             DbtrAgt = etree.SubElement(PmtInf, "DbtrAgt")

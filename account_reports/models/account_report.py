@@ -100,7 +100,7 @@ class AccountReport(models.AbstractModel):
                         # just copy filter and let the system compute the correct date from it
                         options[key]['filter'] = previous_options[key]['filter']
                     elif value.get('date_from') is not None and not previous_options[key].get('date_from'):
-                        date = datetime.datetime.strptime(previous_options[key]['date'], DEFAULT_SERVER_DATE_FORMAT).date()
+                        date = fields.Date.from_string(previous_options[key]['date'])
                         company_fiscalyear_dates = self.env.user.company_id.compute_fiscalyear_dates(date)
                         options[key]['date_from'] = company_fiscalyear_dates['date_from'].strftime(DEFAULT_SERVER_DATE_FORMAT)
                         options[key]['date_to'] = previous_options[key]['date']
@@ -856,10 +856,10 @@ class AccountReport(models.AbstractModel):
         # previously get_full_date_names
         if self.has_single_date_filter(options):
             dt_from = None
-            dt_to = datetime.datetime.strptime(options[dt_filter]['date'], DEFAULT_SERVER_DATE_FORMAT).date()
+            dt_to = fields.Date.from_string(options[dt_filter]['date'])
         else:
-            dt_from = datetime.datetime.strptime(options[dt_filter]['date_from'], DEFAULT_SERVER_DATE_FORMAT).date()
-            dt_to = datetime.datetime.strptime(options[dt_filter]['date_to'], DEFAULT_SERVER_DATE_FORMAT).date()
+            dt_from = fields.Date.from_string(options[dt_filter]['date_from'])
+            dt_to = fields.Date.from_string(options[dt_filter]['date_to'])
 
         return self._get_dates_period(options, dt_from, dt_to)['string']
 
@@ -883,10 +883,10 @@ class AccountReport(models.AbstractModel):
         if options_filter == 'custom':
             if self.has_single_date_filter(options):
                 date_from = None
-                date_to = datetime.datetime.strptime(options['date']['date'], DEFAULT_SERVER_DATE_FORMAT).date()
+                date_to = fields.Date.from_string(options['date']['date'])
             else:
-                date_from = datetime.datetime.strptime(options['date']['date_from'], DEFAULT_SERVER_DATE_FORMAT).date()
-                date_to = datetime.datetime.strptime(options['date']['date_to'], DEFAULT_SERVER_DATE_FORMAT).date()
+                date_from = fields.Date.from_string(options['date']['date_from'])
+                date_to = fields.Date.from_string(options['date']['date_to'])
         elif 'today' in options_filter:
             if not self.has_single_date_filter(options):
                 date_from = self.env.user.company_id.compute_fiscalyear_dates(date_to)['date_from']
@@ -925,10 +925,10 @@ class AccountReport(models.AbstractModel):
         if cmp_filter == 'custom':
             if self.has_single_date_filter(options):
                 date_from = None
-                date_to = datetime.datetime.strptime(options['comparison']['date'], DEFAULT_SERVER_DATE_FORMAT).date()
+                date_to = fields.Date.from_string(options['comparison']['date'])
             else:
-                date_from = datetime.datetime.strptime(options['comparison']['date_from'], DEFAULT_SERVER_DATE_FORMAT).date()
-                date_to = datetime.datetime.strptime(options['comparison']['date_to'], DEFAULT_SERVER_DATE_FORMAT).date()
+                date_from = fields.Date.from_string(options['comparison']['date_from'])
+                date_to = fields.Date.from_string(options['comparison']['date_to'])
             vals = create_vals(self._get_dates_period(options, date_from, date_to))
             options['comparison']['periods'] = [vals]
             return

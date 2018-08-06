@@ -2,9 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, api, _, fields
-from odoo.tools.misc import formatLang
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_is_zero
-from datetime import datetime, timedelta
+from odoo.tools import float_is_zero
+from datetime import timedelta
 
 
 class ReportPartnerLedger(models.AbstractModel):
@@ -74,8 +73,9 @@ class ReportPartnerLedger(models.AbstractModel):
             account_types = [a.get('id') for a in options.get('account_type')]
         date_from = options['date']['date_from']
         results = self._do_query_group_by_account(options, line_id)
-        initial_bal_date_to = datetime.strptime(date_from, DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
-        initial_bal_results = self.with_context(date_from=False, date_to=initial_bal_date_to.strftime(DEFAULT_SERVER_DATE_FORMAT))._do_query_group_by_account(options, line_id)
+        initial_bal_results = self.with_context(
+            date_from=False, date_to=fields.Date.from_string(date_from) + timedelta(days=-1)
+        )._do_query_group_by_account(options, line_id)
         context = self.env.context
         base_domain = [('date', '<=', context['date_to']), ('company_id', 'in', context['company_ids']), ('account_id.internal_type', 'in', account_types)]
         base_domain.append(('date', '>=', date_from))

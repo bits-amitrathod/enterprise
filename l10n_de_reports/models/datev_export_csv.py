@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
 from odoo.tools import pycompat
 
 from datetime import datetime
@@ -130,10 +129,9 @@ class DatevExportCSV(models.AbstractModel):
             client_number = 999
         return [consultant_number, client_number]
 
-
     def _get_partner_list(self, options):
-        date_from = datetime.strptime(options.get('date').get('date_from'), DEFAULT_SERVER_DATE_FORMAT)
-        date_to = datetime.strptime(options.get('date').get('date_to'), DEFAULT_SERVER_DATE_FORMAT)
+        date_from = fields.Date.from_string(options.get('date').get('date_from'))
+        date_to = fields.Date.from_string(options.get('date').get('date_to'))
         fy = self.env.user.company_id.compute_fiscalyear_dates(date_to)
 
         date_from = datetime.strftime(date_from, '%Y%m%d')
@@ -208,8 +206,8 @@ class DatevExportCSV(models.AbstractModel):
     # Source: http://www.datev.de/dnlexom/client/app/index.html#/document/1036228/D103622800029
     def get_csv(self, options):
         # last 2 element of preheader should be filled by "consultant number" and "client number"
-        date_from = datetime.strptime(options.get('date').get('date_from'), DEFAULT_SERVER_DATE_FORMAT)
-        date_to = datetime.strptime(options.get('date').get('date_to'), DEFAULT_SERVER_DATE_FORMAT)
+        date_from = fields.Date.from_string(options.get('date').get('date_from'))
+        date_to = fields.Date.from_string(options.get('date').get('date_to'))
         fy = self.env.user.company_id.compute_fiscalyear_dates(date_to)
 
         date_from = datetime.strftime(date_from, '%Y%m%d')
@@ -299,7 +297,7 @@ class DatevExportCSV(models.AbstractModel):
                 # on receivable/payable aml of sales/purchases
                 receipt2 = ''
                 if to_account_code == account_code and aml.date_maturity:
-                    receipt2 = datetime.strptime(aml.date, DEFAULT_SERVER_DATE_FORMAT).strftime('%d%m%y')
+                    receipt2 = aml.date
 
                 currency = aml.company_id.currency_id
                 partner_vat = aml.tax_ids and aml.move_id.partner_id.vat or ''
@@ -311,7 +309,7 @@ class DatevExportCSV(models.AbstractModel):
                     'gegenkonto': to_account_code,
                     'belegfeld1': receipt1[-12:],
                     'belegfeld2': receipt2,
-                    'datum': datetime.strptime(aml.move_id.date, DEFAULT_SERVER_DATE_FORMAT).strftime('%d%m'),
+                    'datum': aml.move_id.date,
                     'konto': account_code or '',
                     'kurs': str(currency.rate).replace('.', ','),
                     'buchungstext': receipt1,

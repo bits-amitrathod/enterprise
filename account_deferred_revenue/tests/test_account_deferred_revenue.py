@@ -65,7 +65,7 @@ class TestDeferredRevenue(common.TransactionCase):
             msg='Remaining value is incorrect.')
 
         # I check next installment date.
-        last_installment_date = datetime.strptime(first_installment_line.depreciation_date, '%Y-%m-%d')
-        installment_date = (last_installment_date + relativedelta(months=+recognition.method_period))
-        self.assertEqual(recognition.depreciation_line_ids[1].depreciation_date, str(installment_date.date()),
+        last_installment_date = first_installment_line.depreciation_date
+        installment_date = last_installment_date + relativedelta(months=+recognition.method_period)
+        self.assertEqual(recognition.depreciation_line_ids[1].depreciation_date, installment_date,
             'Installment date is incorrect.')

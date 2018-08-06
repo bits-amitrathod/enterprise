@@ -38,7 +38,7 @@ class SaleForecast(models.Model):
         if not limit:
             result = [x for x in mps_report.get_data(product) if x['procurement_enable']]
             for data in result:
-                date_cmp = datetime.datetime.strptime(data['date'], '%Y-%m-%d')
+                date_cmp = fields.Date.from_string(data['date'])
                 if date_cmp < datetime.datetime.now():
                     date = datetime.datetime.now()
                 else:
@@ -58,7 +58,7 @@ class SaleForecast(models.Model):
             result = [x for x in mps_report.get_data(product) if not x['procurement_done']]
             if result:
                 data = result[0]
-                date_cmp = datetime.datetime.strptime(data['date'], '%Y-%m-%d')
+                date_cmp = fields.Date.from_string(data['date'])
                 if date_cmp < datetime.datetime.now():
                     date = datetime.datetime.now()
                 else:

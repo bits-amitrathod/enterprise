@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import json
-from datetime import datetime, timedelta
+from datetime import timedelta
 from lxml import etree
 from lxml.objectify import fromstring
 from odoo import api, fields, models, release, tools, _
 from odoo.exceptions import UserError
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo.tools.float_utils import float_repr
 from odoo.tools.xml_utils import _check_with_xsd
 
@@ -178,8 +177,9 @@ class IrasAuditFile(models.AbstractModel):
             ('date', '<=', date_to)
             ])
 
-        initial_bal_date_to = datetime.strptime(date_from, DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=-1)
-        initial_bal_results = self.with_context(date_to=initial_bal_date_to.strftime(DEFAULT_SERVER_DATE_FORMAT))._do_query_group_by_account({}, None)
+        initial_bal_results = self.with_context(
+            date_to=fields.Date.from_string(date_from) + timedelta(days=-1)
+        )._do_query_group_by_account({}, None)
 
         all_accounts = self.env['account.account'].search([
             ('company_id', '=', company_id.id)

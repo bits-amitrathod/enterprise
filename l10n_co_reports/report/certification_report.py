@@ -6,7 +6,7 @@ from datetime import datetime
 
 from odoo import models
 from odoo.exceptions import UserError
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat
+from odoo.tools import pycompat
 from odoo.tools.translate import _
 
 
@@ -58,7 +58,7 @@ class ReportCertificationReport(models.AbstractModel):
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_year'}
 
     def _get_bimonth_for_aml(self, aml):
-        bimonth = datetime.strptime(aml.date, DEFAULT_SERVER_DATE_FORMAT).month
+        bimonth = aml.date.month
         # month:   1   2   3   4   5   6   7   8   9   10  11   12
         # bimonth: \ 1 /   \ 2 /   \ 3 /   \ 4 /   \ 5 /    \ 6 /
         bimonth = (bimonth + 1) // 2

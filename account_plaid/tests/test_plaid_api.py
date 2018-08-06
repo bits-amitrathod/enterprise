@@ -10,6 +10,7 @@ from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from odoo.tests import tagged
+from odoo import fields
 import requests
 import json
 
@@ -242,10 +243,10 @@ class TestPlaidApi(AccountingTestCase):
             self.assertEqual(bank_stmt.line_ids[i].amount, -2307.21)
             self.assertTrue(bank_stmt.line_ids[i].online_identifier.endswith("lPNjeW1nR6CDn5okmGQ6hEpMo4lLNoSrzqDje"))
             self.assertEqual(bank_stmt.line_ids[i].partner_id, self.env['res.partner']) #No partner defined on line
-        self.assertEqual(account_online_journal.last_sync, datetime.strftime(datetime.today(), '%Y-%m-%d'))
+        self.assertEqual(account_online_journal.last_sync, fields.Date.today())
             
         # Call again and check that we don't have any new transactions
-        account_online_journal.last_sync = datetime.today() - relativedelta(days=15)
+        account_online_journal.last_sync = fields.Date.today() - relativedelta(days=15)
         acc_online_provider.manual_sync()
         bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc")
         self.assertEqual(len(bank_stmt), 1, 'There should not be a new statement created')

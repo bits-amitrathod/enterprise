@@ -26,7 +26,7 @@ class AccountBatchPayment(models.Model):
             if not company.sdd_creditor_identifier:
                 raise UserError(_("Your company must have a creditor identifier in order to issue SEPA Direct Debit payments requests. It can be defined in accounting module's settings."))
 
-            collection_date = datetime.strptime(self.sdd_required_collection_date,'%Y-%m-%d').date()
+            collection_date = self.sdd_required_collection_date
             if collection_date < date.today():
                 raise UserError(_("You cannot generate a SEPA Direct Debit file with a required collection date in the past."))
 

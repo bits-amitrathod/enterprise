@@ -50,7 +50,7 @@ class TestImportExport(common.TransactionCase):
             line_ext_id = line["id"]
             aal = self.env["ir.model.data"].xmlid_to_object(line_ext_id)
             self.assertEqual(line["desc"], aal.name)
-            self.assertEqual(line["date"], aal.date)
+            self.assertEqual(line["date"], str(aal.date))
             self.assertEqual(float(line["unit_amount"]), aal.unit_amount)
 
     # Creates a timesheet_sheet and sets it in a confirmed state.

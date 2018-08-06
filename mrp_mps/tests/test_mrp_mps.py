@@ -65,7 +65,7 @@ class TestMpsReport(TestMpsCommon):
                 demand = sum(forecasts.filtered(lambda x: x.mode == 'auto').mapped('forecast_qty'))
                 indirect_total = 0.0
                 for day, qty in indirect.items():
-                    if (day >= data['date']) and (day < data['date_to']):
+                    if (str(day) >= data['date']) and (str(day) < data['date_to']):
                         indirect_total += qty
                 # To supply = product forecasted - initial quantity (available quantity) + forecast demand + indirect quantity.
                 to_supply = product.mps_forecasted - initial + demand + indirect_total

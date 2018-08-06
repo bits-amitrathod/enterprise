@@ -3,6 +3,7 @@
 
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 from odoo.tests import tagged
+from odoo import fields
 
 
 @tagged('post_install','-at_install')
@@ -38,7 +39,7 @@ class TestSynchStatementCreation(AccountingTestCase):
     def create_bank_statement_date(self, date):
         bank_statement_line_vals = {'name': 'test_line', 'date': date, 'amount': 50}
         bank_stmt = self.bnk_stmt.create({
-            'date': date,
+            'date': fields.Date.from_string(date),
             'journal_id': self.bank_journal.id,
             'line_ids': [(0, 0, bank_statement_line_vals)],
             'balance_start': 0,
@@ -52,14 +53,14 @@ class TestSynchStatementCreation(AccountingTestCase):
     def create_transaction(self, date1, date2):
         tr1 = {
                 'online_identifier': self.transaction_id,
-                'date': date1,
+                'date': fields.Date.from_string(date1),
                 'name': 'transaction',
                 'amount': 50,
                 'end_amount': 1900,
             }
         tr2 = {
                 'online_identifier': self.transaction_id + 1,
-                'date': date2,
+                'date': fields.Date.from_string(date2),
                 'name': 'transaction2',
                 'amount': 50,
                 'end_amount': 1900,
@@ -70,7 +71,7 @@ class TestSynchStatementCreation(AccountingTestCase):
     def create_transaction_partner(self, partner_id=False, vendor_name=False, account_number=False):
         tr = {
             'online_identifier': self.transaction_id,
-            'date': '2016-01-10',
+            'date': fields.Date.from_string('2016-01-10'),
             'name': 'transaction_p',
             'amount': 50,
             'end_amount': 50

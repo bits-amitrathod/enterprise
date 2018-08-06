@@ -4,7 +4,6 @@
 import datetime
 from odoo import api, fields, models, _
 from odoo.exceptions import Warning
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo.osv import expression
 
 class Followup(models.Model):
@@ -107,7 +106,7 @@ class ResPartner(models.Model):
         if not followup_id:
             return {}
 
-        current_date = datetime.date.today()
+        current_date = fields.Date.today()
         self.env.cr.execute(
             "SELECT id, delay "\
             "FROM account_followup_followup_line "\
@@ -136,8 +135,8 @@ class ResPartner(models.Model):
     @api.multi
     def get_followup_level(self):
         self.ensure_one()
-        current_date = datetime.date.today()
-        if self.payment_next_action_date and self.payment_next_action_date > current_date.strftime(DEFAULT_SERVER_DATE_FORMAT):
+        current_date = fields.Date.today()
+        if self.payment_next_action_date and self.payment_next_action_date > current_date:
             return False
 
         fups = self._compute_followup_lines()
@@ -148,7 +147,7 @@ class ResPartner(models.Model):
                 followup_date = fups[index][0]
                 next_level = fups[index][1]
                 delay = fups[index][2]
-                if (aml.date_maturity and aml.date_maturity <= followup_date.strftime(DEFAULT_SERVER_DATE_FORMAT)) or (current_date <= followup_date):
+                if (aml.date_maturity and aml.date_maturity <= followup_date) or (current_date <= followup_date):
                     if level is None or level[1] < delay:
                         level = (next_level, delay)
         return level
@@ -168,5 +167,6 @@ class ResPartner(models.Model):
                 index = aml.followup_line_id.id or None
                 followup_date = fups[index][0]
                 next_level = fups[index][1]
-                if (aml.date_maturity and aml.date_maturity <= followup_date.strftime(DEFAULT_SERVER_DATE_FORMAT)) or (aml.date and aml.date <= followup_date.strftime(DEFAULT_SERVER_DATE_FORMAT)):
+                if (aml.date_maturity and aml.date_maturity <= followup_date
+                        or (aml.date and aml.date <= followup_date)):
                     aml.write({'followup_line_id': next_level, 'followup_date': today})

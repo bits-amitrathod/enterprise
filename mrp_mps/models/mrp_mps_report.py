@@ -65,7 +65,7 @@ class MrpMpsReport(models.TransientModel):
         for inner_data in data:
             products_to_calculate[product].append({'lead': 0.0,
                                            'qty': inner_data['to_supply'],
-                                           'date': datetime.datetime.strptime(inner_data['date'], '%Y-%m-%d'),
+                                           'date': fields.Date.from_string(inner_data['date']),
                                            })
         original_product = product
         while products_to_calculate:
@@ -122,7 +122,7 @@ class MrpMpsReport(models.TransientModel):
     def get_data(self, product):
         result = []
         forecasted = product.mps_forecasted
-        date = datetime.datetime.now()
+        date = fields.Date.today()
         local_tz = pytz.timezone(self.env.context.get('tz') or 'UTC')
         indirect = self.get_indirect(product)[product.id]
         display = _('To Receive / To Supply / Produce')
@@ -136,11 +136,11 @@ class MrpMpsReport(models.TransientModel):
         leadtime = date + relativedelta.relativedelta(days=int(lead_time))
         # Take first day of month or week
         if self.period == 'month':
-            date = datetime.datetime(date.year, date.month, 1)
+            date = datetime.date(date.year, date.month, 1)
         elif self.period == 'week':
             date = date - relativedelta.relativedelta(days=date.weekday())
 
-        if date < datetime.datetime.today():
+        if date < fields.Date.today():
             initial = product.with_context(to_date=date.strftime('%Y-%m-%d')).qty_available
         else:
             initial = product.qty_available
@@ -174,7 +174,7 @@ class MrpMpsReport(models.TransientModel):
             demand = sum(forecasts.filtered(lambda x: x.mode == 'auto').mapped('forecast_qty'))
             indirect_total = 0.0
             for day, qty in indirect.items():
-                if (day >= date.strftime('%Y-%m-%d')) and (day < date_to.strftime('%Y-%m-%d')):
+                if (day >= date) and (day < date_to):
                     indirect_total += qty
             to_supply = product.mps_forecasted - initial + demand + indirect_total
             to_supply = max(to_supply, product.mps_min_supply)

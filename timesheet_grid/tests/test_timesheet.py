@@ -40,7 +40,7 @@ class TestTimesheetValidation(TestCommonTimesheet):
         wizard.action_validate()
 
         # Check validated date
-        end_of_week = fields.Date.to_string(datetime.now() + END_OF['week'])
+        end_of_week = (datetime.now() + END_OF['week']).date()
         self.assertEquals(self.empl_employee.timesheet_validated, end_of_week, 'validate timesheet date should be the end of the week')
 
         # Employee can not modify validated timesheet

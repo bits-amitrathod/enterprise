@@ -51,7 +51,7 @@ class AccountFollowupReport(models.AbstractModel):
 
         lines = []
         res = {}
-        today = datetime.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
+        today = fields.Date.today()
         line_num = 0
         for l in partner.unreconciled_aml_ids:
             if l.company_id == self.env.user.company_id:

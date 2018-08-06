@@ -28,8 +28,7 @@ class AccountPayment(models.Model):
         if not self.l10n_mx_edi_time_payment:
             self.l10n_mx_edi_time_payment = date_mx.strftime(
                 DEFAULT_SERVER_TIME_FORMAT)
-        time_invoice = datetime.strptime(
-            self.l10n_mx_edi_time_payment, DEFAULT_SERVER_TIME_FORMAT).time()
+        time_invoice = fields.Datetime.from_string(self.l10n_mx_edi_time_payment).time()
         cfdi_date = datetime.combine(
             fields.Datetime.from_string(self.l10n_mx_edi_expedition_date),
             time_invoice).strftime('%Y-%m-%dT%H:%M:%S')

@@ -164,7 +164,7 @@ class MarketingCampaign(models.Model):
         as well as campaign filter and unique field. """
         participants = self.env['marketing.participant']
         for campaign in self.filtered(lambda c: c.marketing_activity_ids):
-            now = Datetime.from_string(Datetime.now())
+            now = Datetime.now()
             if not campaign.last_sync_date:
                 campaign.last_sync_date = now
 
@@ -454,7 +454,7 @@ class MarketingActivity(models.Model):
         if self.validity_duration:
             duration = relativedelta(**{self.validity_duration_type: self.validity_duration_number})
             invalid_traces = traces.filtered(
-                lambda trace: not trace.schedule_date or datetime.strptime(trace.schedule_date, DATETIME_FORMAT) + duration < datetime.now()
+                lambda trace: not trace.schedule_date or trace.schedule_date + duration < datetime.now()
             )
             invalid_traces.action_cancel()
             traces = traces - invalid_traces

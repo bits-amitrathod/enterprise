@@ -6,7 +6,6 @@ from lxml.objectify import fromstring
 from odoo import models, api, _, fields, tools
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.xml_utils import _check_with_xsd
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 MX_NS_REFACTORING = {
     'catalogocuentas__': 'catalogocuentas',
@@ -272,8 +271,7 @@ class MxReportAccountTrial(models.AbstractModel):
                 'credit': "%.2f" % (credit),
                 'end': "%.2f" % (end),
             })
-        date = fields.datetime.strptime(
-            self.env.context['date_from'], DEFAULT_SERVER_DATE_FORMAT)
+        date = fields.Date.from_string(self.env.context['date_from'])
         chart = {
             'vat': company.vat or '',
             'month': str(date.month).zfill(2),
@@ -320,9 +318,8 @@ class MxReportAccountTrial(models.AbstractModel):
         BC - Trial balance with with complementary information. (Now is
         not suportes)"""
         context = self.env.context
-        date_report = fields.datetime.strptime(
-            context['date_from'], DEFAULT_SERVER_DATE_FORMAT) if context.get(
-                'date_from') else fields.date.today()
+        date_report = fields.Date.from_string(context['date_from']) if context.get(
+                'date_from') else fields.Date.today()
         return '%s%s%sBN' % (
             self.env.user.company_id.vat or '',
             date_report.year,

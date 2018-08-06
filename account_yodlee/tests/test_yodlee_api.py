@@ -10,6 +10,7 @@ from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from odoo.tests import tagged
+from odoo import fields
 import requests
 import json
 
@@ -335,10 +336,10 @@ class TestYodleeApi(AccountingTestCase):
         self.assertEqual(bank_stmt.line_ids.amount, -12345.12)
         self.assertEqual(bank_stmt.line_ids.online_identifier, "2829798:bank")
         self.assertEqual(bank_stmt.line_ids.partner_id, self.env['res.partner']) #No partner defined on line
-        self.assertEqual(account_online_journal.last_sync, datetime.strftime(datetime.today(), '%Y-%m-%d'))
+        self.assertEqual(account_online_journal.last_sync, fields.Date.today())
             
         # Call again and check that we don't have any new transactions
-        account_online_journal.last_sync = datetime.today() - relativedelta(days=15)
+        account_online_journal.last_sync = fields.Date.today() - relativedelta(days=15)
         acc_online_provider.callback_institution(informations, 'add', self.journal_id)
         bank_stmt = self.env['account.bank.statement'].search([('name', '=', 'online sync')], order="create_date desc")
         self.assertEqual(len(bank_stmt), 1, 'There should not be a new statement created')
@@ -367,7 +368,8 @@ class TestYodleeApi(AccountingTestCase):
 
         acc_online_provider.cron_fetch_online_transactions()
 
-        self.assertEqual(acc_online_provider.last_refresh, datetime.strftime(datetime.today(), '%Y-%m-%d 00:00:00'))
+        self.assertEqual(acc_online_provider.last_refresh,
+                         fields.Datetime.now().replace(hour=0, minute=0, second=0))
 
         # Check that we've a bank statement with 3 lines (we assumed that the demo data have been loaded and a
         # bank statement has already been created, otherwise the statement should have 4 lines as a new one for
@@ -380,7 +382,7 @@ class TestYodleeApi(AccountingTestCase):
         self.assertEqual(bank_stmt.line_ids.name, '0150 Amazon  Santa Ana CA 55.73USD')
         self.assertEqual(bank_stmt.line_ids.amount, -12345.12)
         self.assertEqual(bank_stmt.line_ids.online_identifier, "2829798:bank")
-        self.assertEqual(account_online_journal.last_sync, datetime.strftime(datetime.today(), '%Y-%m-%d'))
+        self.assertEqual(account_online_journal.last_sync, fields.Date.today())
 
         patcher_post.stop()
         patcher_get.stop()

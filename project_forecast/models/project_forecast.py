@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import date, timedelta
+from datetime import date, timedelta, time, datetime
 from dateutil.relativedelta import relativedelta, MO, SU
 from lxml import etree
 import pytz
@@ -122,8 +122,8 @@ class ProjectForecast(models.Model):
     def _compute_time(self):
         # We want to compute the number of hours that an **employee** works between 00:00:00 and 23:59:59
         # according to him -- his **timezone**
-        start = fields.Datetime.from_string(self.start_date)
-        stop = fields.Datetime.from_string(self.end_date).replace(hour=23, minute=59, second=59, microsecond=999999)
+        start = datetime.combine(self.start_date, time.min)
+        stop = datetime.combine(self.end_date, time.max)
         employee_tz = self.employee_id.user_id.tz and pytz.timezone(self.employee_id.user_id.tz)
         if employee_tz:
             start = employee_tz.localize(start).astimezone(pytz.utc)

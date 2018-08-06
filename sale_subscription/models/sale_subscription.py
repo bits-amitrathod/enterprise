@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
 import datetime
-import time
 import traceback
 
 from collections import Counter
@@ -519,7 +518,7 @@ class SaleSubscription(models.Model):
         auto_commit = self.env.context.get('auto_commit', True)
         cr = self.env.cr
         invoices = self.env['account.invoice']
-        current_date = time.strftime('%Y-%m-%d')
+        current_date = datetime.date.today()
         imd_res = self.env['ir.model.data']
         template_res = self.env['mail.template']
         if len(self) > 0:
@@ -566,8 +565,12 @@ class SaleSubscription(models.Model):
                                     new_invoice.unlink()
                             if tx is None or tx.state != 'done':
                                 amount = subscription.recurring_total
-                                date_close = datetime.datetime.strptime(subscription.recurring_next_date, "%Y-%m-%d") + relativedelta(days=subscription.template_id.auto_close_limit or 15)
-                                close_subscription = current_date >= date_close.strftime('%Y-%m-%d')
+                                date_close = (
+                                    subscription.recurring_next_date +
+                                    relativedelta(days=subscription.template_id.auto_close_limit or
+                                                  15)
+                                )
+                                close_subscription = current_date >= date_close
                                 email_context = self.env.context.copy()
                                 email_context.update({
                                     'payment_token': subscription.payment_token_id and subscription.payment_token_id.name,
@@ -577,7 +580,7 @@ class SaleSubscription(models.Model):
                                     'code': subscription.code,
                                     'currency': subscription.pricelist_id.currency_id.name,
                                     'date_end': subscription.date,
-                                    'date_close': date_close.date()
+                                    'date_close': date_close
                                 })
                                 if close_subscription:
                                     _, template_id = imd_res.get_object_reference('sale_subscription', 'email_payment_close')
@@ -589,7 +592,7 @@ class SaleSubscription(models.Model):
                                 else:
                                     _, template_id = imd_res.get_object_reference('sale_subscription', 'email_payment_reminder')
                                     msg_body = 'Automatic payment failed. Subscription set to "To Renew".'
-                                    if (datetime.datetime.today() - datetime.datetime.strptime(subscription.recurring_next_date, '%Y-%m-%d')).days in [0, 3, 7, 14]:
+                                    if (datetime.date.today() - subscription.recurring_next_date).days in [0, 3, 7, 14]:
                                         template = template_res.browse(template_id)
                                         template.with_context(email_context).send_mail(subscription.id)
                                         _logger.debug("Sending Payment Failure Mail to %s for subscription %s and setting subscription to pending", subscription.partner_id.email, subscription.id)
@@ -618,7 +621,7 @@ class SaleSubscription(models.Model):
                                 subtype_id = self.env.ref('mail.mt_note').id)
                             new_invoice.with_context(context_company).compute_taxes()
                             invoices += new_invoice
-                            next_date = datetime.datetime.strptime(subscription.recurring_next_date or current_date, "%Y-%m-%d")
+                            next_date = subscription.recurring_next_date or current_date
                             periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
                             invoicing_period = relativedelta(**{periods[subscription.recurring_rule_type]: subscription.recurring_interval})
                             new_date = next_date + invoicing_period
@@ -636,8 +639,8 @@ class SaleSubscription(models.Model):
     def send_success_mail(self, tx, invoice):
         imd_res = self.env['ir.model.data']
         template_res = self.env['mail.template']
-        current_date = time.strftime('%Y-%m-%d')
-        next_date = datetime.datetime.strptime(self.recurring_next_date or current_date, "%Y-%m-%d")
+        current_date = datetime.date.today()
+        next_date = self.recurring_next_date or current_date
         # if no recurring next date, have next invoice be today + interval
         if not self.recurring_next_date:
             periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}

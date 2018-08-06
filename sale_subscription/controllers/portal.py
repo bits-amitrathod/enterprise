@@ -110,10 +110,10 @@ class sale_subscription(http.Controller):
         active_plan = account.template_id.sudo()
         periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
         if account.recurring_rule_type != 'weekly':
-            rel_period = relativedelta(datetime.datetime.today(), datetime.datetime.strptime(account.recurring_next_date, '%Y-%m-%d'))
+            rel_period = relativedelta(datetime.datetime.today(), account.recurring_next_date)
             missing_periods = getattr(rel_period, periods[account.recurring_rule_type]) + 1
         else:
-            delta = datetime.datetime.today() - datetime.datetime.strptime(account.recurring_next_date, '%Y-%m-%d')
+            delta = datetime.date.today() - account.recurring_next_date
             missing_periods = delta.days / 7
         dummy, action = request.env['ir.model.data'].get_object_reference('sale_subscription', 'sale_subscription_action')
         values = {
