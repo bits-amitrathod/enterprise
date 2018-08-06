@@ -266,7 +266,7 @@
         <field name="model">sign.item.role</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
+                <field name="name" string="Role Name"/>
             </tree>
         </field>
     </record>
@@ -290,7 +290,7 @@
     </record>
 
     <record id="sign_item_role_action" model="ir.actions.act_window">
-        <field name="name">Signature Item Party</field>
+        <field name="name">Signature Item Role</field>
         <field name="res_model">sign.item.role</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -302,6 +302,6 @@
     <menuitem id="menu_sign_configuration" sequence="100" name="Configuration" parent="menu_document"/>
     <!-- Menus -->
     <menuitem id="sign.sign_item_type_menu" name="Field Types" parent="sign.menu_sign_configuration" action="sign_item_type_action" groups="base.group_no_one"/>
-    <menuitem id="sign.sign_item_role_menu" name="Parties" parent="sign.menu_sign_configuration" action="sign_item_role_action" groups="sign.group_sign_manager"/>
+    <menuitem id="sign.sign_item_role_menu" name="Roles" parent="sign.menu_sign_configuration" action="sign_item_role_action" groups="sign.group_sign_manager"/>
     <menuitem id="sign_request_item_menu" name="Signature Requests Items" parent="menu_sign_configuration" action="sign_request_item_action" groups="base.group_no_one" sequence="30"/>
 </odoo>
