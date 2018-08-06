@@ -8,7 +8,7 @@ return ListRenderer.extend(EditorMixin, {
     nearest_hook_tolerance: 200,
     className: ListRenderer.prototype.className + ' o_web_studio_list_view_editor',
     events: _.extend({}, ListRenderer.prototype.events, {
-        'click th:not(.o_web_studio_hook), td:not(.o_web_studio_hook)': '_onExistingColumn',
+        'click th:not(.o_web_studio_hook, .o_group_name), td:not(.o_web_studio_hook)': '_onExistingColumn',
     }),
     /**
      * @constructor
@@ -210,19 +210,28 @@ return ListRenderer.extend(EditorMixin, {
         }
         var $row = $('<tr>').append($tds);
 
-        // insert a hook after each td
-        _.each($row.find('td'), function (td) {
+        this._addStudioHooksOnBodyRow($row);
+
+        return $row;
+    },
+    /**
+     * Adds studio hooks for a row in a list right after their rendering
+     * Since rows of thead and tfoot have special behaviors and classes
+     * this function should only be used for rows in the body of the table
+     * @param {JQuery} $row
+     */
+    _addStudioHooksOnBodyRow: function ($row) {
+        // Insert a hook after each cell
+        _.each($row.find('td, th'), function (cell) {
             $('<td>')
                 .addClass('o_web_studio_hook')
-                .insertAfter($(td));
+                .insertAfter($(cell));
         });
 
-        // insert a hook before the first column
+        // Insert a hook before the first column
         $('<td>')
             .addClass('o_web_studio_hook')
             .prependTo($row);
-
-        return $row;
     },
     /**
      * @override
@@ -230,18 +239,17 @@ return ListRenderer.extend(EditorMixin, {
      */
     _renderRow: function () {
         var $row = this._super.apply(this, arguments);
+        this._addStudioHooksOnBodyRow($row);
 
-        // Inser a hook after each td
-        _.each($row.find('td'), function (td) {
-            $('<td>')
-                .addClass('o_web_studio_hook')
-                .insertAfter($(td));
-        });
-
-        // Insert a hook before the first column
-        $('<td>')
-            .addClass('o_web_studio_hook')
-            .prependTo($row);
+        return $row;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderGroupRow: function () {
+        var $row = this._super.apply(this, arguments);
+        this._addStudioHooksOnBodyRow($row);
 
         return $row;
     },

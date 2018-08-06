@@ -177,8 +177,12 @@ class AccountReport(models.AbstractModel):
                 res_id = aml.invoice_id.id
                 if aml.invoice_id.type in ('in_refund', 'in_invoice'):
                     view_name = 'invoice_supplier_form'
+                    ctx['journal_type'] = 'purchase'
                 elif aml.invoice_id.type in ('out_refund', 'out_invoice'):
                     view_name = 'invoice_form'
+                    ctx['journal_type'] = 'sale'
+                ctx['type'] = aml.invoice_id.type
+                ctx['default_type'] = aml.invoice_id.type
             elif document == 'account.payment' and aml.payment_id.id:
                 view_name = 'view_account_payment_form'
                 res_id = aml.payment_id.id
