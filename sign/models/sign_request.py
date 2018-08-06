@@ -492,7 +492,7 @@ class SignRequestItem(models.Model):
 
     @api.multi
     def send_signature_accesses(self, subject=None, message=None):
-        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         for signer in self:
             if not signer.partner_id or not signer.partner_id.email:
                 continue
