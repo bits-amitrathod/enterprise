@@ -11,6 +11,8 @@
                 <field name="color"/>
                 <field name="create_date"/>
                 <field name="favorited_ids"/>
+                <field name="responsible_count"/>
+                <field name="create_uid"/>
 
                 <templates>
                     <div t-name="kanban-box" t-attf-class="oe_kanban_global_click {{kanban_color(record.color.raw_value)}}">
@@ -21,6 +23,7 @@
                                 </a>
                                 <div class="dropdown-menu" role="menu">
                                     <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                                    <a role="menuitem" type="object" name="go_to_custom_template" class="dropdown-item">Edit Fields</a>
                                     <a role="menuitem" type="object" name="toggle_active" class="dropdown-item">
                                         <t t-if="!record.active.raw_value">Restore</t>
                                         <t t-if="record.active.raw_value">Archive</t>
@@ -33,14 +36,21 @@
                                 class="fa fa-lg fa-star-o favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) &lt; 0"/>
                             <a type="object" name="toggle_favorited" aria-label="In favorites, remove it" title="In favorites, remove it"
                                 class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button" t-if="record.favorited_ids.raw_value.indexOf(user_context.uid) == 0"/>
-                            <span><field name="attachment_id"/></span>
+                            <span><field name="attachment_id"/><field name="extension"/></span>
                         </div>
-                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                        <div class="oe_kanban_bottom_left">
+                        <div class="oe_kanban_content">
                             <em><field name="create_date"/></em>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </div>
-                        <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-sm mt8 o_kanban_sign_send_request">Send</button>
-                        <button name="%(sign.action_sign_template_share)d" type="action" class="btn btn-sm mt8">Share</button>
+                        <div class="o_kanban_record_bottom">
+                            <div class="oe_kanban_bottom_left">
+                                <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-sm mt8 o_kanban_sign_send_request">Send</button>
+                                <button name="%(sign.action_sign_template_share)d" type="action" class="btn btn-sm mt8" attrs="{'invisible': [('responsible_count', '&gt;', 1)]}">Share</button>
+                            </div>
+                            <div class="oe_kanban_bottom_right">
+                                <img t-att-src="kanban_image('res.users', 'image_small', record.create_uid.raw_value)" t-att-title="record.create_uid.value" t-att-alt="record.create_uid.value" width="24" height="24" class="oe_kanban_avatar float-right"/>
+                            </div>
+                        </div>
                     </div>
                 </templates>
             </kanban>
@@ -66,7 +76,7 @@
             <form create="false">
                 <header>
                     <button name="%(sign.action_sign_send_request)d" string="Send" type="action" class="oe_highlight"/>
-                    <button name="%(sign.action_sign_template_share)d" string="Share" type="action"/>
+                    <button name="%(sign.action_sign_template_share)d" string="Share" type="action" attrs="{'invisible': [('responsible_count', '&gt;', 1)]}"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -77,12 +87,19 @@
                     </div>
 
                     <div class="oe_title">
-                        <h1><field name="name"/></h1>
+                        <h1>
+                            <label for="name"/>
+                            <div class="o_row">
+                                <field name="name"  placeholder="Name for the file" nolabel="1"/>
+                                <field name="extension" nolabel="1"/>
+                            </div>
+                        </h1>
                     </div>
 
                     <group>
                         <group>
                             <field name="attachment_id" invisible="1"/>
+                            <field name="responsible_count" invisible="1"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="Tags"/>
                             <field name="favorited_ids" widget="many2many_tags" options="{'color_field': 'color'}" invisible="1"/>
                         </group>
@@ -111,6 +128,7 @@
                 <filter name="active" string="Active" domain="[('active', '=', True)]"/>
                 <filter name="archive" string="Archived" domain="[('active', '=', False)]"/>
                 <separator/>
+                <filter name="my_templates" string="My Templates" domain="[('create_uid', '=', uid)]"/>
                 <filter name="favorite" string="Favorites" domain="[('favorited_ids', '=', uid)]"/>
             </search>
         </field>
@@ -249,7 +267,7 @@
         <field name="model">sign.item.role</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
+                <field name="name" string="Role Name"/>
             </tree>
         </field>
     </record>
@@ -273,7 +291,7 @@
     </record>
 
     <record id="sign_item_role_action" model="ir.actions.act_window">
-        <field name="name">Signature Item Party</field>
+        <field name="name">Signature Item Role</field>
         <field name="res_model">sign.item.role</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -285,6 +303,6 @@
     <menuitem id="menu_sign_configuration" sequence="100" name="Configuration" parent="menu_document"/>
     <!-- Menus -->
     <menuitem id="sign.sign_item_type_menu" name="Field Types" parent="sign.menu_sign_configuration" action="sign_item_type_action" groups="base.group_no_one"/>
-    <menuitem id="sign.sign_item_role_menu" name="Parties" parent="sign.menu_sign_configuration" action="sign_item_role_action" groups="sign.group_sign_manager"/>
+    <menuitem id="sign.sign_item_role_menu" name="Roles" parent="sign.menu_sign_configuration" action="sign_item_role_action" groups="sign.group_sign_manager"/>
     <menuitem id="sign_request_item_menu" name="Signature Requests Items" parent="menu_sign_configuration" action="sign_request_item_action" groups="base.group_no_one" sequence="30"/>
 </odoo>

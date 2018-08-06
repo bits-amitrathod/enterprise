@@ -17,6 +17,7 @@ class SignTemplate(models.Model):
     name = fields.Char(related='attachment_id.name')
     datas = fields.Binary(related='attachment_id.datas')
     sign_item_ids = fields.One2many('sign.item', 'template_id', string="Signature Items")
+    responsible_count = fields.Integer(compute='_compute_responsible_count', string="Responsible Count")
 
     active = fields.Boolean(default=True, string="Active", oldname='archived')
     favorited_ids = fields.Many2many('res.users', string="Favorite of")
@@ -27,6 +28,17 @@ class SignTemplate(models.Model):
 
     tag_ids = fields.Many2many('sign.template.tag', string='Tags')
     color = fields.Integer()
+    extension = fields.Char(compute='_compute_extension')
+
+    @api.depends('attachment_id.datas_fname')
+    def _compute_extension(self):
+        for template in self:
+            template.extension = '.' + template.attachment_id.datas_fname.split('.')[-1]
+
+    @api.depends('sign_item_ids.responsible_id')
+    def _compute_responsible_count(self):
+        for template in self:
+            template.responsible_count = len(template.sign_item_ids.mapped('responsible_id'))
 
     @api.multi
     def go_to_custom_template(self):

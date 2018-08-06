@@ -24,15 +24,15 @@ class SignSendRequest(models.TransientModel):
 
     template_id = fields.Many2one('sign.template', required=True, ondelete='cascade')
     signer_ids = fields.One2many('sign.send.request.signer', 'sign_send_request_id', string="Signers")
-    signer_id = fields.Many2one('res.partner', string="Signer")
+    signer_id = fields.Many2one('res.partner', string="Send To")
     signers_count = fields.Integer()
-    follower_ids = fields.Many2many('res.partner', string="Send a copy to")
-    extension = fields.Char(compute='_compute_extension')
+    follower_ids = fields.Many2many('res.partner', string="Copy to")
+    extension = fields.Char(related="template_id.extension")
     is_user_signer = fields.Boolean(compute='_compute_is_user_signer')
 
-    subject = fields.Char(string="Subject")
+    subject = fields.Char(string="Subject", required=True)
     message = fields.Text("Message")
-    filename = fields.Char("Filename")
+    filename = fields.Char("Filename", required=True)
 
     @api.depends('template_id.attachment_id.datas_fname')
     def _compute_extension(self):

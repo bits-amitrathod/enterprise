@@ -38,17 +38,13 @@ class SignRequest(models.Model):
 
     request_item_ids = fields.One2many('sign.request.item', 'sign_request_id', string="Signers")
     state = fields.Selection([
-        ("draft", "Draft"),
         ("sent", "Signatures in Progress"),
         ("signed", "Fully Signed"),
         ("canceled", "Canceled")
-    ], default='draft', track_visibility='onchange', group_expand='_expand_states')
-
-    follower_ids = fields.Many2many('res.partner', string="Document Followers")
+    ], default='sent', track_visibility='onchange', group_expand='_expand_states')
 
     completed_document = fields.Binary(readonly=True, string="Completed Document", attachment=True)
 
-    nb_draft = fields.Integer(string="Draft Requests", compute="_compute_count", store=True)
     nb_wait = fields.Integer(string="Sent Requests", compute="_compute_count", store=True)
     nb_closed = fields.Integer(string="Completed Signatures", compute="_compute_count", store=True)
     nb_total = fields.Integer(string="Requested Signatures", compute="_compute_count", store=True)
@@ -64,15 +60,12 @@ class SignRequest(models.Model):
     @api.one
     @api.depends('request_item_ids.state')
     def _compute_count(self):
-        draft, wait, closed = 0, 0, 0
+        wait, closed = 0, 0
         for s in self.request_item_ids:
-            if s.state == "draft":
-                draft += 1
             if s.state == "sent":
                 wait += 1
             if s.state == "completed":
                 closed += 1
-        self.nb_draft = draft
         self.nb_wait = wait
         self.nb_closed = closed
         self.nb_total = wait + closed
@@ -95,15 +88,8 @@ class SignRequest(models.Model):
 
     @api.one
     def _check_after_compute(self):
-        if self.state == 'draft' and self.nb_draft == 0 and len(self.request_item_ids) > 0: # When a draft partner is deleted
-            self.action_sent()
-        elif self.state == 'sent':
-            if self.nb_draft > 0 or len(self.request_item_ids) == 0: # A draft partner is added or all partner are deleted
-                self.action_draft()
-            elif self.nb_closed == len(self.request_item_ids) and len(self.request_item_ids) > 0: # All signed
-                self.action_signed()
-        elif self.state == 'signed' and (self.nb_draft > 0 or len(self.request_item_ids) == 0): # A draft partner is added or all removed
-            self.action_draft()
+        if self.state == 'sent' and self.nb_closed == len(self.request_item_ids) and len(self.request_item_ids) > 0: # All signed
+            self.action_signed()
 
     @api.multi
     def button_send(self):
@@ -144,8 +130,13 @@ class SignRequest(models.Model):
         self.write({'favorited_ids': [(3 if self.env.user in self[0].favorited_ids else 4, self.env.user.id)]})
 
     @api.multi
+    def action_resend(self):
+        self.action_draft()
+        self.action_sent()
+
+    @api.multi
     def action_draft(self):
-        self.write({'completed_document': None, 'access_token': self._default_access_token(), 'state': 'draft'})
+        self.write({'completed_document': None, 'access_token': self._default_access_token()})
 
     @api.multi
     def action_sent(self, subject=None, message=None):
@@ -158,7 +149,7 @@ class SignRequest(models.Model):
             included_request_items = sign_request.request_item_ids.filtered(lambda r: not r.partner_id or r.partner_id.id not in ignored_partners)
 
             if sign_request.send_signature_accesses(subject, message, ignored_partners=ignored_partners):
-                sign_request.send_follower_accesses(self.follower_ids, subject, message)
+                sign_request.send_follower_accesses(sign_request.message_follower_ids.mapped('partner_id'), subject, message)
                 included_request_items.action_sent()
             else:
                 sign_request.action_draft()
@@ -172,8 +163,8 @@ class SignRequest(models.Model):
     @api.multi
     def action_canceled(self):
         self.write({'completed_document': None, 'access_token': self._default_access_token(), 'state': 'canceled'})
-        for sign_request in self:
-            sign_request.request_item_ids.action_draft()
+        for request_item in self.mapped('request_item_ids'):
+            request_item.action_draft()
 
     @api.one
     def set_signers(self, signers):
@@ -228,6 +219,7 @@ class SignRequest(models.Model):
                  'email_to': formataddr((follower.name, follower.email)),
                  'subject': subject or _('%s : Signature request') % self.reference}
             )
+            self.message_subscribe(partner_ids=follower.ids)
 
     @api.multi
     def send_completed_document(self):
@@ -278,7 +270,7 @@ class SignRequest(models.Model):
             'body': '',
         }, engine='ir.qweb', minimal_qcontext=True)
 
-        for follower in self.follower_ids:
+        for follower in self.mapped('message_follower_ids.partner_id'):
             if not follower.email:
                 continue
             self.env['sign.request']._message_send_mail(
@@ -401,7 +393,8 @@ class SignRequest(models.Model):
 
     @api.model
     def initialize_new(self, id, signers, followers, reference, subject, message, send=True):
-        sign_request = self.create({'template_id': id, 'reference': reference, 'follower_ids': [(6, 0, followers)], 'favorited_ids': [(4, self.env.user.id)]})
+        sign_request = self.create({'template_id': id, 'reference': reference, 'favorited_ids': [(4, self.env.user.id)]})
+        sign_request.message_subscribe(partner_ids=followers)
         sign_request.set_signers(signers)
         if send:
             sign_request.action_sent(subject, message)
@@ -421,8 +414,8 @@ class SignRequest(models.Model):
     @api.model
     def add_followers(self, id, followers):
         sign_request = self.browse(id)
-        old_followers = set(sign_request.follower_ids.mapped('id'))
-        sign_request.write({'follower_ids': [(6, 0, set(followers) | old_followers)]})
+        old_followers = set(sign_request.message_follower_ids.mapped('partner_id.id'))
+        sign_request.message_subscribe(partner_ids=followers)
         sign_request.send_follower_accesses(self.env['res.partner'].browse(followers))
         return sign_request.id
 
@@ -463,7 +456,7 @@ class SignRequestItem(models.Model):
             'signature': None,
             'signing_date': None,
             'access_token': self._default_access_token(),
-            'state': 'draft'
+            'state': 'draft',
         })
         for request_item in self:
             itemsToClean = request_item.sign_request_id.template_id.sign_item_ids.filtered(lambda r: r.responsible_id == request_item.role_id or not r.responsible_id)
@@ -499,7 +492,7 @@ class SignRequestItem(models.Model):
 
     @api.multi
     def send_signature_accesses(self, subject=None, message=None):
-        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         for signer in self:
             if not signer.partner_id or not signer.partner_id.email:
                 continue
