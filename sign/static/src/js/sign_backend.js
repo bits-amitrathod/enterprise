@@ -48,11 +48,12 @@ odoo.define('sign.views_custo', function(require) {
         return {
             renderButtons: function () {
                 this._super.apply(this, arguments);
-                this.$buttons.find('button.o_button_import').hide();
                 if (this.modelName === "sign.template") {
                     this._sign_upload_file_button();
+                    this.$buttons.find('button.o_button_import').hide();
                 } else if (this.modelName === "sign.request") {
                     this._sign_create_request_button();
+                    this.$buttons.find('button.o_button_import').hide();
                 }
             },
 
