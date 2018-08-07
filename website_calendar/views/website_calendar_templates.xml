@@ -207,7 +207,7 @@
                     </ul>
                     <h2 class="page-header mt32">Confirm your details</h2>
                     <p>
-                        <span t-field="appointment_type.name"/> on <strong t-esc="datetime.strftime('%c')"/>
+                        <span t-field="appointment_type.name"/> on <strong t-esc="datetime_locale"/>
                     </p>
 
                     <form class="form-horizontal mt32 appointment_submit_form" t-attf-action="/website/calendar/#{ appointment_type.id }/submit" method="POST">
