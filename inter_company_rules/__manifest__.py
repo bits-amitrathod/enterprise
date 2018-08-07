@@ -13,7 +13,6 @@
         'sale_management',
         'purchase_stock',
         'sale_stock',
-        'sale_order_dates'
     ],
     'data': [
         'views/inter_company_so_po_view.xml',
