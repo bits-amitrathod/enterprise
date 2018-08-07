@@ -17,7 +17,7 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp_workorder', 'stock_zebra'],
+    'depends': ['base', 'stock_zebra', 'quality_mrp_iot'],
 
     # always loaded
     'data': [
@@ -28,5 +28,8 @@
 
         'data/quality_point.xml',
     ],
+    'demo': [
+        'data/quality_demo.xml'
+    ]
 
 }
