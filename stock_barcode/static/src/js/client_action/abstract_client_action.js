@@ -1250,7 +1250,7 @@ var ClientAction = AbstractAction.extend({
             this.settingsWidget.do_hide();
         }
         this.headerWidget.toggleDisplayContext('init');
-        this.$('.o_show_information').toggleClass('o_hidden', false);
+        this.$('.o_show_information').toggleClass('o_hidden', true);
         var self = this;
         this._save({'forceReload': true}).then(function () {
             var record = ev.data.record;
@@ -1268,6 +1268,7 @@ var ClientAction = AbstractAction.extend({
             self._reloadLineWidget(self.currentPageIndex);
             // FIXME sle: when scanning a package with move entire packages, we shouldn't call this method
             self._endBarcodeFlow();
+            self.$('.o_show_information').toggleClass('o_hidden', false);
         });
     },
 
