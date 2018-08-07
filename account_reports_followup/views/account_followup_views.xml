@@ -25,16 +25,11 @@
                     <div class="oe_inline">
                         After <field name="delay" class="oe_inline"/> days overdue, do the following actions:
                     </div>
-                    <div>
-                        <field name="send_email" class="oe_inline"/>
-                        <label for="send_email"/>
-                    </div><div>
-                        <field name="print_letter" class="oe_inline"/>
-                        <label for="print_letter"/>
-                    </div><div>
-                        <field name="manual_action" class="oe_inline"/>
-                        <label for="manual_action"/>
-                    </div>
+                    <group>
+                        <field name="send_email"/>
+                        <field name="print_letter"/>
+                        <field name="manual_action"/>
+                    </group>
 
                     <group string="Manual Action" attrs="{'invisible': [('manual_action', '=', False)]}">
                        <field name="manual_action_responsible_id"/>

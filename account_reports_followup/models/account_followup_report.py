@@ -18,6 +18,16 @@ class AccountFollowupReport(models.AbstractModel):
             delay = followup_line.delay - self.env['account_followup.followup.line'].browse(level[0] - 1).delay
         return fields.datetime.now() + timedelta(days=delay)
 
+    def _get_line_info(self, followup_line):
+        return {
+                'id': followup_line.id,
+                'name': followup_line.name,
+                'print_letter': followup_line.print_letter,
+                'send_email': followup_line.send_email,
+                'manual_action': followup_line.manual_action,
+                'manual_action_note': followup_line.manual_action_note
+            }
+
     @api.model
     def get_followup_informations(self, partner_id, options):
         partner = self.env['res.partner'].browse(partner_id)
@@ -28,14 +38,7 @@ class AccountFollowupReport(models.AbstractModel):
         infos = super(AccountFollowupReport, self).get_followup_informations(partner_id, options)
         if level:
             followup_line = self.env['account_followup.followup.line'].browse(level[0])
-            infos['followup_level'] = {
-                'id': followup_line.id,
-                'name': followup_line.name,
-                'print_letter': followup_line.print_letter,
-                'send_email': followup_line.send_email,
-                'manual_action': followup_line.manual_action,
-                'manual_action_note': followup_line.manual_action_note
-            }
+            infos['followup_level'] = self._get_line_info(followup_line)
             # Compute the next_action date
             if not options.get('keep_summary'):
                 next_date = self._get_next_date(followup_line, level)
