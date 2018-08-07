@@ -2,8 +2,14 @@
 #from addons.sale.models.sale import SaleOrder
 from odoo import models, fields, api
 from odoo.exceptions import UserError, AccessError
+import logging
 
-# Global level setting
+from datetime import datetime
+
+
+_logger = logging.getLogger(__name__)
+
+# Customer Global level setting
 class Customer(models.Model):
     _inherit = 'res.partner'
     prioritization = fields.Boolean("Prioritization setting")
@@ -94,7 +100,6 @@ class Customer(models.Model):
     def get_carrier_info(self):
         return self.carrier_info
 
-
     # Return Quickbook Id return type character
     def get_quickbook_id(self):
         return self.quickbook_id
@@ -103,7 +108,38 @@ class Customer(models.Model):
     def get_notification_email(self):
         return self.notification_email
 
+    # calculate cooling period
+    def calculate_cooling_priod_in_days(self, confirmation_date):
+        # get current datetime
+        current_datetime = datetime.datetime.now()
 
+        # calculate datetime difference.
+        duration = current_datetime - confirmation_date  # For build-in functions
+        duration_in_seconds = duration.total_seconds()  # Total number of seconds between dates
+        duration_in_hours = duration_in_seconds / 3600  # Total number of hours between dates
+        duration_in_days = duration_in_hours / 24
+        print("duration_in_days is " + str(duration_in_days))
+        if int(self.get_cooling_period()) < int(duration_in_days):
+            return True
+        else:
+            return False
+
+
+    #parameter user id and product id
+    def get_product_last_purchased_date(self):
+        _logger.info("In get_product_last_purchased_date()")
+        sale_orders_line = self.env['sale.order.line'].search([('product_id', '=', 33)])
+
+        sorted_sale_orders_line = sorted([line for line in sale_orders_line if line.order_id.confirmation_date], key=Customer._sort_by_confirmation_date, reverse=True)
+
+        sorted_sale_orders_line.pop(1) #get only first record
+        _logger.info("^^^^"+ str(sorted_sale_orders_line.order_id) + str(sorted_sale_orders_line.order_id.confirmation_date) + str(sorted_sale_orders_line.product_id))
+        self.calculate_cooling_priod_in_days(sorted_sale_orders_line.order_id.confirmation_date)
+
+    @staticmethod
+    def _sort_by_confirmation_date(sale_order_dict):
+        if sale_order_dict.order_id.confirmation_date:
+            return datetime.strptime(sale_order_dict.order_id.confirmation_date, '%Y-%m-%d %H:%M:%S')
 
 
 
@@ -135,6 +171,11 @@ class Prioritization(models.Model):
     _sql_constraints = [
         ('prioritization_engine_company_uniq', 'unique(customer_id,product_id)', 'Product must be unique for customer!!!!'),
     ]
+
+    def get_product_last_purchased_date1(self):
+        _logger.info("In get_product_last_purchased_date()")
+        sale_orders_line = self.env['sale.order.line'].search([('product_id', '=', self.product_id)])
+
 
     # Return product threshold return type Integer
     def get_product_threshold(self):
