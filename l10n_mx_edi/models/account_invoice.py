@@ -854,7 +854,8 @@ class AccountInvoice(models.Model):
             return {'error': _('Please check your configuration: ') + create_list_html(error_log)}
 
         # -Compute date and time of the invoice
-        time_invoice = self.l10n_mx_edi_time_invoice.time()
+        time_invoice = datetime.strptime(self.l10n_mx_edi_time_invoice,
+                                         DEFAULT_SERVER_TIME_FORMAT).time()
         # -----------------------
         # Create the EDI document
         # -----------------------
@@ -951,7 +952,7 @@ class AccountInvoice(models.Model):
         for record in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
             date_mx = self.env['l10n_mx_edi.certificate'].sudo().get_mx_current_datetime()
             if not record.date_invoice:
-                record.date_invoice = date_mx
+                record.date_invoice = date_mx.date()
             if not record.l10n_mx_edi_time_invoice:
                 record.l10n_mx_edi_time_invoice = date_mx.strftime(
                     DEFAULT_SERVER_TIME_FORMAT)
