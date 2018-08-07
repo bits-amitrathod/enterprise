@@ -20,6 +20,13 @@
                             <h2>Inventory Adjustment Report</h2>
                         </b>
                     </center>
+                    <center>
+                        <b>
+                            <span t-esc="start_date"/>
+                            To
+                            <span t-esc="end_date"/>
+                        </b>
+                    </center>
                     <!-- Report page content -->
                     <table class="table table-stripped">
                         <tr>
@@ -55,10 +62,13 @@
                                     <td class="col-xs-2">
                                         <span t-esc="o[3]"/>
                                     </td>
+                                     <td class="col-xs-2">
+                                        <span t-esc="o[4]"/>
+                                    </td>
 
-                                    <!--<td class="col-xs-2">-->
-                                        <!--<span t-esc="o[1]"/>-->
-                                    <!--</td>-->
+                                    <td class="col-xs-2">
+                                        <span t-esc="o[5]"/>
+                                    </td>
                                 </tr>
                             </t>
 

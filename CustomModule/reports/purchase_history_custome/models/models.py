@@ -29,11 +29,15 @@ class purchase_history(models.TransientModel):
             temp = []
             for order in groupby_dict[user]:
                 temp_2 = []
+                temp_2.append(order.partner_id.name)
                 temp_2.append(order.name)
                 temp_2.append(order.price_total)
                 temp_2.append(order.order_id.name)
-                temp_2.append(order.partner_id. name)
-                temp_2.append(order.order_id.date_order)
+                temp_2.append(order.product_qty)
+
+                temp_2.append(order.product_id.product_tmpl_id.manufacturer.name)
+                temp_2.append(order.product_id.product_tmpl_id.list_price)
+                temp_2.append(order.product_id.default_code)
                 temp_2.append(order.qty_received)
 
                 temp.append(temp_2)

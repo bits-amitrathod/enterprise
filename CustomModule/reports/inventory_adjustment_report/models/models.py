@@ -32,6 +32,8 @@ class inventory_adjustment_report(models.TransientModel):
                 temp_2.append(order.create_date)
                 temp_2.append(order.product_code)
                 temp_2.append(order.product_qty)
+                temp_2.append(order.product_id.product_tmpl_id.list_price)
+                temp_2.append(order.product_qty*order.product_id.product_tmpl_id.list_price)
 
                 temp.append(temp_2)
             final_dict[user] = temp
