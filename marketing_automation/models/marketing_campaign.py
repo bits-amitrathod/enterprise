@@ -33,7 +33,7 @@ class MarketingCampaign(models.Model):
     model_id = fields.Many2one(
         'ir.model', string='Model', index=True, required=True,
         default=lambda self: self.env.ref('base.model_res_partner', raise_if_not_found=False),
-        domain="[('is_mail_thread', '=', True)]")
+        domain="['&', ('is_mail_thread', '=', True), ('model', '!=', 'mail.blacklist')]")
     model_name = fields.Char(string='Model Name', related='model_id.model', readonly=True, store=True)
     unique_field_id = fields.Many2one(
         'ir.model.fields', string='Unique Field',
