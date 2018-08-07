@@ -65,7 +65,7 @@ var FieldemployeeUrl = AbstractField.extend({
         });
 
         $icon.tooltip({title: _t("Copied !"), trigger: "manual", placement: "right"});
-        var clipboard = new window.Clipboard($icon[0], {
+        var clipboard = new window.ClipboardJS($icon[0], {
             text: this.url.trim.bind(this.url),
         });
         clipboard.on("success", function (e) {
