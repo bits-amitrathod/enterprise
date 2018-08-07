@@ -75,7 +75,7 @@ class Base(models.AbstractModel):
                     continue
 
                 significative_period = col_start_date.strftime(DISPLAY_FORMATS[interval])
-                col_records = [record for record in records if record[date_stop] and fields.Datetime.from_string(record[date_stop].split(' ')[0]).strftime(DISPLAY_FORMATS[interval]) == significative_period]
+                col_records = [record for record in records if record[date_stop] and record[date_stop].strftime(DISPLAY_FORMATS[interval]) == significative_period]
 
                 if measure == '__count__':
                     col_value = len(col_records)
