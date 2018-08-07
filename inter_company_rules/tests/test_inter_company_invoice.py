@@ -16,24 +16,13 @@ class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
             'rule_type': 'invoice_and_refund'
         })
 
-        wizard_vals = {
-            'chart_template_id': 1,
-            'company_id': self.company_a.id,
-            'currency_id': self.env.ref('base.EUR').id,
-            'code_digits': 6,
-            'purchase_tax_id': False,
-            'bank_account_code_prefix': 'COMP_A',
-            'cash_account_code_prefix': 'TANGO',
-            'transfer_account_code_prefix': '100',
-            'sale_tax_id': False
-        }
-
         # Configure Chart of Account for company_a.
-        self.env['wizard.multi.charts.accounts'].create(wizard_vals).execute()
+        self.env.user.company_id = self.company_a
+        self.env['account.chart.template'].browse(1).load_for_current_company(15.0, 15.0)
 
         # Configure Chart of Account for company_b.
-        wizard_vals['company_id'] = self.company_b.id
-        self.env['wizard.multi.charts.accounts'].create(wizard_vals).execute()
+        self.env.user.company_id = self.company_b
+        self.env['account.chart.template'].browse(1).load_for_current_company(15.0, 15.0)
 
         # Create Expense Account for company_a.
         account_expense_company_a = self.env['account.account'].sudo(self.res_users_company_a).create({
