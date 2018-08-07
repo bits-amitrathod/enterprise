@@ -419,8 +419,9 @@ class HelpdeskTicket(models.Model):
 
         take_action = self._notify_get_action_link('assign')
         helpdesk_actions = [{'url': take_action, 'title': _('Assign to me')}]
+        helpdesk_user_group_id = self.env.ref('helpdesk.group_helpdesk_user').id
         return [(
-            'group_helpdesk_user', lambda partner: bool(partner.user_ids) and any(user.has_group('helpdesk.group_helpdesk_user') for user in partner.user_ids), {
+            'group_helpdesk_user', lambda pdata: pdata['type'] == 'user' and helpdesk_user_group_id in pdata['groups'], {
                 'actions': helpdesk_actions,
             })] + groups
 
