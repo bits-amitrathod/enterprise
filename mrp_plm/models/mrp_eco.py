@@ -299,7 +299,7 @@ class MrpEco(models.Model):
             ('required_user_ids', 'in', self.env.uid)])
         to_approve_eco_ids = approvals.mapped('eco_id').ids
         for eco in self:
-            self.user_can_approve = eco.id in to_approve_eco_ids
+            eco.user_can_approve = eco.id in to_approve_eco_ids
 
     @api.multi
     @api.depends('approval_ids')
