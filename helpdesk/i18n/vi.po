@@ -46,7 +46,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_percentage_satisfaction
 msgid "% Happy"
-msgstr ""
+msgstr "% Hài lòng"
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
@@ -440,7 +440,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
 msgid "Bad"
-msgstr ""
+msgstr "Tồi"
 
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
@@ -673,7 +673,7 @@ msgstr "Tên Khách hàng"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:89
 #, python-format
 msgid "Customer Rating"
-msgstr ""
+msgstr "Xếp hạng của khách hàng"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_data
@@ -988,11 +988,13 @@ msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
 msgstr ""
+"ID của bản ghi cha mà chứa bí danh (ví dụ: dự án chứa bí danh để tạo nhiệm "
+"vụ)"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Important Messages"
-msgstr ""
+msgstr "Thông điệp Quan trọng"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_use_website_helpdesk_livechat
@@ -1271,6 +1273,9 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
+"ID tuỳ chọn của một chủ đề/bản ghi (thread) mà tất cả các thông điệp đến sẽ "
+"được gắn/đính vào, thâm chí nếu người ta không reply nó. Nếu được thiết lập,"
+" điều này sẽ vô hiệu hoàn toàn việc tạo mới bản ghi."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_user_id
@@ -1280,12 +1285,12 @@ msgstr "Chủ sở hữu"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_parent_model_id
 msgid "Parent Model"
-msgstr ""
+msgstr "Model cha"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr ""
+msgstr "Parent Record Thread ID"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_parent_model_id
@@ -1294,11 +1299,14 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
+"Parent model holding the alias. The model holding the alias reference is not"
+" necessarily the model given by alias_model_id (example: project "
+"(parent_model) and task (model))"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Performance"
-msgstr ""
+msgstr "Năng suất"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_team_performance
@@ -1324,6 +1332,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"Cho sách cho phép post các thông điệp lên tài liệu sử dụng.\n"
+"- mọi người: Mọi người có thể post\n"
+"- đối tác: Chỉ các đối tác đã xác thực\n"
+"- đối tượng dõi theo: Chỉ những người ở trong danh sách dõi theo của tài liệu hoặc thành viên của các kênh sau đây\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_priority
@@ -1333,7 +1345,7 @@ msgstr "Mức độ ưu tiên"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Productivity"
-msgstr ""
+msgstr "Năng suất"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1353,7 +1365,7 @@ msgstr ""
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
 msgid "Randomly"
-msgstr ""
+msgstr "Ngẫu nhiên"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_rating
@@ -1385,7 +1397,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "Record Thread ID"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_main
@@ -1395,7 +1407,7 @@ msgstr "Báo cáo"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Restore"
-msgstr ""
+msgstr "Khôi phục"
 
 #. module: helpdesk
 #. openerp-web
@@ -1575,6 +1587,8 @@ msgid ""
 "Specific team that uses this stage. Other teams will not be able to see or "
 "use this stage."
 msgstr ""
+"Các đội/kênh cụ thể mà sử dụng giai đoạn này. Các đội/kênh khác sẽ không thể"
+" thấy hoặc sử dụng giai đoạn này"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_stage
@@ -1623,7 +1637,7 @@ msgstr "Trạng thái"
 #. module: helpdesk
 #: model:mail.message.subtype,description:helpdesk.mt_ticket_stage
 msgid "Status Changed"
-msgstr ""
+msgstr "Giai đoạn đã Thay đổi"
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:28
@@ -1729,7 +1743,7 @@ msgstr "Các thành viên trong nhóm"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
 msgid "Teams"
-msgstr ""
+msgstr "Đội"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_team_action
@@ -1758,6 +1772,10 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"Model (Kiểu Tài liệu Hệ thống) mà bí danh này ứng với nó. Bất kỳ thông điệp "
+"email mà không đáp lại (reply) một bản ghi có sẵn sẽ làm cho Hệ thống tự "
+"động tạo một bản ghi mới cho model này (vd: tạo mới một Nhiệm vụ Dự án nếu "
+"model là project.task)"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_name
@@ -1765,6 +1783,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"Tên của bí danh email, vd 'vieclam' nếu bạn muốn bắt thông điệp gửi đến địa "
+"chỉ email <vieclam@tencongty.com>"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_user_id
@@ -1774,6 +1794,10 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"The owner of records created upon receiving emails on this alias. If this "
+"field is not set the system will attempt to find the right owner based on "
+"the sender (From) address, or will use the Administrator account if no "
+"system user is found for that address."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -1796,7 +1820,7 @@ msgstr ""
 #: code:addons/helpdesk/models/helpdesk.py:345
 #, python-format
 msgid "This target does not exist."
-msgstr ""
+msgstr "Mục tiêu này không tồn tại."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
@@ -1806,7 +1830,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket
 msgid "Ticket"
-msgstr ""
+msgstr "Vé"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_dashboard
@@ -1853,7 +1877,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Ticket Type"
-msgstr ""
+msgstr "Kiểu Vé"
 
 #. module: helpdesk
 #: model:mail.message.subtype,description:helpdesk.mt_ticket_assigned
@@ -1886,7 +1910,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.portal_my_home_menu_helpdesk
 #, python-format
 msgid "Tickets"
-msgstr ""
+msgstr "Vé"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
