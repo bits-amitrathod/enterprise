@@ -11,13 +11,14 @@
 # Vladimir Dachev <v.dachev@dalkomotors.com>, 2018
 # kalatchev, 2018
 # Vladimir Petrov <vladimir.petrov@gmail.com>, 2018
+# Maria Boyadjieva <marabo2000@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-15 14:46+0000\n"
 "PO-Revision-Date: 2018-01-15 14:46+0000\n"
-"Last-Translator: Vladimir Petrov <vladimir.petrov@gmail.com>, 2018\n"
+"Last-Translator: Maria Boyadjieva <marabo2000@gmail.com>, 2018\n"
 "Language-Team: Bulgarian (https://www.transifex.com/odoo/teams/41243/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -374,7 +375,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_assign_method
 msgid "Assignation Method"
-msgstr ""
+msgstr "Разпределителен метод"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_user_id
@@ -388,7 +389,7 @@ msgstr "Възложена на"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Assignee"
-msgstr ""
+msgstr "Разпределено лице/правоприемник"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_template_id
@@ -410,6 +411,10 @@ msgid ""
 "\tRandomly: randomly but everyone gets the same amount\n"
 "\tBalanced: to the person with the least amount of open tickets"
 msgstr ""
+"Автоматичен разпределителен метод за нови квитанции:\n"
+"\tРъчно: ръчен\n"
+"\tНа случаен принцип: на случаен принцип, но всеки получава същото количество\n"
+"\tБалансирано: до лицето с най-малко отворени квитанции"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
@@ -810,7 +815,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_assign_date
 msgid "First assignation date"
-msgstr ""
+msgstr "Дата на първо разпределение"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_fold
@@ -1817,7 +1822,7 @@ msgstr ""
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_assigned
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_assigned
 msgid "Ticket Assigned"
-msgstr ""
+msgstr "Разпределен тикет"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_new
@@ -1917,7 +1922,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_assign_hours
 msgid "Time to first assignation (hours)"
-msgstr ""
+msgstr "Време за първо разпределяне (часове)"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_helpdesk_timesheet
@@ -1963,7 +1968,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Unassigned Tickets"
-msgstr ""
+msgstr "Неразпределени тикети"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -2069,6 +2074,8 @@ msgstr ""
 #, python-format
 msgid "You must have team members assigned to change the assignation method."
 msgstr ""
+"За да промените метода на разпределяне, трябва да разполагате с разпределени"
+" членове."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_team_dashboard_action_main

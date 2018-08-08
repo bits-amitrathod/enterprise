@@ -12,10 +12,10 @@ _logger = logging.getLogger(__name__)
 # Customer Global level setting
 class Customer(models.Model):
     _inherit = 'res.partner'
-    prioritization = fields.Boolean("Prioritization setting")
+    prioritization = fields.Boolean("Prioritization setting" )
     sku_preconfig=fields.Char("SKU PreConfig")
     sku_postconfig = fields.Char("SKU PostConfig")
-    prioritization_ids = fields.Many2many('prioritization_engine.prioritization', 'customer_id')
+    prioritization_ids = fields.One2many('prioritization_engine.prioritization', 'customer_id')
     sps_sku = fields.Char("SPS SKU", readonly=False)
     threshold_min = fields.Integer("Product Min Threshold", readonly=False)
     threshold_max = fields.Integer("Product Max Threshold", readonly=False)
@@ -36,6 +36,32 @@ class Customer(models.Model):
     having_carrier = fields.Boolean("Having Carrier?")
     notification_email=fields.Char("Notification Email")
 
+
+    #@api.multi
+    def bulk_verify(self,arg):
+        print(self)
+        #print(arg)
+        #for record in self:
+            #print(record)
+        view = self.env['prioritization.transient']
+       # view = self.env.ref('prioritization_engine.view_form_prioritization_normal')
+        view_id=self.env.ref('prioritization_engine.view_form_prioritization_normal',False).id
+        params=[]
+        #new = view.create(params)
+        print(view_id)
+        #print(new.id)
+        return {
+            'type': 'ir.actions.act_window',
+            #'name':_('Multiple Update Operations'),
+            'res_model': 'prioritization.transient',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'multi':True,
+            #'res_id': new.id,
+            #'view_id': view_id,
+            #'target': 'new',
+
+        }
     # Return Customer prioritization setting ON(True)/OFF(False).
     def get_prioritization_setting(self):
         return self.prioritization
@@ -260,3 +286,14 @@ class Prioritization(models.Model):
 
 
 
+class PrioritizationTransient(models.TransientModel):
+    _name = 'prioritization.transient'
+    threshold = fields.Integer("Product Threshold")
+    priority = fields.Integer("Product Priority")
+    cooling_period = fields.Integer("Cooling Period in days")
+    auto_allocate = fields.Boolean("Allow Auto Allocation?")
+    length_of_hold = fields.Integer("Length Of Hold in days")
+    expiration_tolerance = fields.Integer("Expiration Tolerance days")
+    partial_ordering = fields.Boolean("Allow Partial Ordering?")
+    partial_UOM = fields.Integer("Allow Partial UOM?")
+    length_of_hold = fields.Date("Lenght Of Holding")

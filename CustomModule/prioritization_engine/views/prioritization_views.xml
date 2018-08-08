@@ -11,18 +11,18 @@
                       <field name="sku_postconfig"/>
                       <field name="quickbook_id"/>
                       <field name="having_carrier"/>
-                   </field>
-                 <field name="lang" position="after">
+                  </field>
+                  <field name="lang" position="after">
                      <field name="prioritization"/>
                      <field name="carrier_info"/>
                      <field name="carrier_acc_no"/>
                      <field name="on_hold"/>
                      <field name="is_broker"/>
-                 </field>
+                  </field>
                   <xpath expr="/form/sheet/notebook/page[@name='sales_purchases']" position="after">
                       <page name="prioritization" string="Customer Priority Configuration">
-                                <field name="prioritization_ids"/>
-                      </page>
+                                <field name="prioritization_ids" widget="one2many_selectable"/>
+                       </page>
                        <page name="CustomerOrder" string="Customer Order">
                             <field name="order_ids" mode="tree">
                                     <tree string="Sales Orders for Customer" editable="bottom" create="false">
@@ -66,7 +66,7 @@
             <field name="mode">primary</field>
             <field name="arch" type="xml">
               <tree editable="bottom">
-                <!--   <field name="sequence" widget="handle"/>-->
+                    <field name="sequence" widget="handle"/>
                     <field name="product_id"/>
                     <field name="name"/>
                     <field name="attribute_value_ids" widget="many2many_tags" groups="product.group_product_variant"/>
@@ -85,12 +85,54 @@
             </field>
       </record>
 
+      <record id="view_form_prioritization_normal" model="ir.ui.view">
+            <field name="sequence" eval="1"/>
+            <field name="name">Prioritization normal form</field>
+            <field name="model">prioritization.transient</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+              <form >
+                  <group>
+                    <group>
+                        <field name="threshold"/>
+                        <field name="priority"/>
+                        <field name="cooling_period"/>
+                    </group>
+                    <group>
+                        <field name="auto_allocate" />
+                        <field name="expiration_tolerance" />
+                        <field name="partial_ordering" />
+                        <field name="partial_UOM"/>
+                  </group>
+                  </group>
+                </form>
+            </field>
+      </record>
+
       <record id="action_sps_customer" model="ir.actions.act_window">
             <field name="name">Create Customer</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a contact in your contacts directory.
+              </p><p>
+                Odoo helps you easily track all activities related to
+                a customer: discussions, history of business opportunities,
+                documents, etc.
+              </p>
+            </field>
+      </record>
+
+      <record id="action_sps_transient" model="ir.actions.act_window">
+            <field name="name">Multiple Update Operations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">prioritization.transient</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
                 Click to add a contact in your contacts directory.
@@ -139,6 +181,6 @@
     <menuitem name="Import Document" id="prioritization_engine.prioritization_imenu" parent="prioritization_engine.menu_root"/>
          <!-- actions -->
     <menuitem name="Import Document" id="prioritization_engine.prioritization_import_menu" parent="prioritization_engine.prioritization_imenu"
-              action="action_sps_customer"/>
+              action="action_sps_transient"/>
   </data>
 </odoo>

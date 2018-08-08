@@ -42,7 +42,7 @@ class AccountInvoice(models.Model):
                                                       'payment_method_id': payment_method.id,
                                                       'amount': self.residual,
                                                       'payment_type': 'inbound',
-                                                      'communication': self.number,
+                                                      'communication': self.reference or self.number,
                                                       'partner_type': 'customer',
                                                       'partner_id': mandate.partner_id.commercial_partner_id.id,
                                                       'payment_date': self.date_due or self.date_invoice})

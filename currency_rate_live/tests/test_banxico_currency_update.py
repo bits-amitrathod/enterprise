@@ -126,6 +126,9 @@ class BanxicoTest(TransactionCase):
         super(BanxicoTest, self).setUp()
         self.company = self.env.user.company_id
         self.company.currency_provider = 'banxico'
+        self.company_2 = self.env.ref('currency_rate_live.res_company_company_2')
+        self.company_1 = self.env.ref('currency_rate_live.res_company_company_1')
+        self.user_root = self.env.ref('base.user_root')
         self.mxn = self.env.ref('base.MXN')
         self.usd = self.env.ref('base.USD')
         self.eur = self.env.ref('base.EUR')
@@ -135,7 +138,7 @@ class BanxicoTest(TransactionCase):
         self.foreign_currencies = [
             self.usd, self.eur, self.cad, self.jpy, self.gbp]
         self.foreign_expected_rates = [
-            21.6643, 23.0649, 16.4474, 0.1889, 26.3893]
+            21.7204, 23.0649, 16.4474, 0.1889, 26.3893]
         self.company.currency_id = self.mxn
 
     def set_rate(self, currency, rate):
@@ -191,3 +194,46 @@ class BanxicoTest(TransactionCase):
         with patch('suds.client.Client', new=serviceClientMock2):
             self.company.update_currency_rates()
         self.assertFalse(self.cad.rate_ids)
+
+    def test_banxico_multicompany(self):
+        companies = self.env['res.company']
+        companies |= self.company_2
+        companies |= self.company_1
+
+        # Let us switch to  company_2
+        self.user_root.write({'company_id': self.company_2.id})
+
+        # Checking company_2 & company_1 has USD as Currency
+        self.assertEqual(self.company_2.currency_id.id, self.mxn.id)
+        self.assertEqual(self.company_1.currency_id.id, self.mxn.id)
+
+        # Checking company_2 & company_1 has banxico as Currency Provider
+        self.assertEqual(self.company_2.currency_provider, 'banxico')
+        self.assertEqual(self.company_1.currency_provider, 'banxico')
+
+        # Checking company_2 & company_1 have no rates for USD currency
+        self.assertFalse(self.usd.rate_ids.filtered(lambda r: r.company_id.id == self.company_2.id))
+        self.assertFalse(self.usd.rate_ids.filtered(lambda r: r.company_id.id == self.company_1.id))
+
+        # Let us fetch the newest USD rates for company_2 & company_1
+        with patch('suds.client.Client', new=serviceClientMock):
+            companies.update_currency_rates()
+        self.assertEqual(len(self.usd.rate_ids.filtered(lambda r: r.company_id.id == self.company_2.id)), 1)
+        self.assertEqual(len(self.usd.rate_ids.filtered(lambda r: r.company_id.id == self.company_1.id)), 1)
+
+        # Let us switch from company_1 to company_2, delete the rates for USD
+        # and set company_1's provider to None
+        self.user_root.write({'company_id': self.company_2.id})
+        self.usd.rate_ids.filtered(lambda r: r.name == fields.Date.today()).unlink()
+        self.company_1.write({'currency_provider': False})
+
+        self.assertEqual(len(self.usd.rate_ids.filtered(lambda r: r.company_id.id == self.company_2.id)), 0)
+        self.assertEqual(len(self.usd.rate_ids.filtered(lambda r: r.company_id.id == self.company_1.id)), 0)
+
+        # Update the currency rates, as banxico is only set in company_2 then
+        # company_1 is left without currency rates
+        with patch('suds.client.Client', new=serviceClientMock):
+            companies.update_currency_rates()
+
+        self.assertEqual(len(self.usd.rate_ids.filtered(lambda r: r.company_id.id == self.company_2.id)), 1)
+        self.assertEqual(len(self.usd.rate_ids.filtered(lambda r: r.company_id.id == self.company_1.id)), 0)
