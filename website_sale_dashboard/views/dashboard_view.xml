@@ -75,6 +75,11 @@
             <field name="search_view_id" ref="website_sale.sale_report_view_search_website"/>
             <field name="context">{'search_default_confirmed':1,'search_default_order_date':1}</field>
         </record>
+
+        <record id="website.menu_website_dashboard" model="ir.ui.menu">
+            <field name="active" eval="True"/>
+        </record>
+
         <!-- ONBOARDING -->
         <template id="website_sale_dashboard_onboarding_panel" name="website.sale.dashboard.onboarding.panel">
             <t t-call="base.onboarding_container">

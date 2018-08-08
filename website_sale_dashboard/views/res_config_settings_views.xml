@@ -6,14 +6,14 @@
         <field name="inherit_id" ref="website.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@id='google_analytics_dashboard_setting']" position="replace">
-                <div class="col-12 col-lg-6 o_setting_box" id="google_analytics_dashboard_setting" invisible="1">
+                <div class="col-xs-12 col-lg-6 o_setting_box" id="google_analytics_dashboard_setting" attrs="{'invisible': [('has_google_analytics', '=', False)]}">
                     <div class="o_setting_left_pane">
                         <field name="has_google_analytics_dashboard"/>
                     </div>
                     <div class="o_setting_right_pane">
                         <label for="has_google_analytics_dashboard"/>
                         <div class="text-muted">
-                            See Google Analytics data on your Website Dashboard
+                            Follow your website traffic in Odoo.
                         </div>
                         <div class="content-group" attrs="{'invisible': [('has_google_analytics_dashboard', '=', False)]}">
                             <div class="row mt16">
