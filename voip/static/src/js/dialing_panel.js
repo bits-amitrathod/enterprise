@@ -96,7 +96,7 @@ var DialingPanel = Widget.extend({
         core.bus.on('transfer_call', this, this._onTransferCall);
         core.bus.on('voip_onToggleDisplay', this, this._onToggleDisplay);
 
-        this.call('bus_service', 'getBus').on('notification', this, function (notifications) {
+        this.call('bus_service', 'onNotification', this, function (notifications) {
             _.each(notifications, function (notification) {
                 if (notification[1].type === 'refresh_voip') {
                     self._onNotifRefreshVoip();

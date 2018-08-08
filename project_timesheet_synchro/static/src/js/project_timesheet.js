@@ -54,6 +54,13 @@ odoo.define('project_timeshee.ui', function (require ) {
             rootPath + '/web/static/lib/nvd3/nv.d3.js',
             rootPath + '/web/static/src/js/libs/nvd3.js'
         ],
+        custom_events: {
+            get_session: function (event) {
+                if (event.data.callback) {
+                    event.data.callback(session);
+                }
+            },
+        },
         init: function(parent) {
             var self = this;
             this._super(parent);
