@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sr_sale_compbymonth_report_form_view" model="ir.ui.view">
+            <field name="name">sr.sale.salesperson.report.form.view</field>
+            <field name="model">sale.compbymonth.report</field>
+            <field name="arch" type="xml">
+                <form string="Sales Report Compare By month">
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="product_id" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="end_date"/>
+
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="print_compbymonth_vise_report" string="Print Report" class="oe_highlight"
+                                type="object"/>
+                        Or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="sr_action_sale_report_compmonth_wizard" model="ir.actions.act_window">
+            <field name="name">Sales Report compare By Month </field>
+            <field name="res_model">sale.compbymonth.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="sr_sale_compbymonth_report_form_view" />
+        </record>
+
+        <record id="sr_action_sale_report_compmonth_wizard1" model="ir.actions.server" >
+            <field name="name">Set session to Draft</field>
+            <field name="model_id" ref="model_sale_compbymonth_report"/>
+            <field name="state">code</field>
+            <field name="code">
+                 model.print_compbymonth_vise_report()
+            </field>
+        </record>
+
+
+        <menuitem id="sr_menu_sale_report_salesperson_wizard"
+                  name="Sales Report Compare By Month"
+                  action="sr_action_sale_report_compmonth_wizard"
+                  parent="sale.menu_sale_report"
+                  sequence="1"/>
+    </data>
+</odoo>
