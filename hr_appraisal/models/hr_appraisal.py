@@ -27,7 +27,7 @@ class HrAppraisal(models.Model):
     employee_id = fields.Many2one('hr.employee', required=True, string='Employee', index=True)
     department_id = fields.Many2one('hr.department', related='employee_id.department_id', string='Department', store=True, readonly=True)
     date_close = fields.Date(string='Appraisal Deadline', required=True)
-    state = fields.Selection(APPRAISAL_STATES, string='Status', track_visibility='onchange', required=True, readonly=True, copy=False, default='new', index=True)
+    state = fields.Selection(APPRAISAL_STATES, string='Status', track_visibility='onchange', required=True, copy=False, default='new', index=True)
     manager_appraisal = fields.Boolean(string='Manager', help="This employee will be appraised by his managers")
     manager_ids = fields.Many2many('hr.employee', 'appraisal_manager_rel', 'hr_appraisal_id')
     manager_survey_id = fields.Many2one('survey.survey', string="Manager's Appraisal")

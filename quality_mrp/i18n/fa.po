@@ -8,13 +8,14 @@
 # Sahar Daraye <sahar.daraye.1369@gmail.com>, 2017
 # Hamid Darabi, 2017
 # Arash Sardari <arashss77@gmail.com>, 2018
+# Hamed Mohammadi <hamed@dehongi.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
 "PO-Revision-Date: 2018-02-19 14:22+0000\n"
-"Last-Translator: Arash Sardari <arashss77@gmail.com>, 2018\n"
+"Last-Translator: Hamed Mohammadi <hamed@dehongi.com>, 2018\n"
 "Language-Team: Persian (https://www.transifex.com/odoo/teams/41243/fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,12 +30,14 @@ msgid ""
 "<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Quality Checks</span>\n"
 "                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Quality Checks</span>"
 msgstr ""
+"<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">بررسی‌های کیفی</span>\n"
+"                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">بررسی‌های کیفی</span>"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 msgid "<span class=\"o_stat_text\">Quality Alert</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">هشدار کیفی</span>"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_alert_ids
@@ -64,7 +67,7 @@ msgstr "چک"
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_check_ids
 msgid "Checks"
-msgstr ""
+msgstr "چکها"
 
 #. module: quality_mrp
 #. openerp-web
@@ -76,7 +79,7 @@ msgstr "پاک‌سازی"
 #. module: quality_mrp
 #: model:ir.actions.act_window,help:quality_mrp.mrp_workorder_action_tablet
 msgid "Click to start a new work order."
-msgstr ""
+msgstr "برای شروع سفارش کار جدید کلیک کنید."
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_component_id
@@ -94,7 +97,7 @@ msgstr "ادامه"
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_control_date
 msgid "Control Date"
-msgstr ""
+msgstr "تاریخ کنترل"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.quality_alert_view_form_inherit_mrp
@@ -116,7 +119,7 @@ msgstr "تاریخ"
 #: model:ir.model.fields,help:quality_mrp.field_mrp_workorder_component_uom_id
 #: model:ir.model.fields,help:quality_mrp.field_quality_check_component_uom_id
 msgid "Default Unit of Measure used for all stock operation."
-msgstr ""
+msgstr "واحد اندازه‌گیری پیشفرض برای تمام عملیات موجودی."
 
 #. module: quality_mrp
 #: selection:quality.point,worksheet:0
@@ -142,7 +145,7 @@ msgstr "ویرایش"
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Fail"
-msgstr ""
+msgstr "شکست"
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/quality.py:112
@@ -154,7 +157,7 @@ msgstr ""
 #: code:addons/quality_mrp/models/mrp_workorder.py:163
 #, python-format
 msgid "Failure Message"
-msgstr ""
+msgstr "پیام شکست"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
@@ -210,17 +213,17 @@ msgstr "سفارش تولید"
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Mark as Done"
-msgstr ""
+msgstr "علامت به عنوان انجام شده"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_measure
 msgid "Measure"
-msgstr ""
+msgstr "ندازه"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_measure_success
 msgid "Measure Success"
-msgstr ""
+msgstr "موفقیت اندازه‌گیری"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
@@ -237,7 +240,7 @@ msgstr "منو"
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_move_line_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_move_line_id
 msgid "Move Line"
-msgstr ""
+msgstr "سطر انقال"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
@@ -274,12 +277,12 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_routing_id
 msgid "Parent Routing"
-msgstr ""
+msgstr "روتین والد"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
 msgid "Pass"
-msgstr ""
+msgstr "قبول کردن"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet
@@ -357,24 +360,24 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workcenter_view_kanban_inherit_quality_mrp
 msgid "Quality Alert"
-msgstr ""
+msgstr "هشدار کیفی"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_alert_count
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_alert_count
 msgid "Quality Alert Count"
-msgstr ""
+msgstr "شمارش هشدار کیفی"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_check
 msgid "Quality Check"
-msgstr ""
+msgstr "بررسی‌های کیفی"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_check_fail
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_quality_check_fail
 msgid "Quality Check Fail"
-msgstr ""
+msgstr "شکست بررسی کیفی"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production_quality_check_todo
@@ -388,12 +391,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_inherit_quality
 msgid "Quality Checks"
-msgstr ""
+msgstr "بررسی‌های کیفی"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_point
 msgid "Quality Point"
-msgstr ""
+msgstr "نقطه کیفی"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet_menu
@@ -475,7 +478,7 @@ msgstr "وضعیت"
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_operation_id
 msgid "Step"
-msgstr ""
+msgstr "گام"
 
 #. module: quality_mrp
 #: model:ir.actions.act_window,name:quality_mrp.action_quality_mrp_show_steps
@@ -500,7 +503,7 @@ msgstr ""
 #: model:ir.model,name:quality_mrp.model_quality_point_test_type
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_test_type
 msgid "Test Type"
-msgstr ""
+msgstr "نوع آزمایش"
 
 #. module: quality_mrp
 #: model:ir.model.fields,help:quality_mrp.field_quality_point_routing_id
@@ -519,12 +522,12 @@ msgstr "عنوان"
 #: code:addons/quality_mrp/models/quality.py:105
 #, python-format
 msgid "To Do"
-msgstr ""
+msgstr "در دست اقدام"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_workorder_component_tracking
 msgid "Tracking"
-msgstr ""
+msgstr "ره گیری"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_code
@@ -560,23 +563,23 @@ msgstr "معتبر سازی"
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_alert_workcenter_id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check_workcenter_id
 msgid "Work Center"
-msgstr ""
+msgstr "مرکز کار"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_mrp_workorder
 msgid "Work Order"
-msgstr ""
+msgstr "سفارش کار"
 
 #. module: quality_mrp
 #: code:addons/quality_mrp/models/quality.py:53
 #, python-format
 msgid "Work Order Messages"
-msgstr ""
+msgstr "پیامهای سفارش کار"
 
 #. module: quality_mrp
 #: model:ir.actions.act_window,name:quality_mrp.mrp_workorder_action_tablet
 msgid "Work Orders"
-msgstr ""
+msgstr "سفارشات کار"
 
 #. module: quality_mrp
 #: model:ir.ui.view,arch_db:quality_mrp.mrp_workorder_view_form_tablet_menu
@@ -586,7 +589,7 @@ msgstr ""
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_worksheet
 msgid "Worksheet"
-msgstr ""
+msgstr "برگه کار"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point_worksheet_page
@@ -609,4 +612,4 @@ msgstr ""
 #: code:addons/quality_mrp/models/mrp_workorder.py:385
 #, python-format
 msgid "You still need to do the quality checks!"
-msgstr ""
+msgstr "شما همچنان نیاز است بررسی‌های کیفی انجام دهید!"

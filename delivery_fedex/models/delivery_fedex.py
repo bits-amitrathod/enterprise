@@ -370,7 +370,10 @@ class ProviderFedex(models.Model):
 
                     carrier_tracking_ref = request['tracking_number']
                     logmessage = (_("Shipment created into Fedex <br/> <b>Tracking Number : </b>%s") % (carrier_tracking_ref))
-                    picking.message_post(body=logmessage, attachments=[('LabelFedex-%s.%s' % (carrier_tracking_ref, self.fedex_label_file_type), srm.get_label())])
+
+                    fedex_labels = [('LabelFedex-%s-%s.%s' % (carrier_tracking_ref, index, self.fedex_label_file_type), label)
+                                    for index, label in enumerate(srm._get_labels(self.fedex_label_file_type))]
+                    picking.message_post(body=logmessage, attachments=fedex_labels)
 
                     shipping_data = {'exact_price': carrier_price,
                                      'tracking_number': carrier_tracking_ref}

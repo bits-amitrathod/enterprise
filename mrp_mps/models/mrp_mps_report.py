@@ -198,7 +198,7 @@ class MrpMpsReport(models.TransientModel):
                                                             ('location_id.usage', '!=', 'internal'),
                                                             ('date_expected', '>=', date.strftime('%Y-%m-%d')),
                                                             ('date_expected', '<', date_to.strftime('%Y-%m-%d'))])
-                to_supply = sum([x.product_qty for x in purchase_lines]) + sum([x.product_qty for x in move_lines]) #TODO: UoM conversion for PO lines
+                to_supply = sum([x.product_uom._compute_quantity(x.product_qty, x.product_id.uom_id) for x in purchase_lines]) + sum([x.product_qty for x in move_lines])
             forecasted = to_supply - demand + initial - indirect_total
             result.append({
                 'period': name,
