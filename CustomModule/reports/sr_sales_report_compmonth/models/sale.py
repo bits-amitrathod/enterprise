@@ -73,10 +73,6 @@ class comparebymonth():
 class SaleSalespersonReport(models.TransientModel):
     _name = 'sale.compbymonth.report'
 
-    start_date = fields.Date('Start Date', required=True)
-    end_date = fields.Date(string="End Date", required=True)
-    product_id = fields.Many2many('product.product', string="Products")
-
     @api.multi
     def print_compbymonth_vise_report(self):
         sale_orders = self.env['sale.order'].search([])
@@ -85,25 +81,11 @@ class SaleSalespersonReport(models.TransientModel):
         s_date = (datetime.datetime.now()-datetime.timedelta(days=30))
         l_date = (datetime.datetime.now())
         filtered_by_current_month = list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= s_date and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= l_date ,sale_orders))
-        # log.info(filtered_by_current_month)
-
 
         ps_date = (datetime.datetime.now() - datetime.timedelta(days=60))
         pl_date = (datetime.datetime.now() - datetime.timedelta(days=31))
         filtered_by_last_month = list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= ps_date and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= pl_date ,sale_orders))
-        # log.info(filtered_by_last_month)
-
-        # dat = comparebymonth().addObject(list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= (datetime.datetime.now()-datetime.timedelta(days=30)) and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= (datetime.datetime.now()) ,sale_orders)),
-        #                                  list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= (datetime.datetime.now() - datetime.timedelta(days=60)) and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= (datetime.datetime.now()- datetime.timedelta(days=31)), sale_orders)))
-
         dat = comparebymonth().addObject(filtered_by_current_month,filtered_by_last_month)
-        log.info('............AAA..................')
-        # log.info(dat)
-
-        # for user in self.product_id:
-            # filtered_order = list(filter(lambda x: x.product_id == user, sale_orders))
-        # filtered_by_date = list(
-        #         filter(lambda x: x.date_order >= self.start_date and x.date_order <= self.end_date, sale_orders))
         groupby_dict['data'] = dat
         final_dict = {}
         for user in dat.keys():
@@ -121,11 +103,5 @@ class SaleSalespersonReport(models.TransientModel):
             'ids': self.ids,
             'model': self._module,
             'form': final_dict,
-            'start_date': datetime.datetime.now(),
-            'end_date': datetime.datetime.now(),
-
         }
-        log.info('............bbb..................')
-        return self.env.ref('sr_sales_report_compmonth.action_report_sales_compmonth_wise').report_action([],
-                                                                                                                    data=datas)
-        log.info('............ccc..................')
+        return self.env.ref('sr_sales_report_compmonth.action_report_sales_compmonth_wise').report_action([],data=datas)
