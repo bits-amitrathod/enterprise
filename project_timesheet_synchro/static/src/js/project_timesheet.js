@@ -40,7 +40,11 @@ odoo.define('project_timeshee.ui', function (require ) {
     // the current path location is 'project_timesheet_synchro' instead of the root path.
     // We need to know the root path to load assets which is the parent folder of
     // 'project_timesheet_synchro' in this case.
-    var rootPath = isDesktop ? '..' : '.';
+    // Must keep the absolute pathname for tests (to avoid 'segmentation fault').
+    var rootPath = '';
+    if (window.location.pathname.indexOf('project_timesheet_synchro') !== -1) {
+        rootPath = isDesktop ? '..' : '.';
+    }
 
     //Main widget to instantiate the app
     var ProjectTimesheet = Widget.extend(ServiceProviderMixin, {
