@@ -27,7 +27,7 @@ $o-afr-cell-bottom: 3px;
 // Summary to be edited
 // -----------------------------------------
 .o_account_reports_summary {
-    padding-bottom: 25px;
+    display: inline-block;
     position: relative;
 
     .o_account_report_summary {
@@ -46,7 +46,6 @@ $o-afr-cell-bottom: 3px;
     }
 
     .o_input {
-        background-color: gray('200');
         border: none;
         padding: 10px;
     }
@@ -484,6 +483,30 @@ p.o_account_reports_contact_info {
         visibility: hidden;
     }
 
+    // Filters lines
+    // -----------------------------------------
+    .o_account_reports_filter_input_wrapper {
+        position: relative;
+        float: right;
+        width: 150px;
+        margin-top: -47px;
+        margin-bottom: 20px;
+        float: right;
+
+        .searchIcon {
+            position: absolute;
+            right: 10px;
+        }
+    }
+
+    .o_account_reports_filter_input {
+        border: none;
+        border-bottom: 1px black solid;
+    }
+
+    .o_account_reports_filtered_lines {
+        display: none;
+    }
 
     // Partners colors, report financial
     // -----------------------------------------

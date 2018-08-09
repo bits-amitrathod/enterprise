@@ -19,6 +19,7 @@ var _t = core._t;
 var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
 
     events: {
+        'input .o_account_reports_filter_input': 'filter_accounts',
         'click .o_account_reports_summary': 'edit_summary',
         'click .js_account_report_save_summary': 'save_summary',
         'click .o_account_reports_footnote_icons': 'delete_footnote',
@@ -124,6 +125,39 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
         }).parent().addClass('o_js_account_report_parent_row_unfolded');
         this.$('tr[data-parent-id]').addClass('o_js_account_report_inner_row');
      },
+    filter_accounts: function(e) {
+        var self = this;
+        var query = e.target.value.trim();
+        this.filterOn = false;
+        this.$('.o_account_reports_level2').each(function(index, el) {
+            var $accountReportLineFoldable = $(el);
+            var line_id = $accountReportLineFoldable.find('.o_account_report_line').data('id');
+            var $childs = self.$('tr[data-parent-id="'+line_id+'"]');
+            var lineText = $accountReportLineFoldable.find('.account_report_line_name')
+                .text()
+                .trim();
+            var queryFound;
+
+            if (query.match(/^[a-zA-Z]/)) {
+                queryFound = lineText.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+            } else {
+                queryFound = lineText.startsWith(query);
+            }
+
+            $accountReportLineFoldable.toggleClass('o_account_reports_filtered_lines', !queryFound);
+            $childs.toggleClass('o_account_reports_filtered_lines', !queryFound);
+
+            if (!queryFound) {
+                self.filterOn = true;
+            }
+        });
+        if (this.filterOn) {
+            this.$('.o_account_reports_level1.total').hide();
+        }
+        else {
+            this.$('.o_account_reports_level1.total').show();
+        }
+    },
     render_searchview_buttons: function() {
         var self = this;
         // bind searchview buttons/filter to the correct actions
@@ -318,7 +352,7 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
                 self.$el.find('.o_account_reports_summary_edit').hide();
                 self.$el.find('.o_account_reports_summary').show();
                 if (!text) {
-                    text = "<input type='text' class='o_input' name='summary' placeholder='Click to add an introductory explanation' />";
+                    text = "<input type='text' class='o_input' name='summary' placeholder='Add a note' />";
                 } else
                     text = '<span style="white-space: pre-wrap;">' + text + '</span>'
                 return $(e.target).parent().siblings('.o_account_reports_summary').find('> .o_account_report_summary').html(text);
