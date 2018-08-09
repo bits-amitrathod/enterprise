@@ -16,7 +16,7 @@
     <template id="portal_my_home_helpdesk_ticket" name="Portal My Home : Helpdesk Ticket" inherit_id="portal.portal_my_home" priority="50">
         <xpath expr="//ul[hasclass('o_portal_docs')]" position="inside">
             <li t-if="ticket_count" class="list-group-item">
-                <span class="badge badge-pill" t-esc="ticket_count"/>
+                <span class="badge badge-secondary badge-pill float-right" t-esc="ticket_count"/>
                 <a href="/my/tickets">Tickets</a>
             </li>
         </xpath>
