@@ -170,6 +170,7 @@ odoo.define('website_sign.template', function(require) {
 
         start: function() {
             this.$responsibleSelect = this.$('.o_sign_responsible_select');
+            website_sign_utils.resetResponsibleSelectConfiguration();
 
             var self = this;
             return this._super().then(function() {
