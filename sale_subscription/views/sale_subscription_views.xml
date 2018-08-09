@@ -221,14 +221,7 @@
                             <field name="partner_id" required="1"/>
                             <field name="pricelist_id" groups="product.group_sale_pricelist"/>
                             <field name="code"/>
-                            <label for="recurring_next_date" string="Date of Next Invoice"/>
-                            <div>
-                                <field name="recurring_next_date"/>
-                                <button string="&#8658; Generate Invoice" class="oe_link" name="recurring_invoice"
-                                        type="object" attrs="{'invisible': [('payment_mode', '!=', 'manual')]}"/>
-                                <button string="&#8658; Generate Invoice" class="oe_link" name="recurring_invoice"
-                                        type="object" attrs="{'invisible': [('payment_mode', '==', 'manual')]}" groups="base.group_no_one"/>
-                            </div>
+                            <field name="date_start"/>
                             <field name="to_renew"/>
                             <field name="in_progress" invisible="1"/>
                         </group>
@@ -237,7 +230,14 @@
                             <field name="user_id"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="currency_id" invisible="1"/>
-                            <field name="date_start"/>
+                            <label for="recurring_next_date" string="Date of Next Invoice"/>
+                            <div>
+                                <field name="recurring_next_date"/>
+                                <button string="&#8658; Generate Invoice" class="oe_link" name="recurring_invoice"
+                                        type="object" attrs="{'invisible': [('payment_mode', '!=', 'manual')]}"/>
+                                <button string="&#8658; Generate Invoice" class="oe_link" name="recurring_invoice"
+                                        type="object" attrs="{'invisible': [('payment_mode', '==', 'manual')]}" groups="base.group_no_one"/>
+                            </div>
                             <field name="recurring_rule_boundary" invisible="1"/>
                             <field name="date" attrs="{'invisible':[('recurring_rule_boundary','=','unlimited')]}"/>
                             <field name="close_reason_id" attrs="{'invisible': [('in_progress', '=', True)]}"/>
