@@ -55,7 +55,7 @@ FollowupFormController.include({
             return;
         }
         var followupLevel = this.model.get(this.handle).data.followup_level;
-        if (followupLevel.send_letter) {
+        if (followupLevel.print_letter) {
             this.$buttons.find('button.o_account_reports_followup_print_letter_button')
                 .removeClass('btn-secondary').addClass('btn-primary');
         } else {

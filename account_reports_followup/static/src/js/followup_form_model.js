@@ -27,8 +27,8 @@ FollowupFormModel.include({
      */
     doPrintLetter: function (handle) {
         var level = this.localData[handle].data.followup_level;
-        if (level && level.send_letter) {
-            level.send_letter = false;
+        if (level && level.print_letter) {
+            level.print_letter = false;
         }
     },
    /**

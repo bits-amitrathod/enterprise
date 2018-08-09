@@ -31,7 +31,7 @@ class AccountFollowupReport(models.AbstractModel):
             infos['followup_level'] = {
                 'id': followup_line.id,
                 'name': followup_line.name,
-                'send_letter': followup_line.send_letter,
+                'print_letter': followup_line.print_letter,
                 'send_email': followup_line.send_email,
                 'manual_action': followup_line.manual_action,
                 'manual_action_note': followup_line.manual_action_note
@@ -105,6 +105,6 @@ class AccountFollowupReport(models.AbstractModel):
                 self.env['mail.activity'].create(activity_data)
             next_date = self._get_next_date(followup_line, level)
             partner.update_next_action(options={'next_action_date': datetime.strftime(next_date, DEFAULT_SERVER_DATE_FORMAT), 'next_action_type': 'auto'})
-            if followup_line.send_letter:
+            if followup_line.print_letter:
                 return partner
         return None

@@ -39,7 +39,7 @@ Would your payment have been carried out after this mail was sent, please ignore
 Best Regards,
 """)
     send_email = fields.Boolean('Send an Email', help="When processing, it will send an email", default=True)
-    send_letter = fields.Boolean('Send a Letter', help="When processing, it will print a letter", default=True)
+    print_letter = fields.Boolean('Print a Letter', help="When processing, it will print a PDF", default=True)
     manual_action = fields.Boolean('Manual Action', help="When processing, it will set the manual action to be taken for that customer. ", default=False)
     manual_action_note = fields.Text('Action To Do', placeholder="e.g. Give a phone call, check with others , ...")
     manual_action_type_id = fields.Many2one('mail.activity.type', 'Manual Action Type', default=False)
