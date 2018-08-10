@@ -3,7 +3,8 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError, AccessError
 import logging
-
+from datetime import date
+from dateutil.relativedelta import relativedelta
 from datetime import datetime
 
 
@@ -186,7 +187,7 @@ class Prioritization(models.Model):
             self.env['sps.customer.requests'].write(dict(status='InCoolingPeriod')).search([('id', '=', request_id)])
             return False
 
-    # calculate length of hold
+    # calculate length of hold(In hours)
     def calculate_length_of_holds_in_hours(self, create_date, request_id):
         # get current datetime
         current_datetime = datetime.datetime.now()
@@ -204,6 +205,26 @@ class Prioritization(models.Model):
             # update status In Process
             self.env['sps.customer.requests'].write(dict(status='Unprocessed')).search([('id', '=', request_id)])
             return False
+
+    # Check Expiration Tolerance in months(3/6/12)
+    def check_product_expiration_tolerance(self, product_id,request_id):
+        # get current datetime
+        expiration_tolerance_date = date.today() + relativedelta(months=+int(self.get_expiration_tolerance()))
+        # use_date = product expiry date
+        stock_production_lot = self.env['stock.production.lot'].search(
+            [('product_id', '=', product_id), ('use_date', '>=', expiration_tolerance_date)])
+
+        if len(stock_production_lot):
+            _logger.info("stock available")
+            # update status In Process
+            self.env['sps.customer.requests'].write(dict(status='InProcess')).search([('id', '=', request_id)])
+            return True
+        else:
+            _logger.info("out of stock")
+            # update status In Process
+            self.env['sps.customer.requests'].write(dict(status='Unprocessed')).search([('id', '=', request_id)])
+            return False
+
 
     # Return product threshold return type Integer
     def get_product_threshold(self):
@@ -283,7 +304,10 @@ class Prioritization(models.Model):
         if sale_order_dict.order_id.create_date:
             return datetime.strptime(sale_order_dict.order_id.create_date, '%Y-%m-%d %H:%M:%S')
 
-
+    # Change date format to calculate date difference (2018-06-25 23:08:15) to (2018, 6, 25, 23, 8, 15)
+    def change_date_format(self, date):
+        formatted_date = date.replace("-", ",").replace(" ", ",").replace(":", ",")
+        return formatted_date
 
 
 class PrioritizationTransient(models.TransientModel):
