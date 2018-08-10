@@ -157,6 +157,8 @@ var FollowupFormController = FormController.extend({
         this.update_control_panel({
             cp_content: {
                 $searchview: this.$searchview,
+                // hack to hide the default searchview buttons
+                $searchview_buttons: $(),
             }}, {
             clear: false,
         });
