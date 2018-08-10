@@ -31,8 +31,7 @@ class YodleeProviderAccount(models.Model):
         login = self._cr.dbname
         secret = ICP_obj.get_param('database.uuid')
         url = 'https://onlinesync.odoo.com/yodlee/api/2'
-        # TODO: wait for yodlee response to change this to our production url
-        fastlink_url = 'https://node.developer.yodlee.com/authenticate/restserver/'
+        fastlink_url = 'https://usyirestmasternode.yodleeinteractive.com/authenticate/odooinc/?channelAppName=usyirestmaster'
         return {'login': login, 'secret': secret, 'url': url, 'fastlink_url': fastlink_url}
 
     @api.multi
