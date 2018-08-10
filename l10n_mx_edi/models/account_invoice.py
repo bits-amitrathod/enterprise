@@ -753,7 +753,8 @@ class AccountInvoice(models.Model):
 
         values['decimal_precision'] = precision_digits
         subtotal_wo_discount = lambda l: float_round(
-            l.price_subtotal / (1 - l.discount/100), int(precision_digits))
+            l.price_subtotal / (1 - l.discount/100) if l.discount != 100 else
+            l.price_unit * l.quantity, int(precision_digits))
         values['subtotal_wo_discount'] = subtotal_wo_discount
         get_discount = lambda l, d: ('%.*f' % (
             int(d), subtotal_wo_discount(l) - l.price_subtotal)) if l.discount else False

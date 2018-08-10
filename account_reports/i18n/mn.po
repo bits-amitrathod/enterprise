@@ -5,7 +5,6 @@
 # Translators:
 # Martin Trigaux, 2018
 # Otgonbayar.A <gobi.mn@gmail.com>, 2018
-# Adyasuren Amarsanaa <adyashde19@gmail.com>, 2018
 # Onii Onii <onii0223@yahoo.com>, 2018
 # Erdenebold Ts <erdenebold10@gmail.com>, 2018
 # nasaaskii <nasaaskii@gmail.com>, 2018
@@ -13,13 +12,14 @@
 # Uurdmunkh Ulam-Orgikh <uurdmunkh.u@gmail.com>, 2018
 # Khishigbat Ganbold <khishigbat@asterisk-tech.mn>, 2018
 # Tsogjav <Tsogjav2007@yahoo.com>, 2018
+# Adyasuren Amarsanaa <adyashde19@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
-"Last-Translator: Tsogjav <Tsogjav2007@yahoo.com>, 2018\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
+"Last-Translator: Adyasuren Amarsanaa <adyashde19@gmail.com>, 2018\n"
 "Language-Team: Mongolian (https://www.transifex.com/odoo/teams/41243/mn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_followup_report.py:236
+#: code:addons/account_reports/models/account_followup_report.py:239
 #, python-format
 msgid "%s Payment Reminder"
 msgstr "%s Төлбөрийн Сануулга"
@@ -46,35 +46,41 @@ msgid "&times;"
 msgstr "&times;"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_financial_report.py:355
-#: code:addons/account_reports/models/account_financial_report.py:357
+#: code:addons/account_reports/models/account_report.py:477
+#, python-format
+msgid "(No Group)"
+msgstr ""
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_financial_report.py:351
+#: code:addons/account_reports/models/account_financial_report.py:353
 #, python-format
 msgid "(copy)"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:18
+#: code:addons/account_reports/models/account_aged_partner_balance.py:21
 #, python-format
-msgid "0 - 30"
-msgstr "0 - 30"
+msgid "1 - 30"
+msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:18
+#: code:addons/account_reports/models/account_aged_partner_balance.py:21
 #, python-format
-msgid "30 - 60"
-msgstr "30 - 60"
+msgid "31 - 60"
+msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:18
+#: code:addons/account_reports/models/account_aged_partner_balance.py:21
 #, python-format
-msgid "60 - 90"
-msgstr "60 - 90"
+msgid "61 - 90"
+msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:18
+#: code:addons/account_reports/models/account_aged_partner_balance.py:21
 #, python-format
-msgid "90 - 120"
-msgstr "90 - 120"
+msgid "91 - 120"
+msgstr ""
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_analytic
@@ -87,7 +93,13 @@ msgid "<b>Next Reminder Date:</b>"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.ui.view,arch_db:account_reports.search_template_partner
+msgid "<b>Partners</b><br/>"
+msgstr ""
+
+#. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_analytic
+#: model:ir.ui.view,arch_db:account_reports.search_template_partner
 msgid "<b>Tags</b><br/>"
 msgstr ""
 
@@ -150,6 +162,13 @@ msgid ""
 msgstr ""
 
 #. module: account_reports
+#: model:ir.ui.view,arch_db:account_reports.search_template_partner
+msgid ""
+"<span class=\"fa fa-folder-open\"/> Partners\n"
+"            <span class=\"caret\"/>"
+msgstr ""
+
+#. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_account_type
 msgid ""
 "<span class=\"fa fa-user\"/>\n"
@@ -178,7 +197,7 @@ msgid "A report line with the same code already exists."
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_partner_ledger.py:34
+#: code:addons/account_reports/models/account_partner_ledger.py:33
 #, python-format
 msgid "Account"
 msgstr "Данс"
@@ -201,7 +220,7 @@ msgid "Account Tags"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_analytic_report.py:77
+#: code:addons/account_reports/models/account_analytic_report.py:78
 #, python-format
 msgid "Accounts without a group"
 msgstr ""
@@ -237,7 +256,7 @@ msgid "Aged Partner Balances"
 msgstr "Түншийн үлдэгдлийн насжилт"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:119
+#: code:addons/account_reports/models/account_aged_partner_balance.py:123
 #: model:ir.actions.client,name:account_reports.action_account_report_ap
 #: model:ir.model,name:account_reports.model_account_aged_payable
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_aged_payable
@@ -251,7 +270,7 @@ msgid "Aged Payables"
 msgstr "Өглөгийн насжилт"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:98
+#: code:addons/account_reports/models/account_aged_partner_balance.py:102
 #: model:ir.actions.client,name:account_reports.action_account_report_ar
 #: model:ir.model,name:account_reports.model_account_aged_receivable
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_aged_receivable
@@ -330,7 +349,7 @@ msgid "Apply"
 msgstr "Ашиглах"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:513
+#: code:addons/account_reports/models/account_report.py:636
 #, python-format
 msgid "As of %s"
 msgstr "%s - н байдлаар"
@@ -374,7 +393,7 @@ msgstr "Зээлдэгчдийн дундаж өдөр"
 #: code:addons/account_reports/models/account_analytic_report.py:24
 #: code:addons/account_reports/models/account_consolidated_journals.py:29
 #: code:addons/account_reports/models/account_general_ledger.py:36
-#: code:addons/account_reports/models/account_partner_ledger.py:40
+#: code:addons/account_reports/models/account_partner_ledger.py:39
 #, python-format
 msgid "Balance"
 msgstr "Баланс"
@@ -389,8 +408,8 @@ msgid "Balance Sheet"
 msgstr "Баланс тайлан"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:170
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:171
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:199
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:200
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation_with_journal
 #, python-format
@@ -408,7 +427,7 @@ msgid "Bank reconciliation report"
 msgstr "Банкны тулгалт тайлан"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:401
+#: code:addons/account_reports/models/account_general_ledger.py:402
 #, python-format
 msgid "Base Amount"
 msgstr "Суурь Дүн"
@@ -609,7 +628,7 @@ msgid "Cost of Revenue"
 msgstr "Орлогын өртөг"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_followup_report.py:244
+#: code:addons/account_reports/models/account_followup_report.py:247
 #, python-format
 msgid ""
 "Could not send mail to partner because it does not have any email address "
@@ -636,7 +655,7 @@ msgstr "Үүсгэсэн"
 #: code:addons/account_reports/models/account_consolidated_journals.py:29
 #: code:addons/account_reports/models/account_financial_report.py:136
 #: code:addons/account_reports/models/account_general_ledger.py:35
-#: code:addons/account_reports/models/account_partner_ledger.py:39
+#: code:addons/account_reports/models/account_partner_ledger.py:38
 #: code:addons/account_reports/models/account_report_coa.py:31
 #: code:addons/account_reports/models/account_report_coa.py:36
 #: code:addons/account_reports/models/account_report_coa.py:40
@@ -658,7 +677,7 @@ msgid "Current Assets"
 msgstr "Эргэлтийн хөрөнгө"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:91
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:100
 #, python-format
 msgid "Current Balance in GL"
 msgstr "Ерөнхий дэвтэр доторх одоогийн баланс"
@@ -696,7 +715,7 @@ msgid "Custom"
 msgstr "Өөриймшүүлсэн"
 
 #. module: account_reports
-#: code:addons/account_reports/models/res_partner.py:93
+#: code:addons/account_reports/models/res_partner.py:88
 #, python-format
 msgid "Customer Ledger"
 msgstr ""
@@ -785,7 +804,7 @@ msgstr ""
 #: code:addons/account_reports/models/account_consolidated_journals.py:29
 #: code:addons/account_reports/models/account_financial_report.py:136
 #: code:addons/account_reports/models/account_general_ledger.py:34
-#: code:addons/account_reports/models/account_partner_ledger.py:38
+#: code:addons/account_reports/models/account_partner_ledger.py:37
 #: code:addons/account_reports/models/account_report_coa.py:30
 #: code:addons/account_reports/models/account_report_coa.py:35
 #: code:addons/account_reports/models/account_report_coa.py:39
@@ -890,7 +909,7 @@ msgid "End of Last Quarter"
 msgstr "Сүүлийн улирлын төгсгөл"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:162
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:191
 #, python-format
 msgid "Equal Last Statement Balance"
 msgstr "Сүүлийн хуулгын балансыг тэнцүүлэх"
@@ -928,7 +947,7 @@ msgid "Expected Payment Date"
 msgstr "Төлбөрийн таамагласан огноо"
 
 #. module: account_reports
-#: code:addons/account_reports/models/res_partner.py:150
+#: code:addons/account_reports/models/res_partner.py:148
 #, python-format
 msgid "Expected pay date has been changed from %s to %s for invoice %s"
 msgstr ""
@@ -952,7 +971,7 @@ msgid "Expenses"
 msgstr "Зардлууд"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:456
+#: code:addons/account_reports/models/account_report.py:567
 #, python-format
 msgid "Export (XLSX)"
 msgstr ""
@@ -1001,13 +1020,13 @@ msgid "Follow-up Reports Tree View"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_followup_report.py:231
+#: code:addons/account_reports/models/account_followup_report.py:234
 #, python-format
 msgid "Follow-up email sent to %s"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_followup_report.py:253
+#: code:addons/account_reports/models/account_followup_report.py:256
 #, python-format
 msgid "Follow-up letter printed"
 msgstr ""
@@ -1025,7 +1044,7 @@ msgid "Follow-ups Done / Total Follow-ups"
 msgstr "Хийгдсэн мөшгөлтүүд / нийт мөшгөлтүүд"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_followup_report.py:176
+#: code:addons/account_reports/models/account_followup_report.py:179
 #: model:ir.model,name:account_reports.model_account_followup_report
 #, python-format
 msgid "Followup Report"
@@ -1058,10 +1077,12 @@ msgid "Formulas"
 msgstr "Томьёонууд"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:514
+#: code:addons/account_reports/models/account_report.py:649
 #, python-format
-msgid "From %s <br/> to  %s"
-msgstr "%s - с <br/> %s хүртэл"
+msgid ""
+"From %s \n"
+" to  %s"
+msgstr ""
 
 #. module: account_reports
 #: selection:account.financial.html.report.line,special_date_changer:0
@@ -1080,7 +1101,7 @@ msgid "From:"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:422
+#: code:addons/account_reports/models/account_general_ledger.py:423
 #: model:ir.actions.client,name:account_reports.action_account_report_general_ledger
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_general_ledger
 #: model:ir.ui.view,arch_db:account_reports.line_caret_options
@@ -1094,7 +1115,7 @@ msgid "General Ledger Report"
 msgstr "Ерөнхий дэвтэрийн тайлан"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:141
+#: code:addons/account_reports/models/account_report.py:157
 #, python-format
 msgid "General Report"
 msgstr ""
@@ -1125,15 +1146,15 @@ msgid "Group by"
 msgstr "Бүлэглэх"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_financial_report.py:291
-#: code:addons/account_reports/models/account_financial_report.py:723
-#: code:addons/account_reports/models/account_financial_report.py:836
+#: code:addons/account_reports/models/account_financial_report.py:287
+#: code:addons/account_reports/models/account_financial_report.py:719
+#: code:addons/account_reports/models/account_financial_report.py:832
 #, python-format
 msgid "Groupby should be a field from account.move.line"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_financial_report.py:687
+#: code:addons/account_reports/models/account_financial_report.py:683
 #, python-format
 msgid "Groupby should be a journal item field"
 msgstr ""
@@ -1202,7 +1223,7 @@ msgstr "Орлого"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_general_ledger.py:292
-#: code:addons/account_reports/models/account_partner_ledger.py:37
+#: code:addons/account_reports/models/account_partner_ledger.py:36
 #: code:addons/account_reports/models/account_report_coa.py:49
 #: model:ir.ui.view,arch_db:account_reports.template_coa_report
 #, python-format
@@ -1227,7 +1248,7 @@ msgid "Is growth good when positive"
 msgstr "Эерэг үед өсөлт сайн"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_partner_ledger.py:33
+#: code:addons/account_reports/models/account_partner_ledger.py:32
 #, python-format
 msgid "JRNL"
 msgstr "ЖРНЛ"
@@ -1350,7 +1371,7 @@ msgid "Manual"
 msgstr "Гараар"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_partner_ledger.py:36
+#: code:addons/account_reports/models/account_partner_ledger.py:35
 #, python-format
 msgid "Matching Number"
 msgstr "Тохирох дугаар"
@@ -1366,19 +1387,19 @@ msgid "Minimum"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:160
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:189
 #, python-format
 msgid "Minus Missing Statements"
 msgstr "Алга болсон тооцоонуудыг хасах"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:118
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:139
 #, python-format
 msgid "Minus Unreconciled Payments"
 msgstr "Тулгагдаагүй бичилтүүдийг хасах"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:145
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:170
 #, python-format
 msgid "Minus Unreconciled Statement Lines"
 msgstr "Тулгагдаагүй хуулгын мөрүүдийг хасах"
@@ -1397,14 +1418,14 @@ msgid "Module"
 msgstr "Модуль"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_generic_tax_report.py:21
-#: code:addons/account_reports/models/account_generic_tax_report.py:24
+#: code:addons/account_reports/models/account_generic_tax_report.py:19
+#: code:addons/account_reports/models/account_generic_tax_report.py:22
 #, python-format
 msgid "NET"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:400
+#: code:addons/account_reports/models/account_general_ledger.py:401
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report__name
 #, python-format
 msgid "Name"
@@ -1449,7 +1470,7 @@ msgid "Next Action Date"
 msgstr "Дараа үйлдэл хийх огноо"
 
 #. module: account_reports
-#: code:addons/account_reports/models/res_partner.py:157
+#: code:addons/account_reports/models/res_partner.py:155
 #, python-format
 msgid "Next action date: "
 msgstr "Дараагийн үйлдлийн огноо:"
@@ -1470,7 +1491,7 @@ msgid "No action needed"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:577
+#: code:addons/account_reports/models/account_report.py:789
 #, python-format
 msgid "No comparison"
 msgstr ""
@@ -1488,7 +1509,7 @@ msgid "No followup to send!"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:18
+#: code:addons/account_reports/models/account_aged_partner_balance.py:21
 #, python-format
 msgid "Not due on: %s"
 msgstr ""
@@ -1522,7 +1543,7 @@ msgid ""
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:18
+#: code:addons/account_reports/models/account_aged_partner_balance.py:21
 #, python-format
 msgid "Older"
 msgstr "Хуучин"
@@ -1548,7 +1569,7 @@ msgid "Overdue Payments Message"
 msgstr "Хугацаа хэтэрсэн төлбөрийн зурвас"
 
 #. module: account_reports
-#: code:addons/account_reports/models/res_partner.py:177
+#: code:addons/account_reports/models/res_partner.py:175
 #, python-format
 msgid "Overdue Payments for %s"
 msgstr ""
@@ -1577,9 +1598,14 @@ msgid "Partner"
 msgstr "Харилцагч"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_partner_ledger.py:205
-#: code:addons/account_reports/models/res_partner.py:89
-#: code:addons/account_reports/models/res_partner.py:188
+#: model:ir.ui.view,arch_db:account_reports.filter_info_template
+msgid "Partner Categories:"
+msgstr ""
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_partner_ledger.py:204
+#: code:addons/account_reports/models/res_partner.py:84
+#: code:addons/account_reports/models/res_partner.py:186
 #: model:ir.actions.client,name:account_reports.action_account_report_partner_ledger
 #: model:ir.model,name:account_reports.model_account_partner_ledger
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_partner_ledger
@@ -1597,6 +1623,11 @@ msgstr ""
 #: model:ir.ui.menu,name:account_reports.account_reports_partners_reports_menu
 msgid "Partner Reports"
 msgstr ""
+
+#. module: account_reports
+#: model:ir.ui.view,arch_db:account_reports.filter_info_template
+msgid "Partners:"
+msgstr "Харилцагчид:"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_partner_ledger.py:19
@@ -1631,7 +1662,7 @@ msgid "Plus Fixed Assets"
 msgstr "Үндсэн хөрөнгийг нэмэх"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:158
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:187
 #, python-format
 msgid "Plus Missing Statements"
 msgstr "Алга болсон тооцоонуудыг нэмэх"
@@ -1647,13 +1678,13 @@ msgid "Plus Non-current Liabilities"
 msgstr "Эргэлтийн бус эх үүсвэрийг нэмэх"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:116
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:137
 #, python-format
 msgid "Plus Unreconciled Payments"
 msgstr "Тулгагдаагүй бичилтүүдийг нэмэх"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_bank_reconciliation_report.py:131
+#: code:addons/account_reports/models/account_bank_reconciliation_report.py:154
 #, python-format
 msgid "Plus Unreconciled Statement Lines"
 msgstr "Тулгагдаагүй хуулгын мөрүүдийг нэмэх"
@@ -1699,7 +1730,7 @@ msgid "Print Legal Statement"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_report.py:456
+#: code:addons/account_reports/models/account_report.py:567
 #, python-format
 msgid "Print Preview"
 msgstr ""
@@ -1734,12 +1765,6 @@ msgid "Profitability"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_generic_tax_report.py:161
-#, python-format
-msgid "Purchase"
-msgstr "Худалдан авалт"
-
-#. module: account_reports
 #: code:addons/account_reports/models/account_partner_ledger.py:19
 #, python-format
 msgid "Receivable"
@@ -1757,7 +1782,7 @@ msgid "Reconciliation Report"
 msgstr "Тулгалтын тайлан"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_partner_ledger.py:35
+#: code:addons/account_reports/models/account_partner_ledger.py:34
 #, python-format
 msgid "Ref"
 msgstr "Дугаар"
@@ -1800,12 +1825,6 @@ msgstr ""
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_return_investment0
 msgid "Return on investments (net profit / assets)"
 msgstr "Хөрөнгө оруулалтын өгөөж (цэвэр ашиг / хөрөнгө)"
-
-#. module: account_reports
-#: code:addons/account_reports/models/account_generic_tax_report.py:161
-#, python-format
-msgid "Sale"
-msgstr "Борлуулалт"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_comparison
@@ -1893,32 +1912,32 @@ msgid "Summary"
 msgstr "Хураангуй"
 
 #. module: account_reports
-#: code:addons/account_reports/models/res_partner.py:91
+#: code:addons/account_reports/models/res_partner.py:86
 #, python-format
 msgid "Supplier Ledger"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_generic_tax_report.py:21
-#: code:addons/account_reports/models/account_generic_tax_report.py:24
+#: code:addons/account_reports/models/account_generic_tax_report.py:19
+#: code:addons/account_reports/models/account_generic_tax_report.py:22
 #, python-format
 msgid "TAX"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:401
+#: code:addons/account_reports/models/account_general_ledger.py:402
 #, python-format
 msgid "Tax Amount"
 msgstr "Татварын дүн"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:392
+#: code:addons/account_reports/models/account_general_ledger.py:393
 #, python-format
 msgid "Tax Declaration"
 msgstr "Татвар тодорхойлолт"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_generic_tax_report.py:196
+#: code:addons/account_reports/models/account_generic_tax_report.py:199
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report__tax_report
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_gt
 #, python-format
@@ -1962,8 +1981,8 @@ msgid ""
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:361
-#: code:addons/account_reports/models/account_partner_ledger.py:188
+#: code:addons/account_reports/models/account_general_ledger.py:362
+#: code:addons/account_reports/models/account_partner_ledger.py:187
 #, python-format
 msgid ""
 "There are more than 80 items in this list, click here to see all of them"
@@ -1990,15 +2009,15 @@ msgid "Today"
 msgstr "Өнөөдөр"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:18
-#: code:addons/account_reports/models/account_aged_partner_balance.py:78
+#: code:addons/account_reports/models/account_aged_partner_balance.py:21
+#: code:addons/account_reports/models/account_aged_partner_balance.py:82
 #: code:addons/account_reports/models/account_consolidated_journals.py:41
 #: code:addons/account_reports/models/account_consolidated_journals.py:62
-#: code:addons/account_reports/models/account_financial_report.py:911
-#: code:addons/account_reports/models/account_financial_report.py:988
-#: code:addons/account_reports/models/account_general_ledger.py:372
-#: code:addons/account_reports/models/account_general_ledger.py:384
-#: code:addons/account_reports/models/account_partner_ledger.py:196
+#: code:addons/account_reports/models/account_financial_report.py:907
+#: code:addons/account_reports/models/account_financial_report.py:984
+#: code:addons/account_reports/models/account_general_ledger.py:373
+#: code:addons/account_reports/models/account_general_ledger.py:385
+#: code:addons/account_reports/models/account_partner_ledger.py:195
 #: code:addons/account_reports/models/account_report_coa.py:51
 #: code:addons/account_reports/models/account_report_coa.py:112
 #: model:ir.ui.view,arch_db:account_reports.customer_statements_tree_view
@@ -2008,15 +2027,15 @@ msgid "Total"
 msgstr "Нийт"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_aged_partner_balance.py:70
-#: code:addons/account_reports/models/account_general_ledger.py:354
+#: code:addons/account_reports/models/account_aged_partner_balance.py:74
+#: code:addons/account_reports/models/account_general_ledger.py:355
 #, python-format
 msgid "Total "
 msgstr "Дүн"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_followup_report.py:35
-#: code:addons/account_reports/models/account_followup_report.py:104
+#: code:addons/account_reports/models/account_followup_report.py:107
 #: model:ir.model.fields,field_description:account_reports.field_res_partner__total_due
 #: model:ir.model.fields,field_description:account_reports.field_res_users__total_due
 #, python-format
@@ -2024,7 +2043,7 @@ msgid "Total Due"
 msgstr "Төлөх дүн"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_followup_report.py:115
+#: code:addons/account_reports/models/account_followup_report.py:118
 #: model:ir.model.fields,field_description:account_reports.field_res_partner__total_overdue
 #: model:ir.model.fields,field_description:account_reports.field_res_users__total_overdue
 #, python-format
@@ -2051,7 +2070,7 @@ msgstr ""
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_financial_report.py:45
-#: code:addons/account_reports/models/account_financial_report.py:760
+#: code:addons/account_reports/models/account_financial_report.py:756
 #, python-format
 msgid "Undefined"
 msgstr "Тодорхойлогдоогүй"
@@ -2156,7 +2175,7 @@ msgid "account.report"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/res_partner.py:150
+#: code:addons/account_reports/models/res_partner.py:148
 #, python-format
 msgid "any"
 msgstr ""
@@ -2199,7 +2218,7 @@ msgid "manage summary and footnotes of reports"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_financial_report.py:778
+#: code:addons/account_reports/models/account_financial_report.py:774
 #, python-format
 msgid "n/a"
 msgstr "б/гүй"

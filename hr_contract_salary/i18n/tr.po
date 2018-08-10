@@ -3,19 +3,19 @@
 # * hr_contract_salary
 # 
 # Translators:
-# Ediz Duman <neps1192@gmail.com>, 2017
 # Murat Kaplan <muratk@projetgrup.com>, 2017
 # Martin Trigaux, 2017
 # Levent Karakaş <levent@mektup.at>, 2017
 # gezgin biri <gezginbiri@hotmail.com>, 2017
+# Ediz Duman <neps1192@gmail.com>, 2017
 # Umur Akın <umura@projetgrup.com>, 2018
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -25,9 +25,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__signatures_count
+msgid "# Signatures"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "# disabled people (&lt;65):"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "# disabled seniors (&gt;=65):"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "# people (&lt;65):"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "# seniors (&gt;=65):"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:mail.template,subject:hr_contract_salary.mail_template_send_offer
+#: model:mail.template,subject:hr_contract_salary.mail_template_send_offer_applicant
 msgid "${object.company_id.name} : Job Offer - ${object.name}"
 msgstr ""
+
+#. module: hr_contract_salary
+#: model:mail.template,subject:hr_contract_salary.mail_template_data_notification_email_send_offer
+msgid "${object.subject}"
+msgstr "${object.subject}"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -37,6 +68,11 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "+32 2 290 34 90"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "/year"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -50,25 +86,109 @@ msgid "110 €"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "13th Month:"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "150 €"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:mail.template,body_html:hr_contract_salary.mail_template_send_offer
+#: model:mail.template,body_html:hr_contract_salary.mail_template_send_offer_applicant
 msgid ""
 "<?xml version=\"1.0\"?>\n"
 "<div>\n"
-"                    <h2>Congratulations!</h2>\n"
-"                    <p>You can configure your salary package by clicking on the link below.</p>\n"
-"                    <br/><br/>\n"
-"                    <center>\n"
-"                        <a href=\"${ctx.get('salary_package_url')}\" target=\"_blank\" style=\"background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;\" class=\"o_default_snippet_text\">Configure your package</a>\n"
-"                        <br/><br/><br/>\n"
-"                    </center>\n"
+"                <h2>Congratulations!</h2>\n"
+"                <p>You can configure your salary package by clicking on the link below.</p>\n"
+"                <br/><br/>\n"
+"                <center>\n"
+"                    <a href=\"${ctx.get('salary_package_url')}\" target=\"_blank\" style=\"background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;\" class=\"o_default_snippet_text\">Configure your package</a>\n"
+"                    <br/><br/><br/>\n"
+"                </center>\n"
 "\n"
-"                </div>\n"
-"            "
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:mail.template,body_html:hr_contract_salary.mail_template_data_notification_email_send_offer
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<html>\n"
+"            <head/>\n"
+"            % set record = ctx.get('record')\n"
+"            % set company = record and record.company_id or user.company_id\n"
+"            <body style=\"margin: 0; padding: 0;\">\n"
+"            <table border=\"0\" width=\"100%\" cellpadding=\"0\" bgcolor=\"#ededed\" style=\"padding: 20px; background-color: #ededed\" summary=\"o_mail_notification\">\n"
+"                <tbody>\n"
+"\n"
+"                  <!-- HEADER -->\n"
+"                  <tr>\n"
+"                    <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                      <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-color: rgb(135,90,123); padding: 20px;\">\n"
+"                        <tr>\n"
+"                          <td valign=\"middle\">\n"
+"                              <span style=\"font-size:20px; color:white; font-weight: bold;\">\n"
+"                                  ${object.record_name}\n"
+"                              </span>\n"
+"                          </td>\n"
+"                          <td valign=\"middle\" align=\"right\">\n"
+"                              <img src=\"/logo.png?company=${company.id}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${company.name}\"/>\n"
+"                          </td>\n"
+"                        </tr>\n"
+"                      </table>\n"
+"                    </td>\n"
+"                  </tr>\n"
+"\n"
+"                  <!-- CONTENT -->\n"
+"                  <tr>\n"
+"                    <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                      <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#ffffff\" style=\"min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;\">\n"
+"                        <tbody>\n"
+"                          <td valign=\"top\" style=\"font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;\">\n"
+"                            ${object.body | safe}\n"
+"                          </td>\n"
+"                        </tbody>\n"
+"                      </table>\n"
+"                    </td>\n"
+"                  </tr>\n"
+"\n"
+"                  <!-- FOOTER -->\n"
+"                  <tr>\n"
+"                    <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                      <table width=\"590\" border=\"0\" cellpadding=\"0\" bgcolor=\"#875A7B\" style=\"min-width: 590px; background-color: rgb(135,90,123); padding: 20px;\">\n"
+"                        <tr>\n"
+"                          <td valign=\"middle\" align=\"left\" style=\"color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;\">\n"
+"                            ${company.name}<br/>\n"
+"                            ${company.phone or ''}\n"
+"                          </td>\n"
+"                          <td valign=\"middle\" align=\"right\" style=\"color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;\">\n"
+"                            % if company.email:\n"
+"                            <a href=\"mailto:${company.email}\" style=\"text-decoration:none; color: white;\">${company.email}</a><br/>\n"
+"                            % endif\n"
+"                            % if company.website:\n"
+"                                <a href=\"${company.website}\" style=\"text-decoration:none; color: white;\">\n"
+"                                    ${company.website}\n"
+"                                </a>\n"
+"                            % endif\n"
+"                          </td>\n"
+"                        </tr>\n"
+"                      </table>\n"
+"                    </td>\n"
+"                  </tr>\n"
+"                  <tr>\n"
+"                    <td align=\"center\">\n"
+"                        Powered by <a target=\"_blank\" href=\"https://www.odoo.com\">Odoo</a>.\n"
+"                    </td>\n"
+"                  </tr>\n"
+"                </tbody>\n"
+"            </table>\n"
+"            </body>\n"
+"            </html>\n"
+"        "
 msgstr ""
 
 #. module: hr_contract_salary
@@ -124,6 +244,18 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Intellectual Property"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"<i class=\"fa fa-1x fa-minus fa-fw\"/> Intellectual Property Income "
+"Deduction"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-minus fa-fw\"/> Meal Vouchers"
 msgstr ""
 
@@ -169,12 +301,22 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Intellectual Property"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Representation Fees"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "<i class=\"fa fa-1x fa-plus fa-fw\"/> Withholding Tax Reductions"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "<i class=\"fa fa-1x fa-puzzle-piece fa-fw fa-lg\"/> Intellectual Property"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -200,8 +342,19 @@ msgstr "<i class=\"fa fa-check-circle-o mr8\"/>Tebrikler"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid ""
-"<span class=\"help-block mt8\" id=\"internet_tooltip\">Your internet "
-"subscription will be paid up to this amount.</span>"
+"<span class=\"help-block mt8\" id=\"internet_tooltip\">Enter the amount of "
+"your internet subscription invoice. If you have a pack only the internet "
+"part of your operator subscription will be paid by the employer.</span>"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"<span class=\"help-block mt8\" id=\"ip_tooltip\">As Odoo invests massively "
+"in developing and writing Intellectual Property content, we benefit from "
+"fiscal ruling allowing us to pay a part of employee's salary as an "
+"intellectual property income instead of a regular salary. This amount will "
+"be paid in cash every month and is less taxed.</span>"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -219,6 +372,14 @@ msgid ""
 "                                                        <span class=\"help-block\" style=\"display: inline;\"> days by the end of the year, you will receive a compensation of approximately </span>\n"
 "                                                        <span class=\"help-block\" style=\"display: inline;\" name=\"compensation_amount\">x</span>\n"
 "                                                        <span class=\"help-block\" style=\"display: inline;\"> €.</span><br/>"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"<span class=\"help-block mt8\">Enter the monthly amount that should be "
+"reimbursed by your employer on transportation (other than public) to go to "
+"work.</span>"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -284,6 +445,11 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
+msgid "<span class=\"o_stat_text\">Reviews</span>"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 msgid "<span class=\"o_stat_text\">Signature Requests</span>"
 msgstr ""
 
@@ -299,12 +465,7 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__active_employee
-msgid "Active"
-msgstr "Aktif"
-
-#. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__additional_note
-msgid "Additional Note"
+msgid "Active Employee"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -314,8 +475,22 @@ msgstr "Adres"
 
 #. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_applicant
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__applicant_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__applicant_id
 msgid "Applicant"
 msgstr "Aday"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Apply Now"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.actions.server,name:hr_contract_salary.ir_cron_clean_redundant_salary_data_ir_actions_server
+#: model:ir.cron,cron_name:hr_contract_salary.ir_cron_clean_redundant_salary_data
+#: model:ir.cron,name:hr_contract_salary.ir_cron_clean_redundant_salary_data
+msgid "Archive/Delete redundant generated salary data"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -328,9 +503,13 @@ msgid "BE10 3631 0709 4104"
 msgstr ""
 
 #. module: hr_contract_salary
-#: selection:hr.employee,certificate:0
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Bachelor"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Bank Account Number:"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -344,13 +523,50 @@ msgid "Batman"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Birth"
+msgstr "Doğum"
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Birthdate"
 msgstr "DoğumGünü"
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Birthdate:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: selection:generate.simulation.link,contract_type:0
+#: selection:hr.contract,contract_type:0
+msgid "CDD"
+msgstr ""
+
+#. module: hr_contract_salary
+#: selection:generate.simulation.link,contract_type:0
+#: selection:hr.contract,contract_type:0
+msgid "CDI"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "CO2 Emission: <span name=\"co2\"/>"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__new_car
+msgid "Can request a new car"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.generate_simulation_link_view_form
+msgid "Cancel"
+msgstr "İptal"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Car:"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -364,14 +580,34 @@ msgid "Certificate"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__certificate
-msgid "Certificate Level"
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Certificate Level:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Citizenship and Other Information"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "City"
 msgstr "Semt/İlçe"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "City:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.actions.act_window,help:hr_contract_salary.action_hr_contract_templates
+msgid "Click here to create new contracts."
+msgstr "Yeni bir sözleşme oluşturmak için tıklayın."
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Commission on Target:"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -384,14 +620,31 @@ msgid "Computer Science"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.generate_simulation_link_view_form
+msgid "Configure the simulation"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__access_token_consumed
 msgid "Consumed Access Token"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Contact Information"
 msgstr "İletişim Bilgisi"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Contract Information:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__contract_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__default_contract_id
+msgid "Contract Template"
+msgstr "Sözleşme Şablonu"
 
 #. module: hr_contract_salary
 #: model:ir.actions.act_window,name:hr_contract_salary.action_hr_contract_templates
@@ -400,13 +653,24 @@ msgid "Contract Templates"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job__contract_update_template_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__contract_type
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__contract_type
+msgid "Contract Type"
+msgstr "Sözleşme Türü"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Contract Type:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__contract_update_template_id
 msgid "Contract Update Document Template"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract__signature_request_template_id
-msgid "Contract template that the employee will have to sign."
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
+msgid "Contracts Reviews"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -415,14 +679,29 @@ msgid "Country"
 msgstr "Ülke"
 
 #. module: hr_contract_salary
-#: model:ir.ui.view,arch_db:hr_contract_salary.hr_applicant_view_form
-msgid "Create Offer"
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Country of Birth:"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.actions.act_window,help:hr_contract_salary.action_hr_contract_templates
-msgid "Create a new contract"
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Country of birth"
 msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Country:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__create_uid
+msgid "Created by"
+msgstr "Oluşturan"
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__create_date
+msgid "Created on"
+msgstr "Oluşturulma"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -435,26 +714,25 @@ msgid "Default Access Token Validity Duration"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_applicant__default_contract_id
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job__default_contract_id
 msgid "Default Contract for New Employees"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_applicant__default_contract_id
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract__default_contract_id
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_job__default_contract_id
 msgid "Default contract used when making an offer to an applicant."
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_job__signature_request_template_id
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract__signature_request_template_id
 msgid ""
 "Default document that the applicant will have to sign to accept a contract "
 "offer."
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_job__contract_update_template_id
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract__contract_update_template_id
 msgid ""
 "Default document that the employee will have to sign to update his contract."
 msgstr ""
@@ -480,6 +758,16 @@ msgid "Disabled Spouse"
 msgstr "Disabled Spouse"
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Disabled Spouse: No"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Disabled Spouse: Yes"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Disabled people <span class=\"help-block\">&amp;le; 65 years old</span>"
 msgstr ""
@@ -490,14 +778,24 @@ msgid "Disabled seniors <span class=\"help-block\">&amp;ge; 65 years old</span>"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Disabled: No"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Disabled: Yes"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__display_name
+msgid "Display Name"
+msgstr "Görünüm Adı"
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Divorced"
 msgstr "Boşanmış"
-
-#. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__signature_request_template_id
-msgid "Document Template"
-msgstr "Belge Şablonu"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -505,7 +803,12 @@ msgid "Doors Number: <span name=\"door_number\"/>"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.ui.view,arch_db:hr_contract_salary.hr_employee_view_form
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Eco Vouchers:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Education"
 msgstr "Eğitim"
 
@@ -515,24 +818,46 @@ msgid "Email"
 msgstr "Eposta"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__emergency_contact
-msgid "Emergency Contact"
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__email_to
+msgid "Email To"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__emergency_phone
-msgid "Emergency Phone"
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Email:"
+msgstr "Email:"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Emergency Contact:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Emergency Phone:"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_employee
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__employee_id
 msgid "Employee"
 msgstr "Personel"
 
 #. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__final_yearly_costs
+msgid "Employee Budget"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_contract
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__employee_contract_id
 msgid "Employee Contract"
 msgstr "Personel Sözleşmesi"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Employee Name:"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -545,9 +870,18 @@ msgid "Female"
 msgstr "Bayan"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__study_field
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Field of Study"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Field of Study:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Fuel Card:"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -566,14 +900,52 @@ msgid "GROSS SALARY"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Gender:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_applicant_view_form
+msgid "Generate Offer Link"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
+msgid "Generate Simulation Link"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.actions.act_window,name:hr_contract_salary.generate_offer_link_action
+#: model:ir.actions.act_window,name:hr_contract_salary.generate_simulation_link_action
+#: model:ir.ui.view,arch_db:hr_contract_salary.generate_simulation_link_view_form
+msgid "Generate a Simulation Link"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Gross"
 msgstr "Brüt"
 
 #. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__hr_responsible_id
 #: model:signature.item.party,name:hr_contract_salary.signature_item_party_job_responsible
 msgid "HR Responsible"
 msgstr "İK Sorumlusu"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Has Another Transport Mode: Yes"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Has Company Car: Yes"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Has Public Transportation: Yes"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package_thank_you
@@ -585,6 +957,36 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Hide <i class=\"fa fa-chevron-up\"/>"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Holiday Bonus:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Holidays:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__id
+msgid "ID"
+msgstr "ID"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "IP percentage:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "IP: No"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Identification No:"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -607,13 +1009,83 @@ msgid "In case of emergency"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__customer_relation
+msgid "In relations with customers"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "International Communication: No"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "International Communication: Yes"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Internet:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Internet: No"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_job
 msgid "Job Position"
 msgstr "İş Pozisyonu"
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Job Position:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__job_title
+msgid "Job Title"
+msgstr "İş Ünvanı"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Job Title:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Km Home to Work"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Km Home-Work:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link____last_update
+msgid "Last Modified on"
+msgstr "Son Güncelleme"
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Last Odometer: <span name=\"odometer\"/>"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__write_uid
+msgid "Last Updated by"
+msgstr "Son Güncelleyen"
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__write_date
+msgid "Last Updated on"
+msgstr "Son Güncelleme"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Legal Cohabitant"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -632,15 +1104,44 @@ msgid "Marital Status"
 msgstr "Medeni Durumu"
 
 #. module: hr_contract_salary
-#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
-msgid "Married / Legal Cohabitant"
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Marital Status:"
 msgstr ""
 
 #. module: hr_contract_salary
-#: selection:hr.employee,certificate:0
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Married"
+msgstr "Evli"
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Master"
 msgstr "Usta"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Meal Vouchers:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Mobile: No"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Mobile: Yes"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__new_car_model_id
+msgid "Model"
+msgstr "Model"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Model:"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -648,6 +1149,7 @@ msgid "Monthly Advantages"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Monthly Advantages in Cash"
 msgstr "Nakit Olarak Aylık Yan Haklar"
@@ -658,6 +1160,7 @@ msgid "Monthly Advantages in Net"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Monthly Benefit in Kind"
 msgstr "Aylık Fayda Çeşidi"
@@ -693,6 +1196,11 @@ msgid "Nationality"
 msgstr "Uyruk (Ülke)"
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Nationality:"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Nature"
 msgstr ""
@@ -708,7 +1216,7 @@ msgid "Net calculation"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_job__signature_request_template_id
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__signature_request_template_id
 msgid "New Contract Document Template"
 msgstr ""
 
@@ -718,7 +1226,7 @@ msgid "No"
 msgstr "Hayır"
 
 #. module: hr_contract_salary
-#: code:addons/hr_contract_salary/controllers/main.py:336
+#: code:addons/hr_contract_salary/controllers/main.py:561
 #, python-format
 msgid ""
 "No HR responsible defined on the job position. Please contact an "
@@ -726,24 +1234,23 @@ msgid ""
 msgstr ""
 
 #. module: hr_contract_salary
-#: code:addons/hr_contract_salary/models/hr_contract.py:110
+#: code:addons/hr_contract_salary/models/hr_contract.py:192
+#: code:addons/hr_contract_salary/wizard/generate_simulation_link.py:123
 #, python-format
 msgid "No home address defined on the employee!"
 msgstr ""
 
 #. module: hr_contract_salary
-#: code:addons/hr_contract_salary/controllers/main.py:333
+#: code:addons/hr_contract_salary/controllers/main.py:558
 #, python-format
 msgid ""
-"No signature template defined on the job position. Please contact the HR "
+"No signature template defined on the contract. Please contact the HR "
 "responsible."
 msgstr ""
 
 #. module: hr_contract_salary
-#. openerp-web
-#: code:addons/hr_contract_salary/static/src/js/hr_contract_salary.js:393
-#, python-format
-msgid "Not a valid e-mail address"
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Number of Children:"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -762,7 +1269,11 @@ msgid "Origin Contract"
 msgstr ""
 
 #. module: hr_contract_salary
-#: selection:hr.employee,certificate:0
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Original Link:"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Other"
 msgstr "Diğer"
@@ -774,8 +1285,29 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Other Transport Mode"
+msgstr ""
+
+#. module: hr_contract_salary
+#: selection:generate.simulation.link,contract_type:0
+#: selection:hr.contract,contract_type:0
+msgid "PFI"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Paid by the employee (Monthly):"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "People <span class=\"help-block\">&amp;le; 65 years old</span>"
 msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract__hr_responsible_id
+msgid "Person responsible of validating the employee's contracts."
+msgstr "Personelin sözleşmesini onaylamakla sorumlu kişi"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -783,8 +1315,28 @@ msgid "Person to call"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Personal Information"
+msgstr "Kişisel Bilgileri"
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Phone number"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Phone:"
+msgstr "Telefon:"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Place of Birth:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Place of birth"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -796,12 +1348,6 @@ msgid ""
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
-#: model:ir.ui.view,arch_db:hr_contract_salary.hr_job_view_form
-msgid "Preview Contract"
-msgstr ""
-
-#. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_applicant__proposed_contracts
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_applicant_view_form
 msgid "Proposed Contracts"
@@ -809,6 +1355,7 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_applicant__proposed_contracts_count
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract__contract_reviews_count
 msgid "Proposed Contracts Count"
 msgstr ""
 
@@ -820,6 +1367,16 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 msgid "Refuse Request"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Reimbursed amount:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Representation Fees:"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -838,9 +1395,13 @@ msgid "Salary Package Configurator"
 msgstr "Maaş Paketi Yapılandıcı"
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__study_school
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "School"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "School:"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -849,13 +1410,13 @@ msgid "Security Token"
 msgstr "Güvenlik Token"
 
 #. module: hr_contract_salary
-#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
-msgid "Send Contract Link"
+#: model:ir.ui.view,arch_db:hr_contract_salary.generate_simulation_link_view_form
+msgid "Send Offer"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
-msgid "Send Offer"
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Send to Responsible"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -874,15 +1435,33 @@ msgid "Signature Request Count"
 msgstr ""
 
 #. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__url
+msgid "Simulation link"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Single"
 msgstr "Bekar"
 
 #. module: hr_contract_salary
-#. openerp-web
-#: code:addons/hr_contract_salary/static/src/js/hr_contract_salary.js:374
-#, python-format
-msgid "Some required fields are not filled"
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Spouse Birthdate"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Spouse Birthdate:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Spouse Complete Name:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Spouse Name and First Name"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -897,8 +1476,48 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "Spouse Professional Situation"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Spouse Professional Situation: With Income greater than 225"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Spouse Professional Situation: With Income greater than 450"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Spouse Professional Situation: With Income less than 225"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Spouse Professional Situation: With Pensions less than 450"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Spouse Professional Situation: Without Income"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "State"
 msgstr "Durum"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "State:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Status"
+msgstr "Durumu"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -911,8 +1530,23 @@ msgid "Street 2"
 msgstr "Adres  2"
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Street2:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Street:"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "TAXABLE INCOME"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "TAXED SALARY"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -930,6 +1564,11 @@ msgstr ""
 msgid ""
 "The number of days you get depends on your working schedule, the number of "
 "days used in your previous job and the number of months worked previously."
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,help:hr_contract_salary.field_hr_contract__signatures_count
+msgid "The number of signatures on the mostly signed pdf contract."
 msgstr ""
 
 #. module: hr_contract_salary
@@ -953,12 +1592,29 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"This is the <b>average salary package</b> for your experience. Top performers get <b>up to 50% more</b>\n"
+"                                        and people below expectations get 20% less."
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Total"
 msgstr "Toplam"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.res_config_settings_view_form
 msgid "Validity duration for salary package requests for new applicants"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__vehicle_id
+msgid "Vehicle"
+msgstr "Araç"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Wage:"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -973,10 +1629,31 @@ msgstr "With Income"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "With Income &gt;= 225 €/month"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "With Income &lt; 225 €/month"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "With Pensions &gt;= 450 €/month"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "With Pensions &lt; 450 €/month"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Without Income"
 msgstr "Without Income"
 
 #. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Yearly Advantages"
 msgstr ""
@@ -1003,8 +1680,25 @@ msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid ""
+"Your gross salary is below the scale. You can change values of the "
+"configurator to increase the gross according to the CP 200 scales."
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
 msgid "Zip Code"
 msgstr "Posta Kodu"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "Zip:"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
+msgid "add me to the waiting list for a new car"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1012,6 +1706,26 @@ msgid "day(s)"
 msgstr "Günler"
 
 #. module: hr_contract_salary
+#: model:ir.model,name:hr_contract_salary.model_generate_simulation_link
+msgid "generate.simulation.link"
+msgstr ""
+
+#. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_res_config_settings
 msgid "res.config.settings"
 msgstr "res.config.settings"
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "€/Worked Day"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "€/month"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
+msgid "€/year"
+msgstr ""

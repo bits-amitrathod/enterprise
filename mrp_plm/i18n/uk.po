@@ -12,10 +12,10 @@
 # Olga Lugova <trolka.olug@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: Olga Lugova <trolka.olug@gmail.com>, 2018\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -444,11 +444,6 @@ msgid "Consumed in Operation"
 msgstr "Спожитий в операції"
 
 #. module: mrp_plm
-#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "Create Alert"
-msgstr "Створити сповіщення"
-
-#. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_bom_action_kanban
 msgid "Create a bill of materials"
 msgstr ""
@@ -666,13 +661,13 @@ msgid "Eco"
 msgstr "Замовлення на інженерні зміни"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:680
+#: code:addons/mrp_plm/models/mrp_eco.py:661
 #, python-format
 msgid "Eco BoM"
 msgstr "Специфікація замовлення на інженерні зміни"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:692
+#: code:addons/mrp_plm/models/mrp_eco.py:673
 #, python-format
 msgid "Eco Routing"
 msgstr "Маршрутизація замовлення на інженерні зміни"
@@ -834,6 +829,12 @@ msgid "If checked, new messages require your attention."
 msgstr "Якщо відмічено, то нові повідомлення будуть потребувати вашої уваги."
 
 #. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_has_error
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_bom__active
 msgid ""
 "If the active field is set to False, it will allow you to hide the bills of "
@@ -956,6 +957,12 @@ msgid "Master Data"
 msgstr "Головні дані"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_has_error
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_ids
 msgid "Messages"
@@ -1071,10 +1078,22 @@ msgid "Number of Actions"
 msgstr "Кількість дій"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_has_error_counter
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_needaction_counter
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr "Кількість повідомлень, які потебують дії"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_has_error_counter
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_unread_counter
@@ -1114,6 +1133,7 @@ msgid "Owner"
 msgstr "Власник"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_res_users__group_mrp_plm_user
 #: model:ir.module.category,name:mrp_plm.module_category_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_root
 msgid "PLM"
@@ -1607,6 +1627,7 @@ msgid "User"
 msgstr "Користувач"
 
 #. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_res_users
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template__user_ids
 msgid "Users"
 msgstr "Користувачі"
@@ -1673,12 +1694,6 @@ msgid "Work Centers"
 msgstr "Робочі центри"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:661
-#, python-format
-msgid "Workorder Messages"
-msgstr "Повідомлення робочого замовлення"
-
-#. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:487
 #, python-format
 msgid "You cannot change the stage, as approvals are required in the process."
@@ -1694,6 +1709,13 @@ msgstr "Ви не можете змінити етап, оскільки зат�
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "e.g. Engineering Department"
 msgstr "напр. Інженерний департамент"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_res_users__group_mrp_plm_user
+msgid ""
+"group_plm_user: The PLM user uses products lifecycle management\n"
+"group_plm_manager: The PLM manager manages products lifecycle management"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom_line

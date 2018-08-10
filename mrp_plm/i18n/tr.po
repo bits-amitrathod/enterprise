@@ -14,10 +14,10 @@
 # UNIBRAVO SOFTWARE <unibravo@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: UNIBRAVO SOFTWARE <unibravo@gmail.com>, 2018\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -446,11 +446,6 @@ msgid "Consumed in Operation"
 msgstr "Operasyonda Tüketilenler"
 
 #. module: mrp_plm
-#: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "Create Alert"
-msgstr "Alarm Oluştur"
-
-#. module: mrp_plm
 #: model:ir.actions.act_window,help:mrp_plm.mrp_bom_action_kanban
 msgid "Create a bill of materials"
 msgstr ""
@@ -668,13 +663,13 @@ msgid "Eco"
 msgstr "Eco"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:680
+#: code:addons/mrp_plm/models/mrp_eco.py:661
 #, python-format
 msgid "Eco BoM"
 msgstr "Eco BoM"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:692
+#: code:addons/mrp_plm/models/mrp_eco.py:673
 #, python-format
 msgid "Eco Routing"
 msgstr "Eco Rota"
@@ -836,6 +831,12 @@ msgid "If checked, new messages require your attention."
 msgstr "İşaretliyse, yeni mesajlar dikkatinize sunulacak."
 
 #. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_has_error
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_bom__active
 msgid ""
 "If the active field is set to False, it will allow you to hide the bills of "
@@ -958,6 +959,12 @@ msgid "Master Data"
 msgstr "Ana Veri"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_has_error
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_ids
 msgid "Messages"
@@ -1073,10 +1080,22 @@ msgid "Number of Actions"
 msgstr "Eylemlerin Sayısı"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_has_error_counter
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_needaction_counter
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr "Eylem gerektiren mesaj sayısı"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_has_error_counter
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_unread_counter
@@ -1115,6 +1134,7 @@ msgid "Owner"
 msgstr "Sahibi"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_res_users__group_mrp_plm_user
 #: model:ir.module.category,name:mrp_plm.module_category_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_root
 msgid "PLM"
@@ -1607,6 +1627,7 @@ msgid "User"
 msgstr "Kullanıcı"
 
 #. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_res_users
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template__user_ids
 msgid "Users"
 msgstr "Kullanıcılar"
@@ -1673,12 +1694,6 @@ msgid "Work Centers"
 msgstr "İş Merkezleri"
 
 #. module: mrp_plm
-#: code:addons/mrp_plm/models/mrp_eco.py:661
-#, python-format
-msgid "Workorder Messages"
-msgstr "İş Emri Mesajları"
-
-#. module: mrp_plm
 #: code:addons/mrp_plm/models/mrp_eco.py:487
 #, python-format
 msgid "You cannot change the stage, as approvals are required in the process."
@@ -1694,6 +1709,13 @@ msgstr "Aşamayı değiştiremezsiniz, çünkü onaylar yine de gereklidir."
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "e.g. Engineering Department"
 msgstr "Örn. Mühendislik Departmanı"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_res_users__group_mrp_plm_user
+msgid ""
+"group_plm_user: The PLM user uses products lifecycle management\n"
+"group_plm_manager: The PLM manager manages products lifecycle management"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom_line

@@ -13,10 +13,10 @@
 # Eric Geens <ericgeens@yahoo.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: Eric Geens <ericgeens@yahoo.com>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -53,8 +53,8 @@ msgstr "<strong>Succes!</strong>Uw account is succesvol geüpdatet."
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid ""
-"<strong>Well done!</strong> Your banking institution is now synchronized "
-"with Odoo."
+"<strong>Well done!</strong> Your banking institution is now connected to "
+"Odoo."
 msgstr ""
 
 #. module: account_online_sync
@@ -112,6 +112,12 @@ msgid "Action Required"
 msgstr "Actie vereist"
 
 #. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:322
+#, python-format
+msgid "Add a Bank Account"
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.online_provider_account_form_view
 msgid "Additional information"
 msgstr "Aanvullende informatie"
@@ -121,6 +127,12 @@ msgstr "Aanvullende informatie"
 #, python-format
 msgid "An error occurred during online synchronization"
 msgstr "Een fout is opgetreden tijdens de online synchronisatie"
+
+#. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:279
+#, python-format
+msgid "Automated Bank Synchronization"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__balance
@@ -134,11 +146,6 @@ msgid "Bank Accounts"
 msgstr "Bankrekeningen"
 
 #. module: account_online_sync
-#: model:ir.model.fields,field_description:account_online_sync.field_account_journal__bank_statements_source
-msgid "Bank Feeds"
-msgstr "Bank feeds"
-
-#. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_bank_statement
 msgid "Bank Statement"
 msgstr "Bankafschrift"
@@ -147,11 +154,6 @@ msgstr "Bankafschrift"
 #: model:ir.model,name:account_online_sync.model_account_bank_statement_line
 msgid "Bank Statement Line"
 msgstr "Bankafschriftregel"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statements_source:0
-msgid "Bank Synchronization"
-msgstr "Bank synchronisatie"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -169,6 +171,11 @@ msgid "Code to identify problem"
 msgstr "Code om probleem te identificeren"
 
 #. module: account_online_sync
+#: model:ir.model,name:account_online_sync.model_res_company
+msgid "Companies"
+msgstr "Bedrijven"
+
+#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__company_id
 msgid "Company"
 msgstr "Bedrijf"
@@ -180,34 +187,15 @@ msgid "Configure"
 msgstr "Configureren"
 
 #. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create bi-monthly statements"
-msgstr "Maak één afschrift per twee maanden"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create daily statements"
-msgstr "Maak dagelijks een afschrift"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create monthly statements"
-msgstr "Maak maandelijks een afschrift"
+#: code:addons/account_online_sync/models/online_sync.py:161
+#, python-format
+msgid "Create a Bank Account"
+msgstr "Maak een bankrekening"
 
 #. module: account_online_sync
 #: selection:account.online.link.wizard,action:0
 msgid "Create new journal"
 msgstr "Maak nieuw dagboek"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create one statement per synchronization"
-msgstr "Maak een afschrift per synchronisatie"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statement_creation:0
-msgid "Create weekly statements"
-msgstr "Maak elke week een afschrift"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__create_uid
@@ -227,8 +215,16 @@ msgstr "Aangemaakt op"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal__bank_statement_creation
-msgid "Creation of bank statement"
-msgstr "Aanmaak van bank afschrift"
+msgid "Creation of Bank Statements"
+msgstr "Aanmaken van bankafschriften"
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_journal__bank_statement_creation
+msgid ""
+"Defines when a new bank statement\n"
+"                                               will be created when fetching new transactions\n"
+"                                               from your bank account."
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__display_name
@@ -257,11 +253,6 @@ msgstr "Mislukt"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__sync_date
 msgid "Fetch transaction from"
 msgstr "Haal transacties op van"
-
-#. module: account_online_sync
-#: selection:account.journal,bank_statements_source:0
-msgid "File Import"
-msgstr "Bestand import"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_follower_ids
@@ -314,6 +305,11 @@ msgid "If checked, new messages require your attention."
 msgstr "Indien aangevinkt vragen nieuwe berichten uw aandacht."
 
 #. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__name
 msgid "Institution"
 msgstr "Instelling"
@@ -341,6 +337,11 @@ msgstr "Kasboek"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__name
 msgid "Journal Name"
 msgstr "Naam dagboek"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__journal_statements_creation
+msgid "Journal Statements Creation"
+msgstr ""
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal____last_update
@@ -379,12 +380,12 @@ msgstr "Laatste synchronisatie"
 #. module: account_online_sync
 #: model:ir.model,name:account_online_sync.model_account_online_link_wizard
 msgid "Link a particular synchronized account to a journal"
-msgstr ""
+msgstr "Link een specifiek gesynchroniseerde rekening aan een dagboek"
 
 #. module: account_online_sync
 #: selection:account.online.link.wizard,action:0
 msgid "Link to existing journal"
-msgstr ""
+msgstr "Link naar bestaand dagboek"
 
 #. module: account_online_sync
 #: model:ir.actions.act_window,help:account_online_sync.action_online_provider_account
@@ -401,6 +402,11 @@ msgstr "Handmatig verversen"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__message
 msgid "Message"
 msgstr "Bericht"
+
+#. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_has_error
+msgid "Message Delivery error"
+msgstr "Bericht aflever fout"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_ids
@@ -424,10 +430,18 @@ msgid "Next synchronization"
 msgstr "Volgende synchronisatie"
 
 #. module: account_online_sync
+#: code:addons/account_online_sync/models/company.py:21
+#, python-format
+msgid ""
+"No bank journal could be found! Please install a chart of accounts first, in"
+" order to create one."
+msgstr ""
+
+#. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:109
 #, python-format
 msgid "No new transactions have been loaded in the system."
-msgstr ""
+msgstr "Er zijn geen nieuwe transacties ingeladen in het systeem."
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__number_added
@@ -440,9 +454,19 @@ msgid "Number of Actions"
 msgstr "Aantal acties"
 
 #. module: account_online_sync
+#: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__message_has_error_counter
+msgid "Number of error"
+msgstr "Aantal foutmeldingen"
+
+#. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr "Aantal berichten die actie vereisen"
+
+#. module: account_online_sync
+#: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Aantal berichten met leveringsfout"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_unread_counter
@@ -464,18 +488,20 @@ msgstr "Online identifier"
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_online_provider_account
 msgid "Online Institution Accounts"
-msgstr ""
+msgstr "Online instellingen accounts"
 
 #. module: account_online_sync
+#: code:addons/account_online_sync/models/online_sync.py:337
 #: model:ir.ui.menu,name:account_online_sync.menu_action_online_provider_account
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_form_inherit_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
+#, python-format
 msgid "Online Synchronization"
 msgstr "Online synchronisatie"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:357
+#: code:addons/account_online_sync/models/online_sync.py:410
 #, python-format
 msgid "Opening statement: first synchronization"
 msgstr "Initieel afschrift: eerste synchronisatie"
@@ -489,15 +515,17 @@ msgstr "Plaid"
 #: code:addons/account_online_sync/models/online_sync.py:82
 #, python-format
 msgid "Please enter at least a character for the search"
-msgstr ""
+msgstr "Gelieve minimaal één karakter in te geven voor het zoeken"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:223
+#: code:addons/account_online_sync/models/online_sync.py:247
 #, python-format
 msgid ""
 "Please link your accounts to a journal or select \"do not link\" as action "
 "to do"
 msgstr ""
+"Gelieve uw rekeningen te koppelen aan een dagboek of selecteer \"niet "
+"koppelen\" als actie om"
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
@@ -530,22 +558,11 @@ msgid "Provider for online account synchronization"
 msgstr "Provider for online rekening synchronisatie"
 
 #. module: account_online_sync
-#: selection:account.journal,bank_statements_source:0
-msgid "Record Manually"
-msgstr "Handmatig invoeren"
-
-#. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:281
-#, python-format
-msgid "Select your institution"
-msgstr ""
-
-#. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:76
 #: code:addons/account_online_sync/models/online_sync.py:90
 #, python-format
 msgid "Server not reachable, please try again later"
-msgstr ""
+msgstr "Server niet bereikbaar, probeer het later opnieuw"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_wizard__status
@@ -565,7 +582,7 @@ msgstr "Succes"
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_account_online_wizard_form
 msgid "Synchronization result"
-msgstr ""
+msgstr "Synchronisatie resultaat"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal__synchronization_status
@@ -597,7 +614,7 @@ msgstr "Technische veld om tabel te verbergen in weergave"
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "The account has been linked to your bank journal."
-msgstr ""
+msgstr "De rekening is gelinkt aan uw bank dagboek."
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:63
@@ -609,18 +626,7 @@ msgstr "De volgende fout is opgetreden tijdens synchronisatie: %s"
 #: code:addons/account_online_sync/models/online_sync.py:105
 #, python-format
 msgid "The following transactions have been loaded in the system."
-msgstr ""
-
-#. module: account_online_sync
-#: model:ir.model.fields,help:account_online_sync.field_account_journal__bank_statement_creation
-msgid ""
-"This field is used for the online synchronization:\n"
-"                                                    depending on the option selected, newly fetched transactions\n"
-"                                                    will be put inside previous statement or in a new one"
-msgstr ""
-"Dit veld wordt gebruikt voor de online synchronisatie:\n"
-"gebaseerd op de geselecteerde optie, worden nieuw opgehaalde transacties\n"
-"in het vorige of een nieuw afschrift gezet"
+msgstr "De volgende transacties zijn ingeladen in het systeem."
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:74
@@ -642,12 +648,7 @@ msgstr ""
 "rekening"
 
 #. module: account_online_sync
-#: selection:account.journal,bank_statements_source:0
-msgid "Undefined"
-msgstr "Niet gedefinieerd"
-
-#. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:189
+#: code:addons/account_online_sync/models/online_sync.py:201
 #, python-format
 msgid "Unimplemented"
 msgstr "Niet geïmplementeerd"
@@ -712,10 +713,10 @@ msgid ""
 msgstr ""
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:225
+#: code:addons/account_online_sync/models/online_sync.py:249
 #, python-format
 msgid "You can not link two accounts to the same journal"
-msgstr ""
+msgstr "U kan geen twee rekeningen koppelen aan hetzelfde dagboek"
 
 #. module: account_online_sync
 #: selection:account.online.wizard,method:0
@@ -745,7 +746,7 @@ msgid "name of the banking institution"
 msgstr "naam van de bank"
 
 #. module: account_online_sync
-#: code:addons/account_online_sync/models/online_sync.py:403
+#: code:addons/account_online_sync/models/online_sync.py:456
 #, python-format
 msgid "online sync"
 msgstr "online sync"
@@ -764,14 +765,14 @@ msgstr "transacties geladen"
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid ""
-"your account because of the following \n"
+"your account because of the following\n"
 "                    error during the process:"
 msgstr ""
 
 #. module: account_online_sync
 #: model:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid ""
-"your account was not \n"
+"your account was not\n"
 "                    thoroughly completed. You can try to manually update your account by clicking the refresh button on the dashboard\n"
 "                    or in the online synchronization menu."
 msgstr ""

@@ -10,10 +10,10 @@
 # ТАрас <tratatuta@i.ua>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
 "Last-Translator: ТАрас <tratatuta@i.ua>, 2018\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -78,6 +78,11 @@ msgstr "Документи"
 #: selection:delivery.carrier,usps_delivery_nature:0
 msgid "Domestic"
 msgstr "Вітчизняний"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "Easypost"
+msgstr ""
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/delivery_usps.py:104
@@ -305,7 +310,7 @@ msgid "Provider"
 msgstr "Провайдер"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:367
+#: code:addons/delivery_usps/models/usps_request.py:372
 #, python-format
 msgid "Recipient address cannot be found. Please check the address exists."
 msgstr ""
@@ -348,13 +353,13 @@ msgid "Sample"
 msgstr "Зразок"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:165
+#: code:addons/delivery_usps/models/delivery_usps.py:169
 #, python-format
 msgid "Shipment N° %s has been cancelled"
 msgstr "Відвантаження № %s було закрито"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:145
+#: code:addons/delivery_usps/models/delivery_usps.py:149
 #, python-format
 msgid "Shipment created into USPS <br/> <b>Tracking Number : </b>%s"
 msgstr "Відвантаження створено в USPS <br/> <b>Номер відслідковування: </b>%s"
@@ -405,7 +410,7 @@ msgstr ""
 " %s)"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:166
+#: code:addons/delivery_usps/models/usps_request.py:167
 #, python-format
 msgid "The selected USPS service (%s) cannot be used to deliver this package."
 msgstr ""
@@ -435,12 +440,12 @@ msgstr "Тип контейнера"
 #. module: delivery_usps
 #: selection:delivery.carrier,delivery_type:0
 msgid "UPS"
-msgstr ""
+msgstr "UPS"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,delivery_type:0
 msgid "USPS"
-msgstr ""
+msgstr "USPS"
 
 #. module: delivery_usps
 #: model:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
@@ -518,7 +523,7 @@ msgid "Usps Size Container"
 msgstr "Розмір контейнера Usps "
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:369
+#: code:addons/delivery_usps/models/usps_request.py:374
 #, python-format
 msgid "Your company or recipient ZIP code is incorrect."
 msgstr "Ваша компанія чи поштовий індекс отримувача невірні."
@@ -526,7 +531,7 @@ msgstr "Ваша компанія чи поштовий індекс отрим�
 #. module: delivery_usps
 #: selection:delivery.carrier,delivery_type:0
 msgid "bpost"
-msgstr ""
+msgstr "bpost"
 
 #. module: delivery_usps
 #: model:product.product,weight_uom_name:delivery_usps.product_product_delivery_usps_domestic

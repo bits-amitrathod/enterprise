@@ -14,13 +14,14 @@
 # liAnGjiA <liangjia@qq.com>, 2018
 # waveyeung <waveyeung@qq.com>, 2018
 # e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018
+# Xu Lei <xulei8@qq.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
-"Last-Translator: e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
+"Last-Translator: Xu Lei <xulei8@qq.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -238,6 +239,7 @@ msgstr "评估：运行员工评估"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_count
+#: model:ir.model.fields,field_description:hr_appraisal.field_res_users__group_hr_appraisal_user
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_department_view_kanban
 msgid "Appraisals"
 msgstr "评价"
@@ -334,8 +336,13 @@ msgstr "创建时间"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
-msgid "Creation Month"
-msgstr "创建月份"
+msgid "Creation Date"
+msgstr "创建日期"
+
+#. module: hr_appraisal
+#: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
+msgid "Date"
+msgstr "日期"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report__deadline
@@ -500,6 +507,11 @@ msgid "If checked, new messages require your attention."
 msgstr "如果勾选此项，有新消息会提醒你。"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__action_plan
 msgid ""
 "If the evaluation does not meet the expectations, you can propose an action "
@@ -566,13 +578,17 @@ msgid "Meeting"
 msgstr "会议"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_ids
 msgid "Messages"
 msgstr "消息"
 
 #. module: hr_appraisal
 #: selection:hr.employee,appraisal_frequency_unit:0
-#: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "Month"
 msgstr "月"
 
@@ -622,9 +638,19 @@ msgid "Number of Sent Forms"
 msgstr "已发送表单数量"
 
 #. module: hr_appraisal
+#: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr "需要行动消息的数量"
+
+#. module: hr_appraisal
+#: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_unread_counter
@@ -818,6 +844,11 @@ msgstr "未读消息"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_unread_counter
 msgid "Unread Messages Counter"
 msgstr "未读消息计数器"
+
+#. module: hr_appraisal
+#: model:ir.model,name:hr_appraisal.model_res_users
+msgid "Users"
+msgstr "用户"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__website_message_ids

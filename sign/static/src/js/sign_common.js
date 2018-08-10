@@ -385,6 +385,10 @@ odoo.define('sign.utils', function (require) {
         return getResponsibleSelectConfiguration.configuration;
     }
 
+    function resetResponsibleSelectConfiguration() {
+        getResponsibleSelectConfiguration.configuration = undefined;
+    }
+
     function setAsResponsibleSelect($select, selected, parties) {
         var configuration = getResponsibleSelectConfiguration(parties);
 
@@ -399,6 +403,7 @@ odoo.define('sign.utils', function (require) {
 
     return {
         setAsResponsibleSelect: setAsResponsibleSelect,
+        resetResponsibleSelectConfiguration: resetResponsibleSelectConfiguration,
     };
 });
 
