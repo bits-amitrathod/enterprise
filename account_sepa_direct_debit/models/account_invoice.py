@@ -10,14 +10,14 @@ class AccountInvoice(models.Model):
 
     sdd_paying_mandate_id = fields.Many2one(comodel_name='sdd.mandate', help="Once this invoice has been paid with Direct Debit, contains the mandate that allowed the payment.", copy=False)
 
+
     def invoice_validate(self):
         """ Overridden to automatically trigger the payment of the invoice if a
         mandate is available.
         """
         super(AccountInvoice, self).invoice_validate()
-        for record in self:
-            if record.residual == 0 or record.type in ['out_refund', 'in_invoice']:
-                continue
+
+        for record in self.filtered(lambda x: x.type in ['in_refund', 'out_invoice'] and x.residual != 0):
             usable_mandate = record._get_usable_mandate()
             if usable_mandate:
                 record.sdd_paying_mandate_id = usable_mandate
@@ -43,7 +43,7 @@ class AccountInvoice(models.Model):
                                                       'amount': self.residual,
                                                       'currency_id': self.currency_id.id,
                                                       'payment_type': 'inbound',
-                                                      'communication': self.number,
+                                                      'communication': self.reference or self.number,
                                                       'partner_type': 'customer',
                                                       'partner_id': mandate.partner_id.commercial_partner_id.id,
                                                       'payment_date': self.date_due or self.date_invoice})

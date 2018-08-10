@@ -21,21 +21,6 @@ def check_valid_SEPA_str(string):
             "0 1 2 3 4 5 6 7 8 9\n"
             "/ - ? : ( ) . , ' + (space)"))
 
-def prepare_SEPA_string(string):
-    """ Make string comply with the recomandations of the EPC. See section 1.4 (Character Set) of document
-        'sepa credit transfer scheme customer-to-bank implementation guidelines', issued by The European Payment Council.
-    """
-    if not string:
-        return ''
-    while '//' in string:  # No double slash allowed
-        string = string.replace('//', '/')
-    while string.startswith('/'):  # No leading slash allowed
-        string = string[1:]
-    while string.endswith('/'):  # No ending slash allowed
-        string = string[:-1]
-    string = re.sub('[^-A-Za-z0-9/?:().,\'+ ]', '', string)  # Only keep allowed characters
-    return string
-
 
 class AccountBatchPayment(models.Model):
     _inherit = 'account.batch.payment'
@@ -92,15 +77,34 @@ class AccountBatchPayment(models.Model):
         rslt.append('sepa_ct')
         return rslt
 
-    def _generate_export_file(self):
+    def validate_batch(self):
         if self.payment_method_code == 'sepa_ct':
             if self.journal_id.bank_account_id.acc_type != 'iban':
-                raise UserError(_("The account %s, of journal '%s', is not of type IBAN.\nA valid IBAN account is required to use SEPA features.") % (self.journal_id.bank_account_id.acc_number, self.journal_id.name))
+                    raise UserError(_("The account %s, of journal '%s', is not of type IBAN.\nA valid IBAN account is required to use SEPA features.") % (self.journal_id.bank_account_id.acc_number, self.journal_id.name))
 
-            payments = self.payment_ids.sorted(key=lambda r: r.id)
-            for payment in payments:
+            no_bank_acc_payments = self.env['account.payment']
+            wrong_comm_payments = self.env['account.payment']
+            for payment in self.payment_ids:
                 if not payment.partner_bank_account_id:
-                    raise UserError(_("There is no bank account selected for payment '%s'") % payment.name)
+                    no_bank_acc_payments += payment
+                if payment.communication and (len(payment.communication) > 140 or payment.communication != wrong_comm_payments._sanitize_communication(payment.communication)):
+                    wrong_comm_payments += payment
+
+            no_bank_acc_error_format = _("The following payments have no recipient bank account set: %s. \n\n")
+            wrong_comm_error_format = _("""The following payments' communications are not SEPA compliant: %s.
+                                         To be SEPA compliant, a communication must be made of only latin characters, be maximum 140 characters long, and cannot contain '//' sequence, nor start or end with a / character.""")
+            error_message = ''
+            error_message += no_bank_acc_payments and no_bank_acc_error_format % ', '.join(no_bank_acc_payments.mapped('name')) or ''
+            error_message += wrong_comm_payments and wrong_comm_error_format % ', '.join(wrong_comm_payments.mapped('name')) or ''
+
+            if error_message:
+                raise UserError(error_message)
+
+        return super(AccountBatchPayment, self).validate_batch()
+
+    def _generate_export_file(self):
+        if self.payment_method_code == 'sepa_ct':
+            payments = self.payment_ids.sorted(key=lambda r: r.id)
 
             if self.journal_id.company_id.sepa_pain_version == 'pain.001.001.03.ch.02':
                 xml_doc = self._create_pain_001_001_03_ch_document(payments)
@@ -158,7 +162,7 @@ class AccountBatchPayment(models.Model):
         GrpHdr = etree.SubElement(CstmrCdtTrfInitn, "GrpHdr")
         MsgId = etree.SubElement(GrpHdr, "MsgId")
         val_MsgId = str(int(time.time() * 100))[-10:]
-        val_MsgId = prepare_SEPA_string(self.journal_id.company_id.name[-15:]) + val_MsgId
+        val_MsgId = self.env['account.payment']._sanitize_communication(self.journal_id.company_id.name[-15:]) + val_MsgId
         val_MsgId = str(random.random()) + val_MsgId
         val_MsgId = val_MsgId[-30:]
         MsgId.text = val_MsgId
@@ -220,9 +224,10 @@ class AccountBatchPayment(models.Model):
         ret = []
         company = self.journal_id.company_id
         name_length = self.sct_generic and 35 or 70
+        payment_model = self.env['account.payment']
 
         Nm = etree.Element("Nm")
-        Nm.text = prepare_SEPA_string(company.sepa_initiating_party_name[:name_length])
+        Nm.text = payment_model._sanitize_communication(company.sepa_initiating_party_name[:name_length])
         ret.append(Nm)
 
         if postal_address and company.partner_id.city and company.partner_id.country_id.code:
@@ -231,10 +236,10 @@ class AccountBatchPayment(models.Model):
             Ctry.text = company.partner_id.country_id.code
             if company.partner_id.street:
                 AdrLine = etree.SubElement(PstlAdr, "AdrLine")
-                AdrLine.text = prepare_SEPA_string(company.partner_id.street)
+                AdrLine.text = payment_model._sanitize_communication(company.partner_id.street)
             if company.partner_id.zip and company.partner_id.city:
                 AdrLine = etree.SubElement(PstlAdr, "AdrLine")
-                AdrLine.text = prepare_SEPA_string(company.partner_id.zip) + " " + prepare_SEPA_string(company.partner_id.city)
+                AdrLine.text = payment_model._sanitize_communication(company.partner_id.zip) + " " + payment_model._sanitize_communication(company.partner_id.city)
             ret.append(PstlAdr)
 
         if org_id and company.sepa_orgid_id:
@@ -242,10 +247,10 @@ class AccountBatchPayment(models.Model):
             OrgId = etree.SubElement(Id, "OrgId")
             Othr = etree.SubElement(OrgId, "Othr")
             _Id = etree.SubElement(Othr, "Id")
-            _Id.text = prepare_SEPA_string(company.sepa_orgid_id)
+            _Id.text = payment_model._sanitize_communication(company.sepa_orgid_id)
             if company.sepa_orgid_issr:
                 Issr = etree.SubElement(Othr, "Issr")
-                Issr.text = prepare_SEPA_string(company.sepa_orgid_issr)
+                Issr.text = payment_model._sanitize_communication(company.sepa_orgid_issr)
             ret.append(Id)
 
         return ret
@@ -286,7 +291,7 @@ class AccountBatchPayment(models.Model):
         CdtTrfTxInf = etree.Element("CdtTrfTxInf")
         PmtId = etree.SubElement(CdtTrfTxInf, "PmtId")
         InstrId = etree.SubElement(PmtId, "InstrId")
-        InstrId.text = prepare_SEPA_string(payment.name)
+        InstrId.text = payment._sanitize_communication(payment.name)
         EndToEndId = etree.SubElement(PmtId, "EndToEndId")
         EndToEndId.text = (PmtInfId.text + str(payment.id))[-30:]
         Amt = etree.SubElement(CdtTrfTxInf, "Amt")
@@ -301,7 +306,7 @@ class AccountBatchPayment(models.Model):
         CdtTrfTxInf.append(self._get_CdtrAgt(payment.partner_bank_account_id))
         Cdtr = etree.SubElement(CdtTrfTxInf, "Cdtr")
         Nm = etree.SubElement(Cdtr, "Nm")
-        Nm.text = prepare_SEPA_string((payment.partner_bank_account_id.acc_holder_name or payment.partner_id.name)[:70])
+        Nm.text = payment._sanitize_communication((payment.partner_bank_account_id.acc_holder_name or payment.partner_id.name)[:70])
         if payment.payment_type == 'transfer':
             CdtTrfTxInf.append(self._get_CdtrAcct(payment.destination_journal_id.bank_account_id))
         else:
@@ -349,5 +354,5 @@ class AccountBatchPayment(models.Model):
             return False
         RmtInf = etree.Element("RmtInf")
         Ustrd = etree.SubElement(RmtInf, "Ustrd")
-        Ustrd.text = prepare_SEPA_string(payment.communication)
+        Ustrd.text = payment._sanitize_communication(payment.communication)
         return RmtInf

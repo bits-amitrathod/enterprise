@@ -2,7 +2,6 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from .account_batch_payment import check_valid_SEPA_str
 
 
 class AccountAbstractPayment(models.AbstractModel):
@@ -25,16 +24,6 @@ class AccountPayment(models.Model):
     _inherit = "account.payment"
 
     partner_bank_account_id = fields.Many2one('res.partner.bank', string="Recipient Bank Account")
-
-    @api.one
-    @api.constrains('payment_method_id', 'communication')
-    def _check_communication_sepa(self):
-        if self.payment_method_id == self.env.ref('account_sepa.account_payment_method_sepa_ct'):
-            if not self.communication:
-                return
-            if len(self.communication) > 140:
-                raise ValidationError(_("A SEPA communication cannot exceed 140 characters"))
-            check_valid_SEPA_str(self.communication)
 
     @api.one
     @api.constrains('payment_method_id', 'journal_id')
