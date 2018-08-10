@@ -373,6 +373,54 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('List grouped', function (assert) {
+        assert.expect(9);
+
+        this.data.coucou.fields.croissant = {string: "Croissant", type: "integer"};
+        this.data.coucou.records = [{id: 1, display_name: 'Red Right Hand', priority: '1', croissant: 3},
+                                    {id: 2, display_name: 'Hell Broke Luce', priority: '1', croissant: 5}];
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='croissant' sum='Total Croissant'/></tree>",
+            groupBy: ['priority'],
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 2,
+            "there should be two nodes");
+        assert.strictEqual(vem.$('table thead th.o_web_studio_hook').length, 3,
+            "there should be three hooks (before & after the field and one before the group names)");
+
+        var $group = vem.$('.o_web_studio_list_view_editor table tbody .o_group_name');
+        assert.equal($group.length, 1, 'There should be one group');
+        assert.equal($group.text(), 'Low (2)',
+            'The group should have the right name');
+
+        // Nothing should happen at all when clicking on a group name
+        assert.ok(vem.$('.o_web_studio_sidebar').find('.o_web_studio_new_fields').length,
+            "The new field panel should be present");
+        $group.click();
+        assert.ok(vem.$('.o_web_studio_sidebar').find('.o_web_studio_new_fields').length,
+            "The new field panel should still be present");
+
+        var expectedCroissantIndex = 3;
+
+        var $headerCells = vem.$('.o_web_studio_list_view_editor table thead th');
+        assert.equal($headerCells.eq(expectedCroissantIndex).text(), 'Croissant',
+            'The header of the aggregate should have the right name');
+
+        var $bodyCells = vem.$('.o_web_studio_list_view_editor table tbody').find('th, td');
+        assert.equal($bodyCells.eq(expectedCroissantIndex).text(), '8',
+            'The body of the aggregate should have the right value');
+
+        var $footerCells = vem.$('.o_web_studio_list_view_editor table tfoot').find('th, td');
+        assert.equal($footerCells.eq(expectedCroissantIndex).text(), '8',
+            'The footer of the aggregate should have the right value');
+
+        vem.destroy();
+    });
+
     QUnit.test('move a field in list', function (assert) {
         assert.expect(3);
         var arch = "<tree>" +
