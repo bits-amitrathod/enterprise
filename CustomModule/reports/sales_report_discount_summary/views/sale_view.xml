@@ -1,44 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="sale_discount_summary_report_form_view" model="ir.ui.view">
-            <field name="name">sale.discount.summary.report.form.view</field>
-            <field name="model">sale.discount.report</field>
-            <field name="arch" type="xml">
-                <form string="Sales Report Discount Summary">
-                    <group>
-                        <group>
-                            <field name="start_date"/>
-                            <field name="product_id" widget="many2many_tags"/>
-                        </group>
-                        <group>
-                            <field name="end_date"/>
 
-                        </group>
-                    </group>
-
-                    <footer>
-                        <button name="print_discountsummary_vise_report" string="Print Report" class="oe_highlight"
-                                type="object"/>
-                        Or
-                        <button string="Cancel" class="btn-default" special="cancel"/>
-                    </footer>
-                </form>
+        <record model="ir.actions.server" id="action_discount_summary_server">
+            <field name="name"> Discount Summary</field>
+            <field name="model_id" ref="model_sale_discount_report"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.print_discountsummary_vise_report()
             </field>
-        </record>
-
-        <record id="action_sale_discount_summary_report_wizard" model="ir.actions.act_window">
-            <field name="name">Sales Report Discount summary </field>
-            <field name="res_model">sale.discount.report</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
-            <field name="view_id" ref="sale_discount_summary_report_form_view" />
-        </record>
+         </record>
 
         <menuitem id="sr_menu_sale_report_salesperson_wizard"
                   name="Sales Discount summary Report"
-                  action="action_sale_discount_summary_report_wizard"
+                  action="action_discount_summary_server"
                   parent="sale.menu_sale_report"
                   sequence="1"/>
     </data>

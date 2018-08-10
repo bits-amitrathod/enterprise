@@ -11,23 +11,17 @@
                             <h4>Sales Report Compare By Month</h4>
                         </b>
                     </center>
-                    <center>
-                       <!-- <b>
-                            <span t-esc="start_date"/>
-                            To
-                            <span t-esc="end_date"/>
-                        </b>-->
-                    </center>
                     </div>
                     <br/>
                     <table class="table table-condensed" style="border: 1px solid black;">
                             <thead>
                                 <tr style="border: 1px solid black;">
                                     <th style="border: 1px solid black;">product Name </th>
-                                    <th style="border: 1px solid black;">current_month_total_qty</th>
-                                    <th style="border: 1px solid black;">current_month_total_amount</th>
-                                    <th style="border: 1px solid black;">last_month_total_qty</th>
-                                    <th style="border: 1px solid black;">last_month_total_amount</th>
+                                    <th style="border: 1px solid black;">Last Month Qty</th>
+                                    <th style="border: 1px solid black;">Last Month Price</th>
+                                    <th style="border: 1px solid black;">Current Month Qty</th>
+                                    <th style="border: 1px solid black;">Current Month Price</th>
+
                                 </tr>
 
                                 <t t-foreach="data.keys()" t-as="user">
@@ -36,19 +30,20 @@
                                         <td style="border: 1px solid black;">
                                             <span t-esc="order[0]"/>
                                         </td>
+                                         <td style="border: 1px solid black;">
+                                            <span t-esc="order[3]"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            $<span t-esc="order[4]"/>
+                                        </td>
 
                                         <td style="border: 1px solid black;">
                                             <span t-esc="order[1]"/>
                                         </td>
                                         <td style="border: 1px solid black;">
-                                            <span t-esc="order[2]"/>
+                                            $<span t-esc="order[2]"/>
                                         </td>
-                                        <td style="border: 1px solid black;">
-                                            <span t-esc="order[3]"/>
-                                        </td>
-                                        <td style="border: 1px solid black;">
-                                            <span t-esc="order[4]"/>
-                                        </td>
+
                                     </tr>
                                 </t>
                             </thead>
