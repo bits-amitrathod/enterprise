@@ -8,6 +8,8 @@ var ClientAction = require('stock_barcode.ClientAction');
 // or to create directly a new line in the main view.
 var FormWidget = require('stock_barcode.FormWidget');
 
+var _t = core._t;
+
 var InventoryClientAction = ClientAction.extend({
     custom_events: _.extend({}, ClientAction.prototype.custom_events, {
         validate: '_onValidate',
@@ -187,6 +189,7 @@ var InventoryClientAction = ClientAction.extend({
                     'method': 'action_done',
                     'args': [[self.currentState.id]],
                 }).then(function () {
+                    self.do_notify(_t("Success"), _t("The inventory adjustment has been validated"));
                     return self.trigger_up('exit');
                 });
             });
@@ -209,6 +212,7 @@ var InventoryClientAction = ClientAction.extend({
                     'method': 'action_cancel_draft',
                     'args': [[self.currentState.id]],
                 }).then(function () {
+                    self.do_notify(_t("Cancel"), _t("The inventory adjustment has been cancelled"));
                     self.trigger_up('exit');
                 });
             });

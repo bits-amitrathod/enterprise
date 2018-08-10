@@ -140,6 +140,7 @@ var PickingClientAction = ClientAction.extend({
                 var def = $.when();
                 var exitCallback = function (infos) {
                     if (infos !== 'special') {
+                        self.do_notify(_t("Success"), _t("The transfer has been validated"));
                         self.trigger_up('exit');
                     }
                 };
@@ -172,6 +173,7 @@ var PickingClientAction = ClientAction.extend({
                 'method': 'action_cancel',
                 'args': [[self.actionParams.pickingId]],
             }).then(function () {
+                self.do_notify(_t("Cancel"), _t("The transfer has been cancelled"));
                 self.trigger_up('exit');
             });
         });
