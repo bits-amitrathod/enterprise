@@ -284,8 +284,8 @@
             > .nav-item {
                 > .nav-link {
                     color: $body-color;
-                    border: none;
-                    background-color: gray('200');
+                    border: 1px solid gray('400');
+                    border-bottom-width: 0;
                     padding: $btn-padding-y-lg $btn-padding-x-lg;
 
                     &:hover, &:focus, &:active {
@@ -307,6 +307,10 @@
                     &.disabled {
                         color: $text-muted;
                     }
+                }
+
+                + .nav-item {
+                    margin-left: -1px;
                 }
             }
         }
