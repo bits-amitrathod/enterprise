@@ -15,13 +15,14 @@
 # Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2017
 # Radosław Biegalski <radoslaw.biegalski@openglobe.pl>, 2018
 # Tomasz Leppich <t.leppich@gmail.com>, 2018
+# Paweł Wodyński <pw@myodoo.pl>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-10 09:14+0000\n"
 "PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Tomasz Leppich <t.leppich@gmail.com>, 2018\n"
+"Last-Translator: Paweł Wodyński <pw@myodoo.pl>, 2018\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,6 +51,22 @@ msgid ""
 "        Any complaints about items or sellers may be sent to our support team: support@wesellyourstuff.com or (888) 555-0198. There is no guarantee of a resolution. Each case will be looked at individually, and the seller will be in contact as well.\n"
 "            "
 msgstr ""
+"\n"
+"        Zapłata\n"
+"        Wszystkie płatności są płatne przy odbiorze. Jeśli płatność nie zostanie odebrana lub metoda płatności zostanie odrzucona, kupujący traci prawo własności do wszelkich zakupionych przedmiotów. Jeśli nie otrzymasz płatności, żadne przedmioty nie zostaną wysłane.\n"
+"\n"
+"        Zasady wysyłki\n"
+"        Wysyłka zostanie opłacona przez kupującego w wysokości uzgodnionej przez sprzedawcę w momencie zakupu. Jeśli przedmiot zostanie utracony podczas wysyłki, całkowity koszt przedmiotu, w tym koszty wysyłki, zostanie zwrócony kupującemu przez sprzedającego. Koszty wysyłki mogą podwoić się w przypadku wysyłki międzynarodowej. Jeśli przedmiot zostanie uszkodzony podczas wysyłki, sprzedawca nie ponosi odpowiedzialności.\n"
+"\n"
+"        Polityka zwrotu pieniędzy / towarów\n"
+"        Przedmioty są uprawnione do refundacji lub zwrotu na podstawie reklamacji. Jeśli przedmiot zostanie uszkodzony podczas wysyłki, przedmiot wymiany zostanie wysłany bezpłatnie. Jeśli przedmiot jest niezadowalający, wymagane jest pisemne wyjaśnienie, zanim przedmiot zostanie uznany za refundację. Kupujący musi wziąć pod uwagę opis przedmiotu przed zwróceniem się o zwrot. Jeśli przedmiot pasuje do opisu sprzedającego, a kupujący jest niezadowolony, sprzedawca nie ponosi odpowiedzialności za zwrot pieniędzy. Wymiana jest przyznawana indywidualnie dla każdego przypadku.\n"
+"\n"
+"        Anulowanie\n"
+"        Produkt może zostać anulowany do czasu przetworzenia płatności. Po zrealizowaniu płatności kupujący jest odpowiedzialny za płatność.\n"
+"\n"
+"        Reklamacje\n"
+"        Wszelkie skargi dotyczące przedmiotów lub sprzedawców mogą być wysyłane do naszego zespołu wsparcia: support@wesellyourstuff.com lub (888) 555-0198. Nie ma gwarancji rozwiązania. Każdy przypadek będzie rozpatrywany indywidualnie, a sprzedawca również będzie w kontakcie.\n"
+"            "
 
 #. module: website_contract
 #: model:mail.template,body_html:website_contract.email_payment_success
@@ -111,6 +128,62 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
+"\n"
+"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
+"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
+"                <div>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
+"                </div>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>\n"
+"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                <p>Szanowny/a ${object.partner_id.name},</p>\n"
+"                <p>\n"
+"                    Twoja subskrypcja (${ctx.get('code')}) właśnie się odnowiła\n"
+"                    %if ctx.get('total_amount') i ctx.get('payment_token'):\n"
+"                        przez wpłatę ${ctx['total_amount']} ${ctx['currency']} pobieraną w ${ctx['payment_token']}\n"
+"                        .\n"
+"                    %endif\n"
+"                </p>\n"
+"                <p>Znajdziesz fakturę dołączoną.</p>\n"
+"                %if ctx.get('next_date'):\n"
+"                <p>\n"
+"                  Twoja następna faktura będzie na ${ctx.get('next_date')}.\n"
+"                </p>\n"
+"                %endif\n"
+"                <br/>\n"
+"                <p>Jeśli masz jakiekolwiek pytania, nie wahaj się z nami skontaktować.</p>\n"
+"                <p>Dziękujemy za wybranie ${object.company_id.name or 'us'}!</p>\n"
+"            </td>\n"
+"        </tr><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                % if user.signature\n"
+"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"                </p>\n"
+"                % endif\n"
+"                <p style=\"font-size: 11px;\"><strong>Wysłane przez\n"
+"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                    <strong>${user.company_id.name}</strong>\n"
+"                </a> używając <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </strong></p>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>"
 
 #. module: website_contract
 #: model:mail.template,body_html:website_contract.email_contract_open
@@ -238,6 +311,68 @@ msgid ""
 "    </table>\n"
 "</div>"
 msgstr ""
+"\n"
+"<div summary=\"o_mail_template\" style=\"padding:0px; width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"center\" width=\"200\" style=\"padding:0px 10px 5px 5px;font-size: 12px\">\n"
+"                <img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\">\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td valign=\"top\" style=\"width:600px; padding:0px 10px 5px 5px;\">\n"
+"                <div>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0;margin:15px auto;padding:0\">\n"
+"                </div>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>\n"
+"<div style=\"padding:0px; width:600px; max-width:600px; margin:0 auto; background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"    <table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"        <tbody><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                <p>Witaj ${object.partner_id.name},</p>\n"
+"                <p>\n"
+"                % if ctx.get('payment_token') and ctx.get('total_amount'):\n"
+"                  Nie możemy przetworzyć płatności za Twoją subskrypcję przy użyciu Twojej metody płatności\n"
+"                  ${ctx['payment_token']}\n"
+"                  za ${ctx['total_amount']} ${ctx.get('currency')}.\n"
+"                  % if ctx.get('error'):\n"
+"                    Twój bank lub instytucja kredytowa podał następujące szczegóły dotyczące problemu: <pre>${ctx['error']}</pre>.\n"
+"                  %endif\n"
+"                % else:\n"
+"                  Nie mogliśmy przetworzyć płatności za Twoją subskrypcję, ponieważ nie mamy dla Ciebie zarejestrowanej metody płatności.\n"
+"                % endif \n"
+"                </p>\n"
+"\n"
+"                <p>\n"
+"                  Twoja subskrypcja ${ctx.get('code')} jest nadal ważna, ale zostanie <b>zawieszona</b>\n"
+"                  dnia ${ctx.get('date_close')}, chyba że płatność zakończy się sukcesem w międzyczasie (spróbujmy raz dziennie).\n"
+"                  Sprawdź ponownie, czy masz wystarczające fundusze.\n"
+"                </p>\n"
+"\n"
+"                <br/>\n"
+"                <p>Jeśli masz jakiekolwiek pytania, nie wahaj się z nami skontaktować.</p>\n"
+"                <p>Dziękujemy za wybranie ${object.company_id.name or 'us'}!</p>\n"
+"            </td>\n"
+"        </tr><tr>\n"
+"            <td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"                % if user.signature\n"
+"                <p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"                </p>\n"
+"                % endif\n"
+"                <p style=\"font-size: 11px;\"><strong>Wysłane przez\n"
+"                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"                    <strong>${user.company_id.name}</strong>\n"
+"                </a> używając <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
+"                </strong></p>\n"
+"            </td>\n"
+"        </tr></tbody>\n"
+"    </table>\n"
+"</div>"
 
 #. module: website_contract
 #: model:mail.template,body_html:website_contract.email_payment_close
@@ -385,7 +520,7 @@ msgstr "(Zły adres?)"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "). After this date, you can reopen your account up to"
-msgstr ""
+msgstr "). Po tej dacie możesz ponownie otworzyć swoje konto"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -404,7 +539,7 @@ msgstr "<i class=\"fa fa-check\"/> Płatności automatyczne"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
 msgid "<i class=\"fa fa-check\"/> Closable by customer"
-msgstr ""
+msgstr "<i class=\"fa fa-check\"/> Zamykane przez klienta"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
@@ -471,7 +606,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
 msgid "<span class=\"o_label\">Subscriptions</span>"
-msgstr ""
+msgstr "<span class=\"o_label\">Subskrypcje</span>"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.prepaid
@@ -596,7 +731,7 @@ msgstr "Zmień swój plan"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Change plan"
-msgstr ""
+msgstr "Zmień plan"
 
 #. module: website_contract
 #: model:ir.actions.act_window,help:website_contract.sale_subscription_action_filtered
@@ -606,7 +741,7 @@ msgstr "Kliknij aby utworzyć nowy kontrakt."
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_user_closable
 msgid "Closable by customer"
-msgstr ""
+msgstr "Zamykane przez klienta"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.template_panel
@@ -616,7 +751,7 @@ msgstr "Zamknij"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Close your account"
-msgstr ""
+msgstr "Zamknij swoje konto"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -634,7 +769,7 @@ msgstr "Zamknięte"
 #: code:addons/website_contract/controllers/main.py:260
 #, python-format
 msgid "Closing text : "
-msgstr ""
+msgstr "Zamykanie tekstu : "
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_color
@@ -723,7 +858,7 @@ msgstr "Bieżący:"
 #: model:product.product,name:website_contract.odoo_custom_domain
 #: model:product.template,name:website_contract.odoo_custom_domain_product_template
 msgid "Custom Domain"
-msgstr ""
+msgstr "Niestandardowa domena"
 
 #. module: website_contract
 #: model:product.product,description_sale:website_contract.odoo_custom_domain
@@ -734,6 +869,8 @@ msgid ""
 "Custom Domain\n"
 "        Access your Odoo Instance using your own domain."
 msgstr ""
+"Niestandardowa domena\n"
+"        Uzyskaj dostęp do instancji Odoo za pomocą własnej domeny."
 
 #. module: website_contract
 #: model:sale.quote.option,name:website_contract.sugg_line_12
@@ -747,7 +884,7 @@ msgstr ""
 #: model:product.product,name:website_contract.odoo_custom_module
 #: model:product.template,name:website_contract.odoo_custom_module_product_template
 msgid "Customized Module"
-msgstr ""
+msgstr "Dostosowany moduł"
 
 #. module: website_contract
 #: model:product.product,description_sale:website_contract.odoo_custom_module
@@ -758,6 +895,8 @@ msgid ""
 "Customized Module\n"
 "        Customize a module to better match your business process."
 msgstr ""
+"Dostosowany moduł\n"
+"        Dostosuj moduł, aby lepiej odpowiadał procesowi biznesowemu."
 
 #. module: website_contract
 #: model:product.product,description_sale:website_contract.odoo_custom_view
@@ -766,6 +905,8 @@ msgid ""
 "Customized View\n"
 "        Customize one or more views (in a single module) to better suit your needs."
 msgstr ""
+"Dostosowany widok\n"
+"        Dostosuj jeden lub więcej widoków (w jednym module), aby lepiej odpowiadały Twoim potrzebom."
 
 #. module: website_contract
 #: model:product.product,name:website_contract.odoo_custom_view
@@ -791,7 +932,7 @@ msgstr "Opis"
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_wizard_date_from
 msgid "Discount Date"
-msgstr ""
+msgstr "Data rabatu"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_option_display_name
@@ -834,11 +975,15 @@ msgstr "ID"
 msgid ""
 "If checked, the user will be able to close his account from the frontend"
 msgstr ""
+"Jeśli zaznaczone, użytkownik będzie mógł zamknąć swoje konto z poziomu "
+"interfejsu"
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_payment_token_id
 msgid "If not set, the default payment token of the partner will be used."
 msgstr ""
+"Jeśli nie zostanie ustawiony, użyty zostanie domyślny token płatności "
+"partnera."
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_order_contract_template
@@ -862,6 +1007,8 @@ msgid ""
 "If set, payments will be made automatically and invoices will not be "
 "generated if payment attempts are unsuccessful."
 msgstr ""
+"Jeśli zostanie ustawiony, płatności będą dokonywane automatycznie, a faktury"
+" nie będą generowane, jeśli próby płatności się nie powiodą."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -869,6 +1016,7 @@ msgid ""
 "If you close your account, it will remain active until your next invoice "
 "date ("
 msgstr ""
+"Jeśli zamkniesz konto, pozostanie ono aktywne do następnej daty faktury ("
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -881,7 +1029,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "If you wish to reopen it, the"
-msgstr ""
+msgstr "Jeśli chcesz go ponownie otworzyć, wybierz"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -889,6 +1037,8 @@ msgid ""
 "If you wish to reopen it, you can pay your invoice for the current invoicing"
 " period."
 msgstr ""
+"Jeśli chcesz go ponownie otworzyć, możesz zapłacić fakturę za bieżący okres "
+"fakturowania."
 
 #. module: website_contract
 #: code:addons/website_contract/controllers/main.py:47
@@ -907,6 +1057,8 @@ msgstr ""
 msgid ""
 "Insert the options directly, they will be invoiced on the next invoice date."
 msgstr ""
+"Bezpośrednio wstaw opcje, zostaną one zafakturowane w następnej dacie "
+"faktury."
 
 #. module: website_contract
 #: selection:sale.subscription.template.option,portal_access:0
@@ -1011,7 +1163,7 @@ msgstr "Najnowsze"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Next invoice:"
-msgstr ""
+msgstr "Następna faktura:"
 
 #. module: website_contract
 #: model:product.product,name:website_contract.odoo_saas
@@ -1028,6 +1180,8 @@ msgid ""
 "Odoo SAAS\n"
 "        Access to your Odoo Instance. Stored on our servers: high speed, high reliability and daily backups."
 msgstr ""
+"Odoo SAAS\n"
+"        Dostęp do instancji Odoo. Przechowywane na naszych serwerach: wysoka prędkość, wysoka niezawodność i codzienne kopie zapasowe."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract_pricing
@@ -1087,7 +1241,7 @@ msgstr "Transakcja płatności"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_reminder
 msgid "Payment reminder for subscription ${object.code}"
-msgstr ""
+msgstr "Przypomnienie o płatności za subskrypcję ${object.code}"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_form_inherit_sale_contract
