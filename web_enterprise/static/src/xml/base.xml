@@ -3,7 +3,7 @@
 
 <div t-name="HomeMenu" class="o_home_menu">
     <div class="o_menu_search o_bar_hidden d-none d-md-flex">
-        <span class="fa fa-search fa-2x o_menu_search_icon" role="img" aria-label="Search" title="Search"/>
+        <span class="fa fa-search o_menu_search_icon" role="img" aria-label="Search" title="Search"/>
         <input type="text" placeholder="Search..." class="o_menu_search_input" onfocus="this.value = this.value;"/>
     </div>
     <div class="o_home_menu_scrollable">
@@ -39,6 +39,7 @@
               t-att-class="'o_menuitem' + ((focused_menu_index === menu_index)? ' o_focused' : '')"
               t-att-href="menu.href ? menu.href : ('#menu_id='+menu.id+'&amp;action_id='+menu.action)"
               t-att-data-menu="menu.id">
+                  <span class="o_menuitem_parents"><t t-esc="menu.parents"/> /</span>
                   <t t-esc="menu.label"/>
             </a>
         </t>

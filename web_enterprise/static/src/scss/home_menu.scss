@@ -83,6 +83,15 @@
                         transform: translateY(-1px);
                     }
                 }
+
+                &.o_menuitem {
+                    margin-left: 0;
+
+                    &:focus, &.o_focused {
+                        background-color: rgba(white, 0.05);
+                        border-radius: 4px;
+                    }
+                }
             }
         }
 
@@ -92,7 +101,7 @@
             .o_menuitem {
                 padding: 2px;
                 @include o-text-overflow;
-                color: $o-brand-lightsecondary;
+                color: $gray-200;
                 margin-bottom: 3px;
                 @include media-breakpoint-up(md) {
                     font-size: 20px;
@@ -102,10 +111,21 @@
                 @include media-breakpoint-down(sm) {
                     padding: 5px 0;
                 }
-                &:hover {
-                    color: white;
+
+                .o_menuitem_parents {
+                    font-weight: $font-weight-light;
+                    color: $gray-400;
                 }
+
+                &:hover, &:focus, &.o_focused {
+                    color: white;
+                    .o_menuitem_parents {
+                        color: $gray-300;
+                    }
+                }
+
                 &:focus, &.o_focused {
+                    padding-left: 5px;
                     background-color: rgba(white, 0.05);
                 }
             }

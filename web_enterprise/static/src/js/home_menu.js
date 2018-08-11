@@ -127,7 +127,8 @@ var HomeMenu = Widget.extend({
                 return;
             }
             var item = {
-                label: _.pluck(parents.slice(1), 'name').concat(menuItem.name).join(' / '),
+                parents: _.pluck(parents.slice(1), 'name').join(' / '),
+                label: menuItem.name,
                 id: menuItem.id,
                 xmlid: menuItem.xmlid,
                 action: menuItem.action ? menuItem.action.split(',')[1] : '',
