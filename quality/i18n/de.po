@@ -6,31 +6,32 @@
 # Gab_Odoo <gab@odoo.com>, 2017
 # Stefan Hartenfels <stefan.hartenfels@camptocamp.com>, 2017
 # Tina Rittmüller <tr@ife.de>, 2017
-# Renzo Meister <info@jamotion.ch>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Renzo Meister, 2017
+# Martin Trigaux, 2017
 # Christian Körner <fipes.de@gmail.com>, 2017
 # Ermin Trevisan <trevi@twanda.com>, 2017
 # Henry Mineehen <info@mineehen.de>, 2017
 # darenkster <inactive+darenkster@transifex.com>, 2017
 # Thorsten Vocks <thorsten.vocks@openbig.org>, 2017
-# Niki Waibel <niki.waibel@gmail.com>, 2017
-# Krakataua Katarajtu <shlok@hotmail.de>, 2017
-# Wolfgang Taferner <wolfgang.transifex@service.wt-io-it.at>, 2017
+# Niki Waibel, 2017
+# dd5cd5bab88c61e9dedf84f5ea59b147, 2017
+# Wolfgang Taferner, 2017
 # JackTheHunter <Maximilian.N98@gmail.com>, 2017
-# Andi <flimflam@salasar.de>, 2017
+# Andi, 2017
 # Christian Oechsner <carinachristian@gmail.com>, 2017
 # Rudolf Schnapka <rs@techno-flex.de>, 2017
 # AppleMentalist <felix.schnatbaum@gmail.com>, 2017
 # Katharina Moritz <kmo@e2f.com>, 2017
 # DE R1 <e2fes1@hotmail.com>, 2017
 # DE T1 <e2f8846@yahoo.com>, 2017
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: DE T1 <e2f8846@yahoo.com>, 2017\n"
+"POT-Creation-Date: 2018-08-08 12:22+0000\n"
+"PO-Revision-Date: 2018-08-08 12:22+0000\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -129,6 +130,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
 msgid "Accept Emails From"
 msgstr "E-Mails annehmen von"
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_2
+msgid "Action Proposed"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_active
@@ -265,6 +271,11 @@ msgstr "Konfiguration"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 msgid "Confirm Measure"
 msgstr "Werte bestätigen"
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_1
+msgid "Confirmed"
+msgstr "Bestätigt"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
@@ -632,6 +643,7 @@ msgstr "Name"
 #: code:addons/quality/models/quality.py:437
 #: code:addons/quality/models/quality.py:438
 #: code:addons/quality/models/quality.py:478
+#: model:quality.alert.stage,name:quality.quality_alert_stage_0
 #, python-format
 msgid "New"
 msgstr "Neu"
@@ -698,6 +710,11 @@ msgstr ""
 "dies die Anlage neuer Datensätze vollständig."
 
 #. module: quality
+#: model:quality.reason,name:quality.reason_other
+msgid "Others"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_user_id
 msgid "Owner"
 msgstr "Besitzer"
@@ -722,6 +739,11 @@ msgstr ""
 "Das übergeordnete Datenmodell des Alias. Dieses Modell, welches die EMail "
 "Alias Referenz enthält, gehört nicht zwangsläufig zum Modell unterhalb von "
 "alias_model_id (Beispiel: project (parent_model) und task (model))"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_parts
+msgid "Parts Quality"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
@@ -1028,7 +1050,12 @@ msgid "Settings"
 msgstr "Einstellungen"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_8974
+#: model:quality.alert.stage,name:quality.quality_alert_stage_3
+msgid "Solved"
+msgstr "Gelöst"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_3233
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "Stufe"
@@ -1061,7 +1088,7 @@ msgid "Tags"
 msgstr "Stichwörter"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_8984
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_3243
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -1081,7 +1108,7 @@ msgstr "Technischer Name"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_point_test_type
-#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_8842
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_3104
 msgid "Test Type"
 msgstr "Testtyp"
 
@@ -1189,6 +1216,16 @@ msgstr "Warnmeldung"
 #: selection:quality.point,measure_frequency_unit:0
 msgid "Week(s)"
 msgstr "Woche(n)"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_wo
+msgid "Work Operation"
+msgstr ""
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_workcenter
+msgid "Workcenter Failure"
+msgstr ""
 
 #. module: quality
 #: code:addons/quality/models/quality.py:273
