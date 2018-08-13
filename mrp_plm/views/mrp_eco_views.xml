@@ -433,6 +433,9 @@
                             class="oe_highlight" attrs="{'invisible': [('user_can_reject', '=', False)]}"/>
                     <button string="Apply Changes" name="action_apply" type="object"
                             class="oe_highlight" attrs="{'invisible': [('allow_apply_change', '=', False)]}"/>
+                    <button name="action_see_attachments" type="object" attrs="{'invisible': ['|', ('state', '=', 'confirmed'), ('type', '=', 'routing')]}" string="Update Documents"/>
+                    <button name="open_new_bom" type="object" attrs="{'invisible': [('new_bom_id', '=', False)]}" string="Update BoM"/>
+                    <button name="open_new_routing" type="object" attrs="{'invisible': [('new_routing_id', '=', False)]}" string="Update Routing"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -487,7 +490,7 @@
                         <page string="Note">
                             <field name="note" attrs="{'readonly': [('state', '=', 'done')]}" placeholder="Description of the change and its reason ..."/>
                         </page>
-                        <page string="BoM Changes" attrs="{'invisible': ['|', ('state', '=', 'confirmed'), ('type', 'in', ('product','routing'))]}" help="Changes made on the new revision bill of materials">
+                        <page string="BoM Changes" attrs="{'invisible': ['|', '|', ('state', '=', 'confirmed'), ('type', 'in', ('product','routing')), ('bom_change_ids','=',[])]}" help="Changes made on the new revision bill of materials">
                             <field name="bom_change_ids">
                                 <tree decoration-danger="change_type=='remove'" decoration-info="change_type=='add'">
                                     <field name="change_type"/>
