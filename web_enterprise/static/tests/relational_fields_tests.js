@@ -58,18 +58,18 @@ QUnit.module('relational_fields', {
 
         assert.strictEqual(form.$('.o_statusbar_status > button:contains(aaa)').length, 1,
             "should have only one visible status in mobile, the active one");
-        assert.strictEqual(form.$('.o_statusbar_status .o-status-more').length, 1,
+        assert.strictEqual(form.$('.o_statusbar_status .dropdown-menu').length, 1,
             "should have a dropdown containing all status");
-        assert.strictEqual(form.$('.o_statusbar_status .o-status-more:visible').length, 0,
+        assert.strictEqual(form.$('.o_statusbar_status .dropdown-menu:visible').length, 0,
             "dropdown should be hidden");
 
         // open the dropdown
         form.$('.o_statusbar_status > button').click();
-        assert.strictEqual(form.$('.o_statusbar_status .o-status-more:visible').length, 1,
+        assert.strictEqual(form.$('.o_statusbar_status .dropdown-menu:visible').length, 1,
             "dropdown should be visible");
-        assert.strictEqual(form.$('.o_statusbar_status .o-status-more button').length, 3,
+        assert.strictEqual(form.$('.o_statusbar_status .dropdown-menu button').length, 3,
             "should have 3 status");
-        var $activeStatus = form.$('.o_statusbar_status .o-status-more button[data-value=4]');
+        var $activeStatus = form.$('.o_statusbar_status .dropdown-menu button[data-value=4]');
         assert.ok($activeStatus.hasClass('btn-primary'), "active status should be btn-primary");
 
         form.destroy();
