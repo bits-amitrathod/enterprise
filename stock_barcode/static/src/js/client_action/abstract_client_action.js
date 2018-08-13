@@ -52,6 +52,7 @@ var ClientAction = AbstractAction.extend({
             'O-CMD.NEXT': this._nextPage.bind(this),
             'O-CMD.PAGER-FIRST': this._firstPage.bind(this),
             'O-CMD.PAGER-LAST': this._lastPage.bind(this),
+            'O-CMD.MAIN-MENU': this._onMainMenu.bind(this),
         };
 
         // State variables
@@ -328,7 +329,7 @@ var ClientAction = AbstractAction.extend({
         var currentPage = this.pages[this.currentPageIndex];
         if (this.scanned_location && currentPage.location_id !== this.scanned_location.id) {
             var alreadyInPages = _.find(pages, function (page) {
-                return page.location_id === self.scanned_location.id && 
+                return page.location_id === self.scanned_location.id &&
                     (self.actionParams.model === 'stock.inventory' || page.location_dest_id === self.currentState.location_dest_id.id);
             });
             if (! alreadyInPages) {
@@ -1046,6 +1047,7 @@ var ClientAction = AbstractAction.extend({
         });
     },
 
+
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
@@ -1305,6 +1307,21 @@ var ClientAction = AbstractAction.extend({
             });
         });
     },
+
+    /**
+     * Handles the 'main_menu' OdooEvent. It's used when we want to go back the
+     * main app menu.
+     * @private
+     */
+    _onMainMenu: function () {
+        var self = this;
+        self._save().then(function () {
+            self.do_action('stock_barcode.stock_barcode_action_main_menu', {
+                clear_breadcrumbs: true,
+            });
+        });
+    },
+
 });
 
 core.action_registry.add('stock_barcode_client_action', ClientAction);
