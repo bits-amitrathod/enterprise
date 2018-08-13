@@ -140,16 +140,18 @@ class report_account_general_ledger(models.AbstractModel):
     def _do_query_group_by_account(self, options, line_id):
         results = self._do_query(options, line_id, group_by_account=True, limit=False)
         used_currency = self.env.user.company_id.currency_id
+        company = self.env['res.company'].browse(self._context.get('company_id')) or self.env['res.users']._get_company()
+        date = self._context.get('date') or fields.Date.today()
         compute_table = {
-            a.id: a.company_id.currency_id.compute
+            a.id: a.company_id.currency_id._convert
             for a in self.env['account.account'].browse([k[0] for k in results])
         }
         results = dict([(
             k[0], {
-                'balance': compute_table[k[0]](k[1], used_currency) if k[0] in compute_table else k[1],
+                'balance': compute_table[k[0]](k[1], used_currency, company, date) if k[0] in compute_table else k[1],
                 'amount_currency': k[2],
-                'debit': compute_table[k[0]](k[3], used_currency) if k[0] in compute_table else k[3],
-                'credit': compute_table[k[0]](k[4], used_currency) if k[0] in compute_table else k[4],
+                'debit': compute_table[k[0]](k[3], used_currency, company, date) if k[0] in compute_table else k[3],
+                'credit': compute_table[k[0]](k[4], used_currency, company, date) if k[0] in compute_table else k[4],
             }
         ) for k in results])
         return results
