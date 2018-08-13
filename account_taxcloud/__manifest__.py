@@ -5,7 +5,6 @@
     'description': """
         Compute sales tax automatically using TaxCloud based on customer address in United States.
     """,
-    'website': "https://www.odoo.com",
     'category': 'Accounting',
     'version': '1.0',
     'depends': ['l10n_us'],
