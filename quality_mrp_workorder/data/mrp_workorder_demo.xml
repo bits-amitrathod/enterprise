@@ -5,7 +5,7 @@
     <record id="quality_point_dummy" model="quality.point">
         <field name="product_id" ref="mrp.product_product_computer_desk"/>
         <field name="product_tmpl_id" ref="mrp.product_product_computer_desk_product_template"/>
-        <field name="picking_type_id" ref="mrp.picking_type_manufacturing"/>
+        <field name="picking_type_id" model="stock.warehouse" eval="obj().env.ref('stock.warehouse0').manu_type_id.id"/>
         <field name="operation_id" ref="mrp.mrp_routing_workcenter_5"/>
         <field name="test_type_id" ref="quality_mrp_workorder.test_type_dummy"/>
         <field name="note">Please ensure you are using the new SRX679 screwdriver.</field>
@@ -17,7 +17,7 @@
     <record id="quality_point_picture" model="quality.point">
         <field name="product_id" ref="mrp.product_product_computer_desk"/>
         <field name="product_tmpl_id" ref="mrp.product_product_computer_desk_product_template"/>
-        <field name="picking_type_id" ref="mrp.picking_type_manufacturing"/>
+        <field name="picking_type_id" model="stock.warehouse" eval="obj().env.ref('stock.warehouse0').manu_type_id.id"/>
         <field name="operation_id" ref="mrp.mrp_routing_workcenter_5"/>
         <field name="test_type_id" ref="quality_mrp_workorder.test_type_picture"/>
         <field name="note">Take a picture of the table head serial number.</field>
@@ -29,7 +29,7 @@
     <record id="quality_point_pass_fail" model="quality.point">
         <field name="product_id" ref="mrp.product_product_computer_desk"/>
         <field name="product_tmpl_id" ref="mrp.product_product_computer_desk_product_template"/>
-        <field name="picking_type_id" ref="mrp.picking_type_manufacturing"/>
+        <field name="picking_type_id" model="stock.warehouse" eval="obj().env.ref('stock.warehouse0').manu_type_id.id"/>
         <field name="operation_id" ref="mrp.mrp_routing_workcenter_5"/>
         <field name="test_type_id" ref="quality_control.test_type_passfail"/>
         <field name="note">Check the fastenings are in good condition.</field>
@@ -41,7 +41,7 @@
     <record id="quality_point_measure" model="quality.point">
         <field name="product_id" ref="mrp.product_product_computer_desk"/>
         <field name="product_tmpl_id" ref="mrp.product_product_computer_desk_product_template"/>
-        <field name="picking_type_id" ref="mrp.picking_type_manufacturing"/>
+        <field name="picking_type_id" model="stock.warehouse" eval="obj().env.ref('stock.warehouse0').manu_type_id.id"/>
         <field name="operation_id" ref="mrp.mrp_routing_workcenter_5"/>
         <field name="test_type_id" ref="quality_control.test_type_measure"/>
         <field name="note">Please measure the angle formed by the two adjacent wooden panels at the bottom left-hand corner.</field>
@@ -58,7 +58,7 @@
     <record id="quality_point_dummy_2" model="quality.point">
         <field name="product_id" ref="mrp.product_product_computer_desk"/>
         <field name="product_tmpl_id" ref="mrp.product_product_computer_desk_product_template"/>
-        <field name="picking_type_id" ref="mrp.picking_type_manufacturing"/>
+        <field name="picking_type_id" model="stock.warehouse" eval="obj().env.ref('stock.warehouse0').manu_type_id.id"/>
         <field name="operation_id" ref="mrp.mrp_routing_workcenter_5"/>
         <field name="test_type_id" ref="quality_mrp_workorder.test_type_dummy"/>
         <field name="note">Please attach the legs to the table as shown below.</field>
