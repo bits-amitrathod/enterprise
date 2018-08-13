@@ -21,7 +21,6 @@ Features:
         'sale_management',
         'portal',
         'web_cohort',
-        'sale_payment',
         'rating',
         'base_automation',
     ],
