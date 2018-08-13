@@ -724,5 +724,89 @@ QUnit.module('Views', {
         });
     });
 
+
+    QUnit.module('GridViewWidgets');
+
+    QUnit.test('float_toggle widget', function (assert) {
+        assert.expect(13);
+        var done = assert.async();
+
+        var grid = createView({
+            View: GridView,
+            model: 'analytic.line',
+            data: this.data,
+            arch: '<grid string="Timesheet" adjustment="object" adjust_name="adjust_grid">' +
+                    '<field name="project_id" type="row" section="1"/>' +
+                    '<field name="task_id" type="row"/>' +
+                    '<field name="date" type="col">' +
+                        '<range name="week" string="Week" span="week" step="day"/>' +
+                        '<range name="month" string="Month" span="month" step="day"/>' +
+                    '</field>'+
+                    '<field name="unit_amount" type="measure" widget="float_toggle" options="{\'factor\': 0.125, \'range\': [0.0, 0.5, 1.0]}"/>' +
+                '</grid>',
+            currentDate: "2017-01-31",
+            mockRPC: function (route, args) {
+                if (args.method === 'adjust_grid') {
+                    if (args.args[3] == '2017-02-01/2017-02-02') { // use case "clicking on empty cell button"
+                        assert.strictEqual(args.args[5], 8, "saving 1.00 on float_toggle button will register 8 in database (1 / 0.125)");
+                    }
+                    if (args.args[3] == '2017-01-30/2017-01-31') { // use case "clicking on non empty cell button"
+                        assert.strictEqual(args.args[5], -10, "saving 0.00 on float_toggle button will send a negative delta of 1.25 / 0.125");
+                    }
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        return concurrency.delay(0).then(function () {
+            // first section
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) button.o_grid_float_toggle').length, 7,
+                "first section should be for project P1");
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) button.o_grid_float_toggle:contains(1.25)').length, 1,
+                "one button contains the value 1.25 (timesheet line #4)");
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) button.o_grid_float_toggle:contains(0.00)').length, 6,
+                "Other button are filled with 0.00");
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) .o_grid_cell_container[data-path="0.grid.0.0"] button').text(), '1.25',
+                "the second cell of the second section is the timesheet #4");
+
+            // second section
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) button.o_grid_float_toggle').length, 7,
+                "first section should be for project Webocalypse Now");
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) button.o_grid_float_toggle:contains(0.44)').length, 1,
+                "one button contains the value 1.25 (timesheet line #5)");
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) button.o_grid_float_toggle:contains(0.00)').length, 6,
+                "Other button are filled with 0.00");
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) .o_grid_cell_container[data-path="1.grid.0.1"] button').text(), '0.44',
+                "the second cell of the second section is the timesheet #5");
+
+            // clicking on empty cell button
+            var $button = grid.$('.o_grid_section:eq(1) .o_grid_cell_container[data-path="1.grid.0.2"] button');
+            $button.focus();
+
+            $button.click();
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) .o_grid_cell_container[data-path="1.grid.0.2"] button').text(), '0.50',
+                "0.5 is the next value since 0.0 was the closest value in the range");
+
+            $button.click();
+            assert.strictEqual(grid.$('.o_grid_section:eq(1) .o_grid_cell_container[data-path="1.grid.0.2"] button').text(), '1.00',
+                "0.5 becomes 1.0 as it is the next value in the range");
+
+            $button.blur(); // will trigger the adjustment RPC call
+
+            // clicking on non empty cell button (1.25)
+            var $button = grid.$('.o_grid_section:eq(0) .o_grid_cell_container[data-path="0.grid.0.0"] button');
+            $button.focus();
+
+            $button.click();
+            assert.strictEqual(grid.$('.o_grid_section:eq(0) .o_grid_cell_container[data-path="0.grid.0.0"] button').text(), '0.00',
+                "1.25 is starting value, the closest in the range is 1.00, so the next will be 0.00");
+
+            $button.blur(); // will trigger the adjustment RPC call
+
+            grid.destroy();
+            done();
+        });
+    });
+
 });
 });

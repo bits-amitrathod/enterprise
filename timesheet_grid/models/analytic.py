@@ -3,6 +3,7 @@
 
 from datetime import date
 from dateutil.relativedelta import relativedelta
+from lxml import etree
 
 from odoo import models, fields, api, _
 from odoo.addons.web_grid.models import END_OF, STEP_BY, START_OF
@@ -104,6 +105,22 @@ class AnalyticLine(models.Model):
         if not self.user_has_groups('hr_timesheet.group_timesheet_manager') and line.is_timesheet and line.validated:
             raise AccessError(_('Only a Timesheets Manager is allowed to create an entry older than the validation limit.'))
         return line
+
+    @api.model
+    def _fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        """ Set the correct label for `unit_amount`, depending on company UoM """
+        result = super(AnalyticLine, self)._fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+        if view_type == 'grid':
+            doc = etree.XML(result['arch'])
+            encoding_uom = self.env.user.company_id.timesheet_encode_uom_id
+            # Here, we override the string put on unit_amount field to display only the UoM name in
+            # the total label on the grid view.
+            # Here, we select only the unit_amount field having no string set to give priority to
+            # custom inheretied view stored in database.
+            for node in doc.xpath("//field[@name='unit_amount'][@widget='timesheet_uom'][not(@string)]"):
+                node.set('string', encoding_uom.name)
+            result['arch'] = etree.tostring(doc, encoding='unicode')
+        return result
 
     @api.multi
     def adjust_grid(self, row_domain, column_field, column_value, cell_field, change):
