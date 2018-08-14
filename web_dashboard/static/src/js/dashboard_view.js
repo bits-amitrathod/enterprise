@@ -124,6 +124,9 @@ var DashboardView = BasicView.extend({
         aggregate.type = field.type;
 
         fv.fieldsInfo.dashboard[aggregateID] = aggregate;
+        fv.viewFields[node.attrs.name] = _.extend({}, field, {
+            name: node.attrs.name,
+        });
         fv.aggregates.push(aggregateID);
         return false;
     },
