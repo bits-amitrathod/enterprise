@@ -142,7 +142,7 @@ class IntrastatReport(models.AbstractModel):
                 LEFT JOIN account_incoterms comp_incoterm ON company.incoterm_id = comp_incoterm.id
                 LEFT JOIN account_intrastat_code inv_transport ON inv.intrastat_transport_mode_id = inv_transport.id
                 LEFT JOIN account_intrastat_code comp_transport ON company.intrastat_transport_mode_id = comp_transport.id
-            WHERE inv.state in ('open', 'paid')
+            WHERE inv.state in ('open', 'in_payment', 'paid')
                 AND inv.company_id = %s
                 AND company_country.id != country.id
                 AND country.intrastat = TRUE

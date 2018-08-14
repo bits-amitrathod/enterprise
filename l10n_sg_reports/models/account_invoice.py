@@ -14,7 +14,7 @@ class AccountInvoiceLine(models.Model):
     @api.depends('invoice_id.state')
     def _compute_tax_product(self):
         for record in self:
-            if record.invoice_id.state == 'open' or record.invoice_id.state == 'paid':
+            if record.invoice_id.state in ('open', 'in_payment', 'paid'):
                 currency = record.invoice_id and record.invoice_id.currency_id or None
                 price = record.price_unit * (1 - (record.discount or 0.0) / 100.0)
                 taxes = False

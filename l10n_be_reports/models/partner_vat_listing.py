@@ -27,7 +27,7 @@ class ReportL10nBePartnerVatListing(models.AbstractModel):
         tag_ids = [self.env['ir.model.data'].xmlid_to_res_id(k) for k in ['l10n_be.tax_tag_00', 'l10n_be.tax_tag_01', 'l10n_be.tax_tag_02', 'l10n_be.tax_tag_03', 'l10n_be.tax_tag_45']]
         tag_ids_2 = [self.env['ir.model.data'].xmlid_to_res_id(k) for k in ['l10n_be.tax_tag_54']]
         query = """
-            WITH out_invoice_table AS (SELECT id FROM account_invoice WHERE type in ('out_invoice', 'out_refund') AND state in ('open', 'paid'))
+            WITH out_invoice_table AS (SELECT id FROM account_invoice WHERE type in ('out_invoice', 'out_refund') AND state in ('open', 'in_payment', 'paid'))
             SELECT sub1.partner_id, sub1.name, sub1.vat, sub1.turnover, sub2.vat_amount
             FROM (SELECT l.partner_id, p.name, p.vat, SUM(l.credit - l.debit) as turnover
                   FROM account_move_line l

@@ -26,7 +26,7 @@ class AccountInvoice(models.Model):
     def pay_with_mandate(self, mandate):
         """ Uses the mandate passed in parameters to pay this invoice. This function
         updates the state of the mandate accordingly if it was of type 'one-off',
-        passes the invoice in 'paid' state and generates the corresponding payment
+        changes the state of the invoice and generates the corresponding payment
         object, setting its state to 'posted'.
         """
         date_upper_bound = mandate.end_date or self.date_invoice
@@ -60,6 +60,6 @@ class AccountInvoice(models.Model):
         """Overridden to log a different message when an invoice is paid using SDD.
         """
         self.ensure_one()
-        if 'state' in init_values and self.state == 'paid' and self.type == 'out_invoice' and self.sdd_paying_mandate_id:
+        if 'state' in init_values and self.state in ('in_payment', 'paid') and self.type == 'out_invoice' and self.sdd_paying_mandate_id:
             return 'account_sepa_direct_debit.sdd_mt_invoice_paid_with_mandate'
         return super(AccountInvoice, self)._track_subtype(init_values)

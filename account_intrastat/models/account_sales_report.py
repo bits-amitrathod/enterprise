@@ -42,7 +42,7 @@ class IntrastatReport(models.AbstractModel):
                 LEFT JOIN res_partner company_partner ON company_partner.id = company.partner_id
                 LEFT JOIN res_partner cpartner ON partner.commercial_partner_id = cpartner.id
                 LEFT JOIN res_country country ON cpartner.country_id = country.id
-            WHERE inv.state in ('open', 'paid')
+            WHERE inv.state in ('open', 'in_payment', 'paid')
                 AND country.intrastat = TRUE
                 AND company_partner.country_id != country.id
                 AND company.id = %s

@@ -73,7 +73,7 @@ class IrasAuditFile(models.AbstractModel):
         invoice_ids = self.env['account.invoice'].search([
             ('company_id', '=', self.env.user.company_id.id),
             ('type', 'in', ['in_invoice', 'in_refund']),
-            ('state', 'in', ['open', 'paid']),
+            ('state', 'in', ['open', 'in_payment', 'paid']),
             ('date', '>=', date_from),
             ('date', '<=', date_to)
             ])
@@ -123,7 +123,7 @@ class IrasAuditFile(models.AbstractModel):
         invoice_ids = self.env['account.invoice'].search([
             ('company_id', '=', self.env.user.company_id.id),
             ('type', 'in', ['out_invoice', 'out_refund']),
-            ('state', 'in', ['open', 'paid']),
+            ('state', 'in', ['open', 'in_payment', 'paid']),
             ('date', '>=', date_from),
             ('date', '<=', date_to)
             ])
