@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import calendar
 import copy
+from dateutil.relativedelta import relativedelta
 import json
 import io
 import logging
@@ -687,10 +687,9 @@ class AccountReport(models.AbstractModel):
             number_period = options['comparison'].get('number_period', 1) or 0
             for index in range(0, number_period):
                 if cmp_filter == 'same_last_year' or options_filter in ('this_year', 'last_year'):
-                    ly = lambda d: d - timedelta(days=366 if calendar.isleap(d.year) else 365)
                     if dt_from:
-                        dt_from = ly(dt_from)
-                    dt_to = ly(dt_to)
+                        dt_from = dt_from + relativedelta(years=-1)
+                    dt_to = dt_to + relativedelta(years=-1)
                 elif cmp_filter == 'previous_period':
                     if options_filter in ('this_month', 'last_month', 'today'):
                         dt_from = dt_from and (dt_from - timedelta(days=1)).replace(day=1) or dt_from
