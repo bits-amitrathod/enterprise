@@ -685,9 +685,18 @@ var ClientAction = AbstractAction.extend({
         this.currentStep = 'source';
         var errorMessage;
 
-        // Bypass the step if needed.
-        if (this.mode === 'receipt' || this.mode === 'no_multi_locations') {
+        /* Bypass this step in the following cases:
+           - the picking is a receipt
+           - the multi location group isn't active
+           - the user explicitely scans a product while he's supposed to scan a source location
+        */
+        var product = this.productsByBarcode[barcode];
+        if (this.mode === 'receipt' || this.mode === 'no_multi_locations' || product) {
             this.scanned_location = this.currentState.location_id;
+            if (product) {
+                linesActions.push([this.linesWidget.highlightLocation, [true]]);
+                linesActions.push([this.linesWidget.highlightDestinationLocation, [false]]);
+            }
             return this._step_product(barcode, linesActions);
         }
 
