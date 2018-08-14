@@ -832,10 +832,7 @@ class SaleSubscriptionLine(models.Model):
         if partner.lang:
             product = product.with_context(lang=partner.lang)
 
-        name = product.display_name
-        if product.description_sale:
-            name += '\n' + product.description_sale
-        self.name = name
+        self.name = product.get_product_multiline_description_sale()
 
     @api.onchange('product_id', 'quantity')
     def onchange_product_quantity(self):

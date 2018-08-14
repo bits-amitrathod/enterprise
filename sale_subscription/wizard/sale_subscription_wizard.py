@@ -79,10 +79,7 @@ class SaleSubscriptionWizardOption(models.TransientModel):
         if not self.product_id:
             domain['uom_id'] = []
         else:
-            name = self.product_id.display_name
-            if self.product_id.description_sale:
-                name += '\n' + self.product_id.description_sale
-            self.name = name
+            self.name = self.product_id.get_product_multiline_description_sale()
 
             if not self.uom_id:
                 self.uom_id = self.product_id.uom_id.id
