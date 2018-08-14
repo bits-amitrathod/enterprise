@@ -1929,6 +1929,38 @@ QUnit.module('Views', {
 
         dashboard.destroy();
     });
+
+    QUnit.test('rendering of aggregate with widget attribute (widget)', function (assert) {
+        assert.expect(1);
+
+        var MyWidget = FieldFloat.extend({
+            start: function () {
+                this.$el.text('The value is ' + this._formatValue(this.value));
+            },
+        });
+        fieldRegistry.add('test', MyWidget);
+
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard>' +
+                        '<aggregate name="some_value" field="sold" widget="test"/>' +
+                    '</dashboard>',
+            mockRPC: function (route, args) {
+                if (args.method === 'read_group') {
+                    return $.when([{'some_value' : 8}]);
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(dashboard.$('.o_value:visible').text(), 'The value is 8.00',
+            "should have used the specified widget (as there is no 'test' formatter)");
+
+        dashboard.destroy();
+        delete fieldRegistry.map.test;
+    });
 });
 
 });

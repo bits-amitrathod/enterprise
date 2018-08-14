@@ -1,6 +1,7 @@
 from odoo import http, _
 from odoo.http import request
 
+
 class StockBarcodeController(http.Controller):
 
     @http.route('/stock_barcode/scan_from_main_menu', type='json', auth='user')
@@ -120,6 +121,7 @@ class StockBarcodeController(http.Controller):
                 'picking_id': picking_id,
             }
             action = dict(action, target='fullscreen', params=params)
+            action['context'] = {'active_id': picking_id}
             action = {'action': action}
             return action
 

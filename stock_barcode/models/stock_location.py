@@ -10,6 +10,6 @@ class Location(models.Model):
     @api.model
     def get_all_locations_by_barcode(self):
         locations = self.env['stock.location'].search_read(
-            [('barcode', '!=', None)], ['name', 'barcode', 'parent_path'])
+            [('barcode', '!=', None)], ['display_name', 'barcode', 'parent_path'])
         locationsByBarcode = {location.pop('barcode'): location for location in locations}
         return locationsByBarcode

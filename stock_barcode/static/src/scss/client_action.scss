@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    background-color: white;
 
     .o_invisible {
         visibility: hidden;
@@ -21,11 +22,16 @@
     }
     .o_button_barcode_standard {
         border: 1px solid $o-main-text-color;
-        background-color: transparent;
+        background-color: #e1e1e1;
+        color: $o-brand-optional;
+    }
+
+    .o_button_settings {
+        border: 1px solid $o-main-text-color;
     }
 
     .o_button_barcode_highlight {
-        border: 1px solid $o-brand-primary;
+        border: 1px solid $o-main-text-color;
         background-color: $o-brand-primary;
         color: white;
     }

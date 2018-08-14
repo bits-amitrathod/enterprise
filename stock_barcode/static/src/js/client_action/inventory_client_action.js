@@ -8,17 +8,23 @@ var ClientAction = require('stock_barcode.ClientAction');
 // or to create directly a new line in the main view.
 var FormWidget = require('stock_barcode.FormWidget');
 
+var _t = core._t;
+
 var InventoryClientAction = ClientAction.extend({
     custom_events: _.extend({}, ClientAction.prototype.custom_events, {
-        validate: '_validate',
-        cancel: '_cancel',
+        validate: '_onValidate',
+        cancel: '_onCancel',
         show_information: '_onShowInformation',
         picking_print_inventory: '_onPrintInventory'
     }),
 
-    init: function () {
+    init: function (parent, action) {
         this._super.apply(this, arguments);
         this.mode = 'inventory';
+        if (! this.actionParams.inventoryId) {
+            this.actionParams.inventoryId = action.context.active_id;
+            this.actionParams.model = 'stock.inventory';
+        }
     },
 
     willStart: function () {
@@ -29,6 +35,9 @@ var InventoryClientAction = ClientAction.extend({
                 self.mode = 'no_multi_locations';
             } else  {
                 self.mode = 'inventory';
+            }
+            if (self.currentState.state === 'done') {
+                self.mode = 'done';
             }
         });
         return res;
@@ -52,7 +61,7 @@ var InventoryClientAction = ClientAction.extend({
      _getPageFields: function () {
          return [
              ['location_id', 'location_id.id'],
-             ['location_name', 'location_id.name'],
+             ['location_name', 'location_id.display_name'],
          ];
      },
 
@@ -138,19 +147,10 @@ var InventoryClientAction = ClientAction.extend({
         return deferred;
     },
 
-
-    //--------------------------------------------------------------------------
-    // Handlers
-    //--------------------------------------------------------------------------
-
     /**
-     * Handles the `show_information` OdooEvent. It hides the content of the page to show
-     * the InformationWidget
-     *
-     * @private
-     * @param {OdooEvent} ev
+     * @override
      */
-    _onShowInformation: function () {
+    _showInformation: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function () {
             if (self.formWidget) {
@@ -169,13 +169,17 @@ var InventoryClientAction = ClientAction.extend({
         });
     },
 
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
     /**
      * Handles the `validate` OdooEvent.
      *
      * @private
      * @param {OdooEvent} ev
      */
-     _validate: function (ev) {
+     _onValidate: function (ev) {
         ev.stopPropagation();
         var self = this;
         return this.mutex.exec(function () {
@@ -185,6 +189,7 @@ var InventoryClientAction = ClientAction.extend({
                     'method': 'action_done',
                     'args': [[self.currentState.id]],
                 }).then(function () {
+                    self.do_notify(_t("Success"), _t("The inventory adjustment has been validated"));
                     return self.trigger_up('exit');
                 });
             });
@@ -197,16 +202,19 @@ var InventoryClientAction = ClientAction.extend({
     * @private
     * @param {OdooEvent} ev
     */
-    _cancel: function (ev) {
+    _onCancel: function (ev) {
         ev.stopPropagation();
         var self = this;
-        this._save().then(function () {
-            self._rpc({
-                'model': self.actionParams.model,
-                'method': 'action_cancel_draft',
-                'args': [[self.currentState.id]],
-            }).then(function () {
-                self.trigger_up('exit');
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._rpc({
+                    'model': self.actionParams.model,
+                    'method': 'action_cancel_draft',
+                    'args': [[self.currentState.id]],
+                }).then(function () {
+                    self.do_notify(_t("Cancel"), _t("The inventory adjustment has been cancelled"));
+                    self.trigger_up('exit');
+                });
             });
         });
     },
@@ -222,13 +230,15 @@ var InventoryClientAction = ClientAction.extend({
     _onPrintInventory: function (ev) {
         ev.stopPropagation();
         var self = this;
-        this._save().then(function () {
-            self.do_action(self.currentState.actionReportInventory, {
-                'additional_context': {
-                    'active_id': self.actionParams.id,
-                    'active_ids': [self.actionParams.inventoryId],
-                    'active_model': 'stock.inventory',
-                }
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self.do_action(self.currentState.actionReportInventory, {
+                    'additional_context': {
+                        'active_id': self.actionParams.id,
+                        'active_ids': [self.actionParams.inventoryId],
+                        'active_model': 'stock.inventory',
+                    }
+                });
             });
         });
     },

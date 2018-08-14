@@ -23,8 +23,20 @@
                 <field name="package_id" groups="stock.group_tracking_lot" domain="[('location_id', '=', location_id)]"/>
                 <field name="result_package_id" groups="stock.group_tracking_lot" domain="['|', '|', ('location_id', '=', False), ('location_id', '=', location_dest_id), ('id', '=', package_id)]"/>
                 <field name="owner_id" groups="stock.group_tracking_owner"/>
-                <field name="lot_name"  groups="stock.group_production_lot"/>
-                <field name="lot_id"  groups="stock.group_production_lot"/>
+
+                <field name="tracking" invisible="1"/>
+                <field name="picking_type_use_create_lots" invisible="1"/>
+                <field name="picking_type_use_existing_lots" invisible="1"/>
+                <field name="lot_name"
+                    groups="stock.group_production_lot"
+                    attrs="{'invisible': ['|', ('tracking', '=', 'none'), ('picking_type_use_create_lots', '=', False)]}"
+                    />
+                <field name="lot_id"
+                    domain="[('product_id', '=', product_id)]"
+                    groups="stock.group_production_lot"
+                    context="{'default_product_id': product_id}"
+                    attrs="{'invisible': ['|', ('tracking', '=', 'none'), ('picking_type_use_existing_lots', '=', False)]}"
+                    />
             </group>
         </form>
     </field>

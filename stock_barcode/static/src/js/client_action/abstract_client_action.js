@@ -50,6 +50,9 @@ var ClientAction = AbstractAction.extend({
         this.commands = {
             'O-CMD.PREV': this._previousPage.bind(this),
             'O-CMD.NEXT': this._nextPage.bind(this),
+            'O-CMD.PAGER-FIRST': this._firstPage.bind(this),
+            'O-CMD.PAGER-LAST': this._lastPage.bind(this),
+            'O-CMD.MAIN-MENU': this._onMainMenu.bind(this),
         };
 
         // State variables
@@ -92,7 +95,7 @@ var ClientAction = AbstractAction.extend({
         core.bus.on('barcode_scanned', this, this._onBarcodeScannedHandler);
 
         this.headerWidget = new HeaderWidget(this);
-        this.settingsWidget = new SettingsWidget(this, this.actionParams.model);
+        this.settingsWidget = new SettingsWidget(this, this.actionParams.model, this.mode);
         return this._super.apply(this, arguments).then(function () {
             self.headerWidget.prependTo(self.$el);
             self.settingsWidget.appendTo(self.$el);
@@ -137,6 +140,7 @@ var ClientAction = AbstractAction.extend({
                 'group_production_lot': self.currentState.group_production_lot,
                 'group_uom': self.currentState.group_uom,
             };
+            self.show_entire_packs = self.currentState.show_entire_packs;
         });
     },
 
@@ -304,7 +308,7 @@ var ClientAction = AbstractAction.extend({
                     return utils.into(line, field[1]);
                 }).join('#');
             });
-            pages = _.map(groups, function (group){
+            pages = _.map(groups, function (group) {
                 var page = {};
                 _.map(self._getPageFields(), function (field) {
                     page[field[0]] = utils.into(group[0], field[1]);
@@ -318,20 +322,28 @@ var ClientAction = AbstractAction.extend({
             });
             defaultPage.lines = [];
         }
+        pages = _.sortBy(pages, 'location_name');
 
+        // Create a new page if the pair scanned location / default destination location doesn't
+        // exist yet and the scanned location isn't the one of current page.
         var currentPage = this.pages[this.currentPageIndex];
-        // FIXME: what if already present in pages?
         if (this.scanned_location && currentPage.location_id !== this.scanned_location.id) {
-            var pageValues = {
-                location_id: this.scanned_location.id,
-                location_name: this.scanned_location.name,
-                lines: [],
-            };
-            if (self.actionParams.model === 'stock.picking') {
-                pageValues.location_dest_id = this.currentState.location_dest_id.id;
-                pageValues.location_dest_name = this.currentState.location_dest_id.name;
+            var alreadyInPages = _.find(pages, function (page) {
+                return page.location_id === self.scanned_location.id &&
+                    (self.actionParams.model === 'stock.inventory' || page.location_dest_id === self.currentState.location_dest_id.id);
+            });
+            if (! alreadyInPages) {
+                var pageValues = {
+                    location_id: this.scanned_location.id,
+                    location_name: this.scanned_location.display_name,
+                    lines: [],
+                };
+                if (self.actionParams.model === 'stock.picking') {
+                    pageValues.location_dest_id = this.currentState.location_dest_id.id;
+                    pageValues.location_dest_name = this.currentState.location_dest_id.display_name;
+                }
+                pages.push(pageValues);
             }
-            pages.push(pageValues);
         }
 
         if (pages.length === 0) {
@@ -605,6 +617,8 @@ var ClientAction = AbstractAction.extend({
      * @param {Object} params.product
      * @param {Object} params.lot_id
      * @param {Object} params.lot_name
+     * @param {Object} params.package_id
+     * @param {Object} params.result_package_id
      * @return {object} object wrapping the incremented line and some other informations
      */
     _incrementLines: function (params) {
@@ -617,9 +631,9 @@ var ClientAction = AbstractAction.extend({
                 params.lot_name
                 ) {
                 if (this.actionParams.model === 'stock.picking') {
-                    line.qty_done++;
+                    line.qty_done += params.product.qty || 1;
                 } else if (this.actionParams.model === 'stock.inventory') {
-                    line.product_qty++;
+                    line.product_qty += params.product.qty || 1;
                 }
             }
         } else {
@@ -629,9 +643,9 @@ var ClientAction = AbstractAction.extend({
                 params.lot_id ||
                 params.lot_name
                 ) {
-                line = this._makeNewLine(params.product, params.barcode, 1);
+                line = this._makeNewLine(params.product, params.barcode, params.product.qty || 1, params.package_id, params.result_package_id);
             } else {
-                line = this._makeNewLine(params.product, params.barcode, 0);
+                line = this._makeNewLine(params.product, params.barcode, 0, params.package_id, params.result_package_id);
             }
             this._getLines(this.currentState).push(line);
             this.pages[this.currentPageIndex].lines.push(line);
@@ -706,6 +720,7 @@ var ClientAction = AbstractAction.extend({
      * @returns {Deferred}
      */
     _step_product: function (barcode, linesActions) {
+        var self = this;
         this.currentStep = 'product';
         var errorMessage;
 
@@ -716,10 +731,27 @@ var ClientAction = AbstractAction.extend({
             }
             var res = this._incrementLines({'product': product, 'barcode': barcode});
             if (res.isNewLine) {
-                linesActions.push([this.linesWidget.addProduct, [res.lineDescription, this.actionParams.model]]);
+                if (this.actionParams.model === 'stock.inventory') {
+                    // FIXME sle: add owner_id, prod_lot_id, owner_id, product_uom_id
+                    return this._rpc({
+                        model: 'product.product',
+                        method: 'get_theoretical_quantity',
+                        args: [
+                            res.lineDescription.product_id.id,
+                            res.lineDescription.location_id.id,
+                        ],
+                    }).then(function (theoretical_qty) {
+                        res.lineDescription.theoretical_qty = theoretical_qty;
+                        linesActions.push([self.linesWidget.addProduct, [res.lineDescription, self.actionParams.model]]);
+                        self.scannedLines.push(res.id || res.virtualId);
+                        return $.when({linesActions: linesActions});
+                    });
+                } else {
+                    linesActions.push([this.linesWidget.addProduct, [res.lineDescription, this.actionParams.model]]);
+                }
             } else {
                 if (product.tracking === 'none') {
-                    linesActions.push([this.linesWidget.incrementProduct, [res.id || res.virtualId, 1, this.actionParams.model]]);
+                    linesActions.push([this.linesWidget.incrementProduct, [res.id || res.virtualId, product.qty || 1, this.actionParams.model]]);
                 } else {
                     linesActions.push([this.linesWidget.incrementProduct, [res.id || res.virtualId, 0, this.actionParams.model]]);
                 }
@@ -727,18 +759,85 @@ var ClientAction = AbstractAction.extend({
             this.scannedLines.push(res.id || res.virtualId);
             return $.when({linesActions: linesActions});
         } else {
-            if (! this.scannedLines.length) {
-                errorMessage = _t('You are expected to scan one or more products.');
-                return $.Deferred().reject(errorMessage);
-            }
-            var destinationLocation = this.locationsByBarcode[barcode];
-            if (destinationLocation) {
-                return this._step_destination(barcode, linesActions);
-            } else {
-                errorMessage = _t('You are expected to scan more products or a destination location.');
-                return $.Deferred().reject(errorMessage);
-            }
+            return this._step_package(barcode, linesActions).then(function (res) {
+                return $.when({linesActions: res.linesActions});
+            }, function () {
+                if (! self.scannedLines.length) {
+                    if (self.groups.group_tracking_lot) {
+                        errorMessage = _t("You are expected to scan one or more products or a package available at the picking's location");
+                    } else {
+                        errorMessage = _t('You are expected to scan one or more products.');
+                    }
+                    return $.Deferred().reject(errorMessage);
+                }
+
+                var destinationLocation = self.locationsByBarcode[barcode];
+                if (destinationLocation) {
+                    return self._step_destination(barcode, linesActions);
+                } else {
+                    errorMessage = _t('You are expected to scan more products or a destination location.');
+                    return $.Deferred().reject(errorMessage);
+                }
+            });
         }
+    },
+
+    _step_package: function (barcode, linesActions) {
+        // search stock.quant.packe location_id child_of main location ; name barcode
+        // then make a search on quants package_id chilf of barcode
+        // call a `_packageMakeNewLines` methode overriden by picking and inventory or increment the existing lines
+        // fill linesActions + scannedLines
+        // if scannedLines isn't set, the caller will warn
+        var self = this;
+        var search_read = function () {
+            return self._rpc({
+                model: 'stock.quant.package',
+                method: 'search_read',
+                domain: [['name', '=', barcode], ['location_id', 'child_of', self.currentState.location_id.id]],
+                limit: 1,
+            });
+        };
+        var get_contained_quants = function (package_id) {
+            return self._rpc({
+                model: 'stock.quant',
+                method: 'search_read',
+                domain: [['package_id', '=', package_id]],
+            });
+        };
+        return search_read().then(function (packages) {
+            if (packages.length) {
+                return get_contained_quants(packages[0].id).then(function (quants) {
+                    _.each(quants, function (quant) {
+                        // FIXME sle: not optimal
+                        var product_barcode = _.findKey(self.productsByBarcode, function (product) {
+                            return product.id === quant.product_id[0];
+                        });
+                        var product = self.productsByBarcode[product_barcode];
+                        var res = self._incrementLines({
+                            product: product,
+                            barcode: product_barcode,
+                            package_id: [packages[0].id, packages[0].display_name],
+                            result_package_id: [packages[0].id, packages[0].display_name],
+                        });
+                        self.scannedLines.push(res.lineDescription.virtual_id);
+                        if (! self.show_entire_packs) {
+                            if (res.isNewLine) {
+                                linesActions.push([self.linesWidget.addProduct, [res.lineDescription, self.actionParams.model]]);
+                            } else {
+                                // FIXME sle: set all quantities done, not just 1
+                                linesActions.push([self.linesWidget.incrementProduct, [res.id || res.virtualId, quant.quantity, self.actionParams.model]]);
+                            }
+                        }
+                    });
+                    if (self.show_entire_packs && quants.length) {
+                        linesActions.push([self.linesWidget.reload, undefined]);
+                    }
+                    return $.when({linesActions: linesActions});
+                });
+            } else {
+                return $.Deferred().reject();
+            }
+        });
     },
 
     /**
@@ -893,14 +992,12 @@ var ClientAction = AbstractAction.extend({
      */
     _nextPage: function (){
         var self = this;
-        return this.mutex.exec(function () {
-            return self._save().then(function () {
-                if (self.currentPageIndex < self.pages.length - 1) {
-                    self.currentPageIndex++;
-                }
-                self._reloadLineWidget(self.currentPageIndex);
-                self._endBarcodeFlow();
-            });
+        return self._save().then(function () {
+            if (self.currentPageIndex < self.pages.length - 1) {
+                self.currentPageIndex++;
+            }
+            self._reloadLineWidget(self.currentPageIndex);
+            self._endBarcodeFlow();
         });
     },
 
@@ -911,18 +1008,45 @@ var ClientAction = AbstractAction.extend({
      */
     _previousPage: function () {
         var self = this;
-        return this.mutex.exec(function () {
-            return self._save().then(function () {
-                if (self.currentPageIndex > 0) {
-                    self.currentPageIndex--;
-                } else {
-                    self.currentPageIndex = self.pages.length - 1;
-                }
-                self._reloadLineWidget(self.currentPageIndex);
-                self._endBarcodeFlow();
-            });
+        return self._save().then(function () {
+            if (self.currentPageIndex > 0) {
+                self.currentPageIndex--;
+            } else {
+                self.currentPageIndex = self.pages.length - 1;
+            }
+            self._reloadLineWidget(self.currentPageIndex);
+            self._endBarcodeFlow();
         });
     },
+    /**
+     * Helper used when we want to go the first page. It calls `this._endBarcodeFlow`.
+     * @private
+     */
+    _firstPage: function () {
+        var self = this;
+        return self._save().then(function () {
+            if (self.currentPageIndex !== 0) {
+                self.currentPageIndex = 0;
+                self._reloadLineWidget(0);
+                self._endBarcodeFlow();
+            }
+        });
+    },
+    /**
+     * Helper used when we want to go the last page. It calls `this._endBarcodeFlow`.
+     * @private
+     */
+    _lastPage: function () {
+        var self = this;
+        return self._save().then(function () {
+            if (self.currentPageIndex !== self.pages.length - 1) {
+                self.currentPageIndex = self.pages.length - 1;
+                self._reloadLineWidget(self.pages.length - 1);
+                self._endBarcodeFlow();
+            }
+        });
+    },
+
 
     //--------------------------------------------------------------------------
     // Handlers
@@ -938,7 +1062,11 @@ var ClientAction = AbstractAction.extend({
      */
     _onBarcodeScannedHandler: function (barcode) {
         var self = this;
-        this.mutex.exec(function() {
+        this.mutex.exec(function () {
+            if (self.mode === 'done' || self.mode === 'cancel') {
+                self.do_warn(_t('Warning'), _t('Scanning is disabled in this state.'));
+                return $.when();
+            }
             var commandeHandler = self.commands[barcode];
             if (commandeHandler) {
                 return commandeHandler();
@@ -957,10 +1085,9 @@ var ClientAction = AbstractAction.extend({
      _onExit: function (ev) {
         ev.stopPropagation();
         var self = this;
-        this.mutex.exec( function () {
+        this.mutex.exec(function () {
             return self._save().then(function () {
                 self.actionManager.$el.height(self.actionManagerInitHeight);
-                self.trigger_up('toggle_fullscreen');
                 self.trigger_up('history_back');
             });
         });
@@ -1072,13 +1199,17 @@ var ClientAction = AbstractAction.extend({
     /**
      * Handles the `show_information` OdooEvent. It hides the main widget and
      * display a standard form view with information about the current record.
-     * To implement by specialized client action.
      *
-     * @abstract
      * @private
      * @param {OdooEvent} ev
      */
     _onShowInformation: function (ev) {  // jshint ignore:line
+        var self = this;
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._showInformation();
+            });
+        });
     },
 
     /**
@@ -1121,12 +1252,11 @@ var ClientAction = AbstractAction.extend({
             this.settingsWidget.do_hide();
         }
         this.headerWidget.toggleDisplayContext('init');
-        this.$('.o_show_information').toggleClass('o_hidden', false);
+        this.$('.o_show_information').toggleClass('o_hidden', true);
         var self = this;
         this._save({'forceReload': true}).then(function () {
             var record = ev.data.record;
             if (record) {
-
                 var newPageIndex = _.findIndex(self.pages, function (page) {
                     return page.location_id === record.data.location_id.res_id &&
                            (self.actionParams.model === 'stock.inventory' ||
@@ -1138,7 +1268,9 @@ var ClientAction = AbstractAction.extend({
                 self.currentPageIndex = newPageIndex;
             }
             self._reloadLineWidget(self.currentPageIndex);
+            // FIXME sle: when scanning a package with move entire packages, we shouldn't call this method
             self._endBarcodeFlow();
+            self.$('.o_show_information').toggleClass('o_hidden', false);
         });
     },
 
@@ -1150,8 +1282,13 @@ var ClientAction = AbstractAction.extend({
      * @param {OdooEvent} ev
      */
     _onNextPage: function (ev) {
+        var self = this;
         ev.stopPropagation();
-        this._nextPage();
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._nextPage();
+            });
+        });
     },
 
     /**
@@ -1162,9 +1299,29 @@ var ClientAction = AbstractAction.extend({
      * @param {OdooEvent} ev
      */
     _onPreviousPage: function (ev) {
+        var self = this;
         ev.stopPropagation();
-        this._previousPage();
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._previousPage();
+            });
+        });
     },
+
+    /**
+     * Handles the 'main_menu' OdooEvent. It's used when we want to go back the
+     * main app menu.
+     * @private
+     */
+    _onMainMenu: function () {
+        var self = this;
+        self._save().then(function () {
+            self.do_action('stock_barcode.stock_barcode_action_main_menu', {
+                clear_breadcrumbs: true,
+            });
+        });
+    },
+
 });
 
 core.action_registry.add('stock_barcode_client_action', ClientAction);

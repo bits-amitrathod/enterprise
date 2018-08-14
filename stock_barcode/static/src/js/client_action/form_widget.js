@@ -34,8 +34,11 @@ var FormWidget = Widget.extend({
     },
 
     start: function() {
+        var self = this;
         var def = this.controller.appendTo(this.$el.filter('.barcode_form_view'));
-        return $.when(def, this._super());
+        return $.when(def, this._super()).then(function () {
+            self.$el.find('.o_form_view').addClass('o_xxs_form_view');
+        });
     },
 
     //--------------------------------------------------------------------------

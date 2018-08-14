@@ -13,6 +13,6 @@ class MrpProduction(models.Model):
         return domain
 
     def _get_quality_check_values(self, quality_point):
-        values = super(MrpProduction, self)._get_quality_check_values()
+        values = super(MrpProduction, self)._get_quality_check_values(quality_point)
         values['workorder_id'] = False
         return values

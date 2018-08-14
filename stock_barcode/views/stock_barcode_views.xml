@@ -6,6 +6,7 @@
     <record id="stock_barcode_action_main_menu" model="ir.actions.client">
         <field name="name">Barcode</field>
         <field name="tag">stock_barcode_main_menu</field>
+        <field name="target">fullscreen</field>
     </record>
 
     <menuitem
@@ -39,10 +40,25 @@
         }</field>
     </record>
 
+    <record id="stock_picking_kanban" model="ir.ui.view">
+        <field name="name">stock.barcode.picking.kanban</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_kanban"/>
+        <field name="mode">primary</field>
+        <!--High priority to not be the standard view of pickings in inventory app-->
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban[hasclass('o_kanban_mobile')]" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
     <record id="stock_picking_action_kanban" model="ir.actions.act_window">
         <field name="name">Operations</field>
         <field name="res_model">stock.picking</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="stock_barcode.stock_picking_kanban"/>
         <field name="context">{
             'form_view_initial_mode': 'edit',
             'search_default_picking_type_id': [active_id],
@@ -61,7 +77,7 @@
         <field name="mode">primary</field>
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_mobile" create="0">
+            <kanban class="o_kanban_mobile oe_background_grey o_emphasize_colors" create="0">
                 <field name="display_name"/>
                 <field name="color"/>
                 <field name="count_picking_ready"/>
@@ -70,13 +86,16 @@
                     <t t-name="kanban-box">
                         <div t-if="['incoming', 'outgoing', 'internal'].indexOf(record.code.raw_value) > -1" t-attf-class="oe_kanban_card #{kanban_color(record.color.raw_value)} oe_kanban_global_click">
                             <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
-                            <div class="row">
-                                <div class="col-12">
-                                    <strong><span><t t-esc="record.display_name.value"/></span></strong>
+                                <div class="o_kanban_card_header">
+                                        <div class="o_primary o_kanban_record_title">
+                                            <field name="name"/>
+                                        </div>
+                                        <div class="o_secondary">
+                                            <field name="warehouse_id"/>
+                                        </div>
                                 </div>
-                            </div>
-                            <div class="row text-muted">
-                                <div class="col-12">
+                            <div class="container o_kanban_card_content">
+                                <div class="row text-muted">
                                     <button class="btn btn-primary" name="get_action_picking_tree_ready_kanban" type="object">
                                         <span t-if="record.code.raw_value =='incoming'"><t t-esc="record.count_picking_ready.value"/> To Receive</span>
                                         <span t-if="record.code.raw_value =='outgoing'"><t t-esc="record.count_picking_ready.value"/> To Do</span>

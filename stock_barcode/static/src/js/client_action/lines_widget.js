@@ -12,6 +12,7 @@ var LinesWidget = Widget.extend({
         'click .o_validate_page': '_onClickValidatePage',
         'click .o_next_page': '_onClickNextPage',
         'click .o_previous_page': '_onClickPreviousPage',
+        'click .o_put_in_pack': '_onPutInPack',
     },
 
     init: function (parent, page, pageIndex, nbPages) {
@@ -22,6 +23,7 @@ var LinesWidget = Widget.extend({
         this.mode = parent.mode;
         this.groups = parent.groups;
         this.model = parent.actionParams.model;
+        this.show_entire_packs = parent.show_entire_packs;
     },
 
     start: function () {
@@ -147,11 +149,44 @@ var LinesWidget = Widget.extend({
         var $line = this.$("[data-id='" + id_or_virtual_id + "']");
         var $lotName = $line.find('.o_line_lot_name');
         var $lotId = $line.find('.o_line_lot_id');
-        if (! $lotName.length && !$lotId.length) {
-            var $p = $('<p>');
+        if (! $lotName.text() && !$lotId.text()) {
             var $span = $('<span>', {class: 'o_line_lot_name', text: lotName});
-            $span.appendTo($p).appendTo($line);
+            $lotName.replaceWith($span);
         }
+    },
+
+    getProductLines: function (lines) {
+        if (! this.show_entire_packs) {
+            return lines;
+        }
+
+        return _.filter(lines, function (line) {
+            return ! line.package_id;
+        });
+    },
+
+    getPackageLines: function (lines) {
+        if (! this.show_entire_packs) {
+            return [];
+        }
+
+        lines = _.filter(lines, function (line) {
+            return line.package_id;
+        });
+        var groupedLines = _.groupBy(lines, function (line) {
+            return line.package_id[0] === line.result_package_id[0] && line.package_id[0];
+        });
+        var packageLines = [];
+        for (var key in groupedLines) {
+            if (groupedLines.hasOwnProperty(key)) {
+                packageLines.push(groupedLines[key][0]);
+            }
+        }
+        return packageLines;
+    },
+
+    reload: function () {
+        this.trigger_up('reload');
     },
 
     //--------------------------------------------------------------------------
@@ -171,6 +206,18 @@ var LinesWidget = Widget.extend({
      * @param {Number} nbPages: the total number of pages
      */
      _renderLines: function() {
+         if (this.mode === 'done') {
+             if (this.model === 'stock.picking') {
+                 this._toggleScanMessage('picking_already_done');
+             } else if (this.model === 'stock.inventory') {
+                 this._toggleScanMessage('inv_already_done');
+             }
+             return;
+         } else if (this.mode === 'cancel') {
+             this._toggleScanMessage('picking_already_cancelled');
+             return;
+         }
+
         // Render and append the page summary.
         var $header = this.$el.filter('.barcode_lines_header');
         var $pageSummary = $(QWeb.render('stock_barcode_summary_template', {
@@ -187,7 +234,8 @@ var LinesWidget = Widget.extend({
         var $body = this.$el.filter('.barcode_lines');
         if (this.page.lines.length) {
             var $lines = $(QWeb.render('stock_barcode_lines_template', {
-                lines: this.page.lines,
+                lines: this.getProductLines(this.page.lines),
+                packageLines: this.getPackageLines(this.page.lines),
                 model: this.model,
                 groups: this.groups,
             }));
@@ -373,6 +421,7 @@ var LinesWidget = Widget.extend({
      * @param {MouseEvent} ev
      */
      _onClickAddLine: function (ev) {
+        ev.preventDefault();
         ev.stopPropagation();
         this.trigger_up('add_line');
     },
@@ -410,6 +459,17 @@ var LinesWidget = Widget.extend({
     _onClickPreviousPage: function (ev) {
         ev.stopPropagation();
         this.trigger_up('previous_page');
+    },
+
+    /**
+     * Handles the click on the `put in pack button`.
+     *
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onPutInPack: function (ev) {
+        ev.stopPropagation();
+        this.trigger_up('put_in_pack');
     },
 });
 

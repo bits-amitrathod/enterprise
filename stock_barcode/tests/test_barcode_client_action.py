@@ -8,6 +8,15 @@ except ImportError:
 from odoo.tests import HttpCase, tagged
 
 
+def clean_access_rights(env):
+    """ remove all access right link to stock application to the users
+    given as parameter"""
+    grp_lot = env.ref('stock.group_production_lot')
+    grp_multi_loc = env.ref('stock.group_stock_multi_locations')
+    env.user.write({'groups_id': [(3, grp_lot.id)]})
+    env.user.write({'groups_id': [(3, grp_multi_loc.id)]})
+
+
 @tagged('post_install', '-at_install')
 class TestBarcodeClientAction(HttpCase):
     def setUp(self):
@@ -80,6 +89,7 @@ class TestBarcodeClientAction(HttpCase):
           - move 1 `self.product2` from shelf1 to shelf2
         Test all these operations only by scanning barcodes.
         """
+        clean_access_rights(self.env)
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
         internal_picking = self.env['stock.picking'].create({
@@ -147,6 +157,7 @@ class TestBarcodeClientAction(HttpCase):
           - move 1 `self.product2` from shelf1 to shelf2
         Test all these operations only by using the embedded form views.
         """
+        clean_access_rights(self.env)
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
         internal_picking = self.env['stock.picking'].create({
@@ -176,6 +187,7 @@ class TestBarcodeClientAction(HttpCase):
           - move 1`self.product1` from shelf3 to shelf4.
         Before doing the reservation, move 1 `self.product1` from shelf3 to shelf2
         """
+        clean_access_rights(self.env)
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
         internal_picking = self.env['stock.picking'].create({
@@ -250,6 +262,7 @@ class TestBarcodeClientAction(HttpCase):
             self.assertEqual(CALL_COUNT, 2)
 
     def test_receipt_from_scratch_with_lots_1(self):
+        clean_access_rights(self.env)
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
@@ -271,6 +284,7 @@ class TestBarcodeClientAction(HttpCase):
         self.assertEqual(receipt_picking.move_line_ids.mapped('lot_name'), ['lot1', 'lot2'])
 
     def test_receipt_from_scratch_with_lots_2(self):
+        clean_access_rights(self.env)
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
@@ -296,6 +310,7 @@ class TestBarcodeClientAction(HttpCase):
         """ Open a receipt. Move a unit of `self.product1` into shelf1, shelf2, shelf3 and shelf 4.
         Move a unit of `self.product2` into shelf1, shelf2, shelf3 and shelf4 too.
         """
+        clean_access_rights(self.env)
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
         receipt_picking = self.env['stock.picking'].create({
@@ -357,6 +372,7 @@ class TestBarcodeClientAction(HttpCase):
             self.assertEqual(CALL_COUNT, 1)
 
     def test_delivery_reserved_1(self):
+        clean_access_rights(self.env)
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
         delivery_picking = self.env['stock.picking'].create({
@@ -414,7 +430,7 @@ class TestBarcodeClientAction(HttpCase):
     def test_delivery_from_scratch_1(self):
         """ Scan unreserved lots on a delivery order.
         """
-
+        clean_access_rights(self.env)
         grp_lot = self.env.ref('stock.group_production_lot')
         self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
 
@@ -449,6 +465,7 @@ class TestBarcodeClientAction(HttpCase):
         """ Scan unreserved serial number on a delivery order.
         """
 
+        clean_access_rights(self.env)
         grp_lot = self.env.ref('stock.group_production_lot')
         self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
 
@@ -480,6 +497,7 @@ class TestBarcodeClientAction(HttpCase):
         self.assertEqual(lines.mapped('qty_done'), [1, 1, 1, 1])
 
     def test_delivery_reserved_lots_1(self):
+        clean_access_rights(self.env)
         grp_lot = self.env.ref('stock.group_production_lot')
         self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
 
@@ -532,8 +550,10 @@ class TestBarcodeClientAction(HttpCase):
         """ Scan unreserved serial number on a delivery order.
         """
 
+        clean_access_rights(self.env)
         grp_lot = self.env.ref('stock.group_production_lot')
         self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        #self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
 
         # Add 4 serial numbers productserial1
         snObj = self.env['stock.production.lot']
@@ -585,6 +605,7 @@ class TestBarcodeClientAction(HttpCase):
         self.assertEqual(lines.mapped('qty_done'), [1, 1, 1, 1])
 
     def test_receipt_reserved_lots_multiloc_1(self):
+        clean_access_rights(self.env)
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
         grp_lot = self.env.ref('stock.group_production_lot')
@@ -670,7 +691,7 @@ class TestBarcodeClientAction(HttpCase):
         WH/stock/shelf2 product1 qty: 1
         - Validate
         """
-
+        clean_access_rights(self.env)
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
 
@@ -712,7 +733,7 @@ class TestBarcodeClientAction(HttpCase):
         productserial1 with serial3 (qty 1)
         - Validate
         """
-
+        clean_access_rights(self.env)
         grp_lot = self.env.ref('stock.group_production_lot')
         self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
 

@@ -18,12 +18,25 @@ var MainMenu = AbstractAction.extend({
         "click .button_inventory": function(){
             this.open_inventory();
         },
+        "click .o_stock_barcode_menu": function(){
+            this.trigger_up('toggle_fullscreen');
+            this.trigger_up('show_home_menu');
+        },
     },
 
     init: function(parent, action) {
         // Yet, "_super" must be present in a function for the class mechanism to replace it with the actual parent method.
         this._super.apply(this, arguments);
         this.message_demo_barcodes = action.params.message_demo_barcodes;
+    },
+
+    willStart: function () {
+        var self = this;
+        return this._super.apply(this, arguments).then(function () {
+            return Session.user_has_group('stock.group_stock_multi_locations').then(function (has_group) {
+                self.group_stock_multi_location = has_group;
+            });
+        });
     },
 
     start: function() {

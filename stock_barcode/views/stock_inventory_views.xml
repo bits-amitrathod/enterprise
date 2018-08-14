@@ -42,6 +42,7 @@
                     type="object"
                     class="oe_stat_button"
                     icon="fa-barcode"
+                    attrs="{'invisible': [('state', '=', 'draft')]}"
                     />
             </xpath>
         </field>
@@ -54,15 +55,22 @@
         <field name="arch" type="xml">
             <form string="Inventory Details">
                 <group>
-                    <group>
-                        <field name="category_id" attrs="{'invisible': [('category_id', '=', False)]}"/>
-                        <field name="product_id" attrs="{'invisible': [('product_id', '=', False)]}"/>
-                        <field name="location_id" attrs="{'invisible': [('location_id', '=', False)]}" />
-                        <field name="lot_id" attrs="{'invisible': [('lot_id', '=', False)]}" />
-                        <field name="date" attrs="{'invisible': [('date', '=', False)]}" />
-                        <field name="state" attrs="{'invisible': [('state', '=', False)]}" />
-                        <field name="partner_id" attrs="{'invisible': [('partner_id', '=', False)]}" />
-                    </group>
+                    <field name="category_id" attrs="{'invisible': [('category_id', '=', False)]}"/>
+                    <field name="product_id" attrs="{'invisible': [('product_id', '=', False)]}"/>
+                    <field name="location_id" attrs="{'invisible': [('location_id', '=', False)]}" />
+                    <field name="lot_id" attrs="{'invisible': [('lot_id', '=', False)]}" />
+                    <field name="date" attrs="{'invisible': [('date', '=', False)]}" />
+                    <field name="state" attrs="{'invisible': [('state', '=', False)]}" />
+                    <field name="partner_id" attrs="{'invisible': [('partner_id', '=', False)]}" />
+                    <field name="move_ids" context="{'default_inventory_id': id}" string="Inventory Adjustments">
+                        <tree>
+                            <field name="product_id"/>
+                            <field name="location_id" string="From"/>
+                            <field name="location_dest_id" string="To"/>
+                            <field name="quantity_done"/>
+                            <field name="state" invisible="1"/>
+                        </tree>
+                    </field>
                 </group>
             </form>
         </field>
@@ -78,7 +86,7 @@
                     <field name="state" invisible="1"/>
                     <field name="product_id"
                         attrs="{'readonly': [('state', '=', 'done')]}"
-                        domain="[('type', 'in', ['product', 'consu'])]"
+                        domain="[('type', 'in', ['product'])]"
                         required="1"/>
                     <field name="theoretical_qty" readonly="1"/>
                     <field name="product_qty" string="Real Quantity" />
