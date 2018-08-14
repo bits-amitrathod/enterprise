@@ -168,7 +168,7 @@ class TimesheetForecastController(SaleTimesheetController):
         return stat_buttons
 
     @http.route('/timesheet/plan/action', type='json', auth="user")
-    def plan_stat_button(self, domain, res_model='account.analytic.line'):
+    def plan_stat_button(self, domain=[], res_model='account.analytic.line', res_id=False):
         action = super(TimesheetForecastController, self).plan_stat_button(domain, res_model=res_model)
         if res_model == 'project.forecast':
             forecasts = request.env['project.forecast'].search(literal_eval(domain))
