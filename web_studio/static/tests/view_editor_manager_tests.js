@@ -1653,8 +1653,8 @@ QUnit.module('ViewEditorManager', {
         return concurrency.delay(0).then(function () {
             assert.strictEqual(vem.$('.o_web_studio_view_renderer .o_graph').length, 1,
                 "there should be a graph renderer");
-            assert.strictEqual(vem.$('.o_web_studio_view_renderer > .o_graph > .o_graph_svg_container > svg').length, 1,
-                "the graph should be the direct child of its container");
+            assert.strictEqual(vem.$('.o_web_studio_view_renderer .o_graph .o_graph_svg_container svg').length, 1,
+                "the graph should be a child of its container");
             vem.destroy();
             done();
         });
