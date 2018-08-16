@@ -38,9 +38,11 @@ class TestImportExport(common.TransactionCase):
             "sync_problem": False,
         }]
 
-        AAL = self.env['account.analytic.line']
+        user_admin = self.env.ref('base.user_admin')
 
-        context = {'lang': "en_US", 'tz': "Europe/Brussels", 'uid': 1}
+        AAL = self.env['account.analytic.line'].sudo(user_admin)
+
+        context = {'lang': "en_US", 'tz': "Europe/Brussels", 'uid': user_admin.id}
 
         AAL.with_context(context).import_ui_data(test_analytic_lines, test_tasks, test_projects)
 

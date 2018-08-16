@@ -26,7 +26,11 @@
     </record>
 
     <record model="res.users" id="base.user_root">
-       <field eval="[(4,ref('quality.group_quality_manager'))]" name="groups_id"/>         
+       <field eval="[(4,ref('quality.group_quality_manager'))]" name="groups_id"/>
+    </record>
+
+    <record model="res.users" id="base.user_admin">
+       <field eval="[(4,ref('quality.group_quality_manager'))]" name="groups_id"/>
    	</record>
 
    	<record model="ir.rule" id="quality_alert_comp_rule">

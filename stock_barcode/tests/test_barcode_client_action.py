@@ -21,6 +21,7 @@ def clean_access_rights(env):
 class TestBarcodeClientAction(HttpCase):
     def setUp(self):
         super(TestBarcodeClientAction, self).setUp()
+        self.uid = self.env.ref('base.user_admin').id
         global CALL_COUNT
         CALL_COUNT = 0
         self.supplier_location = self.env.ref('stock.stock_location_suppliers')
