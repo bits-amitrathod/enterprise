@@ -2,10 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import http
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 from odoo.tools.translate import _
-from odoo.addons.portal.controllers.portal import get_records_pager, pager as portal_pager, CustomerPortal
+from odoo.addons.portal.controllers.portal import pager as portal_pager, CustomerPortal
 from odoo.osv.expression import OR
 
 
@@ -99,7 +99,7 @@ class CustomerPortal(CustomerPortal):
     def tickets_followup(self, ticket_id=None, access_token=None, **kw):
         try:
             ticket_sudo = self._document_check_access('helpdesk.ticket', ticket_id, access_token)
-        except AccessError:
+        except (AccessError, MissingError):
             return request.redirect('/my')
 
         values = self._ticket_get_page_view_values(ticket_sudo, access_token, **kw)
