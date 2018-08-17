@@ -20,19 +20,7 @@ var One2ManySelectable = FieldOne2Many.extend({
      * @override
      * @returns {Deferred}
      */
-    /* init: function() {
-        var result = this._super.apply(this, arguments);
-        console.log("inside init");
-        //console.log(this);
-        //this.renderer.hasSelectors=true;
-       // console.log(this.renderer.hasSelectors)
 
-         //rendererParams
-         //this.__getterSetterInternalMap({renderer:{hasSelectors:true}})
-        //console.log(this.__getterSetterInternalMap(renderer:{hasSelectors:true}));
-       // console.log(this.);
-        return result;
-    },*/
     events: {
         "click .cf_button_confirm": "action_selected_lines",
     },
@@ -45,15 +33,17 @@ var One2ManySelectable = FieldOne2Many.extend({
 
    _render: function () {
           this._super.apply(this, arguments);
-          if(this.renderer.hasSelectors){
-          }else{
+          if(!this.renderer.hasSelectors){
             this.renderer.hasSelectors=true;
           }
    },
-    action_selected_lines: function()
+    action_selected_lines: function(e)
 	{
 			var self=this;
-			//console.log(this.value);
+			var ids=[];
+			var flag=false
+			var records=this.recordData.prioritization_ids.data
+
 			var selected_ids = this.renderer.selection;
 			if (selected_ids.length === 0)
 			{
@@ -61,17 +51,44 @@ var One2ManySelectable = FieldOne2Many.extend({
 				return false;
 			}
 
-/* you can use the python function to get the IDS
-			      @api.multi
-				def bulk_verify(self):
-        				for record in self:
-            				print record
-			*/
-			return this._rpc({
-                model:this.model,
-                method: 'bulk_verify',
-                args: [selected_ids, {context:this.context,value:this.value}],
-                });
+            //console.log(records)
+            selected_ids.forEach(function(seletedId) {
+             //console.log(seletedId);
+              records.forEach(function(record) {
+
+                    if(record.id==seletedId){
+                        //console.log("Inside If");
+                        //console.log(record.res_id);
+                        if(record.res_id===undefined){
+                                //console.log("Inside If1");
+                                flag=true
+                                //this.do_warn(_t("You must save the record before Copy Down."));
+				            //return false;
+                        }else{
+                             //console.log("Inside else");
+                             ids.push(record.res_id);
+                        }
+
+			        }
+              });
+            });
+            if (flag)
+			{
+				this.do_warn(_t("You must save the record before Copy Down."));
+				return false;
+			}
+            e.preventDefault();
+            var returnVal=this.do_action({
+                name: _t("Copy Down"),
+                type: "ir.actions.act_window",
+                res_model: "prioritization.transient",
+                domain : [],
+                views: [[false, "form"]],
+                target: 'new',
+                context: {'selected_ids':ids},
+                view_type : 'form',
+                view_mode : 'form'
+            });
 		},
 });
 
@@ -79,4 +96,3 @@ fieldRegistry.add("one2many_selectable", One2ManySelectable);
 return One2ManySelectable;
 
 });
-//args: [selected_ids, {context:this.context}],

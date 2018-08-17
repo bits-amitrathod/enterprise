@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #from addons.sale.models.sale import SaleOrder
-from odoo import models, fields, api
+
+from odoo import models, fields, api,_
 from odoo.exceptions import UserError, AccessError
 import logging
 from datetime import date
@@ -24,7 +25,8 @@ class Customer(models.Model):
     cooling_period = fields.Integer("Cooling Period in days", readonly=False)
     auto_allocate = fields.Boolean("Allow Auto Allocation?", readonly=False)
     length_of_hold = fields.Integer("Length Of Hold in hours", readonly=False)
-    expiration_tolerance = fields.Integer("Expiration Tolerance in months", readonly=False)
+    expiration_tolerance = fields.Integer("Expiration Tolerance in Months", readonly=False)
+
     partial_ordering = fields.Boolean("Allow Partial Ordering?", readonly=False)
     partial_UOM = fields.Boolean("Allow Partial UOM?", readonly=False)
     order_ids = fields.One2many('sale.order', 'partner_id')
@@ -36,33 +38,11 @@ class Customer(models.Model):
     quickbook_id=fields.Char("Quickbook Id")
     having_carrier = fields.Boolean("Having Carrier?")
     notification_email=fields.Char("Notification Email")
+    preferred_method=fields.Selection([
+       ('mail', 'Mail'),
+       ('email', 'E Mail'),
+       ('both', 'E Mail & Mail ')], string='Preferred Invoice Delivery Method')
 
-
-    #@api.multi
-    def bulk_verify(self,arg):
-        print(self)
-        #print(arg)
-        #for record in self:
-            #print(record)
-        view = self.env['prioritization.transient']
-       # view = self.env.ref('prioritization_engine.view_form_prioritization_normal')
-        view_id=self.env.ref('prioritization_engine.view_form_prioritization_normal',False).id
-        params=[]
-        #new = view.create(params)
-        print(view_id)
-        #print(new.id)
-        return {
-            'type': 'ir.actions.act_window',
-            #'name':_('Multiple Update Operations'),
-            'res_model': 'prioritization.transient',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'multi':True,
-            #'res_id': new.id,
-            #'view_id': view_id,
-            #'target': 'new',
-
-        }
     # Return Customer prioritization setting ON(True)/OFF(False).
     def get_prioritization_setting(self):
         return self.prioritization
@@ -135,6 +115,62 @@ class Customer(models.Model):
     def get_notification_email(self):
         return self.notification_email
 
+    # calculate cooling period
+    def calculate_cooling_priod_in_days(self, confirmation_date):
+        # get current datetime
+        current_datetime = datetime.datetime.now()
+
+        # calculate datetime difference.
+        duration = current_datetime - confirmation_date  # For build-in functions
+        duration_in_seconds = duration.total_seconds()  # Total number of seconds between dates
+        duration_in_hours = duration_in_seconds / 3600  # Total number of hours between dates
+        duration_in_days = duration_in_hours / 24
+        print("duration_in_days is " + str(duration_in_days))
+        if int(self.get_cooling_period()) < int(duration_in_days):
+            return True
+        else:
+            return False
+
+
+    #parameter user id and product id
+    def get_product_last_purchased_date(self):
+        _logger.info("In get_product_last_purchased_date()")
+        sale_orders_line = self.env['sale.order.line'].search([('product_id', '=', 33)])
+
+        sorted_sale_orders_line = sorted([line for line in sale_orders_line if line.order_id.confirmation_date], key=Customer._sort_by_confirmation_date, reverse=True)
+
+        sorted_sale_orders_line.pop(1) #get only first record
+        _logger.info("^^^^"+ str(sorted_sale_orders_line.order_id) + str(sorted_sale_orders_line.order_id.confirmation_date) + str(sorted_sale_orders_line.product_id))
+        self.calculate_cooling_priod_in_days(sorted_sale_orders_line.order_id.confirmation_date)
+
+    @staticmethod
+    def _sort_by_confirmation_date(sale_order_dict):
+        if sale_order_dict.order_id.confirmation_date:
+            return datetime.strptime(sale_order_dict.order_id.confirmation_date, '%Y-%m-%d %H:%M:%S')
+
+
+    @api.multi
+    def bulk_verify(self,arg):
+        #action = self.env.ref('prioritization_engine.action_sps_transient').read()[0]
+        action = self.env.ref('prioritization_engine.action_notification_setting').read()[0]
+        action['views'] = [(self.env.ref('prioritization_engine.view_notification_setting_form').id, 'form')]
+        action['view_ids'] = self.env.ref('prioritization_engine.view_notification_setting_form').id
+        action['res_id'] = 9
+        print(action)
+        return action
+
+    def action_view_notification(self):
+        '''
+        This function returns an action that display existing notification
+        of given partner ids. It can be form
+        view,
+        '''
+        action = self.env.ref('prioritization_engine.action_notification_setting').read()[0]
+        action['views'] = [(self.env.ref('prioritization_engine.view_notification_setting_form').id, 'form')]
+        action['view_ids'] = self.env.ref('prioritization_engine.view_notification_setting_form').id
+        action['res_id'] = self.id
+        print("Inside  action_view_notification")
+        return action
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
@@ -143,7 +179,21 @@ class ProductTemplate(models.Model):
         ('2', 'II')], string='TIER Type')
     location = fields.Char("Location")
     class_code = fields.Char("Class Code")
+    premium = fields.Boolean("Premium")
 
+
+class NotificationSetting(models.Model):
+    _inherit = 'res.partner'
+
+    start_date = fields.Date("Start Date")
+    end_date = fields.Date("End Date")
+    monday = fields.Boolean("Monday")
+    tuesday = fields.Boolean("Tuesday")
+    wednesday = fields.Boolean("Wednesday")
+    thursday = fields.Boolean("Thursday")
+    friday = fields.Boolean("Friday")
+    saturday = fields.Boolean("Saturday")
+    sunday = fields.Boolean("Sunday")
 
 # Customer product level setting
 class Prioritization(models.Model):
@@ -167,6 +217,9 @@ class Prioritization(models.Model):
         ('prioritization_engine_company_uniq', 'unique(customer_id,product_id)', 'Product must be unique for customer!!!!'),
     ]
 
+    def get_product_last_purchased_date1(self):
+        _logger.info("In get_product_last_purchased_date()")
+        sale_orders_line = self.env['sale.order.line'].search([('product_id', '=', self.product_id)])
     # calculate cooling period
     def calculate_cooling_priod_in_days(self, confirmation_date, request_id):
         # get current datetime
@@ -235,7 +288,7 @@ class Prioritization(models.Model):
         return self.priority
 
     # Return cooling period in days return type Integer
-    def get_cooling_period(self,customer_id,product_id):
+    def get_cooling_period(self):
         return self.cooling_period
 
     # Return Allow Auto Allocation? True/ False
@@ -321,3 +374,11 @@ class PrioritizationTransient(models.TransientModel):
     partial_ordering = fields.Boolean("Allow Partial Ordering?")
     partial_UOM = fields.Integer("Allow Partial UOM?")
     length_of_hold = fields.Date("Lenght Of Holding")
+
+    def action_confirm(self,arg):
+        for selected in arg["selected_ids"]:
+            record = self.env['prioritization_engine.prioritization'].search([('id', '=', selected)])[0]
+            record.write({'threshold': self.threshold,'priority': self.priority,'cooling_period': self.cooling_period,'auto_allocate': self.auto_allocate,
+                        'expiration_tolerance': self.expiration_tolerance,'partial_ordering': self.partial_ordering,'partial_UOM': self.partial_UOM,
+                        'length_of_hold': self.length_of_hold})
+        return {'type': 'ir.actions.act_close_wizard_and_reload_view'}

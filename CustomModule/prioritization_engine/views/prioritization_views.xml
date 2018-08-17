@@ -6,11 +6,17 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="priority" eval="20"/>
             <field name="arch" type="xml">
+                <button name="toggle_active" position="before">
+                    <button class="oe_stat_button" name ="action_view_notification" type="object"  icon="fa-bell">
+                         <span class="o_stat_text">Notification</span>
+                    </button>
+                </button>
                   <field name="vat" position="after">
                       <field name="sku_preconfig"/>
                       <field name="sku_postconfig"/>
                       <field name="quickbook_id"/>
                       <field name="having_carrier"/>
+                      <field name="preferred_method"/>
                   </field>
                   <field name="lang" position="after">
                      <field name="prioritization"/>
@@ -105,6 +111,10 @@
                         <field name="partial_UOM"/>
                   </group>
                   </group>
+                  <footer class="oe_edit_only">
+                        <button string="Copy Down" name="action_confirm" type="object" class="oe_highlight"/>
+                        <button string="Discard" special="cancel"/>
+                  </footer>
                 </form>
             </field>
       </record>
@@ -132,6 +142,7 @@
             <field name="res_model">prioritization.transient</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
+          <!--  <field name="target">new</field>-->
             <field name="target">new</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
@@ -156,24 +167,74 @@
                               <field name="location"/>
                         </group>
                         <group>
-                             <field name="tier"/>
+                            <field name="tier"/>
+                            <field name="premium"/>
                          </group>
                      </group>
                 </page>
             </field>
         </record>
 
+      <record id="view_notification_setting_form" model="ir.ui.view">
+            <field name="name">notification.setting.form</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form string="Notification Setting" create="false">
+                    <sheet>
+                         <group>
+                            <group>
+                                    <field name="start_date"/>
+                                    <field name="monday"/>
+                                    <field name="tuesday"/>
+                                    <field name="wednesday"/>
+                                    <field name="thursday"/>
+                            </group>
+                                 <group>
+                                    <field name="end_date"/>
+                                    <field name="friday"/>
+                                    <field name="saturday"/>
+                                    <field name="sunday"/>
+                                  </group>
+                         </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+      <record id="action_notification_setting" model="ir.actions.act_window">
+            <field name="name">Notification Setting</field>
+            <field name="res_model">res.partner</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+             <field name="context">{
+                    'customer_id':[],
+            }
+            </field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click here to create a new transfer.
+              </p><p>
+                You can either do it immediately or mark it as Todo for future processing. Use your scanner to validate the transferred quantity quicker.
+              </p>
+            </field>
+        </record>
+
       <!-- Top menu item -->
     <menuitem name="Prioritization Engine" id="prioritization_engine.menu_root"/>
-    <!-- menu categories -->
+
+      <!-- menu categories -->
     <menuitem name="Customer" id="prioritization_engine.prioritization_cmenu" parent="prioritization_engine.menu_root"/>
-    <!-- actions -->
+
+      <!-- actions -->
     <menuitem name="Customer" id="prioritization_engine.prioritization_cust_menu" parent="prioritization_engine.prioritization_cmenu"
               action="action_sps_customer"/>
+      <!-- menu categories -->
 
-         <!-- menu categories -->
     <menuitem name="Product" id="prioritization_engine.prioritization_pmenu" parent="prioritization_engine.menu_root"/>
-          <!-- actions -->
+
+    <!-- actions -->
+
     <menuitem name="Product" id="prioritization_engine.prioritization_pro_menu" parent="prioritization_engine.prioritization_pmenu"
               action="product.product_template_action"/>
 
@@ -181,6 +242,7 @@
     <menuitem name="Import Document" id="prioritization_engine.prioritization_imenu" parent="prioritization_engine.menu_root"/>
          <!-- actions -->
     <menuitem name="Import Document" id="prioritization_engine.prioritization_import_menu" parent="prioritization_engine.prioritization_imenu"
-              action="action_sps_transient"/>
+              action="action_notification_setting"/>
+
   </data>
 </odoo>
