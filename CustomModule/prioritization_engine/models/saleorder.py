@@ -47,10 +47,16 @@ class SaleOrder(models.Model):
         if self.id:
             self._compute_show_validate()
 
-    class SaleOrderLine(models.Model):
-        _inherit = "sale.order.line"
+    @api.multi
+    def do_unreserve(self):
+        self = self.env['stock.picking'].search([('sale_id', '=', self.id)])
+        if self.id:
+            return self.do_unreserve()
 
-        def action_show_details(self):
-           self= self.env['stock.move'].search([('sale_line_id', '=', self.id)])
-           if self.id:
-               return self.action_show_details()
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    def action_show_details(self):
+       self= self.env['stock.move'].search([('sale_line_id', '=', self.id)])
+       if self.id:
+           return self.action_show_details()

@@ -19,14 +19,17 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','product','product_manufacturer','sale_management','stock','customer-requests','stock'],
+
+    'depends': ['base','product','product_manufacturer','sale_management','stock','customer-requests','stock','web_one2many_selectable'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/saleorder_views.xml',
         'views/prioritization_views.xml',
+        'views/web_assets.xml',
     ],
+
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
