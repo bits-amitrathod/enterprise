@@ -290,7 +290,7 @@ class website_hr_contract_salary(http.Controller):
             model = request.env['fleet.vehicle.model'].sudo().browse(advantages['car_id'])
             contract.car_id = Fleet.sudo().create({
                 'model_id': advantages['car_id'],
-                'state_id': request.env.ref('hr_contract_salary.fleet_vehicle_state_new_request').id,
+                'state_id': request.env.ref('fleet.fleet_vehicle_state_new_request').id,
                 'driver_id': employee.address_home_id.id,
                 'car_value': model.default_car_value,
                 'co2': model.default_co2,
@@ -300,7 +300,7 @@ class website_hr_contract_salary(http.Controller):
             vehicle_contract = contract.car_id.log_contracts[0]
             vehicle_contract.recurring_cost_amount_depreciated = model.default_recurring_cost_amount_depreciated
             vehicle_contract.cost_generated = model.default_recurring_cost_amount_depreciated
-            vehicle_contract.cost_frequency = 'internal_8percent'
+            vehicle_contract.cost_frequency = 'no'
             vehicle_contract.purchaser_id = employee.address_home_id.id
             vehicle_contract.active = False
         return contract
@@ -541,7 +541,7 @@ class website_hr_contract_salary(http.Controller):
             vehicle_contract = car.log_contracts[0]
             vehicle_contract.recurring_cost_amount_depreciated = model.default_recurring_cost_amount_depreciated
             vehicle_contract.cost_generated = model.default_recurring_cost_amount_depreciated
-            vehicle_contract.cost_frequency = 'internal_8percent'
+            vehicle_contract.cost_frequency = 'no'
             vehicle_contract.purchaser_id = new_contract.employee_id.address_home_id.id
 
         if new_contract.id != contract.id:
