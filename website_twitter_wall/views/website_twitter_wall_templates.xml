@@ -71,8 +71,8 @@
                 <div class="o-tw-nav">
                     <div class="container">
                         <div class="row">
-                            <div class="col-10 float-left" title="Total Tweets" ><i class="fa fa-twitter"/> <t t-esc="str(wall.total_tweets) + ' Tweets'" /></div>
-                            <div class="col-2 float-right text-center"><button t-if="wall.is_live" class="btn btn-default o-tw-btn-invert o-tw-live-btn" title="Live mode"><i class="fa fa-arrows-alt" /></button></div>
+                            <div class="col-10" title="Total Tweets" ><i class="fa fa-twitter"/> <t t-esc="str(wall.total_tweets) + ' Tweets'" /></div>
+                            <div class="col-2 text-center"><button t-if="wall.is_live" class="btn btn-default o-tw-btn-invert o-tw-live-btn" title="Live mode"><i class="fa fa-arrows-alt" /></button></div>
                         </div>
                     </div>
                 </div>
@@ -80,13 +80,13 @@
             <nav class="navbar navbar-fixed-top o-tw-live-nav o-tw-toggle" style="display: none;">
                 <div class="container-fluid">
                     <div class="row mt8 mb8 container-fluid">
-                        <div class="col-4 o-tw-hashtag float-left">
+                        <div class="col-4 o-tw-hashtag">
                             <div class="mb4" t-if="wall.description">
                                 <h4><i class="fa fa-twitter" /> <strong> Join the wall</strong></h4>
                                 <label class="label" t-esc="'%s' % (wall.description)" />
                             </div>
                         </div>
-                        <div class="o-tw-options col-4 mt16 float-center">
+                        <div class="o-tw-options col-4 mt16">
                             <div>
                                 <div class="btn-group">
                                     <button class="btn btn-default o-tw-option" data-operation="list" title="List view"><i class="fa fa-reorder" /></button>
@@ -107,7 +107,7 @@
                                 <button class="btn btn-default o-tw-live-btn" title="Exit full screen"><i class="fa fa-compress" /></button>
                             </div>
                         </div>
-                        <div class="col-4 float-right">
+                        <div class="col-4">
                             <b><img src="/website_twitter_wall/static/src/img/odoo.png" class="o-tw-powered mt16 float-right" /></b>
                         </div>
                     </div>
