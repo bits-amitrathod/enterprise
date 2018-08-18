@@ -4,7 +4,7 @@
 {
     'name': 'Deutschland - Accounting Reports',
     'version': '1.1',
-    'category': 'Localization',
+    'category': 'Accounting',
     'description': """
         Accounting reports for Deutschland
         Contains Balance sheet, Profit and Loss, VAT and Partner VAT reports

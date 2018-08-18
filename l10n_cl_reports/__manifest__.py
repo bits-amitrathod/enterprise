@@ -4,7 +4,7 @@
 {
     'name': 'Chile - Accounting Reports',
     'version': '1.1',
-    'category': 'Localization',
+    'category': 'Accounting',
     'description': """
         Accounting reports for Chile
     """,

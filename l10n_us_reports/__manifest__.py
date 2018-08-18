@@ -2,7 +2,7 @@
 {
     'name': 'US - Accounting Reports',
     'version': '1.0',
-    'category': 'Localization',
+    'category': 'Accounting',
     'description': """
         Accounting reports for US
     """,

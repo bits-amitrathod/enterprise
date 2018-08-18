@@ -13,7 +13,7 @@ Accounting reports for Bolivia
     """,
     "author": "Cubic ERP",
     "website": "https://cubicERP.com",
-    'category': 'Localization',
+    'category': 'Accounting',
     "depends": ["l10n_bo", 'account_reports'],
     "data": [
         "data/account_financial_html_report_data.xml",

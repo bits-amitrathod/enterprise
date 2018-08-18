@@ -9,7 +9,7 @@
 {
     'name': 'Dominican Republic - Accounting',
     'version': '1.0',
-    'category': 'Localization',
+    'category': 'Accounting',
     'description': """
 This is the base module to manage the accounting chart for Dominican Republic.
 ==============================================================================

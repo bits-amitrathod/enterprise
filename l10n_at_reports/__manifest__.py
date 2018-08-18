@@ -8,7 +8,7 @@
     'version': '1.0',
     'author': 'conexus.at',
     'website': 'http://www.conexus.at',
-    'category': 'Localization',
+    'category': 'Accounting',
     'depends': ['l10n_at', 'account_reports'],
     'description': """
 This module provides the standard Accounting Chart for Austria which is based on the Template from BMF.gv.at.

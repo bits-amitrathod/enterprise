@@ -13,7 +13,7 @@ Accounting reports for Argentina
     """,
     'author': ['Cubic ERP'],
     'website': 'http://cubicERP.com',
-    'category': 'Localization',
+    'category': 'Accounting',
     'depends': ['l10n_ar', 'account_reports'],
     'data':[
         'data/account_financial_html_report_data.xml'

@@ -12,7 +12,7 @@ Accounting reports for Japan
     """,
     'author': ['Rooms For (Hong Kong) Limited T/A OSCG'],
     'website': 'http://www.openerp-asia.net/',
-    'category': 'Localization',
+    'category': 'Accounting',
     'depends': ['l10n_jp', 'account_reports'],
     'data': [
         'data/account_financial_html_report_data.xml'

@@ -10,7 +10,7 @@ Accounting reports for Norway
 ================================
     """,
     'author': 'Rolv Råen',
-    'category': 'Localization',
+    'category': 'Accounting',
     'depends': [
         'l10n_no', 'account_reports',
     ],

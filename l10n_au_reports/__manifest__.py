@@ -6,7 +6,7 @@
 {
     'name': 'Australian - Accounting Reports',
     'version': '1.1',
-    'category': 'Localization',
+    'category': 'Accounting',
     'description': """
 Australian Accounting Reports
 =============================

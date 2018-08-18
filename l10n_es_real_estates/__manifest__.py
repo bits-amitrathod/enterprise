@@ -7,7 +7,7 @@
         and its mod 347 report.
     """,
 
-    'category': 'Localization',
+    'category': 'Accounting',
     'version': '0.1',
     'depends': ['l10n_es_reports'],
     'data': [

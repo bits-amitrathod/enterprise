@@ -7,7 +7,7 @@
 {
     'name': 'Hungarian - Accounting Reports',
     'version': '1.1',
-    'category': 'Localization',
+    'category': 'Accounting',
     'description': """
         Accounting reports for Hungarian
  """,

@@ -13,7 +13,7 @@ Accounting reports for Greece
     """,
     'author': ['P. Christeas, OpenERP SA.'],
     'website': 'http://openerp.hellug.gr/',
-    'category': 'Localization',
+    'category': 'Accounting',
     'depends': ['l10n_gr', 'account_reports'],
     'data': [
         'data/account_financial_html_report_data.xml'
