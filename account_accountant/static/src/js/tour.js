@@ -126,7 +126,7 @@ tour.register('account_accountant_tour', {
     position: 'bottom',
 }, {
     trigger: ".o_invoice_new",
-    extra_trigger: '.o_account_kanban',
+    extra_trigger: 'div.o_view_controller:not(.o_has_banner) .o_account_kanban',
     content:  _t("Let\'s start with a new customer invoice."),
     position: "bottom"
 }, {
