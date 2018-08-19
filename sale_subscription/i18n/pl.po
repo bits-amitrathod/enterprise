@@ -2115,11 +2115,14 @@ msgid ""
 "                can be selected by the salespeople to quickly configure the\n"
 "                terms and conditions of the subscription."
 msgstr ""
+"Szablony służą do prenumerowania subskrypcji, którą\n"
+"                handlowcy mogą wybrać, aby szybko skonfigurować\n"
+"                warunki subskrypcji."
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_close
 msgid "Termination of subscription ${object.code}"
-msgstr ""
+msgstr "Zakończenie subskrypcji ${object.code}"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_description
@@ -2139,6 +2142,9 @@ msgid ""
 "ratio between the full invoicing period of the subscription and the period "
 "between this date and the next invoicing date."
 msgstr ""
+"Zniżka zastosowana podczas tworzenia zamówienia sprzedaży zostanie obliczona"
+" jako stosunek pełnego okresu fakturowania w ramach subskrypcji do okresu "
+"między tą datą a datą następnego fakturowania."
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_website_url
@@ -2151,6 +2157,8 @@ msgid ""
 "The next invoice will be created on this date then the period will be "
 "extended."
 msgstr ""
+"Następna faktura zostanie utworzona w tym dniu, a następnie okres zostanie "
+"przedłużony."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
@@ -2159,22 +2167,25 @@ msgid ""
 "            process: price, notes in the quotation, accounting data,\n"
 "            procurement methods, etc."
 msgstr ""
+"Formularz produktu zawiera informacje ułatwiające proces\n"
+"            sprzedaży: cenę, uwagi w ofercie, dane księgowe,\n"
+"            metody zamówień itp."
 
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_view
 msgid "The user will have read access to subscriptions."
-msgstr ""
+msgstr "Użytkownik będzie mieć dostęp do odczytu subskrypcji."
 
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_manager
 msgid "The user will have write access to Subscriptions."
-msgstr ""
+msgstr "Użytkownik będzie miał prawo do zapisu w subskrypcjach."
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:311
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
-msgstr ""
+msgstr "Niniejsza faktura obejmuje następujący okres: %s - %s"
 
 #. module: sale_subscription
 #: model:product.uom.categ,name:sale_subscription.uom_categ_time
@@ -2212,6 +2223,8 @@ msgid ""
 "UUIDs (Universally Unique IDentifier) for Sale Subscriptions should be "
 "unique!"
 msgstr ""
+"Identyfikatory UUID (uniwersalny unikatowy identyfikator) ponieważ "
+"subskrypcje sprzedaży powinny być unikatowe!"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_price_unit
@@ -2229,7 +2242,7 @@ msgstr "Jednostka miary"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Upsell Subscription"
-msgstr ""
+msgstr "Subskrypcja Upsell"
 
 #. module: sale_subscription
 #: selection:sale.order,subscription_management:0
@@ -2243,11 +2256,14 @@ msgid ""
 "                work done, expenses and/or sales orders. Odoo will automatically manage\n"
 "                the alerts for the renewal of the subscriptions to the right salesperson."
 msgstr ""
+"Używaj subskrypcji, aby śledzić zadania, problemy, karty czasu pracy lub fakturowanie w oparciu o\n"
+"                wykonane prace, wydatki i / lub zamówienia sprzedaży. Odoo automatycznie zarządza\n"
+"                powiadomieniami o odnawianiu subskrypcji u właściwego sprzedawcy."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Valid until:"
-msgstr ""
+msgstr "Ważne do:"
 
 #. module: sale_subscription
 #. openerp-web
@@ -2257,6 +2273,8 @@ msgid ""
 "Want recurring billing via subscription management ? Get started by clicking"
 " here"
 msgstr ""
+"Chcesz otrzymywać powtarzające się płatności za pośrednictwem zarządzania "
+"subskrypcjami? Rozpocznij, klikając tutaj"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2264,6 +2282,8 @@ msgid ""
 "We always listen to our customer. Could you specify the reason for "
 "cancelling your subscription?"
 msgstr ""
+"Zawsze słuchamy naszego klienta. Czy możesz podać powód anulowania "
+"subskrypcji?"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_website_url
@@ -2294,11 +2314,15 @@ msgid ""
 " or directly insert them in the subscription to invoice it on the next "
 "invoice date."
 msgstr ""
+"Możesz utworzyć wycenę, która zostanie zdyskontowana w bieżącym okresie "
+"fakturowania (opcje zostaną dodane, gdy oferta zostanie potwierdzona) lub "
+"bezpośrednio wstawić je do subskrypcji, aby wystawić fakturę na następną "
+"datę faktury."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
 msgid "You don't have any subscriptions yet."
-msgstr ""
+msgstr "Nie masz jeszcze żadnych subskrypcji."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
@@ -2307,18 +2331,22 @@ msgid ""
 "            a physical product, a consumable or a service you offer to\n"
 "            customers."
 msgstr ""
+"Musisz zdefiniować produkt dla wszystkiego, co sprzedajesz, bez względu na to, czy jest to\n"
+"            produkt fizyczny, materiał eksploatacyjny czy usługa, którą oferujesz\n"
+"            klientom."
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:279
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
-msgstr ""
+msgstr "Najpierw musisz wybrać klienta do subskrypcji %s!"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_template_action_subscription
 msgid ""
 "You will find here all the products related to this subscription template."
 msgstr ""
+"Znajdziesz tutaj wszystkie produkty związane z tym szablonem subskrypcji."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action_pending
@@ -2327,6 +2355,9 @@ msgid ""
 "            end date is passed or the working effort is higher than the\n"
 "            maximum authorized one."
 msgstr ""
+"Znajdziesz tu subskrypcje do przedłużenia, ponieważ\n"
+"            data zakończenia minęła lub nakład pracy jest wyższy niż\n"
+"            maksymalny autoryzowany."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2336,17 +2367,17 @@ msgstr "Twój plan"
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_subscription_open
 msgid "Your subscription ${object.subscription_id.code} is active!"
-msgstr ""
+msgstr "Twoja subskrypcja ${object.subscription_id.code} jest aktywna!"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Your subscription is closed."
-msgstr ""
+msgstr "Twoja subskrypcja jest zamknięta."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "by paying your invoice."
-msgstr ""
+msgstr "płacąc fakturę."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2356,7 +2387,7 @@ msgstr "dzień(dni)"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "missing payments (from"
-msgstr ""
+msgstr "brakujące płatności (od"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2367,12 +2398,12 @@ msgstr "miesiąc(e)"
 #: model:product.product,name:sale_subscription.odoo_saas
 #: model:product.template,name:sale_subscription.odoo_saas_product_template
 msgid "odoo_custom_module"
-msgstr ""
+msgstr "odoo_custom_module"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_payment_token
 msgid "payment.token"
-msgstr ""
+msgstr "payment.token"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_res_config_settings
@@ -2382,7 +2413,7 @@ msgstr "res.config.settings"
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_close_reason_wizard
 msgid "sale.subscription.close.reason.wizard"
-msgstr ""
+msgstr "sale.subscription.close.reason.wizard"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_wizard
@@ -2397,7 +2428,7 @@ msgstr "sale.subscription.wizard.option"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "to this day) will be automatically processed."
-msgstr ""
+msgstr "do dziś) zostanie automatycznie przetworzony."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
