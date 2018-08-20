@@ -112,6 +112,15 @@ class SignRequest(models.Model):
             },
         }
 
+    def open_sign_request(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "sign.request",
+            "views": [[False, "form"]],
+            "res_id": self.id,
+        }
+
     @api.multi
     def get_completed_document(self):
         self.ensure_one()
