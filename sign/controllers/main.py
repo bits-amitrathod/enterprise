@@ -211,9 +211,6 @@ class Sign(http.Controller):
 
         request_item.action_completed()
         request = request_item.sign_request_id
-        request._message_post_as_creator(_('Signed.'), author=request_item.partner_id, type='comment', subtype='mt_comment')
-        if request.state == 'signed':
-            request._message_post_as_creator(_('Everybody Signed.'), type='comment', subtype='mt_comment')
         return True
 
     @http.route(['/sign/save_location/<int:id>/<token>'], type='json', auth='public')

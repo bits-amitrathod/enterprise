@@ -364,16 +364,6 @@ class SignRequest(models.Model):
         self.completed_document = base64.b64encode(output.getvalue())
         output.close()
 
-    # YTI TODO: Probably to remove
-    @api.one
-    def _message_post_as_creator(self, body, author=None, type='comment', subtype=False):
-        return self.sudo(self.create_uid).message_post(
-            body=body,
-            author_id=(author.id if author else None),
-            message_type=type,
-            subtype=subtype
-        )
-
     @api.model
     def _message_send_mail(self, body, notif_template_xmlid, message_values, notif_values, mail_values, **kwargs):
         """ Shortcut to send an email. """
@@ -392,18 +382,11 @@ class SignRequest(models.Model):
         sign_request.set_signers(signers)
         if send:
             sign_request.action_sent(subject, message)
-            sign_request._message_post_as_creator(_('Waiting for signatures.'), type='comment', subtype='mt_comment')
         return {
             'id': sign_request.id,
             'token': sign_request.access_token,
             'sign_token': sign_request.request_item_ids.filtered(lambda r: r.partner_id == self.env.user.partner_id)[:1].access_token,
         }
-
-    @api.model
-    def cancel(self, id):
-        sign_request = self.browse(id)
-        sign_request._message_post_as_creator(_('Canceled.'), type='comment', subtype='mt_comment')
-        return sign_request.action_canceled()
 
     @api.model
     def add_followers(self, id, followers):
