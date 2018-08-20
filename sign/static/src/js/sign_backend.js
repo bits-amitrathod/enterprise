@@ -36,8 +36,19 @@ odoo.define('sign.views_custo', function(require) {
          * @private
          */
         _openRecord: function () {
+            var self = this;
             if (this.modelName === 'sign.template') {
-                this.$('button.o_kanban_sign_send_request').click();
+                this.do_action("sign.action_sign_send_request", {
+                    additional_context: {active_id: self.recordData.id}
+                });
+            } else if (this.modelName === 'sign.request') {
+                this._rpc({
+                    model: 'sign.request',
+                    method: 'go_to_document',
+                    args: [self.recordData.id],
+                }).then(function(action) {
+                    self.do_action(action);
+                });
             } else {
                 this._super.apply(this, arguments);
             }
