@@ -3,11 +3,11 @@
 <data noupdate="0">
     <template id="portal_my_home_menu_helpdesk" name="Portal layout : helpdesk tickets menu entries" inherit_id="portal.portal_layout" priority="50">
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
-            <li t-if="page_name == 'ticket' or ticket">
+            <li t-if="page_name == 'ticket' or ticket" class="breadcrumb-item">
                 <a t-if="ticket" t-attf-href="/my/tickets?{{ keep_query() }}">Tickets</a>
                 <t t-else="">Tickets</t>
             </li>
-            <li t-if="ticket">
+            <li t-if="ticket" class="breadcrumb-item">
                 #<span t-field="ticket.id"/>
             </li>
         </xpath>

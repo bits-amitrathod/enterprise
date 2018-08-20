@@ -227,7 +227,7 @@
     <!-- Modify portal templates -->
     <template id="portal_my_home_menu_subscription" name="Portal layout : subscription menu entry" inherit_id="portal.portal_layout" priority="10">
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
-            <li t-if="page_name == 'subscription' or account">
+            <li t-if="page_name == 'subscription' or account" class="breadcrumb-item">
                 <a t-if="account" t-attf-href="/my/subscription?{{ keep_query() }}">Subscriptions</a>
                 <t t-else="">Subscriptions</t>
             </li>
