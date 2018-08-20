@@ -23,7 +23,7 @@
                     <t t-foreach="data.keys()" t-as="user">
                         <center>
                             <b>
-                                <span>product :</span>
+                                <span>Product :</span>
                                 <span t-esc="user"/>
                             </b>
                         </center>
@@ -44,7 +44,7 @@
                                         <span t-esc="order[1]"/>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-esc="order[2]"/>
+                                        $ <span t-esc="order[2]"/>
                                         <t t-set="total_sum" t-value="total_sum + order[2]"/>
                                     </td>
                                 </tr>
@@ -55,7 +55,7 @@
                                         <b>Total</b>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-esc="total_sum"/>
+                                       $ <span t-esc="total_sum"/>
                                     </td>
                                 </tr>
                             </thead>

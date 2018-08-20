@@ -20,6 +20,8 @@
 ##############################################################################
 
 from odoo import api, fields, models
+import datetime
+import logging
 
 
 class SaleSalespersonReport(models.TransientModel):
@@ -45,7 +47,7 @@ class SaleSalespersonReport(models.TransientModel):
             for order in groupby_dict[user]:
                 temp_2 = []
                 temp_2.append(order.name)
-                temp_2.append(order.date_order)
+                temp_2.append(datetime.datetime.strptime(order.date_order, "%Y-%m-%d %H:%M:%S").date().strftime('%Y-%m-%d'))
                 temp_2.append(order.amount_total)
                 temp_2.append(order.product_id.name)
                 temp.append(temp_2)

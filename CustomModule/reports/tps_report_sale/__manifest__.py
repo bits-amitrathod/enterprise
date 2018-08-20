@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Total Product sale",
+    'name': "TPS Report (Total Product Sales)",
 
     'summary': """""",
 

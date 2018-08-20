@@ -96,7 +96,7 @@ class SaleSalespersonReport(models.TransientModel):
             temp_2.append(order.current_month_total_qty)
             temp_2.append(order.current_month_total_amount)
             temp_2.append(order.last_month_total_qty)
-            temp_2.append(order.last_month_total_amount)
+            temp_2.append(float(order.last_month_total_amount))
             temp.append(temp_2)
             final_dict[user] = temp
         datas = {

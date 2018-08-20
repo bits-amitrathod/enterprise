@@ -20,6 +20,7 @@
 ##############################################################################
 
 from odoo import api, fields, models
+import datetime
 
 
 class SaleSalespersonReport(models.TransientModel):
@@ -31,24 +32,24 @@ class SaleSalespersonReport(models.TransientModel):
 
     @api.multi
     def print_salesperson_vise_report(self):
-        sale_orders = self.env['sale.order'].search([])
+        sale_orders = self.env['sale.order'].search([('state', '=', 'sale')])
         groupby_dict = {}
-        for user in self.product_id:
-            filtered_order = list(filter(lambda x: x.product_id == user, sale_orders))
-            filtered_by_date = list(
-                filter(lambda x: x.date_order >= self.start_date and x.date_order <= self.end_date, filtered_order))
-            groupby_dict[user.name] = filtered_by_date
-
         final_dict = {}
-        for user in groupby_dict.keys():
+        for p_id in self.product_id:
+            # filtered_order = list(filter(lambda x: x.product_id == user, sale_orders))
+            filtered_by_date = list(filter(lambda x: x.date_order >= self.start_date and x.date_order <= self.end_date, sale_orders))
+            # groupby_dict[user.name] = filtered_by_date
             temp = []
-            for order in groupby_dict[user]:
-                temp_2 = []
-                temp_2.append(order.name)
-                temp_2.append(order.date_order)
-                temp_2.append(order.amount_total)
-                temp.append(temp_2)
-            final_dict[user] = temp
+            for sale_order in filtered_by_date:
+                for sale_order_line in sale_order.order_line:
+                    if p_id == sale_order_line.product_id :
+                        temp_2 = []
+                        temp_2.append(sale_order.name)
+                        temp_2.append(datetime.datetime.strptime(sale_order.date_order, "%Y-%m-%d %H:%M:%S").date().strftime('%m-%d-%Y'))
+                        temp_2.append(sale_order_line.price_subtotal)
+                        temp.append(temp_2)
+            final_dict[p_id.name] = temp
+
         datas = {
             'ids': self,
             'model': 'sale.product.report',
