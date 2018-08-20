@@ -186,7 +186,6 @@ class SignRequest(models.Model):
                 'partner_id': signer['partner_id'],
                 'sign_request_id': self.id,
                 'role_id': signer['role'],
-                'sms_number': signer['sms_number'],
             })
 
     @api.multi

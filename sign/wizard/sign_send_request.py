@@ -51,9 +51,9 @@ class SignSendRequest(models.TransientModel):
     def create_request(self):
         template_id = self.template_id.id
         if self.signers_count:
-            signers = [{'partner_id': signer.partner_id.id, 'sms_number': signer.partner_id.mobile, 'role': signer.role_id.id} for signer in self.signer_ids]
+            signers = [{'partner_id': signer.partner_id.id, 'role': signer.role_id.id} for signer in self.signer_ids]
         else:
-            signers = [{'partner_id': self.signer_id.id, 'sms_number': self.signer_id.mobile, 'role': False}]
+            signers = [{'partner_id': self.signer_id.id, 'role': False}]
         followers = self.follower_ids.ids
         reference = self.filename
         subject = self.subject
