@@ -132,7 +132,8 @@ class SignRequest(models.Model):
     @api.multi
     def action_resend(self):
         self.action_draft()
-        self.action_sent()
+        subject = _("Signature Request - %s") % (self.template_id.attachment_id.name)
+        self.action_sent(subject=subject)
 
     @api.multi
     def action_draft(self):
@@ -543,7 +544,9 @@ class SignRequestItem(models.Model):
 
     @api.model
     def resend_access(self, id):
-        self.browse(id).send_signature_accesses()
+        sign_request_item = self.browse(id)
+        subject = _("Signature Request - %s") % (sign_request_item.sign_request_id.template_id.attachment_id.name)
+        self.browse(id).send_signature_accesses(subject=subject)
 
     @api.multi
     def _reset_sms_token(self):
