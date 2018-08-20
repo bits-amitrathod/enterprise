@@ -102,6 +102,11 @@ var ViewEditorManager = Widget.extend({
 
         this._apply_changes_mutex = new concurrency.Mutex();
 
+        if (this.view_type === 'list') {
+            // reset the group by so lists are not grouped in studio.
+            this.view_env.groupBy = [];
+        }
+
         bus.on('undo_clicked', this, this.undo);
         bus.on('redo_clicked', this, this.redo);
     },
