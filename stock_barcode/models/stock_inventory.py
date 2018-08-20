@@ -47,6 +47,7 @@ class StockInventory(models.Model):
                 'product_qty',
                 'theoretical_qty',
                 'product_uom_id',
+                'prod_lot_id',
             ])
             for line_id in inventory['line_ids']:
                 line_id['product_id'] = self.env['product.product'].browse(line_id.pop('product_id')[0]).read([

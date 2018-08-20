@@ -88,8 +88,9 @@
                         <span class="fa fa-cubes"></span> <span class="product_qty"><t t-esc="line.product_qty"></t></span> / <t t-esc="line.theoretical_qty"></t>
                         <span t-if="groups.group_uom" t-esc="line.product_uom_id[1]"/>
                     </p>
-                    <p t-if="line.prod_lot_id">
-                        <span class="o_line_lot_name"><t t-esc="line.prod_lot_id[1]"></t></span>
+                    <p t-if="line.product_id.tracking !== 'none'">
+                        <span class="fa fa-barcode"></span>
+                        <span class="o_line_lot_name"><t t-if="line.prod_lot_id" t-esc="line.prod_lot_id[1]"></t></span>
                     </p>
                     <p t-if="line.partner_id">
                         <span class="fa fa-user-o"></span> <t t-esc="line.partner_id.name"></t>
