@@ -13,7 +13,7 @@ class SignSendRequest(models.TransientModel):
         res['template_id'] = self.env.context.get('active_id')
         template = self.env['sign.template'].browse(res['template_id'])
         res['filename'] = template.attachment_id.name
-        res['subject'] = "Signature Request - %s" % (template.attachment_id.name)
+        res['subject'] = _("Signature Request - %s") % (template.attachment_id.name)
         roles = template.mapped('sign_item_ids.responsible_id')
         res['signers_count'] = len(roles)
         res['signer_ids'] = [(0, 0, {
@@ -31,7 +31,7 @@ class SignSendRequest(models.TransientModel):
     is_user_signer = fields.Boolean(compute='_compute_is_user_signer')
 
     subject = fields.Char(string="Subject", required=True)
-    message = fields.Text("Message")
+    message = fields.Html("Message")
     filename = fields.Char("Filename", required=True)
 
     @api.depends('template_id.attachment_id.datas_fname')

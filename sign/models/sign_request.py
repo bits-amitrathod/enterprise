@@ -112,6 +112,15 @@ class SignRequest(models.Model):
             },
         }
 
+    def open_sign_request(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "sign.request",
+            "views": [[False, "form"]],
+            "res_id": self.id,
+        }
+
     @api.multi
     def get_completed_document(self):
         self.ensure_one()
@@ -132,7 +141,8 @@ class SignRequest(models.Model):
     @api.multi
     def action_resend(self):
         self.action_draft()
-        self.action_sent()
+        subject = _("Signature Request - %s") % (self.template_id.attachment_id.name)
+        self.action_sent(subject=subject)
 
     @api.multi
     def action_draft(self):
@@ -149,7 +159,11 @@ class SignRequest(models.Model):
             included_request_items = sign_request.request_item_ids.filtered(lambda r: not r.partner_id or r.partner_id.id not in ignored_partners)
 
             if sign_request.send_signature_accesses(subject, message, ignored_partners=ignored_partners):
-                sign_request.send_follower_accesses(sign_request.message_follower_ids.mapped('partner_id'), subject, message)
+                followers = sign_request.message_follower_ids.mapped('partner_id')
+                followers -= sign_request.create_uid.partner_id
+                followers -= sign_request.request_item_ids.mapped('partner_id')
+                if followers:
+                    sign_request.send_follower_accesses(followers, subject, message)
                 included_request_items.action_sent()
             else:
                 sign_request.action_draft()
@@ -257,7 +271,7 @@ class SignRequest(models.Model):
                 {'model_description': 'signature', 'company': self.create_uid.company_id},
                 {'email_from': formataddr((self.create_uid.name, self.create_uid.email)),
                  'email_to': formataddr((signer.partner_id.name, signer.partner_id.email)),
-                 'subject': '%s signed' % self.reference,
+                 'subject': _('%s has been signed') % self.reference,
                  'attachment_ids': [(4, attachment.id)]}
             )
 
@@ -269,7 +283,7 @@ class SignRequest(models.Model):
             'body': '',
         }, engine='ir.qweb', minimal_qcontext=True)
 
-        for follower in self.mapped('message_follower_ids.partner_id'):
+        for follower in self.mapped('message_follower_ids.partner_id') - self.request_item_ids.mapped('partner_id'):
             if not follower.email:
                 continue
             self.env['sign.request']._message_send_mail(
@@ -280,16 +294,6 @@ class SignRequest(models.Model):
                  'email_to': formataddr((follower.name, follower.email)),
                  'subject': _('%s has been signed') % self.reference}
             )
-
-        # Send copy to request creator
-        self.env['sign.request']._message_send_mail(
-            body, 'mail.mail_notification_light',
-            {'record_name': self.reference},
-            {'model_description': 'signature', 'company': self.create_uid.company_id},
-            {'email_from': formataddr((self.create_uid.name, self.create_uid.email)),
-             'email_to': formataddr((self.create_uid.name, self.create_uid.email)),
-             'subject': _('%s has been signed') % self.reference}
-        )
 
         return True
 
@@ -369,16 +373,6 @@ class SignRequest(models.Model):
         self.completed_document = base64.b64encode(output.getvalue())
         output.close()
 
-    # YTI TODO: Probably to remove
-    @api.one
-    def _message_post_as_creator(self, body, author=None, type='comment', subtype=False):
-        return self.sudo(self.create_uid).message_post(
-            body=body,
-            author_id=(author.id if author else None),
-            message_type=type,
-            subtype=subtype
-        )
-
     @api.model
     def _message_send_mail(self, body, notif_template_xmlid, message_values, notif_values, mail_values, **kwargs):
         """ Shortcut to send an email. """
@@ -397,7 +391,6 @@ class SignRequest(models.Model):
         sign_request.set_signers(signers)
         if send:
             sign_request.action_sent(subject, message)
-            sign_request._message_post_as_creator(_('Waiting for signatures.'), type='comment', subtype='mt_comment')
         return {
             'id': sign_request.id,
             'token': sign_request.access_token,
@@ -405,17 +398,13 @@ class SignRequest(models.Model):
         }
 
     @api.model
-    def cancel(self, id):
-        sign_request = self.browse(id)
-        sign_request._message_post_as_creator(_('Canceled.'), type='comment', subtype='mt_comment')
-        return sign_request.action_canceled()
-
-    @api.model
     def add_followers(self, id, followers):
         sign_request = self.browse(id)
         old_followers = set(sign_request.message_follower_ids.mapped('partner_id.id'))
-        sign_request.message_subscribe(partner_ids=followers)
-        sign_request.send_follower_accesses(self.env['res.partner'].browse(followers))
+        followers = list(set(followers) - old_followers)
+        if followers:
+            sign_request.message_subscribe(partner_ids=followers)
+            sign_request.send_follower_accesses(self.env['res.partner'].browse(followers))
         return sign_request.id
 
 
@@ -547,7 +536,9 @@ class SignRequestItem(models.Model):
 
     @api.model
     def resend_access(self, id):
-        self.browse(id).send_signature_accesses()
+        sign_request_item = self.browse(id)
+        subject = _("Signature Request - %s") % (sign_request_item.sign_request_id.template_id.attachment_id.name)
+        self.browse(id).send_signature_accesses(subject=subject)
 
     @api.multi
     def _reset_sms_token(self):
