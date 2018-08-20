@@ -22,6 +22,7 @@
 from odoo import api, fields, models
 
 
+
 class SaleSalespersonReport(models.TransientModel):
     _name = 'product.list.report'
 
@@ -47,6 +48,7 @@ class SaleSalespersonReport(models.TransientModel):
                 temp_2.append(order.standard_price)
                 temp.append(temp_2)
             final_dict[user] = temp
+
         datas = {
             'ids': self,
             'model': 'product.list.report',
@@ -55,5 +57,4 @@ class SaleSalespersonReport(models.TransientModel):
             'end_date': self.end_date,
 
         }
-        return self.env.ref('product_price_list_report.action_report_price_list_wise').report_action([],
-                                                                                                                    data=datas)
+        return self.env.ref('product_price_list_report.action_report_price_list_wise').report_action([], data=datas)

@@ -18,27 +18,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
+from odoo import api, models
 
-{
-    'name': 'Product Price List',
-    'category': 'sale',
-    'version': '11.0.0.1',
-    'summary': 'This module provides Product Price List Report.',
-    'website': ' ',
-    'author': 'By Akash Ingole',
-    'license': 'AGPL-3',
-    'description': '''This module provides Product Price List Report.
-                      With the help of this moudule you can print Product Price List .
-                     '''
-                   ,
-    'depends': ['base', 'sale_management','stock'],
-    'data': [
-        'views/price_list_view.xml',
-        'report/price_list_report.xml',
-        'report/price_list_temp.xml'
-    ],
-    'images': ['static/description/banner.png'],
-    'auto_install': True,
-    'installable': True,
-    'application': True,
-}
+
+class ReportPurchaseSalespersonWise(models.AbstractModel):
+    _name = 'report.lot_history.purchase_report'
+
+    @api.model
+    def get_report_values(self, docids, data=None):
+        return {
+            'doc_ids': data.get('ids'),
+            'doc_model': data.get('model'),
+            'data': data['form'],
+            'start_date': data['start_date'],
+            'end_date': data['end_date'],
+        }

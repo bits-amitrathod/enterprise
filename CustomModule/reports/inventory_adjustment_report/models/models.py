@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 import logging
+import datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -29,7 +30,7 @@ class inventory_adjustment_report(models.TransientModel):
             for order in groupby_dict[user]:
                 temp_2 = []
                 temp_2.append(order.product_name)
-                temp_2.append(order.create_date)
+                temp_2.append(datetime.datetime.strptime(str(order.create_date),'%Y-%m-%d %H:%M:%S').date().strftime( '%d-%m-%Y'))
                 temp_2.append(order.product_code)
                 temp_2.append(order.product_qty)
                 temp_2.append(order.product_id.product_tmpl_id.list_price)
