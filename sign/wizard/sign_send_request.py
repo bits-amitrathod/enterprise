@@ -31,7 +31,7 @@ class SignSendRequest(models.TransientModel):
     is_user_signer = fields.Boolean(compute='_compute_is_user_signer')
 
     subject = fields.Char(string="Subject", required=True)
-    message = fields.Text("Message")
+    message = fields.Html("Message")
     filename = fields.Char("Filename", required=True)
 
     @api.depends('template_id.attachment_id.datas_fname')
