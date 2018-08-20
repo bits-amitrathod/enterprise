@@ -84,7 +84,7 @@
                     <button string="Get Completed Document" type="object" states="signed" name="get_completed_document" class="oe_read_only oe_highlight"/>
                     <button name="%(sign.action_sign_request_send_copy)d" string="Send a Copy" type="action"/>
                     <button string="Cancel" type="object" states="sent,signed" name="action_canceled" class="oe_read_only" confirm="This will delete all the already completed documents of this request and disable every sent accesses, are you sure?"/>
-                    <field name="state" widget="statusbar"/>
+                    <field name="state" widget="statusbar" statusbar_visible="sent,signed"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
