@@ -149,7 +149,11 @@ class SignRequest(models.Model):
             included_request_items = sign_request.request_item_ids.filtered(lambda r: not r.partner_id or r.partner_id.id not in ignored_partners)
 
             if sign_request.send_signature_accesses(subject, message, ignored_partners=ignored_partners):
-                sign_request.send_follower_accesses(sign_request.message_follower_ids.mapped('partner_id'), subject, message)
+                followers = sign_request.message_follower_ids.mapped('partner_id')
+                followers -= sign_request.create_uid.partner_id
+                followers -= sign_request.request_item_ids.mapped('partner_id')
+                if followers:
+                    sign_request.send_follower_accesses(followers, subject, message)
                 included_request_items.action_sent()
             else:
                 sign_request.action_draft()
@@ -257,7 +261,7 @@ class SignRequest(models.Model):
                 {'model_description': 'signature', 'company': self.create_uid.company_id},
                 {'email_from': formataddr((self.create_uid.name, self.create_uid.email)),
                  'email_to': formataddr((signer.partner_id.name, signer.partner_id.email)),
-                 'subject': '%s signed' % self.reference,
+                 'subject': _('%s has been signed') % self.reference,
                  'attachment_ids': [(4, attachment.id)]}
             )
 
@@ -269,7 +273,7 @@ class SignRequest(models.Model):
             'body': '',
         }, engine='ir.qweb', minimal_qcontext=True)
 
-        for follower in self.mapped('message_follower_ids.partner_id'):
+        for follower in self.mapped('message_follower_ids.partner_id') - self.request_item_ids.mapped('partner_id'):
             if not follower.email:
                 continue
             self.env['sign.request']._message_send_mail(
@@ -280,16 +284,6 @@ class SignRequest(models.Model):
                  'email_to': formataddr((follower.name, follower.email)),
                  'subject': _('%s has been signed') % self.reference}
             )
-
-        # Send copy to request creator
-        self.env['sign.request']._message_send_mail(
-            body, 'mail.mail_notification_light',
-            {'record_name': self.reference},
-            {'model_description': 'signature', 'company': self.create_uid.company_id},
-            {'email_from': formataddr((self.create_uid.name, self.create_uid.email)),
-             'email_to': formataddr((self.create_uid.name, self.create_uid.email)),
-             'subject': _('%s has been signed') % self.reference}
-        )
 
         return True
 
@@ -414,8 +408,10 @@ class SignRequest(models.Model):
     def add_followers(self, id, followers):
         sign_request = self.browse(id)
         old_followers = set(sign_request.message_follower_ids.mapped('partner_id.id'))
-        sign_request.message_subscribe(partner_ids=followers)
-        sign_request.send_follower_accesses(self.env['res.partner'].browse(followers))
+        followers = list(set(followers) - old_followers)
+        if followers:
+            sign_request.message_subscribe(partner_ids=followers)
+            sign_request.send_follower_accesses(self.env['res.partner'].browse(followers))
         return sign_request.id
 
 
