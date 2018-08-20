@@ -531,6 +531,43 @@ QUnit.module('ReportComponents', {
 
         parent.destroy();
     });
+
+    QUnit.test('groups component', function (assert) {
+        assert.expect(3);
+        var parent = new Widget();
+        parent.appendTo($('#qunit-fixture'));
+        var groups = new (editComponentsRegistry.get('groups'))(parent, {
+            widgets: this.widgets,
+            node: {
+                tag: 'span',
+                attrs: {
+                    studio_groups: "[" +
+                        "{\"name\": \"group_A\", \"display_name\": \"My Awesome Group\", \"id\": 42}," +
+                        "{\"name\": \"group_13\", \"display_name\": \"Kikou\", \"id\": 13}" +
+                    "]",
+                },
+            },
+        });
+        groups.appendTo(parent.$el);
+
+        assert.strictEqual(groups.$('.o_field_many2manytags .o_badge_text').length, 2,
+            "there should be displayed two groups");
+        assert.strictEqual(groups.$('.o_field_many2manytags').text().replace(/\s/g, ''), "MyAwesomeGroupKikou",
+            "the groups should be correctly set");
+
+        // delete a group
+        testUtils.addMockEnvironment(parent, {
+            intercepts: {
+                view_change: function (ev) {
+                    assert.deepEqual(ev.data.operation.new_attrs, {groups: [13]},
+                        "should correctly delete the group");
+                },
+            },
+        });
+        groups.$('.o_field_many2manytags .o_delete:first').click();
+
+        parent.destroy();
+    });
 });
 
 });

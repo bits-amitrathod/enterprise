@@ -1009,8 +1009,7 @@ var Groups = AbstractEditComponent.extend({
     init: function () {
         this._super.apply(this, arguments);
 
-        var studio_groups = this.node.attrs.studio_groups && JSON.parse(this.node.attrs.studio_groups);
-
+        var groups = this.node.attrs.studio_groups && JSON.parse(this.node.attrs.studio_groups);
         this.directiveFields.groups = {
             name: 'groups',
             fields: [{
@@ -1020,9 +1019,9 @@ var Groups = AbstractEditComponent.extend({
                 name: 'display_name',
                 type: 'char',
             }],
+            value: groups,
             relation: 'res.groups',
             type: 'many2many',
-            value: studio_groups,
             Widget: 'many2many_tags',
         };
     },
@@ -1033,20 +1032,6 @@ var Groups = AbstractEditComponent.extend({
         var self = this;
         return this._super.apply(this, arguments).then(function () {
             return self.fieldSelector.groups.appendTo(self.$('.o_web_studio_groups'));
-        });
-    },
-    /**
-     * @override
-     */
-    _triggerViewChange: function (newAttrs) {
-        newAttrs.groups = newAttrs.groups.res_ids;
-        this.trigger_up('view_change', {
-            node: this.node,
-            operation: {
-                type: 'attributes',
-                structure: 'edit_attributes',
-                new_attrs: newAttrs,
-            },
         });
     },
 });

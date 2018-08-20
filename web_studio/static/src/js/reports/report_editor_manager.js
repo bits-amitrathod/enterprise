@@ -55,6 +55,9 @@ var ReportEditorManager = AbstractEditorManager.extend({
         // load the widgets options for t-options directive
         var defWidgets = this._rpc({
             route: '/web_studio/get_widgets_available_options',
+            params: {
+                context: session.user_context,
+            },
         }).then(function (widgets) {
             self.widgets = widgets;
         });
@@ -63,7 +66,8 @@ var ReportEditorManager = AbstractEditorManager.extend({
             model: 'ir.model',
             method: 'search_read',
             fields: ['id', 'name', 'model'],
-            domain: [['transient', '=', false], ['abstract', '=', false]]
+            domain: [['transient', '=', false], ['abstract', '=', false]],
+            context: session.user_context,
         }).then(function (models) {
             self.models = _.object(_.pluck(models, 'model'), _.pluck(models, 'name'));
         });
@@ -248,6 +252,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
             params: {
                 record_id: this.env.currentId,
                 report_name: this.reportName,
+                context: session.user_context,
             },
         });
     },
@@ -418,6 +423,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
             params: {
                 record_id: this.env.currentId,
                 report_name: this.reportName,
+                context: session.user_context,
             },
         }).then(function (action) {
             self.do_action(action);

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import copy
 import base64
+import json
 
 from lxml import etree
 from odoo import http, _
@@ -96,6 +96,16 @@ class WebStudioReportController(main.WebStudioController):
             view.ensure_one()
             return view
 
+        def process_template_groups(element):
+            """ `get_template` only returns the groups names but we also need
+                need their id and display name in Studio to edit them (many2many
+                tags widget). These data are thus added on the node.
+                This processing is quite similar to what has been done on views.
+            """
+            for node in element.iter():
+                if node.get('groups'):
+                    request.env['ir.ui.view'].set_studio_groups(node)
+
         def load_arch(view_name):
             if view_name in loaded:
                 return
@@ -104,6 +114,9 @@ class WebStudioReportController(main.WebStudioController):
             view = get_report_view(view_name)
             studio_view = self._get_studio_view(view)
             element, document = request.env['ir.qweb'].get_template(view.id, {"full_branding": True})
+
+            process_template_groups(element)
+
             views[view.id] = {
                 'arch': etree.tostring(element),
                 'key': view.key,

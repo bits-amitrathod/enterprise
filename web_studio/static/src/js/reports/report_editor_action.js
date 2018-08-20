@@ -101,6 +101,7 @@ var ReportEditorAction = AbstractAction.extend({
             params: {
                 record_id: this.env.currentId,
                 report_name: this.reportName,
+                context: session.user_context,
             },
         }).then(function (result) {
             self.reportViews = result;
@@ -131,6 +132,7 @@ var ReportEditorAction = AbstractAction.extend({
                 model: self.report.model,
                 method: 'search',
                 args: [[]],
+                context: session.user_context,
             }).then(function (result) {
                 self.env.ids = result;
             });
@@ -149,6 +151,7 @@ var ReportEditorAction = AbstractAction.extend({
             model: 'ir.actions.report',
             method: 'read',
             args: [[self.handle.res_id]],
+            context: session.user_context,
         }).then(function (result) {
             self.report = result[0];
         });
@@ -163,6 +166,7 @@ var ReportEditorAction = AbstractAction.extend({
             model: 'report.paperformat',
             method: 'read',
             args: [[this.report.paperformat_id[0]]],
+            context: session.user_context,
         }).then(function (result) {
             self.paperFormat = result[0];
         });

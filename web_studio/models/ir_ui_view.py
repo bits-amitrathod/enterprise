@@ -6,7 +6,7 @@ import io
 from collections import defaultdict
 from lxml import etree
 from lxml.builder import E
-from odoo import models, _
+from odoo import api, models, _
 import json
 import uuid
 import random
@@ -46,18 +46,22 @@ class View(models.Model):
         # attribute `studio_groups` is not RNG valid.
         if self._context.get('studio') and not self._context.get('check_field_names'):
             if node.get('groups'):
-                studio_groups = []
-                for xml_id in node.attrib['groups'].split(','):
-                    group = self.env['ir.model.data'].xmlid_to_object(xml_id)
-                    if group:
-                        studio_groups.append({
-                            "id": group.id,
-                            "name": group.name,
-                            "display_name": group.display_name
-                        })
-                node.attrib['studio_groups'] = json.dumps(studio_groups)
+                self.set_studio_groups(node)
 
         return super(View, self)._apply_group(model, node, modifiers, fields)
+
+    @api.model
+    def set_studio_groups(self, node):
+        studio_groups = []
+        for xml_id in node.attrib['groups'].split(','):
+            group = self.env['ir.model.data'].xmlid_to_object(xml_id)
+            if group:
+                studio_groups.append({
+                    "id": group.id,
+                    "name": group.name,
+                    "display_name": group.display_name
+                })
+        node.attrib['studio_groups'] = json.dumps(studio_groups)
 
     def create_simplified_form_view(self, res_model):
         model = self.env[res_model]

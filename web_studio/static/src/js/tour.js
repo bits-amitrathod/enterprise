@@ -343,8 +343,18 @@ tour.register('web_studio_new_report_tour', {
         this.$anchor.blur();
     }
 }, {
-    // switch to 'Add' in Sidebar
     extra_trigger: '.o_web_studio_report_editor iframe h2:contains(Test)',
+    // add a new group on the node
+    trigger: '.o_web_studio_sidebar .o_field_many2manytags[name="groups"] input',
+    run: function () {
+        this.$anchor.click();
+    },
+}, {
+    trigger: '.ui-autocomplete:visible li:contains(Access Rights)',
+}, {
+    // wait for the group to appear
+    extra_trigger: '.o_web_studio_sidebar .o_field_many2manytags[name="groups"] .o_badge_text:contains(Access Rights)',
+    // switch to 'Add' in Sidebar
     trigger: '.o_web_studio_sidebar div[name="new"]',
 }, {
     // add a 'title' building block Data Table
@@ -376,7 +386,7 @@ tour.register('web_studio_new_report_tour', {
     }
 }, {
     trigger: 'ul.o_field_selector_page li:contains(ID)'
-},{
+}, {
     // update the title of the column
     trigger: '.o_web_studio_report_editor iframe table thead span:contains(Name) ', // the name title
     //extra_trigger: '.o_web_studio_report_editor iframe span[t-field="table_line.display_name"]:not(:contains(YourCompany, Administrator))', // the id has been updated in the iframe
