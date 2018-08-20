@@ -283,7 +283,7 @@ var PickingClientAction = ClientAction.extend({
             return this._rpc({
                 'model': 'stock.quant.package',
                 'method': 'create',
-                'args': [[]],
+                'args': [{}],
             }).then(function (package_id) {
                 return self._rpc({
                     'model': 'stock.quant.package',

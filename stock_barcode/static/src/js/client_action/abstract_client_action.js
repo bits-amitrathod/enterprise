@@ -761,7 +761,10 @@ var ClientAction = AbstractAction.extend({
         } else {
             return this._step_package(barcode, linesActions).then(function (res) {
                 return $.when({linesActions: res.linesActions});
-            }, function () {
+            }, function (specializedErrorMessage) {
+                if (specializedErrorMessage){
+                    return $.Deferred().reject(specializedErrorMessage);
+                }
                 if (! self.scannedLines.length) {
                     if (self.groups.group_tracking_lot) {
                         errorMessage = _t("You are expected to scan one or more products or a package available at the picking's location");
@@ -809,9 +812,29 @@ var ClientAction = AbstractAction.extend({
                 domain: [['package_id', '=', package_id]],
             });
         };
+        var package_already_scanned = function (package_id, quants) {
+            // FIXME: to improve, at the moment we consider that a package is already scanned if
+            // there are as many lines having result_package_id set to the concerned package in
+            // the current page as there should be if the package was scanned.
+            var expectedNumberOfLines = quants.length;
+            var currentNumberOfLines = 0;
+
+            var currentPage = self.pages[self.currentPageIndex];
+            for (var i=0; i < currentPage.lines.length; i++) {
+                if (currentPage.lines[i].package_id[0] === package_id) {
+                    currentNumberOfLines += 1;
+                }
+            }
+            return currentNumberOfLines === expectedNumberOfLines;
+        };
         return search_read().then(function (packages) {
             if (packages.length) {
                 return get_contained_quants(packages[0].id).then(function (quants) {
+                    var packageAlreadyScanned = package_already_scanned(packages[0].id, quants);
+                    if (packageAlreadyScanned) {
+                        return $.Deferred().reject(_t('This package is already scanned.'));
+                    }
+
                     _.each(quants, function (quant) {
                         // FIXME sle: not optimal
                         var product_barcode = _.findKey(self.productsByBarcode, function (product) {
@@ -829,11 +852,11 @@ var ClientAction = AbstractAction.extend({
                             if (res.isNewLine) {
                                 linesActions.push([self.linesWidget.addProduct, [res.lineDescription, self.actionParams.model]]);
                             } else {
-                                // FIXME sle: set all quantities done, not just 1
                                 linesActions.push([self.linesWidget.incrementProduct, [res.id || res.virtualId, quant.quantity, self.actionParams.model]]);
                             }
                         }
                     });
+
                     if (self.show_entire_packs && quants.length) {
                         linesActions.push([self.linesWidget.reload, undefined]);
                     }
