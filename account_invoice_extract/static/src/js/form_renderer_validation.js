@@ -55,9 +55,7 @@ var AccountOcrFormRenderer = FormRenderer.extend({
     _add_feature_buttons: function (page) {
         var $buttonsDiv = this.$attachmentPreview.find('.o_features_buttons');
         if ($buttonsDiv.length > 0) {
-            while ($buttonsDiv[0].firstChild) {
-                $buttonsDiv[0].removeChild($buttonsDiv[0].firstChild);
-            }
+            return;
         }
         $(page).before($('<div class="o_features_buttons"/>'));
         $buttonsDiv = this.$attachmentPreview.find('.o_features_buttons');
@@ -131,6 +129,9 @@ var AccountOcrFormRenderer = FormRenderer.extend({
                 $(boxLayer)[0].style.left = $(page)[0].offsetLeft + "px";
                 $(boxLayer)[0].style.top = $(page)[0].offsetTop + "px";
             }
+            if ($(page).is("iframe")) { //in case of pdf
+                $(page)[0].style.height = "calc(100% - " + $buttonsDiv.height() + "px)";
+            }
         });
     },
 
@@ -149,6 +150,7 @@ var AccountOcrFormRenderer = FormRenderer.extend({
         if (this.$attachmentPreview === undefined) {
             return; 
         }
+
         this.$attachmentPreview.find('iframe').load(function () { // wait for iframe to load
             var $frameDoc = self.$attachmentPreview.find('iframe').contents()[0];     
             $frameDoc.addEventListener("pagerendered", function (evt) {
@@ -156,16 +158,19 @@ var AccountOcrFormRenderer = FormRenderer.extend({
                 var ocr_success = $(".o_success_ocr");
                 if ($iframe != undefined && ocr_success.length > 0 && !ocr_success.hasClass("o_invisible_modifier")) {
                     var document = $iframe.contentDocument;
-                    
+
                     self._add_feature_buttons($iframe);
 
                     if ($("account_invoice_extract_css").length == 0)
                         $(document.head).append('<link id="account_invoice_extract_css" rel="stylesheet" type="text/css" href="/account_invoice_extract/static/src/css/account_invoice_extract.css">');
                     var textLayer = document.getElementsByClassName('textLayer');
+                    $(document.getElementsByClassName('boxLayer')).remove();
                     $(textLayer).after('<div class="boxLayer"/>');
                     var boxLayer = document.getElementsByClassName('boxLayer');
-                    $(boxLayer)[0].style.width = $(textLayer)[0].style.width;
-                    $(boxLayer)[0].style.height = $(textLayer)[0].style.height;
+                    $(boxLayer).each(function (index) {
+                        $(this)[0].style.width = $(textLayer)[index].style.width;
+                        $(this)[0].style.height = $(textLayer)[index].style.height;
+                    })
                 }
             });
         });
@@ -202,9 +207,11 @@ var AccountOcrFormRenderer = FormRenderer.extend({
         }
         var boxLayer = document.getElementsByClassName('boxLayer');
         if (boxLayer.length > 0) {
-            while ($(boxLayer)[0].firstChild) {
-                $(boxLayer)[0].removeChild($(boxLayer)[0].firstChild);
-            }
+            $(boxLayer).each(function(index) {
+                while ($(this)[0].firstChild) {
+                    $(this)[0].removeChild($(this)[0].firstChild);
+                }
+            })
             for (var index in this.boxes) {
                 var box = this.boxes[index];
                 if (box["feature"] == ev.data.feature) {
@@ -215,8 +222,8 @@ var AccountOcrFormRenderer = FormRenderer.extend({
                     if (box["user_selected"] == true) {
                         classDiv = "simpleBox userChosenBox";
                     }
-                    $(boxLayer).append("<div class='" + classDiv + "' style='left:" + (box["box_left"] * parseInt($(boxLayer)[0].style.width) - 4) + "px;top:" + (box["box_top"] * parseInt($(boxLayer)[0].style.height) - 4)  + "px;width:" + ((box["box_right"] - box["box_left"]) * parseInt($(boxLayer)[0].style.width))  + 
-                                "px;height:" + ((box["box_bottom"]-box["box_top"]) * parseInt($(boxLayer)[0].style.height))  + "px;' data_id='" + box["id"] + "' data_feature='" + box['feature'] +"' data_text='" + box['text'] +"'/>");
+                    $($(boxLayer)[box["page"]]).append("<div class='" + classDiv + "' style='left:" + (box["box_left"] * parseInt($(boxLayer)[box["page"]].style.width) - 4) + "px;top:" + (box["box_top"] * parseInt($(boxLayer)[box["page"]].style.height) - 4)  + "px;width:" + ((box["box_right"] - box["box_left"]) * parseInt($(boxLayer)[box["page"]].style.width))  + 
+                                "px;height:" + ((box["box_bottom"]-box["box_top"]) * parseInt($(boxLayer)[box["page"]].style.height))  + "px;' data_id='" + box["id"] + "' data_feature='" + box['feature'] +"' data_text='" + box['text'] +"'/>");
                 }
             }
             $(boxLayer).find(".simpleBox").click(function (event) {
