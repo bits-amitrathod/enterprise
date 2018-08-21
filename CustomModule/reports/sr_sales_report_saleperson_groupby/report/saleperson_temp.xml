@@ -8,13 +8,14 @@
                     <div class="row">
                     <center>
                         <b>
-                            <h4>Sales Report By Sale Person</h4>
+                            <h2> Surgical Product Solutions </h2>
+                            <h4> Gross Sales By Salesperson </h4>
                         </b>
                     </center>
                     <center>
                         <b>
                             <span t-esc="start_date"/>
-                            To
+                            -
                             <span t-esc="end_date"/>
                         </b>
                     </center>
@@ -23,7 +24,7 @@
                     <t t-foreach="data.keys()" t-as="user">
                         <center>
                             <b>
-                                <span>Sale Person :</span>
+                                <span>Salesperson :</span>
                                 <span t-esc="user"/>
                             </b>
                         </center>
@@ -44,7 +45,7 @@
                                         <span t-esc="order[1]"/>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-esc="order[2]"/>
+                                        $ <span t-esc="order[2]"/>
                                         <t t-set="total_sum" t-value="total_sum + order[2]"/>
                                     </td>
                                 </tr>
@@ -55,7 +56,7 @@
                                         <b>Total</b>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-esc="total_sum"/>
+                                        $ <span t-esc="total_sum"/>
                                     </td>
                                 </tr>
                             </thead>

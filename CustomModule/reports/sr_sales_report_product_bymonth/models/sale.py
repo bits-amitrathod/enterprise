@@ -20,6 +20,8 @@
 ##############################################################################
 
 from odoo import api, fields, models
+import datetime
+import logging
 
 
 class SaleSalespersonReport(models.TransientModel):
@@ -44,18 +46,20 @@ class SaleSalespersonReport(models.TransientModel):
             temp = []
             for order in groupby_dict[user]:
                 temp_2 = []
-                temp_2.append(order.name)
-                temp_2.append(order.date_order)
-                temp_2.append(order.amount_total)
+                temp_2.append(order.product_id.product_tmpl_id.sku_code)
                 temp_2.append(order.product_id.name)
+                temp_2.append(order.amount_total)
+                temp_2.append(fields.Datetime.from_string(str(order.date_order)).date().strftime('%m/%d/%Y'))
+                temp_2.append(order.name)
+
                 temp.append(temp_2)
             final_dict[user] = temp
         datas = {
             'ids': self,
             'model': 'sale.product.report',
             'form': final_dict,
-            'start_date': self.start_date,
-            'end_date': self.end_date,
+            'start_date': fields.Datetime.from_string(str(self.start_date)).date().strftime('%m/%d/%Y'),
+            'end_date': fields.Datetime.from_string(str(self.end_date)).date().strftime('%m/%d/%Y'),
 
         }
         return self.env.ref('sr_sales_report_product_bymonth.action_report_sales_salesbymonth_wise').report_action([],

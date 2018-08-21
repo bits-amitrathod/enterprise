@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Sales Report By Product',
+    'name': 'Gross Sales By Product',
     'category': 'sale',
     'version': '11.0.0.1',
     'summary': 'This module provides Sales Report By product group',

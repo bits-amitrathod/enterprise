@@ -46,7 +46,7 @@ class SaleSalespersonReport(models.TransientModel):
                 temp_2.append(order.product_tmpl_id.type)
                 temp_2.append(order.product_tmpl_id.manufacturer.name)
                 temp_2.append(order.id)
-                temp_2.append(order.product_tmpl_id.description)
+                temp_2.append(order.product_tmpl_id.name)
                 order.env.cr.execute(
                     "SELECT sum(quantity) as qut FROM public.stock_quant where company_id != 0.0 and  product_id = " + str(
                         order.id))
@@ -58,13 +58,15 @@ class SaleSalespersonReport(models.TransientModel):
                 query_result = order.env.cr.dictfetchone()
                 print(query_result['min'])
                 if query_result['min']:
-                    temp_2.append(datetime.datetime.strptime(str(query_result['min']), "%Y-%m-%d %H:%M:%S.%f").date().strftime('%Y-%m-%d'))
+                    temp_2.append(fields.Datetime.from_string(str(query_result['min'])).date().strftime('%m/%d/%Y'))
                 else:
-                    temp_2.append(fields.Datetime.from_string(query_result['min']))
+                    temp_2.append(query_result['min'])
+
                 if query_result['max']:
-                    temp_2.append(datetime.datetime.strptime(str(query_result['max']), "%Y-%m-%d %H:%M:%S.%f").date().strftime('%Y-%m-%d'))
+                    temp_2.append(fields.Datetime.from_string(str(query_result['max'])).date().strftime('%m/%d/%Y'))
                 else:
-                    temp_2.append(fields.Datetime.from_string(query_result['max']))
+                    temp_2.append(query_result['max'])
+
                 temp.append(temp_2)
             final_dict[user] = temp
         datas = {
@@ -74,4 +76,28 @@ class SaleSalespersonReport(models.TransientModel):
         }
         return self.env.ref('custom_product_catalog.action_report_custom_catalog_wise').report_action([],
                                                                                                                     data=datas)
+
+    @api.multi
+    def print_product_catalog_report(self):
+        sale_orders = self.env['product.product'].search([])
+        groupby_dict = {}
+        filtered_by_date = sale_orders
+        groupby_dict['data'] = filtered_by_date
+
+        final_dict = {}
+        for user in groupby_dict.keys():
+            temp = []
+            for order in groupby_dict[user]:
+                temp_2 = []
+                temp_2.append(order.name)
+                temp_2.append(order.product_tmpl_id.list_price)
+                temp.append(temp_2)
+            final_dict[user] = temp
+        datas = {
+            'ids': self,
+            'model': 'custome.product.report',
+            'form': final_dict,
+        }
+        return self.env.ref('custom_product_catalog.action_report_product_catalog_wise').report_action([],
+                                                                                                      data=datas)
 
