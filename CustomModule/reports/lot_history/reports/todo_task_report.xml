@@ -1,0 +1,85 @@
+<odoo>
+
+    <report id="action_todo_model_report"
+            string="Lot History"
+            model="lot_history.lot_history"
+            report_type="qweb-html"
+            file="lot_history.purchase_report"
+            name="lot_history.purchase_report"
+    />
+
+    <template id="purchase_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <page>
+                    <div class="oe_structure"/>
+                    <div class="row">
+
+                        <center>
+                            <b>
+                                <h4>Surgical Product Solutions</h4>
+                            </b>
+                            <b>
+                                <h2>Lot History Report Of Product</h2>
+                            </b>
+                        </center>
+                        <center>
+                            <b>
+                                <span t-esc="start_date"/>
+                                To
+                                <span t-esc="end_date"/>
+                            </b>
+                        </center>
+                        <!-- Report page content -->
+                        <table class="table table-condensed" style="border: 1px solid black;">
+                            <tr>
+                                <th>Lot</th>
+                                <th>Product Number</th>
+                                <th>Description</th>
+                                <th>Product Type</th>
+                                <th>Creation date</th>
+                                <th>Vendor</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                            </tr>
+
+                            <t t-foreach="data.keys()" t-as="user">
+                                <t t-foreach="data[user]" t-as="o">
+                                    <tr>
+                                        <td class="col-xs-2">
+                                            <span t-esc="o[0]"/>
+                                        </td>
+                                        <td class="col-xs-2">
+                                            <span t-esc="o[0]"/>
+                                        </td>
+                                        <td class="col-xs-2">
+                                            <span t-esc="o[2]"/>
+                                        </td>
+                                        <td class="col-xs-2">
+                                            <span t-esc="o[3]"/>
+                                        </td>
+                                        <td class="col-xs-2">
+                                            <span t-esc="o[7]"/>
+                                        </td>
+                                        <td class="col-xs-2">
+                                            <span t-esc="o[4]"/>
+                                        </td>
+                                         <td class="col-xs-2">
+                                            <span t-esc="o[5]"/>
+                                        </td>
+                                        <td class="col-xs-2">
+                                            <span t-esc="o[6]"/>
+                                        </td>
+
+
+                                    </tr>
+                                </t>
+                            </t>
+                        </table>
+                    </div>
+                </page>
+            </t>
+        </t>
+    </template>
+
+</odoo>

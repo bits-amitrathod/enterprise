@@ -46,7 +46,7 @@
                       <page name="prioritization" string="Global Priority Configuration">
                           <group>
                                <group>
-                                     <field name="sps_sku" />
+                                     <!--<field name="sps_sku" />-->
                                      <field name="threshold_min"/>
                                      <field name="priority"/>
                                      <field name="auto_allocate" />
@@ -80,7 +80,7 @@
                     <field name="lst_price"/>
                     <field name="price" invisible="not context.get('pricelist',False)"/>
                     <field name="uom_id" options="{'no_open': True, 'no_create': True}" groups="product.group_uom"/>
-                    <field name="sps_sku" />
+                    <!--<field name="sps_sku" />-->
                     <field name="threshold"/>
                     <field name="priority"/>
                     <field name="cooling_period"/>
@@ -164,11 +164,10 @@
                 <page name="general_information" position="inside">
                     <group name="Category" string="Category">
                         <group>
-                              <field name="class_code"/>
                               <field name="location"/>
+                              <field name="sku_code"/>
                         </group>
                         <group>
-                            <field name="tier"/>
                             <field name="premium"/>
                          </group>
                      </group>
