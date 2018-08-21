@@ -74,6 +74,12 @@ class ProductTemplate(models.Model):
     class_code = fields.Char("Class Code")
     premium = fields.Boolean("Premium")
 
+class ProductProduct(models.Model):
+    
+    _inherit = "product.product"
+    _description = "Product"
+    default_code = fields.Char('Internal Reference/SKU', index=True)
+
 class NotificationSetting(models.Model):
     _inherit = 'res.partner'
 
