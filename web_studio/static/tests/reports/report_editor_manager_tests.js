@@ -9,13 +9,24 @@ var session = require('web.session');
 
 function getFloatSizeFromPropertyInPixels($element, propertyName) {
     var size = $element.css(propertyName);
-    size = size.slice(0, size.length - 2); // remove the 'px at the end
+    size = size.slice(0, size.length - 2); // remove the 'px' at the end
     return parseFloat(size);
 }
 
-
+/**
+ * Some tests need the style assets inside the iframe, mainly to correctly
+ * display the hooks (the hooks sizes are taken into account to decide which
+ * ones are the closest ones). This function loads the iframe assets
+ * (server-side) and insert them inside the corresponding test template[0] HTML.
+ *
+ * As a server-side call needs to be done before executing the test, this
+ * function wraps the original function.
+ *
+ * **Warning** only use this function when it's really needed as it's quite
+ * expensive.
+ */
 var loadIframeCss = function (callback) {
-    return function WrapLoadIframeCss (assert) {
+    return function WrapLoadIframeCss(assert) {
         var self = this;
         var done = assert.async();
         if (loadIframeCss.assets) {
@@ -113,7 +124,7 @@ QUnit.module('ReportEditorManager', {
     }
 }, function () {
 
-    QUnit.test('basic editor rendering', function(assert) {
+    QUnit.test('basic editor rendering', function (assert) {
         var done = assert.async();
         assert.expect(8);
 
@@ -195,7 +206,7 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-    QUnit.test('editor rendering with paperformat', function(assert) {
+    QUnit.test('editor rendering with paperformat', function (assert) {
         var done = assert.async();
         assert.expect(2);
 
@@ -250,8 +261,7 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-
-    QUnit.test('use pager', function(assert) {
+    QUnit.test('use pager', function (assert) {
         var done = assert.async();
         assert.expect(6);
         var self = this;
@@ -327,7 +337,7 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-    QUnit.test('components edition', function(assert) {
+    QUnit.test('components edition', function (assert) {
         var done = assert.async();
         assert.expect(7);
 
@@ -432,7 +442,7 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-    QUnit.test('components edition 2', function(assert) {
+    QUnit.test('components edition 2', function (assert) {
         var done = assert.async();
         assert.expect(6);
 
@@ -497,7 +507,7 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-    QUnit.test('display hooks when D&D component', function(assert) {
+    QUnit.test('display hooks when D&D component', function (assert) {
         var done = assert.async();
         assert.expect(4);
 
@@ -558,7 +568,7 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-    QUnit.test('do not display hooks when D&D component far from hook', function(assert) {
+    QUnit.test('do not display hooks when D&D component far from hook', function (assert) {
         var done = assert.async();
         assert.expect(2);
 
@@ -615,7 +625,7 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-    QUnit.test('drag & drop text component', function(assert) {
+    QUnit.test('drag & drop text component', function (assert) {
         var done = assert.async();
         assert.expect(1);
 
@@ -694,7 +704,7 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-    QUnit.test('drag & drop components and cancel', function(assert) {
+    QUnit.test('drag & drop components and cancel', function (assert) {
         var done = assert.async();
         assert.expect(4);
 
@@ -787,8 +797,8 @@ QUnit.module('ReportEditorManager', {
                 {firstname: 'firstname 2', name: 'name 2', product: 'product 2', price: 20, quantity: 2000, total: 40000},
                 {firstname: 'firstname 3', name: 'name 3', product: 'product 3', price: 30, quantity: 3000, total: 90000}
             ],
-            sum: function(list){
-                return list.reduce(function(a, b){
+            sum: function (list) {
+                return list.reduce(function (a, b) {
                     return a + b;
                 }, 0);
             },
@@ -816,6 +826,8 @@ QUnit.module('ReportEditorManager', {
                 if (route === '/web_studio/edit_report_view') {
                     var operation = _.last(args.operations);
                     if (!operation) {
+                        // this is to deal with undo operation (which is
+                        // triggered after the first deferred reject)
                         return $.Deferred().reject();
                     }
                     assert.deepEqual(operation.inheritance, tests[testIndex].inheritance, tests[testIndex].text);
@@ -891,7 +903,7 @@ QUnit.module('ReportEditorManager', {
         });
     }));
 
-    QUnit.skip('drag & drop field in table', loadIframeCss(function(assert, done) {
+    QUnit.skip('drag & drop field in table', loadIframeCss(function (assert, done) {
         assert.expect(20);
 
         this.templates.push({
@@ -940,8 +952,8 @@ QUnit.module('ReportEditorManager', {
                 {firstname: 'firstname 2', name: 'name 2', product: 'product 2', price: 20, quantity: 2000, total: 40000},
                 {firstname: 'firstname 3', name: 'name 3', product: 'product 3', price: 30, quantity: 3000, total: 90000}
             ],
-            sum: function(list){
-                return list.reduce(function(a, b){
+            sum: function (list) {
+                return list.reduce(function (a, b) {
                     return a + b;
                 }, 0);
             },
@@ -1289,7 +1301,7 @@ QUnit.module('ReportEditorManager', {
         });
     }));
 
-    QUnit.test('drag & drop block "Accounting Total"', loadIframeCss(function(assert, done) {
+    QUnit.test('drag & drop block "Accounting Total"', loadIframeCss(function (assert, done) {
         assert.expect(1);
 
         this.templates.push({
@@ -1406,7 +1418,7 @@ QUnit.module('ReportEditorManager', {
         });
     }));
 
-    QUnit.test('edit block "Accounting Total"', loadIframeCss(function(assert, done) {
+    QUnit.test('edit block "Accounting Total"', loadIframeCss(function (assert, done) {
         assert.expect(2);
 
         var initialDebugMode = config.debug;
@@ -1498,7 +1510,7 @@ QUnit.module('ReportEditorManager', {
         });
     }));
 
-    QUnit.test('drag & drop block "Data table"', loadIframeCss(function(assert, done) {
+    QUnit.test('drag & drop block "Data table"', loadIframeCss(function (assert, done) {
         assert.expect(2);
 
         this.templates.push({
@@ -1585,7 +1597,7 @@ QUnit.module('ReportEditorManager', {
         });
     }));
 
-    QUnit.test('edit text', function(assert) {
+    QUnit.test('edit text', function (assert) {
         var done = assert.async();
         assert.expect(2);
 
@@ -1651,7 +1663,7 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-    QUnit.test('open XML editor after modification', function(assert) {
+    QUnit.test('open XML editor after modification', function (assert) {
         var done = assert.async();
         assert.expect(7);
 
