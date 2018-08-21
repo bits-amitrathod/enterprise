@@ -46,6 +46,7 @@ class SaleSalespersonReport(models.TransientModel):
             temp = []
             for order in groupby_dict[user]:
                 temp_2 = []
+                temp_2.append(order.product_id.product_tmpl_id.sku_code)
                 temp_2.append(order.product_id.name)
                 temp_2.append(order.amount_total)
                 temp_2.append(fields.Datetime.from_string(str(order.date_order)).date().strftime('%m/%d/%Y'))
