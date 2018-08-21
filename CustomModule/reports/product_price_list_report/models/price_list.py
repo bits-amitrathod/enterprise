@@ -21,8 +21,6 @@
 
 from odoo import api, fields, models
 
-
-
 class SaleSalespersonReport(models.TransientModel):
     _name = 'product.list.report'
 
@@ -32,7 +30,7 @@ class SaleSalespersonReport(models.TransientModel):
 
     @api.multi
     def print_product_price_list_vise_report(self):
-        sale_orders = self.env['product.template'].search([])
+        sale_orders = self.env['product.product'].search([])
         groupby_dict = {}
         filtered_order = sale_orders
         filtered_by_date = filtered_order
@@ -41,11 +39,10 @@ class SaleSalespersonReport(models.TransientModel):
         final_dict = {}
         for user in groupby_dict.keys():
             temp = []
-            for order in groupby_dict[user]:
+            for product in groupby_dict[user]:
                 temp_2 = []
-                temp_2.append(order.default_code)
-                temp_2.append(order.description)
-                temp_2.append(order.standard_price)
+                temp_2.append(product.default_code)
+                temp_2.append(product.product_tmpl_id.list_price)
                 temp.append(temp_2)
             final_dict[user] = temp
 

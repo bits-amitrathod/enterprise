@@ -42,7 +42,7 @@ class comparebymonth():
             object.sale_order = record.name
             object.customer = record.partner_id.name
             if record.confirmation_date:
-                object.confirmation_date = datetime.datetime.strptime(record.confirmation_date, "%Y-%m-%d %H:%M:%S").date().strftime('%m-%d-%Y')
+                object.confirmation_date = datetime.datetime.strptime(record.confirmation_date, "%Y-%m-%d %H:%M:%S").date().strftime('%m/%d/%Y')
             else:
                 object.confirmation_date = record.confirmation_date
             sum=0

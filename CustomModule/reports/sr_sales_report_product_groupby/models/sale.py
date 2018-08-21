@@ -45,7 +45,7 @@ class SaleSalespersonReport(models.TransientModel):
                     if p_id == sale_order_line.product_id :
                         temp_2 = []
                         temp_2.append(sale_order.name)
-                        temp_2.append(datetime.datetime.strptime(sale_order.date_order, "%Y-%m-%d %H:%M:%S").date().strftime('%m-%d-%Y'))
+                        temp_2.append(datetime.datetime.strptime(sale_order.date_order, "%Y-%m-%d %H:%M:%S").date().strftime('%m/%d/%Y'))
                         temp_2.append(sale_order_line.price_subtotal)
                         temp.append(temp_2)
             final_dict[p_id.name] = temp
@@ -54,8 +54,8 @@ class SaleSalespersonReport(models.TransientModel):
             'ids': self,
             'model': 'sale.product.report',
             'form': final_dict,
-            'start_date': self.start_date,
-            'end_date': self.end_date,
+            'start_date': fields.Datetime.from_string(str(self.start_date)).date().strftime('%m/%d/%Y'),
+            'end_date': fields.Datetime.from_string(str(self.end_date)).date().strftime('%m/%d/%Y'),
 
         }
         return self.env.ref('sr_sales_report_product_groupby.action_report_sales_saleperson_wise').report_action([],

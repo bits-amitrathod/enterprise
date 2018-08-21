@@ -46,7 +46,7 @@ class SaleSalespersonReport(models.TransientModel):
                 temp_2.append(order.product_tmpl_id.type)
                 temp_2.append(order.product_tmpl_id.manufacturer.name)
                 temp_2.append(order.id)
-                temp_2.append(order.product_tmpl_id.description)
+                temp_2.append(order.product_tmpl_id.name)
                 order.env.cr.execute(
                     "SELECT sum(quantity) as qut FROM public.stock_quant where company_id != 0.0 and  product_id = " + str(
                         order.id))
@@ -58,23 +58,15 @@ class SaleSalespersonReport(models.TransientModel):
                 query_result = order.env.cr.dictfetchone()
                 print(query_result['min'])
                 if query_result['min']:
-                    try:
-                        str(query_result['min']).index('.')
-                        str_format = '%Y-%m-%d %H:%M:%S.%f'
-                    except ValueError:
-                        str_format = '%Y-%m-%d %H:%M:%S'
-                    temp_2.append(datetime.datetime.strptime(str(query_result['min']), str_format).date().strftime('%d-%m-%Y'))
+                    temp_2.append(fields.Datetime.from_string(str(query_result['min'])).date().strftime('%m/%d/%Y'))
                 else:
-                    temp_2.append(fields.Datetime.from_string(query_result['min']))
+                    temp_2.append(query_result['min'])
+
                 if query_result['max']:
-                    try:
-                        str(query_result['max']).index('.')
-                        str_format = '%Y-%m-%d %H:%M:%S.%f'
-                    except ValueError:
-                        str_format = '%Y-%m-%d %H:%M:%S'
-                    temp_2.append(datetime.datetime.strptime(str(query_result['max']), str_format).date().strftime('%d-%m-%Y'))
+                    temp_2.append(fields.Datetime.from_string(str(query_result['max'])).date().strftime('%m/%d/%Y'))
                 else:
-                    temp_2.append(fields.Datetime.from_string(query_result['max']))
+                    temp_2.append(query_result['max'])
+
                 temp.append(temp_2)
             final_dict[user] = temp
         datas = {
