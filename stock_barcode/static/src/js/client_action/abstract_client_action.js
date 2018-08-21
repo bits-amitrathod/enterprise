@@ -788,6 +788,11 @@ var ClientAction = AbstractAction.extend({
         // call a `_packageMakeNewLines` methode overriden by picking and inventory or increment the existing lines
         // fill linesActions + scannedLines
         // if scannedLines isn't set, the caller will warn
+        var destinationLocation = this.locationsByBarcode[barcode];
+        if (destinationLocation) {
+            return $.Deferred().reject();
+        }
+
         var self = this;
         var search_read = function () {
             return self._rpc({
