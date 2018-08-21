@@ -27,52 +27,29 @@ var ReportEditorManager = AbstractEditorManager.extend({
     /**
      * @override
      * @param {Object} params
+     * @param {Object} params.models
      * @param {Object} params.report
      * @param {Object} params.reportHTML
      * @param {Object} params.reportMainViewID
      * @param {Object} params.reportViews
      * @param {Object} [params.paperFormat]
+     * @param {Object} [params.widgetsOptions]
      */
     init: function (parent, params) {
         this._super.apply(this, arguments);
 
         this.view_id = params.reportMainViewID;
+
+        this.models = params.models;
         this.report = params.report;
         this.reportHTML = params.reportHTML;
         this.reportName = this.report.report_name;
         this.reportViews = params.reportViews;
 
         this.paperFormat = params.paperFormat;
+        this.widgetsOptions = params.widgetsOptions;
 
         this.editorIframeDef = $.Deferred();
-    },
-    /**
-     * @override
-     */
-    willStart: function () {
-        var self = this;
-
-        // load the widgets options for t-options directive
-        var defWidgets = this._rpc({
-            route: '/web_studio/get_widgets_available_options',
-            params: {
-                context: session.user_context,
-            },
-        }).then(function (widgets) {
-            self.widgets = widgets;
-        });
-
-        var defModels = this._rpc({
-            model: 'ir.model',
-            method: 'search_read',
-            fields: ['id', 'name', 'model'],
-            domain: [['transient', '=', false], ['abstract', '=', false]],
-            context: session.user_context,
-        }).then(function (models) {
-            self.models = _.object(_.pluck(models, 'model'), _.pluck(models, 'name'));
-        });
-        var defParent = this._super.apply(this, arguments);
-        return $.when(defWidgets, defModels, defParent);
     },
     /**
      * @override
@@ -277,7 +254,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
         });
         return new ReportEditorSidebar(this, {
             report: this.report,
-            widgets: this.widgets,
+            widgetsOptions: this.widgetsOptions,
             models: this.models,
             state: state,
             previousState: previousState,

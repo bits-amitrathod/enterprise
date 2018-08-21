@@ -6,6 +6,9 @@ var Widget = require('web.Widget');
 var AbstractReportComponent = Widget.extend({
     /**
      * @override
+     * @param {Widget} parent
+     * @param {Object} params
+     * @param {Object} params.models
      */
     init: function (parent, params) {
         this.models = params.models;

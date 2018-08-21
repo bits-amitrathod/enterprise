@@ -33,8 +33,9 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
      * @param {Object} params
      * @param {Object} [params.previousState]
      * @param {Object} [params.report] only mandatory if state.mode = 'report'
+     * @param {Object} [params.models]
      * @param {Object} [params.state]
-     * @param {Array} [params.widgets] a list of available field widgets
+     * @param {Object} [params.widgetsOptions]
      */
     init: function (parent, params) {
         this._super.apply(this, arguments);
@@ -44,8 +45,8 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         this.report = params.report;
         this.state = params.state || {};
         this.previousState = params.previousState || {};
-        this.widgets = params.widgets;
         this.models = params.models;
+        this.widgetsOptions = params.widgetsOptions;
     },
     /**
      * @override

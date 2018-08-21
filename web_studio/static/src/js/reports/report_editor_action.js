@@ -38,6 +38,8 @@ var ReportEditorAction = AbstractAction.extend({
     willStart: function () {
         var defs = [this._super.apply(this, arguments)];
         defs.push(this._readReport().then(this._loadEnvironment.bind(this)));
+        defs.push(this._readModels());
+        defs.push(this._readWidgetsOptions());
         return $.when.apply($, defs);
     },
     /**
@@ -142,6 +144,28 @@ var ReportEditorAction = AbstractAction.extend({
         });
     },
     /**
+     * Read the models (ir.model) name and model to display them in a
+     * user-friendly way in the sidebar (see AbstractReportComponent).
+     *
+     * @private
+     * @returns {Deferred}
+     */
+    _readModels: function () {
+        var self = this;
+        return this._rpc({
+            model: 'ir.model',
+            method: 'search_read',
+            fields: ['name', 'model'],
+            domain: [['transient', '=', false], ['abstract', '=', false]],
+            context: session.user_context,
+        }).then(function (models) {
+            self.models = {};
+            _.each(models, function (model) {
+                self.models[model.model] = model.name;
+            });
+        });
+    },
+    /**
      * @private
      * @returns {Deferred}
      */
@@ -172,6 +196,23 @@ var ReportEditorAction = AbstractAction.extend({
         });
     },
     /**
+     * Load the widgets options for t-options directive in sidebar.
+     *
+     * @private
+     * @returns {Deferred}
+     */
+    _readWidgetsOptions: function () {
+        var self = this;
+        return this._rpc({
+            route: '/web_studio/get_widgets_available_options',
+            params: {
+                context: session.user_context,
+            },
+        }).then(function (widgetsOptions) {
+            self.widgetsOptions = widgetsOptions;
+        });
+    },
+    /**
      * @private
      * @returns {Deferred}
      */
@@ -183,12 +224,14 @@ var ReportEditorAction = AbstractAction.extend({
         }
         return $.when.apply($, defs).then(function () {
             var params = {
+                env: self.env,
+                models: self.models,
                 paperFormat: self.paperFormat,
                 report: self.report,
                 reportHTML: self.reportViews.report_html,
                 reportMainViewID: self.reportViews.main_view_id,
                 reportViews: self.reportViews.views,
-                env: self.env,
+                widgetsOptions: self.widgetsOptions,
             };
 
             var oldEditor = self.reportEditorManager;

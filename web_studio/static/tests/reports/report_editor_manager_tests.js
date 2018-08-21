@@ -71,19 +71,11 @@ QUnit.module('Studio', {}, function () {
 
 QUnit.module('ReportEditorManager', {
     beforeEach: function () {
+        this.models = {
+            'model.test': 'Model Test',
+            'model.test.child': 'Model Test Child',
+        };
         this.data = {
-            'ir.model': {
-                fields: {
-                    name: { string: "Name", type: "char"},
-                    model: { string: "Model", type: "char"},
-                    transient: { string: "transient", type: "boolean"},
-                    abstract: { string: "abstract", type: "boolean"},
-                },
-                records: [
-                    {id: 1, name: 'Model Test', model: 'model.test'},
-                    {id: 2, name: 'Model Test Child', model: 'model.test.child'}
-                ],
-            },
             'model.test': {
                 fields: {
                     name: {string: "Name", type: "char"},
@@ -154,6 +146,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -165,12 +158,6 @@ QUnit.module('ReportEditorManager', {
             reportHTML: studioTestUtils.getReportHTML(this.templates),
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
-            mockRPC: function (route) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
-                return this._super.apply(this, arguments);
-            },
         });
 
         rem.editorIframeDef.then(function () {
@@ -225,6 +212,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -240,12 +228,6 @@ QUnit.module('ReportEditorManager', {
             reportHTML: studioTestUtils.getReportHTML(this.templates),
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
-            mockRPC: function (route) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
-                return this._super.apply(this, arguments);
-            },
         });
 
         rem.editorIframeDef.then(function () {
@@ -281,6 +263,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -293,9 +276,7 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                } else if (route === '/web_studio/get_report_views') {
+                if (route === '/web_studio/get_report_views') {
                     assert.strictEqual(args.record_id, 43,
                         "the record id should be correctly set");
                     self.templates[1].arch = '<kikou>' +
@@ -359,6 +340,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -371,9 +353,6 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
                 if (route === '/web_studio/edit_report_view') {
                     assert.deepEqual(args, {
                         context: {},
@@ -463,6 +442,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -474,12 +454,6 @@ QUnit.module('ReportEditorManager', {
             reportHTML: studioTestUtils.getReportHTML(this.templates),
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
-            mockRPC: function (route) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
-                return this._super.apply(this, arguments);
-            },
         });
 
         rem.editorIframeDef.then(function () {
@@ -528,6 +502,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -539,12 +514,6 @@ QUnit.module('ReportEditorManager', {
             reportHTML: studioTestUtils.getReportHTML(this.templates),
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
-            mockRPC: function (route) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
-                return this._super.apply(this, arguments);
-            },
         });
 
         rem.editorIframeDef.then(function () {
@@ -589,6 +558,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -600,12 +570,6 @@ QUnit.module('ReportEditorManager', {
             reportHTML: studioTestUtils.getReportHTML(this.templates),
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
-            mockRPC: function (route) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
-                return this._super.apply(this, arguments);
-            },
         });
 
         rem.editorIframeDef.then(function () {
@@ -647,6 +611,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -659,9 +624,6 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
                 if (route === '/web_studio/edit_report_view') {
                     assert.deepEqual(args, {
                         context: {},
@@ -727,6 +689,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -738,12 +701,6 @@ QUnit.module('ReportEditorManager', {
             reportHTML: studioTestUtils.getReportHTML(this.templates),
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
-            mockRPC: function (route) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
-                return this._super.apply(this, arguments);
-            },
         });
 
         rem.editorIframeDef.then(function () {
@@ -808,6 +765,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -820,9 +778,6 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates, templateData),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
                 if (route === '/web_studio/edit_report_view') {
                     var operation = _.last(args.operations);
                     if (!operation) {
@@ -963,6 +918,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -975,9 +931,6 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates, templateData),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
                 if (route === '/web_studio/edit_report_view') {
                     var operation = _.last(args.operations);
                     if (!operation) {
@@ -1318,7 +1271,7 @@ QUnit.module('ReportEditorManager', {
                     '</t>' +
                 '</kikou>',
         });
-        this.data['ir.model'].records.push({id: 3, name: 'Invoice', model: 'account.invoice'});
+        this.models['account.invoice'] = 'Invoice';
         this.data['account.invoice'] = {
             fields: {
                 name: { string: "Name", type: "char"},
@@ -1330,6 +1283,7 @@ QUnit.module('ReportEditorManager', {
         };
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -1342,9 +1296,6 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates, templateData),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
                 if (route === '/web_studio/edit_report_view') {
                     var operation = _.last(args.operations);
                     if (!operation) {
@@ -1460,6 +1411,7 @@ QUnit.module('ReportEditorManager', {
         };
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -1472,9 +1424,6 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates, templateData),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
                 if (route === '/web_studio/edit_report_view') {
                     var operation = _.last(args.operations);
                     if (!operation) {
@@ -1532,6 +1481,7 @@ QUnit.module('ReportEditorManager', {
         };
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -1544,9 +1494,6 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates, templateData),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
                 if (route === '/web_studio/edit_report_view') {
                     var operation = _.last(args.operations);
                     if (!operation) {
@@ -1613,6 +1560,7 @@ QUnit.module('ReportEditorManager', {
         });
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -1625,9 +1573,6 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                }
                 if (route === '/web_studio/edit_report_view') {
                     var operation = _.last(args.operations);
                     if (!operation) {
@@ -1699,6 +1644,7 @@ QUnit.module('ReportEditorManager', {
 
         var rem = studioTestUtils.createReportEditorManager({
             data: this.data,
+            models: this.models,
             env: {
                 modelName: 'kikou',
                 ids: [42, 43],
@@ -1711,9 +1657,7 @@ QUnit.module('ReportEditorManager', {
             reportViews: studioTestUtils.getReportViews(this.templates),
             reportMainViewID: 42,
             mockRPC: function (route, args) {
-                if (route === '/web_studio/get_widgets_available_options') {
-                    return $.when({});
-                } else if (route === '/web_studio/edit_report_view') {
+                if (route === '/web_studio/edit_report_view') {
                     // directly apply the operation on the view
                     self.templates[1].arch = '<kikou>' +
                         '<t t-name="template1">' +
