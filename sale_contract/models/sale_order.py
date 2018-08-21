@@ -98,7 +98,8 @@ class SaleOrder(models.Model):
             previous_date = next_date - relativedelta(**{periods[subscr.recurring_rule_type]: subscr.recurring_interval})
 
             # DO NOT FORWARDPORT
-            format_date = self.env['ir.qweb.field.date'].value_to_html
+            lang = self.env['res.partner'].browse(invoice_vals['partner_id']).lang
+            format_date = self.env['ir.qweb.field.date'].with_context(lang=lang).value_to_html
             invoice_vals['comment'] = _("This invoice covers the following period: %s - %s") % (format_date(fields.Date.to_string(previous_date), {}), format_date(fields.Date.to_string(next_date - relativedelta(days=1)), {}))
 
         return invoice_vals
