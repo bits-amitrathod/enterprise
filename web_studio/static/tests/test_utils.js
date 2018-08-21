@@ -10,6 +10,7 @@ var Widget = require('web.Widget');
 var ReportEditor = require('web_studio.ReportEditor');
 var ReportEditorManager = require('web_studio.ReportEditorManager');
 var ReportEditorSidebar = require('web_studio.ReportEditorSidebar');
+var ViewEditorManager = require('web_studio.ViewEditorManager');
 
 /**
  * Test Utils
@@ -65,22 +66,7 @@ function createReportEditor (params) {
  * @return {ReportEditorManager}
  */
 function createReportEditorManager (params) {
-    var Parent = Widget.extend({
-        className: 'o_web_client o_in_studio',
-        start: function () {
-            var self = this;
-            this._super.apply(this, arguments).then(function () {
-                // reproduce the DOM environment of Studio
-                var $studio = $.parseHTML(
-                    "<div class='o_content'>" +
-                        "<div class='o_web_studio_client_action'/>" +
-                    "</div>"
-                );
-                self.$el.append($studio);
-            });
-        },
-    });
-    var parent = new Parent();
+    var parent = new StudioEnvironment();
     testUtils.addMockEnvironment(parent, params);
 
     var rem = new ReportEditorManager(parent, params);
@@ -144,6 +130,57 @@ function createSidebar (params) {
     };
     sidebar.appendTo(parent.$('.o_web_studio_editor_manager'));
     return sidebar;
+}
+
+/**
+ * Create a ViewEditorManager widget.
+ *
+ * @param {Object} params
+ * @return {ViewEditorManager}
+ */
+function createViewEditorManager (params) {
+    var parent = new StudioEnvironment();
+    var mockServer = testUtils.addMockEnvironment(parent, params);
+    var fieldsView = testUtils.fieldsViewGet(mockServer, params);
+    if (params.viewID) {
+        fieldsView.view_id = params.viewID;
+    }
+    var env = {
+        modelName: params.model,
+        ids: 'res_id' in params ? [params.res_id] : undefined,
+        currentId: 'res_id' in params ? params.res_id : undefined,
+        domain: params.domain || [],
+        context: params.context || {},
+        groupBy: params.groupBy || [],
+    };
+    var vem = new ViewEditorManager(parent, {
+        fields_view: fieldsView,
+        viewType: fieldsView.type,
+        env: env,
+        studio_view_id: params.studioViewID,
+        chatter_allowed: params.chatter_allowed,
+    });
+
+    // also destroy to parent widget to avoid memory leak
+    var originalDestroy = ViewEditorManager.prototype.destroy;
+    vem.destroy = function () {
+        vem.destroy = originalDestroy;
+        parent.destroy();
+    };
+
+    var fragment = document.createDocumentFragment();
+    var selector = params.debug ? 'body' : '#qunit-fixture';
+    if (params.debug) {
+        $('body').addClass('debug');
+    }
+    parent.prependTo(selector);
+    vem.appendTo(fragment).then(function () {
+        dom.append(parent.$('.o_web_studio_client_action'), fragment, {
+            callbacks: [{widget: vem}],
+            in_DOM: true,
+        });
+    });
+    return vem;
 }
 
 /**
@@ -230,10 +267,27 @@ function _brandTemplates (templates, dataOeContext) {
     }
 }
 
+var StudioEnvironment = Widget.extend({
+    className: 'o_web_client o_in_studio',
+    start: function () {
+        var self = this;
+        this._super.apply(this, arguments).then(function () {
+            // reproduce the DOM environment of Studio
+            var $studio = $.parseHTML(
+                "<div class='o_content'>" +
+                    "<div class='o_web_studio_client_action'/>" +
+                "</div>"
+            );
+            self.$el.append($studio);
+        });
+    },
+});
+
 return {
     createReportEditor: createReportEditor,
     createReportEditorManager: createReportEditorManager,
     createSidebar: createSidebar,
+    createViewEditorManager: createViewEditorManager,
     getReportHTML: getReportHTML,
     getReportViews: getReportViews,
 };
