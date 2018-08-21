@@ -239,7 +239,7 @@ var ClientAction = AbstractAction.extend({
             var initialLine = this._getLines(this.initialState)[i];
             for (var j = 0; j < writeableFields.length; j++) {
                 var writeableField = writeableFields[j];
-                if (initialLine[writeableField] !== currentLine[writeableField] ) {
+                if (!_.isEqual(utils.into(initialLine, writeableField), utils.into(currentLine, writeableField))) {
                     modifiedMovelines.push(currentLine);
                     break;
                 }
