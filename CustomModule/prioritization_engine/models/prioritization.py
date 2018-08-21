@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #from addons.sale.models.sale import SaleOrder
-
 from odoo import models, fields, api,_
 from odoo.exceptions import UserError, AccessError
 import logging
-from datetime import date
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
+from operator import attrgetter
 
 
 _logger = logging.getLogger(__name__)
@@ -43,112 +42,6 @@ class Customer(models.Model):
        ('email', 'E Mail'),
        ('both', 'E Mail & Mail ')], string='Preferred Invoice Delivery Method')
 
-    # Return Customer prioritization setting ON(True)/OFF(False).
-    def get_prioritization_setting(self):
-        return self.prioritization
-
-    # Return product minimum threshold return type Integer
-    def get_product_min_threshold(self):
-        return self.threshold_min
-
-    # Return product maximum threshold return type Integer
-    def get_product_max_threshold(self):
-        return self.threshold_max
-
-    # Return product priority threshold return type Integer
-    def get_product_priority(self):
-        return self.priority
-
-    # Return cooling period in days return type Integer
-    def get_cooling_period(self):
-        return self.cooling_period
-
-    # Return Allow Auto Allocation? True/ False
-    def is_auto_allocate(self):
-        return self.auto_allocate
-
-    # Return Length Of Hold in hours return type Integer
-    def get_length_of_hold(self):
-        return self.length_of_hold
-
-    # Return Expiration Tolerance in months return type Integer
-    def get_expiration_tolerance(self):
-        return self.expiration_tolerance
-
-    # Return partial_ordering? True/ False
-    def is_partial_ordering(self):
-        return self.partial_ordering
-
-    # Return Allow Partial UOM? True/ False
-    def is_allow_partial_uom(self):
-        return self.partial_UOM
-
-    # Return GL Account return type character
-    def get_gl_account(self):
-        return self.gl_account
-
-    # Return On Hold? True/ False
-    def is_on_hold(self):
-        return self.on_hold
-
-    # Return Is a Broker? True/ False
-    def is_is_broker(self):
-        return self.is_broker
-
-    # Return Having Carrier? True/ False
-    def is_having_carrier(self):
-        return self.having_carrier
-
-    # Return Carrier Account No return type character
-    def get_carrier_acc_no(self):
-        return self.carrier_acc_no
-
-    # Return Carrier Information return type character
-    def get_carrier_info(self):
-        return self.carrier_info
-
-    # Return Quickbook Id return type character
-    def get_quickbook_id(self):
-        return self.quickbook_id
-
-    # Return notification_email return type character
-    def get_notification_email(self):
-        return self.notification_email
-
-    # calculate cooling period
-    def calculate_cooling_priod_in_days(self, confirmation_date):
-        # get current datetime
-        current_datetime = datetime.datetime.now()
-
-        # calculate datetime difference.
-        duration = current_datetime - confirmation_date  # For build-in functions
-        duration_in_seconds = duration.total_seconds()  # Total number of seconds between dates
-        duration_in_hours = duration_in_seconds / 3600  # Total number of hours between dates
-        duration_in_days = duration_in_hours / 24
-        print("duration_in_days is " + str(duration_in_days))
-        if int(self.get_cooling_period()) < int(duration_in_days):
-            return True
-        else:
-            return False
-
-
-    #parameter user id and product id
-    def get_product_last_purchased_date(self):
-        _logger.info("In get_product_last_purchased_date()")
-        sale_orders_line = self.env['sale.order.line'].search([('product_id', '=', 33)])
-
-        sorted_sale_orders_line = sorted([line for line in sale_orders_line if line.order_id.confirmation_date], key=Customer._sort_by_confirmation_date, reverse=True)
-
-        sorted_sale_orders_line.pop(1) #get only first record
-        _logger.info("^^^^"+ str(sorted_sale_orders_line.order_id) + str(sorted_sale_orders_line.order_id.confirmation_date) + str(sorted_sale_orders_line.product_id))
-        self.calculate_cooling_priod_in_days(sorted_sale_orders_line.order_id.confirmation_date)
-
-    @staticmethod
-    def _sort_by_confirmation_date(sale_order_dict):
-        if sale_order_dict.order_id.confirmation_date:
-            return datetime.strptime(sale_order_dict.order_id.confirmation_date, '%Y-%m-%d %H:%M:%S')
-
-
     @api.multi
     def bulk_verify(self,arg):
         #action = self.env.ref('prioritization_engine.action_sps_transient').read()[0]
@@ -180,7 +73,6 @@ class ProductTemplate(models.Model):
     location = fields.Char("Location")
     class_code = fields.Char("Class Code")
     premium = fields.Boolean("Premium")
-
 
 class NotificationSetting(models.Model):
     _inherit = 'res.partner'
@@ -217,9 +109,72 @@ class Prioritization(models.Model):
         ('prioritization_engine_company_uniq', 'unique(customer_id,product_id)', 'Product must be unique for customer!!!!'),
     ]
 
-    def get_product_last_purchased_date1(self):
-        _logger.info("In get_product_last_purchased_date()")
-        sale_orders_line = self.env['sale.order.line'].search([('product_id', '=', self.product_id)])
+    # Get Customer Requests
+    def get_customer_requests(self):
+        sps_customer_requests = self.env['sps.customer.requests'].search([('status','in',('Inprocess','Incomplete','Partial','Unprocessed','InCoolingPeriod','New'))])
+
+        customer_product_priority_list = []
+
+        for customer_request in sps_customer_requests:
+            _logger.info("\n------------------New Customer Record---------------------"+ str(customer_request.customer_id))
+
+            # check customer prioritization setting True/False
+            res_partner = self.env['res.partner'].search([('id','=', customer_request.customer_id)])
+            _logger.info("res_partner.id(customer_id) : " + str(res_partner.id) + " prioritization_setting_flag : " + str(res_partner.prioritization))
+
+            if res_partner.prioritization is True:
+                _logger.info("\nProceed.....Customer prioritization setting is True.")
+                # Check product level setting or global level setting
+                self.check_product_level_setting(customer_request,customer_product_priority_list)
+            else:
+                _logger.info("\nUnable to process because Customer prioritization setting is False.")
+
+        # sort customer product by product/customer priority
+        self.sort_product_by_priority(customer_product_priority_list)
+
+
+    # Check product level setting or global level setting
+    def check_product_level_setting(self, customer_request, customer_product_priority_list):
+        # To check customer level setting
+        customer_level_setting = self.env['prioritization_engine.prioritization'].search(
+            [('customer_id', '=',customer_request.customer_id),('product_id', '=', customer_request.product_id)])
+
+        if len(customer_level_setting) == 1:
+            _logger.info(str(customer_level_setting.product_id) + ' is available in prioritization_engine_prioritization'+ str(customer_request.quantity))
+            customer_product_priority_list.append(CustomerProductSetting(customer_level_setting.customer_id,
+                                                                         customer_level_setting.product_id,
+                                                                         customer_level_setting.priority,
+                                                                         customer_level_setting.auto_allocate,
+                                                                         customer_level_setting.cooling_period,
+                                                                         customer_level_setting.length_of_hold,
+                                                                         customer_level_setting.partial_ordering,
+                                                                         customer_level_setting.expiration_tolerance,
+                                                                         customer_request.quantity))
+
+        else:
+            global_level_setting = self.env['res.partner'].search(
+                [('id', '=', customer_request.customer_id)])
+            if len(global_level_setting) == 1:
+                _logger.info(str(customer_level_setting.product_id) + ' is available in res.partner')
+                customer_product_priority_list.append(CustomerProductSetting(global_level_setting.id,
+                                                                             customer_request.product_id,
+                                                                             global_level_setting.priority,
+                                                                             global_level_setting.auto_allocate,
+                                                                             global_level_setting.cooling_period,
+                                                                             global_level_setting.length_of_hold,
+                                                                             global_level_setting.partial_ordering,
+                                                                             global_level_setting.expiration_tolerance,
+                                                                             customer_request.quantity))
+
+
+    # sort customer product by product/customer priority
+    def sort_product_by_priority(self,customer_product_priority_list):
+        customer_product_priority_list.sort(key=attrgetter('product_priority'))
+        #_logger.info("customer_product_priority_list : %r" + str(customer_product_priority_list))
+        for customer_product_priority in customer_product_priority_list:
+            _logger.info("***** customer id : " + str(customer_product_priority.customer_id) + " Product id : " + str(customer_product_priority.product_id)
+                         + " product priority" + str(customer_product_priority.product_priority))
+
     # calculate cooling period
     def calculate_cooling_priod_in_days(self, confirmation_date, request_id):
         # get current datetime
@@ -233,11 +188,11 @@ class Prioritization(models.Model):
         _logger.info("duration_in_days is " + str(duration_in_days))
         if int(self.get_cooling_period()) < int(duration_in_days):
             # update status In Process
-            self.env['sps.customer.requests'].write(dict(status='InProcess')).search([('id', '=', request_id)])
+            self.env['sps.customer.requests'].search([('id', '=', request_id)]).write(dict(status='InProcess'))
             return True
         else:
             # update status In cooling period
-            self.env['sps.customer.requests'].write(dict(status='InCoolingPeriod')).search([('id', '=', request_id)])
+            self.env['sps.customer.requests'].search([('id', '=', request_id)]).write(dict(status='InCoolingPeriod'))
             return False
 
     # calculate length of hold(In hours)
@@ -252,76 +207,37 @@ class Prioritization(models.Model):
         print("duration_in_hours is " + str(duration_in_hours))
         if int(self.get_length_of_hold()) < int(duration_in_hours):
             # update status In Process
-            self.env['sps.customer.requests'].write(dict(status='InProcess')).search([('id', '=', request_id)])
+            self.env['sps.customer.requests'].search([('id', '=', request_id)]).write(dict(status='InProcess'))
             return True
         else:
             # update status In Process
-            self.env['sps.customer.requests'].write(dict(status='Unprocessed')).search([('id', '=', request_id)])
+            self.env['sps.customer.requests'].search([('id', '=', request_id)]).write(dict(status='Unprocessed'))
             return False
 
     # Check Expiration Tolerance in months(3/6/12)
     def check_product_expiration_tolerance(self, product_id,request_id):
         # get current datetime
-        expiration_tolerance_date = date.today() + relativedelta(months=+int(self.get_expiration_tolerance()))
+        expiration_tolerance_date = datetime.today() + relativedelta(months=+int(self.get_expiration_tolerance()))
         # use_date = product expiry date
-        stock_production_lot = self.env['stock.production.lot'].search(
-            [('product_id', '=', product_id), ('use_date', '>=', expiration_tolerance_date)])
+        # check lot quantity is greater than zero(0)
+        stock_production_lot_quantity = self.env['stock.quant'].search(
+            [('product_id', '=', 19), ('quantity', '>', 0), ('lot_id.use_date', '>=', str(expiration_tolerance_date))])
 
-        if len(stock_production_lot):
+        _logger.info("stock_production_quantity : " + str(stock_production_lot_quantity.product_id) + "  " + str(
+            stock_production_lot_quantity.lot_id.use_date) + "  " +
+                     str(stock_production_lot_quantity.lot_id.name) + "  " + str(
+            stock_production_lot_quantity.quantity))
+
+        if len(stock_production_lot_quantity) > 0:
             _logger.info("stock available")
             # update status In Process
-            self.env['sps.customer.requests'].write(dict(status='InProcess')).search([('id', '=', request_id)])
+            self.env['sps.customer.requests'].search([('id', '=', request_id)]).write(dict(status='InProcess'))
             return True
         else:
             _logger.info("out of stock")
             # update status In Process
-            self.env['sps.customer.requests'].write(dict(status='Unprocessed')).search([('id', '=', request_id)])
+            self.env['sps.customer.requests'].search([('id', '=', request_id)]).write(dict(status='Unprocessed'))
             return False
-
-
-    # Return product threshold return type Integer
-    def get_product_threshold(self):
-        return self.threshold
-
-    # Return product priority threshold return type Integer
-    def get_product_priority(self):
-        return self.priority
-
-    # Return cooling period in days return type Integer
-    def get_cooling_period(self):
-        return self.cooling_period
-
-    # Return Allow Auto Allocation? True/ False
-    def is_auto_allocate(self):
-        return self.auto_allocate
-
-    # Return Length Of Hold in hours return type Integer
-    def get_length_of_hold(self):
-        return self.length_of_hold
-
-    # Return Expiration Tolerance in months return type Integer
-    def get_expiration_tolerance(self):
-        return self.expiration_tolerance
-
-    # Return partial_ordering? True/ False
-    def is_partial_ordering(self):
-        return self.partial_ordering
-
-    # Return Allow Partial UOM? True/ False
-    def is_allow_partial_uom(self):
-        return self.partial_UOM
-
-    # Return customer id return type Integer
-    def get_customer_id(self):
-        return self.customer_id
-
-    # Return product id return type Integer
-    def get_product_id(self):
-        return self.product_id
-
-    # Return sales_channel return type Integer
-    def get_sales_channel(self):
-        return self.sales_channel
 
     # parameter product id
     def get_product_last_purchased_date(self, product_id):
@@ -362,7 +278,6 @@ class Prioritization(models.Model):
         formatted_date = date.replace("-", ",").replace(" ", ",").replace(":", ",")
         return formatted_date
 
-
 class PrioritizationTransient(models.TransientModel):
     _name = 'prioritization.transient'
     threshold = fields.Integer("Product Threshold")
@@ -382,3 +297,18 @@ class PrioritizationTransient(models.TransientModel):
                         'expiration_tolerance': self.expiration_tolerance,'partial_ordering': self.partial_ordering,'partial_UOM': self.partial_UOM,
                         'length_of_hold': self.length_of_hold})
         return {'type': 'ir.actions.act_close_wizard_and_reload_view'}
+
+class CustomerProductSetting:
+    def __init__(self, customer_id, product_id, product_priority, auto_allocate, cooling_period, length_of_hold, partial_order, expiration_tolerance, product_quantity):
+        self.customer_id = customer_id
+        self.product_id = product_id
+        self.product_priority = product_priority
+        self.auto_allocate = auto_allocate
+        self.cooling_period = cooling_period
+        #self.last_purchased_date = last_purchased_date
+        self.length_of_hold = length_of_hold
+        self.partial_order = partial_order
+        self.expiration_tolerance = expiration_tolerance
+        self.product_quantity = product_quantity
+
+

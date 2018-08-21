@@ -1,11 +1,11 @@
 <odoo>
 
     <report id="action_todo_model_report"
-            string="Purchase History"
-            model="purchase.history.cust"
+            string="Lot History"
+            model="lot_history.lot_history"
             report_type="qweb-html"
-            file="purchase_history_custome.purchase_report"
-            name="purchase_history_custome.purchase_report"
+            file="lot_history.purchase_report"
+            name="lot_history.purchase_report"
     />
 
     <template id="purchase_report">
@@ -20,7 +20,7 @@
                                 <h4>Surgical Product Solutions</h4>
                             </b>
                             <b>
-                                <h2>Purchase History Report Of Product</h2>
+                                <h2>Lot History Report Of Product</h2>
                             </b>
                         </center>
                         <center>
@@ -33,14 +33,14 @@
                         <!-- Report page content -->
                         <table class="table table-condensed" style="border: 1px solid black;">
                             <tr>
-                                <th>Customer</th>
-                                <th>Manufacturer</th>
-                                <th>Product</th>
-                                <th>Product Description</th>
-                                <th>Qty</th>
-                                <th>Price Per Stock</th>
-                                <th>Min Exp Date</th>
-                                <th>Max Exp Date</th>
+                                <th>Lot</th>
+                                <th>Product Number</th>
+                                <th>Description</th>
+                                <th>Product Type</th>
+                                <th>Creation date</th>
+                                <th>Vendor</th>
+                                <th>Phone</th>
+                                <th>Email</th>
                             </tr>
 
                             <t t-foreach="data.keys()" t-as="user">
@@ -50,27 +50,28 @@
                                             <span t-esc="o[0]"/>
                                         </td>
                                         <td class="col-xs-2">
-                                            <span t-esc="o[5]"/>
+                                            <span t-esc="o[0]"/>
                                         </td>
                                         <td class="col-xs-2">
-                                            <span t-esc="o[1]"/>
+                                            <span t-esc="o[2]"/>
                                         </td>
                                         <td class="col-xs-2">
-                                            <span t-esc="o[9]"/>
+                                            <span t-esc="o[3]"/>
+                                        </td>
+                                        <td class="col-xs-2">
+                                            <span t-esc="o[7]"/>
                                         </td>
                                         <td class="col-xs-2">
                                             <span t-esc="o[4]"/>
                                         </td>
+                                         <td class="col-xs-2">
+                                            <span t-esc="o[5]"/>
+                                        </td>
                                         <td class="col-xs-2">
-                                            $
                                             <span t-esc="o[6]"/>
                                         </td>
-                                        <!--<td class="col-xs-2">-->
-                                            <!--<span t-esc="o[10]"/>-->
-                                        <!--</td>-->
-                                        <!--<td class="col-xs-2">-->
-                                            <!--<span t-esc="o[11]"/>-->
-                                        <!--</td>-->
+
+
                                     </tr>
                                 </t>
                             </t>

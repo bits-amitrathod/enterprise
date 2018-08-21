@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Customer Requests",
+    'name': "lot_history",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -10,8 +10,8 @@
         Long description of module's purpose
     """,
 
-    'author': "Manohar",
-    'website': "http://www.benchmarkitsolutions.com",
+    'author': "My Company",
+    'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
@@ -20,24 +20,20 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'fetchmail', 'sale', 'sps'],
+    'depends': ['base','stock'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
+        'reports/todo_task_report.xml',
         'views/templates.xml',
     ],
-
-    'qweb': [
-         'static/src/xml/template_import.xml'
+    # only loaded in demonstration mode
+    'demo': [
+        'demo/demo.xml',
     ],
-
-    'js': [
-         'static/src/js/base_import.js'
-    ],
-
-    'application' : True,
-    'installable' : True,
-    'auto_install' : True
+    'installable': True,
+    'auto_install': True,
+    'application': True,
 }
