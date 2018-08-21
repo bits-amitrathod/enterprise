@@ -66,13 +66,12 @@ class Customer(models.Model):
         return action
 
 class ProductTemplate(models.Model):
+
     _inherit = 'product.template'
-    tier = fields.Selection([
-        ('1', 'I'),
-        ('2', 'II')], string='TIER Type')
     location = fields.Char("Location")
-    class_code = fields.Char("Class Code")
     premium = fields.Boolean("Premium")
+    sku_code = fields.Char('SKU / Catalog No')
+
 
 class NotificationSetting(models.Model):
     _inherit = 'res.partner'
@@ -91,7 +90,7 @@ class NotificationSetting(models.Model):
 class Prioritization(models.Model):
     _name = 'prioritization_engine.prioritization'
     _inherits = {'product.product':'product_id'}
-    sps_sku = fields.Char("SPS SKU",readonly=False)
+    #sps_sku = fields.Char("SPS SKU",readonly=False)
     threshold = fields.Integer("Product Threshold",readonly=False)
     priority = fields.Integer("Product Priority",readonly=False)
     cooling_period = fields.Integer("Cooling Period in days",readonly=False)
