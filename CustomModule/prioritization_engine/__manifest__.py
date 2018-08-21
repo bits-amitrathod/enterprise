@@ -20,11 +20,9 @@
 
     # any module necessary for this one to work correctly
 
-<<<<<<< HEAD
-    'depends': ['base','product','product_manufacturer','sale_management','stock','stock','web_one2many_selectable'],
-=======
+
+
     'depends': ['base','product','product_manufacturer','sale_management','stock','web_one2many_selectable'],
->>>>>>> a0f42ba7747bb5d6218e74013a790d868f19cacf
 
     # always loaded
     'data': [
