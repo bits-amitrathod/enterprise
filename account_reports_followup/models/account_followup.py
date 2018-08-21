@@ -102,9 +102,6 @@ class ResPartner(models.Model):
         """
         followup_id = 'followup_id' in self.env.context and self.env.context['followup_id'] or self.env['account_followup.followup'].search([('company_id', '=', self.env.user.company_id.id)]).id
         if not followup_id:
-            raise Warning(_('No follow-up is defined for the company "%s".\n Please define one.') % self.env.user.company_id.name)
-
-        if not followup_id:
             return {}
 
         current_date = datetime.date.today()

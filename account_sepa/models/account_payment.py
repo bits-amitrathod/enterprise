@@ -27,6 +27,18 @@ class AccountRegisterPayments(models.TransientModel):
             res.update({'partner_bank_account_id': self.partner_bank_account_id.id})
         return res
 
+    @api.onchange('payment_method_id')
+    def _onchange_payment_method_id(self):
+        if self.payment_method_id == self.env.ref('account_sepa.account_payment_method_sepa_ct'):
+            if self._context.get('active_model') == 'account.invoice':
+                invoice_ids = self._context.get('active_ids', [])
+                partners = self.env['account.invoice'].browse(invoice_ids).mapped('partner_id')
+
+                return {'domain':
+                        {'partner_bank_account_id': [('partner_id', 'in', partners.ids + partners.mapped('commercial_partner_id').ids)]}
+                }
+
+
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 

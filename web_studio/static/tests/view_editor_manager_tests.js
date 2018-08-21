@@ -1259,6 +1259,128 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('kanban editor add priority', function (assert) {
+        assert.expect(3);
+        var arch = "<kanban>" +
+                    "<templates>" +
+                        "<t t-name='kanban-box'>" +
+                            "<div class='o_kanban_record'>" +
+                                "<field name='display_name'/>" +
+                            "</div>" +
+                        "</t>" +
+                    "</templates>" +
+                "</kanban>";
+        var fieldsView;
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    assert.deepEqual(args.operations[0], {
+                        field: 'priority',
+                        type: 'kanban_priority',
+                    }, "Proper field name and operation type should be passed");
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            kanban: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_kanban_record .o_web_studio_add_priority').length, 1,
+            "there should be the hook for priority");
+        // click the 'Add a priority' link
+        vem.$('.o_kanban_record .o_web_studio_add_priority').click();
+        assert.strictEqual($('.modal .modal-body select > option[value="priority"]').length, 1,
+            "there should be 'Priority' option with proper value set in Field selection drop-down ");
+        // select priority field from the drop-down
+        $('.modal .modal-body select > option[value="priority"]').prop('selected', true);
+        // Click 'Confirm' Button
+        $('.modal .modal-footer .btn-primary').click();
+
+        vem.destroy();
+    });
+
+    QUnit.test('kanban editor add image', function (assert) {
+        assert.expect(3);
+        // We have to add relational model specifically named 'res.parter' or
+        // 'res.users' because it is hard-coded in the kanban record editor.
+        this.data['res.partner'] = {
+            fields: {
+                display_name: {type: "char", string: "Display Name"},
+                image: {type: "binary", string: "Image"},
+            },
+            records: [{id: 1, display_name: 'Dustin', image:'D Artagnan'}],
+        };
+
+        this.data.coucou.fields.partner_id = {string: 'Res Partner', type: 'many2one', relation: 'res.partner'};
+        this.data.coucou.records = [{id: 1, display_name:'Eleven', partner_id: 1}];
+
+
+        var arch = "<kanban>" +
+                    "<templates>" +
+                        "<t t-name='kanban-box'>" +
+                            "<div class='o_kanban_record'>" +
+                                "<field name='display_name'/>" +
+                            "</div>" +
+                        "</t>" +
+                    "</templates>" +
+                "</kanban>";
+        var fieldsView;
+
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    assert.deepEqual(args.operations[0], {
+                        field: 'partner_id',
+                        type: 'kanban_image',
+                    }, "Proper field name and operation type should be passed");
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            kanban: fieldsView,
+                        }
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        fieldsView = $.extend(true, {}, vem.fields_view);
+
+        assert.strictEqual(vem.$('.o_kanban_record .o_web_studio_add_kanban_image').length, 1,
+            "there should be the hook for Image");
+        // click the 'Add a Image' link
+        vem.$('.o_kanban_record .o_web_studio_add_kanban_image').click();
+        assert.strictEqual($('.modal .modal-body select > option[value="partner_id"]').length, 1,
+            "there should be 'Res Partner' option with proper value set in Field selection drop-down ");
+        // Click 'Confirm' Button
+        $('.modal .modal-footer .btn-primary').click();
+
+        vem.destroy();
+    });
+
     QUnit.test('kanban editor with widget', function(assert) {
         assert.expect(4);
 

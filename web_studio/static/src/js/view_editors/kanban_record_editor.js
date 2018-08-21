@@ -362,10 +362,14 @@ var NewKanbanHelperDialog = Dialog.extend({
      * @param {Boolean} show_new
      */
     init: function (parent, fields, show_new) {
-
-        this.fields = fields;
-        this.orderered_fields = _.sortBy(this.fields, 'string');
-
+        // set the field name because they key will be lost when sorting dict
+        this.orderered_fields = _.sortBy(
+            _.mapObject(fields, function (attrs, fieldName) {
+                return {
+                    name: fieldName,
+                    string: attrs.string
+                };
+            }), 'string');
         this.show_new = show_new;
         this.debug = config.debug;
 

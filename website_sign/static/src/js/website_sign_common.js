@@ -39,15 +39,17 @@ odoo.define('website_sign.PDFIframe', function (require) {
 
         start: function() {
             this.$iframe = this.$el; // this.$el will be changed to the iframe html tag once loaded
-
+            var self = this;
             this.pdfView = (this.$iframe.attr('readonly') === "readonly");
             this.readonlyFields = this.pdfView || this.editMode;
 
             var viewerURL = "/web/static/lib/pdfjs/web/viewer.html?file=";
             viewerURL += encodeURIComponent(this.attachmentLocation).replace(/'/g,"%27").replace(/"/g,"%22") + "#page=1&zoom=page-width";
+            this.$iframe.load(function() {
+                self.waitForPDF();
+            });
             this.$iframe.attr('src', viewerURL);
 
-            this.waitForPDF();
             return $.when(this._super(), this.fullyLoaded);
         },
 

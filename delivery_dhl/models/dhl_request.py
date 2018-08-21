@@ -34,7 +34,7 @@ class DHLProvider():
             'recipient_partner': order.partner_shipping_id,
             'total_weight': total_weight,
             'currency_name': order.currency_id.name,
-            'total_value': sum([(line.price_unit * line.product_uom_qty) for line in order.order_line.filtered(lambda line: not line.is_delivery)]) or 0,
+            'total_value': str(sum([(line.price_unit * line.product_uom_qty) for line in order.order_line.filtered(lambda line: not line.is_delivery)])),
             'is_dutiable': carrier.dhl_dutiable,
             'package_ids': False,
         }
@@ -269,7 +269,7 @@ class DHLProvider():
         if param["is_dutiable"]:
             dutiable_node = etree.SubElement(get_quote_node, "Dutiable")
             etree.SubElement(dutiable_node, "DeclaredCurrency").text = param["currency_name"]
-            etree.SubElement(dutiable_node, "DeclaredValue").text = str(round(param["total_value"], 2))
+            etree.SubElement(dutiable_node, "DeclaredValue").text = param["total_value"]
         return etree.tostring(root)
 
     def _create_shipping_xml(self, param):
