@@ -76,13 +76,15 @@ var ReportEditor = Widget.extend(EditorMixin, {
             var inSelectors = dropIn.split(',');
             _.each(inSelectors, function (selector) {
                 var $target = self.$content.find(selector + "[data-oe-xpath]");
-                if (!$target.data('node')) {
-                    // this is probably a template not present in reportViews
-                    // TODO: should the corresponding view be branded
-                    // (server-side) in this case?
-                    return;
-                }
                 _.each($target, function (node) {
+                    if (!$(node).data('node')) {
+                        // this is probably a template not present in
+                        // reportViews so no hook should be attached to it
+                        // TODO: should the corresponding view be branded
+                        // (server-side) in this case (there won't be any
+                        // data-oe-xpath then)?
+                        return;
+                    }
                     self._createHookOnNodeAndChildren($(node), component);
                 });
             });
@@ -377,13 +379,14 @@ var ReportEditor = Widget.extend(EditorMixin, {
     // Private
     //--------------------------------------------------------------------------
     /**
-     * create hook on target and compute its size
-     * @param {JQElem} $node  the node from the dom of the report that should be hooked onto
-     * @param {Object} component the component from the sidebar currently being dragged
+     * Create hook on target and compute its size.
+     *
+     * @private
+     * @param {jQuery} $node report dom node that should be hooked onto
+     * @param {Object} sidebar component currently being dragged
      */
     _createHookOnNodeAndChildren: function ($node, component) {
-        var self = this;
-        var $hook = self._createHook($(this), component);
+        var $hook = this._createHook($node, component);
         var $newHook = $hook.clone();
         var $children = $node.children().not('.o_web_studio_hook');
         // display the hook with max height of this sibling

@@ -729,8 +729,8 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
-    QUnit.skip('drag & drop field in row', loadIframeCss(function(assert, done) {
-        assert.expect(7);
+    QUnit.test('drag & drop field in row', loadIframeCss(function (assert, done) {
+        assert.expect(6); // 2 asserts by test
 
         this.templates.push({
             key: 'template1',
@@ -792,7 +792,7 @@ QUnit.module('ReportEditorManager', {
             },
         });
 
-        var testIndex = 0;
+        // create multiple tests to avoid duplicating very similar tests
         var tests = [
             {
                 text: "Should select the hook next to the span",
@@ -829,19 +829,17 @@ QUnit.module('ReportEditorManager', {
                 }],
             },
         ];
+        var testIndex = 0;
 
         rem.editorIframeDef.then(function () {
             rem.$('.o_web_studio_sidebar .o_web_studio_sidebar_header div[name="new"]').click();
 
-            assert.strictEqual($('.o_web_studio_field_modal').length, 0,
-                "there should be no opened modal");
-
-            // drag and drop a Text component, which should trigger a view edition
             var $field = rem.$('.o_web_studio_sidebar .o_web_studio_component:contains(Field)');
 
             for (testIndex; testIndex < tests.length; testIndex++) {
                 var test = tests[testIndex];
                 var $target = rem.$('iframe').contents().find(test.selector);
+                // drag and drop a Field component, which should trigger a view edition
                 testUtils.dragAndDrop($field, $target, {position: test.position});
                 var $nearestHook = rem.$('iframe').contents().find('.o_web_studio_nearest_hook');
                 assert.strictEqual($nearestHook.length, test.nearestHookNumber, test.text + ' (nearestHook number)');
