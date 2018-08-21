@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "vendor_offer",
+    'name': "Vendor Offer",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -32,7 +32,7 @@
     'demo': [
         'demo/demo.xml',
     ],
-    'application': True,
+    'application' :True,
     'auto-install': True,
     'installable': True,
 }

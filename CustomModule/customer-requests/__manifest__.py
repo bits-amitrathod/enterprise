@@ -11,7 +11,7 @@
     """,
 
     'author': "Manohar",
-    'website': "http://www.yourcompany.com",
+    'website': "http://www.benchmarkitsolutions.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'fetchmail', 'sale'],
+    'depends': ['base', 'fetchmail', 'sale', 'prioritization_engine'],
 
     # always loaded
     'data': [
@@ -28,6 +28,15 @@
         'views/views.xml',
         'views/templates.xml',
     ],
+
+    'qweb': [
+         'static/src/xml/template_import.xml'
+    ],
+
+    'js': [
+         'static/src/js/base_import.js'
+    ],
+
     'application' : True,
     'installable' : True,
     'auto_install' : True
