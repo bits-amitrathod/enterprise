@@ -210,7 +210,13 @@ var ViewEditorManager = Widget.extend({
                 this.view_id,
                 this.studio_view_arch,
                 _.filter(this.operations, function (el) {return el.type !== 'replace_arch'; })
-            ));
+            )).fail(function () {
+                // the operation can't be applied
+                self.trigger_up('studio_error', {error: 'wrong_xpath'});
+                return self.undo(true).then(function () {
+                    return $.Deferred().reject();
+                });
+            });
         }
         return def.then(function (result) {
             if (!result.fields_views) {

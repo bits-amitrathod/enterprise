@@ -1015,6 +1015,11 @@ class WebStudioController(http.Controller):
                 group_xmlid = ir_model_data.search([
                     ('model', '=', 'res.groups'),
                     ('res_id', '=', many2many_value)])
+                if not group_xmlid:
+                    raise UserError(_(
+                        "Only groups with an external ID can be used here. Please choose another " +
+                        "group or assign manually an external ID to this group."
+                    ))
                 eval_attr.append(group_xmlid.complete_name)
             eval_attr = ",".join(eval_attr)
             new_attrs['groups'] = eval_attr
