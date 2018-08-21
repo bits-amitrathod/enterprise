@@ -32,5 +32,8 @@ class ReportSalesSalespersonWise(models.AbstractModel):
             'doc_ids': data.get('ids'),
             'doc_model': data.get('model'),
             'data': data['form'],
-
+            'current_start_date': data['current_start_date'],
+            'current_end_date': data['current_end_date'],
+            'last_start_date': data['last_start_date'],
+            'last_end_date': data['last_end_date'],
         }

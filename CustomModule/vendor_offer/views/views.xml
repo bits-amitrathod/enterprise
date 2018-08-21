@@ -117,7 +117,7 @@
                     <button name="action_print_vendor_offer" string="Print Vendor Offer" type="object"  class="btn-primary"/>
                     <button name="action_confirm_vendor_offer" string="Confirm Order" type="object"  />
                     <button name="action_cancel_vendor_offer" string="Cancel" type="object"  />
-                     <field name="state" widget="statusbar" statusbar_visible="ven_draft,ven_sent,purchase" readonly="1"  />
+                     <field name="state" widget="statusbar" statusbar_visible="draft,ven_draft,ven_sent,purchase" readonly="1"  />
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -159,8 +159,9 @@
                                                 <group>
                                                     <group>
                                                          <field name="product_id" />
-                                                         <field name="manufacturer" />
-                                                         <field name="name" />
+                                                         <field name="sku_code"  readonly="True"/>
+                                                         <field name="manufacturer"  readonly="True"/>
+                                                         <field name="name"  invisible="1"  />
                                                          <field name="product_tier" />
                                                          <field name="prod_qty" />
                                                          <field name="expiration_date" />
@@ -186,8 +187,9 @@
                                 <tree   >
                                                          <field name="currency_id" invisible="1"/>
                                                          <field name="product_id" />
-                                                         <field name="manufacturer" />
-                                                         <field name="name" />
+                                                         <field name="sku_code"  readonly="True"/>
+                                                         <field name="manufacturer"  readonly="True" />
+                                                         <!--<field name="name" />-->
                                                          <field name="product_tier" />
                                                          <field name="prod_qty" />
                                                          <field name="expiration_date" />
@@ -197,7 +199,7 @@
                                                          <field name="product_sales_count_90" />
                                                          <field name="product_sales_count_yrs" />
                                                          <field name="expired_inventory" />
-                                                         <field name="premium" />
+                                                         <!--<field name="premium" />-->
                                                          <field name="price_unit" String="Retail" />
                                                          <field name="offer_price" />
                                                          <field name="margin" />

@@ -22,6 +22,9 @@
 from odoo import api, fields, models
 import datetime
 import logging
+import operator
+
+from odoo.fields import Field
 
 log = logging.getLogger(__name__)
 
@@ -78,13 +81,13 @@ class SaleSalespersonReport(models.TransientModel):
         sale_orders = self.env['sale.order'].search([])
         groupby_dict = {}
 
-        s_date = (datetime.datetime.now()-datetime.timedelta(days=30))
-        l_date = (datetime.datetime.now())
-        filtered_by_current_month = list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= s_date and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= l_date ,sale_orders))
+        s_date = (fields.date.today()-datetime.timedelta(days=30))
+        l_date = (fields.date.today())
+        filtered_by_current_month = list(filter(lambda x:fields.Datetime.from_string(x.date_order).date() >= s_date and fields.Datetime.from_string(x.date_order).date() <= l_date ,sale_orders))
 
-        ps_date = (datetime.datetime.now() - datetime.timedelta(days=60))
-        pl_date = (datetime.datetime.now() - datetime.timedelta(days=31))
-        filtered_by_last_month = list(filter(lambda x: datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") >= ps_date and datetime.datetime.strptime(x.date_order, "%Y-%m-%d %H:%M:%S") <= pl_date ,sale_orders))
+        ps_date = (fields.date.today() - datetime.timedelta(days=60))
+        pl_date = (fields.date.today() - datetime.timedelta(days=31))
+        filtered_by_last_month = list(filter(lambda x: fields.Datetime.from_string(x.date_order).date() >= ps_date and fields.Datetime.from_string(x.date_order).date() <= pl_date ,sale_orders))
         dat = comparebymonth().addObject(filtered_by_current_month,filtered_by_last_month)
         groupby_dict['data'] = dat
         final_dict = {}
@@ -96,12 +99,17 @@ class SaleSalespersonReport(models.TransientModel):
             temp_2.append(order.current_month_total_qty)
             temp_2.append(order.current_month_total_amount)
             temp_2.append(order.last_month_total_qty)
-            temp_2.append(order.last_month_total_amount)
+            temp_2.append(float(order.last_month_total_amount))
             temp.append(temp_2)
             final_dict[user] = temp
+        sort_dict = sorted(final_dict.items(), key=operator.itemgetter(1), reverse=True)
         datas = {
             'ids': self.ids,
             'model': self._module,
             'form': final_dict,
+            'current_start_date':fields.Datetime.from_string(str(s_date)).date().strftime('%m/%d/%Y'),
+            'current_end_date': fields.Datetime.from_string(str(l_date)).date().strftime('%m/%d/%Y'),
+            'last_start_date':fields.Datetime.from_string(str(ps_date)).date().strftime('%m/%d/%Y'),
+            'last_end_date': fields.Datetime.from_string(str(pl_date)).date().strftime('%m/%d/%Y'),
         }
         return self.env.ref('sr_sales_report_compmonth.action_report_sales_compmonth_wise').report_action([],data=datas)

@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Sales Report Discount Summary',
+    'name': 'Discount Summary',
     'category': 'sale',
     'version': '11.0.0.1',
     'summary': 'This module provides Sales Report Discount Summary.',
