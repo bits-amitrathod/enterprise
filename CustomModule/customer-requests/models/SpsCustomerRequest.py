@@ -7,8 +7,10 @@ class SpsCustomerRequest(models.Model):
 
     _name = 'sps.customer.requests'
 
-    document_id = fields.Integer()
-    product_id = fields.Integer()
+    customer_id = fields.Many2one('res.partner', string='Customer', required=True)
+    document_id = fields.Many2one('sps.cust.uploaded.documents', string='Document', required=True)
+    product_id = fields.Many2one('sps.product', string='Product', required=False, default=0)
+
     contact_id = fields.Integer()
     vendor_pricing = fields.Char()
     quantity = fields.Integer()
@@ -19,4 +21,4 @@ class SpsCustomerRequest(models.Model):
     sps_sku = fields.Char()
     uom = fields.Char()
     status = fields.Char()
-    customer_id = fields.Integer()
+    un_mapped_data = fields.Text()

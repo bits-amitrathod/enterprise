@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="discountsummary_temp">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <page>
+                    <div class="oe_structure"/>
+                    <div class="row">
+                    <center>
+                        <b>
+                            <h4>Sales Report Discount Summary</h4>
+                        </b>
+                    </center>
+                    <center>
+                    </center>
+                    </div>
+                    <br/>
+                    <table class="table table-condensed" style="border: 1px solid black;">
+                            <thead>
+                                <tr style="border: 1px solid black;">
+                                    <th style="border: 1px solid black;">Order Name </th>
+                                    <th style="border: 1px solid black;">Customer</th>
+                                    <th style="border: 1px solid black;">Confirmation Date</th>
+                                    <th style="border: 1px solid black;">Amount</th>
+                                    <th style="border: 1px solid black;">Discount</th>
+                                    <th style="border: 1px solid black;">Total</th>
+                                </tr>
+
+                                <t t-foreach="data.keys()" t-as="user">
+
+                                    <tr t-foreach="data[user]" t-as="order">
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="order[0]"/>
+                                        </td>
+
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="order[1]"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="order[2]"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            $<span t-esc="order[3]"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            $<span t-esc="order[4]"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            $<span t-esc="order[5]"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </thead>
+                    </table>
+                </page>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="products_item" name="Products item" inherit_id="website_sale.products_item">
+        <xpath expr="//div[@class='product_price']" position="before">
+            <t t-if="isVisibleWebsiteExpirationDate">
+                <div style="padding-bottom: 2px;">
+                    <strong>Expiration :</strong>
+                    <br/>
+                    Min -
+                    <span t-esc="productExpiration[product.id]['min']" t-options="{'widget': 'date'}"/>
+                    <span t-if="productExpiration[product.id]['max'] is None">N/A</span>
+                    <br/>
+                    Max -
+                    <span t-esc="productExpiration[product.id]['max']" t-options="{'widget': 'date'}"/>
+                    <span t-if="productExpiration[product.id]['max'] is None">N/A</span>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.website.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='sale_product_catalog_settings']" position="inside">
+
+                <div class="col-xs-12 col-md-6 o_setting_box" id="product_lot_expiration_date_setting">
+                    <div class="o_setting_left_pane">
+                        <field name="default_website_expiration_date"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="default_website_expiration_date"/>
+                        <div class="text-muted">
+                            Display an product lot expiration minimum &amp; maximum dates
+                        </div>
+                    </div>
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+
+
+    <!--Customer Reference As sales Order-->
+
+    <template id="assets_frontend" inherit_id="web.assets_frontend" name="Website Assets">
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/website_sales/static/src/js/script.js"/>
+        </xpath>
+    </template>
+
+    <template id="customerReferenceSO" name="customerReferenceSO" inherit_id="website_sale.payment">
+        <xpath expr="//div[@id='payment_method']" position="before">
+            <div class="row" id="order_customer_referance_so">
+                <div id="cart_totala" class="col-xs-12 col-sm-5 col-sm-push-7">
+                    <span class="col-xs-6 text-right h5 mt0">Purchase Order:</span>
+                    <span class="col-xs-6 text-right-not-xs text-left-xs h4 mt0" style="white-space: nowrap;">
+                        <input type="text" class="form-control" name="customerReferenceSO"
+                               t-att-value="website_sale_order.client_order_ref"/>
+                    </span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

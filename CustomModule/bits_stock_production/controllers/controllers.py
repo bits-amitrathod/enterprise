@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from odoo import http
-
 # class BitsStockProduction(http.Controller):
 #     @http.route('/bits_stock_production/bits_stock_production/', auth='public')
 #     def index(self, **kw):

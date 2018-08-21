@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_price_list_report_form_view" model="ir.ui.view">
+            <field name="name">product.price.list.report.form.view</field>
+            <field name="model">product.list.report</field>
+            <field name="arch" type="xml">
+                <form string="Product Price List">
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="user_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="print_product_price_list_vise_report" string="Print Report" class="oe_highlight"
+                                type="object"/>
+                        Or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+
+
+            </field>
+        </record>
+
+        <record id="action_product_price_list_wizard" model="ir.actions.act_window">
+            <field name="name">product price list</field>
+            <field name="res_model">product.list.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_sale_report_product_list_wizard"
+                  name="Product Price List"
+                  action="action_product_price_list_wizard"
+                  parent="stock.menu_warehouse_report"
+                  sequence="1"/>
+    </data>
+</odoo>

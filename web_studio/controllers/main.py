@@ -585,7 +585,7 @@ class WebStudioController(http.Controller):
         # Determine whether an operation is associated with
         # the creation of a binary field
         def create_binary_field(op):
-            if op['node'].get('tag') == 'field' and op['node'].get('field_description'):
+            if 'node' in op and op['node'].get('tag') == 'field' and op['node'].get('field_description'):
                 ttype = op['node']['field_description'].get('ttype')
                 is_image = op['node']['attrs'].get('widget') == 'image'
                 return ttype == 'binary' and not is_image
@@ -599,7 +599,7 @@ class WebStudioController(http.Controller):
             filename = op['node']['field_description']['name'] + '_filename'
 
             # Create an operation adding an additional char field
-            char_op = deepcopy(op);
+            char_op = deepcopy(op)
             char_op['node']['field_description'].update({
                 'name': filename,
                 'ttype': 'char',

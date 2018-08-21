@@ -2,9 +2,10 @@
 
 from . import models
 from . import IncomigMailCronModel
-from . import SpsCustomerTemplateMapping
 from . import SpsCustomerUploadedDocument
 from . import SpsCustomerRequest
 from . import SpsProduct
-from . import SpsCustomerTemplateMapper
 from . import SpsCustomerProductPriority
+from . import SpsTransientBaseImport
+from . import CustomerTemplate
+from . import SpsCustomerTemplateMapping
