@@ -1,6 +1,33 @@
 <odoo>
-    <data>
 
+  <data>
+
+    <record model="ir.ui.view" id="view_partner_form122">
+        <field name="name">res.partner.form.inherit122</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Import Template">
+                   <group string="Upload File" name="mapping">
+                       <field name="file" widget='file'></field>
+                   </group>
+                   <group string="Map Columns" name="mapping">
+                       <field name="customer_sku" />
+                       <field name="required_quantity"/>
+                       <field name="quantity" />
+                       <field name="uom" />
+                       <field name="frequency_of_refill" />
+                   </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+  </data>
+
+
+    <data>
         <record id="view_tree_documents_normal" model="ir.ui.view">
             <field name="sequence" eval="1"/>
             <field name="name">Import Document normal tree</field>
@@ -98,13 +125,15 @@
         </record>
 
 
-        <menuitem name="Import" id="sps.prioritization_imenu" parent="sps.menu_root"/>
+        <menuitem name="Import" id="prioritization_engine.prioritization_imenu" parent="prioritization_engine.menu_root"/>
 
-        <menuitem name="Vendor Template" id="sps.prioritization_vendor_template_menu" parent="sps.prioritization_imenu"
+        <menuitem name="Vendor Template" id="prioritization_engine.prioritization_vendor_template_menu" parent="prioritization_engine.prioritization_imenu"
                   action="vendor-template-client-action"/>
 
-        <menuitem name="Customer Template" id="sps.prioritization_customer_template_menu" parent="sps.prioritization_imenu"
+        <menuitem name="Customer Template" id="prioritization_engine.prioritization_customer_template_menu" parent="prioritization_engine.prioritization_imenu"
                   action="customer-template-client-action"/>
 
     </data>
+
 </odoo>
+
