@@ -208,10 +208,14 @@ odoo.define('sign.template', function(require) {
                         return self.$el;
                     },
                     html: true,
-                    placement: 'auto',
+                    placement: 'right',
                     trigger:'focus',
                 };
-                self.$currentTarget.popover(options).popover("toggle");
+                self.$currentTarget.popover(options).one('inserted.bs.popover', function (e) {
+                    $('.popover').addClass('o_popover_offset');
+                });
+                self.$currentTarget.popover("toggle");
+
             });
         },
         hide: function() {
