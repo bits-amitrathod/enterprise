@@ -159,7 +159,7 @@
             </div>
         </div>
         <div t-if="mode == 'print' and context.summary != ''" class="o_account_reports_summary" summary="o_followup_letter_display_none" role="alert">
-            <span style="white-space: pre; white-space: pre-wrap;"><t t-esc="context.summary" /></span>
+            <span><t t-esc="context.summary" t-options="{'widget': 'text'}"/></span>
         </div>
         <div t-att-class="mode != 'print' and 'table-responsive' or None">
             <table width='100%' t-att-class="' '.join(['o_account_reports_table', report.get_name() in ['aged_receivable', 'aged_payable'] and 'table-striped' or ''])">
