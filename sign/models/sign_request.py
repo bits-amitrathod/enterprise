@@ -352,6 +352,11 @@ class SignRequest(models.Model):
                         can.drawString(width*item.posX, height*y, line)
                         y -= normalFontSize*0.1
 
+                elif item.type_id.type == "checkbox":
+                    can.setFont(font, height*item.height*0.8)
+                    value = 'X' if value == 'on' else ''
+                    can.drawString(width*item.posX, height*(1-item.posY-item.height*0.9), value)
+
                 elif item.type_id.type == "signature" or item.type_id.type == "initial":
                     img = base64.b64decode(value[value.find(',')+1:])
                     can.drawImage(ImageReader(io.BytesIO(img)), width*item.posX, height*(1-item.posY-item.height), width*item.width, height*item.height, 'auto', True)
