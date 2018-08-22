@@ -18,7 +18,13 @@ class WebsiteSignContract(WebsiteSign):
         request_item = request.env['signature.request.item'].sudo().search([('access_token', '=', token)])
         contract = request.env['hr.contract'].sudo().with_context(active_test=False).search([
             ('signature_request_ids', 'in', request_item.signature_request_id.ids)])
-        if contract:
+        request_template_id = request_item.signature_request_id.template_id.id
+        # Only if the signed document is the document to sign from the salary package
+        contract_documents = [
+            contract.signature_request_template_id.id,
+            contract.contract_update_template_id.id,
+        ]
+        if contract and request_template_id in contract_documents:
             # Only the applicant/employee has signed
             if request_item.signature_request_id.nb_closed == 1:
                 contract.active = True
