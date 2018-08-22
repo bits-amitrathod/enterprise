@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Sales Report Compare By Month',
+    'name': 'Compare Sales By Month',
     'category': 'sale',
     'version': '11.0.0.1',
     'summary': 'This module provides Sales Report Compare By Month.',

@@ -8,15 +8,22 @@
                     <div class="row">
                     <center>
                         <b>
-                            <h4>Sales Report Compare By Month</h4>
+                            <h2> Surgical Product Solutions </h2>
+                            <h4>Compare Sales By Month</h4>
                         </b>
                     </center>
                     </div>
                     <br/>
-                    <table class="table table-condensed" style="border: 1px solid black;">
+                    <table class="table table-condensed" style="border: 0px solid black;">
                             <thead>
+                                <tr style="border: 0px;">
+                                    <th style="border: 0px;"></th>
+                                    <th colspan="2" style="border: 0px;"> <span t-esc="last_start_date"/> - <span t-esc="last_end_date"/> </th>
+                                    <th colspan="2" style="border: 0px;"> <span t-esc="current_start_date"/> - <span t-esc="current_end_date"/> </th>
+                                </tr>
+
                                 <tr style="border: 1px solid black;">
-                                    <th style="border: 1px solid black;">product Name </th>
+                                    <th style="border: 1px solid black;">Product Name </th>
                                     <th style="border: 1px solid black;">Last Month Qty</th>
                                     <th style="border: 1px solid black;">Last Month Price</th>
                                     <th style="border: 1px solid black;">Current Month Qty</th>
@@ -34,14 +41,14 @@
                                             <span t-esc="order[3]"/>
                                         </td>
                                         <td style="border: 1px solid black;">
-                                            $<span t-esc="order[4]"/>
+                                            $ <span t-esc="order[4]"/>
                                         </td>
 
                                         <td style="border: 1px solid black;">
                                             <span t-esc="order[1]"/>
                                         </td>
                                         <td style="border: 1px solid black;">
-                                            $<span t-esc="order[2]"/>
+                                            $ <span t-esc="order[2]"/>
                                         </td>
 
                                     </tr>

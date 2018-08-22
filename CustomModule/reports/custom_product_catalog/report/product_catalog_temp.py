@@ -32,3 +32,15 @@ class ReportSalesSalespersonWise(models.AbstractModel):
             'data': data['form'],
 
         }
+
+class ReportProductWise(models.AbstractModel):
+    _name = 'report.custom_product_catalog.product_catalog_temp'
+
+    @api.model
+    def get_report_values(self, docids, data=None):
+        return {
+            'doc_ids': data.get('ids'),
+            'doc_model': data.get('model'),
+            'data': data['form'],
+
+        }

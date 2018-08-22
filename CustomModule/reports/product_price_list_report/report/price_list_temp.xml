@@ -8,7 +8,8 @@
                     <div class="row">
                     <center>
                         <b>
-                            <h4>Product Price List</h4>
+                            <h2> Surgical Product Solutions </h2>
+                            <h4> Product Price List </h4>
                         </b>
                     </center>
                     <!--<center>
@@ -32,7 +33,6 @@
                             <thead>
                                 <tr style="border: 1px solid black;">
                                     <th style="border: 1px solid black;">Product Number</th>
-                                    <th style="border: 1px solid black;">Description</th>
                                     <th style="border: 1px solid black;">Cost</th>
 
                                 </tr>
@@ -41,21 +41,7 @@
                                         <span t-esc="order[0]"/>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-esc="order[1]"/>
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-esc="order[2]"/>
-                                        <t t-set="total_sum" t-value="total_sum + order[2]"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid black;">
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <b>Total</b>
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-esc="total_sum"/>
+                                       $ <span t-esc="order[1]"/>
                                     </td>
                                 </tr>
                             </thead>

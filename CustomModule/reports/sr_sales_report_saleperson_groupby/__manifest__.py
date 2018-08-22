@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Sales Report By Saleperson',
+    'name': 'Gross Sales By Salesperson',
     'category': 'sale',
     'version': '11.0.0.1',
     'summary': 'This module provides Sales Report By Saleperson and group.',
