@@ -46,5 +46,5 @@ class ProductTemplate(models.Model):
     product_brand_id = fields.Many2one(
         'product.brand',
         string='Manufacture',
-        help='Select a Manufacture for this product',required=True
+        help='Select a Manufacture for this product'
     )

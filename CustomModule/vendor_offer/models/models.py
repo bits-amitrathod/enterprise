@@ -20,7 +20,7 @@ class VendorOffer(models.Model):
     retail_amt = fields.Monetary(string="Total Retail",readonly=True,default=0 ,compute='_amount_tot_all')
     offer_amount = fields.Monetary(string="Total Offer",readonly=True,default=0,compute='_amount_tot_all')
     date_planned = fields.Datetime(string='Scheduled Date')
-    possible_competition = fields.Many2one('competition.competition', string="Possible Competition",required=True)
+    possible_competition = fields.Many2one('competition.competition', string="Possible Competition")
     offer_type = fields.Selection([
         ('cash', 'Cash'),
         ('credit', 'Credit')
