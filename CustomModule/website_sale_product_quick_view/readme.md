@@ -1,5 +1,5 @@
 Quick View
-by Cybrosys Techno Solutions
+by Benchmark It Solutions
          # Ecommerce Product Quick View
 
 Ecommerce Product Quick View is an odoo e-commerse based addon, which Extends the products view by
