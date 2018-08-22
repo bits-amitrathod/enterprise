@@ -6,7 +6,7 @@ import datetime
 
 
 class VendorOffer(models.Model):
-    _name = 'purchase.order'
+    # _name = 'purchase.order'
     _description = "Vendor Offer"
     _inherit = "purchase.order"
 
@@ -45,7 +45,7 @@ class VendorOffer(models.Model):
         ('no', 'No')
     ], string='Shipping label Issued')
 
-    order_line = fields.One2many('purchase.order.line', 'order_id', string='Order Lines')
+    # order_line = fields.One2many('purchase.order.line', 'order_id', string='Order Lines')
     state = fields.Selection([
         ('ven_draft', 'Vendor Offer'),
         ('ven_sent', 'Vendor Offer Sent'),
@@ -55,16 +55,16 @@ class VendorOffer(models.Model):
         ('purchase', 'Purchase Order'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled')
-    ], string='Status', readonly=True, index=True, copy=False,  track_visibility='onchange')
+    ], string='Status', readonly=True, index=True, copy=False, default="draft", track_visibility='onchange')
 
-    @api.model_cr
-    def init(self):
-        print('============================================================================================================')
-        for order in self:
-            print('----------------------------')
-            order.update({
-                'state': 'ven_draft',
-            })
+    # @api.model_cr
+    # def init(self):
+    #     print('============================================================================================================')
+    #     for order in self:
+    #         print('----------------------------')
+    #         order.update({
+    #             'state': 'ven_draft',
+    #         })
 
     @api.depends('order_line.offer_price')
     def _amount_tot_all(self):
@@ -147,26 +147,27 @@ class VendorOffer(models.Model):
 
 
 class VendorOfferProduct(models.Model):
-    _name = 'purchase.order.line'
-    _inherits = {'product.product': 'product_id'}
+
+    # _name = 'purchase.order.line'
     _inherit = "purchase.order.line"
+    _inherits = {'product.product': 'product_id'}
     _description = "Vendor Offer Product"
 
-    product_tier = fields.Char(string="TIER")
+    product_tier = fields.Many2one('tier.tier', string="Tier")
     product_sales_count = fields.Char(string="Sales Count All")
     product_sales_count_month = fields.Char(string="Sales Count Month")
     product_sales_count_90 = fields.Char(string="Sales Count 90 Days")
     product_sales_count_yrs = fields.Char(string="Sales Count Yr")
     qty_in_stock = fields.Char(string="Quantity In Stock")
     prod_qty = fields.Char(string="Quantity")
-    premium = fields.Char(string="Premium")
+    # premium = fields.Char(string="Premium")
     expiration_date = fields.Datetime(string="Expiration Date")
     expired_inventory = fields.Char(string="Expired Inventory Items")
     multiplier = fields.Many2one('multiplier.multiplier', string="Multiplier")
     offer_price = fields.Char(string="Offer Price")
     margin = fields.Char(string="Margin")
-    manufacturer = fields.Char(string="Manufacturer",store=False)
-    order_id = fields.Many2one('purchase.order',  string='Order Lines')
+    # manufacturer = fields.Char(string="Manufacturer",store=False)
+    # order_id = fields.Many2one('purchase.order',  string='Order Lines')
     possible_competition = fields.Many2one(related='order_id.possible_competition',store=False)
     product_note = fields.Text(string="Notes")
 
@@ -218,19 +219,20 @@ class VendorOfferProduct(models.Model):
 
         self.product_sales_count_yrs = total_yr
 
-        self.product_tier_manufacturer()
+        #self.product_tier_manufacturer()
         self.expired_inventory_cal()
 
-    def product_tier_manufacturer(self):
-        group_by_product = {}
-        temp_id = ''
-        product_info_list = self.env['product.product'].search([('id', '=', self.product_id.id)])
-        group_by_product['data'] = product_info_list
-        for product_info in group_by_product['data']:
-            temp_id = product_info.product_tmpl_id
-        product_info_template_list = self.env['product.template'].search([('id', '=', temp_id.id)])
-        self.manufacturer = product_info_template_list.manufacturer.name
-        #self.product_tier = product_info_template_list.tier
+
+    # def product_tier_manufacturer(self):
+    #     group_by_product = {}
+    #     temp_id = ''
+    #     product_info_list = self.env['product.product'].search([('id', '=', self.product_id.id)])
+    #     group_by_product['data'] = product_info_list
+    #     for product_info in group_by_product['data']:
+    #         temp_id = product_info.product_tmpl_id
+    #     product_info_template_list = self.env['product.template'].search([('id', '=', temp_id.id)])
+    #     self.manufacturer = product_info_template_list.manufacturer.name
+    #     self.product_tier = product_info_template_list.tier
 
     def expired_inventory_cal(self):
         expired_lot_count = 0
@@ -262,10 +264,8 @@ class Multiplier(models.Model):
     _description = "Multiplier"
 
     name = fields.Char(string="Multiplier Name",required=True)
-    # retail = fields.Char(string="Retail %",required=True)
     retail = fields.Float('Retail %', digits=dp.get_precision('Product Unit of Measure'), required=True)
     margin = fields.Float('Margin %', digits=dp.get_precision('Product Unit of Measure'), required=True)
-    # margin = fields.Char(string="Margin %",required=True)
 
 
 class Competition(models.Model):
@@ -274,4 +274,24 @@ class Competition(models.Model):
 
     name = fields.Char(string="Competition Name",required=True)
     margin = fields.Float('Margin %', digits=dp.get_precision('Product Unit of Measure'), required=True)
-    # margin = fields.Char(string="Margin %",required=True)
+
+
+class Tier(models.Model):
+    _name = 'tier.tier'
+    _description = "Product Tier"
+
+    name = fields.Char(string="Product Tier",required=True)
+
+
+class ClassCode(models.Model):
+    _name = 'classcode.classcode'
+    _description = "Class Code"
+
+    name=fields.Char(string="Class Code",required=True)
+
+
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    tier = fields.Many2one('tier.tier', string="Tier")
+    class_code = fields.Many2one('classcode.classcode', string="Class Code")

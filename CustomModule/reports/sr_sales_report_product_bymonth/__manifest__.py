@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Sales Report By Month',
+    'name': 'Sales By Month',
     'category': 'sale',
     'version': '11.0.0.1',
     'summary': 'This module provides Sales Report By Month.',

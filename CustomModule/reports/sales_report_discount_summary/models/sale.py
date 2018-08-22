@@ -42,14 +42,15 @@ class comparebymonth():
             object.sale_order = record.name
             object.customer = record.partner_id.name
             if record.confirmation_date:
-                object.confirmation_date = datetime.datetime.strptime(record.confirmation_date, "%Y-%m-%d %H:%M:%S").date().strftime('%Y-%m-%d')
+                object.confirmation_date = datetime.datetime.strptime(record.confirmation_date, "%Y-%m-%d %H:%M:%S").date().strftime('%m/%d/%Y')
             else:
                 object.confirmation_date = record.confirmation_date
             sum=0
             for r1 in record.order_line:
                 sum = sum + (r1.product_uom_qty * r1.price_unit)
-            object.amount = sum
-            object.discount_amount = sum -record.amount_untaxed
+
+            object.amount = record.amount_untaxed
+            object.discount_amount = float(round(sum -record.amount_untaxed))
             object.total_amount = record.amount_total
             dict[record.id] = object
 
@@ -65,7 +66,7 @@ class DiscountSummaryReport(models.TransientModel):
 
     @api.multi
     def print_discountsummary_vise_report(self):
-        sale_orders = self.env['sale.order'].search([])
+        sale_orders = self.env['sale.order'].search([('state', '=', 'sale')])
         groupby_dict = {}
         filtered_by_current_month = sale_orders
         dat = comparebymonth().addObject(filtered_by_current_month)

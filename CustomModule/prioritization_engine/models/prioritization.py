@@ -69,6 +69,12 @@ class Customer(models.Model):
         print("Inside  action_view_notification")
         return action
 
+    def get_customer_request(self):
+        _logger.info("***************In main function()**************")
+        self = self.env['prioritization_engine.prioritization'].search([('customer_id', '=', 5)])
+        if self.customer_id:
+            return self.get_customer_requests()
+
 class ProductTemplate(models.Model):
 
     _inherit = 'product.template'
@@ -115,28 +121,26 @@ class Prioritization(models.Model):
     # Get Customer Requests
     def get_customer_requests(self):
         sps_customer_requests = self.env['sps.customer.requests'].search([('status','in',('Inprocess','Incomplete','Partial','Unprocessed','InCoolingPeriod','New'))])
-
         customer_product_priority_list = []
-
         for customer_request in sps_customer_requests:
             _logger.info("\n------------------New Customer Record---------------------"+ str(customer_request.customer_id))
-
             # check customer prioritization setting True/False
             res_partner = self.env['res.partner'].search([('id','=', customer_request.customer_id)])
             _logger.info("res_partner.id(customer_id) : " + str(res_partner.id) + " prioritization_setting_flag : " + str(res_partner.prioritization))
 
             if res_partner.prioritization is True:
                 _logger.info("\nProceed.....Customer prioritization setting is True.")
-                # Check product level setting or global level setting
+                # Check customer or global level setting
                 self.check_product_level_setting(customer_request,customer_product_priority_list)
             else:
                 _logger.info("\nUnable to process because Customer prioritization setting is False.")
 
         # sort customer product by product/customer priority
         self.sort_product_by_priority(customer_product_priority_list)
+        # call Product allocation by priority
+        self.product_allocation_by_priority(customer_product_priority_list)
 
-
-    # Check product level setting or global level setting
+    # Check customer or global level setting
     def check_product_level_setting(self, customer_request, customer_product_priority_list):
         # To check customer level setting
         customer_level_setting = self.env['prioritization_engine.prioritization'].search(
@@ -159,7 +163,7 @@ class Prioritization(models.Model):
                 [('id', '=', customer_request.customer_id)])
             if len(global_level_setting) == 1:
                 _logger.info(str(customer_level_setting.product_id) + ' is available in res.partner')
-                customer_product_priority_list.append(CustomerProductSetting(global_level_setting.id,
+                customer_product_priority_list.append(CustomerProductSetting(int(global_level_setting.id),
                                                                              customer_request.product_id,
                                                                              global_level_setting.priority,
                                                                              global_level_setting.auto_allocate,
@@ -177,6 +181,23 @@ class Prioritization(models.Model):
         for customer_product_priority in customer_product_priority_list:
             _logger.info("***** customer id : " + str(customer_product_priority.customer_id) + " Product id : " + str(customer_product_priority.product_id)
                          + " product priority" + str(customer_product_priority.product_priority))
+
+    # Product allocation by priority
+    def product_allocation_by_priority(self,customer_product_priority_list):
+        _logger.info('In product_allocation_by_priority')
+        for customer_product in customer_product_priority_list:
+            _logger.info(
+                "\ncustomer_id  product_id  product_priority  auto_allocate  cooling_period  length_of_hold  partial_order  expiration_tolerance  Required Product Quantity\n")
+            _logger.info("\n"+str(customer_product.customer_id)+"   "+str(customer_product.product_id)+"  "+str(customer_product.product_priority)+"  "+str(customer_product.auto_allocate)+
+                         "   " + str(customer_product.cooling_period) +"   " + str(customer_product.length_of_hold) +"   " + str(customer_product.partial_order)+
+                         "   " + str(customer_product.expiration_tolerance) + "   " + str(customer_product.required_product_quantity))
+
+            # check product and quantity is available or not.
+            # product_quantity_available = self.env['stock.quant'].search([('product_id', '=', customer_product.product_id), ('quantity', '>=', customer_product.required_product_quantity)])
+            # if len(product_quantity_available) >=1:
+            #     _logger.info('Product quantity available in stock')
+            # else:
+            #     _logger.info('Out of stock')
 
     # calculate cooling period
     def calculate_cooling_priod_in_days(self, confirmation_date, request_id):
@@ -312,6 +333,6 @@ class CustomerProductSetting:
         self.length_of_hold = length_of_hold
         self.partial_order = partial_order
         self.expiration_tolerance = expiration_tolerance
-        self.product_quantity = product_quantity
+        self.required_product_quantity = product_quantity
 
 
