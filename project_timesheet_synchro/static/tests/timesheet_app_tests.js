@@ -2,6 +2,8 @@ odoo.define('project_timesheet_synchro.timesheet_app_tests', function (require) 
     "use strict";
     var TimeSheetUI = require('project_timeshee.ui');
     var concurrency = require('web.concurrency');
+    var ServiceProviderMixin = require('web.ServiceProviderMixin');
+    var testUtils = require('web.test_utils');
 
     QUnit.module('project_timesheet_synchro', {
         beforeEach: function () {
@@ -77,6 +79,22 @@ odoo.define('project_timesheet_synchro.timesheet_app_tests', function (require) 
                     }, ]
                 },
             };
+
+            // Patch timesheetUI so that it is no longer a service provider.
+            testUtils.patch(TimeSheetUI, {
+                /**
+                 * @override
+                 */
+                init: function () {
+                    var originalServiceProviderMixinInit = ServiceProviderMixin.init;
+                    ServiceProviderMixin.init = function () {};
+                    this._super.apply(this, arguments);
+                    ServiceProviderMixin.init = originalServiceProviderMixinInit;
+                },
+            });
+        },
+        afterEach: function () {
+            testUtils.unpatch(TimeSheetUI);
         }
     }, function () {
 
