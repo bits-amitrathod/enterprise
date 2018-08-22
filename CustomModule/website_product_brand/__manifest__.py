@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Prioritization Engine",
+    'name': "Product Brand Filtering in Website",
 
     'summary': """
         Prioritization Engine""",
@@ -15,29 +15,23 @@
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
     # for the full list
-    'category': 'Sale',
+    'category': 'e-commerce',
     'version': '1.0',
 
     # any module necessary for this one to work correctly
 
-
-
-
-
-    'depends': ['base','product','product_brand','sale_management','stock','web_one2many_selectable'],
+    'depends': ['product_brand',
+                'website_sale'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/saleorder_views.xml',
-        'views/prioritization_views.xml',
-        'views/web_assets.xml',
+        "security/ir.model.access.csv",
+        "views/product_brand.xml",
     ],
 
     # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    'demo': [],
     'application': True,
     'auto-install': True,
     'installable': True,
