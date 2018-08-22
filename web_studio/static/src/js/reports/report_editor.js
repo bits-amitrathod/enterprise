@@ -130,7 +130,7 @@ var ReportEditor = Widget.extend(EditorMixin, {
         });
 
         // compute the size box with the nearest rendering
-        self._computeNearestHookAndShowIt();
+        this._computeNearestHookAndShowIt();
 
         // association for td and colspan
         this.$dropZone.filter('th, td').each(function (_, item) {

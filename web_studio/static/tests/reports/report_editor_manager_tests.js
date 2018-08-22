@@ -915,7 +915,7 @@ QUnit.module('ReportEditorManager', {
         });
     }));
 
-    QUnit.skip('drag & drop field in table', loadIframeCss(function (assert, done) {
+    QUnit.test('drag & drop field in table', loadIframeCss(function (assert, done) {
         assert.expect(20);
 
         this.templates.push({
@@ -1003,9 +1003,20 @@ QUnit.module('ReportEditorManager', {
         var testIndex = 0;
         var tests = [
             {
+                text: "Should select the hooks inside the th",
+                selector: 'thead tr th:eq(0)',
+                position: 'left',
+                nearestHookNumber: 1,
+                inheritance: [{
+                    content: "<span t-field=\"o.child.name\"></span>",
+                    position: "before",
+                    view_id: 55,
+                    xpath: "/t/div/div/table/thead/tr/th/span"
+                }],
+            }, {
                 text: "Should select the column (1)",
                 selector: 'tbody tr:eq(1) td:first',
-                position: 'left',
+                position: {left: 80, top: 0},
                 nearestHookNumber: 5,
                 inheritance: [{
                     content: "<th><span>Name</span></th>",
@@ -1039,11 +1050,10 @@ QUnit.module('ReportEditorManager', {
                     assert.strictEqual($table.find('tr td:first-child.o_web_studio_nearest_hook').length, 4,
                             "Should select the first cell of each line");
                 },
-            },
-            {
-                text: "Should select the hooks inside the td (1)",
+            }, {
+                text: "Should select the hooks inside the td, on the left",
                 selector: 'tbody tr:eq(1) td:first',
-                position: 'center',
+                position: 'left',
                 nearestHookNumber: 3,
                 inheritance: [{
                     content: "<span t-field=\"o.child.name\"></span>",
@@ -1061,11 +1071,31 @@ QUnit.module('ReportEditorManager', {
                     view_id: 55,
                     xpath: "/t/div/div/table/tbody/tr/td/span"
                 } ],
-            },
-            {
+            }, {
+                text: "Should select the hooks inside the td, on the right",
+                selector: 'tbody tr:eq(1) td:eq(0)',
+                position: 'center',
+                nearestHookNumber: 3,
+                inheritance: [{
+                    content: "<span t-field=\"o.child.name\"></span>",
+                    position: "after",
+                    view_id: 55,
+                    xpath: "/t/div/div/table/tbody/tr/td/span"
+                }, {
+                    content: "<span t-field=\"o.child.name\"></span>",
+                    position: "after",
+                    view_id: 55,
+                    xpath: "/t/div/div/table/tbody/tr/td/span"
+                }, {
+                    content: "<span t-field=\"o.child.name\"></span>",
+                    position: "after",
+                    view_id: 55,
+                    xpath: "/t/div/div/table/tbody/tr/td/span"
+                } ],
+            }, {
                 text: "Should select column without the header because it's colspan=2",
                 selector: 'tbody tr:eq(1) td:eq(1)',
-                position: {left: -30, top: 10},
+                position: {left: -10, top: 0},
                 nearestHookNumber: 4,
                 inheritance: [{
                     content: "<td><span t-field=\"o.child.name\"></span></td>",
@@ -1093,33 +1123,10 @@ QUnit.module('ReportEditorManager', {
                     view_id: 55,
                     xpath: "/t/div/div/table/thead/tr/th"
                 }],
-            },
-            {
-                text: "Should select the hooks inside the td (2)",
-                selector: 'tbody tr:eq(1) td:eq(1)',
-                position: {top: 10, left: 10},
-                nearestHookNumber: 3,
-                inheritance: [{
-                    content: "<span t-field=\"o.child.name\"></span>",
-                    position: "before",
-                    view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td[1]/span"
-                }, {
-                    content: "<span t-field=\"o.child.name\"></span>",
-                    position: "before",
-                    view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td[1]/span"
-                }, {
-                    content: "<span t-field=\"o.child.name\"></span>",
-                    position: "before",
-                    view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td[1]/span"
-                } ],
-            },
-            {
+            }, {
                 text: "Should select the column (2)",
                 selector: 'tbody tr:eq(1) td:eq(2)',
-                position: {left: -30, top: 10},
+                position: {left: -30, top: 0},
                 nearestHookNumber: 5,
                 inheritance: [{
                     content: "<th><span>Name</span></th>",
@@ -1152,8 +1159,7 @@ QUnit.module('ReportEditorManager', {
                     view_id: 55,
                     xpath: "/t/div/div/table/thead/tr/th"
                 }],
-            },
-            {
+            }, {
                 text: "Should select column without the header because there are two colspan=2",
                 selector: 'tbody tr:eq(1) td:eq(4)',
                 position: {top: 10, left: -40},
@@ -1184,8 +1190,7 @@ QUnit.module('ReportEditorManager', {
                     view_id: 55,
                     xpath: "/t/div/div/table/tbody/tr[1]/td[3]"
                 }],
-            },
-            {
+            }, {
                 text: "Should select the column (3)",
                 selector: 'tbody tr:eq(1) td:eq(5)',
                 position: 'left',
@@ -1226,22 +1231,9 @@ QUnit.module('ReportEditorManager', {
                     view_id: 55,
                     xpath: "/t/div/div/table/thead/tr/th[2]"
                 }],
-            },
-            {
-                text: "Should select the hooks inside the th",
-                selector: 'thead tr th:eq(1)',
-                position: {top: 30, left: -10},
-                nearestHookNumber: 1,
-                inheritance: [{
-                    content: "<span t-field=\"o.child.name\"></span>",
-                    position: "after",
-                    view_id: 55,
-                    xpath: "/t/div/div/table/thead/tr/th[1]/span"
-                }],
-            },
-            {
+            }, {
                 text: "Should select the column (4)",
-                selector: 'tbody tr:first td:eq(4)', // TODO test with 'thead tr th:eq(3)' because currently it's not intuitive enough for drop zones
+                selector: 'tbody tr:first td:eq(4)',
                 position: 'right',
                 nearestHookNumber: 5,
                 inheritance: [{

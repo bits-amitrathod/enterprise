@@ -258,16 +258,15 @@ var AbstractNewComponent = Abstract.extend({
         var stack = [parent];
         parent = stack.shift();
         while (parent) {
-            if (!parent.children) {
-                continue;
-            }
-            for (var k = 0; k < parent.children.length; k++) {
-                var node = parent.children[k];
-                if (fn(node)) {
-                    children.push(node);
+            if (parent.children) {
+                for (var k = 0; k < parent.children.length; k++) {
+                    var node = parent.children[k];
+                    if (fn(node)) {
+                        children.push(node);
+                    }
                 }
+                stack = parent.children.concat(stack);
             }
-            stack = parent.children.concat(stack);
             parent = stack.shift();
         }
         return children;
