@@ -17,6 +17,7 @@ except ImportError:
 
 from odoo import models, fields, api, _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat, config, date_utils
+from odoo.osv import expression
 from babel.dates import get_quarter_names
 from odoo.tools.misc import formatLang, format_date
 from odoo.addons.web.controllers.main import clean_action
@@ -363,9 +364,18 @@ class AccountReport(models.AbstractModel):
                     'search_default_account_id': [active_id],
             })
             action['context'] = ctx
-        if options and options.get('analytic_accounts'):
-            analytic_ids = [int(r) for r in options['analytic_accounts']]
-            action['domain'] = [('analytic_account_id', 'in', analytic_ids)]
+        if options:
+            domain = expression.normalize_domain(safe_eval(action.get('domain', '[]')))
+            if options.get('analytic_accounts'):
+                analytic_ids = [int(r) for r in options['analytic_accounts']]
+                domain = expression.AND([domain, [('analytic_account_id', 'in', analytic_ids)]])
+            if options.get('date'):
+                opt_date = options['date']
+                if opt_date.get('date_from'):
+                    domain = expression.AND([domain, [('date', '>=', opt_date['date_from'])]])
+                if opt_date.get('date_to'):
+                    domain = expression.AND([domain, [('date', '<=', opt_date['date_to'])]])
+            action['domain'] = domain
         return action
 
     def reverse(self, values):

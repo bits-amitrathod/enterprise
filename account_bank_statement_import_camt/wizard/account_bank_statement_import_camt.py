@@ -87,7 +87,7 @@ class AccountBankStatementImport(models.TransientModel):
                         entry_vals['currency_id'] = curr_cache[instruc_curr[0]]
 
                     # Name 0..1
-                    transaction_name = entry_details.xpath('.//ns:RmtInf/ns:Ustrd/text()', namespaces=ns)
+                    transaction_name = entry_details.xpath('.//ns:RmtInf/ns:Ustrd/text()', namespaces=ns) or entry_details.xpath('.//ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref/text()', namespaces=ns)
                     transaction_name = transaction_name or entry_details.xpath('ns:AddtlNtryInf/text()', namespaces=ns)
                     partner_name = entry_details.xpath('.//ns:RltdPties/ns:%s/ns:Nm/text()' % (counter_party,), namespaces=ns)
                     entry_vals['name'] = ' '.join(transaction_name) if transaction_name else '/'
