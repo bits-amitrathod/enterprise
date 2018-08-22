@@ -15,15 +15,16 @@
                       <field name="sku_preconfig"/>
                       <field name="sku_postconfig"/>
                       <field name="quickbook_id"/>
-                      <field name="having_carrier"/>
                       <field name="preferred_method"/>
                   </field>
                   <field name="lang" position="after">
                      <field name="prioritization"/>
-                     <field name="carrier_info"/>
-                     <field name="carrier_acc_no"/>
                      <field name="on_hold"/>
                      <field name="is_broker"/>
+                     <field name="having_carrier"/>
+                     <field name="carrier_info"  attrs="{'invisible':[('having_carrier', '==', False)]}"/>
+                     <field name="carrier_acc_no" attrs="{'invisible':[('having_carrier', '==', False)]}"/>
+                      <field name="shipping_terms"/>
                   </field>
                   <xpath expr="/form/sheet/notebook/page[@name='sales_purchases']" position="after">
                       <page name="prioritization" string="Customer Priority Configuration">
@@ -78,6 +79,7 @@
                     <field name="attribute_value_ids" widget="many2many_tags" groups="product.group_product_variant"/>
                     <field name="lst_price"/>
                     <field name="price" invisible="not context.get('pricelist',False)"/>
+                    <field name="manufacturer_pname" />
                     <field name="uom_id" options="{'no_open': True, 'no_create': True}" groups="product.group_uom"/>
                     <!--<field name="sps_sku" />-->
                     <field name="threshold"/>

@@ -148,6 +148,7 @@ class VendorOffer(models.Model):
 
 class VendorOfferProduct(models.Model):
     _name = 'purchase.order.line'
+    _inherits = {'product.product': 'product_id'}
     _inherit = "purchase.order.line"
     _description = "Vendor Offer Product"
 
@@ -229,7 +230,7 @@ class VendorOfferProduct(models.Model):
             temp_id = product_info.product_tmpl_id
         product_info_template_list = self.env['product.template'].search([('id', '=', temp_id.id)])
         self.manufacturer = product_info_template_list.manufacturer.name
-        self.product_tier = product_info_template_list.tier
+        #self.product_tier = product_info_template_list.tier
 
     def expired_inventory_cal(self):
         expired_lot_count = 0
