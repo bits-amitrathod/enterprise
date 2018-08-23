@@ -16,7 +16,7 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
                  '/shop/category/<model("product.public.category"):category>',
                  '/shop/category/<model("product.public.category"):category>\
                  /page/<int:page>', '/shop/brands'], type='http',
-                auth='public', website=True)
+                auth='public', website=True,csrf=False)
     def shop(self, page=0, category=None, search='', brand=None, **post):
         values = {}
         domain = request.website.sale_product_domain()
@@ -59,7 +59,6 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
                 pricelist_context['pricelist'])
 
         product_obj = request.env['product.template']
-
         # Brand's product search
         if brand:
             values.update({'brand': brand})
@@ -70,6 +69,7 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
         product_count = product_obj.search_count(domain)
         if search:
             post['search'] = search
+            print(search);
         if category:
             category = request.env['product.public.category'].\
                 browse(int(category))
@@ -80,6 +80,7 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
         products = product_obj.\
             search(domain, limit=PPG, offset=pager['offset'],
                    order='website_published desc, website_sequence desc')
+        print(products)
         style_obj = request.env['product.style']
         styles = style_obj.search([])
         category_obj = request.env['product.public.category']

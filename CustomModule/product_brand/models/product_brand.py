@@ -12,7 +12,7 @@ from odoo import api, fields, models
 class ProductBrand(models.Model):
     _name = 'product.brand'
 
-    name = fields.Char('Manufacture Name', related='partner_id.name',readonly=True)
+    name = fields.Char('Manufacture Name', related='partner_id.name',readonly=True,store=True)
     description = fields.Text('Description', translate=True)
     manufacturer_pname = fields.Char(string='Manuf. Product Name')
     manufacturer_pref = fields.Char(string='Manuf. Catalog No')
