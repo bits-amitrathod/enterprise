@@ -17,6 +17,11 @@ class lot_history(models.TransientModel):
         lots = self.env['stock.production.lot'].search([])
         groupby_dict = {}
 
+        ACTIONS = {
+            "product": "Stockable Product",
+            "consu": "Consumable",
+            "service": "Service",
+        }
 
         for user in self.product_id:
             filtered_order = list(filter(lambda x: x.product_id == user, lots))
@@ -32,11 +37,11 @@ class lot_history(models.TransientModel):
                 temp_2.append(order.name)
                 temp_2.append(order.product_id.product_tmpl_id.sku_code)
                 temp_2.append(order.product_id.product_tmpl_id.name)
-                temp_2.append(order.product_id.product_tmpl_id.type)
-                temp_2.append(order.product_id.product_tmpl_id.manufacturer.display_name)
-                temp_2.append(order.product_id.product_tmpl_id.manufacturer.email)
-                temp_2.append(order.product_id.product_tmpl_id.manufacturer.phone)
-                temp_2.append(datetime.datetime.strptime(str(order.create_date),'%Y-%m-%d %H:%M:%S').date().strftime( '%d-%m-%Y'))
+                temp_2.append(ACTIONS[order.product_id.product_tmpl_id.type])
+                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.name)
+                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.email)
+                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.phone)
+                temp_2.append(datetime.datetime.strptime(str(order.create_date),'%Y-%m-%d %H:%M:%S').date().strftime( '%m-%d-%Y'))
                 temp.append(temp_2)
             final_dict[user] = temp
 
@@ -44,8 +49,8 @@ class lot_history(models.TransientModel):
             'ids': self,
             'model': 'product.list.report',
             'form': final_dict,
-            'start_date': fields.Datetime.from_string(str(self.start_date)).date().strftime('%d/%m/%Y'),
-            'end_date': fields.Datetime.from_string(str(self.end_date)).date().strftime('%d/%m/%Y'),
+            'start_date': fields.Datetime.from_string(str(self.start_date)).date().strftime('%m/%d/%Y'),
+            'end_date': fields.Datetime.from_string(str(self.end_date)).date().strftime('%m/%d/%Y'),
 
         }
         return self.env.ref('lot_history.action_todo_model_report').report_action([], data=datas)

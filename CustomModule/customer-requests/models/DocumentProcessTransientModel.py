@@ -62,6 +62,7 @@ class DocumentProcessTransientModel(models.Model):
                     document_id = file_uploaded_record.id
                     ref = str(document_id) + "_" + file_uploaded_record.token
                     response = dict(errorCode=0, message='File Uploaded Successfully', ref=ref)
+                    high_priority_requests = []
                     for req in requests:
                         customer_sku = req['customer_sku']
                         product_sku = customer_sku
@@ -103,7 +104,9 @@ class DocumentProcessTransientModel(models.Model):
                         saved_sps_customer_request = self.env['sps.customer.requests'].create(
                             sps_customer_request)
                         if high_priority_product:
-                            self.send_sps_customer_request_for_processing(saved_sps_customer_request)
+                            high_priority_requests.append(saved_sps_customer_request)
+                    if len(high_priority_requests) > 0:
+                        self.send_sps_customer_request_for_processing(high_priority_requests)
                 else:
                     _logger.info('file is not acceptable')
                     response = dict(errorCode=2, message='Invalid File extension')
@@ -249,6 +252,10 @@ class DocumentProcessTransientModel(models.Model):
             _logger.info(str(ue))
         return requests, file_acceptable
 
-    def send_sps_customer_request_for_processing(self, customer_product_request):
-        _logger.info('inside processing %r', customer_product_request.id)
+    def send_sps_customer_request_for_processing(self, customer_product_requests):
+        try:
+            _logger.info('processing %r high priority products requests', str(len(customer_product_requests)))
+            self.env['prioritization_engine.prioritization'].process_requests(customer_product_requests)
+        except:
+            _logger.info('Error Processing Hight Priority Requests')
         return None
