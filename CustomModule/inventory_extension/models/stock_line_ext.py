@@ -10,8 +10,8 @@ from odoo.tools.float_utils import float_round, float_compare, float_is_zero
 
 class inventory_exe(models.Model):
     _inherit = 'stock.move.line'
-    lot_expired_date = fields.Date('Expired Date')
-    lot_use_date = fields.Date('Expired Date', compute='_compute_show_lot_user_date')
+    lot_expired_date = fields.Date('Expiration Date')
+    lot_use_date = fields.Date('Expiration Date', compute='_compute_show_lot_user_date')
     @api.onchange('lot_name', 'lot_id','lot_expired_date')
     def onchange_serial_number(self):
         _logger.info("(stock_move_line_extension) onchange_serial_number called...")

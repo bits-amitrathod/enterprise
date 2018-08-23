@@ -31,5 +31,17 @@
 
             </field>
         </record>
+
+      <record id="view_invoice_form_ex" model="ir.ui.view">
+            <field name="name">account.invoice.form_ex</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                 <field name="payment_term_id" position="after">
+                     <field name="preferred_method"/>
+                     <field name="shipping_terms"/>
+                 </field>
+            </field>
+        </record>
   </data>
 </odoo>
