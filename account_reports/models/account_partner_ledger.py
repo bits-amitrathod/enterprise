@@ -90,6 +90,7 @@ class ReportPartnerLedger(models.AbstractModel):
             partners[partner] = result
             partners[partner]['initial_bal'] = initial_bal_results.get(partner.id, {'balance': 0, 'debit': 0, 'credit': 0})
             partners[partner]['balance'] += partners[partner]['initial_bal']['balance']
+            partners[partner]['total_lines'] = 0
             if not context.get('print_mode'):
                 partners[partner]['total_lines'] = self.env['account.move.line'].search_count(domain)
                 offset = int(options.get('lines_offset', 0))
