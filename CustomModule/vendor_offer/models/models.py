@@ -26,19 +26,23 @@ class VendorOffer(models.Model):
         ('credit', 'Credit')
     ], string='Offer Type')
 
-    accelerator = fields.Selection([
-        ('yes', 'Yes'),
-        ('no', 'No')
-        ], string='Accelerator')
+    accelerator=fields.Boolean(string="Accelerator")
+
+    # accelerator = fields.Selection([
+    #     ('yes', 'Yes'),
+    #     ('no', 'No')
+    #     ], string='Accelerator')
     priority = fields.Selection([
         ('low', 'Low'),
         ('medium', 'Medium'),
         ('high', 'High')], string='Priority')
 
-    new_customer = fields.Selection([
-        ('yes', 'Yes'),
-        ('no', 'No')
-    ], string='New Customer')
+    new_customer = fields.Boolean(string="New Customer")
+
+    # new_customer = fields.Selection([
+    #     ('yes', 'Yes'),
+    #     ('no', 'No')
+    # ], string='New Customer')
 
     shipping_label_issued = fields.Selection([
         ('yes', 'Yes'),
@@ -56,15 +60,6 @@ class VendorOffer(models.Model):
         ('done', 'Locked'),
         ('cancel', 'Cancelled')
     ], string='Status', readonly=True, index=True, copy=False, default="draft", track_visibility='onchange')
-
-    # @api.model_cr
-    # def init(self):
-    #     print('============================================================================================================')
-    #     for order in self:
-    #         print('----------------------------')
-    #         order.update({
-    #             'state': 'ven_draft',
-    #         })
 
     @api.depends('order_line.offer_price')
     def _amount_tot_all(self):
@@ -219,6 +214,27 @@ class VendorOfferProduct(models.Model):
 
         self.product_sales_count_yrs = total_yr
 
+        if self.tier.code == False:
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 'out of scope')])
+            self.multiplier = multiplier_list.id
+        elif self.product_sales_count == '0':
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 'no history')])
+            self.multiplier = multiplier_list.id
+        elif float(self.qty_in_stock) > (float(self.product_sales_count) * 2 ) and self.product_sales_count!='0':
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 'overstocked')])
+            self.multiplier = multiplier_list.id
+        elif self.product_id.product_tmpl_id.premium == True:
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 'premium')])
+            self.multiplier = multiplier_list.id
+        elif self.tier.code == '1':
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 't1 good 45')])
+            self.multiplier = multiplier_list.id
+        elif self.tier.code == '2':
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 't2 good 35')])
+            self.multiplier=multiplier_list.id
+
+
+
         #self.product_tier_manufacturer()
         self.expired_inventory_cal()
 
@@ -264,6 +280,7 @@ class Multiplier(models.Model):
     _description = "Multiplier"
 
     name = fields.Char(string="Multiplier Name",required=True)
+    code = fields.Char(string="Multiplier Code", required=True)
     retail = fields.Float('Retail %', digits=dp.get_precision('Product Unit of Measure'), required=True)
     margin = fields.Float('Margin %', digits=dp.get_precision('Product Unit of Measure'), required=True)
 
@@ -281,6 +298,7 @@ class Tier(models.Model):
     _description = "Product Tier"
 
     name = fields.Char(string="Product Tier",required=True)
+    code = fields.Char(string="Product Tier Code", required=True)
 
 
 class ClassCode(models.Model):
