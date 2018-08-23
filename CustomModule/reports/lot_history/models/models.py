@@ -17,6 +17,11 @@ class lot_history(models.TransientModel):
         lots = self.env['stock.production.lot'].search([])
         groupby_dict = {}
 
+        ACTIONS = {
+            "product": "Stockable Product",
+            "consu": "Consumable",
+            "service": "Service",
+        }
 
         for user in self.product_id:
             filtered_order = list(filter(lambda x: x.product_id == user, lots))
@@ -32,10 +37,10 @@ class lot_history(models.TransientModel):
                 temp_2.append(order.name)
                 temp_2.append(order.product_id.product_tmpl_id.sku_code)
                 temp_2.append(order.product_id.product_tmpl_id.name)
-                temp_2.append(order.product_id.product_tmpl_id.type)
-                temp_2.append(order.product_id.product_tmpl_id.manufacturer.display_name)
-                temp_2.append(order.product_id.product_tmpl_id.manufacturer.email)
-                temp_2.append(order.product_id.product_tmpl_id.manufacturer.phone)
+                temp_2.append(ACTIONS[order.product_id.product_tmpl_id.type])
+                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.name)
+                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.email)
+                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.phone)
                 temp_2.append(datetime.datetime.strptime(str(order.create_date),'%Y-%m-%d %H:%M:%S').date().strftime( '%d-%m-%Y'))
                 temp.append(temp_2)
             final_dict[user] = temp
