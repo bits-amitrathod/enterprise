@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import datetime
-
 from odoo import api, fields, models
 from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -39,8 +37,8 @@ class SaleForecast(models.Model):
             result = [x for x in mps_report.get_data(product) if x['procurement_enable']]
             for data in result:
                 date_cmp = fields.Date.from_string(data['date'])
-                if date_cmp < datetime.datetime.now():
-                    date = datetime.datetime.now()
+                if date_cmp < fields.Date.context_today(self):
+                    date = fields.Date.context_today(self)
                 else:
                     date = date_cmp
                 self._action_procurement_create(product, data['to_supply'], date)
@@ -59,8 +57,8 @@ class SaleForecast(models.Model):
             if result:
                 data = result[0]
                 date_cmp = fields.Date.from_string(data['date'])
-                if date_cmp < datetime.datetime.now():
-                    date = datetime.datetime.now()
+                if date_cmp < fields.Date.context_today(self):
+                    date = fields.Date.context_today(self)
                 else:
                     date = date_cmp
                 self._action_procurement_create(product, data['to_supply'], date)
