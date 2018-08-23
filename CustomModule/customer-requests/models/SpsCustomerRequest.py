@@ -9,7 +9,7 @@ class SpsCustomerRequest(models.Model):
 
     customer_id = fields.Many2one('res.partner', string='Customer', required=True)
     document_id = fields.Many2one('sps.cust.uploaded.documents', string='Document', required=True)
-    product_id = fields.Many2one('sps.product', string='Product', required=False, default=0)
+    product_id = fields.Many2one('product.product', string='Product', required=False, default=0)
 
     customer_sku = fields.Char()
     sps_sku = fields.Char()

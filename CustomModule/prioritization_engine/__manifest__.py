@@ -24,7 +24,7 @@
 
 
 
-    'depends': ['base','product','product_manufacturer','sale_management','stock','web_one2many_selectable'],
+    'depends': ['base','product','product_brand','sale_management','stock','web_one2many_selectable'],
 
     # always loaded
     'data': [

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "eCommerce",
+    'name': "eCommerce CSTM",
 
     'summary': """
-        Provide feature for product expiration lot""",
+        Provide feature for product expiration lot
+        
+        """,
 
     'description': """
         Provide feature for product expiration lot
@@ -28,6 +30,7 @@
         # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
+        # 'data/website_data.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

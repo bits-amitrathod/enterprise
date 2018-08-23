@@ -41,16 +41,27 @@ class Customer(models.Model):
        ('mail', 'Mail'),
        ('email', 'E Mail'),
        ('both', 'E Mail & Mail ')], string='Preferred Invoice Delivery Method')
+    shipping_terms = fields.Selection([
+        ('1', 'Prepaid & Billed'),
+        ('2', 'Prepaid'),
+        (3,'Freight Collect')], string='Shipping Terms')
+
+    @api.model
+    def create(self, vals):
+        self.on_hold_changes(vals)
+        return super(Customer, self).create(vals)
 
     @api.multi
-    def bulk_verify(self,arg):
-        #action = self.env.ref('prioritization_engine.action_sps_transient').read()[0]
-        action = self.env.ref('prioritization_engine.action_notification_setting').read()[0]
-        action['views'] = [(self.env.ref('prioritization_engine.view_notification_setting_form').id, 'form')]
-        action['view_ids'] = self.env.ref('prioritization_engine.view_notification_setting_form').id
-        action['res_id'] = 9
-        print(action)
-        return action
+    def write(self, vals):
+        res = super(Customer, self).write(vals)
+        self.on_hold_changes(vals)
+        return res
+
+    def on_hold_changes(self, vals):
+        for child_id in self.child_ids:
+            print(child_id.on_hold);
+            child_id.write({'on_hold':self.on_hold});
+            print(child_id.on_hold)
 
     def action_view_notification(self):
         '''
@@ -72,7 +83,6 @@ class Customer(models.Model):
             return self.get_customer_requests()
 
 class ProductTemplate(models.Model):
-
     _inherit = 'product.template'
     location = fields.Char("Location")
     premium = fields.Boolean("Premium")

@@ -29,20 +29,11 @@ class CustomerTemplate(models.Model):
 
     _name = 'sps.customer.template'
 
-    # template_file = fields.Binary(string="Template File", required=True)
-    # name = fields.Char(string="Template Name")
-    # type = fields.Selection((('inventory', 'Stock'), ('requirement', 'Requirement')), string="Template Type",
-    #                         default="inventory")
     customer_id = fields.Many2one('res.partner', string='Customer', required=True)
     file_name = fields.Char('File Name')
     non_selected_columns = fields.Char(string='Non Selected Columns')
     template_type = fields.Char(string='Template Type')
     template_status = fields.Char(string='Template Status')
-
-    # mf_customer_sku = fields.Selection(selection='_get_selections', string='SKU')
-    # mf_required_quantity = fields.Selection(selection='_get_selections', string='Required Quantity')
-    # mf_quantity = fields.Selection(selection='_get_selections', string='Stock')
-    # mf_uom = fields.Selection(selection='_get_selections', string='Unit Of Measurement')
 
     mf_customer_sku = fields.Char(string='SKU')
     mf_required_quantity = fields.Char(string='Required Quantity')

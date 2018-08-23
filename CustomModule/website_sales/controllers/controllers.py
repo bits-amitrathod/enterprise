@@ -4,8 +4,19 @@ from odoo.http import request
 from addons.website_sale.controllers.main import WebsiteSale
 
 class WebsiteSales(WebsiteSale):
-    @http.route('/shop', type='http', auth="public", website=True)
+    @http.route([
+        '/shop',
+        '/shop/featured',
+        '/shop/page/<int:page>',
+        '/shop/category/<model("product.public.category"):category>',
+        '/shop/category/<model("product.public.category"):category>/page/<int:page>'
+    ], type='http', auth="public", website=True)
     def shop(self, page=0, category=None, search='', ppg=False, **post):
+        if request.httprequest.path == "/shop/featured" :
+            result = request.env['product.public.category'].search([('name','ilike', 'featured' )], limit=1)
+            if result :
+                category = result.id
+
         responce =  super(WebsiteSales,self).shop(page, category, search, ppg, **post)
 
         payload = responce.qcontext;
@@ -33,4 +44,5 @@ class WebsiteSales(WebsiteSale):
             salesOrderContext)}
 
         return value
+
 
