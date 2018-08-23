@@ -143,6 +143,12 @@ class Prioritization(models.Model):
 
         self.product_sort_allocation(customer_product_priority_list, customer_request)
 
+    def process_requests(self, customer_requests_list):
+        customer_product_priority_list = []
+        for customer_request in customer_requests_list:
+            self.check_product_level_setting(customer_request, customer_product_priority_list)
+            self.product_sort_allocation(customer_product_priority_list, customer_request)
+
     def product_sort_allocation(self, customer_product_priority_list, customer_request):
         # sort customer product by product/customer priority
         self.sort_product_by_priority(customer_product_priority_list)
