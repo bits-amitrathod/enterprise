@@ -1,41 +1,35 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "eCommerce CSTM",
+    'name': "email_notification_cstm",
 
     'summary': """
-        Provide feature for product expiration lot
-        
-        """,
+        Short (1 phrase/line) summary of the module's purpose, used as
+        subtitle on modules listing or apps.openerp.com""",
 
     'description': """
-        Provide feature for product expiration lot
+        Long description of module's purpose
     """,
 
-    'sequence': 57,
-
-    # 'author': "",
-    # 'website': "",
+    'author': "My Company",
+    'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
     # for the full list
-    'category': 'Website',
+    'category': 'Uncategorized',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['website_sale'],
+    'depends': ['base'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
-        # 'data/website_data.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
-    'installable': True,
-    'application': True,
 }
