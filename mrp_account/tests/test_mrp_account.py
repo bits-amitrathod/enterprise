@@ -61,13 +61,14 @@ class TestMrpAccount(common.TransactionCase):
             }),
             ]
         })
-        inventory.action_validate()
-        self.env.ref('mrp.mrp_bom_desk').routing_id = False # TODO: extend the test later with the necessary operations
+        inventory.action_validate
+        bom = self.env.ref('mrp.mrp_bom_desk').copy()
+        bom.routing_id = False # TODO: extend the test later with the necessary operations
         production_table = self.env['mrp.production'].create({
             'product_id': self.dining_table.id,
             'product_qty': 5.0,
             'product_uom_id': self.dining_table.uom_id.id,
-            'bom_id': self.ref("mrp.mrp_bom_desk")
+            'bom_id': bom.id
         })
 
         produce_wizard = self.env['mrp.product.produce'].with_context({
