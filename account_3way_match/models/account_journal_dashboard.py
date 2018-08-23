@@ -43,5 +43,5 @@ class AccountJournal(models.Model):
                       AND (release_to_pay = 'yes'
                           OR date_due < %(today)s)
                       AND state = 'open'""",
-                      {'journal_id':self.id, 'today':datetime.today()})
+                      {'journal_id': self.id, 'today': fields.Date.today()})
         return super(AccountJournal, self)._get_bar_graph_select_query()
