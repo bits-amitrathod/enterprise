@@ -20,27 +20,29 @@
                                 <h4>Surgical Product Solutions</h4>
                             </b>
                             <b>
-                                <h2>Lot History Report Of Product</h2>
+                                <h2>Lot History</h2>
                             </b>
                         </center>
                         <center>
-                            <b>
+                            <b> Date Range:
                                 <span t-esc="start_date"/>
-                                To
+
+                                -
+
                                 <span t-esc="end_date"/>
                             </b>
                         </center>
                         <!-- Report page content -->
                         <table class="table table-condensed" style="border: 1px solid black;">
                             <tr>
-                                <th>Lot</th>
-                                <th>Product Number</th>
-                                <th>Description</th>
-                                <th>Product Type</th>
-                                <th>Creation date</th>
-                                <th>Vendor</th>
-                                <th>Phone</th>
-                                <th>Email</th>
+                                <th style="border: 1px solid black;text-align: center;">Lot</th>
+                                <th style="border: 1px solid black;text-align: center;">Product Number</th>
+                                <th style="border: 1px solid black;text-align: center;">Product Name</th>
+                                <th style="border: 1px solid black;text-align: center;">Product Type</th>
+                                <th style="border: 1px solid black;text-align: center;">Creation date</th>
+                                <th style="border: 1px solid black;text-align: center;">Vendor</th>
+                                <th style="border: 1px solid black;text-align: center;">Phone</th>
+                                <th style="border: 1px solid black;text-align: center;">Email</th>
                             </tr>
 
                             <t t-foreach="data.keys()" t-as="user">
@@ -52,13 +54,13 @@
                                         <td class="col-xs-2">
                                             <span t-esc="o[0]"/>
                                         </td>
-                                        <td class="col-xs-2">
+                                        <td align="left" class="col-xs-2">
                                             <span t-esc="o[2]"/>
                                         </td>
                                         <td class="col-xs-2">
                                             <span t-esc="o[3]"/>
                                         </td>
-                                        <td class="col-xs-2">
+                                        <td align="center" class="col-xs-2">
                                             <span t-esc="o[7]"/>
                                         </td>
                                         <td class="col-xs-2">
