@@ -42,7 +42,7 @@ class purchase_history(models.TransientModel):
                 temp_2.append(order.price_total)
                 temp_2.append(order.order_id.name)
                 temp_2.append(order.product_qty)
-                temp_2.append(order.product_id.product_tmpl_id.manufacturer.name)
+                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.name)
                 temp_2.append(float_repr(order.price_unit,precision_digits=2))
                 temp_2.append(order.product_id.default_code)
                 temp_2.append(order.qty_received)
