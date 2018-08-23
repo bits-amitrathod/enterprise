@@ -20,6 +20,8 @@ class SaleOrder(models.Model):
     show_validate = fields.Boolean(
         compute='_compute_show_validate',
         help='Technical field used to compute whether the validate should be shown.')
+    shipping_terms = fields.Selection(string='Shipping Term', related='partner_id.shipping_terms', readonly=True)
+    preferred_method = fields.Selection(string='Preferred Invoice Delivery Method', related='partner_id.preferred_method', readonly=True)
 
     @api.multi
     def action_void(self):
