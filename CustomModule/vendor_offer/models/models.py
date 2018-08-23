@@ -75,6 +75,7 @@ class VendorOffer(models.Model):
 
     @api.onchange('possible_competition')
     def possible_competition_onchange(self):
+        self.state = 'ven_draft'
         for order in self:
             for line in order.order_line:
                 multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
@@ -172,6 +173,7 @@ class VendorOfferProduct(models.Model):
         if not self.product_id:
             return result1
 
+
         self.qty_in_stocks()
         groupby_dict = groupby_dict_month = groupby_dict_90 = groupby_dict_yr = {}
         sale_orders_line = self.env['sale.order.line'].search([('product_id', '=', self.product_id.id)])
@@ -233,22 +235,10 @@ class VendorOfferProduct(models.Model):
             multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 't2 good 35')])
             self.multiplier=multiplier_list.id
 
-
-
+        self.cal_offer_price()
         #self.product_tier_manufacturer()
         self.expired_inventory_cal()
 
-
-    # def product_tier_manufacturer(self):
-    #     group_by_product = {}
-    #     temp_id = ''
-    #     product_info_list = self.env['product.product'].search([('id', '=', self.product_id.id)])
-    #     group_by_product['data'] = product_info_list
-    #     for product_info in group_by_product['data']:
-    #         temp_id = product_info.product_tmpl_id
-    #     product_info_template_list = self.env['product.template'].search([('id', '=', temp_id.id)])
-    #     self.manufacturer = product_info_template_list.manufacturer.name
-    #     self.product_tier = product_info_template_list.tier
 
     def expired_inventory_cal(self):
         expired_lot_count = 0
