@@ -50,11 +50,11 @@ class purchase_history(models.TransientModel):
                 order.env.cr.execute( "SELECT min(use_date), max (use_date) FROM public.stock_production_lot where product_id ="+str(order.product_id.id))
                 query_result = order.env.cr.dictfetchone()
                 if query_result['min'] != None:
-                    temp_2.append(fields.Datetime.from_string(str(query_result['min'])).date().strftime('%d/%m/%Y'))
+                    temp_2.append(fields.Datetime.from_string(str(query_result['min'])).date().strftime('%m/%d/%Y'))
                 else:
                     temp_2.append(query_result['min'])
                 if query_result['max'] != None:
-                    temp_2.append(fields.Datetime.from_string(str(query_result['max'])).date().strftime('%d/%m/%Y'))
+                    temp_2.append(fields.Datetime.from_string(str(query_result['max'])).date().strftime('%m/%d/%Y'))
                 else:
                     temp_2.append(query_result['max'])
                 temp.append(temp_2)
@@ -64,8 +64,8 @@ class purchase_history(models.TransientModel):
             'ids': self,
             'model': 'purchase.history.cust',
             'form': final_dict,
-            'start_date': fields.Datetime.from_string(str(self.start_date)).date().strftime('%d/%m/%Y'),
-            'end_date': fields.Datetime.from_string(str(self.end_date)).date().strftime('%d/%m/%Y'),
+            'start_date': fields.Datetime.from_string(str(self.start_date)).date().strftime('%m/%d/%Y'),
+            'end_date': fields.Datetime.from_string(str(self.end_date)).date().strftime('%m/%d/%Y'),
 
         }
         return self.env.ref('purchase_history_custome.action_todo_model_report').report_action([],

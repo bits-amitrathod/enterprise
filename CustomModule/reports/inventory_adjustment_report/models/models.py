@@ -24,6 +24,11 @@ class inventory_adjustment_report(models.TransientModel):
             filter(lambda x: x.inventory_id.date >= self.start_date and x.inventory_id.date <= self.end_date, adjustment))
         _logger.info('AKASH %r', filtered_by_date)
         groupby_dict['data'] = filtered_by_date
+        ACTIONS = {
+            "product": "Stockable Product",
+            "consu": "Consumable",
+            "service": "Service",
+        }
         final_dict = {}
         for user in groupby_dict.keys():
             temp = []
@@ -31,7 +36,7 @@ class inventory_adjustment_report(models.TransientModel):
                 temp_2 = []
                 temp_2.append(order.product_name)
                 temp_2.append(datetime.datetime.strptime(str(order.create_date),'%Y-%m-%d %H:%M:%S').date().strftime( '%m/%d/%Y'))
-                temp_2.append(order.product_code)
+                temp_2.append(ACTIONS[order.product_id.product_tmpl_id.type])
                 temp_2.append(order.product_qty)
                 temp_2.append(float_repr(order.product_id.product_tmpl_id.list_price,precision_digits=2))
                 temp_2.append(float_repr(order.product_qty*order.product_id.product_tmpl_id.list_price,precision_digits=2))
