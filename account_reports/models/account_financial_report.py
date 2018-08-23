@@ -344,11 +344,11 @@ class AccountFinancialReportLine(models.Model):
                                 'balance_cash_basis': 'ref.matched_percentage * aml.balance AS balance_cash_basis'}
             for field in self.env.cr.fetchall():
                 field = field[0]
-                columns.append("\"account_move_line\".%s" % (field,))
+                columns.append("\"account_move_line\".\"%s\"" % (field,))
                 if field in replace_columns:
                     columns_2.append(replace_columns.get(field))
                 else:
-                    columns_2.append('aml.%s' % (field,))
+                    columns_2.append('aml.\"%s\"' % (field,))
             select_clause_1 = ', '.join(columns);
             select_clause_2 = ', '.join(columns_2);
 
