@@ -1,7 +1,6 @@
 <odoo>
-
-
     <data>
+
         <record id="view_tree_documents_normal" model="ir.ui.view">
             <field name="sequence" eval="1"/>
             <field name="name">Import Document normal tree</field>
@@ -29,6 +28,30 @@
                     <field name="quantity"/>
                     <field name="required_quantity"/>
                 </tree>
+            </field>
+        </record>
+
+        <record id="view_form_template_normal" model="ir.ui.view">
+            <field name="sequence" eval="1"/>
+            <field name="name">Customer Template Form</field>
+            <field name="model">sps.customer.template</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false">
+                    <group>
+                        <field name="customer_id"/>
+                        <field name="non_selected_columns"/>
+                        <field name="file_name"/>
+                        <field name="template_type"/>
+                        <field name="template_status"/>
+                    </group>
+                    <group>
+                        <field name="mf_customer_sku"/>
+                        <field name="mf_required_quantity"/>
+                        <field name="mf_quantity"/>
+                        <field name="mf_uom"/>
+                    </group>
+                </form>
             </field>
         </record>
 
@@ -108,5 +131,4 @@
                   action="customer-template-client-action"/>
 
     </data>
-
 </odoo>
