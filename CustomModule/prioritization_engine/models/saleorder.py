@@ -125,3 +125,10 @@ class StockPicking(models.Model):
             return self.action_generate_backorder_wizard()
         self.action_done()
         return
+
+    class AccountInvoice(models.Model):
+        _inherit = 'account.invoice'
+
+        shipping_terms = fields.Selection(string='Shipping Term', related='partner_id.shipping_terms', readonly=True)
+        preferred_method = fields.Selection(string='Preferred Invoice Delivery Method',
+                                            related='partner_id.preferred_method', readonly=True)
