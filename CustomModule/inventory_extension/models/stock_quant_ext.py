@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 class StockQuantExt(models.Model):
 
     _inherit = 'stock.quant'
-    use_date = fields.Char('Expired Date', compute='_compute_show_lot_user_date')
+    use_date = fields.Char('Expiration Date', compute='_compute_show_lot_user_date')
 
     @api.multi
     def _compute_show_lot_user_date(self):
