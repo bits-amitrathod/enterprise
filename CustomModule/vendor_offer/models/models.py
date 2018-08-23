@@ -171,7 +171,7 @@ class VendorOfferProduct(models.Model):
         result1 = {}
         if not self.product_id:
             return result1
-
+        self.write({'state': 'ven_draft'})
         self.qty_in_stocks()
         groupby_dict = groupby_dict_month = groupby_dict_90 = groupby_dict_yr = {}
         sale_orders_line = self.env['sale.order.line'].search([('product_id', '=', self.product_id.id)])
