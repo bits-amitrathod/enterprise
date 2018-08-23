@@ -14,8 +14,6 @@ class StockQuantExt(models.Model):
 
     @api.multi
     def _compute_show_lot_user_date(self):
-        _logger.info("(stock_quant_ext) _compute_show_lot_user_date called...")
-        _logger.info("%r", self)
         for record in self:
             _logger.info(record.lot_id)
             if record.lot_id and record.lot_id.use_date:
