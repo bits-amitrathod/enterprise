@@ -17,66 +17,63 @@
                             <h4>Surgical Product Solutions</h4>
                         </b>
                         <b>
-                            <h2>Inventory Adjustment Report</h2>
+                            <h2>Adjustment Report</h2>
                         </b>
                     </center>
                     <center>
-                        <b>
+                        <b>Date Range:
                             <span t-esc="start_date"/>
-                            To
+
+                            -
+
                             <span t-esc="end_date"/>
                         </b>
                     </center>
                     <!-- Report page content -->
-                    <table class="table table-stripped">
+                    <table class="table table-condensed" style="border: 1px solid black;">
                         <tr>
-                            <th>Product</th>
-                            <th>Inventory Date</th>
-                            <th>Date Posted</th>
-                            <th>Type</th>
-                            <th>Qty</th>
-                            <th>Amount</th>
-                            <th>Total Amount</th>
+                            <th style="border: 1px solid black;text-align: center;">Product</th>
+                            <!--<th>SKU</th>-->
+                            <th style="border: 1px solid black;text-align: center;">Inventory Date</th>
+                            <th style="border: 1px solid black;text-align: center;">Date Posted</th>
+                            <th style="border: 1px solid black;text-align: center;">Type</th>
+                            <th style="border: 1px solid black;text-align: center;">Qty</th>
+                            <th style="border: 1px solid black;text-align: center;">Amount</th>
+                            <th style="border: 1px solid black;text-align: center;">Total Amount</th>
 
                         </tr>
 
                         <t t-foreach="data.keys()" t-as="user">
                             <t t-foreach="data[user]" t-as="o">
                                 <tr>
-                                    <td class="col-xs-2">
-                                        <span t-esc="o[0]"/>
+                                    <td align="left" class="col-xs-2">
+                                        <span t-esc="o[6]"/>
                                     </td>
-
-                                    <td class="col-xs-2">
+                                    <!--<td class="col-xs-2">-->
+                                        <!--<span t-esc="o[6]"/>-->
+                                    <!--</td>-->
+                                    <td align="center" class="col-xs-2">
                                         <span t-esc="o[1]"/>
                                     </td>
-
-                                    <td class="col-xs-2">
+                                    <td align="center" class="col-xs-2">
                                         <span t-esc="o[1]"/>
                                     </td>
-
                                     <td class="col-xs-2">
                                         <span t-esc="o[2]"/>
                                     </td>
-
-                                    <td class="col-xs-2">
+                                    <td align="right" class="col-xs-2">
                                         <span t-esc="o[3]"/>
                                     </td>
-                                     <td class="col-xs-2">
-                                        $<span t-esc="o[4]"/>
+                                     <td align="right" class="col-xs-2">
+                                        $ <span t-esc="o[4]"/>
                                     </td>
-
-                                    <td class="col-xs-2">
-                                        $<span t-esc="o[5]"/>
+                                    <td align="right" class="col-xs-2">
+                                        $ <span t-esc="o[5]"/>
                                     </td>
                                 </tr>
                             </t>
-
                         </t>
-
                     </table>
-
-
                 </div>
             </t>
         </t>
