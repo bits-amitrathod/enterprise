@@ -128,7 +128,7 @@ class AccountInvoice(models.Model):
         return None
 
     @api.multi
-    @api.returns('self', lambda value: value.id)
+    @api.returns('mail.message', lambda value: value.id)
     def message_post(self, **kwargs):
         """When a message is posted on an account.invoice, send the attachment to iap-ocr if
         the res_config is on "auto_send" and if this is the first attachment."""

@@ -503,7 +503,7 @@ class MrpEco(models.Model):
         return stages.browse(stage_ids)
 
     @api.multi
-    @api.returns('self', lambda value: value.id)
+    @api.returns('mail.message', lambda value: value.id)
     def message_post(self, **kwargs):
         message = super(MrpEco, self).message_post(**kwargs)
         if message.message_type == 'comment' and message.author_id == self.env.user.partner_id:
