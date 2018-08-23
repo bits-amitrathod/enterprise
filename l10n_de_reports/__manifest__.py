@@ -2,11 +2,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Deutschland - Accounting Reports',
+    'name': 'Germany - Accounting Reports',
     'version': '1.1',
     'category': 'Accounting',
     'description': """
-        Accounting reports for Deutschland
+        Accounting reports for Germany
         Contains Balance sheet, Profit and Loss, VAT and Partner VAT reports
         Also add DATEV export options to general ledger
     """,
