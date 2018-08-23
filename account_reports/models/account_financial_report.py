@@ -152,6 +152,11 @@ class ReportAccountFinancialReport(models.Model):
 
         return columns
 
+    def _get_filter_journals(self):
+        if self == self.env.ref('account_reports.account_financial_report_cashsummary0'):
+            return self.env['account.journal'].search([('company_id', 'in', self.env.user.company_ids.ids or [self.env.user.company_id.id]), ('type', 'in', ['bank', 'cash'])], order="company_id, name")
+        return super(ReportAccountFinancialReport, self)._get_filter_journals()
+
     def _build_options(self, previous_options=None):
         options = super(ReportAccountFinancialReport, self)._build_options(previous_options=previous_options)
 
