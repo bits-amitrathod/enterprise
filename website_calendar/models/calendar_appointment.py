@@ -168,8 +168,8 @@ class CalendarAppointmentType(models.Model):
         def is_calendar_available(slot, events, employee):
             """ Returns True if the given slot doesn't collide with given events for the employee
             """
-            start_dt_string = fields.Datetime.to_string(slot['UTC'][0])
-            end_dt_string = fields.Datetime.to_string(slot['UTC'][1])
+            start_dt_string = slot['UTC'][0]
+            end_dt_string = slot['UTC'][1]
             employee_tz = pytz.timezone(employee.user_id.tz or self.sudo().env.user.tz or slot['slot'].appointment_type_id.appointment_tz or 'UTC')
 
             for ev in events.filtered(lambda ev: ev.start < end_dt_string and ev.stop > start_dt_string):

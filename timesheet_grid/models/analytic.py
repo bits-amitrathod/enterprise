@@ -70,7 +70,7 @@ class AnalyticLine(models.Model):
         else:
             anchor = date.today() + relativedelta(weeks=-1, days=1, weekday=0)
         span = self.env.context.get('grid_range', 'week')
-        validate_to = fields.Date.to_string(anchor + END_OF[span])
+        validate_to = anchor + END_OF[span]
 
         if not self:
             raise UserError(_("There aren't any timesheet to validate"))

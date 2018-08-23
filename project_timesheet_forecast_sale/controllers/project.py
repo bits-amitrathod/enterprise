@@ -103,8 +103,8 @@ class TimesheetForecastController(SaleTimesheetController):
         if not any(projects.mapped('allow_forecast')):
             return rows_employee
 
-        initial_date = fields.Date.from_string(fields.Date.today())
-        fc_months = sorted([fields.Date.to_string(initial_date + relativedelta(months=i, day=1)) for i in range(0, DEFAULT_MONTH_RANGE)])  # M3, M4, M5
+        initial_date = fields.Date.today()
+        fc_months = sorted([initial_date + relativedelta(months=i, day=1) for i in range(0, DEFAULT_MONTH_RANGE)])  # M3, M4, M5
         default_row_vals = self._table_row_default(projects)
 
         # extract employee names
