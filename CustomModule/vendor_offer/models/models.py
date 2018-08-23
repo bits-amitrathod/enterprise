@@ -142,6 +142,7 @@ class VendorOffer(models.Model):
 
 
 class VendorOfferProduct(models.Model):
+
     # _name = 'purchase.order.line'
     _inherit = "purchase.order.line"
     _inherits = {'product.product': 'product_id'}
@@ -236,6 +237,7 @@ class VendorOfferProduct(models.Model):
 
         #self.product_tier_manufacturer()
         self.expired_inventory_cal()
+
 
     # def product_tier_manufacturer(self):
     #     group_by_product = {}

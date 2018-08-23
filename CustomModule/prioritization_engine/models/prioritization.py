@@ -41,6 +41,10 @@ class Customer(models.Model):
        ('mail', 'Mail'),
        ('email', 'E Mail'),
        ('both', 'E Mail & Mail ')], string='Preferred Invoice Delivery Method')
+    shipping_terms = fields.Selection([
+        ('1', 'Prepaid & Billed'),
+        ('2', 'Prepaid'),
+        (3,'Freight Collect')], string='Shipping Terms')
 
     @api.multi
     def bulk_verify(self,arg):

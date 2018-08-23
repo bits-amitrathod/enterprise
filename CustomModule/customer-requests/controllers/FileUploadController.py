@@ -96,20 +96,31 @@ class FileUploadController(Controller):
                         document_id = file_uploaded_record.id
                         ref = str(document_id) + "_" + file_uploaded_record.token
                         response = dict(errorCode=0, message='File Uploaded Successfully', ref=ref)
-                        # if user_api_settings.sku_preconfig
                         _logger.info('user_api_settings.sku_preconfig %r', user_api_settings.sku_preconfig)
                         _logger.info('user_api_settings.sku_postconfig %r', user_api_settings.sku_postconfig)
                         for req in requests:
-                            sps_products = request.env['sps.product'].sudo().search(
-                                [['customer_id', '=', user_id], ['customer_sku', '=', req['customer_sku']]])
+                            customer_sku = req['customer_sku']
+                            product_sku = customer_sku
+                            if not user_api_settings.sku_preconfig is None \
+                                    and product_sku.startswith(user_api_settings.sku_preconfig):
+                                product_sku = product_sku[len(user_api_settings.sku_preconfig):]
+                            if not user_api_settings.sku_postconfig is None \
+                                    and product_sku.endswith(user_api_settings.sku_postconfig):
+                                product_sku = product_sku[:-len(user_api_settings.sku_postconfig)]
+                            _logger.info('customer_sku %r product sku %r', customer_sku, product_sku)
+                            product_tmpl = request.env['product.template'].sudo().search(['|',('sku_code', '=', product_sku), ('manufacturer_pref', '=', product_sku)])
+                            sps_product_id = 0
+                            if product_tmpl :
+                                product_model = request.env['product.product'].sudo().search(
+                                [['product_tmpl_id', '=', product_tmpl.id], ['default_code', '=', product_tmpl.default_code]])
+                                sps_product_id = product_model[0].id
+                            sps_product_priotization = request.env['prioritization_engine.prioritization'].sudo().search(
+                                [['customer_id', '=', user_id], ['product_id', '=', sps_product_id]])
                             high_priority_product = False
-                            if len(sps_products) >= 1:
-                                sps_product = sps_products[0]
+                            if len(sps_product_priotization) >= 1:
+                                sps_product = sps_product_priotization[0]
                                 sps_product_id = sps_product.product_id.id
-                                sps_customer_product_priority = request.env[
-                                    'sps.customer.product.priority'].sudo().search(
-                                    [['product_id', '=', sps_product_id], ['customer_id', '=', user_id],
-                                     ['product_priority', '=', 0]])
+                                sps_customer_product_priority = sps_product.priority
                                 if sps_customer_product_priority or (not user_api_settings.priority is None and user_api_settings.priority == 0):
                                     high_priority_product = True
                                     req.update(dict(product_id=sps_product_id, status='Inprocess'))
