@@ -44,7 +44,7 @@ class SaleSalespersonReport(models.TransientModel):
             for order in groupby_dict[user]:
                 temp_2 = []
                 temp_2.append(order.product_tmpl_id.type)
-                temp_2.append(order.product_tmpl_id.manufacturer.name)
+                temp_2.append(order.product_tmpl_id.product_brand_id.name)
                 temp_2.append(order.id)
                 temp_2.append(order.product_tmpl_id.name)
                 order.env.cr.execute(
