@@ -73,7 +73,7 @@ class Customer(models.Model):
         action['views'] = [(self.env.ref('prioritization_engine.view_notification_setting_form').id, 'form')]
         action['view_ids'] = self.env.ref('prioritization_engine.view_notification_setting_form').id
         action['res_id'] = self.id
-        print("Inside  action_view_notification")
+        #print("Inside  action_view_notification")
         return action
 
     def get_customer_request(self):
@@ -87,6 +87,7 @@ class ProductTemplate(models.Model):
     location = fields.Char("Location")
     premium = fields.Boolean("Premium")
     sku_code = fields.Char('SKU / Catalog No')
+    manufacturer_pref = fields.Char(string='Manuf. Catalog No')
 
 
 class NotificationSetting(models.Model):
@@ -107,7 +108,8 @@ class Prioritization(models.Model):
     _name = 'prioritization_engine.prioritization'
     _inherits = {'product.product':'product_id'}
     #sps_sku = fields.Char("SPS SKU",readonly=False)
-    threshold = fields.Integer("Product Threshold",readonly=False)
+    min_threshold = fields.Integer("Min Threshold",readonly=False)
+    max_threshold = fields.Integer("Max Threshold",readonly=False)
     priority = fields.Integer("Product Priority",readonly=False)
     cooling_period = fields.Integer("Cooling Period in days",readonly=False)
     auto_allocate = fields.Boolean("Allow Auto Allocation?",readonly=False)
@@ -115,9 +117,9 @@ class Prioritization(models.Model):
     expiration_tolerance = fields.Integer("Expiration Tolerance in months",readonly=False)
     partial_ordering = fields.Boolean("Allow Partial Ordering?",readonly=False)
     partial_UOM = fields.Boolean("Allow Partial UOM?",readonly=False)
-    length_of_holding = fields.Date("Length Of Holding",readonly=False)
+    length_of_holding = fields.Integer("Length Of Holding",readonly=False)
     customer_id = fields.Many2one('res.partner', string='GlobalPrioritization',required=True)
-    product_id = fields.Many2one('product.product', string='Prioritization Product',required=True)
+    product_id = fields.Many2one('product.product', string='Product',required=True)
     sales_channel = fields.Selection([('1','Manual'),('2','Prioritization Engine')], String="Sales Channel",readonly=False)# get team id = sales channel like 3 = Manual, 4 = Prioritization Engine
 
     _sql_constraints = [
@@ -310,20 +312,21 @@ class Prioritization(models.Model):
 
 class PrioritizationTransient(models.TransientModel):
     _name = 'prioritization.transient'
-    threshold = fields.Integer("Product Threshold")
-    priority = fields.Integer("Product Priority")
+    min_threshold = fields.Integer("Min Threshold", readonly=False)
+    max_threshold = fields.Integer("Max Threshold", readonly=False)
+    priority = fields.Integer("Priority")
     cooling_period = fields.Integer("Cooling Period in days")
     auto_allocate = fields.Boolean("Allow Auto Allocation?")
     length_of_hold = fields.Integer("Length Of Hold in days")
     expiration_tolerance = fields.Integer("Expiration Tolerance days")
     partial_ordering = fields.Boolean("Allow Partial Ordering?")
-    partial_UOM = fields.Integer("Allow Partial UOM?")
-    length_of_hold = fields.Date("Lenght Of Holding")
+    partial_UOM = fields.Boolean("Allow Partial UOM?")
+    length_of_hold = fields.Integer("Lenght Of Holding")
 
     def action_confirm(self,arg):
         for selected in arg["selected_ids"]:
             record = self.env['prioritization_engine.prioritization'].search([('id', '=', selected)])[0]
-            record.write({'threshold': self.threshold,'priority': self.priority,'cooling_period': self.cooling_period,'auto_allocate': self.auto_allocate,
+            record.write({'min_threshold': self.min_threshold,'max_threshold': self.min_threshold,'priority': self.priority,'cooling_period': self.cooling_period,'auto_allocate': self.auto_allocate,
                         'expiration_tolerance': self.expiration_tolerance,'partial_ordering': self.partial_ordering,'partial_UOM': self.partial_UOM,
                         'length_of_hold': self.length_of_hold})
         return {'type': 'ir.actions.act_close_wizard_and_reload_view'}
