@@ -230,7 +230,6 @@ QUnit.module('Studio', {}, function () {
             assert.expect(3);
 
             var node = {
-                components: ['layout'],
                 node: {
                     attrs: {
                         'data-oe-id': '42',
@@ -263,7 +262,6 @@ QUnit.module('Studio', {}, function () {
             assert.expect(1);
 
             var node = {
-                components: ['layout'],
                 node: {
                     attrs: {
                         'data-oe-id': '42',
@@ -663,7 +661,6 @@ QUnit.module('Studio', {}, function () {
 
             _.each(layoutChangesOperations, function (changeOperation) {
                 var node = {
-                    components: ['layout'],
                     node: changeOperation.nodeToUse,
                 };
                 var sidebar = studioTestUtils.createSidebar({
