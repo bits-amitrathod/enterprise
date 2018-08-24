@@ -31,12 +31,8 @@ var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
             self.$('.sync_error').removeClass('hidden');
             self.renderSyncError();
         }
-        else if (this.state === 'dashboard' && this.country === 'worldwide') {
-            self.$('.favorite_institutions_no_result').removeClass('hidden');
-            self.$('.institutions_search').addClass('hidden');
-        }
-        else {
-            self.$('.institution_search').removeClass('hidden');
+        else if (this.state === 'search' || (this.state === 'dashboard' && this.results.length > 0)) {
+            self.$('.institutions_search').removeClass('hidden');
             self.$('.favorite_institutions_no_result').addClass('hidden');
             if (self.results.length > 0) {
                 // Display results
@@ -49,6 +45,10 @@ var OnlineSyncAccountInstitutionSelector = AbstractAction.extend({
                 self.$('.institution_no_result').removeClass('hidden');
                 self.$('.institution_result').addClass('hidden');
             }
+        }
+        else {
+            self.$('.favorite_institutions_no_result').removeClass('hidden');
+            self.$('.institutions_search').addClass('hidden');
         }
     },
 
