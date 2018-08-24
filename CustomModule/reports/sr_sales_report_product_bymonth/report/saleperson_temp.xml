@@ -13,7 +13,7 @@
                         </b>
                     </center>
                     <center>
-                        <b>
+                       Date Range: <b>
                             <span t-esc="start_date"/>
                             -
                              <span t-esc="end_date"/>
@@ -24,35 +24,37 @@
                     <t t-foreach="data.keys()" t-as="user">
 
                         <t t-set="total_sum" t-value="0"/>
+                        <div class="table-responsive">
                         <table class="table table-condensed" style="border: 1px solid black;">
                             <thead>
                                 <tr style="border: 1px solid black;">
-                                    <th style="border: 1px solid black;">Product - SKU</th>
-                                    <th style="border: 1px solid black;">Product Nmae</th>
-                                    <th style="border: 1px solid black;">Price</th>
-                                    <th style="border: 1px solid black;">Date</th>
-                                    <th style="border: 1px solid black;">Order</th>
+                                    <th style="border: 1px solid black;text-align: center;">Order</th>
+                                    <th style="border: 1px solid black;text-align: center;">Product</th>
+                                    <th style="border: 1px solid black;text-align: center;">Product Name</th>
+                                    <th style="border: 1px solid black;text-align: center;">Date</th>
+                                    <th style="border: 1px solid black;text-align: center;">Price</th>
                                 </tr>
                                 <tr t-foreach="data[user]" t-as="order">
+                                    <td style="border: 1px solid black;">
+                                        <span t-esc="order[4]"/>
+                                    </td>
                                     <td style="border: 1px solid black;">
                                         <span t-esc="order[0]"/>
                                     </td>
                                     <td style="border: 1px solid black;">
                                          <span t-esc="order[1]"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                         $ <span t-esc="order[2]"/>
-                                    </td>
-                                    <td style="border: 1px solid black;">
+                                    <td align="center" style="border: 1px solid black;">
                                         <span t-esc="order[3]"/>
                                     </td>
-                                     <td style="border: 1px solid black;">
-                                        <span t-esc="order[4]"/>
+                                    <td align="right" style="border: 1px solid black;">
+                                         $ <span t-esc="order[2]"/>
                                     </td>
                                 </tr>
 
                             </thead>
                         </table>
+                        </div>
                     </t>
                 </page>
 

@@ -27,7 +27,28 @@
                     <field name="customer_sku"/>
                     <field name="quantity"/>
                     <field name="required_quantity"/>
+                    <field name="status"/>
                 </tree>
+            </field>
+        </record>
+
+
+        <record id="view_form_documents_normal" model="ir.ui.view">
+            <field name="sequence" eval="1"/>
+            <field name="name">Import Document normal Form</field>
+            <field name="model">sps.cust.uploaded.documents</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false">
+                    <group>
+                        <field name="customer_id"/>
+                        <field name="source"/>
+                        <field name="status"/>
+                    </group>
+                    <group>
+                        <field name="request_ids"/>
+                    </group>
+                </form>
             </field>
         </record>
 

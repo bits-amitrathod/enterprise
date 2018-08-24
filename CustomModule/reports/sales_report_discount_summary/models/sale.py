@@ -20,6 +20,7 @@
 ##############################################################################
 
 from odoo import api, fields, models
+from odoo.tools import float_repr
 import datetime
 import logging
 
@@ -70,7 +71,6 @@ class DiscountSummaryReport(models.TransientModel):
         groupby_dict = {}
         filtered_by_current_month = sale_orders
         dat = comparebymonth().addObject(filtered_by_current_month)
-        groupby_dict['data'] = dat
         final_dict = {}
         for user in dat.keys():
             temp = []
@@ -79,11 +79,12 @@ class DiscountSummaryReport(models.TransientModel):
             temp_2.append(order.sale_order)
             temp_2.append(order.customer)
             temp_2.append(order.confirmation_date)
-            temp_2.append(order.amount)
-            temp_2.append(order.discount_amount)
-            temp_2.append(order.total_amount)
+            temp_2.append(float_repr(order.amount,precision_digits=2))
+            temp_2.append(float_repr(order.discount_amount,precision_digits=2))
+            temp_2.append(float_repr(order.total_amount,precision_digits=2))
             temp.append(temp_2)
             final_dict[user] = temp
+        # final_dict['data'].sort(key=lambda x: x[0])
         datas = {
             'ids': self.ids,
             'model': self._module,

@@ -23,12 +23,12 @@
     'name': 'Discount Summary',
     'category': 'sale',
     'version': '11.0.0.1',
-    'summary': 'This module provides Sales Report Discount Summary.',
+    # 'summary': 'This module provides Sales Report Discount Summary.',
     'author': 'Tushar Godase',
-    'description': '''This module provides Sales Report Discount Summary.
-                      With the help of this moudule you can print sales reportDiscount Summary.
-                      '''
-                   ,
+    # 'description': '''This module provides Sales Report Discount Summary.
+    #                   With the help of this moudule you can print sales reportDiscount Summary.
+    #                   '''
+    #                ,
     'depends': ['base', 'sale_management'],
     'data': [
         'views/sale_view.xml',

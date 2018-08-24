@@ -17,33 +17,35 @@ class lot_history(models.TransientModel):
         lots = self.env['stock.production.lot'].search([])
         groupby_dict = {}
 
-        ACTIONS = {
-            "product": "Stockable Product",
-            "consu": "Consumable",
-            "service": "Service",
-        }
-
         for user in self.product_id:
             filtered_order = list(filter(lambda x: x.product_id == user, lots))
-            filtered_by_date = list(
-                filter(lambda x: x.create_date >= self.start_date and x.create_date <= self.end_date, filtered_order))
+            filtered_by_date = list( filter(lambda x: x.create_date >= self.start_date and x.create_date <= self.end_date, filtered_order))
             groupby_dict[user.name] = filtered_by_date
 
-        final_dict = {}
-        for user in groupby_dict.keys():
-            temp = []
-            for order in groupby_dict[user]:
-                temp_2 = []
-                temp_2.append(order.name)
-                temp_2.append(order.product_id.product_tmpl_id.sku_code)
-                temp_2.append(order.product_id.product_tmpl_id.name)
-                temp_2.append(ACTIONS[order.product_id.product_tmpl_id.type])
-                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.name)
-                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.email)
-                temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.phone)
-                temp_2.append(datetime.datetime.strptime(str(order.create_date),'%Y-%m-%d %H:%M:%S').date().strftime( '%m-%d-%Y'))
-                temp.append(temp_2)
-            final_dict[user] = temp
+
+            ACTIONS = {
+                "product": "Stockable Product",
+                "consu": "Consumable",
+                "service": "Service",
+            }
+
+
+
+            final_dict = {}
+            for user in groupby_dict.keys():
+                temp = []
+                for order in groupby_dict[user]:
+                    temp_2 = []
+                    temp_2.append(order.name)
+                    temp_2.append(order.product_id.product_tmpl_id.sku_code)
+                    temp_2.append(order.product_id.product_tmpl_id.name)
+                    temp_2.append(ACTIONS[order.product_id.product_tmpl_id.type])
+                    temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.name)
+                    temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.phone)
+                    temp_2.append(order.product_id.product_tmpl_id.product_brand_id.partner_id.email)
+                    temp_2.append(datetime.datetime.strptime(str(order.create_date),'%Y-%m-%d %H:%M:%S').date().strftime('%m-%d-%Y'))
+                    temp.append(temp_2)
+                final_dict[user] = temp
 
         datas = {
             'ids': self,

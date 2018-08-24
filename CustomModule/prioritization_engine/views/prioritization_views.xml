@@ -45,23 +45,22 @@
                             </field>
                       </page>
                       <page name="prioritization" string="Global Priority Configuration">
-                          <group>
-                               <group>
-                                     <!--<field name="sps_sku" />-->
-                                     <field name="threshold_min"/>
-                                     <field name="priority"/>
-                                     <field name="auto_allocate" />
-                                     <field name="notification_email"/>
-                               </group>
-                               <group>
-                                    <field name="cooling_period"/>
-                                     <field name="threshold_max"/>
-                                    <field name="expiration_tolerance" />
-                                    <field name="partial_UOM"/>
-                                    <field name="partial_ordering" />
-                                    <button name="get_customer_request" string="Get customer requests" class="oe_highlight" type="object"/>
-                                </group>
-                          </group>
+                      <group>
+                        <group>
+                            <field name="auto_allocate" />
+                            <field name="priority"/>
+                             <field name="expiration_tolerance" />
+                            <field name="length_of_hold"/>
+                        </group>
+                        <group>
+                            <field name="min_threshold"/>
+                             <field name="max_threshold"/>
+                            <field name="cooling_period"/>
+                             <field name="partial_ordering" />
+                            <field name="partial_UOM"/>
+                            <button name="get_customer_request" string="Get customer requests" class="oe_highlight" type="object"/>
+                      </group>
+                      </group>
                       </page>
                   </xpath>
             </field>

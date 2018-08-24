@@ -20,6 +20,8 @@
 ##############################################################################
 
 from odoo import api, fields, models
+from odoo.tools import float_repr
+from numpy.core.defchararray import upper
 
 class SaleSalespersonReport(models.TransientModel):
     _name = 'product.list.report'
@@ -27,6 +29,13 @@ class SaleSalespersonReport(models.TransientModel):
     start_date = fields.Date('Start Date', required=True)
     end_date = fields.Date(string="End Date", required=True)
     user_ids = fields.Many2many('res.users', string="Salesperson")
+
+    @api.model
+    def check(self, data):
+        if data:
+            return upper(data)
+        else:
+            return " "
 
     @api.multi
     def print_product_price_list_vise_report(self):
@@ -41,11 +50,13 @@ class SaleSalespersonReport(models.TransientModel):
             temp = []
             for product in groupby_dict[user]:
                 temp_2 = []
-                temp_2.append(product.default_code)
-                temp_2.append(product.product_tmpl_id.list_price)
+                temp_2.append(product.product_tmpl_id.sku_code)
+                temp_2.append(product.product_tmpl_id.name)
+                temp_2.append(float_repr(product.product_tmpl_id.standard_price,precision_digits=2))
                 temp.append(temp_2)
             final_dict[user] = temp
 
+        final_dict['data'].sort(key=lambda x:self.check(x[0]))
         datas = {
             'ids': self,
             'model': 'product.list.report',
@@ -55,3 +66,33 @@ class SaleSalespersonReport(models.TransientModel):
 
         }
         return self.env.ref('product_price_list_report.action_report_price_list_wise').report_action([], data=datas)
+
+    @api.multi
+    def print_customer_product_price_list_vise_report(self):
+        sale_orders = self.env['product.product'].search([])
+        groupby_dict = {}
+        filtered_order = sale_orders
+        filtered_by_date = filtered_order
+        groupby_dict['data'] = filtered_by_date
+
+        final_dict = {}
+        for user in groupby_dict.keys():
+            temp = []
+            for product in groupby_dict[user]:
+                temp_2 = []
+                temp_2.append(product.product_tmpl_id.sku_code)
+                temp_2.append(product.product_tmpl_id.name)
+                temp_2.append(float_repr(product.product_tmpl_id.list_price, precision_digits=2))
+                temp.append(temp_2)
+            final_dict[user] = temp
+        final_dict['data'].sort(key=lambda x: self.check(x[0]))
+        datas = {
+            'ids': self,
+            'model': 'product.list.report',
+            'form': final_dict,
+            'start_date': self.start_date,
+            'end_date': self.end_date,
+
+        }
+        return self.env.ref('product_price_list_report.action_report_cust_price_list_wise').report_action([], data=datas)
+

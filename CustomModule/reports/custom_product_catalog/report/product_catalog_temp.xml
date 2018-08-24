@@ -17,18 +17,18 @@
                     <t t-foreach="data.keys()" t-as="user">
 
                         <t t-set="total_sum" t-value="0"/>
+                        <div class="table-responsive">
                         <table class="table table-condensed" style="border: 1px solid black;">
                             <thead>
                                 <tr style="border: 1px solid black;">
-                                    <th style="border: 1px solid black;">Type</th>
-                                    <th style="border: 1px solid black;">Manufacturer</th>
-                                    <th style="border: 1px solid black;">Product Number</th>
-                                    <th style="border: 1px solid black;">Product Name</th>
-                                    <th style="border: 1px solid black;">Quantity</th>
-                                    <th style="border: 1px solid black;">Price</th>
-                                    <th style="border: 1px solid black;">Min Exp Date</th>
-                                    <th style="border: 1px solid black;">Max Exp Date</th>
-
+                                    <th style="border: 1px solid black;text-align: center !important;white-space: nowrap;width:200px;">Type</th>
+                                    <th style="border: 1px solid black;text-align: center !important;white-space: nowrap;">Manufacturer</th>
+                                    <th style="border: 1px solid black;text-align: center !important;white-space: nowrap;">Product</th>
+                                    <th style="border: 1px solid black;text-align: center !important;white-space: nowrap;">Product Name</th>
+                                    <th style="border: 1px solid black;text-align: center !important;white-space: nowrap;">Quantity</th>
+                                    <th style="border: 1px solid black;text-align: center !important;white-space: nowrap;">Price</th>
+                                    <th style="border: 1px solid black;text-align: center !important;white-space: nowrap;">Min Exp Date</th>
+                                    <th style="border: 1px solid black;text-align: center !important;white-space: nowrap;">Max Exp Date</th>
                                 </tr>
                                 <tr t-foreach="data[user]" t-as="order">
                                     <td style="border: 1px solid black;">
@@ -43,21 +43,22 @@
                                     <td style="border: 1px solid black;">
                                         <span t-esc="order[3]"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
+                                    <td align="right" style="border: 1px solid black;">
                                         <span t-esc="order[4]"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        $ <span t-esc="order[5]"/>
+                                    <td  align="right" style="border: 1px solid black;">
+                                        $ <span  t-esc="order[5]"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
+                                    <td align="center" style="border: 1px solid black;">
                                         <span t-esc="order[6]"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
+                                    <td align="center" style="border: 1px solid black;">
                                         <span t-esc="order[7]"/>
                                     </td>
                                 </tr>
                             </thead>
                         </table>
+                        </div>
                     </t>
                 </page>
             </t>
@@ -72,6 +73,7 @@
                     <div class="row">
                     <center>
                         <b>
+                            <h2> Surgical Product Solutions </h2>
                             <h4> Product Catalog Report </h4>
                         </b>
                     </center>
@@ -80,11 +82,13 @@
                     <t t-foreach="data.keys()" t-as="user">
 
                         <t t-set="total_sum" t-value="0"/>
+                        <div class="table-responsive">
                         <table class="table table-condensed" style="border: 1px solid black;">
                             <thead>
                                 <tr style="border: 1px solid black;">
-                                    <th style="border: 1px solid black;">Name</th>
-                                    <th style="border: 1px solid black;">Price</th>
+                                    <th style="border: 1px solid black;text-align:center;width:200px;">SKU</th>
+                                    <th style="border: 1px solid black;text-align:center;">Product Name</th>
+                                    <th style="border: 1px solid black;text-align:center;">Price</th>
                                 </tr>
                                 <tr t-foreach="data[user]" t-as="order">
                                     <td style="border: 1px solid black;">
@@ -93,9 +97,13 @@
                                     <td style="border: 1px solid black;">
                                         <span t-esc="order[1]"/>
                                     </td>
+                                    <td style="border: 1px solid black;text-align: right;">
+                                        $ <span t-esc="order[2]"/>
+                                    </td>
                                 </tr>
                             </thead>
                         </table>
+                        </div>
                     </t>
                 </page>
             </t>

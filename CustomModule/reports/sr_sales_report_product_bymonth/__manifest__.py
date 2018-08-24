@@ -23,12 +23,12 @@
     'name': 'Sales By Month',
     'category': 'sale',
     'version': '11.0.0.1',
-    'summary': 'This module provides Sales Report By Month.',
+    # 'summary': 'This module provides Sales Report By Month.',
     'author': 'Tushar Godase',
-    'description': '''This module provides Sales Report By Month.
-                      With the help of this moudule you can print sales report Month Wise .
-                      '''
-                   ,
+    # 'description': '''This module provides Sales Report By Month.
+    #                   With the help of this moudule you can print sales report Month Wise .
+    #                   '''
+    #                ,
     'depends': ['base', 'sale_management'],
     'data': [
         'views/sale_view.xml',
