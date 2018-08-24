@@ -9,7 +9,11 @@ class VendorOffer(models.Model):
     # _name = 'purchase.order'
     _description = "Vendor Offer"
     _inherit = "purchase.order"
+    _inherits = {'res.partner': 'partner_id'}
 
+    carrier_info = fields.Char("Carrier Info", related='partner_id.carrier_info', readonly=True)
+    carrier_acc_no = fields.Char("Carrier Account No", related='partner_id.carrier_acc_no', readonly=True)
+    shipping_terms = fields.Selection(string='Shipping Term', related='partner_id.shipping_terms', readonly=True)
     appraisal_no = fields.Char(string='Appraisal No#')
     acq_user_id = fields.Many2one('res.users',string='Acq Manager')
     date_offered = fields.Datetime(string='Date Offered', default=fields.Datetime.now)
@@ -76,20 +80,20 @@ class VendorOffer(models.Model):
     @api.onchange('possible_competition')
     def possible_competition_onchange(self):
         self.state = 'ven_draft'
-        for order in self:
-            for line in order.order_line:
-                multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
-                line.margin = multiplier_list.margin
-                line.offer_price = round(float(line.price_unit) * (
-                            float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
+        # for order in self:
+        #     for line in order.order_line:
+        #         multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
+        #         line.margin = multiplier_list.margin
+        #         line.offer_price = round(float(line.price_unit) * (
+        #                     float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
 
-    @api.onchange('accelerator','retail_amt')
-    def accelerator_onchange(self):
-        if self.accelerator == 'yes':
-            self.max = float(self.retail_amt)*float(0.65)
-        else:
-            self.max = 0
-        print(self.max)
+    # @api.onchange('accelerator','retail_amt')
+    # def accelerator_onchange(self):
+    #     if self.accelerator == 'yes':
+    #         self.max = float(self.retail_amt)*float(0.65)
+    #     else:
+    #         self.max = 0
+    #     print(self.max)
 
     @api.multi
     def action_send_offer_email(self):
@@ -238,6 +242,12 @@ class VendorOfferProduct(models.Model):
         self.cal_offer_price()
         #self.product_tier_manufacturer()
         self.expired_inventory_cal()
+        for order in self:
+            for line in order:
+                multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
+                line.margin = multiplier_list.margin
+                line.offer_price = round(float(line.price_unit) * (
+                        float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
 
 
     def expired_inventory_cal(self):
