@@ -18,8 +18,8 @@ class Customer(models.Model):
     sku_postconfig = fields.Char("SKU PostConfig")
     prioritization_ids = fields.One2many('prioritization_engine.prioritization', 'customer_id')
     sps_sku = fields.Char("SPS SKU", readonly=False)
-    threshold_min = fields.Integer("Product Min Threshold", readonly=False)
-    threshold_max = fields.Integer("Product Max Threshold", readonly=False)
+    min_threshold = fields.Integer("Product Min Threshold", readonly=False)
+    max_threshold = fields.Integer("Product Max Threshold", readonly=False)
     priority = fields.Integer("Product Priority", readonly=False)
     cooling_period = fields.Integer("Cooling Period in days", readonly=False)
     auto_allocate = fields.Boolean("Allow Auto Allocation?", readonly=False)
@@ -73,7 +73,6 @@ class Customer(models.Model):
         action['views'] = [(self.env.ref('prioritization_engine.view_notification_setting_form').id, 'form')]
         action['view_ids'] = self.env.ref('prioritization_engine.view_notification_setting_form').id
         action['res_id'] = self.id
-        #print("Inside  action_view_notification")
         return action
 
     def get_customer_request(self):
@@ -212,6 +211,7 @@ class Prioritization(models.Model):
                          "   " + str(customer_product.expiration_tolerance) + "   " + str(customer_product.required_product_quantity))
 
             # 1) Auto Allocate True/False
+            #customer_product.auto_allocate==true
             if self.auto_allocate is True:
                 #2) get available production lot list.
                 production_lot_list = self.get_available_production_lot_list(customer_product)
