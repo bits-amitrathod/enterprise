@@ -9,11 +9,6 @@ QUnit.module('Studio', {}, function () {
 
     QUnit.module('ReportEditorSidebar', {
         beforeEach: function () {
-            this.widgets = {
-                image: {},
-                integer: {},
-            };
-
             this.data = {
                 'report.paperformat': {
                     fields: {
@@ -36,6 +31,12 @@ QUnit.module('Studio', {}, function () {
                         display_name: 'Group7',
                     }],
                 }
+            };
+
+            this.widgetsOptions = {
+                image: {},
+                integer: {},
+                text: {},
             };
         },
     }, function () {
@@ -282,6 +283,43 @@ QUnit.module('Studio', {}, function () {
             });
 
             assert.equal(sidebar.$('.o_web_studio_width:visible').length, 1);
+
+            sidebar.destroy();
+        });
+
+        QUnit.test("'Options' tab with widget selection (tOptions) component", function (assert) {
+            assert.expect(4);
+
+            var node = {
+                context: {
+                    'doc': 'x_mymodel',
+                },
+                node: {
+                    attrs: {
+                        'data-oe-id': '42',
+                        'data-oe-xpath': '/t/t/div',
+                        't-field': 'doc.id',
+                        't-options-widget': '"text"',
+                    },
+                    tag: 'span',
+                },
+            };
+            var sidebar = studioTestUtils.createSidebar({
+                state: {
+                    mode: 'properties',
+                    nodes: [node],
+                },
+                widgetsOptions: this.widgetsOptions,
+            });
+
+            assert.strictEqual(sidebar.$('.o_web_studio_tfield_fieldexpression').length, 1,
+                "the t-field component should be displayed");
+            assert.strictEqual(sidebar.$('.o_web_studio_toption_widget').length, 1,
+                "the t-options component should be displayed");
+            assert.strictEqual(sidebar.$('.o_web_studio_toption_widget select').text().replace(/\s/g, ''), "imageintegertext",
+                "all widgets should be selectable");
+            assert.strictEqual(sidebar.$('.o_web_studio_toption_widget select').val(), "text",
+                "the correct widget should be selected");
 
             sidebar.destroy();
         });

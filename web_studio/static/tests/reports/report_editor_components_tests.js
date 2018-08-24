@@ -12,7 +12,7 @@ QUnit.module('Studio', {}, function () {
 
 QUnit.module('ReportComponents', {
     beforeEach: function () {
-        this.widgets = {
+        this.widgetsOptions = {
             monetary: {
                 company_id: {
                     type: "model",
@@ -286,7 +286,6 @@ QUnit.module('ReportComponents', {
         var parent = new Widget();
         parent.appendTo($('#qunit-fixture'));
         var column = new (editComponentsRegistry.get('column'))(parent, {
-            widgets: this.widgets,
             node: {
                 attrs: {
                     class: 'col-5 offset-3',
@@ -308,7 +307,6 @@ QUnit.module('ReportComponents', {
         var parent = new Widget();
         parent.appendTo($('#qunit-fixture'));
         var column = new (editComponentsRegistry.get('column'))(parent, {
-            widgets: this.widgets,
             node: {
                 attrs: {
                     class: 'col- offset-kikou',
@@ -330,7 +328,7 @@ QUnit.module('ReportComponents', {
         var parent = new Widget();
         parent.appendTo($('#qunit-fixture'));
         var tOptions = new (editComponentsRegistry.get('tOptions'))(parent, {
-            widgets: this.widgets,
+            widgetsOptions: this.widgetsOptions,
             node: {
                 attrs: {
                     't-options': '{"widget": "text"}',
@@ -366,7 +364,7 @@ QUnit.module('ReportComponents', {
         });
 
         var tOptions = new (editComponentsRegistry.get('tOptions'))(parent, {
-            widgets: this.widgets,
+            widgetsOptions: this.widgetsOptions,
             node: {
                 attrs: {
                     't-options': 'dict(from_currency=o.child.currency_id, date=o.child.date)',
@@ -413,7 +411,6 @@ QUnit.module('ReportComponents', {
         });
 
         var tOptions = new (editComponentsRegistry.get('tEsc'))(parent, {
-            widgets: this.widgets,
             node: {
                 attrs: {
                     't-esc': 'o.child.company_id',
@@ -445,7 +442,6 @@ QUnit.module('ReportComponents', {
         });
 
         var tOptions = new (editComponentsRegistry.get('tEsc'))(parent, {
-            widgets: this.widgets,
             node: {
                 attrs: {
                     't-esc': 'o.child.getCompany()',
@@ -485,7 +481,7 @@ QUnit.module('ReportComponents', {
         parent.appendTo($('#qunit-fixture'));
 
         var params = {
-            widgets: this.widgets,
+            widgetsOptions: this.widgetsOptions,
             node: {
                 attrs: {
                     't-options': '{"widget": "contact"}',

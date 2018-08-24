@@ -405,7 +405,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
                 var previousWidgetState = self.previousState[self._computeUniqueNodeName(node.node)] &&
                     self.previousState[self._computeUniqueNodeName(node.node)][Component.prototype.name];
                 var directiveWidget = new Component(self, {
-                    widgets: self.widgets,
+                    widgetsOptions: self.widgetsOptions,
                     node: node.node,
                     context: node.context,
                     state: previousWidgetState,

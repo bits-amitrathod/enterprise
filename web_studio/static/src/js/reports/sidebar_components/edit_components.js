@@ -1047,12 +1047,13 @@ var TOptions = AbstractEditComponent.extend( {
     }),
     /**
      * @override
+     * @param {Object} [params.widgetsOptions]
      */
     init: function (parent, params) {
         this._super.apply(this, arguments);
 
         this.changes = {};
-        this.confWidgets = params.widgets;
+        this.widgetsOptions = params.widgetsOptions;
         this.widget = null;  // the selected widget
         this.values = {};  // dict containing the t-options values
 
@@ -1066,7 +1067,7 @@ var TOptions = AbstractEditComponent.extend( {
 
         // create fields for each widget options
         var directiveFields = this.directiveFields;
-        this.widgets = _.map(this.confWidgets, function (widgetConf, widgetKey) {
+        this.widgets = _.map(this.widgetsOptions, function (widgetConf, widgetKey) {
             var values = self.values.widget === widgetKey ? self.values : {};
 
             var options = _.map(widgetConf, function (option, optionKey) {
@@ -1105,7 +1106,7 @@ var TOptions = AbstractEditComponent.extend( {
                     case 'date':
                     case 'datetime':
                         params.type = 'related';
-                        params.filter= function (field) {
+                        params.filter = function (field) {
                             return field.type === 'many2one' || field.type === 'datetime';
                         };
                         params.followRelations = function (field) {
@@ -1152,7 +1153,7 @@ var TOptions = AbstractEditComponent.extend( {
         // selected widget
         this.widget = _.findWhere(this.widgets, {key: this.values.widget && this.values.widget});
 
-        return this._super();
+        return this._super.apply(this, arguments);
     },
     /**
      * @override
