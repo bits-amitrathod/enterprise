@@ -23,19 +23,19 @@
     'name': 'Custom Product Catalog',
     'category': 'sale',
     'version': '11.0.0.1',
-    'summary': 'This module provides Custom Product Catalog.',
-    'author': 'Tushar Godase',
-    'description': '''This module provides Custom Product Catalog.
-                      With the help of this moudule you can print Custom Product Catalog .
-                      '''
-                   ,
+    # 'summary': 'This module provides Custom Product Catalog.',
+    'author': 'By Tushar Godase',
+    # 'description': '''This module provides Custom Product Catalog.
+    #                   With the help of this moudule you can print Custom Product Catalog .
+    #                   '''
+    #                ,
     'depends': ['base', 'stock'],
     'data': [
         'views/catalog_view.xml',
         'report/product_catalog_report.xml',
         'report/product_catalog_temp.xml'
     ],
-    'images': ['static/description/banner.png'],
+    # 'images': ['static/description/banner.png'],
     'auto_install': False,
     'installable': True,
     'application': False,

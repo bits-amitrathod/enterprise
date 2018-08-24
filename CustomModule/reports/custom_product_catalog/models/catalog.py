@@ -18,8 +18,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
-
+from numpy.core.defchararray import upper
 from odoo import api, fields, models
+from odoo.tools import float_repr
 import datetime
 
 class SaleSalespersonReport(models.TransientModel):
@@ -29,10 +30,21 @@ class SaleSalespersonReport(models.TransientModel):
     end_date = fields.Date(string="End Date", required=True)
     product_id = fields.Many2many('product.product', string="Products")
 
+    @api.model
+    def check(self, data):
+        if data:
+            return upper(data)
+        else:
+            return " "
     @api.multi
     def print_catalog_vise_report(self):
         sale_orders = self.env['product.product'].search([])
         groupby_dict = {}
+        ACTIONS = {
+            "product": "Stockable Product",
+            "consu": "Consumable",
+            "service": "Service",
+        }
         # for user in self.product_id:
             # filtered_order = list(filter(lambda x: x.product_id == user, sale_orders))
         filtered_by_date = sale_orders
@@ -43,16 +55,16 @@ class SaleSalespersonReport(models.TransientModel):
             temp = []
             for order in groupby_dict[user]:
                 temp_2 = []
-                temp_2.append(order.product_tmpl_id.type)
+                temp_2.append(ACTIONS[order.product_tmpl_id.type])
                 temp_2.append(order.product_tmpl_id.manufacturer.name)
-                temp_2.append(order.id)
+                temp_2.append(order.product_tmpl_id.sku_code)
                 temp_2.append(order.product_tmpl_id.name)
                 order.env.cr.execute(
                     "SELECT sum(quantity) as qut FROM public.stock_quant where company_id != 0.0 and  product_id = " + str(
                         order.id))
                 query_result = order.env.cr.dictfetchone()
                 temp_2.append(query_result['qut'])
-                temp_2.append(order.product_tmpl_id.list_price)
+                temp_2.append(float_repr(order.product_tmpl_id.list_price,precision_digits=2))
                 # temp_2.append(order.product_tmpl_id.name)
                 order.env.cr.execute( "SELECT min(use_date), max (use_date) FROM public.stock_production_lot where product_id = "+str(order.id))
                 query_result = order.env.cr.dictfetchone()
@@ -69,6 +81,7 @@ class SaleSalespersonReport(models.TransientModel):
 
                 temp.append(temp_2)
             final_dict[user] = temp
+            final_dict['data'].sort(key=lambda x: self.check(x[0]))
         datas = {
             'ids': self,
             'model': 'custome.product.report',
@@ -89,10 +102,12 @@ class SaleSalespersonReport(models.TransientModel):
             temp = []
             for order in groupby_dict[user]:
                 temp_2 = []
+                temp_2.append(order.product_tmpl_id.sku_code)
                 temp_2.append(order.name)
-                temp_2.append(order.product_tmpl_id.list_price)
+                temp_2.append(float_repr(order.product_tmpl_id.list_price,precision_digits=2))
                 temp.append(temp_2)
             final_dict[user] = temp
+            final_dict['data'].sort(key=lambda x: self.check(x[0]))
         datas = {
             'ids': self,
             'model': 'custome.product.report',

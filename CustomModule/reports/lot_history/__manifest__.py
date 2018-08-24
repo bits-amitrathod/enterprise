@@ -2,15 +2,15 @@
 {
     'name': "lot_history",
 
-    'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+    # 'summary': """
+    #     Short (1 phrase/line) summary of the module's purpose, used as
+    #     subtitle on modules listing or apps.openerp.com""",
+    #
+    # 'description': """
+    #     Long description of module's purpose
+    # """,
 
-    'description': """
-        Long description of module's purpose
-    """,
-
-    'author': "My Company",
+    'author': "By Akash Ingole",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing

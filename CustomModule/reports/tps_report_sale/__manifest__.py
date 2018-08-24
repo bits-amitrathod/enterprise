@@ -2,11 +2,11 @@
 {
     'name': "Total Product Sales",
 
-    'summary': """""",
-
-    'description': """
-         This module provides Sales Report Total Product sale.
-    """,
+    # 'summary': """""",
+    #
+    # 'description': """
+    #      This module provides Sales Report Total Product sale.
+    # """,
 
     'author': "Tushar Godase",
     'website': "",
@@ -27,9 +27,6 @@
         'views/tps_report_view.xml',
         'report/selected_product_report.xml',
         'report/selected_product_template.xml',
-        'report/selected_product_amount_report.xml',
-        'report/selected_product_amount_template.xml'
-
     ],
     # only loaded in demonstration mode
     'demo': [

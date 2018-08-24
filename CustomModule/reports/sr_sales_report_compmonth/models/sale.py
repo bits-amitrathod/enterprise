@@ -20,6 +20,7 @@
 ##############################################################################
 
 from odoo import api, fields, models
+from odoo.tools import float_repr
 import datetime
 import logging
 import operator
@@ -34,6 +35,7 @@ class comparebymonth():
     current_month_total_amount = 0
     last_month_total_qty = 0
     last_month_total_amount = 0
+    sku=''
 
     @api.multi
     def addObject(self, filtered_by_current_month, filtered_by_last_month):
@@ -53,6 +55,7 @@ class comparebymonth():
                     object.current_month_total_qty = r1.product_uom_qty
                     object.current_month_total_amount = r1.price_subtotal
                     object.product_name = r1.product_id.name
+                    object.sku = r1.product_id.product_tmpl_id.sku_code
                     dict[r1.product_id.id] = object
 
         for record in filtered_by_last_month:
@@ -69,6 +72,7 @@ class comparebymonth():
                     object.last_month_total_qty = r1.product_uom_qty
                     object.last_month_total_amount = r1.price_subtotal
                     object.product_name = r1.product_id.name
+                    object.sku = r1.product_id.product_tmpl_id.sku_code
                     dict[r1.product_id.id] = object
         log.info(" return addObject ")
         return dict
@@ -96,13 +100,14 @@ class SaleSalespersonReport(models.TransientModel):
             order= dat[user]
             temp_2 = []
             temp_2.append(order.product_name)
-            temp_2.append(order.current_month_total_qty)
-            temp_2.append(order.current_month_total_amount)
-            temp_2.append(order.last_month_total_qty)
-            temp_2.append(float(order.last_month_total_amount))
+            temp_2.append(int(order.current_month_total_qty))
+            temp_2.append(float_repr(order.current_month_total_amount,precision_digits=2))
+            temp_2.append(int(order.last_month_total_qty))
+            temp_2.append(float_repr(order.last_month_total_amount,precision_digits=2))
+            temp_2.append(order.sku)
             temp.append(temp_2)
             final_dict[user] = temp
-        sort_dict = sorted(final_dict.items(), key=operator.itemgetter(1), reverse=True)
+
         datas = {
             'ids': self.ids,
             'model': self._module,
