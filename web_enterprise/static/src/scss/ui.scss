@@ -17,6 +17,10 @@ div.o_checkbox {
         @include o-position-absolute;
         cursor: pointer;
 
+        @media print {
+            opacity: 1; // printing hides background so show real mark
+        }
+
         + span {
             display: block;
             width: $o-checkbox-size;
