@@ -127,7 +127,7 @@ class Prioritization(models.Model):
 
 
     # Product allocation by priority
-    def product_allocation_by_priority(self,sps_customer_requests, ):
+    def product_allocation_by_priority(self,sps_customer_requests):
         _logger.info('In product_allocation_by_priority')
         for sps_customer_request in sps_customer_requests:
             _logger.info(
