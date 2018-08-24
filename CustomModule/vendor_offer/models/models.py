@@ -30,6 +30,12 @@ class VendorOffer(models.Model):
         ('credit', 'Credit')
     ], string='Offer Type')
 
+    shipping_date = fields.Datetime(string="Shipping Date")
+    delivered_date = fields.Datetime(string="Delivered Date")
+    expected_date = fields.Datetime(string="Expected Date")
+
+    notes_desc = fields.Text(string="Note")
+
     accelerator=fields.Boolean(string="Accelerator")
 
     # accelerator = fields.Selection([
