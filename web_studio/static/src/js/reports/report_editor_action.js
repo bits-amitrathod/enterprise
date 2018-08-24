@@ -52,6 +52,7 @@ var ReportEditorAction = AbstractAction.extend({
         }
         else {
             this.do_warn(_t('Error: Preview not available because there is no existing record.'));
+            this.trigger_up('studio_history_back');
         }
         return $.when.apply($, defs);
     },
@@ -63,14 +64,17 @@ var ReportEditorAction = AbstractAction.extend({
      * @returns {Deferred}
      */
     on_attach_callback: function () {
-        var isLoading = this.reportEditorManager.editorIframeDef;
-        if (isLoading.state() === 'pending') {
+        if (!this.reportEditorManager) {
+            // the preview was not availble (see @start) so the manager hasn't
+            // been instantiated
+            return $.when();
+        }
+        if (this.reportEditorManager.editorIframeDef.state() === 'pending') {
             // this is the first rendering of the editor but we only want to
             // update the editor when going back with the breadcrumb
             return $.when();
-        } else {
-            return this.reportEditorManager.updateEditor();
         }
+        return this.reportEditorManager.updateEditor();
     },
 
     //--------------------------------------------------------------------------
