@@ -858,6 +858,9 @@ odoo.define('sign.document_signing', function(require) {
 
     var ThankYouDialog = Dialog.extend({
         template: "sign.thank_you_dialog",
+        events: {
+            'click .o_go_to_document': 'on_closed',
+        },
 
         init: function(parent, options) {
             options = (options || {});
