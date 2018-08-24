@@ -23,12 +23,12 @@
     'name': 'Sales purchase History',
     'category': 'sale',
     'version': '11.0.0.1',
-    'summary': 'This module provides Sales purchase History',
+    # 'summary': 'This module provides Sales purchase History',
     'author': 'Tushar Godase',
-    'description': '''This module provides  sale purchase History.
-                      With the help of this moudule you can print sales purchase History .
-                      '''
-                   ,
+    # 'description': '''This module provides  sale purchase History.
+    #                   With the help of this moudule you can print sales purchase History .
+    #                   '''
+    #                ,
     'depends': ['base', 'sale_management'],
     'data': [
         'views/sale_view.xml',

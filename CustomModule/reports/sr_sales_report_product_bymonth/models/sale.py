@@ -20,6 +20,7 @@
 ##############################################################################
 
 from odoo import api, fields, models
+from odoo.tools import float_repr
 import datetime
 import logging
 
@@ -30,6 +31,13 @@ class SaleSalespersonReport(models.TransientModel):
     start_date = fields.Date('Start Date', required=True)
     end_date = fields.Date(string="End Date", required=True)
     product_id = fields.Many2many('product.product', string="Products")
+
+    @api.model
+    def check(self, data):
+        if data:
+            return data
+        else:
+            return " "
 
     @api.multi
     def print_salesbymonth_vise_report(self):
@@ -48,12 +56,13 @@ class SaleSalespersonReport(models.TransientModel):
                 temp_2 = []
                 temp_2.append(order.product_id.product_tmpl_id.sku_code)
                 temp_2.append(order.product_id.name)
-                temp_2.append(order.amount_total)
+                temp_2.append(float_repr(order.amount_total,precision_digits=2))
                 temp_2.append(fields.Datetime.from_string(str(order.date_order)).date().strftime('%m/%d/%Y'))
                 temp_2.append(order.name)
 
                 temp.append(temp_2)
             final_dict[user] = temp
+            final_dict['data'].sort(key=lambda x: self.check(x[4]))
         datas = {
             'ids': self,
             'model': 'sale.product.report',

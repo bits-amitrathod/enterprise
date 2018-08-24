@@ -20,6 +20,7 @@
 ##############################################################################
 
 from odoo import api, fields, models
+from odoo.tools import float_repr
 
 
 class SaleSalespersonReport(models.TransientModel):
@@ -31,7 +32,7 @@ class SaleSalespersonReport(models.TransientModel):
 
     @api.multi
     def print_salesperson_vise_report(self):
-        sale_orders = self.env['sale.order'].search([])
+        sale_orders = self.env['sale.order'].search([('state', '=', 'sale')])
         groupby_dict = {}
         for user in self.user_ids:
             filtered_order = list(filter(lambda x: x.user_id == user, sale_orders))
@@ -46,7 +47,7 @@ class SaleSalespersonReport(models.TransientModel):
                 temp_2 = []
                 temp_2.append(order.name)
                 temp_2.append(fields.Datetime.from_string(str(order.date_order)).date().strftime('%m/%d/%Y'))
-                temp_2.append(order.amount_total)
+                temp_2.append(float_repr(order.amount_total,precision_digits=2))
                 temp.append(temp_2)
             final_dict[user] = temp
         datas = {
