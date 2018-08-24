@@ -17,7 +17,6 @@ class ResConfigSettings(models.TransientModel):
 
     @api.onchange('group_stock_production_lot')
     def _onchange_group_stock_production_lot(self):
-        _logger.info("addons/inventory_extension/models/res_config_settings _onchange_group_stock_production_lot called.....")
         if self.group_stock_production_lot:
             self.module_product_expiry = True
             self.production_lot_alert_settings = True
@@ -28,8 +27,6 @@ class ResConfigSettings(models.TransientModel):
 
     @api.onchange('module_product_expiry')
     def _onchange_module_product_expiry(self):
-        _logger.info(
-            "addons/inventory_extension/models/res_config_settings _onchange_module_product_expiry called.....")
         if self.module_product_expiry:
             self.production_lot_alert_settings = True
         else:
@@ -40,33 +37,26 @@ class ResConfigSettings(models.TransientModel):
 
     @api.onchange('production_lot_alert_settings')
     def _onchange_production_lot_alert_settings(self):
-        _logger.info("addons/inventory_extension/models/res_config_settings _onchange_production_lot_alert_settings called.....")
         if self.production_lot_alert_settings is False:
             self.production_lot_alert_days = 0
 
     @api.onchange('production_lot_alert_days')
     def _onchange_production_lot_alert_days(self):
-        _logger.info(
-            "addons/inventory_extension/models/res_config_settings _onchange_production_lot_alert_days called.....")
         if self.production_lot_alert_days >366:
             self.production_lot_alert_days = 0
 
     @api.model
     def get_values(self):
-        _logger.info("addons/inventory_extension/models/res_config_settings get_values called.....")
         res = super(ResConfigSettings, self).get_values()
         params = self.env['ir.config_parameter'].sudo()
         production_lot_alert_days = int(
             params.get_param('inventory_extension.production_lot_alert_days'))
         production_lot_alert_settings = params.get_param('inventory_extension.production_lot_alert_settings',  default=True)
-        _logger.info("addons/inventory_extension/models/res_config_settings production_lot_alert_settings called.....")
-        _logger.info(production_lot_alert_settings)
         res.update(production_lot_alert_settings=production_lot_alert_settings, production_lot_alert_days=production_lot_alert_days,)
         return res
 
     @api.multi
     def set_values(self):
-        _logger.info("addons/inventory_extension/models/res_config_settings set_values called.....")
         super(ResConfigSettings, self).set_values()
         self.env['ir.config_parameter'].sudo().set_param("inventory_extension.production_lot_alert_days",
                                                          self.production_lot_alert_days)
