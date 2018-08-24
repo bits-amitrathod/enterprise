@@ -23,9 +23,9 @@
     'name': "Purchase Receiving Report",
     'author': 'By Tushar Godase',
     'category': 'purchase',
-    'summary': """Reports of Purchase Receiving Report""",
-    'description': """
-""",
+#     'summary': """Reports of Purchase Receiving Report""",
+#     'description': """
+# """,
     'version': '1.0',
     'depends': ['base','product','purchase'],
     'data': ['wizard/purchase_view.xml',

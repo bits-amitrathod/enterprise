@@ -25,8 +25,8 @@ class ProductDetailPurchase(models.TransientModel):
     _name = "product.detail.purchase"
 
 
-    start_date = fields.Date(string="From Date", required='1')
-    end_date = fields.Date(string="To Date", required='1')
+    start_date = fields.Date(string="Start Date", required='1')
+    end_date = fields.Date(string="End Date", required='1')
     top_products = fields.Selection([
         ('by_units', 'Units'),
         ('by_amounts', 'Purchases')

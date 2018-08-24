@@ -64,6 +64,7 @@ class DocumentProcessTransientModel(models.Model):
                     response = dict(errorCode=0, message='File Uploaded Successfully', ref=ref)
                     high_priority_requests = []
                     for req in requests:
+                        high_priority_product = False
                         customer_sku = req['customer_sku']
                         product_sku = customer_sku
                         if user_model.sku_preconfig and product_sku.startswith(
@@ -74,31 +75,32 @@ class DocumentProcessTransientModel(models.Model):
                             product_sku = product_sku[:-len(user_model.sku_postconfig)]
                         _logger.info('customer_sku %r product sku %r', customer_sku, product_sku)
                         product_tmpl = self.env['product.template'].search(
-                            ['|', ('sku_code', '=', product_sku), ('manufacturer_pref', '=', product_sku)])
+                            ['|', ('sku_code', '=', product_sku), ('manufacturer_pref', '=', customer_sku)])
                         sps_product_id = 0
-                        if product_tmpl:
+                        if len(product_tmpl) > 0:
                             product_model = self.env['product.product'].search(
-                                [['product_tmpl_id', '=', product_tmpl.id],
-                                 ['default_code', '=', product_tmpl.default_code]])
-                            sps_product_id = product_model[0].id
-                        sps_product_priotization = self.env[
-                            'prioritization_engine.prioritization'].search(
-                            [['customer_id', '=', user_id], ['product_id', '=', sps_product_id]])
-                        high_priority_product = False
-                        if len(sps_product_priotization) >= 1:
-                            sps_product = sps_product_priotization[0]
-                            sps_product_id = sps_product.product_id.id
-                            sps_customer_product_priority = sps_product.priority
-                            if sps_customer_product_priority or (
-                                    not user_model.priority is None and user_model.priority == 0):
-                                high_priority_product = True
-                                req.update(dict(product_id=sps_product_id, status='Inprocess'))
+                                [['product_tmpl_id', '=', product_tmpl.id]])
+                            if len(product_model) > 0:
+                                sps_product_id = product_model[0].id
+                        if sps_product_id:
+                            sps_product_priotization = self.env[
+                                'prioritization_engine.prioritization'].search(
+                                [['customer_id', '=', user_id], ['product_id', '=', sps_product_id]])
+                            if len(sps_product_priotization) >= 1:
+                                sps_product = sps_product_priotization[0]
+                                sps_product_id = sps_product.product_id.id
+                                sps_customer_product_priority = sps_product.priority
+                                if sps_customer_product_priority or (not user_model.priority):
+                                    high_priority_product = True
+                                    req.update(dict(product_id=sps_product_id, status='Inprocess'))
+                                else:
+                                    req.update(dict(product_id=sps_product_id, status='New'))
                             else:
-                                req.update(dict(product_id=sps_product_id, status='New'))
+                                req.update(dict(product_id=None, status='Voided'))
                         else:
                             req.update(dict(product_id=None, status='Voided'))
                         sps_customer_request = dict(document_id=document_id, customer_id=user_id, create_uid=1,
-                                                    create_date=today_date, write_uid=1, write_date=today_date)
+                                                        create_date=today_date, write_uid=1, write_date=today_date)
                         for key in req.keys():
                             sps_customer_request.update({key: req[key]})
                         saved_sps_customer_request = self.env['sps.customer.requests'].create(
@@ -253,9 +255,10 @@ class DocumentProcessTransientModel(models.Model):
         return requests, file_acceptable
 
     def send_sps_customer_request_for_processing(self, customer_product_requests):
-        try:
-            _logger.info('processing %r high priority products requests', str(len(customer_product_requests)))
-            self.env['prioritization_engine.prioritization'].process_requests(customer_product_requests)
-        except:
-            _logger.info('Error Processing Hight Priority Requests')
+        # try:
+        #     _logger.info('processing %r high priority products requests', str(len(customer_product_requests)))
+        #     self.env['prioritization_engine.prioritization'].process_requests(customer_product_requests)
+        # except:
+        #     _logger.info('Error Processing Hight Priority Requests')
+        self.env['prioritization_engine.prioritization'].process_requests(customer_product_requests)
         return None

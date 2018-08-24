@@ -116,8 +116,8 @@
                 <header>
                     <button name="action_send_offer_email" string="Send Offer by Email" type="object"  class="btn-primary"/>
                     <button name="action_print_vendor_offer" string="Print Vendor Offer" type="object"  class="btn-primary"/>
-                    <button name="action_confirm_vendor_offer" string="Confirm Order" type="object"  />
-                    <button name="action_cancel_vendor_offer" string="Cancel" type="object"  />
+                    <button name="action_confirm_vendor_offer" states="draft ,ven_draft" string="Confirm Order" type="object"  />
+                    <button name="action_cancel_vendor_offer"  string="Cancel" type="object"  />
                      <field name="state" widget="statusbar" statusbar_visible="draft,ven_draft,ven_sent,purchase" readonly="1"  />
                 </header>
                 <sheet>
@@ -155,7 +155,7 @@
                     </group>
                     <notebook>
                         <page string="Product">
-                            <field name="order_line" mode="tree,kanban">
+                            <field name="order_line" mode="tree,kanban" attrs="{'readonly': [('state', 'not in', ('draft', 'ven_draft'))]}" >
                                             <form >
                                                 <group>
                                                     <group>
@@ -226,12 +226,17 @@
                                         <field name="date_planned" />
                                         <field name="shipping_label_issued" />
                                 </group>
+                                 <group  >
+                                        <field name="shipping_date" />
+                                        <field name="delivered_date" />
+                                        <field name="expected_date" />
+                                </group>
                             </group>
                         </page>
                          <page string="Notes">
                             <group>
                                 <group  >
-                                        <!--<field name="notes_desc" />-->
+                                        <field name="notes_desc" />
                                 </group>
                             </group>
                         </page>
@@ -241,6 +246,22 @@
 
                 </div>
                 </form>
+            </field>
+        </record>
+
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"></field>
+            <field name="arch" type="xml">
+                <!--<form string="Purchase Order">-->
+                     <xpath expr="//group/group/field[@name='company_id']" position="after">
+                <field name="carrier_info"></field>
+                    <field name="carrier_acc_no"></field>
+                          <field name="shipping_terms"></field>
+                </xpath>
+
+                <!--</form>-->
             </field>
         </record>
 
@@ -255,6 +276,7 @@
 
                     <field name="tier"></field>
                     <field name="class_code"></field>
+
                                 </group>
                          </group>
             </page>
