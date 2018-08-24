@@ -74,12 +74,12 @@ var One2ManySelectable = FieldOne2Many.extend({
             });
             if (flag)
 			{
-				this.do_warn(_t("You must save the record before Copy Down."));
+				this.do_warn(_t("You must save the record before Multiple Update."));
 				return false;
 			}
             e.preventDefault();
             var returnVal=this.do_action({
-                name: _t("Copy Down"),
+                name: _t("Multiple Update"),
                 type: "ir.actions.act_window",
                 res_model: "prioritization.transient",
                 domain : [],

@@ -21,9 +21,26 @@
                  <button name="action_cancel" position="after" >
                  <button name="action_void" string="Voided" type="object" states="draft,sent"/>
                  </button>
+                 <field name="partner_shipping_id" position="after">
+                     <field name="preferred_method"/>
+                     <field name="shipping_terms"/>
+                 </field>
                  <xpath expr="/form/sheet/notebook/page[1]/field[@name='order_line']/tree/field[@name='currency_id']" position="after">
                           <button name="action_show_details" string="Register lots, packs, location" type="object" icon="fa-list"  options='{"warn": true}' states="sale"/>
                  </xpath>
+
+            </field>
+        </record>
+
+      <record id="view_invoice_form_ex" model="ir.ui.view">
+            <field name="name">account.invoice.form_ex</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                 <field name="payment_term_id" position="after">
+                     <field name="preferred_method"/>
+                     <field name="shipping_terms"/>
+                 </field>
             </field>
         </record>
   </data>

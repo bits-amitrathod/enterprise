@@ -56,6 +56,7 @@
                            <group>
                         <group>
                              <field name="name" />
+                             <field name="code" />
                              <field name="retail" />
                              <field name="margin" />
                         </group>
@@ -159,24 +160,25 @@
                                                 <group>
                                                     <group>
                                                          <field name="product_id" />
-                                                         <field name="manufacturer_pname" />
-                                                         <field name="name"  invisible="1"  />
-                                                         <field name="product_tier" />
-                                                         <field name="prod_qty" />
-                                                         <field name="expiration_date" />
+                                                         <field name="sku_code"  />
+                                                         <field name="product_brand_id"  />
+                                                         <field name="name"   />
+                                                         <field name="tier"   />
+                                                         <field name="prod_qty"   />
+                                                         <field name="expiration_date"   />
                                                          <field name="qty_in_stock" />
                                                          <field name="product_sales_count" />
                                                          <field name="product_sales_count_month" />
                                                     </group>
                                                      <group>
-                                                         <field name="product_sales_count_90" />
+                                                         <field name="product_sales_count_90"  />
                                                          <field name="product_sales_count_yrs" />
-                                                         <field name="expired_inventory" />
-                                                         <field name="price_unit" />
-                                                         <field name="offer_price" />
-                                                         <field name="margin" />
-                                                         <field name="multiplier" />
-                                                         <field name="product_note" />
+                                                         <field name="expired_inventory"  />
+                                                         <field name="price_unit"  />
+                                                         <field name="offer_price"   />
+                                                         <field name="margin"   />
+                                                         <field name="multiplier"   />
+                                                         <field name="product_note"  />
                                                          <field name="product_qty"  invisible="1" />
                                                          <field name="date_planned"  invisible="1" />
                                                          <field name="product_uom"  invisible="1" />
@@ -186,26 +188,27 @@
                                 <tree   >
                                                          <field name="currency_id" invisible="1"/>
                                                          <field name="product_id" />
-                                                         <field name="manufacturer_pname" />
+                                                         <field name="sku_code"  />
+                                                         <field name="product_brand_id"  />
                                                          <!--<field name="name" />-->
-                                                         <field name="product_tier" />
+                                                         <field name="tier"  />
                                                          <field name="prod_qty" />
-                                                         <field name="expiration_date" />
-                                                         <field name="qty_in_stock" />
+                                                         <field name="expiration_date"   />
+                                                         <field name="qty_in_stock"  />
                                                          <field name="product_sales_count" />
-                                                         <field name="product_sales_count_month" />
-                                                         <field name="product_sales_count_90" />
-                                                         <field name="product_sales_count_yrs" />
-                                                         <field name="expired_inventory" />
+                                                         <field name="product_sales_count_month"   />
+                                                         <field name="product_sales_count_90"   />
+                                                         <field name="product_sales_count_yrs"  />
+                                                         <field name="expired_inventory"   />
                                                          <!--<field name="premium" />-->
-                                                         <field name="price_unit" String="Retail" />
-                                                         <field name="offer_price" />
-                                                         <field name="margin" />
-                                                         <field name="multiplier" />
-                                                         <field name="product_qty"  invisible="1" />
-                                                         <field name="date_planned"  invisible="1" />
-                                                         <field name="product_uom"  invisible="1" />
-                                                         <field name="order_id"  invisible="1" />
+                                                         <field name="price_unit" String="Retail"  />
+                                                         <field name="offer_price"   />
+                                                         <field name="margin"  />
+                                                         <field name="multiplier"   />
+                                                         <field name="product_qty"   />
+                                                         <field name="date_planned"   />
+                                                         <field name="product_uom"  />
+                                                         <field name="order_id"   />
 
                                 </tree>
 
@@ -240,6 +243,23 @@
                 </form>
             </field>
         </record>
+
+      <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.common.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <page name="general_information"  position="inside">
+                         <group>
+                                <group name="group_general">
+
+                    <field name="tier"></field>
+                    <field name="class_code"></field>
+                                </group>
+                         </group>
+            </page>
+        </field>
+      </record>
 
 
     <!-- actions opening views on models -->
