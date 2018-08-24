@@ -22,6 +22,8 @@ class SaleOrder(models.Model):
         help='Technical field used to compute whether the validate should be shown.')
     shipping_terms = fields.Selection(string='Shipping Term', related='partner_id.shipping_terms', readonly=True)
     preferred_method = fields.Selection(string='Preferred Invoice Delivery Method', related='partner_id.preferred_method', readonly=True)
+    carrier_info = fields.Char("Carrier Info",related='partner_id.carrier_info',readonly=True)
+    carrier_acc_no = fields.Char("Carrier Account No",related='partner_id.carrier_acc_no',readonly=True)
 
     @api.multi
     def action_void(self):
@@ -126,9 +128,10 @@ class StockPicking(models.Model):
         self.action_done()
         return
 
-    class AccountInvoice(models.Model):
+class AccountInvoice(models.Model):
         _inherit = 'account.invoice'
-
+        expiration_date=fields.Date("Expiration Date")
+        note = fields.Char("Customer Message")
         shipping_terms = fields.Selection(string='Shipping Term', related='partner_id.shipping_terms', readonly=True)
         preferred_method = fields.Selection(string='Preferred Invoice Delivery Method',
                                             related='partner_id.preferred_method', readonly=True)
