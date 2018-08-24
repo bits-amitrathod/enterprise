@@ -99,15 +99,21 @@
     <div t-name="sign.thank_you_dialog">
         <div class="o_thankyou_message">We will let you know by email once everyone has signed.<br/>
         You can close the window and come back later.</div>
-
-        <div class="o_promote_esign o_thankyou_link">
-            <img src="/sign/static/description/icon.png" alt="Document Sign" class="img img-fluid d-inline-block"/>
-            <a class="pl-3" target="_blank" href="https://www.odoo.com/page/sign">Made with Odoo Sign</a>
-        </div>
-
+        <t t-if="!widget.RedirectURL">
+            <div class="o_promote_esign o_thankyou_link">
+                <img src="/sign/static/description/icon.png" alt="Document Sign" class="img img-fluid d-inline-block"/>
+                <a class="pl-3" target="_blank" href="https://www.odoo.com/page/sign">Made with Odoo Sign</a>
+            </div>
+        </t>
+        <t t-if="widget.RedirectURL">
+            <div class="o_promote_esign o_thankyou_link">
+                <img src="/sign/static/description/icon.png" alt="Document Sign" class="img img-fluid d-inline-block"/>
+                <a class="pl-3" target="_blank" t-att-href="widget.RedirectURL">View External Document</a>
+            </div>
+        </t>
         <div class="o_go_to_document o_thankyou_link">
             <img src="/sign/static/description/icon.png" alt="Document Sign" class="img img-fluid d-inline-block"/>
-            <a class="pl-3" href="#">Go to Document</a>
+            <a class="pl-3" href="#">View Signed document</a>
         </div>
     </div>
 

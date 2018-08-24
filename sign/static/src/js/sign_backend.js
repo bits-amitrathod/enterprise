@@ -1012,12 +1012,13 @@ odoo.define('sign.document_signing_backend', function(require) {
     var NoPubThankYouDialog = document_signing.ThankYouDialog.extend({
         template: "sign.no_pub_thank_you_dialog",
 
-        init: function (parent, options) {
+        init: function (parent, RedirectURL, options) {
             options = (options || {});
             if (!options.buttons) {
                 options.buttons = [{text: _t("Ok"), close: true}];
             }
 
+            this.RedirectURL = RedirectURL;
             this._super(parent, options);
         },
 
