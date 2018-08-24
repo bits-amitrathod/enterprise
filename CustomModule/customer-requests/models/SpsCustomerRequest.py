@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 from operator import attrgetter
+import logging
 
 _logger = logging.getLogger(__name__)
 
