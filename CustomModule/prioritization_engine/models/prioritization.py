@@ -144,6 +144,12 @@ class Prioritization(models.Model):
 
         self.product_sort_allocation(customer_product_priority_list, customer_request)
 
+    def process_requests(self, customer_requests_list):
+        customer_product_priority_list = []
+        for customer_request in customer_requests_list:
+            self.check_product_level_setting(customer_request, customer_product_priority_list)
+            self.product_sort_allocation(customer_product_priority_list, customer_request)
+
     def product_sort_allocation(self, customer_product_priority_list, customer_request):
         # sort customer product by product/customer priority
         self.sort_product_by_priority(customer_product_priority_list)
@@ -155,7 +161,7 @@ class Prioritization(models.Model):
         # To check customer level setting
         _logger.info('customer_request %r ', customer_request)
         customer_level_setting = self.env['prioritization_engine.prioritization'].search(
-            [('customer_id', '=',customer_request['customer_id']),('product_id', '=', customer_request['product_id'])])
+            [('customer_id', '=',customer_request['customer_id'].id),('product_id', '=', customer_request['product_id'].id)])
 
         if len(customer_level_setting) == 1:
             _logger.info(str(customer_level_setting.product_id) + ' is available in prioritization_engine_prioritization'+ str(customer_request['quantity']))
@@ -172,7 +178,7 @@ class Prioritization(models.Model):
 
         else:
             global_level_setting = self.env['res.partner'].search(
-                [('id', '=', customer_request['customer_id'])])
+                [('id', '=', customer_request['customer_id'].id)])
             if len(global_level_setting) == 1:
                 _logger.info(str(customer_level_setting.product_id) + ' is available in res.partner')
                 customer_product_priority_list.append(CustomerProductSetting(customer_request['id'],

@@ -11,15 +11,9 @@ from odoo.tools.float_utils import float_round, float_compare, float_is_zero
 class inventory_exe(models.Model):
     _inherit = 'stock.move.line'
     lot_expired_date = fields.Date('Expiration Date')
-    lot_use_date = fields.Date('Expiration Date', compute='_compute_show_lot_user_date')
+    lot_use_date = fields.Date('Expiration Date', compute='_compute_show_lot_user_date',readOnly=True)
     @api.onchange('lot_name', 'lot_id','lot_expired_date')
     def onchange_serial_number(self):
-        _logger.info("(stock_move_line_extension) onchange_serial_number called...")
-        _logger.info(self)
-        _logger.info("lot_id")
-        _logger.info(self.lot_id)
-        _logger.info("lot_name")
-        _logger.info(self.lot_name or self.lot_name)
         """ When the user is encoding a move line for a tracked product, we apply some logic to
         help him. This includes:
             - automatically switch `qty_done` to 1.0
@@ -54,15 +48,11 @@ class inventory_exe(models.Model):
 
 
     def _compute_show_lot_user_date(self):
-        _logger.info("(stock_move_line_extension) _compute_show_lot_user_date called...")
-        _logger.info("(stock_move_line_extension) lot_user_date : %r",self.lot_expired_date)
         if self.lot_id and self.lot_id.use_date:
             # final_date = datetime.datetime.strptime(self.lot_id.use_date, '%Y-%m-%d %H:%M:%S')
             self.lot_use_date = self.lot_id.use_date
 
     def _action_done(self):
-        _logger.info("(stock_move_line (inventory_extension)) _action_done called...")
-        _logger.info(self)
         """ This method is called during a move's `action_done`. It'll actually move a quant from
         the source location to the destination location, and unreserve if needed in the source
         location.
@@ -99,25 +89,16 @@ class inventory_exe(models.Model):
                             # the fly before assigning it to the move line if the user checked both
                             # `use_create_lots` and `use_existing_lots`.
                             if ml.lot_name and not ml.lot_id:
-                                _logger.info("%r", ml.product_id.product_tmpl_id)
                                 tmpl_id = ml.product_id.product_tmpl_id
                                 product_template = self.env['product.template'].search([('id', '=', int(tmpl_id))])
-                                _logger.info("product template.........")
-                                _logger.info("%r", product_template.alert_time)
                                 params = self.env['ir.config_parameter'].sudo()
                                 production_lot_alert_days = int(
                                     params.get_param('inventory_extension.production_lot_alert_days'))
-                                _logger.info("use_date........")
-                                _logger.info("%r",ml.lot_expired_date)
-
                                 final_date = fields.Datetime.from_string(ml.lot_expired_date)
                                 if production_lot_alert_days > 0:
                                     alert_date = final_date.date() - datetime.timedelta(days=production_lot_alert_days)
                                 else:
                                     alert_date = final_date.date() - datetime.timedelta(days=3)
-
-                                _logger.info("use_date........")
-                                _logger.info("%r", alert_date)
                                 lot = self.env['stock.production.lot'].create(
                                     {'name': ml.lot_name, 'use_date': ml.lot_expired_date,
                                      'removal_date': ml.lot_expired_date, 'life_date': ml.lot_expired_date,
