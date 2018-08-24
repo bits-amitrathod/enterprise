@@ -22,7 +22,7 @@ class ReportAccountFinancialReport(models.Model):
     line_ids = fields.One2many('account.financial.html.report.line', 'financial_report_id', string='Lines')
     date_range = fields.Boolean('Based on date ranges', default=True, help='specify if the report use date_range or single date')
     comparison = fields.Boolean('Allow comparison', default=True, help='display the comparison filter')
-    cash_basis = fields.Boolean('Use cash basis', help='if true, report will always use cash basis, if false, user can choose from filter inside the report')
+    cash_basis = fields.Boolean('Allow cash basis mode', help='display the option to switch to cash basis mode')
     analytic = fields.Boolean('Allow analytic filters', help='display the analytic filters')
     hierarchy_option = fields.Boolean('Enable the hierarchy option', help='Display the hierarchy choice in the report options')
     show_journal_filter = fields.Boolean('Allow filtering by journals', help='display the journal filter in the report')
@@ -192,9 +192,7 @@ class ReportAccountFinancialReport(models.Model):
             self.filter_date = {'date': '', 'filter': 'today'}
             if self.comparison:
                 self.filter_comparison = {'date': '', 'filter': 'no_comparison', 'number_period': 1}
-        self.filter_cash_basis = False
-        if self.cash_basis:
-            self.filter_cash_basis = None
+        self.filter_cash_basis = False if self.cash_basis else None
         if self.unfold_all_filter:
             self.filter_unfold_all = False
         if self.show_journal_filter:
@@ -338,7 +336,7 @@ class ReportAccountFinancialReport(models.Model):
         linesDicts = [[{} for _ in range(0, amount_of_group_ids)] for _ in range(0, amount_of_periods)]
 
         res = line_obj.with_context(
-            cash_basis=options.get('cash_basis') or self.cash_basis,
+            cash_basis=options.get('cash_basis'),
             filter_domain=domain,
         )._get_lines(self, currency_table, options, linesDicts)
         return res
