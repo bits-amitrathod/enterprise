@@ -5,15 +5,15 @@
 # Translators:
 # Martin Trigaux, 2016
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2016
+# Maria Boyadjieva <marabo2000@gmail.com>, 2016
 # Vladimir Dachev <v.dachev@dalkomotors.com>, 2016
-# Maria Boyadjieva <marabo2000@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
 "PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Maria Boyadjieva <marabo2000@gmail.com>, 2018\n"
+"Last-Translator: Vladimir Dachev <v.dachev@dalkomotors.com>, 2016\n"
 "Language-Team: Bulgarian (https://www.transifex.com/odoo/teams/41243/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +45,7 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_company
 msgid "Companies"
-msgstr "Предприятия"
+msgstr "Компании"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:82
@@ -68,7 +68,7 @@ msgstr ""
 msgid ""
 "Create Invoices/Refunds when encoding invoices/refunds made to this company"
 msgstr ""
-"Създайте фактура/кредитни известия, когато кодирате фактура/кредитни "
+"Създайте фактури/кредитни известия, когато кодирате фактури/кредитни "
 "известия, направени към тази компания"
 
 #. module: inter_company_rules
@@ -106,7 +106,7 @@ msgid ""
 "Generate Customer/Vendor Bills (and refunds) when encoding invoices (or refunds) made to this company.\n"
 " e.g: Generate a Customer Invoice when a Vendor Bill with this company as vendor is created."
 msgstr ""
-"Създавайте фактура за продажба/покупка (и кредитни известия), когато кодирате фактури (или кредитни известия), направени към тази компания.\n"
+"Създавайте фактури за продажба/покупка (и кредитни известия), когато кодирате фактури (или кредитни известия), направени към тази компания.\n"
 " напр.: създавайте фактура за продажба при създаването на фактура за покупка с тази компания в качеството й на доставчик."
 
 #. module: inter_company_rules
@@ -116,7 +116,7 @@ msgid ""
 " created."
 msgstr ""
 "Създайте поръчка за покупка, при създаването на поръчка за продажба за тази "
-"компания."
+"компания в качеството й на клиент."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_po_from_so
@@ -131,6 +131,8 @@ msgid ""
 "Generate a Sale Order when a Purchase Order with this company as vendor is "
 "created."
 msgstr ""
+"Създайте поръчка за продажба при създаването на поръчката за покупка с тази "
+"компания в качеството й на доставчик."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_so_from_po
@@ -138,11 +140,13 @@ msgid ""
 "Generate a Sale Order when a Purchase Order with this company as vendor is created.\n"
 " The intercompany user must at least be Sale User."
 msgstr ""
+"Създайте поръчка за продажба при създаването на поръчката за покупка с тази компания в качеството й на доставчик.\n"
+"Потребителят на интеркомпанията трябва да е поне потребител на продажби."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_intercompany_user_id
 msgid "Inter Company User"
-msgstr ""
+msgstr "Потребител на интеркомпания"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:43
@@ -150,11 +154,12 @@ msgstr ""
 #, python-format
 msgid "Inter company user of company %s doesn't have enough access rights"
 msgstr ""
+"Потребителят на ентуркомпанията %s не притежава достатъчно права за достъп"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "Inter-Company Rules"
-msgstr ""
+msgstr "Правила на интеркомпания"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_account_invoice

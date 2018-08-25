@@ -6,8 +6,8 @@
 # Martin Trigaux, 2016
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2016
 # kalatchev, 2016
-# preslav <hackerz99999@gmail.com>, 2016
 # Maria Boyadjieva <marabo2000@gmail.com>, 2016
+# preslav <hackerz99999@gmail.com>, 2016
 # Vladimir Dachev <v.dachev@dalkomotors.com>, 2016
 # Vladimir Petrov <vladimir.petrov@gmail.com>, 2017
 # kirily <kiril@teracomp.eu>, 2017
@@ -240,7 +240,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
-msgstr ""
+msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -263,6 +263,8 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
+"Речник Python, който ще бъде оценен, за да предоставя стойности по "
+"подразбиране при създаването на нови записи за този alias."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -295,12 +297,12 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_property_account_payable_id
 msgid "Account Payable"
-msgstr "Разплащателна сметка"
+msgstr "Сметка задължения към доставчици"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_property_account_receivable_id
 msgid "Account Receivable"
-msgstr "Приходна сметка"
+msgstr "Сметка вземания от клиенти"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_active
@@ -311,7 +313,7 @@ msgstr "Активен"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_contact
 msgid "Alias Contact Security"
-msgstr ""
+msgstr "Защита на контакт-синоним"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_name
@@ -410,9 +412,9 @@ msgid ""
 "\tBalanced: to the person with the least amount of open tickets"
 msgstr ""
 "Автоматичен разпределителен метод за нови тикети:\n"
-"\tРъчно: ръчен\n"
-"\tНа случаен принцип: на случаен принцип, но всеки получава същото количество\n"
-"\tБалансирано: до лицето с най-малко отворени квитанции"
+"\tМеханично: механичен\n"
+"\tНа случаен принцип: на случаен принцип, но всеки получава еднакво количество\n"
+"\tБалансирано: до лицето с най-малко отворени тикети"
 
 #. module: helpdesk
 #. openerp-web
@@ -431,7 +433,7 @@ msgstr ""
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
 msgid "Balanced"
-msgstr ""
+msgstr "Балансиран"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_bank_account_count
@@ -545,14 +547,14 @@ msgstr "Индекс на Цветовете."
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_ref_company_ids
 msgid "Companies that refers to partner"
-msgstr "Фирми свързани с партньор"
+msgstr "Компании, свързани с контрагент"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_company_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_company_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_company_id
 msgid "Company"
-msgstr "Фирма"
+msgstr "Компания"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_menu_config
@@ -912,6 +914,9 @@ msgid ""
 "In Channel: You can create a new ticket by typing /helpdesk [ticket title]. "
 "You can search ticket by typing /helpdesk_search [Keyword1],[Keyword2],."
 msgstr ""
+"В канал: Можете да създадете нов тикет, като напечатате /helpdesk [заглавие "
+"на тикет]. Можете да търсите тикет, като напечатате /helpdesk_search "
+"[ключова дума1],[ключова дума2]."
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -986,9 +991,9 @@ msgid ""
 "It is set either if there's not at least an unreconciled debit and an "
 "unreconciled credit or if you click the \"Done\" button."
 msgstr ""
-"За този партньор бе извършено обединяване на последните фактури и плащания. "
-"То се определя или ако няма поне един необединен дебит и един необединен "
-"кредит, или пък ако натиснете бутона \"Done - Извършен\"."
+"За този контрагент бе извършено обединяване на последните фактури и "
+"плащания. То се определя или ако няма поне един необединен дебит и един "
+"необединен кредит, или пък ако натиснете бутона \"Извършен\"."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_last_time_entries_checked
@@ -1115,7 +1120,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_tickets
 msgid "Number of tickets from the same partner"
-msgstr ""
+msgstr "Брой тикети от един и същ контрагент"
 
 #. module: helpdesk
 #. openerp-web
@@ -1181,7 +1186,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_debit_limit
 msgid "Payable Limit"
-msgstr "Платим лимит"
+msgstr "Лимит на сметка задължения към доставчици"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1212,6 +1217,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"Политика за публикуване на съобщение в документа чрез пощенската кутия.\n"
+"- всеки: всеки може да публикува\n"
+"- контрагенти: само удостоверени контрагенти\n"
+"- последователи: само последователи на свързан документ или членове на следващите канали\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_priority
@@ -1562,8 +1571,8 @@ msgstr "Шаблони"
 msgid ""
 "The fiscal position will determine taxes and accounts used for the partner."
 msgstr ""
-"Фискалната позиция ще определи данъците и сметките, използвани за партньора."
-" "
+"Фискалната позиция ще определи данъците и сметките, използвани от "
+"контрагента. "
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_model_id
@@ -1595,8 +1604,8 @@ msgid ""
 "The partner has at least one unreconciled debit and credit since last time "
 "the invoices & payments matching was performed."
 msgstr ""
-"Партньорът има поне един необединен дебит и кредит откакто е било извършено "
-"последното обединяване на фактури и плащания."
+"Контрагентът има поне един необединен дебит и кредит откакто е било "
+"извършено последното обединяване на фактури и плащания."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_res_users_property_account_payable_id
@@ -1604,8 +1613,8 @@ msgid ""
 "This account will be used instead of the default one as the payable account "
 "for the current partner"
 msgstr ""
-"Тази сметка ще бъде използвана за настоящия партньор като сметка за плащане "
-"вместо сметката по подразбиране."
+"Тази сметка ще бъде използвана вместо сметката по подразбиране в качеството "
+"ѝ на сметка задължения към доставчици за настоящия контрагент."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_res_users_property_account_receivable_id
@@ -1613,8 +1622,8 @@ msgid ""
 "This account will be used instead of the default one as the receivable "
 "account for the current partner"
 msgstr ""
-"Като сметка за получаване за текущия партньор ще се използва тази сметка  "
-"вместо сметката по подрабиране"
+"Тази сметка ще бъде използвана вместо сметката по подразбиране в качеството "
+"ѝ на сметка вземания от клиенти за настоящия контрагент"
 
 #. module: helpdesk
 #. openerp-web
@@ -1766,12 +1775,12 @@ msgstr "Общо фактурирани"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_debit
 msgid "Total Payable"
-msgstr "Общо за плащане"
+msgstr "Тотал на сметки задължения към доставчици"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_credit
 msgid "Total Receivable"
-msgstr "Общо за получаване"
+msgstr "Тотал на сметки вземания от клиенти"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_res_users_credit
@@ -1781,7 +1790,7 @@ msgstr "Обща сума, която клиентът ви дължи."
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_res_users_debit
 msgid "Total amount you have to pay to this vendor."
-msgstr "Обща сума, която трябва да платите на този търговец/доставчик."
+msgstr "Обща сума, която трябва да платите на този доставчик."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_twitter
@@ -1854,7 +1863,7 @@ msgstr "Практично поле, което изразява налично�
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_property_supplier_payment_term_id
 msgid "Vendor Payment Terms"
-msgstr "Срокове/условия за раз/плащане с доставчици"
+msgstr "Срокове за плащане на доставчици"
 
 #. module: helpdesk
 #. openerp-web

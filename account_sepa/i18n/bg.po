@@ -27,7 +27,7 @@ msgstr ""
 #: code:addons/account_sepa/account_payment.py:42
 #, python-format
 msgid "A SEPA communication cannot exceed 140 characters"
-msgstr "Едно съобщение по ЕЗПЕ не може да надхвърля 140 знака/символа"
+msgstr "Едно съобщение по ЕЗПЕ не може да надхвърля 140 символа"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_bank_account_id
@@ -37,7 +37,7 @@ msgstr "Банкова сметка"
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
 msgid "Cancel"
-msgstr "Анулирайте/откажете"
+msgstr "Откажете"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -46,13 +46,13 @@ msgid ""
 "file on your bank's homebanking website to order the credit transfer."
 msgstr ""
 "Натиснете върху файла, за да го съхраните някъде в компютъра си. След това "
-"качете този файл на уебсайта на Вашата банка, за да поръчате кредитния "
-"трансфер/прехвърлянето на кредита."
+"качете този файл в уебсайта на банката си, за да поръчате кредитния трансфер"
+" на кредита."
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_res_company
 msgid "Companies"
-msgstr "Компании/фирми/предприятия"
+msgstr "Компании"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_sepa_credit_transfer
@@ -77,12 +77,12 @@ msgstr "Покажете име"
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
 msgid "Download SEPA Credit Transfer File"
-msgstr "Свалете файл за кредитен превод по ЕЗПЕ"
+msgstr "Изтеглете файл за кредитен превод по ЕЗПЕ"
 
 #. module: account_sepa
 #: model:ir.actions.server,name:account_sepa.action_account_download_sepa_sct_file
 msgid "Download SEPA Payment"
-msgstr "Свалете раз/плащане по ЕЗПЕ"
+msgstr "Изтеглете плащане по ЕЗПЕ"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company_sepa_orgid_issr
@@ -101,7 +101,7 @@ msgstr "Име на файл"
 #. module: account_sepa
 #: selection:res.company,sepa_pain_version:0
 msgid "Generic"
-msgstr "Общ/с широко приложение"
+msgstr "Общ"
 
 #. module: account_sepa
 #: selection:res.company,sepa_pain_version:0
@@ -111,7 +111,7 @@ msgstr "Немска версия"
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_id
 msgid "ID"
-msgstr "ID/идентификация"
+msgstr "Идентификация"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
@@ -136,13 +136,13 @@ msgid ""
 "In order to export a SEPA Credit Transfer file, please only select payments "
 "belonging to the same bank journal."
 msgstr ""
-"За да експортирате файл за кредитен превод по ЕЗПЕ, моля подберете "
-"единствено плащания, принадлежащи към един и същ банков журнал."
+"За да експортирате файл за кредитен превод по ЕЗПЕ, моля само подберете "
+"плащания, принадлежащи към един и същ банков журнал."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
 msgid "Is generic"
-msgstr "Е общ/с широко приложение"
+msgstr "Е общ"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
@@ -182,12 +182,12 @@ msgid ""
 "in length."
 msgstr ""
 "Име на референтната страна на кредитора. Инструкция за употреба: ограничение"
-" в дължината от 70 символа/знака."
+" в дължината от 70 символа."
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
 msgid "Ok"
-msgstr "Ok"
+msgstr "Добре"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
@@ -288,11 +288,11 @@ msgid ""
 " or a payee is not identified by an IBAN account number and a bank BIC."
 msgstr ""
 "Техническа характеристика, използвана в хода на създаването на файла. Смята "
-"се, че дадено съобщение по ЕЗПА може да мине за 'общо', ако не може да се "
+"се, че дадено съобщение по ЕЗПЕ може да мине за 'общо', ако не може да се "
 "разглежда като стандартен европейски кредитен превод. Това се случва, ако "
-"банковият журнал не оперира в €, дадена транзакция не е осъществена в  € или"
-" един получател на пари не е идентифициран чрез IBAN номер на сметка и "
-"банков BIC."
+"банковият журнал не оперира в €, дадена транзакция не е осъществена в € или "
+"един получател на пари не е идентифициран чрез IBAN номер на сметка и банков"
+" BIC."
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:350
@@ -301,7 +301,7 @@ msgid ""
 "The account %s, linked to partner '%s', is not of type IBAN.\n"
 "A valid IBAN account is required to use SEPA features."
 msgstr ""
-"Сметката %s, свързана с партньора '%s', не е от типа IBAN.\n"
+"Сметката %s, свързана с контрагент '%s', не е от типа IBAN.\n"
 "За да се възползвате от характеристиките на ЕЗПЕ, Ви е нужна сметка с валиден IBAN."
 
 #. module: account_sepa
@@ -312,7 +312,7 @@ msgid ""
 "A valid IBAN account is required to use SEPA features."
 msgstr ""
 "Сметката %s от журнала '%s' не е от типа IBAN.\n"
-"За да се възползвате от характеристиките на ЕЗПЕ, е необходима сметка с валиден  IBAN."
+"За да се възползвате от функциите на ЕЗПЕ, е необходима сметка с валиден  IBAN."
 
 #. module: account_sepa
 #: code:addons/account_sepa/account_payment.py:52
@@ -359,9 +359,9 @@ msgid ""
 "In particular, the reason why it this payment file is not a generic is the following:\n"
 "   "
 msgstr ""
-"Създаденият файл за плащане не представлява общ кредитен превод по ЕЗПЕ. Бъдете наясно, че някои банки могат да го отхвърлят, защото той не се предлага от тяхна страна.\n"
+"Създаденият файл за плащане не представлява общ кредитен трансфер по ЕЗПЕ. Бъдете наясно, че някои банки могат да го отхвърлят, защото той не се предлага от тяхна страна.\n"
 "\n"
-"По-специално, причината, поради която този файл за плащане не се явява общ, е следната:\n"
+"По-специално, причината, поради която този файл за плащане не се явява общ е следната:\n"
 "   "
 
 #. module: account_sepa
@@ -381,8 +381,8 @@ msgid ""
 "The partner account '%s' requires a Bank Identification Code (BIC) to pay "
 "via SEPA. Please configure it first."
 msgstr ""
-"Сметката на партньора '%s' изисква Банков Идентификационен Код (BIC), за да "
-"се плаща през SEPA. Моля конфигурирайте първо него."
+"Сметката на контрагента '%s' изисква Банков идентификационен код - BIC, за "
+"да се плаща през SEPA. Моля конфигурирайте първо него."
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:17
@@ -412,7 +412,7 @@ msgstr "Транзакцията %s е зададена във валута, к�
 #: code:addons/account_sepa/sepa_credit_transfer.py:334
 #, python-format
 msgid "There is no Bank Identifier Code recorded for bank account '%s'"
-msgstr "В сметката не е въведен Банков Идентификационен Код BIC '%s'"
+msgstr "В сметката не е въведен Банков идентификационен код BIC '%s'"
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:180
@@ -421,7 +421,7 @@ msgid ""
 "There is no Bank Identifier Code recorded for bank account '%s' of journal "
 "'%s'"
 msgstr ""
-"Липсва Банков Идентификационен Код BIC, регистриран по сметката '%s' от "
+"Липсва Банков идентификационен код BIC, регистриран по сметката '%s' от "
 "журнал '%s'"
 
 #. module: account_sepa
@@ -439,7 +439,7 @@ msgstr "Твърде много транзакции за един файл."
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_warning_message
 msgid "Warning"
-msgstr "Внимание"
+msgstr "Предупреждение"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_orgid_issr

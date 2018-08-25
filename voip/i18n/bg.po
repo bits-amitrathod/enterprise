@@ -6,16 +6,16 @@
 # Martin Trigaux, 2016
 # kalatchev, 2016
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2016
+# Maria Boyadjieva <marabo2000@gmail.com>, 2016
 # Albena Mincheva <albena_vicheva@abv.bg>, 2018
 # Boris Stefanov <borkata@gmail.com>, 2018
-# Maria Boyadjieva <marabo2000@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
 "PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Maria Boyadjieva <marabo2000@gmail.com>, 2018\n"
+"Last-Translator: Boris Stefanov <borkata@gmail.com>, 2018\n"
 "Language-Team: Bulgarian (https://www.transifex.com/odoo/teams/41243/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,12 +31,12 @@ msgstr "# Задачи"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_property_account_payable_id
 msgid "Account Payable"
-msgstr "Разплащателна сметка"
+msgstr "Сметка задължения към доставчици"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_property_account_receivable_id
 msgid "Account Receivable"
-msgstr "Приходна сметка"
+msgstr "Сметка вземания от клиенти"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_sip_always_transfer
@@ -51,7 +51,7 @@ msgstr "Банка"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_ref_company_ids
 msgid "Companies that refers to partner"
-msgstr "Фирми свързани с партньор"
+msgstr "Компании, свързани с контагент"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_contract_ids
@@ -173,9 +173,9 @@ msgid ""
 "It is set either if there's not at least an unreconciled debit and an "
 "unreconciled credit or if you click the \"Done\" button."
 msgstr ""
-"За този партньор бе извършено съгласуване на последните фактури и плащания. "
-"То се определя или ако няма поне един необединен дебит и един необединен "
-"кредит, или пък ако натиснете бутона \"Done - Извършен\"."
+"За този контрагент бе извършено съгласуване на последните фактури и "
+"плащания. То се определя или ако няма поне един необединен дебит и един "
+"необединен кредит, или пък ако натиснете бутона \"Извършен\"."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_last_time_entries_checked
@@ -207,7 +207,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_debit_limit
 msgid "Payable Limit"
-msgstr "Платим лимит"
+msgstr "Лимит на сметка задължения към доставчици"
 
 #. module: voip
 #. openerp-web
@@ -257,8 +257,8 @@ msgstr "Задачи"
 msgid ""
 "The fiscal position will determine taxes and accounts used for the partner."
 msgstr ""
-"Фискалната позиция ще определи данъците и сметките, използвани за партньора."
-" "
+"Фискалната позиция ще определи данъците и сметките, използвани за "
+"контрагента. "
 
 #. module: voip
 #. openerp-web
@@ -283,8 +283,8 @@ msgid ""
 "The partner has at least one unreconciled debit and credit since last time "
 "the invoices & payments matching was performed."
 msgstr ""
-"Партньорът има поне един необединен дебит и кредит откакто е било извършено "
-"последното обединяване на фактури и плащания."
+"Контрагентът има поне един необединен дебит и кредит, откакто е било "
+"извършено последното съчетаване на фактури и плащания."
 
 #. module: voip
 #. openerp-web
@@ -307,8 +307,8 @@ msgid ""
 "This account will be used instead of the default one as the payable account "
 "for the current partner"
 msgstr ""
-"Тази сметка ще бъде използвана за настоящия партньор като сметка за плащане "
-"вместо сметката по подразбиране."
+"Тази сметка ще бъде използвана вместо сметката по подразбиране в качеството "
+"ѝ на сметка задължения към доставчици за настоящия контрагент"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_property_account_receivable_id
@@ -316,8 +316,8 @@ msgid ""
 "This account will be used instead of the default one as the receivable "
 "account for the current partner"
 msgstr ""
-"Като сметка за получаване за текущия партньор ще се използва тази сметка  "
-"вместо сметката по подрабиране"
+"Тази сметка ще бъде използвана вместо сметката по подразбиране в качеството "
+"ѝ на сметка вземания от клиенти за настоящия контрагент"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_property_supplier_payment_term_id
@@ -325,8 +325,8 @@ msgid ""
 "This payment term will be used instead of the default one for purchase "
 "orders and vendor bills"
 msgstr ""
-"Това условие на плащане ще бъде използвано вместо това, което се извършва по"
-" подразбиране, за поръчките за покупки и фактурите за покупки."
+"Този срок на плащане ще бъде използван вместо това, което се извършва по "
+"подразбиране, за поръчките за покупки и фактурите за покупки."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_property_payment_term_id
@@ -345,12 +345,12 @@ msgstr "Общо фактурирани"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_debit
 msgid "Total Payable"
-msgstr "Общо за плащане"
+msgstr "Тотал на сметки задължения към доставчици"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_credit
 msgid "Total Receivable"
-msgstr "Общо за получаване"
+msgstr "Тотал на сметки вземания с натрупване"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_credit
@@ -360,7 +360,7 @@ msgstr "Обща сума, която клиентът ви дължи."
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_debit
 msgid "Total amount you have to pay to this vendor."
-msgstr "Обща сума, която трябва да платите на този търговец/доставчик."
+msgstr "Обща сума, която трябва да платите на този доставчик."
 
 #. module: voip
 #: model:ir.model,name:voip.model_res_users
@@ -380,7 +380,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_property_supplier_payment_term_id
 msgid "Vendor Payment Terms"
-msgstr "Срокове/условия за раз/плащане с доставчици"
+msgstr "Срокове за плащане на доставчици"
 
 #. module: voip
 #. openerp-web
