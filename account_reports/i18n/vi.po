@@ -7,8 +7,8 @@
 # Martin Trigaux, 2017
 # sao sang <saosangmo@yahoo.com>, 2017
 # Tuan Tran <tmtuan.projects@gmail.com>, 2017
-# Phạm Lân <phamquanglan@gmail.com>, 2017
 # Duy BQ <duybq86@gmail.com>, 2017
+# Phạm Lân <phamquanglan@gmail.com>, 2017
 # Hoang Loc Le Huu <loclhh@gmail.com>, 2017
 # son dang <son.dang@doda100.com>, 2017
 # Jean-Charles Drubay <jcdrubay@gmail.com>, 2017
@@ -447,7 +447,7 @@ msgstr "Kế toán theo dòng tiền,"
 #: model:ir.actions.client,name:account_reports.action_account_report_cs
 #: model:ir.ui.menu,name:account_reports.account_financial_html_report_menu_3
 msgid "Cash Flow Statement"
-msgstr "Báo cáo lưu chuyển tiền tệ"
+msgstr "Báo cáo lưu chuyển tiền mặt"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_opening_balance0
@@ -1357,7 +1357,7 @@ msgstr "Mô đun"
 #: code:addons/account_reports/models/account_generic_tax_report.py:24
 #, python-format
 msgid "NET"
-msgstr "NET"
+msgstr "VỐN"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_net_assets0
@@ -1508,7 +1508,7 @@ msgstr "Một tuần"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
 msgid "Only Show Unreconciled Entries"
-msgstr ""
+msgstr "Chỉ hiện bút toán chưa đối soát"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_income0
@@ -1584,13 +1584,13 @@ msgstr "Báo cáo đối tác"
 #: code:addons/account_reports/models/account_partner_ledger.py:19
 #, python-format
 msgid "Payable"
-msgstr "Phải trả"
+msgstr "Khoản phải trả"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_current_liabilities_payable
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_creditors0
 msgid "Payables"
-msgstr "Phải trả"
+msgstr "Khoản phải trả"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
@@ -1643,7 +1643,7 @@ msgstr "Chỉ bút toán vào sổ"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
 msgid "Posted Entries Only,"
-msgstr ""
+msgstr "Chỉ bút toán vào sổ,"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_prepayements0
@@ -1658,7 +1658,7 @@ msgstr "Kì trước"
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_previous_year_earnings0
 msgid "Previous Years Unallocated Earnings"
-msgstr ""
+msgstr "Thu nhập chưa phân bổ của năm hiện tại"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
@@ -1813,12 +1813,12 @@ msgstr "Xem cột Nợ và Có"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_show_domain
 msgid "Show Domain"
-msgstr ""
+msgstr "Hiển thị Domain"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_unfold_all_filter
 msgid "Show unfold all filter"
-msgstr ""
+msgstr "Hiển thị tất cả bộ lọc đã mở"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line_special_date_changer
@@ -1897,6 +1897,8 @@ msgstr "Nhãn hiển thị trên nút sổ cái đối tác, trong khung nhìn"
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report_generated_menu_id
 msgid "The menu item generated for this report, or None if there isn't any."
 msgstr ""
+"Mục trình đơn được tạo cho báo cáo này hoặc Không có nếu không có bất kỳ mục"
+" nào."
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_general_ledger.py:346
@@ -2002,12 +2004,12 @@ msgstr "Không xác định"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
 msgid "Unfold"
-msgstr ""
+msgstr "Mở ra"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
 msgid "Unfold All"
-msgstr ""
+msgstr "Mở tất cả"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
@@ -2018,7 +2020,7 @@ msgstr "Chưa được đối soát"
 #: model:ir.model.fields,field_description:account_reports.field_res_partner_unreconciled_aml_ids
 #: model:ir.model.fields,field_description:account_reports.field_res_users_unreconciled_aml_ids
 msgid "Unreconciled Aml"
-msgstr ""
+msgstr "Mã ami chưa đối soát"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_cash_basis
@@ -2063,7 +2065,7 @@ msgstr "Với bút toán nháp"
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_extra_options
 msgid "With Draft Entries,"
-msgstr ""
+msgstr "Với bút toán nháp,"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.followup_search_template

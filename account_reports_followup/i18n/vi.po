@@ -67,6 +67,14 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"\n"
+"Gửi công ty %(partner_name)s,\n"
+"Đây có thể là sai sót của chúng tôi, nhưng có vẻ như số tiền sau vẫn chưa được thanh toán. Vui lòng thực hiện các biện pháp thích hợp để thực hiện thanh toán này trong 8 ngày tới.\n"
+"\n"
+"Nếu khoản thanh toán của bạn đã được thực hiện trước khi thư này được gửi, vui lòng bỏ qua thông báo này. Đừng ngần ngại liên hệ với bộ phận kế toán của chúng tôi.\n"
+"\n"
+"Chân thành cảm ơn,\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line2
@@ -85,6 +93,17 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Gửi công ty %(partner_name)s,\n"
+"\n"
+"Chúng tôi rất thất vọng khi thấy rằng mặc dù đã gửi lời nhắc, rằng tài khoản của bạn hiện đang bị quá hạn nghiêm trọng.\n"
+"\n"
+"Điều quan trọng là thanh toán ngay lập tức phải được thực hiện, nếu không chúng tôi sẽ phải xem xét việc đặt lệnh dừng trên tài khoản của bạn có nghĩa là chúng tôi sẽ không còn có thể cung cấp cho công ty của bạn (hàng hóa/dịch vụ) nữa.\n"
+"Vui lòng thực hiện các biện pháp thích hợp để thực hiện thanh toán này trong 8 ngày tới.\n"
+"\n"
+"Chi tiết các khoản thanh toán quá hạn được in dưới đây.\n"
+"\n"
+"Chân thành cảm ơn,\n"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -277,7 +296,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
 msgid "Gives the sequence order when displaying a list of follow-up lines."
-msgstr ""
+msgstr "Cung cấp thứ tự chuỗi khi hiển thị danh sách các dòng tiếp theo."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_id
@@ -354,11 +373,13 @@ msgid ""
 "No follow-up is defined for the company \"%s\".\n"
 " Please define one."
 msgstr ""
+"Công ty \"%s\" chưa được xác định theo dõi.\n"
+"  Vui lòng chọn một theo dõi."
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
 msgid "Only one follow-up per company is allowed"
-msgstr ""
+msgstr "Chỉ cho phép một công ty theo dõi cho mỗi công ty"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_res_partner_payment_responsible_id
@@ -367,11 +388,13 @@ msgid ""
 "Optionally you can assign a user to this field, which will make him "
 "responsible for the action."
 msgstr ""
+"Tùy chọn bạn có thể chỉ định người dùng cho trường này, điều này sẽ khiến "
+"anh ta chịu trách nhiệm về hành động."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
 msgid "Partner entries"
-msgstr ""
+msgstr "Bút toán đối tác"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
@@ -441,6 +464,8 @@ msgid ""
 "the reminder.  Could be negative if you want to send a polite alert "
 "beforehand."
 msgstr ""
+"Số ngày sau ngày hết hạn của hóa đơn phải chờ trước khi gửi lời nhắc. Có thể"
+" âm nếu bạn muốn gửi cảnh báo lịch sự trước."
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line3
@@ -525,6 +550,8 @@ msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
 "the percent character."
 msgstr ""
+"Mô tả của bạn không hợp lệ, sử dụng chú thích phù hợp hoặc %% nếu bạn muốn "
+"sử dụng ký tự phần trăm."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.res_config_settings_view_form
