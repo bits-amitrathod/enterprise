@@ -32,7 +32,7 @@
 
     # only loaded in demonstration mode
     'demo': [],
-    'application': True,
+    # 'application': True,
     'auto-install': True,
     'installable': True,
 }
