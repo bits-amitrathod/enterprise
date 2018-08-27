@@ -21,10 +21,10 @@ class SignContract(Sign):
         request_item = request.env['sign.request.item'].sudo().search([('access_token', '=', token)])
         contract = request.env['hr.contract'].sudo().with_context(active_test=False).search([
             ('sign_request_ids', 'in', request_item.sign_request_id.ids)])
-        request_template_id = request_item.signature_request_id.template_id.id
+        request_template_id = request_item.sign_request_id.template_id.id
         # Only if the signed document is the document to sign from the salary package
         contract_documents = [
-            contract.signature_request_template_id.id,
+            contract.sign_template_id.id,
             contract.contract_update_template_id.id,
         ]
         if contract and request_template_id in contract_documents:
