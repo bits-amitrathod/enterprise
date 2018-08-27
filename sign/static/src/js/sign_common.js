@@ -823,7 +823,7 @@ odoo.define('sign.document_signing', function(require) {
                     });
                 }
                 if (response === true) {
-                    (new (self.get_thankyoudialog_class())(self, self.RedirectURL)).open();
+                    (new (self.get_thankyoudialog_class())(self, self.RedirectURL, self.requestID)).open();
                 }
                 if (typeof response === 'object') {
                     if (response.url) {
@@ -864,18 +864,26 @@ odoo.define('sign.document_signing', function(require) {
             'click .o_go_to_document': 'on_closed',
         },
 
-        init: function(parent, RedirectURL, options) {
+        init: function(parent, RedirectURL, requestID, options) {
             options = (options || {});
             options.title = options.title || _t("Thank You !") + "<br/>";
             options.subtitle = options.subtitle || _t("Your signature has been saved.");
             options.size = options.size || "medium";
             options.technical = false;
             options.buttons = [];
-
             this.RedirectURL = RedirectURL;
+            this.requestID = requestID;
             this._super(parent, options);
 
             this.on('closed', this, this.on_closed);
+        },
+
+        /**
+         * @override
+         */
+        renderElement: function () {
+            this._super.apply(this, arguments);
+            this.$modal.addClass('o_sign_thank_you_dialog');
         },
 
         on_closed: function () {
@@ -1094,7 +1102,7 @@ odoo.define('sign.document_signing', function(require) {
                     }
                     if (response === true) {
                         self.iframeWidget.disableItems();
-                        (new (self.get_thankyoudialog_class())(self, self.RedirectURL)).open();
+                        (new (self.get_thankyoudialog_class())(self, self.RedirectURL, self.requestID)).open();
                     }
                     if (typeof response === 'object') {
                         if (response.sms) {
@@ -1155,7 +1163,7 @@ odoo.define('sign.document_signing', function(require) {
                             }, 500);
                         }
                     });
-                    (new (self.get_thankyoudialog_class())(self, self.RedirectURL)).open();
+                    (new (self.get_thankyoudialog_class())(self, self.RedirectURL, self.requestID)).open();
                 }
             });
         },

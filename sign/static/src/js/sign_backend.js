@@ -1012,19 +1012,23 @@ odoo.define('sign.document_signing_backend', function(require) {
     var NoPubThankYouDialog = document_signing.ThankYouDialog.extend({
         template: "sign.no_pub_thank_you_dialog",
 
-        init: function (parent, RedirectURL, options) {
+        init: function (parent, RedirectURL, requestID, options) {
             options = (options || {});
             if (!options.buttons) {
                 options.buttons = [{text: _t("Ok"), close: true}];
             }
-
-            this.RedirectURL = RedirectURL;
-            this._super(parent, options);
+            this._super(parent, RedirectURL, requestID, options);
         },
 
         on_closed: function () {
-            return this.do_action("sign.sign_request_action", {
-                clear_breadcrumbs: true,
+            var self = this;
+            self._rpc({
+                model: 'sign.request',
+                method: 'go_to_document',
+                args: [self.requestID],
+            }).then(function(action) {
+                self.do_action(action);
+                self.destroy();
             });
         },
     });
