@@ -4,27 +4,28 @@
 # 
 # Translators:
 # Viktor Pogrebniak <vp@aifil.ru>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
+# Martin Trigaux, 2017
+# Collex100, 2017
 # Masha Koc <mariya.kos.ua@gmail.com>, 2017
 # Максим Дронь <dronmax@gmail.com>, 2017
-# Sergey Vilizhanin <sv@grimmette.ru>, 2017
+# Sergey Vilizhanin, 2017
 # Max Belyanin <maxbelyanin@gmail.com>, 2017
-# Andrey Skabelin <inactive+a.skabelin@transifex.com>, 2017
+# Andrey Skabelin, 2017
 # Denis Trepalin <zekarious@gmail.com>, 2017
 # Evgeny <transingularity@gmail.com>, 2017
 # Gennady Marchenko <gennadym@gmail.com>, 2017
 # Mekan Bash <tmbashimov@gmail.com>, 2017
 # Amaro Vita <vita.amaro@gmail.com>, 2017
 # Русский «kolobok2048» Ивашка <kolobok2048@gmail.com>, 2017
-# Dimko Pythonic <d.v.selitsky@gmail.com>, 2017
+# Dmitry sky <d.v.selitsky@gmail.com>, 2017
+# sergeiruzkiicode <sergei.ruzki@icode.by>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Dimko Pythonic <d.v.selitsky@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-08-08 12:22+0000\n"
+"PO-Revision-Date: 2018-08-08 12:22+0000\n"
+"Last-Translator: sergeiruzkiicode <sergei.ruzki@icode.by>, 2018\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,6 +120,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
 msgid "Accept Emails From"
 msgstr "Принять электронные письма от"
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_2
+msgid "Action Proposed"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_active
@@ -255,6 +261,11 @@ msgstr "Настройка"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 msgid "Confirm Measure"
 msgstr ""
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_1
+msgid "Confirmed"
+msgstr "Запрошен"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
@@ -623,6 +634,7 @@ msgstr "Название"
 #: code:addons/quality/models/quality.py:437
 #: code:addons/quality/models/quality.py:438
 #: code:addons/quality/models/quality.py:478
+#: model:quality.alert.stage,name:quality.quality_alert_stage_0
 #, python-format
 msgid "New"
 msgstr "Новый"
@@ -689,6 +701,11 @@ msgstr ""
 "отключит создание новых записей полностью."
 
 #. module: quality
+#: model:quality.reason,name:quality.reason_other
+msgid "Others"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_user_id
 msgid "Owner"
 msgstr "Владелец"
@@ -713,6 +730,11 @@ msgstr ""
 "Предок содержащий алиас. Модель, содержащая ссылку на алиас — не обязательно"
 " та, на которую ссылается alias_model_id (например, проект (parent_model) и "
 "задача (model))"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_parts
+msgid "Parts Quality"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
@@ -1019,7 +1041,12 @@ msgid "Settings"
 msgstr "Настройки"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_8974
+#: model:quality.alert.stage,name:quality.quality_alert_stage_3
+msgid "Solved"
+msgstr "Решено"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_3233
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "Этап"
@@ -1052,7 +1079,7 @@ msgid "Tags"
 msgstr "Теги"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_8984
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_3243
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -1072,7 +1099,7 @@ msgstr ""
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_point_test_type
-#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_8842
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_3104
 msgid "Test Type"
 msgstr "Тип испытания"
 
@@ -1178,6 +1205,16 @@ msgstr ""
 #: selection:quality.point,measure_frequency_unit:0
 msgid "Week(s)"
 msgstr "Неделя(и)"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_wo
+msgid "Work Operation"
+msgstr ""
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_workcenter
+msgid "Workcenter Failure"
+msgstr ""
 
 #. module: quality
 #: code:addons/quality/models/quality.py:273

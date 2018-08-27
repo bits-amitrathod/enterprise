@@ -5,7 +5,7 @@
 # Translators:
 # Xavier Belmere <Info@cartmeleon.com>, 2017
 # Adriana Ierfino <adriana.ierfino@savoirfairelinux.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2017
 # Eloïse Stilmant <est@odoo.com>, 2017
 # Micky Jault <micky037@hotmail.fr>, 2017
@@ -21,21 +21,22 @@
 # Saad Thaifa <saad.thaifa@gmail.com>, 2017
 # Sébastien LANGE (SYLEAM) <sebastien.lange@syleam.fr>, 2017
 # lucasdeliege <deliegelucas@gmail.com>, 2017
-# lap.odoo <lap@odoo.com>, 2017
+# Laura Piraux <lap@odoo.com>, 2017
 # Jérémy Donas <LeDistordu@users.noreply.github.com>, 2017
 # Benjamin Delagoutte <ben@ampletus.fr>, 2017
 # Shark McGnark <peculiarcheese@gmail.com>, 2017
 # Richard Mathot <rim@odoo.com>, 2017
 # fr trans <e2ftrans1@yahoo.com>, 2017
 # fr rev <e2ffr02@hotmail.com>, 2017
-# Florian Hatat <mininet@wanadoo.fr>, 2017
+# Florian Hatat, 2017
+# Jérôme Tanché <jerome.tanche@ouest-dsi.fr>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Florian Hatat <mininet@wanadoo.fr>, 2017\n"
+"POT-Creation-Date: 2018-08-08 12:22+0000\n"
+"PO-Revision-Date: 2018-08-08 12:22+0000\n"
+"Last-Translator: Jérôme Tanché <jerome.tanche@ouest-dsi.fr>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -134,6 +135,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
 msgid "Accept Emails From"
 msgstr "Accepter les emails de"
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_2
+msgid "Action Proposed"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_active
@@ -270,6 +276,11 @@ msgstr "Configuration"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 msgid "Confirm Measure"
 msgstr "Confirmer la mesure"
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_1
+msgid "Confirmed"
+msgstr "Confirmé"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
@@ -637,6 +648,7 @@ msgstr "Nom"
 #: code:addons/quality/models/quality.py:437
 #: code:addons/quality/models/quality.py:438
 #: code:addons/quality/models/quality.py:478
+#: model:quality.alert.stage,name:quality.quality_alert_stage_0
 #, python-format
 msgid "New"
 msgstr "Nouveau"
@@ -703,6 +715,11 @@ msgstr ""
 " la création de nouveaux enregistrements sera complètement désactivée."
 
 #. module: quality
+#: model:quality.reason,name:quality.reason_other
+msgid "Others"
+msgstr "Autres"
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_user_id
 msgid "Owner"
 msgstr "Propriétaire"
@@ -727,6 +744,11 @@ msgstr ""
 "Modèle parent de l'alias. Le modèle possédant la référence de l'alias n'est "
 "pas nécessairement le modèle donné par alias_model_id (Ex. : project "
 "(parent_model) et task (modèle))"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_parts
+msgid "Parts Quality"
+msgstr ""
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
@@ -1034,7 +1056,12 @@ msgid "Settings"
 msgstr "Configuration"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_8974
+#: model:quality.alert.stage,name:quality.quality_alert_stage_3
+msgid "Solved"
+msgstr "Résolu"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_3233
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "Étape"
@@ -1067,7 +1094,7 @@ msgid "Tags"
 msgstr "Étiquettes"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_8984
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_3243
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -1087,7 +1114,7 @@ msgstr "Nom technique"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_point_test_type
-#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_8842
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_3104
 msgid "Test Type"
 msgstr "Type de test"
 
@@ -1196,6 +1223,16 @@ msgstr "Message d'avertissement"
 #: selection:quality.point,measure_frequency_unit:0
 msgid "Week(s)"
 msgstr "Semaine(s)"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_wo
+msgid "Work Operation"
+msgstr ""
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_workcenter
+msgid "Workcenter Failure"
+msgstr ""
 
 #. module: quality
 #: code:addons/quality/models/quality.py:273
