@@ -12,13 +12,14 @@
 # Paweł Michoń <michon.pawel@wp.pl>, 2017
 # zieloo <zieloo@gmail.com>, 2017
 # Tomasz Leppich <t.leppich@gmail.com>, 2018
+# Paweł Wodyński <pw@myodoo.pl>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Tomasz Leppich <t.leppich@gmail.com>, 2018\n"
+"Last-Translator: Paweł Wodyński <pw@myodoo.pl>, 2018\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +30,7 @@ msgstr ""
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_form
 msgid "% Time"
-msgstr ""
+msgstr "% Czas"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_view_kanban_inherit_project_forecast
@@ -76,7 +77,7 @@ msgstr "Pozwalaj na prognozy"
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_project_allow_forecast
 msgid "Allow forecast"
-msgstr ""
+msgstr "Dopuść prognozę"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -96,7 +97,7 @@ msgstr "Przypisz użytkownika na zadaniu"
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_assign
 msgid "Assign user on task"
-msgstr ""
+msgstr "Przypisywanie użytkownika do zadania"
 
 #. module: project_forecast
 #: model:ir.ui.menu,name:project_forecast.menu_project_forecast_grid_by_project
@@ -117,6 +118,9 @@ msgid ""
 "Can only be used for forecasts not spanning multiple months, found "
 "%(forecast_count)d forecast(s) spanning across months in %(project_name)s"
 msgstr ""
+"Może być używany tylko w przypadku prognoz nieobjętych wieloma miesiącami, "
+"znaleziono %(forecast_count)d prognozę(y) obejmujące miesiące w "
+"%(project_name)s"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_color
@@ -181,17 +185,17 @@ msgstr "Prognoza"
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_report_activities
 #: model:ir.ui.menu,name:project_forecast.project_forecast_report_activities
 msgid "Forecast Analysis"
-msgstr ""
+msgstr "Analiza prognozy"
 
 #. module: project_forecast
 #: model:ir.actions.act_window,name:project_forecast.action_project_forecast_grid_by_project
 msgid "Forecast By Project"
-msgstr ""
+msgstr "Prognoza według projektu"
 
 #. module: project_forecast
 #: model:ir.actions.act_window,name:project_forecast.action_project_forecast_grid_by_user
 msgid "Forecast By User"
-msgstr ""
+msgstr "Prognoza według użytkownika"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_form
@@ -206,18 +210,18 @@ msgstr "Lista prognozy"
 #. module: project_forecast
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_by_project
 msgid "Forecast by project"
-msgstr ""
+msgstr "Prognoza według projektu"
 
 #. module: project_forecast
 #: model:ir.actions.act_window,name:project_forecast.project_forecast_action_by_user
 msgid "Forecast by user"
-msgstr ""
+msgstr "Prognoza według użytkownika"
 
 #. module: project_forecast
 #: code:addons/project_forecast/models/project_forecast.py:97
 #, python-format
 msgid "Forecasted time must be positive"
-msgstr ""
+msgstr "Prognozowany czas musi być dodatni"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_set_dates
@@ -225,6 +229,8 @@ msgid ""
 "Forecasting on a project requires that the project\n"
 "                        have start and end dates"
 msgstr ""
+"Prognozowanie projektu wymaga, aby projekt\n"
+"                        miał datę rozpoczęcia i zakończenia"
 
 #. module: project_forecast
 #: code:addons/project_forecast/models/project_forecast.py:148
@@ -232,6 +238,8 @@ msgstr ""
 msgid ""
 "Forecasting over a project only supports monthly forecasts (got step {})"
 msgstr ""
+"Prognozy dotyczące projektu obsługują tylko prognozy miesięczne (otrzymałem "
+"krok {})"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -261,6 +269,9 @@ msgid ""
 " field and the 'resource_hours' cell field, got respectively "
 "%(column_field)r and %(cell_field)r"
 msgstr ""
+"Korekta siatki dla prognoz projektowych obsługuje tylko pole kolumny "
+"'start_date' i pole komórki 'resource_hours', otrzymano odpowiednio "
+"%(column_field)r i %(cell_field)r"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_search
@@ -325,7 +336,7 @@ msgstr "Przeszłość"
 #. module: project_forecast
 #: model:ir.model.fields,help:project_forecast.field_project_forecast_time
 msgid "Percentage of working time"
-msgstr ""
+msgstr "Procent czasu pracy"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_resource_hours
@@ -344,7 +355,7 @@ msgstr "Projekt"
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_set_dates
 msgid "Project Dates"
-msgstr ""
+msgstr "Daty projektów"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.project_forecast_view_form
@@ -354,22 +365,22 @@ msgstr "Prognoza projektu"
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
 msgid "Project Forecast By Project"
-msgstr ""
+msgstr "Prognoza projektu według projektu"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_user
 msgid "Project Forecast By User"
-msgstr ""
+msgstr "Prognoza projektu według użytkownika"
 
 #. module: project_forecast
 #: model:ir.actions.server,name:project_forecast.project_forecast_server_action_archive
 msgid "Project Forecast: Archive/Restore forecasts"
-msgstr ""
+msgstr "Prognoza projektu: Archiwizuj / przywróć prognozy"
 
 #. module: project_forecast
 #: model:ir.actions.server,name:project_forecast.action_generate_forecast
 msgid "Project: Generate Task Forecast"
-msgstr ""
+msgstr "Projekt: Wygeneruj prognozę zadania"
 
 #. module: project_forecast
 #: model:ir.model.fields,help:project_forecast.field_project_forecast_user_id
@@ -392,18 +403,18 @@ msgstr "Zadanie"
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_stage_id
 msgid "Task stage"
-msgstr ""
+msgstr "Etap zadania"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_project_forecast_tag_ids
 msgid "Task tags"
-msgstr ""
+msgstr "Tagi zadań"
 
 #. module: project_forecast
 #: code:addons/project_forecast/models/project_forecast.py:109
 #, python-format
 msgid "The start-date must be lower than end-date."
-msgstr ""
+msgstr "Data rozpoczęcia musi być wcześniejsza niż data końcowa."
 
 #. module: project_forecast
 #: model:ir.model.fields,help:project_forecast.field_project_project_allow_forecast
@@ -419,7 +430,7 @@ msgstr "Użytkownik"
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_set_dates
 msgid "View Forecast"
-msgstr ""
+msgstr "Wyświetl prognozę"
 
 #. module: project_forecast
 #: model:ir.ui.view,arch_db:project_forecast.view_project_forecast_grid_by_project
@@ -437,13 +448,13 @@ msgstr "Rok"
 #: code:addons/project_forecast/models/project_forecast.py:88
 #, python-format
 msgid "You cannot set a user with no working time."
-msgstr ""
+msgstr "Nie możesz ustawić użytkownika bez czasu pracy."
 
 #. module: project_forecast
 #: code:addons/project_forecast/models/project_forecast.py:103
 #, python-format
 msgid "Your task is not in the selected project."
-msgstr ""
+msgstr "Twoje zadanie nie znajduje się w wybranym projekcie."
 
 #. module: project_forecast
 #: model:ir.model,name:project_forecast.model_project_forecast
@@ -453,10 +464,10 @@ msgstr "project.forecast"
 #. module: project_forecast
 #: model:ir.model,name:project_forecast.model_project_forecast_assignment
 msgid "project.forecast.assignment"
-msgstr ""
+msgstr "project.forecast.assignment"
 
 #. module: project_forecast
 #: code:addons/project_forecast/models/project_forecast.py:68
 #, python-format
 msgid "undefined"
-msgstr ""
+msgstr "niezdefiniowany"

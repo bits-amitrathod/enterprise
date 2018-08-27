@@ -6,8 +6,8 @@
 # Martin Trigaux, 2017
 # Rolandas <info@paninfo.lt>, 2017
 # digitouch UAB <digitouchagencyeur@gmail.com>, 2017
-# Audrius Palenskis <audrius.palenskis@gmail.com>, 2017
 # Linas Versada <paulius.sladkevicius@gmail.com>, 2017
+# Audrius Palenskis <audrius.palenskis@gmail.com>, 2017
 # Paulius Sladkevičius <paulius@versada.eu>, 2017
 # UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2017
 # vaalds <vaalds@gmail.com>, 2017
@@ -42,7 +42,7 @@ msgstr "Suma"
 #. module: account_batch_deposit
 #: model:ir.model.fields,help:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
 msgid "Automatically generates references for batch deposits."
-msgstr "Automatiškai generuoja unikalius numerius užstato partijoms."
+msgstr "Automatiškai generuoja unikalius numerius grupiniams depozitams."
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_journal_id
@@ -72,17 +72,17 @@ msgstr "Banko išrašo eilutė"
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_search
 msgid "Batch Deposit"
-msgstr "Užstato partija"
+msgstr "Grupinis depozitas"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_payment_method_selected
 msgid "Batch Deposit Payment Method Selected"
-msgstr ""
+msgstr "Grupinio depozito mokėjimo būdas pasirinktas"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_journal_batch_deposit_sequence_id
 msgid "Batch Deposit Sequence"
-msgstr "Užstato partijos eilė"
+msgstr "Grupinio depozito seka"
 
 #. module: account_batch_deposit
 #: model:ir.actions.act_window,name:account_batch_deposit.action_batch_deposit
@@ -94,7 +94,7 @@ msgstr "Grupiniai depozitai"
 #: code:addons/account_batch_deposit/models/account_journal.py:44
 #, python-format
 msgid "Batch Deposits Sequence"
-msgstr "Užstatų partijos eilė"
+msgstr "Grupinių depozitų seka"
 
 #. module: account_batch_deposit
 #: model:ir.actions.act_window,help:account_batch_deposit.action_batch_deposit
@@ -103,13 +103,16 @@ msgid ""
 "                    The amount deposited to your bank will then appear as a single transaction on your bank statement.\n"
 "                    When you proceed with the reconciliation, simply select the corresponding batch deposit to reconcile the payments."
 msgstr ""
+"Grupiniai depozitai leidžia jums sugrupuoti gautus čekius prieš atiduodant juos bankui.\n"
+"Tokiu atveju, bankui atiduodamas kiekis bus viena operacija jūsų išraše.\n"
+"Kai sudengiate, paprasčiausiai pasirinkite susijusį grupinį depozitą ir sudenkite mokėjimus."
 
 #. module: account_batch_deposit
 #: code:addons/account_batch_deposit/models/account_journal.py:69
 #: model:ir.actions.server,name:account_batch_deposit.action_account_create_batch_deposit
 #, python-format
 msgid "Create Batch Deposit"
-msgstr "Sukurti užstato partiją"
+msgstr "Sukurti grupinį depozitą"
 
 #. module: account_batch_deposit
 #: model:ir.model.fields,field_description:account_batch_deposit.field_account_batch_deposit_create_uid
@@ -217,12 +220,12 @@ msgstr "Spausdinti"
 #. module: account_batch_deposit
 #: model:ir.actions.report,name:account_batch_deposit.action_print_batch_deposit
 msgid "Print Batch Deposit"
-msgstr "Spausdinti užstato partiją"
+msgstr "Spausdinti grupinį depozitą"
 
 #. module: account_batch_deposit
 #: model:ir.actions.server,name:account_batch_deposit.action_account_print_batch_deposit
 msgid "Print Batch Deposits"
-msgstr "Spausdinti užstato partiją"
+msgstr "Spausdinti grupinius depozitus"
 
 #. module: account_batch_deposit
 #: selection:account.batch.deposit,state:0
@@ -249,7 +252,7 @@ msgstr "Užregistruoti mokėjimą"
 #: code:addons/account_batch_deposit/static/src/xml/account_reconciliation.xml:8
 #, python-format
 msgid "Select a Batch Deposit"
-msgstr "Pasirinkti užstato partiją"
+msgstr "Pasirinkite grupinį depozitą"
 
 #. module: account_batch_deposit
 #. openerp-web
@@ -272,6 +275,8 @@ msgid ""
 "Technical feature used to know whether batch deposit was enabled as payment "
 "method."
 msgstr ""
+"Techninė funkcija, naudojama sužinoti, ar grupiniai depozitai buvo įjungti "
+"kaip mokėjimo būdas."
 
 #. module: account_batch_deposit
 #: model:ir.ui.view,arch_db:account_batch_deposit.view_batch_deposit_form

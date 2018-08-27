@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import calendar
 import copy
+from dateutil.relativedelta import relativedelta
 import json
 import io
 import logging
@@ -15,6 +15,7 @@ except ImportError:
 
 from odoo import models, fields, api, _
 from datetime import timedelta, datetime, date
+from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat
 from babel.dates import get_quarter_names
 from odoo.tools.misc import formatLang, format_date
@@ -253,9 +254,18 @@ class AccountReport(models.AbstractModel):
                     'search_default_account_id': [active_id],
             })
             action['context'] = ctx
-        if options and options.get('analytic_accounts'):
-            analytic_ids = [int(r) for r in options['analytic_accounts']]
-            action['domain'] = [('analytic_account_id', 'in', analytic_ids)]
+        if options:
+            domain = expression.normalize_domain(safe_eval(action.get('domain', '[]')))
+            if options.get('analytic_accounts'):
+                analytic_ids = [int(r) for r in options['analytic_accounts']]
+                domain = expression.AND([domain, [('analytic_account_id', 'in', analytic_ids)]])
+            if options.get('date'):
+                opt_date = options['date']
+                if opt_date.get('date_from'):
+                    domain = expression.AND([domain, [('date', '>=', opt_date['date_from'])]])
+                if opt_date.get('date_to'):
+                    domain = expression.AND([domain, [('date', '<=', opt_date['date_to'])]])
+            action['domain'] = domain
         return action
 
     def reverse(self, values):
@@ -674,10 +684,9 @@ class AccountReport(models.AbstractModel):
             number_period = options['comparison'].get('number_period', 1) or 0
             for index in range(0, number_period):
                 if cmp_filter == 'same_last_year' or options_filter in ('this_year', 'last_year'):
-                    ly = lambda d: d - timedelta(days=366 if calendar.isleap(d.year) else 365)
                     if dt_from:
-                        dt_from = ly(dt_from)
-                    dt_to = ly(dt_to)
+                        dt_from = dt_from + relativedelta(years=-1)
+                    dt_to = dt_to + relativedelta(years=-1)
                 elif cmp_filter == 'previous_period':
                     if options_filter in ('this_month', 'last_month', 'today'):
                         dt_from = dt_from and (dt_from - timedelta(days=1)).replace(day=1) or dt_from

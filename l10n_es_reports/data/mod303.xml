@@ -38,6 +38,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="3"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_03" model="account.financial.html.report.line">
@@ -45,10 +46,11 @@
             <field name="code">aeat_mod_303_03</field>
             <field name="parent_id" ref="mod_303_title_2"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_01_03')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.credit</field>
+            <field name="formulas">balance = -sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="4"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_04" model="account.financial.html.report.line">
@@ -60,6 +62,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="5"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_06" model="account.financial.html.report.line">
@@ -67,10 +70,11 @@
             <field name="code">aeat_mod_303_06</field>
             <field name="parent_id" ref="mod_303_title_2"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_04_06')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.credit</field>
+            <field name="formulas">balance = -sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="6"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_07" model="account.financial.html.report.line">
@@ -82,6 +86,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="7"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_09" model="account.financial.html.report.line">
@@ -89,10 +94,11 @@
             <field name="code">aeat_mod_303_09</field>
             <field name="parent_id" ref="mod_303_title_2"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_07_09')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.credit</field>
+            <field name="formulas">balance = -sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="8"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_3" model="account.financial.html.report.line">
@@ -112,6 +118,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="10"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_11" model="account.financial.html.report.line">
@@ -119,10 +126,11 @@
             <field name="code">aeat_mod_303_11</field>
             <field name="parent_id" ref="mod_303_title_2"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_10_11')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.credit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="11"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_4" model="account.financial.html.report.line">
@@ -142,6 +150,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="13"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_13" model="account.financial.html.report.line">
@@ -149,10 +158,11 @@
             <field name="code">aeat_mod_303_13</field>
             <field name="parent_id" ref="mod_303_title_4"/>
             <field name="domain" eval="[('tax_ids.tag_ids','=',ref('l10n_es.mod_303_12_13')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.credit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="14"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_5" model="account.financial.html.report.line">
@@ -172,6 +182,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="16"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <!--Invisible line, used for the computation of casilla 14-->
@@ -183,6 +194,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="17"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_14" model="account.financial.html.report.line">
@@ -199,10 +211,11 @@
             <field name="name">[15] Cuota - SALE</field>
             <field name="code">aeat_mod_303_15_sale</field>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_14_15_sale')), ('invoice_id.type','in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="19"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <!--Invisible line, used for the computation of casilla 14-->
@@ -210,10 +223,11 @@
             <field name="name">[15] Cuota - PURCHASE</field>
             <field name="code">aeat_mod_303_15_purchase</field>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_14_15_purchase')), ('invoice_id.type','in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="20"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_15" model="account.financial.html.report.line">
@@ -242,6 +256,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="22"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_18" model="account.financial.html.report.line">
@@ -249,10 +264,11 @@
             <field name="code">aeat_mod_303_18</field>
             <field name="parent_id" ref="mod_303_title_6"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_16_18')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.credit</field>
+            <field name="formulas">balance = -sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="23"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_19" model="account.financial.html.report.line">
@@ -264,6 +280,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="24"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_21" model="account.financial.html.report.line">
@@ -271,10 +288,11 @@
             <field name="code">aeat_mod_303_21</field>
             <field name="parent_id" ref="mod_303_title_6"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_19_21')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.credit</field>
+            <field name="formulas">balance = -sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="25"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_22" model="account.financial.html.report.line">
@@ -286,6 +304,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="26"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_24" model="account.financial.html.report.line">
@@ -293,10 +312,11 @@
             <field name="code">aeat_mod_303_24</field>
             <field name="parent_id" ref="mod_303_title_6"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_22_24')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.credit</field>
+            <field name="formulas">balance = -sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="27"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_7" model="account.financial.html.report.line">
@@ -316,6 +336,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="29"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_26" model="account.financial.html.report.line">
@@ -327,6 +348,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="30"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_27" model="account.financial.html.report.line">
@@ -336,6 +358,7 @@
             <field name="formulas">balance = aeat_mod_303_03.balance + aeat_mod_303_06.balance + aeat_mod_303_09.balance + aeat_mod_303_11.balance + aeat_mod_303_13.balance + aeat_mod_303_15.balance + aeat_mod_303_18.balance + aeat_mod_303_21.balance + aeat_mod_303_24.balance + aeat_mod_303_26.balance</field>
             <field name="sequence" eval="31"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_8" model="account.financial.html.report.line">
@@ -363,6 +386,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="34"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_29" model="account.financial.html.report.line">
@@ -370,10 +394,11 @@
             <field name="code">aeat_mod_303_29</field>
             <field name="parent_id" ref="mod_303_title_9"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_28_29')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="35"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_10" model="account.financial.html.report.line">
@@ -393,6 +418,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="37"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_31" model="account.financial.html.report.line">
@@ -400,10 +426,11 @@
             <field name="code">aeat_mod_303_31</field>
             <field name="parent_id" ref="mod_303_title_10"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_30_31')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="38"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_11" model="account.financial.html.report.line">
@@ -423,6 +450,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="40"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_33" model="account.financial.html.report.line">
@@ -430,10 +458,11 @@
             <field name="code">aeat_mod_303_33</field>
             <field name="parent_id" ref="mod_303_title_11"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_32_33')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.debit</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="41"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_12" model="account.financial.html.report.line">
@@ -453,6 +482,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="43"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_35" model="account.financial.html.report.line">
@@ -460,10 +490,11 @@
             <field name="code">aeat_mod_303_35</field>
             <field name="parent_id" ref="mod_303_title_12"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_34_35')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="44"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_13" model="account.financial.html.report.line">
@@ -483,6 +514,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="46"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_37" model="account.financial.html.report.line">
@@ -490,10 +522,11 @@
             <field name="code">aeat_mod_303_37</field>
             <field name="parent_id" ref="mod_303_title_13"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_36_37')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="47"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_14" model="account.financial.html.report.line">
@@ -513,6 +546,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="49"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_39" model="account.financial.html.report.line">
@@ -520,10 +554,11 @@
             <field name="code">aeat_mod_303_39</field>
             <field name="parent_id" ref="mod_303_title_14"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_38_39')), ('invoice_id.type','not in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = -sum.debit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="50"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_15" model="account.financial.html.report.line">
@@ -543,6 +578,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="52"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_41" model="account.financial.html.report.line">
@@ -550,10 +586,11 @@
             <field name="code">aeat_mod_303_41</field>
             <field name="parent_id" ref="mod_303_title_15"/>
             <field name="domain" eval="[('tax_line_id.tag_ids','=',ref('l10n_es.mod_303_40_41')), ('invoice_id.type','in',['out_refund','in_refund'])]"/>
-            <field name="formulas">balance = sum.credit</field>
+            <field name="formulas">balance = sum.balance</field>
             <field name="groupby">account_id</field>
             <field name="sequence" eval="53"/>
             <field name="level" eval="5"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_42" model="account.financial.html.report.line">
@@ -565,6 +602,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="54"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_43" model="account.financial.html.report.line">
@@ -574,6 +612,7 @@
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="55"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_44" model="account.financial.html.report.line">
@@ -583,6 +622,7 @@
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="56"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_45" model="account.financial.html.report.line">
@@ -592,6 +632,7 @@
             <field name="formulas">balance = aeat_mod_303_29.balance + aeat_mod_303_31.balance + aeat_mod_303_33.balance + aeat_mod_303_35.balance + aeat_mod_303_37.balance + aeat_mod_303_39.balance + aeat_mod_303_41.balance + aeat_mod_303_42.balance + aeat_mod_303_43.balance + aeat_mod_303_44.balance</field>
             <field name="sequence" eval="57"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_46" model="account.financial.html.report.line">
@@ -601,6 +642,7 @@
             <field name="formulas">balance = aeat_mod_303_27.balance - aeat_mod_303_45.balance</field>
             <field name="sequence" eval="58"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_16" model="account.financial.html.report.line">
@@ -620,6 +662,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="60"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_60" model="account.financial.html.report.line">
@@ -631,6 +674,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="61"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_61" model="account.financial.html.report.line">
@@ -642,6 +686,7 @@
             <field name="groupby">account_id</field>
             <field name="sequence" eval="62"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_17" model="account.financial.html.report.line">
@@ -659,6 +704,7 @@
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="64"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_63" model="account.financial.html.report.line">
@@ -668,6 +714,7 @@
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="65"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_18" model="account.financial.html.report.line">
@@ -686,6 +733,7 @@
             <field name="figure_type">percents</field>
             <field name="sequence" eval="67"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_66" model="account.financial.html.report.line">
@@ -695,6 +743,7 @@
             <field name="formulas">balance = aeat_mod_303_65.balance * aeat_mod_303_46.balance / 100.0</field>
             <field name="sequence" eval="68"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_67" model="account.financial.html.report.line">
@@ -704,6 +753,7 @@
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="69"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_68" model="account.financial.html.report.line">
@@ -713,6 +763,7 @@
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="70"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_69" model="account.financial.html.report.line">
@@ -722,6 +773,7 @@
             <field name="formulas">balance = aeat_mod_303_66.balance + aeat_mod_303_77.balance - aeat_mod_303_67.balance + aeat_mod_303_68.balance</field>
             <field name="sequence" eval="71"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_title_19" model="account.financial.html.report.line">
@@ -739,6 +791,7 @@
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="73"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_75" model="account.financial.html.report.line">
@@ -748,6 +801,7 @@
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="74"/>
             <field name="level" eval="4"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
         <record id="mod_303_casilla_77" model="account.financial.html.report.line">
@@ -757,6 +811,7 @@
             <field name="formulas">balance = from_context</field>
             <field name="sequence" eval="75"/>
             <field name="level" eval="3"/>
+            <field name="special_date_changer">strict_range</field>
         </record>
 
     </data>
