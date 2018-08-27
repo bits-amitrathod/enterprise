@@ -32,6 +32,7 @@
         'views/saleorder_views.xml',
         'views/prioritization_views.xml',
         'views/web_assets.xml',
+        'views/templates.xml',
     ],
 
     # only loaded in demonstration mode
