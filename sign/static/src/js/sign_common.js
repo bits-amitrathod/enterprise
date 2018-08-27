@@ -824,6 +824,7 @@ odoo.define('sign.document_signing', function(require) {
                 }
                 if (response === true) {
                     (new (self.get_thankyoudialog_class())(self, self.RedirectURL, self.requestID)).open();
+                    self.do_hide();
                 }
                 if (typeof response === 'object') {
                     if (response.url) {
