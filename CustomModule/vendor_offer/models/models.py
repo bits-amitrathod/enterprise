@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from pygments.lexer import default
 
 from odoo import models, fields, api, SUPERUSER_ID ,_
 from odoo.addons import decimal_precision as dp
@@ -9,36 +10,57 @@ class VendorOffer(models.Model):
     # _name = 'purchase.order'
     _description = "Vendor Offer"
     _inherit = "purchase.order"
+    # _inherits = {'res.partner': 'partner_id'}
 
+    carrier_info = fields.Char("Carrier Info", related='partner_id.carrier_info', readonly=True)
+    carrier_acc_no = fields.Char("Carrier Account No", related='partner_id.carrier_acc_no', readonly=True)
+    shipping_terms = fields.Selection(string='Shipping Term', related='partner_id.shipping_terms', readonly=True)
     appraisal_no = fields.Char(string='Appraisal No#')
-    acq_user_id = fields.Many2one('res.users',string='Acq Manager')
+
+    acq_user_id = fields.Many2one('res.users',string='Acq  Manager ')
+
     date_offered = fields.Datetime(string='Date Offered', default=fields.Datetime.now)
-    revision = fields.Char(string='Revision')
+
+
+    revision = fields.Char(string='Revision ')
     max = fields.Char(string='Max', readonly=True ,default=0)
     accepted_date = fields.Datetime(string="Accepted Date")
     declined_date = fields.Datetime(string="Declined Date")
+
     retail_amt = fields.Monetary(string="Total Retail",readonly=True,default=0 ,compute='_amount_tot_all')
-    offer_amount = fields.Monetary(string="Total Offer",readonly=True,default=0,compute='_amount_tot_all')
+
+
+    offer_amount = fields.Monetary(string="Total  Offer",readonly=True,default=0,compute='_amount_tot_all')
     date_planned = fields.Datetime(string='Scheduled Date')
-    possible_competition = fields.Many2one('competition.competition', string="Possible Competition",required=True)
+    possible_competition = fields.Many2one('competition.competition', string="Possible Competition")
     offer_type = fields.Selection([
         ('cash', 'Cash'),
         ('credit', 'Credit')
     ], string='Offer Type')
 
-    accelerator = fields.Selection([
-        ('yes', 'Yes'),
-        ('no', 'No')
-        ], string='Accelerator')
+    shipping_date = fields.Datetime(string="Shipping Date")
+    delivered_date = fields.Datetime(string="Delivered Date")
+    expected_date = fields.Datetime(string="Expected Date")
+
+    notes_desc = fields.Text(string="Note")
+
+    accelerator=fields.Boolean(string="Accelerator")
+
+    # accelerator = fields.Selection([
+    #     ('yes', 'Yes'),
+    #     ('no', 'No')
+    #     ], string='Accelerator')
     priority = fields.Selection([
         ('low', 'Low'),
         ('medium', 'Medium'),
         ('high', 'High')], string='Priority')
 
-    new_customer = fields.Selection([
-        ('yes', 'Yes'),
-        ('no', 'No')
-    ], string='New Customer')
+    new_customer = fields.Boolean(string="New Customer")
+
+    # new_customer = fields.Selection([
+    #     ('yes', 'Yes'),
+    #     ('no', 'No')
+    # ], string='New Customer')
 
     shipping_label_issued = fields.Selection([
         ('yes', 'Yes'),
@@ -55,16 +77,7 @@ class VendorOffer(models.Model):
         ('purchase', 'Purchase Order'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled')
-    ], string='Status', readonly=True, index=True, copy=False, default="draft", track_visibility='onchange')
-
-    # @api.model_cr
-    # def init(self):
-    #     print('============================================================================================================')
-    #     for order in self:
-    #         print('----------------------------')
-    #         order.update({
-    #             'state': 'ven_draft',
-    #         })
+    ], string='Status', readonly=True, index=True, copy=False, default='draft',track_visibility='onchange')
 
     @api.depends('order_line.offer_price')
     def _amount_tot_all(self):
@@ -80,16 +93,19 @@ class VendorOffer(models.Model):
 
     @api.onchange('possible_competition')
     def possible_competition_onchange(self):
-        for order in self:
-            for line in order.order_line:
-                multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
-                line.margin = multiplier_list.margin
-                line.offer_price = round(float(line.price_unit) * (
-                            float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
+        self.state = 'ven_draft'
+        # for order in self:
+        #     for line in order.order_line:
+        #         multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
+        #         line.margin = multiplier_list.margin
+        #         line.offer_price = round(float(line.price_unit) * (
+        #                     float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
 
     @api.onchange('accelerator','retail_amt')
     def accelerator_onchange(self):
-        if self.accelerator == 'yes':
+        print('===================================================================')
+        print(self.accelerator)
+        if self.accelerator == True:
             self.max = float(self.retail_amt)*float(0.65)
         else:
             self.max = 0
@@ -145,6 +161,10 @@ class VendorOffer(models.Model):
     def action_cancel_vendor_offer(self):
         self.write({'state': 'cancel'})
 
+    @api.model
+    def create(self, vals):
+        vals['state']= 'ven_draft'
+        return super(VendorOffer, self).create(vals)
 
 class VendorOfferProduct(models.Model):
 
@@ -160,14 +180,11 @@ class VendorOfferProduct(models.Model):
     product_sales_count_yrs = fields.Char(string="Sales Count Yr")
     qty_in_stock = fields.Char(string="Quantity In Stock")
     prod_qty = fields.Char(string="Quantity")
-    # premium = fields.Char(string="Premium")
     expiration_date = fields.Datetime(string="Expiration Date")
     expired_inventory = fields.Char(string="Expired Inventory Items")
     multiplier = fields.Many2one('multiplier.multiplier', string="Multiplier")
     offer_price = fields.Char(string="Offer Price")
     margin = fields.Char(string="Margin")
-    # manufacturer = fields.Char(string="Manufacturer",store=False)
-    # order_id = fields.Many2one('purchase.order',  string='Order Lines')
     possible_competition = fields.Many2one(related='order_id.possible_competition',store=False)
     product_note = fields.Text(string="Notes")
 
@@ -177,6 +194,7 @@ class VendorOfferProduct(models.Model):
         if not self.product_id:
             return result1
 
+
         self.qty_in_stocks()
         groupby_dict = groupby_dict_month = groupby_dict_90 = groupby_dict_yr = {}
         sale_orders_line = self.env['sale.order.line'].search([('product_id', '=', self.product_id.id)])
@@ -184,7 +202,7 @@ class VendorOfferProduct(models.Model):
         total = total_m = total_90 = total_yr = 0
 
         for sale_order in groupby_dict['data']:
-            total=total + sale_order.product_qty
+            total=total + sale_order.product_uom_qty
 
         self.product_sales_count=total
         sale_orders = self.env['sale.order'].search([('product_id', '=', self.product_id.id)])
@@ -196,7 +214,7 @@ class VendorOfferProduct(models.Model):
         for sale_order_list in groupby_dict_month['data']:
             for sale_order in sale_order_list.order_line:
                 if sale_order.product_id.id == self.product_id.id:
-                    total_m=total_m + sale_order.product_qty
+                    total_m=total_m + sale_order.product_uom_qty
 
         self.product_sales_count_month=total_m
 
@@ -206,7 +224,7 @@ class VendorOfferProduct(models.Model):
         for sale_order_list_90 in groupby_dict_90['data']:
             for sale_order in sale_order_list_90.order_line:
                 if sale_order.product_id.id == self.product_id.id:
-                    total_90 = total_90 + sale_order.product_qty
+                    total_90 = total_90 + sale_order.product_uom_qty
 
         self.product_sales_count_90 = total_90
 
@@ -215,24 +233,39 @@ class VendorOfferProduct(models.Model):
         for sale_order_list_yr in groupby_dict_yr['data']:
             for sale_order in sale_order_list_yr.order_line:
                 if sale_order.product_id.id == self.product_id.id:
-                    total_yr = total_yr + sale_order.product_qty
+                    total_yr = total_yr + sale_order.product_uom_qty
 
         self.product_sales_count_yrs = total_yr
 
+        if self.tier.code == False:
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 'out of scope')])
+            self.multiplier = multiplier_list.id
+        elif self.product_sales_count == '0':
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 'no history')])
+            self.multiplier = multiplier_list.id
+        elif float(self.qty_in_stock) > (float(self.product_sales_count) * 2 ) and self.product_sales_count!='0':
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 'overstocked')])
+            self.multiplier = multiplier_list.id
+        elif self.product_id.product_tmpl_id.premium == True:
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 'premium')])
+            self.multiplier = multiplier_list.id
+        elif self.tier.code == '1':
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 't1 good 45')])
+            self.multiplier = multiplier_list.id
+        elif self.tier.code == '2':
+            multiplier_list = self.env['multiplier.multiplier'].search([('code', '=', 't2 good 35')])
+            self.multiplier=multiplier_list.id
+
+        self.cal_offer_price()
         #self.product_tier_manufacturer()
         self.expired_inventory_cal()
+        for order in self:
+            for line in order:
+                multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
+                line.margin = multiplier_list.margin
+                line.offer_price = round(float(line.price_unit) * (
+                        float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
 
-
-    # def product_tier_manufacturer(self):
-    #     group_by_product = {}
-    #     temp_id = ''
-    #     product_info_list = self.env['product.product'].search([('id', '=', self.product_id.id)])
-    #     group_by_product['data'] = product_info_list
-    #     for product_info in group_by_product['data']:
-    #         temp_id = product_info.product_tmpl_id
-    #     product_info_template_list = self.env['product.template'].search([('id', '=', temp_id.id)])
-    #     self.manufacturer = product_info_template_list.manufacturer.name
-    #     self.product_tier = product_info_template_list.tier
 
     def expired_inventory_cal(self):
         expired_lot_count = 0
@@ -264,6 +297,7 @@ class Multiplier(models.Model):
     _description = "Multiplier"
 
     name = fields.Char(string="Multiplier Name",required=True)
+    code = fields.Char(string="Multiplier Code", required=True)
     retail = fields.Float('Retail %', digits=dp.get_precision('Product Unit of Measure'), required=True)
     margin = fields.Float('Margin %', digits=dp.get_precision('Product Unit of Measure'), required=True)
 
@@ -281,6 +315,7 @@ class Tier(models.Model):
     _description = "Product Tier"
 
     name = fields.Char(string="Product Tier",required=True)
+    code = fields.Char(string="Product Tier Code", required=True)
 
 
 class ClassCode(models.Model):

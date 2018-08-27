@@ -20,27 +20,29 @@
                                 <h4>Surgical Product Solutions</h4>
                             </b>
                             <b>
-                                <h2>Purchase History Report Of Product</h2>
+                                <h2>Purchase History Report</h2>
                             </b>
                         </center>
                         <center>
-                            <b>
+                            <b>Date Range:
                                 <span t-esc="start_date"/>
-                                To
+
+                                -
+
                                 <span t-esc="end_date"/>
                             </b>
                         </center>
                         <!-- Report page content -->
-                        <table class="table table-condensed" style="border: 1px solid black;">
+                        <table class="table table-condensed table-bordered"  style="border: 1px solid black;">
                             <tr>
-                                <th>Customer</th>
-                                <th>Manufacturer</th>
-                                <th>Product</th>
-                                <th>Product Description</th>
-                                <th>Qty</th>
-                                <th>Price Per Stock</th>
-                                <th>Min Exp Date</th>
-                                <th>Max Exp Date</th>
+                                <th style="border: 1px solid black;text-align: center;">Customer</th>
+                                <th style="border: 1px solid black;text-align: center;">Manufacturer</th>
+                                <th style="border: 1px solid black;text-align: center;">Product</th>
+                                <th style="border: 1px solid black;text-align: center;">Product Name</th>
+                                <th style="border: 1px solid black;text-align: center;">Qty</th>
+                                <th style="border: 1px solid black;text-align: center;">Price Per Stock</th>
+                                <th style="border: 1px solid black;text-align: center;">Min Exp Date</th>
+                                <th style="border: 1px solid black;text-align: center;">Max Exp Date</th>
                             </tr>
 
                             <t t-foreach="data.keys()" t-as="user">
@@ -50,7 +52,7 @@
                                             <span t-esc="o[0]"/>
                                         </td>
                                         <td class="col-xs-2">
-                                            <span t-esc="o[5]"/>
+                                            <span t-esc="o[0]"/>
                                         </td>
                                         <td class="col-xs-2">
                                             <span t-esc="o[1]"/>
@@ -58,17 +60,15 @@
                                         <td class="col-xs-2">
                                             <span t-esc="o[9]"/>
                                         </td>
-                                        <td class="col-xs-2">
+                                        <td align="right" class="col-xs-2">
                                             <span t-esc="o[4]"/>
                                         </td>
-                                        <td class="col-xs-2">
-                                            $
-                                            <span t-esc="o[6]"/>
+                                        <td align="right" class="col-xs-2">$ <span t-esc="o[6]"/>
                                         </td>
-                                        <td class="col-xs-2">
+                                        <td align="center" class="col-xs-2">
                                             <span t-esc="o[10]"/>
                                         </td>
-                                        <td class="col-xs-2">
+                                        <td align="center" class="col-xs-2">
                                             <span t-esc="o[11]"/>
                                         </td>
                                     </tr>

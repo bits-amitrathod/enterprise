@@ -12,10 +12,9 @@ from odoo import api, fields, models
 class ProductBrand(models.Model):
     _name = 'product.brand'
 
-    name = fields.Char('Manufacture Name', related='partner_id.name',readonly=True)
+    name = fields.Char('Manufacture Name', related='partner_id.name',readonly=True,store=True)
     description = fields.Text('Description', translate=True)
     manufacturer_pname = fields.Char(string='Manuf. Product Name')
-    manufacturer_pref = fields.Char(string='Manuf. Catalog No')
     manufacturer_purl = fields.Char(string='Manuf. Product URL')
     partner_id = fields.Many2one(
         'res.partner',
@@ -46,5 +45,5 @@ class ProductTemplate(models.Model):
     product_brand_id = fields.Many2one(
         'product.brand',
         string='Manufacture',
-        help='Select a Manufacture for this product',required=True
+        help='Select a Manufacture for this product'
     )

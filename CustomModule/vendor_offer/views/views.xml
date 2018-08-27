@@ -56,6 +56,7 @@
                            <group>
                         <group>
                              <field name="name" />
+                             <field name="code" />
                              <field name="retail" />
                              <field name="margin" />
                         </group>
@@ -115,22 +116,22 @@
                 <header>
                     <button name="action_send_offer_email" string="Send Offer by Email" type="object"  class="btn-primary"/>
                     <button name="action_print_vendor_offer" string="Print Vendor Offer" type="object"  class="btn-primary"/>
-                    <button name="action_confirm_vendor_offer" string="Confirm Order" type="object"  />
-                    <button name="action_cancel_vendor_offer" string="Cancel" type="object"  />
-                     <field name="state" widget="statusbar" statusbar_visible="draft,ven_draft,ven_sent,purchase" readonly="1"  />
+                    <button name="action_confirm_vendor_offer" states="draft ,ven_draft" string="Confirm Order" type="object"  />
+                    <button name="action_cancel_vendor_offer"  string="Cancel" type="object"  />
+                     <field name="state" widget="statusbar" statusbar_visible="ven_draft,ven_sent,purchase" readonly="1"  />
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="action_send_offer_email"
-                            type="object"
-                            class="oe_stat_button"
-                            icon="fa-archive" string="Active">
-                        </button>
+                        <!--<button name="action_send_offer_email"-->
+                            <!--type="object"-->
+                            <!--class="oe_stat_button"-->
+                            <!--icon="fa-archive" string="Active">-->
+                        <!--</button>-->
                     </div>
                     <div class="oe_title">
                          <label string="Vendor Offer"/>
                         <h1>
-                           <label string="New"/>
+                          <field name="name" readonly="1"/>
                         </h1>
                     </div>
                     <group>
@@ -154,30 +155,30 @@
                     </group>
                     <notebook>
                         <page string="Product">
-                            <field name="order_line" mode="tree,kanban">
+                            <field name="order_line" mode="tree,kanban" attrs="{'readonly': [('state', 'not in', ('draft', 'ven_draft'))]}" >
                                             <form >
                                                 <group>
                                                     <group>
                                                          <field name="product_id" />
-                                                         <field name="sku_code"  readonly="True"/>
-                                                         <field name="manufacturer"  readonly="True"/>
-                                                         <field name="name"  invisible="1"  />
-                                                         <field name="product_tier" />
-                                                         <field name="prod_qty" />
-                                                         <field name="expiration_date" />
-                                                         <field name="qty_in_stock" />
-                                                         <field name="product_sales_count" />
-                                                         <field name="product_sales_count_month" />
+                                                         <field name="sku_code"   readonly="1"/>
+                                                         <field name="product_brand_id" readonly="1"  />
+                                                         <field name="name"    invisible="1" />
+                                                         <field name="tier"  readonly="1" />
+                                                         <field name="prod_qty"  />
+                                                         <field name="expiration_date"  />
+                                                         <field name="qty_in_stock"    />
+                                                         <field name="product_sales_count"  />
+                                                         <field name="product_sales_count_month"  />
                                                     </group>
                                                      <group>
-                                                         <field name="product_sales_count_90" />
+                                                         <field name="product_sales_count_90"   />
                                                          <field name="product_sales_count_yrs" />
-                                                         <field name="expired_inventory" />
-                                                         <field name="price_unit" />
-                                                         <field name="offer_price" />
-                                                         <field name="margin" />
-                                                         <field name="multiplier" />
-                                                         <field name="product_note" />
+                                                         <field name="expired_inventory"   />
+                                                         <field name="price_unit"  />
+                                                         <field name="offer_price"   />
+                                                         <field name="margin"    />
+                                                         <field name="multiplier"   />
+                                                         <field name="product_note"  readonly="1" />
                                                          <field name="product_qty"  invisible="1" />
                                                          <field name="date_planned"  invisible="1" />
                                                          <field name="product_uom"  invisible="1" />
@@ -187,27 +188,27 @@
                                 <tree   >
                                                          <field name="currency_id" invisible="1"/>
                                                          <field name="product_id" />
-                                                         <field name="sku_code"  readonly="True"/>
-                                                         <field name="manufacturer"  readonly="True" />
-                                                         <!--<field name="name" />-->
-                                                         <field name="product_tier" />
-                                                         <field name="prod_qty" />
-                                                         <field name="expiration_date" />
+                                                         <field name="sku_code"  readonly="1" />
+                                                         <field name="product_brand_id"   readonly="1"/>
+                                                         <field name="name"  invisible="1" />
+                                                         <field name="tier"  readonly="1" />
+                                                         <field name="prod_qty"  />
+                                                         <field name="expiration_date"    />
                                                          <field name="qty_in_stock" />
                                                          <field name="product_sales_count" />
-                                                         <field name="product_sales_count_month" />
-                                                         <field name="product_sales_count_90" />
-                                                         <field name="product_sales_count_yrs" />
-                                                         <field name="expired_inventory" />
+                                                         <field name="product_sales_count_month"  />
+                                                         <field name="product_sales_count_90"    />
+                                                         <field name="product_sales_count_yrs"   />
+                                                         <field name="expired_inventory"   />
                                                          <!--<field name="premium" />-->
-                                                         <field name="price_unit" String="Retail" />
-                                                         <field name="offer_price" />
+                                                         <field name="price_unit" String="Retail"   />
+                                                         <field name="offer_price"   />
                                                          <field name="margin" />
-                                                         <field name="multiplier" />
-                                                         <field name="product_qty"  invisible="1" />
-                                                         <field name="date_planned"  invisible="1" />
-                                                         <field name="product_uom"  invisible="1" />
-                                                         <field name="order_id"  invisible="1" />
+                                                         <field name="multiplier"   />
+                                                         <!--<field name="product_uom_qty"   invisible="1"  />-->
+                                                         <field name="date_planned"  readonly="1"  invisible="1"  />
+                                                         <field name="product_uom"  readonly="1"  invisible="1"/>
+                                                         <field name="order_id"   invisible="1"  />
 
                                 </tree>
 
@@ -225,12 +226,17 @@
                                         <field name="date_planned" />
                                         <field name="shipping_label_issued" />
                                 </group>
+                                 <group  >
+                                        <field name="shipping_date" />
+                                        <field name="delivered_date" />
+                                        <field name="expected_date" />
+                                </group>
                             </group>
                         </page>
                          <page string="Notes">
                             <group>
                                 <group  >
-                                        <!--<field name="notes_desc" />-->
+                                        <field name="notes_desc" />
                                 </group>
                             </group>
                         </page>
@@ -242,6 +248,40 @@
                 </form>
             </field>
         </record>
+
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"></field>
+            <field name="arch" type="xml">
+                <!--<form string="Purchase Order">-->
+                     <xpath expr="//group/group/field[@name='company_id']" position="after">
+                <field name="carrier_info"></field>
+                    <field name="carrier_acc_no"></field>
+                          <field name="shipping_terms"></field>
+                </xpath>
+
+                <!--</form>-->
+            </field>
+        </record>
+
+      <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.common.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <page name="general_information"  position="inside">
+                         <group>
+                                <group name="group_general">
+
+                    <field name="tier"></field>
+                    <field name="class_code"></field>
+
+                                </group>
+                         </group>
+            </page>
+        </field>
+      </record>
 
 
     <!-- actions opening views on models -->

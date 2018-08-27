@@ -20,6 +20,7 @@
 ##############################################################################
 
 from odoo import api, fields, models
+from odoo.tools import float_repr
 import datetime
 
 
@@ -46,7 +47,7 @@ class SaleSalespersonReport(models.TransientModel):
                         temp_2 = []
                         temp_2.append(sale_order.name)
                         temp_2.append(datetime.datetime.strptime(sale_order.date_order, "%Y-%m-%d %H:%M:%S").date().strftime('%m/%d/%Y'))
-                        temp_2.append(sale_order_line.price_subtotal)
+                        temp_2.append(float_repr(sale_order_line.price_subtotal,precision_digits=2))
                         temp.append(temp_2)
             final_dict[p_id.name] = temp
 
