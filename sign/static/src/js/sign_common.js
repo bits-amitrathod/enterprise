@@ -817,9 +817,6 @@ odoo.define('sign.document_signing', function(require) {
                 if (!response) {
                     Dialog.alert(self, _t("Sorry, an error occured, please try to fill the document again."), {
                         title: _t("Error"),
-                        confirm_callback: function() {
-                            window.location.reload();
-                        },
                     });
                 }
                 if (response === true) {
