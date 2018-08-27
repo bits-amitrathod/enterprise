@@ -457,8 +457,8 @@ QUnit.module('ReportEditorManager', {
         });
 
         rem.editorIframeDef.then(function () {
-            assert.strictEqual(rem.$('.o_web_studio_sidebar_header .active').attr('name'), 'report',
-                "the 'Report' tab should be active");
+            assert.strictEqual(rem.$('.o_web_studio_sidebar_header .active').attr('name'), 'new',
+                "the 'Add' tab should be active");
             assert.strictEqual(rem.$('iframe').contents().find('.o_web_studio_report_selected').length, 0,
                 "there should be no selected node");
 
@@ -470,9 +470,9 @@ QUnit.module('ReportEditorManager', {
                 "the span should be selected");
 
             // switch tab
-            rem.$('.o_web_studio_sidebar_header [name="new"]').click();
-            assert.strictEqual(rem.$('.o_web_studio_sidebar_header .active').attr('name'), 'new',
-                "the 'Add' tab should be active");
+            rem.$('.o_web_studio_sidebar_header [name="report"]').click();
+            assert.strictEqual(rem.$('.o_web_studio_sidebar_header .active').attr('name'), 'report',
+                "the 'Report' tab should be active");
             assert.strictEqual(rem.$('iframe').contents().find('.o_web_studio_report_selected').length, 0,
                 "there should be no selected node anymore");
 

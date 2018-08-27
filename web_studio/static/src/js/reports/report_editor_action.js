@@ -218,9 +218,11 @@ var ReportEditorAction = AbstractAction.extend({
     },
     /**
      * @private
+     * @param {Object} [state]
+     * @param {string} [state.sidebarMode] among ['add', 'report']
      * @returns {Deferred}
      */
-    _renderEditor: function () {
+    _renderEditor: function (state) {
         var self = this;
         var defs = [this._getReportViews()];
         if (this.report.paperformat_id) {
@@ -229,6 +231,7 @@ var ReportEditorAction = AbstractAction.extend({
         return $.when.apply($, defs).then(function () {
             var params = {
                 env: self.env,
+                initialState: state,
                 models: self.models,
                 paperFormat: self.paperFormat,
                 report: self.report,
@@ -270,7 +273,9 @@ var ReportEditorAction = AbstractAction.extend({
         var self = this;
         this._editReport(ev.data).then(function (result) {
             self.report = result[0];
-            self._renderEditor();
+            self._renderEditor({
+                sidebarMode: 'report',
+            });
         });
     },
     /**

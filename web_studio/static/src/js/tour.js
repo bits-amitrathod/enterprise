@@ -316,8 +316,11 @@ tour.register('web_studio_new_report_tour', {
     // select external layout
     trigger: '.o_web_studio_report_layout_dialog div[data-layout="web.external_layout"]',
 }, {
-    // sidebar should display report options
-    extra_trigger: '.o_web_studio_report_editor_manager div.active[name="report"]',
+    // sidebar should display add tab
+    extra_trigger: '.o_web_studio_report_editor_manager .o_web_studio_sidebar_header div.active[name="new"]',
+    // switch to 'Report' tab
+    trigger: '.o_web_studio_report_editor_manager .o_web_studio_sidebar_header div[name="report"]',
+}, {
     // edit report name
     trigger: '.o_web_studio_sidebar input[name="name"]',
     run: 'text My Awesome Report',
@@ -422,6 +425,9 @@ tour.register('web_studio_new_report_tour', {
 }, {
     // open the duplicate report
     trigger: '.o_kanban_record:contains(My Awesome Report copy(1))',
+}, {
+    // switch to 'Report' tab
+    trigger: '.o_web_studio_report_editor_manager .o_web_studio_sidebar_header div[name="report"]',
 }, {
     // wait for the duplicated report to be correctly loaded
     extra_trigger: '.o_web_studio_sidebar input[name="name"][value="My Awesome Report copy(1)"]',

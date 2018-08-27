@@ -32,6 +32,8 @@ var ReportEditorManager = AbstractEditorManager.extend({
      * @param {Object} params.reportHTML
      * @param {Object} params.reportMainViewID
      * @param {Object} params.reportViews
+     * @param {Object} [params.initialState]
+     * @param {string} [params.initialState.sidebarMode] among ['add', 'report']
      * @param {Object} [params.paperFormat]
      * @param {Object} [params.widgetsOptions]
      */
@@ -46,6 +48,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
         this.reportName = this.report.report_name;
         this.reportViews = params.reportViews;
 
+        this.initialState = params.initialState || {};
         this.paperFormat = params.paperFormat;
         this.widgetsOptions = params.widgetsOptions;
 
@@ -250,7 +253,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
      */
     _instantiateSidebar: function (state, previousState) {
         state = _.defaults(state || {}, {
-            mode: 'report',
+            mode: this.initialState.sidebarMode || 'new',
         });
         return new ReportEditorSidebar(this, {
             report: this.report,
