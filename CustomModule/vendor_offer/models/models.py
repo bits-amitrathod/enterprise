@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from pygments.lexer import default
 
 from odoo import models, fields, api, SUPERUSER_ID ,_
 from odoo.addons import decimal_precision as dp
@@ -9,20 +10,27 @@ class VendorOffer(models.Model):
     # _name = 'purchase.order'
     _description = "Vendor Offer"
     _inherit = "purchase.order"
-    _inherits = {'res.partner': 'partner_id'}
+    # _inherits = {'res.partner': 'partner_id'}
 
     carrier_info = fields.Char("Carrier Info", related='partner_id.carrier_info', readonly=True)
     carrier_acc_no = fields.Char("Carrier Account No", related='partner_id.carrier_acc_no', readonly=True)
     shipping_terms = fields.Selection(string='Shipping Term', related='partner_id.shipping_terms', readonly=True)
     appraisal_no = fields.Char(string='Appraisal No#')
-    acq_user_id = fields.Many2one('res.users',string='Acq Manager')
+
+    acq_user_id = fields.Many2one('res.users',string='Acq  Manager ')
+
     date_offered = fields.Datetime(string='Date Offered', default=fields.Datetime.now)
-    revision = fields.Char(string='Revision')
+
+
+    revision = fields.Char(string='Revision ')
     max = fields.Char(string='Max', readonly=True ,default=0)
     accepted_date = fields.Datetime(string="Accepted Date")
     declined_date = fields.Datetime(string="Declined Date")
+
     retail_amt = fields.Monetary(string="Total Retail",readonly=True,default=0 ,compute='_amount_tot_all')
-    offer_amount = fields.Monetary(string="Total Offer",readonly=True,default=0,compute='_amount_tot_all')
+
+
+    offer_amount = fields.Monetary(string="Total  Offer",readonly=True,default=0,compute='_amount_tot_all')
     date_planned = fields.Datetime(string='Scheduled Date')
     possible_competition = fields.Many2one('competition.competition', string="Possible Competition")
     offer_type = fields.Selection([
@@ -69,7 +77,7 @@ class VendorOffer(models.Model):
         ('purchase', 'Purchase Order'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled')
-    ], string='Status', readonly=True, index=True, copy=False, default="draft", track_visibility='onchange')
+    ], string='Status', readonly=True, index=True, copy=False, default='draft',track_visibility='onchange')
 
     @api.depends('order_line.offer_price')
     def _amount_tot_all(self):
@@ -93,13 +101,15 @@ class VendorOffer(models.Model):
         #         line.offer_price = round(float(line.price_unit) * (
         #                     float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
 
-    # @api.onchange('accelerator','retail_amt')
-    # def accelerator_onchange(self):
-    #     if self.accelerator == 'yes':
-    #         self.max = float(self.retail_amt)*float(0.65)
-    #     else:
-    #         self.max = 0
-    #     print(self.max)
+    @api.onchange('accelerator','retail_amt')
+    def accelerator_onchange(self):
+        print('===================================================================')
+        print(self.accelerator)
+        if self.accelerator == True:
+            self.max = float(self.retail_amt)*float(0.65)
+        else:
+            self.max = 0
+        print(self.max)
 
     @api.multi
     def action_send_offer_email(self):
@@ -151,6 +161,10 @@ class VendorOffer(models.Model):
     def action_cancel_vendor_offer(self):
         self.write({'state': 'cancel'})
 
+    @api.model
+    def create(self, vals):
+        vals['state']= 'ven_draft'
+        return super(VendorOffer, self).create(vals)
 
 class VendorOfferProduct(models.Model):
 
@@ -166,14 +180,11 @@ class VendorOfferProduct(models.Model):
     product_sales_count_yrs = fields.Char(string="Sales Count Yr")
     qty_in_stock = fields.Char(string="Quantity In Stock")
     prod_qty = fields.Char(string="Quantity")
-    # premium = fields.Char(string="Premium")
     expiration_date = fields.Datetime(string="Expiration Date")
     expired_inventory = fields.Char(string="Expired Inventory Items")
     multiplier = fields.Many2one('multiplier.multiplier', string="Multiplier")
     offer_price = fields.Char(string="Offer Price")
     margin = fields.Char(string="Margin")
-    # manufacturer = fields.Char(string="Manufacturer",store=False)
-    # order_id = fields.Many2one('purchase.order',  string='Order Lines')
     possible_competition = fields.Many2one(related='order_id.possible_competition',store=False)
     product_note = fields.Text(string="Notes")
 
@@ -191,7 +202,7 @@ class VendorOfferProduct(models.Model):
         total = total_m = total_90 = total_yr = 0
 
         for sale_order in groupby_dict['data']:
-            total=total + sale_order.product_qty
+            total=total + sale_order.product_uom_qty
 
         self.product_sales_count=total
         sale_orders = self.env['sale.order'].search([('product_id', '=', self.product_id.id)])
@@ -203,7 +214,7 @@ class VendorOfferProduct(models.Model):
         for sale_order_list in groupby_dict_month['data']:
             for sale_order in sale_order_list.order_line:
                 if sale_order.product_id.id == self.product_id.id:
-                    total_m=total_m + sale_order.product_qty
+                    total_m=total_m + sale_order.product_uom_qty
 
         self.product_sales_count_month=total_m
 
@@ -213,7 +224,7 @@ class VendorOfferProduct(models.Model):
         for sale_order_list_90 in groupby_dict_90['data']:
             for sale_order in sale_order_list_90.order_line:
                 if sale_order.product_id.id == self.product_id.id:
-                    total_90 = total_90 + sale_order.product_qty
+                    total_90 = total_90 + sale_order.product_uom_qty
 
         self.product_sales_count_90 = total_90
 
@@ -222,7 +233,7 @@ class VendorOfferProduct(models.Model):
         for sale_order_list_yr in groupby_dict_yr['data']:
             for sale_order in sale_order_list_yr.order_line:
                 if sale_order.product_id.id == self.product_id.id:
-                    total_yr = total_yr + sale_order.product_qty
+                    total_yr = total_yr + sale_order.product_uom_qty
 
         self.product_sales_count_yrs = total_yr
 

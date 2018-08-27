@@ -83,6 +83,21 @@ class FileUploadController(Controller):
 
         return 'window.top.%s(%s)' % (misc.html_escape(jsonp), json.dumps({'result': written}))
 
+    @http.route('/webhook', type='json', auth='public', csrf=False, methods=["POST"], website=True)
+    def test(self, **post):
+        try:
+            headers = request.httprequest.headers
+            if headers['X-GitLab-Token'] == 'benchmark':
+                _logger.info("WebHook %r", request.jsonrequest)
+                os.system('sh ' + '/opt/scripts/test.sh')
+                response = {'message': headers['X-GitLab-Token']}
+            else:
+                response = {'message': 'UnAuthorized'}
+        except:
+            response = {'message': 'error'}
+        return json.JSONEncoder().encode(response)
+
+
     @staticmethod
     def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
         return ''.join(random.choice(chars) for _ in range(size))
