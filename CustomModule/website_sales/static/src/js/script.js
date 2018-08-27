@@ -18,7 +18,7 @@ odoo.define('website_sales.website_sales', function (require) {
             ajax.jsonRpc("/shop/cart/updatePurchaseOrderNumber", 'call', {
                 'purchase_order': self.val()
             }).then(function (data) {
-            console.log("data------------>",data);
+//            console.log("data------------>",data);
             });
           }, 500);
       });

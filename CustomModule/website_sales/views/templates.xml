@@ -7,20 +7,31 @@
 
     <template id="products_item" name="Products item" inherit_id="website_sale.products_item">
         <xpath expr="//div[@class='product_price']" position="before">
-            <t t-if="isVisibleWebsiteExpirationDate">
-                <div style="padding-bottom: 2px;">
-                    <strong>Expiration :</strong>
-                    <br/>
-                    Min -
-                    <span t-esc="productExpiration[product.id]['min']" t-options="{'widget': 'date'}"/>
-                    <span t-if="productExpiration[product.id]['max'] is None">N/A</span>
-                    <br/>
-                    Max -
-                    <span t-esc="productExpiration[product.id]['max']" t-options="{'widget': 'date'}"/>
-                    <span t-if="productExpiration[product.id]['max'] is None">N/A</span>
-                </div>
-            </t>
+            <t t-call="website_sales.productExpirationDate"/>
         </xpath>
+    </template>
+
+    <template id="productExpirationDate" name="Product Expiration Date">
+        <t t-if="isVisibleWebsiteExpirationDate">
+            <div style="padding-bottom: 5px;">
+                <strong>Expiration :</strong>
+                <br/>
+                Min -
+                <t t-if="productExpiration[product.id]['max'] is None">N/A</t>
+                <t t-else="">
+                    <span t-esc="productExpiration[product.id]['min']" t-options="{'widget': 'date'}"/>
+                </t>
+
+                <br/>
+
+                Max -
+
+                <t t-if="productExpiration[product.id]['max'] is None">N/A</t>
+                <t t-else="">
+                    <span t-esc="productExpiration[product.id]['max']" t-options="{'widget': 'date'}"/>
+                </t>
+            </div>
+        </t>
     </template>
 
     <record id="res_config_settings_view_form" model="ir.ui.view">
@@ -69,6 +80,32 @@
                 </div>
             </div>
         </xpath>
+    </template>
+
+
+    <template id="category_vender" name="category Vender">
+        <strong>Category:</strong>
+        <ul class="list-inline">
+            <t t-foreach="product.public_categ_ids" t-as="c">
+                <t t-call="website_sales.categories_recursive"/>
+            </t>
+        </ul>
+        <p>
+            <strong>Vendor:</strong>
+            <a t-att-href="keep('/shop/brands', brand=product.product_brand_id.id)"
+               t-field="product.product_brand_id.name"></a>
+        </p>
+    </template>
+
+    <template id="categories_recursive" name="Category list">
+        <li t-att-class="'active' if c.id == int(category or 0) else None">
+            <a t-att-href="keep('/shop/category/' + slug(c), category=0)" t-field="c.name"></a>
+            <ul t-if="c.child_id" class="nav nav-pills nav-stacked nav-hierarchy">
+                <t t-foreach="c.child_id" t-as="c">
+                    <t t-call="website_sales.categories_recursive"/>
+                </t>
+            </ul>
+        </li>
     </template>
 
 </odoo>
