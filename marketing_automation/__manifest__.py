@@ -19,5 +19,6 @@
         'data/marketing_automation_demo.xml'
     ],
     'application': True,
-    'license': 'OEEL-1'
+    'license': 'OEEL-1',
+    'uninstall_hook': 'uninstall_hook',
 }

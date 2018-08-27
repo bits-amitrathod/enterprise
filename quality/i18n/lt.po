@@ -16,10 +16,10 @@
 # Silvija Butko <silvija.butko@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2018-08-08 12:22+0000\n"
+"PO-Revision-Date: 2018-08-08 12:22+0000\n"
 "Last-Translator: Silvija Butko <silvija.butko@gmail.com>, 2018\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -115,6 +115,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
 msgid "Accept Emails From"
 msgstr "Priimti laiškus iš"
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_2
+msgid "Action Proposed"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_active
@@ -251,6 +256,11 @@ msgstr "Nustatymai"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 msgid "Confirm Measure"
 msgstr ""
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_1
+msgid "Confirmed"
+msgstr "Patvirtinta"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
@@ -617,6 +627,7 @@ msgstr "Pavadinimas"
 #: code:addons/quality/models/quality.py:437
 #: code:addons/quality/models/quality.py:438
 #: code:addons/quality/models/quality.py:478
+#: model:quality.alert.stage,name:quality.quality_alert_stage_0
 #, python-format
 msgid "New"
 msgstr "Nauja"
@@ -682,6 +693,11 @@ msgstr ""
 "nustatyta, nauji laiškai nebus kuriami."
 
 #. module: quality
+#: model:quality.reason,name:quality.reason_other
+msgid "Others"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_user_id
 msgid "Owner"
 msgstr "Savininkas"
@@ -702,6 +718,11 @@ msgid ""
 "Parent model holding the alias. The model holding the alias reference is not"
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
+msgstr ""
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_parts
+msgid "Parts Quality"
 msgstr ""
 
 #. module: quality
@@ -1002,7 +1023,12 @@ msgid "Settings"
 msgstr "Nustatymai"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_8974
+#: model:quality.alert.stage,name:quality.quality_alert_stage_3
+msgid "Solved"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_3233
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "Etapas"
@@ -1035,7 +1061,7 @@ msgid "Tags"
 msgstr "Žymos"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_8984
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_3243
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -1055,7 +1081,7 @@ msgstr ""
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_point_test_type
-#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_8842
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_3104
 msgid "Test Type"
 msgstr ""
 
@@ -1162,6 +1188,16 @@ msgstr ""
 #: selection:quality.point,measure_frequency_unit:0
 msgid "Week(s)"
 msgstr "Savaitė (-ės)"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_wo
+msgid "Work Operation"
+msgstr ""
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_workcenter
+msgid "Workcenter Failure"
+msgstr ""
 
 #. module: quality
 #: code:addons/quality/models/quality.py:273
