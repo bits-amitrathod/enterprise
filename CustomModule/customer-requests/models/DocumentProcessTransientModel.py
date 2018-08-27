@@ -108,7 +108,7 @@ class DocumentProcessTransientModel(models.Model):
                         if high_priority_product:
                             high_priority_requests.append(saved_sps_customer_request)
                     if len(high_priority_requests) > 0:
-                        self.send_sps_customer_request_for_processing(high_priority_requests)
+                        self.env['sps.customer.requests'].process_requests(high_priority_requests)
                 else:
                     _logger.info('file is not acceptable')
                     response = dict(errorCode=2, message='Invalid File extension')

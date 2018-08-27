@@ -67,6 +67,45 @@ msgid ""
 "</div>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px;border-collapse:collapse;background:inherit;color:inherit\">\n"
+"<tbody><tr>\n"
+"<td valign=\"center\" width=\"200\" style=\"padding:10px 10px 10px 5px;font-size: 12px\">\n"
+"<img src=\"/logo.png\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${user.company_id.name}\"/>\n"
+"</td>\n"
+"</tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"<div style=\"padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777\">\n"
+"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:600px ;text-align:justify; margin:0 auto; border-collapse:collapse; background:inherit; color:inherit\">\n"
+"<tbody><tr>\n"
+"<td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"<p>Gửi ${object.name},</p>\n"
+"<p>Đây là lời nhắc thân thiện để phê duyệt số giờ của nhóm trong khoảng thời gian: ${ctx.get('date_start')} - ${ctx.get('date_stop')}.</p>\n"
+"% if ctx.get('action_url'):\n"
+"<center>\n"
+"<a href=\"${ctx.get('action_url')}\" style=\"background-color: #1abc9c; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 14px;\" class=\"o_default_snippet_text\">Xác thực bảng chấm công của bạn</a>\n"
+"</center>\n"
+"% endif\n"
+"<p>Chân thành cảm ơn,</p>\n"
+"</td>\n"
+"</tr><tr>\n"
+"<td style=\"padding:0px 10px 5px 5px;font-size: 14px;\">\n"
+"% if user.signature\n"
+"<p style=\"font-size: 14px;\">${user.signature | safe}\n"
+"</p>\n"
+" % endif\n"
+"<p style=\"font-size: 11px;\"><strong>Gửi bởi\n"
+"<a href=\"${object.user_id.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
+"<strong>${user.company_id.name}</strong>\n"
+"</a>sử dụng <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Hệ thống ERP</strong></a>\n"
+"</strong></p>\n"
+"</td>\n"
+"</tr></tbody>\n"
+"</table>\n"
+"</div>\n"
+"</data>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
@@ -116,18 +155,18 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet managers"
-msgstr ""
+msgstr "Kích hoạt lời nhắc email định kỳ cho người quản lý bảng chấm công"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet users"
-msgstr ""
+msgstr "Kích hoạt nhắc nhở email định kỳ cho người dùng Bảng chấm công"
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:79
 #, python-format
 msgid "All selected timesheets are already validated"
-msgstr ""
+msgstr "Tất cả các bảng chấm công được chọn đã xác thực"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
@@ -137,12 +176,12 @@ msgstr "Analytic Line"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Android App"
-msgstr ""
+msgstr "Ứng dụng Android"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Apple App"
-msgstr ""
+msgstr "Ứng dụng iOS"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
@@ -154,17 +193,17 @@ msgstr "Hủy"
 #: code:addons/timesheet_grid/static/src/js/tour.js:22
 #, python-format
 msgid "Choose a <b>project name</b>. (e.g. name of a customer, or product)"
-msgstr ""
+msgstr "Chọn một <b>tên dự án</b>. (ví dụ: tên của khách hàng, hoặc sản phẩm)"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Chrome Plugin"
-msgstr ""
+msgstr "Chrome Plugin"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Click to add projects and tasks"
-msgstr ""
+msgstr "Bấm để thêm dự án, thêm tác vụ"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_company
@@ -186,12 +225,12 @@ msgstr "Thời điểm tạo"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Date until which the employee's timesheets have been validated"
-msgstr ""
+msgstr "Là ngày cho đến khi bảng chấm công của nhân viên đã được xác thực"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
 msgid "Describe your activity"
-msgstr ""
+msgstr "Mô tả hoạt động của bạn"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_display_name
@@ -205,6 +244,8 @@ msgstr "Tên hiển thị"
 #, python-format
 msgid "Easily switch to the monthly or daily view to control your time"
 msgstr ""
+"Dễ dàng chuyển sang chế độ xem hàng tháng hoặc hàng ngày để kiểm soát thời "
+"gian của bạn"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee
@@ -216,7 +257,7 @@ msgstr "Người lao động"
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_allow
 msgid "Employee Reminder"
-msgstr ""
+msgstr "Nhắc nhở nhân viên"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_interval
@@ -229,17 +270,17 @@ msgstr "Tần suất"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get Android app"
-msgstr ""
+msgstr "Tải ứng dụng Android"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get Chrome plugin"
-msgstr ""
+msgstr "Tài plugin Chrome"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Get iOS app"
-msgstr ""
+msgstr "Tải ứng dụng iOS"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_id
@@ -250,7 +291,7 @@ msgstr "ID"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "If checked, send an email to all manager"
-msgstr ""
+msgstr "Nếu chọn, sẽ gửi một email đến tất cả người quản lý"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_manager_allow
@@ -258,6 +299,8 @@ msgid ""
 "If checked, send an email to all managers who have not validated their "
 "timesheet"
 msgstr ""
+"Nếu được chọn, sẽ gửi email đến tất cả những người quản lý chưa xác thực "
+"bảng chấm công của họ"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_employee_allow
@@ -265,6 +308,8 @@ msgstr ""
 msgid ""
 "If checked, send an email to all users who have not recorded their timesheet"
 msgstr ""
+"Nếu được chọn, sẽ gửi email đến tất cả người dùng chưa ghi lại bảng chấm "
+"công của họ"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation___last_update
@@ -299,13 +344,13 @@ msgstr "Tuần gần nhất"
 #: code:addons/timesheet_grid/static/src/js/tour.js:17
 #, python-format
 msgid "Let's create your first timesheet entry."
-msgstr ""
+msgstr "Hãy tạo mục Bảng chấm công đầu tiên của bạn."
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_allow
 msgid "Manager Reminder"
-msgstr ""
+msgstr "Quản lý nhắc nhở"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
@@ -321,22 +366,24 @@ msgid ""
 "Multiple timesheet entries match the modified value. Please change the "
 "search options or modify the entries individually."
 msgstr ""
+"Nhiều mục nhập Bảng chấm công không khớp với giá trị được sửa đổi. Vui lòng "
+"thay đổi các tùy chọn tìm kiếm hoặc sửa đổi các mục riêng lẻ."
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "My Team"
-msgstr ""
+msgstr "Đội của tôi"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_nextdate
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_nextdate
 msgid "Next scheduled date for manager reminder"
-msgstr ""
+msgstr "Ngày được lên lịch tiếp theo cho quản lý lời nhắc"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Non Validated"
-msgstr ""
+msgstr "Chưa xác thực"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_delay
@@ -344,7 +391,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_delay
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_delay
 msgid "Number of days"
-msgstr ""
+msgstr "Số ngày"
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:101
@@ -353,33 +400,38 @@ msgid ""
 "Only a Timesheets Officer is allowed to create an entry older than the "
 "validation limit."
 msgstr ""
+"Chỉ có một Cán bộ Bảng chấm công mới được phép tạo một mục cũ hơn giới hạn "
+"xác nhận."
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:116
 #, python-format
 msgid "Only a Timesheets Officer is allowed to delete a validated entry."
 msgstr ""
+"Chỉ một viên chức Bảng chấm công mới được phép xóa một mục đã được xác thực."
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:110
 #, python-format
 msgid "Only a Timesheets Officer is allowed to modify a validated entry."
 msgstr ""
+"Chỉ một viên chức Bảng chấm công mới được phép chỉnh sửa một mục đã được xác"
+" thực."
 
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_manager
 msgid "Reminder: please approve your team's timesheets"
-msgstr ""
+msgstr "Nhắc nhở: vui lòng phê duyệt bảng chấm công nhóm của bạn"
 
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_user
 msgid "Reminder: please log your hours"
-msgstr ""
+msgstr "Nhắc nhở: xin vui lòng ghi lại giờ của bạn"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line_is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
-msgstr ""
+msgstr "Đặt nếu đường phân tích này đại diện cho một dòng của bảng chấm công."
 
 #. module: timesheet_grid
 #. openerp-web
@@ -404,7 +456,7 @@ msgstr "Thời gian sử dụng"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Timesheet Control"
-msgstr ""
+msgstr "Điều khiển Bảng chấm công"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_is_timesheet
@@ -445,7 +497,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
 msgid "To Validate"
-msgstr ""
+msgstr "Cần xác thực"
 
 #. module: timesheet_grid
 #. openerp-web

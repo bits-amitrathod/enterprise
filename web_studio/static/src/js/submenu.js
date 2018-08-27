@@ -30,6 +30,7 @@ var SubMenu = Widget.extend({
         this._super.apply(this, arguments);
         this.action = action;
         this.active_view_types = this.action.view_mode.split(',');
+        this.activeMenu = 'Views';
         this.studio_actions = [{action: 'action_web_studio_main', title: 'Views'}];
         this.multi_lang = options.multi_lang;
         this._setDefaultBc(active_view);
@@ -66,6 +67,7 @@ var SubMenu = Widget.extend({
      */
     renderElement: function() {
         this._super.apply(this, arguments);
+        this.$('.o_menu_sections li a:contains(' + this.activeMenu +')').addClass('active');
         this._renderBreadcrumb();
     },
 
@@ -78,7 +80,6 @@ var SubMenu = Widget.extend({
      * @param {Object} options
      */
     _addAction: function (options) {
-        this.$('.o_menu_sections li a.active').removeClass('active');
         this.studio_actions.push(options);
         this.renderElement();
     },
@@ -150,6 +151,7 @@ var SubMenu = Widget.extend({
         } else {
             this.studio_actions = [{action: action, title: title}];
         }
+        this.activeMenu = title;
         this.do_action(action, options);
         this.renderElement();
     },
@@ -206,10 +208,6 @@ var SubMenu = Widget.extend({
     _onMenu: function (ev) {
         var $menu = $(ev.currentTarget);
         if (!$menu.data('name')) { return; }
-
-        // make the primary menu active
-        this.$('.active').removeClass('active');
-        $menu.addClass('active');
 
         // do the corresponding action
         var title = $menu.text();

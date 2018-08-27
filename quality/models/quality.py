@@ -199,7 +199,7 @@ class QualityReason(models.Model):
     _name = "quality.reason"
     _description = "Quality Reason"
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char('Name', required=True, translate=True)
 
 
 class QualityTag(models.Model):
@@ -216,7 +216,7 @@ class QualityAlertStage(models.Model):
     _order = "sequence, id"
     _fold_name = 'folded'
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char('Name', required=True, translate=True)
     sequence = fields.Integer('Sequence')
     folded = fields.Boolean('Folded')
     done = fields.Boolean('Alert Processed')

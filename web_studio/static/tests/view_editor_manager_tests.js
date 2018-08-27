@@ -1317,6 +1317,62 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('error in view edition: undo', function (assert) {
+        assert.expect(4);
+
+        var firstExecution = true;
+        var vem = createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<tree><field name='id'/></tree>",
+            mockRPC: function (route) {
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                } else if (route === '/web_studio/edit_view') {
+                    if (firstExecution) {
+                        firstExecution = false;
+                        // simulate a failed route
+                        return $.Deferred().reject();
+                    } else {
+                        // the server sends the arch in string but it's post-processed
+                        // by the ViewEditorManager
+                        fieldsView.arch = "<tree><field name='id'/></tree>";
+                        return $.when({
+                            fields: fieldsView.fields,
+                            fields_views: {
+                                list: fieldsView,
+                            }
+                        });
+                    }
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // used to generate the new fields view in mockRPC
+        var fieldsView = $.extend(true, {}, vem.fields_view);
+
+        testUtils.intercept(vem, 'studio_error', function (event) {
+            assert.strictEqual(event.data.error, 'wrong_xpath',
+                "should have raised an error");
+        });
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "there should be one field in the view");
+
+        // delete a field to generate a view edition
+        vem.$('.o_web_studio_list_view_editor [data-node-id]').click();
+        vem.$('.o_web_studio_sidebar .o_web_studio_remove').click();
+        $('.modal-dialog .btn-primary').click();
+
+        assert.strictEqual(vem.$('.o_web_studio_list_view_editor [data-node-id]').length, 1,
+            "the view should be back as normal with 1 field");
+        assert.strictEqual(vem.$('.o_web_studio_sidebar_content.o_display_view').length, 1,
+            "the sidebar should have reset to its default mode");
+
+        vem.destroy();
+    });
+
     QUnit.test('add a monetary field without currency_id', function(assert) {
         assert.expect(7);
 

@@ -24,43 +24,42 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand" href="#" style="width: 225px;">
+                <a class="navbar-brand" href="#">
                     <span t-field="res_company.logo" t-options="{'widget': 'image'}"
                           t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
                 </a>
 
             </div>
+
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <t t-if="not request.httprequest.path[0:5] == '/shop'">
-                    <form class="navbar-form navbar-right" role="search" t-attf-action="/shop" method="get">
-                        <div class="input-group">
-                            <input type="text" name="search" class="search-query form-control oe_search_box"
-                                   placeholder="Search..." t-att-value="search"/>
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default oe_search_button">
-                                    <i class="fa fa-search"/>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
+                <form class="navbar-form navbar-right" role="search" t-attf-action="/shop" method="get">
+                    <div class="input-group header-searchbox">
+                        <input type="text" name="search" class="form-control search_box search-query form-control oe_search_box" placeholder="Search..." t-att-value="search"/>
+                    </div>
+                </form>
                 </t>
-                <ul class="nav navbar-nav navbar-right" id="PhoneNumber">
+                <ul class="nav navbar-nav navbar-right">
                     <li class="active">
                         <a href="#" style="color:#353b4d!important;">(412) 564-1280</a>
                     </li>
+                    <!--<li>-->
+                        <!--<a href="#">Sign in</a>-->
+                    <!--</li>-->
+                    <!--<li class="dropdown currency">-->
 
+                        <!--<select class="form-control">-->
+                            <!--<option>USD</option>-->
+                            <!--<option>CAD</option>-->
+                            <!--<option>INR</option>-->
+                            <!--<option>GBP</option>-->
+                            <!--<option>AUD</option>-->
+                        <!--</select>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </xpath>
     </template>
-
-    <!--<template id="layout_logo_show" inherit_id="website.layout" customize_show="True" name="Show Logo">-->
-    <!--<xpath expr="//header//a[hasclass('navbar-brand')]" position="replace">-->
-    <!--<a href="/" class="navbar-brand logo">-->
-    <!--<span t-field="res_company.logo" t-options="{'widget': 'image'}" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name" />-->
-    <!--</a>-->
-    <!--</xpath>-->
-    <!--</template>-->
 
     <!--
         ~~~~~~~~~~~~~~~~~~~~~~~~~~ FOOTER ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,7 +70,7 @@
         <xpath expr="//div[@id='footer']" position="replace">
             <div id="footer" class="container hidden-print " t-if="not no_footer">
                 <div class="row">
-                    <div class="col-md-5 newsletter">
+                    <div class="col-md-5 col-sm-12 newsletter">
                         <h6>Sign Up for our Newsletter</h6>
                         <div class="newsletter ">
                             <p class="message"/>
@@ -83,7 +82,7 @@
                                                placeholder="Enter your email address..."/>
                                     </div>
                                     <div class="col-md-4 col-sm-4">
-                                        <input type="submit" value="Sign Up" class="action_button sign_up"
+                                        <input type="" value="Sign Up" class="action_button sign_up"
                                                name="subscribe"/>
                                     </div>
                                 </div>
@@ -97,59 +96,59 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-2" id="info">
+                    <div class="col-md-2 col-sm-6" id="info">
                         <h6>Main Menu</h6>
                         <ul class="footer_menu">
                             <li>
-                                <a href="#" title="Home">Home</a>
+                                <a href="/" title="Home">Home</a>
                             </li>
                             <li>
-                                <a href="#" title="Catalog">Catalog</a>
+                                <a href="/shop" title="Catalog">Shop</a>
                             </li>
                             <li>
-                                <a href="#" title="Featured Products">Featured Products</a>
+                                <a href="/shop/featured" title="Featured Products">Featured Products</a>
                             </li>
                             <li>
-                                <a href="#" title="About">About</a>
+                                <a href="/about" title="About">About</a>
                             </li>
                             <li>
-                                <a href="#" title="FAQs">FAQs</a>
+                                <a href="/faqs" title="FAQs">FAQs</a>
                             </li>
                             <li>
-                                <a href="#" title="Contact">Contact</a>
+                                <a href="/contactus" title="Contact">Contact</a>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-sm-6">
                         <h6>Footer</h6>
                         <ul class="footer_menu">
                             <li>
-                                <a href="" title="Download Catalog">Download Catalog</a>
+                                <a href="/website_cstm/static/src/download/SPS_product_listing.xlsm" title="Download Catalog">Download Catalog</a>
+                            </li>
+                            <!--<li>-->
+                                <!--<a href="" title="Search">Search</a>-->
+                            <!--</li>-->
+                            <li>
+                                <a href="/about" title="About Us">About Us</a>
                             </li>
                             <li>
-                                <a href="" title="Search">Search</a>
+                                <a href="/faqs" title="FAQs">FAQs</a>
                             </li>
                             <li>
-                                <a href="" title="About Us">About Us</a>
-                            </li>
-                            <li>
-                                <a href="" title="FAQs">FAQs</a>
-                            </li>
-                            <li>
-                                <a href="" title="Quality Assurance and Service Guarantee">Quality Assurance and Service
+                                <a href="/quality_assurance" title="Quality Assurance and Service Guarantee">Quality Assurance and Service
                                     Guarantee
                                 </a>
                             </li>
                             <li>
-                                <a href="" title="SurgicalProductSolutions.com">SurgicalProductSolutions.com</a>
+                                <a href="http://www.surgicalproductsolutions.com/" title="SurgicalProductSolutions.com">SurgicalProductSolutions.com</a>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-2 social_icons">
+                    <div class="col-md-2 col-sm-6 social_icons">
                         <h6 class="social">Social</h6>
                         <ul class="social_icons">
                             <li class="linkedin">
-                                <a href="#" title="#" rel="me" target="_blank">
+                                <a href="https://www.linkedin.com/company/2706681?trk=tyah" title="#" rel="me" target="_blank">
                                     <i class="fa fa-linkedin" aria-hidden="true"/>
                                 </a>
                             </li>
@@ -160,16 +159,14 @@
 
                     <hr/>
 
-                    <div class="col-md-5">
+                    <div class="col-md-5 col-sm-5">
                         <p class="credits">
                             2018 <a href="#" title="">Surgical Product Solutions</a>.
 
                         </p>
                     </div>
-                    <div class="col-md-7">
-                        <p class="credits">
+                    <div class="col-md-7 col-sm-7">
 
-                        </p>
                         <div class="payment_methods">
                             <img src="/website_cstm/static/src/img/american_express-ed5c54cf3ceb18cd4deb3687857b816c07e4f4c7e8719da4a206cea3e7961be1.svg"
                                  alt="American express"/>
@@ -194,5 +191,12 @@
 
         </xpath>
     </template>
+
+    <template id="layout_footer_copyright" inherit_id="website.layout" name="Footer Copyright">
+        <xpath expr="//footer//div[hasclass('mt16')]" position="replace">
+            <div class="container mt16 mb8"></div>
+        </xpath>
+    </template>
+
 
 </odoo>

@@ -25,6 +25,10 @@
                      <field name="preferred_method"/>
                      <field name="shipping_terms"/>
                  </field>
+                <field name="payment_term_id" position="after">
+                     <field name="carrier_info"/>
+                     <field name="carrier_acc_no"/>
+                 </field>
                  <xpath expr="/form/sheet/notebook/page[1]/field[@name='order_line']/tree/field[@name='currency_id']" position="after">
                           <button name="action_show_details" string="Register lots, packs, location" type="object" icon="fa-list"  options='{"warn": true}' states="sale"/>
                  </xpath>
@@ -38,8 +42,15 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
                  <field name="payment_term_id" position="after">
-                     <field name="preferred_method"/>
-                     <field name="shipping_terms"/>
+                             <field name="preferred_method"/>
+                             <field name="shipping_terms"/>
+                 </field>
+                <field name="date_due" position="after">
+                     <field name="expiration_date"/>
+                </field>
+                 <field name="comment" position="before">
+                      <field name="note" class="oe_inline" placeholder="Customer Message....." style="width:50% !important;"/>
+                      <div class="oe_clear"/>
                  </field>
             </field>
         </record>

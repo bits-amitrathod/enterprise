@@ -5,14 +5,14 @@
 # Translators:
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Cas Vissers <casvissers@brahoo.nl>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
+"POT-Creation-Date: 2018-08-08 12:22+0000\n"
+"PO-Revision-Date: 2018-08-08 12:22+0000\n"
 "Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -112,6 +112,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
 msgid "Accept Emails From"
 msgstr "Accepteer e-mails van"
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_2
+msgid "Action Proposed"
+msgstr "Voorgestelde actie"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_active
@@ -248,6 +253,11 @@ msgstr "Configuratie"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_failure
 msgid "Confirm Measure"
 msgstr "Bevestig eenheid"
+
+#. module: quality
+#: model:quality.alert.stage,name:quality.quality_alert_stage_1
+msgid "Confirmed"
+msgstr "Bevestigd"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
@@ -614,6 +624,7 @@ msgstr "Naam"
 #: code:addons/quality/models/quality.py:437
 #: code:addons/quality/models/quality.py:438
 #: code:addons/quality/models/quality.py:478
+#: model:quality.alert.stage,name:quality.quality_alert_stage_0
 #, python-format
 msgid "New"
 msgstr "Nieuw"
@@ -680,6 +691,11 @@ msgstr ""
 "dit het aanmaken van nieuwe records uitzetten."
 
 #. module: quality
+#: model:quality.reason,name:quality.reason_other
+msgid "Others"
+msgstr "Andere"
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_user_id
 msgid "Owner"
 msgstr "Eigenaar"
@@ -703,6 +719,11 @@ msgid ""
 msgstr ""
 "Bovenliggend model welke de alias bezit. Het model dat de alias referentie bezit\n"
 "is niet noodzakelijk het model wat wordt gegeven door alias_model_id (bijvoorbeeld: project (parent_model) en taak (model))"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_parts
+msgid "Parts Quality"
+msgstr "Kwaliteit componenten"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
@@ -1010,7 +1031,12 @@ msgid "Settings"
 msgstr "Instellingen"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_8974
+#: model:quality.alert.stage,name:quality.quality_alert_stage_3
+msgid "Solved"
+msgstr "Opgelost"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_stage_id_3233
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Stage"
 msgstr "Fase"
@@ -1043,7 +1069,7 @@ msgid "Tags"
 msgstr "Labels"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_8984
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team_id_3243
 #: model:ir.model.fields,field_description:quality.field_quality_check_team_id
 #: model:ir.model.fields,field_description:quality.field_quality_point_team_id
 msgid "Team"
@@ -1063,7 +1089,7 @@ msgstr "Technische naam"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_point_test_type
-#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_8842
+#: model:ir.model.fields,field_description:quality.field_quality_point_test_type_id_3104
 msgid "Test Type"
 msgstr "Soort test"
 
@@ -1171,6 +1197,16 @@ msgstr "Waarschuwingsberichten"
 #: selection:quality.point,measure_frequency_unit:0
 msgid "Week(s)"
 msgstr "Week/weken"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_wo
+msgid "Work Operation"
+msgstr "Bewerking"
+
+#. module: quality
+#: model:quality.reason,name:quality.reason_workcenter
+msgid "Workcenter Failure"
+msgstr "Werkplekfout"
 
 #. module: quality
 #: code:addons/quality/models/quality.py:273

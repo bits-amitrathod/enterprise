@@ -21,14 +21,14 @@ class WebsiteSales(WebsiteSale):
 
         payload = responce.qcontext;
         if payload['products']:
-            productProduct = request.env['product.product'].search([('product_tmpl_id', 'in', responce.qcontext['products'].ids)])
+            productProduct = request.env['product.product'].search([('product_tmpl_id', 'in', payload['products'].ids)])
 
             productMaxMinDates = {}
             for val in productProduct:
                 val.env.cr.execute(
                     "SELECT min(use_date), max (use_date) FROM public.stock_production_lot where product_id = %s",(val.id,))
                 query_result = val.env.cr.dictfetchone()
-                productMaxMinDates[val.id] = {"min" : fields.Datetime.from_string(query_result['min']), "max": fields.Datetime.from_string(query_result['max'])}
+                productMaxMinDates[val.product_tmpl_id.id] = {"min" : fields.Datetime.from_string(query_result['min']), "max": fields.Datetime.from_string(query_result['max'])}
 
             payload['productExpiration'] = productMaxMinDates;
             payload['isVisibleWebsiteExpirationDate'] = request.env['ir.config_parameter'].sudo().get_param('website_sales.default_website_expiration_date')
@@ -44,5 +44,24 @@ class WebsiteSales(WebsiteSale):
             salesOrderContext)}
 
         return value
+
+    @http.route(['/shop/product/<model("product.template"):product>'], type='http', auth="public", website=True)
+    def product(self, product, category='', search='', **kwargs):
+        responce = super(WebsiteSales, self).product(product, category='', search='', **kwargs)
+        payload = responce.qcontext;
+
+        productMaxMinDates = {}
+        request.env.cr.execute(
+                "SELECT min(use_date), max (use_date) FROM public.stock_production_lot where product_id = %s",
+                (payload['product'].id,))
+        query_result = request.env.cr.dictfetchone()
+        productMaxMinDates[payload['product'].id] = {"min": fields.Datetime.from_string(query_result['min']),
+                                                          "max": fields.Datetime.from_string(query_result['max'])}
+
+        payload['productExpiration'] = productMaxMinDates;
+        payload['isVisibleWebsiteExpirationDate'] = request.env['ir.config_parameter'].sudo().get_param('website_sales.default_website_expiration_date')
+        return request.render("website_sale.product", payload)
+
+
 
 
