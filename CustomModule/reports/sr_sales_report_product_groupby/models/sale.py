@@ -18,10 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
+from builtins import reversed
 
 from odoo import api, fields, models
 from odoo.tools import float_repr
 import datetime
+from numpy.core.defchararray import upper
 
 
 class SaleSalespersonReport(models.TransientModel):
@@ -31,6 +33,12 @@ class SaleSalespersonReport(models.TransientModel):
     end_date = fields.Date(string="End Date", required=True)
     product_id = fields.Many2many('product.product', string="Products", required=True)
 
+    @api.model
+    def check(self, data):
+        if data:
+            return upper(data)
+        else:
+            return " "
     @api.multi
     def print_salesperson_vise_report(self):
         sale_orders = self.env['sale.order'].search([('state', '=', 'sale')])
@@ -49,7 +57,7 @@ class SaleSalespersonReport(models.TransientModel):
                         temp_2.append(datetime.datetime.strptime(sale_order.date_order, "%Y-%m-%d %H:%M:%S").date().strftime('%m/%d/%Y'))
                         temp_2.append(float_repr(sale_order_line.price_subtotal,precision_digits=2))
                         temp.append(temp_2)
-            final_dict[p_id.name] = temp
+            final_dict[p_id.name] =sorted(temp, key=lambda x: x[0],reverse=False)
 
         datas = {
             'ids': self,

@@ -21,6 +21,7 @@
 
 from odoo import api, fields, models
 from odoo.tools import float_repr
+from numpy.core.defchararray import upper
 import datetime
 import logging
 
@@ -33,6 +34,13 @@ class comparebymonth():
     amount = 0
     discount_amount = 0
     total_amount = 0
+
+    @api.model
+    def check(self, data):
+        if data:
+            return upper(data)
+        else:
+            return " "
 
     @api.multi
     def addObject(self, filtered_by_current_month):
@@ -65,16 +73,22 @@ class DiscountSummaryReport(models.TransientModel):
     end_date = fields.Date(string="End Date", required=True)
     product_id = fields.Many2many('product.product', string="Products")
 
+    @api.model
+    def check(self, data):
+        if data:
+            return upper(data)
+        else:
+            return " "
+
     @api.multi
     def print_discountsummary_vise_report(self):
         sale_orders = self.env['sale.order'].search([('state', '=', 'sale')])
         groupby_dict = {}
         filtered_by_current_month = sale_orders
         dat = comparebymonth().addObject(filtered_by_current_month)
-        final_dict = {}
+        final_list = []
         for user in dat.keys():
-            temp = []
-            order= dat[user]
+            order = dat[user]
             temp_2 = []
             temp_2.append(order.sale_order)
             temp_2.append(order.customer)
@@ -82,13 +96,13 @@ class DiscountSummaryReport(models.TransientModel):
             temp_2.append(float_repr(order.amount,precision_digits=2))
             temp_2.append(float_repr(order.discount_amount,precision_digits=2))
             temp_2.append(float_repr(order.total_amount,precision_digits=2))
-            temp.append(temp_2)
-            final_dict[user] = temp
+            final_list.append(temp_2)
+        final_list.sort(key=lambda x:self.check(str(x[0])))
         # final_dict['data'].sort(key=lambda x: x[0])
         datas = {
             'ids': self.ids,
             'model': self._module,
-            'form': final_dict,
+            'form': final_list,
         }
         log.info('............bbb..................')
         return self.env.ref('sales_report_discount_summary.action_report_sales_discount_summary_wise').report_action([],
