@@ -48,9 +48,9 @@ class inventory_exe(models.Model):
 
 
     def _compute_show_lot_user_date(self):
-        if self.lot_id and self.lot_id.use_date:
-            # final_date = datetime.datetime.strptime(self.lot_id.use_date, '%Y-%m-%d %H:%M:%S')
-            self.lot_use_date = self.lot_id.use_date
+            for ml in self:
+                ml.lot_use_date= ml.lot_id.use_date
+
 
     def _action_done(self):
         """ This method is called during a move's `action_done`. It'll actually move a quant from
