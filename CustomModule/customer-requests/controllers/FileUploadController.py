@@ -86,12 +86,15 @@ class FileUploadController(Controller):
     @http.route('/webhook', type='json', auth='public', csrf=False, methods=["POST"], website=True)
     def test(self, **post):
         try:
-            _logger.info("WebHook %r", request.jsonrequest)
-            os.system('sh ' + '/opt/scripts/test.sh')
             headers = request.httprequest.headers
-            response = {'errorCode' : headers['X-GitLab-Token']}
+            if headers['X-GitLab-Token'] == 'benchmark':
+                _logger.info("WebHook %r", request.jsonrequest)
+                os.system('sh ' + '/opt/scripts/test.sh')
+                response = {'message': headers['X-GitLab-Token']}
+            else:
+                response = {'message': 'UnAuthorized'}
         except:
-            response = {'errorCode': 1}
+            response = {'message': 'error'}
         return json.JSONEncoder().encode(response)
 
 
