@@ -29,8 +29,10 @@
             <field name="model">stock.report</field>
             <field name="arch" type="xml">
                 <pivot string="Stock Overview">
-                    <field name="operation_type" type="row"/>
-                    <field name="date_done" interval="month" type="col"/>
+                    <field name="operation_type" type="col"/>
+                    <field name="categ_id" type="row"/>
+                    <field name="cycle_time" type="measure"/>
+                    <field name="delay" type="measure"/>
                 </pivot>
             </field>
         </record>
@@ -118,23 +120,23 @@
             <field name="name">stock.report.cohort.view</field>
             <field name="model">stock.report</field>
             <field name="arch" type="xml">
-                <cohort string="Report" date_start="creation_date" date_stop="date_done" interval="week" mode="churn"/>
+                <cohort string="Report" date_start="creation_date" date_stop="date_done" interval="day" mode="churn"/>
             </field>
         </record>
 
         <record id="stock_report_dashboard_action" model="ir.actions.act_window">
-            <field name="name">Inventory Overview</field>
+            <field name="name">Warehouse Dashboard</field>
             <field name="res_model">stock.report</field>
             <field name="view_mode">dashboard</field>
             <field name="view_id" ref="stock_report_dashboard_view"/>
             <field name="search_view_id" ref="stock_enterprise.stock_report_search_view"/>
             <field name="domain" eval="[('picking_type_code', '!=', False)]"/>
-            <field name="context">{'search_default_done': 1}</field> <!-- Use context keys for cohort view -->
+            <field name="context">{'search_default_done': 1, 'time_ranges': {'field':'date_done', 'range':'last_30_days'}}</field> <!-- Use context keys for cohort view -->
         </record>
 
         <menuitem
             id="stock_dashboard_menuitem"
-            name="Inventory Overview"
+            name="Warehouse Dashboard"
             parent="stock.menu_warehouse_report"
             action="stock_report_dashboard_action"/>
     </data>
