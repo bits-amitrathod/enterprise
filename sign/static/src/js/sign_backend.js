@@ -195,6 +195,7 @@ odoo.define('sign.template', function(require) {
                 self.$('#o_sign_name').val(self.$currentTarget.data('name') );
                 self.title = self.title + ' <span class="fa fa-long-arrow-right"/> ' + self.$currentTarget.prop('field-type') + ' Field';
             });
+
         },
 
         create: function($targetEl) {
@@ -715,6 +716,15 @@ odoo.define('sign.template', function(require) {
             if(this.$('iframe').length) {
                 core.bus.on('DOM_updated', this, init_iframe);
             }
+
+            $('body').on('click', function (e) {
+                $('div.popover').each(function () {
+                    if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                        $(this).find('.o_sign_validate_field_button').click();
+                    }
+                });
+            });
+
             return this._super();
 
             function init_iframe() {
@@ -980,7 +990,6 @@ odoo.define('sign.document_edition', function(require) {
 
         start: function() {
             var self = this;
-
             return this._super.apply(this, arguments).then(function () {
                 if(self.is_author && self.is_sent) {
                     self.$('.o_sign_signer_status').each(function(i, el) {
@@ -1049,7 +1058,7 @@ odoo.define('sign.document_signing_backend', function(require) {
         get_thankyoudialog_class: function () {
             return NoPubThankYouDialog;
         },
-    })
+    });
 
     core.action_registry.add('sign.SignableDocument', SignableDocumentBackend);
 });
