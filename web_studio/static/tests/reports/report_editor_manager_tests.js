@@ -1781,6 +1781,97 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
+    QUnit.test('automatic undo of correct operation', function (assert) {
+        var self = this;
+        var done = assert.async();
+        assert.expect(5);
+
+        this.templates.push({
+            key: 'template1',
+            view_id: 55,
+            arch:
+                '<kikou>' +
+                    '<t t-name="template1"><span>First span</span></t>' +
+                '</kikou>',
+        });
+
+        var rem = studioTestUtils.createReportEditorManager({
+            env: {
+                modelName: 'kikou',
+                ids: [42, 43],
+                currentId: 42,
+            },
+            report: {},
+            reportHTML: studioTestUtils.getReportHTML(this.templates),
+            reportViews: studioTestUtils.getReportViews(this.templates),
+            reportMainViewID: 42,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_report_view') {
+                    nbEdit++;
+                    switch (nbEdit) {
+                        case 1:
+                            assert.strictEqual(args.operations.length, 1);
+                            assert.deepEqual(args.operations[0].inheritance, [{
+                                content: '<attribute name="class" separator=" " add="o_bold"/>',
+                                position: 'attributes',
+                                view_id: 55,
+                                xpath: '/t/span',
+                            }]);
+                            // first rpc that we will make fail
+                            return firstDef;
+                        case 2:
+                            // NB: undo RPC and second op RPC are dropped by
+                            // MutexedDropPrevious
+                            assert.strictEqual(args.operations.length, 2,
+                                "should have undone the first operation");
+                            assert.deepEqual(args.operations[0].inheritance, [{
+                                content: '<attribute name="class" separator=" " add="o_italic"/>',
+                                position: 'attributes',
+                                view_id: 55,
+                                xpath: '/t/span',
+                            }]);
+                            assert.deepEqual(args.operations[1].inheritance, [{
+                                content: '<attribute name="class" separator=" " add="o_underline"/>',
+                                position: 'attributes',
+                                view_id: 55,
+                                xpath: '/t/span',
+                            }]);
+                            // second rpc that succeeds
+                            return $.when({
+                                report_html: studioTestUtils.getReportHTML(self.templates),
+                                views: studioTestUtils.getReportViews(self.templates),
+                            });
+                        case 3:
+                            assert.ok(false, "should not edit a third time");
+                    }
+
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        var nbEdit = 0;
+        var firstDef = $.Deferred();
+        rem.editorIframeDef.then(function () {
+            rem.$('iframe').contents().find('span:contains(First span)').click();
+
+            // trigger a modification
+            rem.$('.o_web_studio_sidebar .card:eq(1) .o_web_studio_text_decoration button[data-property="bold"]').click();
+
+            // trigger a second modification before the first one has finished
+            rem.$('.o_web_studio_sidebar .card:eq(1) .o_web_studio_text_decoration button[data-property="italic"]').click();
+
+            // trigger a third modification before the first one has finished
+            rem.$('.o_web_studio_sidebar .card:eq(1) .o_web_studio_text_decoration button[data-property="underline"]').click();
+
+            // make the first op fail (will release the MutexedDropPrevious)
+            firstDef.reject();
+
+            rem.destroy();
+            done();
+        });
+    });
+
 });
 
 });

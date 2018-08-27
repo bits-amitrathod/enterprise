@@ -111,7 +111,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
     /**
      * @override
      */
-    _applyChangeHandling: function (result, from_xml) {
+    _applyChangeHandling: function (result, opID, from_xml) {
         var self = this;
         // TODO: what should we do with result? Maybe update the studio_view_id
         // if one has been created?
@@ -137,7 +137,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
         } else {
             // the operation can't be applied
             this.trigger_up('studio_error', {error: 'wrong_xpath'});
-            return this._undo(true).then(function () {
+            return this._undo(opID, true).then(function () {
                 return $.Deferred().reject();
             });
         }
