@@ -91,8 +91,7 @@
                     <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer"
                          class="product_price" t-if="product.product_variant_ids"
                          style="position: relative;">
-
-                        <strong>
+                         <strong>
                             <t t-if="product.website_price_difference and website.get_current_pricelist().discount_policy=='without_discount'">
                                 <del class="text-danger mr8" style="white-space: nowrap;"
                                      t-esc="compute_currency(product.website_public_price)"
