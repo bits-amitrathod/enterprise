@@ -32,7 +32,7 @@ class SpsCustomerRequest(models.Model):
     # Get Customer Requests
     def get_customer_requests(self):
         sps_customer_requests = self.env['sps.customer.requests'].search(
-            [('status', 'in', ('Inprocess', 'Incomplete', 'Partial', 'Unprocessed', 'InCoolingPeriod', 'New'))])
+            [('status', 'in', ('Inprocess', 'Incomplete', 'Unprocessed', 'InCoolingPeriod', 'New'))])
         self.process_requests(sps_customer_requests)
 
     def process_requests(self, sps_customer_requests):
