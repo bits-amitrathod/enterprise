@@ -219,10 +219,10 @@ class MrpEco(models.Model):
     def _compute_bom_change_ids(self):
         # TDE TODO: should we add workcenter logic ?
         new_bom_commands = []
-        old_bom_lines = dict(((line.product_id, line.product_uom_id,), line) for line in self.bom_id.bom_line_ids)
+        old_bom_lines = dict(((line.product_id, line.product_uom_id, tuple(line.attribute_value_ids.ids),), line) for line in self.bom_id.bom_line_ids)
         if self.new_bom_id and self.bom_id:
             for line in self.new_bom_id.bom_line_ids:
-                key = (line.product_id, line.product_uom_id,)
+                key = (line.product_id, line.product_uom_id, tuple(line.attribute_value_ids.ids),)
                 old_line = old_bom_lines.pop(key, None)
                 if old_line and tools.float_compare(old_line.product_qty, line.product_qty, line.product_uom_id.rounding) != 0:
                     new_bom_commands += [(0, 0, {
