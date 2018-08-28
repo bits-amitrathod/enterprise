@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from pygments.lexer import default
 
-from odoo import models, fields, api, SUPERUSER_ID ,_
+from odoo import models, fields, api, SUPERUSER_ID
 from odoo.addons import decimal_precision as dp
 import datetime
+import math
+from decimal import Decimal, ROUND_HALF_UP
 
 
 class VendorOffer(models.Model):
     # _name = 'purchase.order'
     _description = "Vendor Offer"
     _inherit = "purchase.order"
-    # _inherits = {'res.partner': 'partner_id'}
+
 
     carrier_info = fields.Char("Carrier Info", related='partner_id.carrier_info', readonly=True)
     carrier_acc_no = fields.Char("Carrier Account No", related='partner_id.carrier_acc_no', readonly=True)
@@ -68,6 +70,17 @@ class VendorOffer(models.Model):
     ], string='Shipping label Issued')
 
     # order_line = fields.One2many('purchase.order.line', 'order_id', string='Order Lines')
+    status = fields.Selection([
+        ('ven_draft', 'Vendor Offer'),
+        ('ven_sent', 'Vendor Offer Sent'),
+        ('draft', 'RFQ'),
+        ('sent', 'RFQ Sent'),
+        ('to approve', 'To Approve'),
+        ('purchase', 'Purchase Order'),
+        ('done', 'Locked'),
+        ('cancel', 'Cancelled')
+    ], string='Status', readonly=True, index=True, copy=False, default='ven_draft',track_visibility='onchange',store=True)
+
     state = fields.Selection([
         ('ven_draft', 'Vendor Offer'),
         ('ven_sent', 'Vendor Offer Sent'),
@@ -77,14 +90,14 @@ class VendorOffer(models.Model):
         ('purchase', 'Purchase Order'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled')
-    ], string='Status', readonly=True, index=True, copy=False, default='draft',track_visibility='onchange')
+    ], string='Status', readonly=True, index=True, copy=False, default='draft', track_visibility='onchange')
 
     @api.depends('order_line.offer_price')
     def _amount_tot_all(self):
         for order in self:
             retail_amt = offer_amount = 0.0
             for line in order.order_line:
-                retail_amt += float(line.price_unit) * float(line.qty_in_stock)
+                retail_amt += float(line.product_retail)
                 offer_amount += float(line.offer_price)
             order.update({
                 'retail_amt': retail_amt,
@@ -94,16 +107,15 @@ class VendorOffer(models.Model):
     @api.onchange('possible_competition')
     def possible_competition_onchange(self):
         self.state = 'ven_draft'
-        # for order in self:
-        #     for line in order.order_line:
-        #         multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
-        #         line.margin = multiplier_list.margin
-        #         line.offer_price = round(float(line.price_unit) * (
-        #                     float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
+        for order in self:
+            for line in order.order_line:
+                multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
+                line.margin = multiplier_list.margin
+                line.offer_price = round(float(line.price_unit) * (
+                            float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
 
     @api.onchange('accelerator','retail_amt')
     def accelerator_onchange(self):
-        print('===================================================================')
         print(self.accelerator)
         if self.accelerator == True:
             self.max = float(self.retail_amt)*float(0.65)
@@ -113,40 +125,41 @@ class VendorOffer(models.Model):
 
     @api.multi
     def action_send_offer_email(self):
-        self.ensure_one()
-        ir_model_data = self.env['ir.model.data']
-        try:
-            if self.env.context.get('send_rfq', False):
-                template_id = ir_model_data.get_object_reference('purchase', 'email_template_edi_purchase')[1]
-            else:
-                template_id = ir_model_data.get_object_reference('purchase', 'email_template_edi_purchase_done')[1]
-        except ValueError:
-            template_id = False
-        try:
-            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
-        except ValueError:
-            compose_form_id = False
-        ctx = dict(self.env.context or {})
-        ctx.update({
-            'default_model': 'purchase.order',
-            'default_res_id': self.ids[0],
-            'default_use_template': bool(template_id),
-            'default_template_id': template_id,
-            'default_composition_mode': 'comment',
-            'custom_layout': "purchase.mail_template_data_notification_email_purchase_order",
-            'force_email': True
-        })
-        return {
-            'name': _('Compose Email'),
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'mail.compose.message',
-            'views': [(compose_form_id, 'form')],
-            'view_id': compose_form_id,
-            'target': 'new',
-            'context': ctx,
-        }
+        pass
+        # self.ensure_one()
+        # ir_model_data = self.env['ir.model.data']
+        # try:
+        #     if self.env.context.get('send_rfq', False):
+        #         template_id = ir_model_data.get_object_reference('purchase', 'email_template_edi_purchase')[1]
+        #     else:
+        #         template_id = ir_model_data.get_object_reference('purchase', 'email_template_edi_purchase_done')[1]
+        # except ValueError:
+        #     template_id = False
+        # try:
+        #     compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        # except ValueError:
+        #     compose_form_id = False
+        # ctx = dict(self.env.context or {})
+        # ctx.update({
+        #     'default_model': 'purchase.order',
+        #     'default_res_id': self.ids[0],
+        #     'default_use_template': bool(template_id),
+        #     'default_template_id': template_id,
+        #     'default_composition_mode': 'comment',
+        #     'custom_layout': "purchase.mail_template_data_notification_email_purchase_order",
+        #     'force_email': True
+        # })
+        # return {
+        #     'name': _('Compose Email'),
+        #     'type': 'ir.actions.act_window',
+        #     'view_type': 'form',
+        #     'view_mode': 'form',
+        #     'res_model': 'mail.compose.message',
+        #     'views': [(compose_form_id, 'form')],
+        #     'view_id': compose_form_id,
+        #     'target': 'new',
+        #     'context': ctx,
+        # }
 
     @api.multi
     def action_print_vendor_offer(self):
@@ -183,17 +196,19 @@ class VendorOfferProduct(models.Model):
     expiration_date = fields.Datetime(string="Expiration Date")
     expired_inventory = fields.Char(string="Expired Inventory Items")
     multiplier = fields.Many2one('multiplier.multiplier', string="Multiplier")
-    offer_price = fields.Char(string="Offer Price")
+    offer_price = fields.Char(string="Total Offer Price")
+    product_offer_price = fields.Char(string="Offer Price")
     margin = fields.Char(string="Margin")
     possible_competition = fields.Many2one(related='order_id.possible_competition',store=False)
     product_note = fields.Text(string="Notes")
+    product_retail = fields.Char(string="Total Retail Price")
+    product_unit_price = fields.Char(string="Retail Price")
 
     @api.onchange('product_id')
     def onchange_product_id_vendor_offer(self):
         result1 = {}
         if not self.product_id:
             return result1
-
 
         self.qty_in_stocks()
         groupby_dict = groupby_dict_month = groupby_dict_90 = groupby_dict_yr = {}
@@ -257,14 +272,33 @@ class VendorOfferProduct(models.Model):
             self.multiplier=multiplier_list.id
 
         self.cal_offer_price()
-        #self.product_tier_manufacturer()
         self.expired_inventory_cal()
         for order in self:
+            order.env.cr.execute("SELECT min(use_date), max(use_date) FROM public.stock_production_lot where product_id =" + str(order.product_id.id))
+            query_result = order.env.cr.dictfetchone()
+            if query_result['max'] != None:
+                self.expiration_date=fields.Datetime.from_string(str(query_result['max'])).date()
+
+
+        # for order in self:
+        #     for line in order:
+        #         multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
+        #         line.margin = multiplier_list.margin
+        #         line.offer_price = round(float(self.prod_qty) * float(line.price_unit) * (
+        #                 float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
+
+        for order in self:
             for line in order:
-                multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', line.multiplier.id)])
-                line.margin = multiplier_list.margin
-                line.offer_price = round(float(line.price_unit) * (
-                        float(multiplier_list.margin) / 100 + float(self.possible_competition.id) / 100),2)
+                if (line.prod_qty == False):
+                    line.prod_qty = '1'
+                    line.product_retail = line.price_unit
+                    line.product_unit_price = line.price_unit
+
+        multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', self.multiplier.id)])
+        possible_competition_list = self.env['competition.competition'].search([('id', '=', self.possible_competition.id)])
+        self.margin = multiplier_list.margin
+        self.product_unit_price=math.ceil(round(float(self.price_unit) * (float(multiplier_list.retail) / 100),10))
+        self.product_offer_price =math.ceil(round(float(self.product_unit_price) * (float(multiplier_list.margin) / 100 + float(possible_competition_list.margin) / 100),2))
 
 
     def expired_inventory_cal(self):
@@ -277,11 +311,13 @@ class VendorOfferProduct(models.Model):
 
         self.expired_inventory = expired_lot_count
 
-    @api.onchange('multiplier')
+    @api.onchange('multiplier','prod_qty')
     def cal_offer_price(self):
+
         multiplier_list = self.env['multiplier.multiplier'].search([('id', '=', self.multiplier.id)])
         self.margin=multiplier_list.margin
-        self.offer_price=round(float(self.price_unit) * (float(multiplier_list.margin)/100 + float(self.order_id.possible_competition.id)/100),2)
+        self.offer_price=round(float(self.prod_qty) * float(self.product_offer_price),2)
+        self.product_retail = round(float(self.prod_qty) * float(self.product_unit_price),2)
 
     @api.multi
     def qty_in_stocks(self):
@@ -290,6 +326,12 @@ class VendorOfferProduct(models.Model):
         ]
         moves = self.env['stock.move'].search(domain,limit=1)
         self.qty_in_stock=moves.product_qty
+
+    # @api.onchange('prod_qty')
+    # def prod_qty_onchange(self):
+    #     print('------------------------------------------')
+    #     self.product_retail=round(float(self.prod_qty)*float(self.price_unit),2)
+    #     print(self.product_retail)
 
 
 class Multiplier(models.Model):
