@@ -71,6 +71,8 @@ class Customer(models.Model):
         return action
 
 
+
+
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
     location = fields.Char("Location")
