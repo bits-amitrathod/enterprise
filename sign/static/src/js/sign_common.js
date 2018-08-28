@@ -1114,7 +1114,7 @@ odoo.define('sign.document_signing', function(require) {
                             });
                         }
                         if (response.url) {
-                            document.location.pathname = success['url'];
+                            document.location.pathname = response['url'];
                         }
                     }
                 });
