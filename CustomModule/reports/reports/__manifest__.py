@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "website CSTM",
+    'name': "reports",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -10,41 +10,32 @@
         Long description of module's purpose
     """,
 
-    'sequence': 57,
-
-    # 'author': "My Company",
-    # 'website': "http://www.yourcompany.com",
+    'author': "My Company",
+    'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
     # for the full list
-    'category': 'website',
+    'category': 'Uncategorized',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['website_sales','website_product_brand'],
+    'depends': ['base', 'purchase_history_custome', 'inventory_adjustment_report',
+                'custom_product_catalog', 'product_price_list_report', 'purchased_products',
+                'sales_purchase_history_report', 'sales_report_discount_summary', 'sr_sales_report_compmonth',
+                'sr_sales_report_product_bymonth', 'sr_sales_report_product_groupby','sr_sales_report_saleperson_groupby','tps_report_sale'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'data/website_data.xml',
+        # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
-
-        'views/home.xml',
-        'views/contact.xml',
-        'views/faqs.xml',
-        'views/about.xml',
-        'views/ecommerce.xml',
-        'views/quality_assurance.xml',
-        'views/product-types.xml',
-        'views/login.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
-    # 'auto_install': True,
-    'application': True,
     'installable': True,
+    'auto_install': True,
+    'application': True,
 }
