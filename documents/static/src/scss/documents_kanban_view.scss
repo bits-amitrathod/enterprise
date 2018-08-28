@@ -142,6 +142,7 @@ $o-dms-inspector-bg-darker: #1A1A1A;
     .o_documents_kanban_view.o_kanban_view {
         overflow: auto;
         transition: background 0.3s;
+        height: 100%;
 
         .o_kanban_record.o_kanban_attachment {
             .o_kanban_image .o_kanban_image_wrapper {
@@ -175,23 +176,17 @@ $o-dms-inspector-bg-darker: #1A1A1A;
             }
         }
 
-        &.o_documents_kanban_view_has_selection {
-            .o_kanban_record.o_kanban_attachment {
-                @include o-hover-opacity(0.7);
+        .o_record_selected {
+            opacity: 1;
+            border-color: $o-brand-primary;
+            box-shadow: 0 0 0 1px $o-brand-primary;
 
-                &.o_record_selected {
-                    opacity: 1;
-                    border-color: $o-brand-primary;
-                    box-shadow: 0 0 0 1px $o-brand-primary;
+            .o_record_selector{
+                @include o-hover-opacity(0.8, 1);
 
-                    .o_record_selector{
-                        @include o-hover-opacity(0.8, 1);
-
-                        &:before{
-                            color: $o-brand-primary;
-                            content:"\f058";
-                        }
-                    }
+                &:before{
+                    color: $o-brand-primary;
+                    content:"\f058";
                 }
             }
         }
@@ -257,6 +252,13 @@ $o-dms-inspector-bg-darker: #1A1A1A;
 
                     .o_mimetype_icon {
                         @include size(46px);
+                    }
+                }
+
+                &.o_documents_preview_image {
+                    > img {
+                        max-height: 100%;
+                        max-width: 100%;
                     }
                 }
 

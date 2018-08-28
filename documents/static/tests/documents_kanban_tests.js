@@ -19,23 +19,26 @@ QUnit.module('DocumentsKanbanView', {
             'ir.attachment': {
                 fields: {
                     active: {string: "Active", type: 'boolean', default: true},
+                    available_rule_ids: {string: "Rules", type: 'many2many', relation: 'documents.workflow.rule'},
                     datas_fname: {string: "Foo", type: 'char'},
                     file_size: {string: "Size", type: 'integer'},
+                    folder_id: {string: "Folders", type: 'many2one', relation: 'documents.folder'},
+                    lock_uid: {string: "Locked by", type: "many2one", relation: 'user'},
                     message_follower_ids: {string: "Followers", type: 'one2many', relation: 'mail.followers'},
                     message_ids: {string: "Messages", type: 'one2many', relation: 'mail.message'},
+                    mimetype: {string: "Mimetype", type: 'char', default: ''},
+                    name: {string: "Name", type: 'char', default: ' '},
                     owner_id: {string: "Owner", type: "many2one", relation: 'user'},
-                    lock_uid: {string: "Locked by", type: "many2one", relation: 'user'},
                     partner_id: {string: "Related partner", type: 'many2one', relation: 'user'},
                     public: {string: "Is public", type: 'boolean'},
                     res_id: {string: "Resource id", type: 'integer'},
                     res_model: {string: "Model (technical)", type: 'char'},
                     res_model_name: {string: "Resource model", type: 'char'},
                     res_name: {string: "Resource name", type: 'char'},
-                    folder_id: {string: "Folders", type: 'many2one', relation: 'documents.folder'},
-                    tag_ids: {string: "Tags", type: 'many2many', relation: 'documents.tag'},
-                    available_rule_ids: {string: "Rules", type: 'many2many', relation: 'documents.workflow.rule'},
                     share_ids: {string: "Shares", type: "many2many", relation: 'documents.share'},
-                    mimetype: {string: "Mimetype", type: 'char', default: ''},
+                    tag_ids: {string: "Tags", type: 'many2many', relation: 'documents.tag'},
+                    type: {string: "Type", type: 'selection', selection: [['url', "URL"], ['binary', "File"]], default: 1},
+                    url: {string: "Url", type: 'char'},
                 },
                 records: [
                     {id: 1, datas_fname: 'yop', file_size: 30000, owner_id: 1, partner_id: 2,
@@ -191,7 +194,7 @@ QUnit.module('DocumentsKanbanView', {
             "should have two primary buttons");
         assert.strictEqual(kanban.$buttons.find('.btn-primary:first').text().trim(), 'Upload',
             "should have a primary 'Upload' button");
-        assert.strictEqual(kanban.$buttons.find('a.o_documents_kanban_url').length, 1,
+        assert.strictEqual(kanban.$buttons.find('button.o_documents_kanban_url').length, 1,
             "should allow to save a URL");
         assert.strictEqual(kanban.$buttons.find('.btn-secondary').text().trim(), 'Share',
             "should have a secondary 'Share' button");
@@ -543,7 +546,6 @@ QUnit.module('DocumentsKanbanView', {
                         type: 'ir.actions.act_window',
                         context: {
                             default_type: 'url',
-                            default_name: 'url',
                             default_folder_id: 1,
                         },
                         views: [[false, 'form']],
@@ -553,7 +555,7 @@ QUnit.module('DocumentsKanbanView', {
             },
         });
 
-        kanban.$buttons.find('a.o_documents_kanban_url').click();
+        kanban.$buttons.find('button.o_documents_kanban_url').click();
 
         kanban.destroy();
     });
@@ -720,21 +722,28 @@ QUnit.module('DocumentsKanbanView', {
         });
 
         kanban.$('.o_kanban_record:contains(yop)').click();
-        assert.strictEqual(kanban.$('.o_click_image').length, 0,
+
+        assert.strictEqual(kanban.$('.o_document_preview img').length, 0,
             "should not have a clickable image");
+
         kanban.$('.o_kanban_record:contains(burp)').click();
+
         assert.strictEqual(kanban.$('.o_viewer_content').length, 0,
             "should not have a document preview");
         assert.strictEqual(kanban.$('.o_document_preview img').length, 1,
             "should have a clickable image");
+
         kanban.$('.o_document_preview img').click();
+
         assert.strictEqual(kanban.$('.o_viewer_content').length, 1,
             "should have a document preview");
         assert.strictEqual(kanban.$('.o_close_btn').length, 1,
             "should have a close button");
+
         kanban.$('.o_close_btn').click();
+
         assert.strictEqual(kanban.$('.o_viewer_content').length, 0,
-            "should not have a document preview");
+            "should not have a document preview after pdf exit");
 
         kanban.destroy();
     });
