@@ -528,13 +528,6 @@ class AccountFinancialReportLine(models.Model):
         #least, one line is touching a liquidity account. Counterparts are either shown directly if they're not reconciled (or
         #not reconciliable), either replaced by the accounts of the entries they're reconciled with.
         if financial_report == self.env.ref('account_reports.account_financial_report_cashsummary0'):
-            bank_journals = self.env['account.journal'].search([('type', 'in', ('bank', 'cash'))])
-            bank_accounts = bank_journals.mapped('default_debit_account_id') + bank_journals.mapped('default_credit_account_id')
-
-            # Get moves having a line using a bank account.
-            self._cr.execute('SELECT DISTINCT(move_id) FROM account_move_line WHERE account_id IN %s', [tuple(bank_accounts.ids)])
-            bank_move_ids = tuple([r[0] for r in self.env.cr.fetchall()])
-
             # Get available fields.
             replace_columns = {
                 'date': 'ref.date',
@@ -554,6 +547,24 @@ class AccountFinancialReportLine(models.Model):
                     columns_2.append('\"account_move_line\".%s' % name)
             select_clause_1 = ', '.join(columns)
             select_clause_2 = ', '.join(columns_2)
+
+            # Get moves having a line using a bank account in one of the selected journals.
+            if self.env.context.get('journal_ids'):
+                bank_journals = self.env['account.journal'].browse(self.env.context.get('journal_ids'))
+            else:
+                bank_journals = self.env['account.journal'].search([('type', 'in', ('bank', 'cash'))])
+            bank_accounts = bank_journals.mapped('default_debit_account_id') + bank_journals.mapped('default_credit_account_id')
+
+            self._cr.execute('SELECT DISTINCT(move_id) FROM account_move_line WHERE account_id IN %s', [tuple(bank_accounts.ids)])
+            bank_move_ids = tuple([r[0] for r in self.env.cr.fetchall()])
+
+            # Avoid crash if there's no bank moves to consider
+            if not bank_move_ids:
+                return '''
+                WITH account_move_line AS (
+                    SELECT ''' + select_clause_1 + '''
+                    FROM account_move_line
+                    WHERE False)''', []
 
             # Fake domain to always get the join to the account_move_line__move_id table.
             fake_domain = [('move_id.id', '!=', None)]
