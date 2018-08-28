@@ -14,6 +14,7 @@ class SpsCustomerRequest(models.Model):
     customer_id = fields.Many2one('res.partner', string='Customer', required=True)
     document_id = fields.Many2one('sps.cust.uploaded.documents', string='Document', required=True)
     product_id = fields.Many2one('product.product', string='Product', required=False, default=0)
+    process_ids = fields.One2many('prioritization.engine.model', 'sps_customer_request', required=False)
 
     customer_sku = fields.Char()
     sps_sku = fields.Char()
@@ -32,10 +33,11 @@ class SpsCustomerRequest(models.Model):
     def get_customer_requests(self):
         sps_customer_requests = self.env['sps.customer.requests'].search(
             [('status', 'in', ('Inprocess', 'Incomplete', 'Partial', 'Unprocessed', 'InCoolingPeriod', 'New'))])
-        sps_customer_requests.process_request()
+        self.process_requests(sps_customer_requests)
 
     def process_requests(self, sps_customer_requests):
         pr_models = []
+        _logger.info('len customer req %r ', str(len(sps_customer_requests)))
         for sps_customer_request in sps_customer_requests:
             _setting_object = self._get_settings_object(sps_customer_request['customer_id'].id,
                                                         sps_customer_request['product_id'].id)
