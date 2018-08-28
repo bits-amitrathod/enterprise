@@ -46,21 +46,26 @@ class SaleSalespersonReport(models.TransientModel):
             filtered_by_date = list(
                 filter(lambda x: x.date_order >= self.start_date and x.date_order <= self.end_date, filtered_order))
             groupby_dict[user.name] = filtered_by_date
-
-        final_dict = {}
+        final_list = []
         for user in groupby_dict.keys():
             temp = []
+            list1 = []
             for order in groupby_dict[user]:
                 temp_2 = []
                 temp_2.append(order.name)
                 temp_2.append(fields.Datetime.from_string(str(order.date_order)).date().strftime('%m/%d/%Y'))
                 temp_2.append(float_repr(order.amount_total,precision_digits=2))
                 temp.append(temp_2)
-            final_dict[user] = sorted(temp, key=lambda x: x[0],reverse=False)
+            list1.append(user)
+            list1.append(sorted(temp, key=lambda x: x[0], reverse=False))
+            final_list.append(list1)
+        final_list.sort(key=lambda x: x[0])
+        print(final_list)
+
         datas = {
             'ids': self,
             'model': 'sale.salesperson.report',
-            'form': final_dict,
+            'form': final_list,
             'start_date': fields.Datetime.from_string(str(self.start_date)).date().strftime('%m/%d/%Y'),
             'end_date': fields.Datetime.from_string(str(self.end_date)).date().strftime('%m/%d/%Y'),
         }

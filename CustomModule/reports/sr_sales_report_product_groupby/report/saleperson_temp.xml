@@ -21,11 +21,11 @@
                     </center>
                     </div>
                     <br/>
-                    <t t-foreach="data.keys()" t-as="user">
+                    <t t-foreach="data" t-as="user">
                         <center>
                             <b>
                                 <span>Product :</span>
-                                <span t-esc="user"/>
+                                <span t-esc="user[0]"/>
                             </b>
                         </center>
                         <t t-set="total_sum" t-value="0"/>
@@ -38,7 +38,7 @@
                                     <th style="border: 1px solid black;text-align: center;">Price</th>
 
                                 </tr>
-                                <tr t-foreach="data[user]" t-as="order">
+                                <tr t-foreach="user[1]" t-as="order">
                                     <td style="border: 1px solid black;">
                                         <span t-esc="order[0]"/>
                                     </td>
