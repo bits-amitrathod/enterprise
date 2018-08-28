@@ -21,7 +21,7 @@
     # any module necessary for this one to work correctly
 
     'depends': ['base',
-                'website_sale',
+                'website_cstm',
                 'website_mail',
                 'rating'],
 
@@ -34,7 +34,7 @@
 
     # only loaded in demonstration mode
     'demo': [],
-    'application': True,
+    # 'application': True,
     'auto-install': True,
     'installable': True,
 }

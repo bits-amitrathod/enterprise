@@ -10,14 +10,15 @@ from odoo.addons.website_sale.controllers.main import TableCompute, QueryURL
 PPG = 20
 PPR = 4
 
-
+#
+# '/shop', '/shop/page/<int:page>',
+#                  '/shop/category/<model("product.public.category"):category>',
+#                  '/shop/category/<model("product.public.category"):category>\
+#
 class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
-    @http.route(['/shop', '/shop/page/<int:page>',
-                 '/shop/category/<model("product.public.category"):category>',
-                 '/shop/category/<model("product.public.category"):category>\
-                 /page/<int:page>', '/shop/brands'], type='http',
-                auth='public', website=True,csrf=False)
-    def shop(self, page=0, category=None, search='', brand=None, **post):
+    @http.route(['/page/<int:page>', '/shop/brands'], type='http',
+                auth='public', website=True)
+    def shopBrand(self, page=0, category=None, search='', brand=None, **post):
         values = {}
         domain = request.website.sale_product_domain()
         if search:
@@ -59,6 +60,7 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
                 pricelist_context['pricelist'])
 
         product_obj = request.env['product.template']
+
         # Brand's product search
         if brand:
             values.update({'brand': brand})
@@ -69,7 +71,6 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
         product_count = product_obj.search_count(domain)
         if search:
             post['search'] = search
-            print(search);
         if category:
             category = request.env['product.public.category'].\
                 browse(int(category))
@@ -80,7 +81,6 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
         products = product_obj.\
             search(domain, limit=PPG, offset=pager['offset'],
                    order='website_published desc, website_sequence desc')
-        print(products)
         style_obj = request.env['product.style']
         styles = style_obj.search([])
         category_obj = request.env['product.public.category']
@@ -115,6 +115,24 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
                                s.id for s in product.website_style_ids],
                        'attrib_encode': lambda attribs: werkzeug.url_encode
                        ([('attrib', i) for i in attribs])})
+
+
+
+
+        productMaxMinDates = {}
+        productProduct = request.env['product.product'].search([('product_tmpl_id', 'in', products.ids)])
+        for val in productProduct:
+            val.env.cr.execute(
+                "SELECT min(use_date), max (use_date) FROM public.stock_production_lot where product_id = %s",
+                (val.id,))
+            query_result = val.env.cr.dictfetchone()
+            productMaxMinDates[val.product_tmpl_id.id] = {"min": fields.Datetime.from_string(query_result['min']),
+                                                          "max": fields.Datetime.from_string(query_result['max'])}
+
+        values['productExpiration'] = productMaxMinDates;
+        values['isVisibleWebsiteExpirationDate'] = request.env['ir.config_parameter'].sudo().get_param(
+            'website_sales.default_website_expiration_date')
+
         return request.render('website_sale.products', values)
 
     def currency_compute(self, from_currency, to_currency):

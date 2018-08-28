@@ -21,6 +21,7 @@
 
 from odoo import api, fields, models
 from odoo.tools import float_repr
+from numpy.core.defchararray import upper
 
 
 class SaleSalespersonReport(models.TransientModel):
@@ -30,6 +31,12 @@ class SaleSalespersonReport(models.TransientModel):
     end_date = fields.Date(string="End Date", required=True)
     user_ids = fields.Many2many('res.users', string="Salesperson")
 
+    @api.model
+    def check(self, data):
+        if data:
+            return upper(data)
+        else:
+            return " "
     @api.multi
     def print_salesperson_vise_report(self):
         sale_orders = self.env['sale.order'].search([('state', '=', 'sale')])
@@ -49,7 +56,7 @@ class SaleSalespersonReport(models.TransientModel):
                 temp_2.append(fields.Datetime.from_string(str(order.date_order)).date().strftime('%m/%d/%Y'))
                 temp_2.append(float_repr(order.amount_total,precision_digits=2))
                 temp.append(temp_2)
-            final_dict[user] = temp
+            final_dict[user] = sorted(temp, key=lambda x: x[0],reverse=False)
         datas = {
             'ids': self,
             'model': 'sale.salesperson.report',

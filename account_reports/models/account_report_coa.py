@@ -44,7 +44,7 @@ class report_account_coa(models.AbstractModel):
 
     def _get_super_columns(self, options):
         date_cols = options.get('date') and [options['date']] or []
-        date_cols += options.get('comparison', {}).get('periods', [])
+        date_cols += (options.get('comparison') or {}).get('periods', [])
 
         columns = [{'string': _('Initial Balance')}]
         columns += reversed(date_cols)

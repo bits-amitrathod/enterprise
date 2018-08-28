@@ -22,11 +22,11 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['website_sales'],
+    'depends': ['website_sales','website_product_brand'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'data/website_data.xml',
         'views/views.xml',
         'views/templates.xml',
@@ -37,8 +37,8 @@
         'views/about.xml',
         'views/ecommerce.xml',
         'views/quality_assurance.xml',
-        'views/vendors.xml',
-        'views/product-types.xml'
+        'views/product-types.xml',
+        'views/login.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

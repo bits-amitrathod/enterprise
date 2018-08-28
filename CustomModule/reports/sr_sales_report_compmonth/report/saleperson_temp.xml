@@ -15,7 +15,7 @@
                     </div>
                     <br/>
                     <div class="table-responsive">
-                    <table class="table table-condensed" style="border: 0px solid black;">
+                    <table class="table table-condensed" style="border: 1px solid black;">
                             <thead>
                                 <tr style="border: 0px;">
                                     <th style="border: 0px;"></th>
@@ -31,12 +31,8 @@
                                     <th style="border: 1px solid black;text-align: center;">Last Month Price</th>
                                     <th style="border: 1px solid black;text-align: center;">Current Month Qty</th>
                                     <th style="border: 1px solid black;text-align: center;">Current Month Price</th>
-
                                 </tr>
-
-                                <t t-foreach="data.keys()" t-as="user">
-
-                                    <tr t-foreach="data[user]" t-as="order">
+                                    <tr t-foreach="data" t-as="order">
                                         <td style="border: 1px solid black;">
                                             <span t-esc="order[5]"/>
                                         </td>
@@ -56,9 +52,7 @@
                                         <td align="right" style="border: 1px solid black;">
                                             $ <span t-esc="order[2]"/>
                                         </td>
-
                                     </tr>
-                                </t>
                             </thead>
                     </table>
                     </div>

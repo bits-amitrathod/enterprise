@@ -3,6 +3,7 @@
 
 from odoo import models, fields, api
 from odoo.tools.translate import _
+from odoo.tools.mail import html2plaintext
 import time
 import math
 
@@ -40,7 +41,7 @@ class account_report_followup(models.AbstractModel):
             try:
                 summary = summary % {'partner_name': partner.name,
                                                'date': time.strftime('%Y-%m-%d'),
-                                               'user_signature': self.env.user.signature or '',
+                                               'user_signature': html2plaintext(self.env.user.signature or ''),
                                                'company_name': self.env.user.company_id.name}
             except ValueError as e:
                 message = "An error has occurred while formatting your followup letter/email. (Lang: %s, Followup Level: #%s) \n\nFull error description: %s" \

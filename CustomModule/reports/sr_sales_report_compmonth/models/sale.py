@@ -26,7 +26,7 @@ import logging
 import operator
 
 from odoo.fields import Field
-
+from numpy.core.defchararray import upper
 log = logging.getLogger(__name__)
 
 class comparebymonth():
@@ -80,6 +80,12 @@ class comparebymonth():
 class SaleSalespersonReport(models.TransientModel):
     _name = 'sale.compbymonth.report'
 
+    @api.model
+    def check(self, data):
+        if data:
+            return upper(data)
+        else:
+            return " "
     @api.multi
     def print_compbymonth_vise_report(self):
         sale_orders = self.env['sale.order'].search([])
@@ -94,9 +100,8 @@ class SaleSalespersonReport(models.TransientModel):
         filtered_by_last_month = list(filter(lambda x: fields.Datetime.from_string(x.date_order).date() >= ps_date and fields.Datetime.from_string(x.date_order).date() <= pl_date ,sale_orders))
         dat = comparebymonth().addObject(filtered_by_current_month,filtered_by_last_month)
         groupby_dict['data'] = dat
-        final_dict = {}
+        final_list = []
         for user in dat.keys():
-            temp = []
             order= dat[user]
             temp_2 = []
             temp_2.append(order.product_name)
@@ -105,13 +110,13 @@ class SaleSalespersonReport(models.TransientModel):
             temp_2.append(int(order.last_month_total_qty))
             temp_2.append(float_repr(order.last_month_total_amount,precision_digits=2))
             temp_2.append(order.sku)
-            temp.append(temp_2)
-            final_dict[user] = temp
+            final_list.append(temp_2)
+        final_list.sort(key=lambda x: self.check(str(x[5])))
 
         datas = {
             'ids': self.ids,
             'model': self._module,
-            'form': final_dict,
+            'form': final_list,
             'current_start_date':fields.Datetime.from_string(str(s_date)).date().strftime('%m/%d/%Y'),
             'current_end_date': fields.Datetime.from_string(str(l_date)).date().strftime('%m/%d/%Y'),
             'last_start_date':fields.Datetime.from_string(str(ps_date)).date().strftime('%m/%d/%Y'),
