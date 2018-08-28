@@ -24,6 +24,35 @@ from odoo.tools import float_repr
 import datetime
 import logging
 
+class salebymonth():
+    product_name = ''
+    current_month_total_qty = 0
+    current_month_total_amount = 0
+    last_month_total_qty = 0
+    last_month_total_amount = 0
+    sku=''
+
+    @api.multi
+    def addObject(self, filtered_by_current_month):
+        dict = {}
+        for record in filtered_by_current_month:
+            for r1 in record.order_line:
+                if r1.product_id.id in dict:
+                    # log.info(" current_month Key available in dictionary")
+                    data = dict[r1.product_id.id]
+                    data.current_month_total_qty = data.current_month_total_qty + r1.product_uom_qty
+                    data.current_month_total_amount = data.current_month_total_amount + r1.price_subtotal
+                    dict[r1.product_id.id] = data
+                else:
+                    # log.info(" current_month not Key available in dictionary")
+                    object = salebymonth()
+                    object.current_month_total_qty = r1.product_uom_qty
+                    object.current_month_total_amount = r1.price_subtotal
+                    object.product_name = r1.product_id.name
+                    object.sku = r1.product_id.product_tmpl_id.sku_code
+                    dict[r1.product_id.id] = object
+
+        return dict
 
 class SaleSalespersonReport(models.TransientModel):
     _name = 'sale.productbymonth.report'
