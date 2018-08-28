@@ -467,7 +467,7 @@ var SalaryPackageWidget = Widget.extend({
         var dotpos = email.lastIndexOf(".");
         var invalid_email = atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length;
         if(required_empty_input || required_empty_select) {
-            $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade in'>" + _('Some required fields are not filled') + "</div>");
+            $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade show'>" + _('Some required fields are not filled') + "</div>");
             _.each($("input:required"), function(input) {
                 if (input.value === '') {
                     $(input).addClass('bg-danger');
@@ -486,7 +486,7 @@ var SalaryPackageWidget = Widget.extend({
         }
         if (invalid_email) {
             $("input[name='email']").addClass('bg-danger');
-            $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade in'>" + _('Not a valid e-mail address') + "</div>");
+            $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade show'>" + _('Not a valid e-mail address') + "</div>");
             $("section#hr_cs_personal_information")[0].scrollIntoView({block: "end", behavior: "smooth"});
         } else {
             $("input[name='email']").removeClass('bg-danger');
@@ -530,7 +530,7 @@ var SalaryPackageWidget = Widget.extend({
                 this.get_form_info()
             ).then(function (data) {
                 if (data['error']) {
-                    $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade in'>" + data['error_msg'] + "</div>");
+                    $("button#hr_cs_submit").parent().append("<div class='alert alert-danger alert-dismissable fade show'>" + data['error_msg'] + "</div>");
                 } else {
                     document.location.pathname = '/sign/document/' + data['request_id'] + '/' + data['token'];
                 }
