@@ -20,6 +20,11 @@ class IrAttachment(models.Model):
     folder_id = fields.Many2one('documents.folder', ondelete="restrict", track_visibility="onchange")
     lock_uid = fields.Many2one('res.users', string="Locked by")
 
+    @api.onchange('url')
+    def _on_url_change(self):
+        if self.url:
+            self.name = self.url[self.url.rfind('/')+1:]
+
     @api.multi
     def _compute_available_rules(self, folder_id=None):
         """
@@ -138,8 +143,9 @@ class IrAttachment(models.Model):
                 vals.update(thumbnail=thumbnail)
         return super(IrAttachment, self).write(vals)
 
-    @api.model
-    def create_multi(self, attachments):
-        # TODO remove
-        # AL: to remove and swap to the new built in multi create (added by metastorm in v12).
-        return [self.create(attachment) for attachment in attachments]
+    @api.multi
+    def refresh_write(self):
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }

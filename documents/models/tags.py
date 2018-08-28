@@ -11,7 +11,6 @@ class TagsCategories(models.Model):
     name = fields.Char(required=True)
     tag_ids = fields.One2many('documents.tag', 'facet_id')
     tooltip = fields.Char(help="hover text description", string="Tooltip")
-    color = fields.Integer(string='color index', default=2)
     sequence = fields.Integer('Sequence', default=10)
 
     _sql_constraints = [
@@ -26,8 +25,14 @@ class Tags(models.Model):
     folder_id = fields.Many2one('documents.folder', related='facet_id.folder_id', store=True)
     facet_id = fields.Many2one('documents.facet', ondelete='cascade', required=True)
     name = fields.Char(required=True)
-    color = fields.Integer(default=2, related='facet_id.color')
     sequence = fields.Integer('Sequence', default=10)
+
+    @api.multi
+    def name_get(self):
+        name_array = []
+        for record in self:
+            name_array.append((record.id, "%s > %s" % (record.facet_id.name, record.name)))
+        return name_array
 
     _sql_constraints = [
         ('facet_name_unique', 'unique (facet_id, name)', "Tag already exists for this facet"),
@@ -47,7 +52,6 @@ class Tags(models.Model):
         query = """
             SELECT  facet.id AS facet_id,
                     facet.name AS facet_name,
-                    facet.color AS facet_color,
                     facet.sequence AS facet_sequence,
                     documents_tag.id AS tag_id,
                     documents_tag.name AS tag_name,
@@ -58,7 +62,7 @@ class Tags(models.Model):
                 LEFT JOIN document_tag_rel rel ON documents_tag.id = rel.documents_tag_id
                     AND rel.ir_attachment_id IN (SELECT id from ir_attachment WHERE %s)
             GROUP BY facet.id, facet.name, documents_tag.id, documents_tag.name, documents_tag.sequence, facet.sequence
-            ORDER BY facet.sequence, documents_tag.sequence
+            ORDER BY facet.sequence, facet.name, documents_tag.sequence, documents_tag.name
         """ % (folder_query, domain_query)
         self.env.cr.execute(query, folder_params + domain_params)
         return self.env.cr.dictfetchall()
