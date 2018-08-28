@@ -63,7 +63,7 @@
                                              </div>
 
                                             <!-- Company Car -->
-                                            <div class="mobility-options" id="company_car">
+                                            <div class="mobility-options row" id="company_car">
                                                 <div class="col-md-7 offset-md-3">
                                                     <t t-set='max_unused_cars' t-value="contract.max_unused_cars"/>
                                                     <select name="select_car" class="form-control form-control-primary mt16 mb8 advantage_input">
@@ -119,7 +119,7 @@
                                                 </label>
                                             </div>
 
-                                            <div class="mobility-options" id="public_transport">
+                                            <div class="mobility-options row" id="public_transport">
                                                 <div class="col-md-7 offset-md-3">
                                                     <input class="form-control form-control-primary mt16 mb8 advantage_input" type="number" t-att-value="contract.public_transport_employee_amount or '0'" name="public_transport_employee_amount"/>
                                                     <span class="form-text mt8">Enter the monthly amount you spend on public transportation to go to work. The approximative amount reimbursed by the employer is calculated accordingly.</span>
@@ -143,7 +143,7 @@
                                                 </label>
                                             </div>
 
-                                            <div class="mobility-options" id="others">
+                                            <div class="mobility-options row" id="others">
                                                 <div class="col-md-7 offset-md-3">
                                                     <input class="form-control form-control-primary mt16 mb8 advantage_input" type="number" t-att-value="contract.others_reimbursed_amount or '0'" name="others_employee_amount"/>
                                                     <span class="form-text mt8">Enter the monthly amount that should be reimbursed by your employer on transportation (other than public) to go to work.</span>
