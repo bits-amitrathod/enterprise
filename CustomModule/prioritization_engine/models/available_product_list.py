@@ -1,12 +1,11 @@
 from odoo import models, fields, api
 import logging
-from dateutil.relativedelta import relativedelta
-from datetime import datetime
 from operator import attrgetter
 
 _logger = logging.getLogger(__name__)
 
 available_production_lot_list_to_be_returned = []
+
 
 class AvailableProductList(models.Model):
     _name = "available.product.list"

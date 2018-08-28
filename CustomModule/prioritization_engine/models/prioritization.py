@@ -109,8 +109,8 @@ class Prioritization(models.Model):
     partial_ordering = fields.Boolean("Allow Partial Ordering?",readonly=False)
     partial_UOM = fields.Boolean("Allow Partial UOM?",readonly=False)
     length_of_holding = fields.Integer("Length Of Holding",readonly=False)
-    customer_id = fields.Many2one('res.partner', string='GlobalPrioritization',required=True)
-    product_id = fields.Many2one('product.product', string='Product',required=True)
+    customer_id = fields.Many2one('res.partner', string='GlobalPrioritization',required=True, ondelete="cascade")
+    product_id = fields.Many2one('product.product', string='Product',required=True, ondelete="cascade")
     sales_channel = fields.Selection([('1','Manual'),('2','Prioritization Engine')], String="Sales Channel",readonly=False)# get team id = sales channel like 3 = Manual, 4 = Prioritization Engine
 
     _sql_constraints = [

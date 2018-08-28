@@ -2,9 +2,9 @@ from odoo import models, fields, api
 import logging
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
-from operator import attrgetter
 
 _logger = logging.getLogger(__name__)
+allocated_product_list = []
 
 
 class PrioritizationEngineModel(models.Model):
@@ -34,23 +34,25 @@ class PrioritizationEngineModel(models.Model):
                         if self.calculate_length_of_holds_in_hours(prioritization_engine_model.sps_customer_request):
                             _logger.info('successed length of hold')
                             # allocate product
-                            product_allocation_flag = self.allocate_product(prioritization_engine_model.sps_customer_request, product_lot_list)
-                            if product_allocation_flag is False:
-                                # check partial order flag is True or False
-                                if self.partial_order:
-                                    _logger.info('Partial ordering flag is True')
-                                    self.allocate_partial_order_product(prioritization_engine_model.sps_customer_request, product_lot_list)
-                                else:
-                                    _logger.info('Partial ordering flag is False')
-
+                            if self.allocate_product(prioritization_engine_model.sps_customer_request, product_lot_list):
+                                _logger.info('product allocated....')
+                            # check partial order flag is True or False
+                            elif self.partial_order:
+                                _logger.info('Partial ordering flag is True')
+                                self.allocate_partial_order_product(prioritization_engine_model.sps_customer_request, product_lot_list)
+                            else:
+                                _logger.info('Partial ordering flag is False')
+                        else:
+                            _logger.info('In length of hold false....')
                     else:
-                        _logger.info('In cooling period.....')
+                        _logger.info('In cooling period false.....')
                 else:
                     _logger.info('Product Lot not available....')
             else:
                 _logger.info('Auto allocate is false....')
 
         self.env['available.product.list'].update_production_lot_list()
+        self.env['allocated.product.list'].display_allocated_product_list(allocated_product_list)
 
     # get available production lot list, parameter product id.
     def get_available_product_lot_list(self, sps_customer_request):
@@ -127,50 +129,64 @@ class PrioritizationEngineModel(models.Model):
 
                 _logger.info('Quantity Updated')
 
-                product_allocation_flag = True
+                allocated_product = self.env['allocated.product.list'].add_allocated_products(sps_customer_request.customer_id, sps_customer_request.product_id, sps_customer_request.required_quantity)
+                allocated_product_list.append(allocated_product)
+
                 self.env['sps.customer.requests'].search([('id', '=', sps_customer_request.id)]).write(
                     dict(status='Completed'))
+
+                product_allocation_flag = True
                 break
         return product_allocation_flag
 
 
     # Allocate partial order product
     def allocate_partial_order_product(self, sps_customer_request, product_lot_list):
-        required_product_quantity = sps_customer_request.required_quantity
+        remaining_product_allocation_quantity = sps_customer_request.required_quantity
         for product_lot in product_lot_list:
-            if required_product_quantity >= product_lot.available_quantity:
-                _logger.info('product allocated from lot %r %r %r', product_lot.lot_id, product_lot.available_quantity,
-                                required_product_quantity)
-                required_product_quantity = int(required_product_quantity) - int(product_lot.available_quantity)
+            if remaining_product_allocation_quantity >= product_lot.available_quantity:
+                _logger.info('product allocated from lot %r %r %r', product_lot.lot_id)
+
+                remaining_product_allocation_quantity = int(remaining_product_allocation_quantity) - int(product_lot.available_quantity)
 
                 product_lot.reserved_quantity = int(product_lot.reserved_quantity) + int(product_lot.available_quantity)
                 product_lot.available_quantity = 0
 
                 _logger.info('Quantity Updated')
             else:
-                if required_product_quantity < product_lot.available_quantity:
-                    _logger.info('product allocated from lot %r %r %r', product_lot.lot_id,
-                                     product_lot.available_quantity,
-                                     required_product_quantity)
+                if remaining_product_allocation_quantity < product_lot.available_quantity:
+                    _logger.info('product allocated from lot %r %r %r', product_lot.lot_id)
 
-                    product_lot.reserved_quantity = int(product_lot.reserved_quantity) + int(required_product_quantity)
-                    product_lot.available_quantity = int(product_lot.available_quantity) - int(required_product_quantity)
+                    product_lot.reserved_quantity = int(product_lot.reserved_quantity) + int(remaining_product_allocation_quantity)
+                    product_lot.available_quantity = int(product_lot.available_quantity) - int(remaining_product_allocation_quantity)
 
                     _logger.info('Quantity Updated')
 
-                    required_product_quantity = 0
+                    remaining_product_allocation_quantity = 0
 
-        if required_product_quantity == 0:
+        if remaining_product_allocation_quantity == 0:
             _logger.info("Allocated Partial order of product id " + str(
                     sps_customer_request.product_id.id) + ". Total required product quantity is " + str(
                     sps_customer_request.required_product_quantity))
+
+            allocated_product = self.env['allocated.product.list'].add_allocated_products(
+                sps_customer_request.customer_id, sps_customer_request.product_id,
+                sps_customer_request.required_quantity)
+            allocated_product_list.append(allocated_product)
+
             self.env['sps.customer.requests'].search([('id', '=', sps_customer_request.id)]).write(
                     dict(status='Completed'))
-        elif required_product_quantity > 0:
+        elif remaining_product_allocation_quantity > 0:
             allocated_product_quantity = int(sps_customer_request.required_quantity) - int(
-                    required_product_quantity)
+                remaining_product_allocation_quantity)
             _logger.info(str(" We have allocated only " + str(allocated_product_quantity) + " products. " + str(
-                    required_product_quantity) + " are pending."))
+                remaining_product_allocation_quantity) + " are pending."))
+
+            allocated_product = self.env['allocated.product.list'].add_allocated_products(
+                sps_customer_request.customer_id, sps_customer_request.product_id,
+                allocated_product_quantity)
+            allocated_product_list.append(allocated_product)
+
             self.env['sps.customer.requests'].search([('id', '=', sps_customer_request.id)]).write(
                     dict(status='Partial'))
 
