@@ -36,6 +36,7 @@ var SalaryPackageWidget = Widget.extend({
         "click #send_email": "send_offer_to_responsible",
         "change select[name='spouse_professional_situation']": "onchange_spouse_professional_situation",
         "change input[name='waiting_list']": "onchange_waiting_list",
+        "change input.bg-danger": "check_form_validity",
     },
 
     init: function(parent, options) {
@@ -477,9 +478,9 @@ var SalaryPackageWidget = Widget.extend({
             });
             _.each($("select:required"), function(select) {
                 if ($(select).val() === '') {
-                    $(select).parent().addClass('bg-danger');
+                    $(select).parent().find('.select2-choice').addClass('bg-danger');
                 } else {
-                    $(select).parent().removeClass('bg-danger');
+                    $(select).parent().find('.select2-choice').removeClass('bg-danger');
                 }
             });
             $("section#hr_cs_personal_information")[0].scrollIntoView({block: "end", behavior: "smooth"});
