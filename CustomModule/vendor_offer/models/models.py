@@ -13,25 +13,17 @@ class VendorOffer(models.Model):
     _description = "Vendor Offer"
     _inherit = "purchase.order"
 
-
     carrier_info = fields.Char("Carrier Info", related='partner_id.carrier_info', readonly=True)
     carrier_acc_no = fields.Char("Carrier Account No", related='partner_id.carrier_acc_no', readonly=True)
     shipping_terms = fields.Selection(string='Shipping Term', related='partner_id.shipping_terms', readonly=True)
     appraisal_no = fields.Char(string='Appraisal No#')
-
     acq_user_id = fields.Many2one('res.users',string='Acq  Manager ')
-
     date_offered = fields.Datetime(string='Date Offered', default=fields.Datetime.now)
-
-
     revision = fields.Char(string='Revision ')
     max = fields.Char(string='Max', readonly=True ,default=0)
     accepted_date = fields.Datetime(string="Accepted Date")
     declined_date = fields.Datetime(string="Declined Date")
-
     retail_amt = fields.Monetary(string="Total Retail",readonly=True,default=0 ,compute='_amount_tot_all')
-
-
     offer_amount = fields.Monetary(string="Total  Offer",readonly=True,default=0,compute='_amount_tot_all')
     date_planned = fields.Datetime(string='Scheduled Date')
     possible_competition = fields.Many2one('competition.competition', string="Possible Competition")
@@ -47,29 +39,17 @@ class VendorOffer(models.Model):
     notes_desc = fields.Text(string="Note")
 
     accelerator=fields.Boolean(string="Accelerator")
-
-    # accelerator = fields.Selection([
-    #     ('yes', 'Yes'),
-    #     ('no', 'No')
-    #     ], string='Accelerator')
     priority = fields.Selection([
         ('low', 'Low'),
         ('medium', 'Medium'),
         ('high', 'High')], string='Priority')
 
     new_customer = fields.Boolean(string="New Customer")
-
-    # new_customer = fields.Selection([
-    #     ('yes', 'Yes'),
-    #     ('no', 'No')
-    # ], string='New Customer')
-
     shipping_label_issued = fields.Selection([
         ('yes', 'Yes'),
         ('no', 'No')
     ], string='Shipping label Issued')
 
-    # order_line = fields.One2many('purchase.order.line', 'order_id', string='Order Lines')
     status = fields.Selection([
         ('ven_draft', 'Vendor Offer'),
         ('ven_sent', 'Vendor Offer Sent'),
@@ -168,16 +148,19 @@ class VendorOffer(models.Model):
     @api.multi
     def action_confirm_vendor_offer(self):
         self.write({'state': 'purchase'})
+        self.write({'status': 'purchase'})
         return True
 
     @api.multi
     def action_cancel_vendor_offer(self):
         self.write({'state': 'cancel'})
+        self.write({'status': 'cancel'})
 
     @api.model
     def create(self, vals):
         vals['state']= 'ven_draft'
         return super(VendorOffer, self).create(vals)
+
 
 class VendorOfferProduct(models.Model):
 
@@ -299,7 +282,6 @@ class VendorOfferProduct(models.Model):
         self.margin = multiplier_list.margin
         self.product_unit_price=math.ceil(round(float(self.price_unit) * (float(multiplier_list.retail) / 100),10))
         self.product_offer_price =math.ceil(round(float(self.product_unit_price) * (float(multiplier_list.margin) / 100 + float(possible_competition_list.margin) / 100),2))
-
 
     def expired_inventory_cal(self):
         expired_lot_count = 0
