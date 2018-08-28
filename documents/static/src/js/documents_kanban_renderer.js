@@ -15,7 +15,6 @@ var DocumentsKanbanRenderer = KanbanRenderer.extend({
         KanbanRecord: DocumentsKanbanRecord,
     }),
     custom_events: _.extend({}, KanbanRenderer.prototype.custom_events, {
-        select_record: '_onRecordSelected',
     }),
 
     /**
@@ -38,6 +37,10 @@ var DocumentsKanbanRenderer = KanbanRenderer.extend({
     // Public
     //--------------------------------------------------------------------------
 
+    setSelectedRecordIDs: function (selectedRecordIDs) {
+        this.selectedRecordIDs = selectedRecordIDs;
+    },
+
     /**
      * @override
      */
@@ -58,81 +61,16 @@ var DocumentsKanbanRenderer = KanbanRenderer.extend({
      */
     _updateSelection: function () {
         var self = this;
-        var hasSelection = false;
         _.each(this.widgets, function (widget) {
             var selected = _.contains(self.selectedRecordIDs, widget.getResID());
             widget.updateSelection(selected);
-            hasSelection = hasSelection || selected;
         });
-        this.$el.toggleClass('o_documents_kanban_view_has_selection', hasSelection);
     },
 
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
 
-    /**
-     * React to records selection changes to update the DocumentInspector with
-     * the current selected records.
-     *
-     * @private
-     * @param {OdooEvent} ev
-     * @param {boolean} ev.data.clear if true, unselect other records
-     * @param {MouseEvent} ev.data.originalEvent the event catched by the child
-     *   element triggering up the OdooEvent
-     * @param {string} ev.data.resID the resID of the record updating its status
-     * @param {boolean} ev.data.selected whether the record is selected or not
-     */
-    _onRecordSelected: function (ev) {
-        ev.stopPropagation();
-
-        // update the list of selected records (support typical behavior of
-        // ctrl/shift/command muti-selection)
-        var shift = ev.data.originalEvent.shiftKey;
-        var ctrl = ev.data.originalEvent.ctrlKey || ev.data.originalEvent.metaKey;
-        if (ev.data.clear || shift || ctrl) {
-            if (this.selectedRecordIDs.length === 1 && this.selectedRecordIDs[0] === ev.data.resID) {
-                // unselect the record if it is currently the only selected one
-                this.selectedRecordIDs = [];
-            } else if (shift && this.selectedRecordIDs.length) {
-                var recordIDs = this.state.res_ids;
-                var anchorIndex = recordIDs.indexOf(this.anchorID);
-                var selectedRecordIndex = recordIDs.indexOf(ev.data.resID);
-                var lowerIndex = Math.min(anchorIndex, selectedRecordIndex);
-                var upperIndex = Math.max(anchorIndex, selectedRecordIndex);
-                var shiftSelection = recordIDs.slice(lowerIndex, upperIndex + 1);
-                if (ctrl) {
-                    this.selectedRecordIDs = _.uniq(this.selectedRecordIDs.concat(shiftSelection));
-                } else {
-                    this.selectedRecordIDs = shiftSelection;
-                }
-            } else if (ctrl && this.selectedRecordIDs.length) {
-                var oldIds = this.selectedRecordIDs.slice();
-                this.selectedRecordIDs = _.without(this.selectedRecordIDs, ev.data.resID);
-                if (this.selectedRecordIDs.length === oldIds.length) {
-                    this.selectedRecordIDs.push(ev.data.resID);
-                    this.anchorID = ev.data.resID;
-                }
-            } else {
-                this.selectedRecordIDs = [ev.data.resID];
-                this.anchorID = ev.data.resID;
-            }
-        } else if (ev.data.selected) {
-            this.selectedRecordIDs.push(ev.data.resID);
-            this.selectedRecordIDs = _.uniq(this.selectedRecordIDs);
-            this.anchorID = ev.data.resID;
-        } else {
-            this.selectedRecordIDs = _.without(this.selectedRecordIDs, ev.data.resID);
-        }
-
-        // notify the controller of the selection changes
-        this.trigger_up('selection_changed', {
-            selection: this.selectedRecordIDs,
-        });
-
-        // update the kanban records
-        this._updateSelection();
-    },
 });
 
 return DocumentsKanbanRenderer;
