@@ -55,9 +55,9 @@ class SaleSalespersonReport(models.TransientModel):
             temp = []
             for order in groupby_dict[user]:
                 temp_2 = []
-                temp_2.append(order.product_tmpl_id.type)
+                temp_2.append(ACTIONS[order.product_tmpl_id.type])
                 temp_2.append(order.product_tmpl_id.product_brand_id.name)
-                temp_2.append(order.id)
+                temp_2.append(order.product_tmpl_id.sku_code)
                 temp_2.append(order.product_tmpl_id.name)
                 order.env.cr.execute(
                     "SELECT sum(quantity) as qut FROM public.stock_quant where company_id != 0.0 and  product_id = " + str(

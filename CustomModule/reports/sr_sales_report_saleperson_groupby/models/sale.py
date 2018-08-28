@@ -59,7 +59,7 @@ class SaleSalespersonReport(models.TransientModel):
             list1.append(user)
             list1.append(sorted(temp, key=lambda x: x[0], reverse=False))
             final_list.append(list1)
-        final_list.sort(key=lambda x: x[0])
+        final_list.sort(key=lambda x: self.check(x[0]))
         print(final_list)
 
         datas = {
