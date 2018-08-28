@@ -370,6 +370,9 @@ var ReportEditor = Widget.extend(EditorMixin, {
                     $nodes.first().click();
                 } else {
                     self.selectedNode = null;
+                    self.trigger_up('sidebar_tab_changed', {
+                        mode: 'new',
+                    })
                 }
             }
         });

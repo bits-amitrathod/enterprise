@@ -481,6 +481,65 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
+    QUnit.test('remove components - when no node is available to select, the add tab is activated', function (assert) {
+        var self = this;
+        var done = assert.async();
+        assert.expect(1);
+
+        this.templates.push({
+            key: 'template1',
+            view_id: 55,
+            arch:
+                '<kikou>' +
+                    '<t t-name="template1">' +
+                        '<div class="row">' +
+                            '<div class="col-12">' +
+                                '<span>First span</span>' +
+                            '</div>' +
+                        '</div>' +
+                    '</t>' +
+                '</kikou>',
+        });
+
+        var rem = studioTestUtils.createReportEditorManager({
+            env: {
+                modelName: 'kikou',
+                ids: [42, 43],
+                currentId: 42,
+            },
+            report: { },
+            reportHTML: studioTestUtils.getReportHTML(this.templates),
+            reportViews: studioTestUtils.getReportViews(this.templates),
+            reportMainViewID: 42,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_report_view') {
+                    self.templates[1].arch = '<kikou>' +
+                        '<t t-name="template1">' +
+                        '</t>' +
+                    '</kikou>';
+                    return $.when({
+                        report_html: studioTestUtils.getReportHTML(self.templates),
+                        views: studioTestUtils.getReportViews(self.templates),
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        rem.editorIframeDef.then(function () {
+            // click to edit a span
+            rem.$('iframe').contents().find('span:contains(First)').click();
+
+            // remove the span from the dom
+            rem.$('.o_web_studio_active .o_web_studio_remove').click();
+            $('.modal-content .btn-primary').click(); // confirm the deletion
+            assert.strictEqual(rem.$('.o_web_studio_sidebar_header .active').attr('name'), 'new',
+                "after the remove, 'Add' tab should be active");
+
+            rem.destroy();
+            done();
+        });
+    });
     QUnit.test('display hooks when D&D component', function (assert) {
         var done = assert.async();
         assert.expect(4);
