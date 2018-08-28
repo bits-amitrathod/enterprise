@@ -18,12 +18,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
+import collections
+
 from builtins import reversed
 
 from odoo import api, fields, models
 from odoo.tools import float_repr
 import datetime
 from numpy.core.defchararray import upper
+import collections
+
 
 
 class SaleSalespersonReport(models.TransientModel):
@@ -42,13 +46,14 @@ class SaleSalespersonReport(models.TransientModel):
     @api.multi
     def print_salesperson_vise_report(self):
         sale_orders = self.env['sale.order'].search([('state', '=', 'sale')])
-        groupby_dict = {}
-        final_dict = {}
+        groupby_dict = collections.OrderedDict()
+        final_list = []
         for p_id in self.product_id:
             # filtered_order = list(filter(lambda x: x.product_id == user, sale_orders))
             filtered_by_date = list(filter(lambda x: x.date_order >= self.start_date and x.date_order <= self.end_date, sale_orders))
             # groupby_dict[user.name] = filtered_by_date
             temp = []
+            list1 = []
             for sale_order in filtered_by_date:
                 for sale_order_line in sale_order.order_line:
                     if p_id == sale_order_line.product_id :
@@ -57,12 +62,17 @@ class SaleSalespersonReport(models.TransientModel):
                         temp_2.append(datetime.datetime.strptime(sale_order.date_order, "%Y-%m-%d %H:%M:%S").date().strftime('%m/%d/%Y'))
                         temp_2.append(float_repr(sale_order_line.price_subtotal,precision_digits=2))
                         temp.append(temp_2)
-            final_dict[p_id.name] =sorted(temp, key=lambda x: x[0],reverse=False)
+
+            list1.append(p_id.name)
+            list1.append(sorted(temp, key=lambda x: x[0],reverse=False))
+            final_list.append(list1)
+
+        final_list.sort(key = lambda x: x[0])
 
         datas = {
             'ids': self,
-            'model': 'sale.product.report',
-            'form': final_dict,
+            'model': 'sale.product.reprt',
+            'form': final_list,
             'start_date': fields.Datetime.from_string(str(self.start_date)).date().strftime('%m/%d/%Y'),
             'end_date': fields.Datetime.from_string(str(self.end_date)).date().strftime('%m/%d/%Y'),
 
