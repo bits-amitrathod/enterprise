@@ -308,7 +308,7 @@
             <field name="name">Requests for vendor Offer</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">purchase.order</field>
-            <field name="domain">[('state','in',('ven_draft','ven_sent','purchase'))]</field>
+            <field name="domain">[('state','in',('ven_draft','ven_sent'))]</field>
             <field name="view_mode">form,tree</field>
              <field name="view_ids" eval="[(5, 0, 0),
         (0, 0, {'view_mode': 'tree', 'view_id': ref('vendor_offer.list')},),
