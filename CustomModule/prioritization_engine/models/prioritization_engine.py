@@ -6,6 +6,7 @@ from operator import attrgetter
 
 _logger = logging.getLogger(__name__)
 
+
 class PrioritizationEngineModel(models.Model):
     _name = "prioritization.engine.model"
 
@@ -21,52 +22,48 @@ class PrioritizationEngineModel(models.Model):
     def allocate_product_by_priority(self, pr_models):
         _logger.info('In product_allocation_by_priority')
         for prioritization_engine_model in pr_models:
-            # 1) Auto Allocate True/False
-            # customer_product.auto_allocate==true
-
+            # auto allocate True/False
             if self.auto_allocate:
-                # 2) get available production lot list.
-                production_lot_list = self.get_available_production_lot_list(
-                    prioritization_engine_model.sps_customer_request)
-                _logger.info('In ++++++++++++++++%r', production_lot_list)
-                if len(production_lot_list) >= 1:
-                    # 3) check cooling period- method return True/False
+                # get available production lot list.
+                product_lot_list = self.get_available_product_lot_list(prioritization_engine_model.sps_customer_request)
+                if len(product_lot_list) >= 1:
+                    # check cooling period- method return True/False
                     if self.calculate_cooling_priod_in_days(prioritization_engine_model.sps_customer_request):
                         _logger.info('successed cooling period')
+                        # check length of holds- method return True/False
                         if self.calculate_length_of_holds_in_hours(prioritization_engine_model.sps_customer_request):
                             _logger.info('successed length of hold')
                             # allocate product
-                            product_allocation_flag = self.allocate_product(
-                                prioritization_engine_model.sps_customer_request, production_lot_list)
+                            product_allocation_flag = self.allocate_product(prioritization_engine_model.sps_customer_request, product_lot_list)
                             if product_allocation_flag is False:
                                 # check partial order flag is True or False
-                                if prioritization_engine_model.partial_ordering is True:
+                                if self.partial_order:
                                     _logger.info('Partial ordering flag is True')
+                                    self.allocate_partial_order_product(prioritization_engine_model.sps_customer_request, product_lot_list)
                                 else:
                                     _logger.info('Partial ordering flag is False')
+
                     else:
                         _logger.info('In cooling period.....')
                 else:
-                    _logger.info('Quantity not available')
+                    _logger.info('Product Lot not available....')
             else:
                 _logger.info('Auto allocate is false....')
 
+        self.env['available.product.list'].update_production_lot_list()
+
     # get available production lot list, parameter product id.
-    def get_available_production_lot_list(self, sps_customer_request):
+    def get_available_product_lot_list(self, sps_customer_request):
         _logger.info('expiration_tolerance %r', self.expiration_tolerance)
-        production_lot_list = self.env['stock.quant'].search(
-            [('product_id', '=', sps_customer_request.product_id.id), ('quantity', '>', 0),
-             ('location_id.usage', '=', 'internal'), ('location_id.active', '=', 'true')])
+        production_lot_list = self.env['available.product.list'].get_available_production_lot_list()
         _logger.info('production_lot_list ^^^^^: %r', production_lot_list)
-        production_lot_list_to_be_returned = []
+        filtered_production_lot_list_to_be_returned = []
         for production_lot in production_lot_list:
-            if production_lot.lot_id and production_lot.lot_id.life_date:
-                if datetime.strptime(production_lot.lot_id.life_date,
+            if datetime.strptime(production_lot.use_date,
                                      '%Y-%m-%d %H:%M:%S') >= self.get_product_expiration_tolerance_date():
-                    production_lot_list_to_be_returned.append(production_lot)
-        # sort list by latest expiry date(life date)
-        production_lot_list_to_be_returned.sort(key=attrgetter('lot_id.life_date'))
-        return production_lot_list_to_be_returned
+                filtered_production_lot_list_to_be_returned.append(production_lot)
+        _logger.info('filtered_production_lot_list_to_be_returned %r', filtered_production_lot_list_to_be_returned)
+        return filtered_production_lot_list_to_be_returned
 
     # calculate cooling period
     def calculate_cooling_priod_in_days(self, sps_customer_request):
@@ -75,7 +72,6 @@ class PrioritizationEngineModel(models.Model):
         if not confirmation_date is None:
             # get current datetime
             current_datetime = datetime.datetime.now()
-
             # calculate datetime difference.
             duration = current_datetime - confirmation_date  # For build-in functions
             duration_in_seconds = duration.total_seconds()  # Total number of seconds between dates
@@ -113,22 +109,24 @@ class PrioritizationEngineModel(models.Model):
         else:
             return True
 
-    # get product expiration tolerance date
+    # get product expiration tolerance date, expiration tolerance in months(3/6/12)
     def get_product_expiration_tolerance_date(self):
-        # expiration tolerance in months(3/6/12)
         expiration_tolerance_date = datetime.today() + relativedelta(months=+int(self.expiration_tolerance))
         return expiration_tolerance_date
 
     # Allocate product
-    def allocate_product(self, sps_customer_request, production_lot_list):
+    def allocate_product(self, sps_customer_request, product_lot_list):
         product_allocation_flag = False
-        for production_lot in production_lot_list:
-            if production_lot.quantity >= sps_customer_request.required_quantity:
-                _logger.info('product allocated from lot %r %r %r', production_lot.lot_id, production_lot.quantity,
+        for product_lot in product_lot_list:
+            if product_lot.available_quantity >= sps_customer_request.required_quantity:
+                _logger.info('product allocated from lot %r %r %r %r', product_lot.lot_id, product_lot.available_quantity,product_lot.available_quantity,
                             sps_customer_request.required_quantity)
-                self.env['stock.quant'].search([('id', '=', production_lot.id)]).write(
-                    dict(quantity=production_lot.quantity - sps_customer_request.required_quantity))
+
+                product_lot.reserved_quantity = int(product_lot.reserved_quantity) + int(sps_customer_request.required_quantity)
+                product_lot.available_quantity = int(product_lot.available_quantity) - int(sps_customer_request.required_quantity)
+
                 _logger.info('Quantity Updated')
+
                 product_allocation_flag = True
                 self.env['sps.customer.requests'].search([('id', '=', sps_customer_request.id)]).write(
                     dict(status='Completed'))
@@ -137,24 +135,30 @@ class PrioritizationEngineModel(models.Model):
 
 
     # Allocate partial order product
-    def allocate_partial_order_product(self, sps_customer_request, production_lot_list):
+    def allocate_partial_order_product(self, sps_customer_request, product_lot_list):
         required_product_quantity = sps_customer_request.required_quantity
-        for production_lot in production_lot_list:
-            if required_product_quantity >= production_lot.quantity:
-                _logger.info('product allocated from lot %r %r %r', production_lot.lot_id, production_lot.quantity,
+        for product_lot in product_lot_list:
+            if required_product_quantity >= product_lot.available_quantity:
+                _logger.info('product allocated from lot %r %r %r', product_lot.lot_id, product_lot.available_quantity,
                                 required_product_quantity)
-                required_product_quantity = int(required_product_quantity) - int(production_lot.quantity)
-                self.env['stock.quant'].search([('id', '=', production_lot.id)]).write(dict(quantity=0))
+                required_product_quantity = int(required_product_quantity) - int(product_lot.available_quantity)
+
+                product_lot.reserved_quantity = int(product_lot.reserved_quantity) + int(product_lot.available_quantity)
+                product_lot.available_quantity = 0
+
                 _logger.info('Quantity Updated')
             else:
-                if required_product_quantity < production_lot.quantity:
-                    _logger.info('product allocated from lot %r %r %r', production_lot.lot_id,
-                                     production_lot.quantity,
+                if required_product_quantity < product_lot.available_quantity:
+                    _logger.info('product allocated from lot %r %r %r', product_lot.lot_id,
+                                     product_lot.available_quantity,
                                      required_product_quantity)
-                    self.env['stock.quant'].search([('id', '=', production_lot.id)]).write(
-                            dict(quantity=int(production_lot.quantity) - int(required_product_quantity)))
-                    required_product_quantity = 0
+
+                    product_lot.reserved_quantity = int(product_lot.reserved_quantity) + int(required_product_quantity)
+                    product_lot.available_quantity = int(product_lot.available_quantity) - int(required_product_quantity)
+
                     _logger.info('Quantity Updated')
+
+                    required_product_quantity = 0
 
         if required_product_quantity == 0:
             _logger.info("Allocated Partial order of product id " + str(

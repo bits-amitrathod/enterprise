@@ -22,7 +22,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['website_sales'],
+    'depends': ['website_sales','website_product_brand'],
 
     # always loaded
     'data': [

@@ -116,9 +116,9 @@
                 <header>
                     <button name="action_send_offer_email" string="Send Offer by Email" type="object"  class="btn-primary"/>
                     <button name="action_print_vendor_offer" string="Print Vendor Offer" type="object"  class="btn-primary"/>
-                    <button name="action_confirm_vendor_offer" states="draft ,ven_draft" string="Confirm Order" type="object"  />
-                    <button name="action_cancel_vendor_offer"  string="Cancel" type="object"  />
-                     <field name="state" widget="statusbar" statusbar_visible="ven_draft,ven_sent,purchase" readonly="1"  />
+                    <button name="action_confirm_vendor_offer" states="ven_draft" string="Confirm Order" type="object"  />
+                    <button name="action_cancel_vendor_offer"  states="ven_draft" string="Cancel" type="object"  />
+                     <field name="status" widget="statusbar" statusbar_visible="ven_draft,ven_sent,purchase" readonly="1"  />
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -174,7 +174,10 @@
                                                          <field name="product_sales_count_90"   />
                                                          <field name="product_sales_count_yrs" />
                                                          <field name="expired_inventory"   />
-                                                         <field name="price_unit"  />
+                                                         <field name="price_unit"  invisible="1" />
+                                                         <field name="product_unit_price"  />
+                                                         <field name="product_offer_price"   />
+                                                         <field name="product_retail"  />
                                                          <field name="offer_price"   />
                                                          <field name="margin"    />
                                                          <field name="multiplier"   />
@@ -201,7 +204,9 @@
                                                          <field name="product_sales_count_yrs"   />
                                                          <field name="expired_inventory"   />
                                                          <!--<field name="premium" />-->
-                                                         <field name="price_unit" String="Retail"   />
+                                                         <field name="product_unit_price"  />
+                                                         <field name="product_offer_price"   />
+                                                         <field name="product_retail" />
                                                          <field name="offer_price"   />
                                                          <field name="margin" />
                                                          <field name="multiplier"   />
@@ -286,17 +291,42 @@
 
 
     <!-- actions opening views on models -->
-    <record model="ir.actions.act_window" id="vendor_offer.action_window">
-      <field name="name">Vendor Offer</field>
-      <field name="res_model">purchase.order</field>
-      <field name="view_mode">tree,form</field>
-         <field name="domain">[('state', '=', 'ven_draft')]</field>
-         <field name="view_ids" eval="[(5, 0, 0),
+    <!--<record model="ir.actions.act_window" id="vendor_offer.action_window">-->
+      <!--<field name="name">Vendor Offer</field>-->
+      <!--<field name="res_model">purchase.order</field>-->
+      <!--<field name="view_mode">tree,form</field>-->
+         <!--&lt;!&ndash;<field name="domain">[('state', '=', 'ven_draft')]</field>&ndash;&gt;-->
+        <!--<field name="domain">[('state','in',('ven_draft','ven_sent','purchase'))]</field>-->
+         <!--<field name="view_ids" eval="[(5, 0, 0),-->
+        <!--(0, 0, {'view_mode': 'tree', 'view_id': ref('vendor_offer.list')},),-->
+        <!--(0, 0, {'view_mode': 'form', 'view_id': ref('view_vendor_offer_form')})-->
+        <!--]"/>-->
+
+    <!--</record>-->
+
+      <record id="vendor_offer.action_window" model="ir.actions.act_window">
+            <field name="name">Requests for vendor Offer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="domain">[('state','in',('ven_draft','ven_sent','purchase'))]</field>
+            <field name="view_mode">form,tree</field>
+             <field name="view_ids" eval="[(5, 0, 0),
         (0, 0, {'view_mode': 'tree', 'view_id': ref('vendor_offer.list')},),
         (0, 0, {'view_mode': 'form', 'view_id': ref('view_vendor_offer_form')})
         ]"/>
-
-    </record>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            Click to create a request for quotation.
+            </p><p>
+            The quotation contains the history of the discussion/negotiation
+            you had with your vendor. Once confirmed, a request for
+            quotation is converted into a purchase order.
+            </p><p>
+            Most propositions of purchase orders are created automatically
+            by Odoo based on inventory needs.
+            </p>
+            </field>
+       </record>
 
      <record model="ir.actions.act_window" id="vendor_offer.action_window_multiplier">
       <field name="name">Multiplier</field>

@@ -33,7 +33,8 @@
                             </b>
                         </center>
                         <!-- Report page content -->
-                        <table class="table table-condensed" style="border: 1px solid black;">
+                         <div class="table-responsive">
+                        <table class="table table-condensed table-bordered" style="border: 1px solid black;">
                             <tr style="border: 1px solid black;">
                                 <th style="border: 1px solid black;text-align: center;">Lot</th>
                                 <th style="border: 1px solid black;text-align: center;">Product SKU</th>
@@ -42,34 +43,34 @@
                                 <th style="border: 1px solid black;text-align: center;">Creation date</th>
                                 <th style="border: 1px solid black;text-align: center;">Vendor</th>
                                 <th style="border: 1px solid black;text-align: center;">Phone</th>
-                                <th style="border: 1px solid black;text-align: center;">Email</th>
+                                <th style="border: 1px solid black;text-align: center; width: 220px;">Email</th>
                             </tr>
 
                             <t t-foreach="data.keys()" t-as="user">
                                 <t t-foreach="data[user]" t-as="o">
                                     <tr>
-                                        <td class="col-xs-2">
+                                        <td  style="border: 1px solid #000;">
                                             <span t-esc="o[0]"/>
                                         </td>
-                                        <td class="col-xs-2">
+                                        <td style="border: 1px solid #000;">
                                             <span t-esc="o[1]"/>
                                         </td>
-                                        <td align="left" class="col-xs-2">
+                                        <td  style="border: 1px solid #000;">
                                             <span t-esc="o[2]"/>
                                         </td>
-                                        <td class="col-xs-2">
+                                        <td style="border: 1px solid #000;">
                                             <span t-esc="o[3]"/>
                                         </td>
-                                        <td align="center" class="col-xs-2">
+                                        <td   style="border: 1px solid #000;">
                                             <span t-esc="o[7]"/>
                                         </td>
-                                        <td class="col-xs-2">
+                                        <td style="border: 1px solid #000;">
                                             <span t-esc="o[4]"/>
                                         </td>
-                                         <td class="col-xs-2">
+                                         <td  style="border: 1px solid #000;">
                                             <span t-esc="o[5]"/>
                                         </td>
-                                        <td class="col-xs-2">
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
                                             <span t-esc="o[6]"/>
                                         </td>
 
@@ -78,6 +79,7 @@
                                 </t>
                             </t>
                         </table>
+                         </div>
                     </div>
                 </page>
             </t>

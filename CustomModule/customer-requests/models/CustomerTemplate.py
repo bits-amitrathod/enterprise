@@ -4,7 +4,6 @@ from odoo import models, fields, api
 import logging
 import datetime
 
-import base64
 import csv
 
 try:
@@ -22,7 +21,7 @@ import os
 import errno
 
 _logger = logging.getLogger(__name__)
-ATTACHMENT_DIR = "/home/odoouser/templates/"
+ATTACHMENT_DIR = "/home/odoo/templates/"
 
 
 class CustomerTemplate(models.Model):
