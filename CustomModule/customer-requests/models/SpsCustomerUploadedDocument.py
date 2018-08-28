@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-import logging
 
-
-_logger = logging.getLogger(__name__)
 
 class SpsCustomerUploadedDocument(models.Model):
 
@@ -16,8 +13,3 @@ class SpsCustomerUploadedDocument(models.Model):
     file_location = fields.Char()
     source = fields.Char()
     status = fields.Char()
-
-    @api.multi
-    def load(self, import_fields, data):
-        _logger.info('fields %r ' , import_fields)
-
