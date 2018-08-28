@@ -76,22 +76,20 @@ class SaleSalespersonReport(models.TransientModel):
             # filtered_order = list(filter(lambda x: x.product_id == user, sale_orders))
         filtered_by_date = list(
                 filter(lambda x: x.date_order >= self.start_date and x.date_order <= self.end_date, sale_orders))
-        groupby_dict['data'] = filtered_by_date
+        groupby_dict = salebymonth().addObject(filtered_by_date)
 
         final_dict = {}
+        temp = []
         for user in groupby_dict.keys():
-            temp = []
-            for order in groupby_dict[user]:
-                temp_2 = []
-                temp_2.append(order.product_id.product_tmpl_id.sku_code)
-                temp_2.append(order.product_id.name)
-                temp_2.append(float_repr(order.amount_total,precision_digits=2))
-                temp_2.append(fields.Datetime.from_string(str(order.date_order)).date().strftime('%m/%d/%Y'))
-                temp_2.append(order.name)
-
-                temp.append(temp_2)
-            final_dict[user] = temp
-            final_dict['data'].sort(key=lambda x: self.check(x[4]))
+            order =groupby_dict[user]
+            temp_2 = []
+            temp_2.append(order.sku)
+            temp_2.append(order.product_name)
+            temp_2.append(float_repr(order.current_month_total_amount,precision_digits=2))
+            temp_2.append(int(order.current_month_total_qty))
+            temp.append(temp_2)
+        final_dict['data'] = temp
+        final_dict['data'].sort(key=lambda x: self.check(x[0]))
         datas = {
             'ids': self,
             'model': 'sale.product.report',
