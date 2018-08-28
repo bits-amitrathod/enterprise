@@ -23,4 +23,16 @@ class WorkflowActionRuleSign(models.Model):
 
                 this_attachment.res_model = self.create_model
                 this_attachment.res_id = new_obj.id
+                view_id = new_obj.get_formview_id()
+                return {
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'sign.template',
+                    'name': "New sign template",
+                    'context': self._context,
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'views': [(view_id, "form")],
+                    'res_id': new_obj.id if new_obj else False,
+                    'view_id': view_id,
+                }
         return rv
