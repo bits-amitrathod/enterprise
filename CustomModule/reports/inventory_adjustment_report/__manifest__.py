@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "inventory_adjustment_report",
+    'name': "Inventory Adjustment Report",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
