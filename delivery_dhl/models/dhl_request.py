@@ -315,7 +315,7 @@ class DHLProvider():
             etree.SubElement(consignee_node, "DivisionCode").text = param["recipient_partner"].state_id.code
         etree.SubElement(consignee_node, "PostalCode").text = param["recipient_partner"].zip
         etree.SubElement(consignee_node, "CountryCode").text = param["recipient_partner"].country_id.code
-        etree.SubElement(consignee_node, "CountryName").text = param["recipient_partner"].country_id.name
+        etree.SubElement(consignee_node, "CountryName").text = self._remove_accents(param["recipient_partner"].country_id.name)
         contact_node = etree.SubElement(consignee_node, "Contact")
         etree.SubElement(contact_node, "PersonName").text = self._remove_accents(param["recipient_partner"].name)
         etree.SubElement(contact_node, "PhoneNumber").text = param["recipient_partner"].phone
@@ -362,7 +362,7 @@ class DHLProvider():
         etree.SubElement(shipper_node, "City").text = self._remove_accents(param["shipper_partner"].city)
         etree.SubElement(shipper_node, "PostalCode").text = self._remove_accents(param["shipper_partner"].zip)
         etree.SubElement(shipper_node, "CountryCode").text = param["shipper_partner"].country_id.code
-        etree.SubElement(shipper_node, "CountryName").text = param["shipper_partner"].country_id.name
+        etree.SubElement(shipper_node, "CountryName").text = self._remove_accents(param["shipper_partner"].country_id.name)
 
         contact_node = etree.SubElement(shipper_node, "Contact")
         etree.SubElement(contact_node, "PersonName").text = self._remove_accents(param["shipper_partner"].name)
