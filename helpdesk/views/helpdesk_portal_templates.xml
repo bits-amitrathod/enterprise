@@ -14,11 +14,12 @@
     </template>
 
     <template id="portal_my_home_helpdesk_ticket" name="Portal My Home : Helpdesk Ticket" inherit_id="portal.portal_my_home" priority="50">
-        <xpath expr="//ul[hasclass('o_portal_docs')]" position="inside">
-            <li t-if="ticket_count" class="list-group-item">
-                <span class="badge badge-secondary badge-pill float-right" t-esc="ticket_count"/>
-                <a href="/my/tickets">Tickets</a>
-            </li>
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-if="ticket_count" t-call="portal.portal_docs_entry">
+                <t t-set="title">Tickets</t>
+                <t t-set="url" t-value="'/my/tickets'"/>
+                <t t-set="count" t-value="ticket_count"/>
+            </t>
         </xpath>
     </template>
 
