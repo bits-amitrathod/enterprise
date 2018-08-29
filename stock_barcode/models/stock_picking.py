@@ -223,7 +223,7 @@ class StockPicking(models.Model):
         return True
 
     def on_barcode_scanned(self, barcode):
-        if not self.picking_type_id.barcode_nomenclature_id:
+        if not self.env.user.company_id.nomenclature_id:
             # Logic for products
             product = self.env['product.product'].search(['|', ('barcode', '=', barcode), ('default_code', '=', barcode)], limit=1)
             if product:
@@ -254,7 +254,7 @@ class StockPicking(models.Model):
                 if self._check_destination_location(location):
                     return
         else:
-            parsed_result = self.picking_type_id.barcode_nomenclature_id.parse_barcode(barcode)
+            parsed_result = self.env.user.company_id.nomenclature_id.parse_barcode(barcode)
             if parsed_result['type'] in ['weight', 'product']:
                 if parsed_result['type'] == 'weight':
                     product_barcode = parsed_result['base_code']
