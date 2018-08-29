@@ -276,7 +276,7 @@ var AbstractNewComponent = Abstract.extend({
 var BuildingTextComponent = AbstractNewComponent.extend({
     type: 'text',
     label: _lt('Text'),
-    dropIn: 'div[class*=col-], td, th, p',
+    dropIn: '.row > div, td, th, p',
     className: 'o_web_studio_field_char',
     hookClass: 'o_web_studio_hook_inline',
     hookAutoHeight: true,
@@ -400,7 +400,7 @@ var BuildingBlockTitle = AbstractNewComponent.extend({
         return this._super.apply(this, arguments).then(function () {
             return $.when({
                 inheritance: [{
-                    content: '<h2>New Title</h2>',
+                    content: '<div class="row"><div class="col h2"><span>New Title</span></div></div>',
                     position: self.position,
                     xpath: self.node.attrs['data-oe-xpath'],
                     view_id: +self.node.attrs['data-oe-id'],

@@ -337,7 +337,7 @@ tour.register('web_studio_new_report_tour', {
     auto: true,
 }, {
     // click on the newly added field
-    trigger: '.o_web_studio_report_editor iframe h2:contains(New Title)',
+    trigger: '.o_web_studio_report_editor iframe .h2 > span:contains(New Title)',
 }, {
     // change the text of the H2 to 'test'
     trigger: '.o_web_studio_sidebar .o_web_studio_text .note-editable',
@@ -348,7 +348,7 @@ tour.register('web_studio_new_report_tour', {
         this.$anchor.blur();
     }
 }, {
-    extra_trigger: '.o_web_studio_report_editor iframe h2:contains(Test)',
+    extra_trigger: '.o_web_studio_report_editor iframe .h2:contains(Test)',
     // add a new group on the node
     trigger: '.o_web_studio_sidebar .o_field_many2manytags[name="groups"] input',
     run: function () {
