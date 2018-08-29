@@ -323,7 +323,7 @@ var GanttView = View.extend({
                 date_display = this.focus_date.format("YYYY");
                 break;
         }
-        this.set({'title': 'Forecast (' + date_display + ')'});
+        this.set({'title': _t('Forecast') + ' (' + date_display + ')'});
     },
 
     change_scale_button: function (e) {
