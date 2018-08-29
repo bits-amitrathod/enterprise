@@ -26,6 +26,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         'click .o_web_studio_xml_editor': '_onXMLEditor',
         'click .o_web_studio_parameters': '_onParameters',
         'click .o_web_studio_print': '_onPrint',
+        'click .o_web_studio_remove': '_onRemove',
     },
     /**
      * @constructor
@@ -433,18 +434,12 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
                 .find('.collapse').on('show.bs.collapse hide.bs.collapse', function (ev) {
                     $(this).parent('.card').toggleClass('o_web_studio_active', ev.type === 'show');
                 });
+            var $removeButton = $(qweb.render('web_studio.Sidebar.Remove'));
+            $removeButton.data('node', node.node);  // see @_onRemove
             var $removeSection = $('<div>', {
                 class: 'card-body',
-            }).append($(qweb.render('web_studio.Sidebar.Remove')));
-            $removeSection
-                .find('.btn').toggleClass('btn-xs mt0').end()
-                .appendTo($accordionSection.find('.collapse'))
-                //TODO: consider adding event handler in event, and use a hashmap
-                .on('click', function () {
-                    self.trigger_up('element_removed', {
-                        node: node.node,
-                    });
-                });
+            }).append($removeButton);
+            $removeSection.appendTo($accordionSection.find('.collapse'));
         });
 
         // open the last section
@@ -541,7 +536,16 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
     /**
      * @private
      * @param {ClickEvent} ev
-     * TODO: maybe create an abstract sidebar?
+     */
+    _onRemove: function (ev) {
+        var node = $(ev.currentTarget).data('node');
+        this.trigger_up('element_removed', {
+            node: node,
+        });
+    },
+    /**
+     * @private
+     * @param {ClickEvent} ev
      */
     _onTab: function (ev) {
         var mode = $(ev.currentTarget).attr('name');
