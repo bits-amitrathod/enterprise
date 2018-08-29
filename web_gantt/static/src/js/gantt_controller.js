@@ -141,7 +141,7 @@ var GanttController = AbstractController.extend({
         var self = this;
         this.model.setFocusDate(focusDate);
         this.reload().then(function () {
-            self.set({'title': 'Forecast (' + self.model.get().date_display + ')'});
+            self.set({'title': _t('Forecast') + ' (' + self.model.get().date_display + ')'});
         });
     },
     /**
@@ -152,7 +152,7 @@ var GanttController = AbstractController.extend({
         var self = this;
         this.model.setScale(scale);
         this.reload().then(function () {
-            self.set({'title': 'Forecast (' + self.model.get().date_display + ')'});
+            self.set({'title': _t('Forecast') + ' (' + self.model.get().date_display + ')'});
         });
     },
 
