@@ -64,7 +64,7 @@ class SaleSubscription(models.Model):
     ]
 
     def _compute_sale_order_count(self):
-        raw_data = self.env['sale.order.line'].read_group(
+        raw_data = self.env['sale.order.line'].sudo().read_group(
             [('subscription_id', 'in', self.ids)],
             ['subscription_id', 'order_id'],
             ['subscription_id', 'order_id'],
@@ -138,7 +138,7 @@ class SaleSubscription(models.Model):
     def _compute_invoice_count(self):
         Invoice = self.env['account.invoice']
         for subscription in self:
-            subscription.invoice_count = Invoice.search_count([('invoice_line_ids.subscription_id', '=', subscription.id)])
+            subscription.invoice_count = Invoice.sudo().search_count([('invoice_line_ids.subscription_id', '=', subscription.id)])
 
     @api.depends('recurring_invoice_line_ids', 'recurring_invoice_line_ids.quantity', 'recurring_invoice_line_ids.price_subtotal')
     def _compute_recurring_total(self):
