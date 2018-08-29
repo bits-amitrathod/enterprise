@@ -394,7 +394,7 @@ QUnit.module('DocumentsKanbanView', {
         kanban.destroy();
     });
 
-    QUnit.test('selected records are kept after a reload', function (assert) {
+    QUnit.test('only visible selected records are kept after a reload', function (assert) {
         assert.expect(6);
 
         var kanban = createView({
@@ -427,10 +427,10 @@ QUnit.module('DocumentsKanbanView', {
 
         kanban.reload({domain: []});
 
-        assert.strictEqual(kanban.$('.o_record_selected').length, 3,
-            "should have 3 selected records");
-        assert.strictEqual(kanban.$('.o_documents_inspector_preview .o_document_preview').length, 3,
-            "should show 3 document previews in the DocumentsInspector");
+        assert.strictEqual(kanban.$('.o_record_selected').length, 1,
+            "should have 1 selected records");
+        assert.strictEqual(kanban.$('.o_documents_inspector_preview .o_document_preview').length, 1,
+            "should show 1 document previews in the DocumentsInspector");
 
         kanban.destroy();
     });
@@ -699,10 +699,10 @@ QUnit.module('DocumentsKanbanView', {
 
         kanban.pager.$('.o_pager_previous').click();
 
-        assert.strictEqual(kanban.$('.o_record_selected').length, 1,
-            "should have 1 selected record");
-        assert.strictEqual(kanban.$('.o_documents_inspector_preview .o_document_preview').length, 1,
-            "should show 1 document preview in the DocumentsInspector");
+        assert.strictEqual(kanban.$('.o_record_selected').length, 0,
+            "should have no selected record");
+        assert.strictEqual(kanban.$('.o_documents_inspector_preview .o_document_preview').length, 0,
+            "should show no document preview in the DocumentsInspector");
 
         kanban.destroy();
     });
@@ -822,7 +822,7 @@ QUnit.module('DocumentsKanbanView', {
         assert.strictEqual(kanban.$('.o_record_selected').length, 0,
             "should have no selected record");
         assert.strictEqual(kanban.$('.o_documents_inspector_preview .o_document_preview').length, 0,
-            "should show 0 document preview in the DocumentsInspector");
+            "should show no document preview in the DocumentsInspector");
 
         kanban.reload({active: false});
 

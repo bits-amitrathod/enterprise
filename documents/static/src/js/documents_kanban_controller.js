@@ -256,7 +256,7 @@ var DocumentsKanbanController = KanbanController.extend({
         });
         return $.when.apply($, defs).then(function () {
             var l = Array.prototype.slice.call(arguments);
-            for(var i=0; i<l.length; i++) {
+            for (var i=0; i<l.length; i++) {
                 // convert data from "data:application/zip;base64,R0lGODdhAQBADs=" to "R0lGODdhAQBADs="
                 l[i].datas = l[i].datas.split(',',2)[1];
                 l[i].folder_id = self.selectedFolderID;
@@ -455,6 +455,7 @@ var DocumentsKanbanController = KanbanController.extend({
     },
     /**
      * Override to render the documents selector and inspector sidebars.
+     * Also update the selection.
      *
      * @override
      * @private
@@ -463,6 +464,7 @@ var DocumentsKanbanController = KanbanController.extend({
         var self = this;
         return this._super.apply(this, arguments).then(function () {
             var state = self.model.get(self.handle);
+            self.selectedRecordIDs = _.intersection(self.selectedRecordIDs, state.res_ids);
             self._renderDocumentsInspector(state);
             self._renderDocumentsSelector(state);
             self._updateChatter(state);
@@ -535,8 +537,6 @@ var DocumentsKanbanController = KanbanController.extend({
         var active = !ev.data.records[0].data.active;
         var recordIDs = _.pluck(ev.data.records, 'id');
         this.model.toggleActive(recordIDs, active, this.handle).then(function () {
-            var resIDs = _.pluck(ev.data.records, 'res_id');
-            self.selectedRecordIDs = _.difference(self.selectedRecordIDs, resIDs);
             self.update({}, {reload: false}); // the reload is done by toggleActive
         });
     },
