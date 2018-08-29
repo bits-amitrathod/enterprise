@@ -54,6 +54,7 @@ var DocumentsKanbanController = KanbanController.extend({
         this.selectedFilterTagIDs = {};
         this.chatter = null;
         this.documentsInspector = null;
+        this.anchorID = null; // used to select records with ctrl/shift keys
 
         var state = this.model.get(this.handle);
         this.selectedFolderID = state.folderID;
@@ -137,7 +138,7 @@ var DocumentsKanbanController = KanbanController.extend({
      * Construct the extra domain based on selector's filters
      *
      * @private
-     * @returns {Array}
+     * @returns {Array[]}
      */
     _buildSelectorDomain: function () {
         var domain = [];
@@ -169,8 +170,8 @@ var DocumentsKanbanController = KanbanController.extend({
      * Group tags by facets.
      *
      * @private
-     * @param {array} tags - raw list of tags
-     * @returns {Array[]}
+     * @param {Object[]} tags - raw list of tags
+     * @returns {Object[]}
      */
     _groupTagsByFacets: function (tags) {
         var groupedFacets = _.reduce(tags, function (memo, tag) {
@@ -285,8 +286,8 @@ var DocumentsKanbanController = KanbanController.extend({
      * Remove a Tag filter from selector panel
      *
      * @private
-     * @param {Integer} facetID
-     * @param {Integer} tagID
+     * @param {integer} facetID
+     * @param {integer} tagID
      */
     _removeSelectorTagFilter: function (facetID, tagID) {
         this.selectedFilterTagIDs[facetID] = _.without(this.selectedFilterTagIDs[facetID], tagID);
@@ -356,7 +357,7 @@ var DocumentsKanbanController = KanbanController.extend({
      * Render a folder tree, recursively
      *
      * @private
-     * @param {Array<Object>} folders - the subtree of folders to render
+     * @param {Object[]} folders - the subtree of folders to render
      * @returns {jQuery}
      */
     _renderFolders: function (folders) {
@@ -415,8 +416,8 @@ var DocumentsKanbanController = KanbanController.extend({
      * Toggle the selected facet/tag
      *
      * @private
-     * @param {String|Integer} facet
-     * @param {String|Integer} tag
+     * @param {string|integer} facet
+     * @param {string|integer} tag
      */
     _toggleSelectorTag: function (facet, tag) {
         var facetID = parseInt(facet, 10);
@@ -464,10 +465,12 @@ var DocumentsKanbanController = KanbanController.extend({
         var self = this;
         return this._super.apply(this, arguments).then(function () {
             var state = self.model.get(self.handle);
-            self.selectedRecordIDs = _.intersection(self.selectedRecordIDs, state.res_ids);
+            var recordIDs = _.pluck(state.data, 'res_id');
+            self.selectedRecordIDs = _.intersection(self.selectedRecordIDs, recordIDs);
             self._renderDocumentsInspector(state);
             self._renderDocumentsSelector(state);
             self._updateChatter(state);
+            self.anchorID = null;
             self.renderer.updateSelection(self.selectedRecordIDs);
         });
     },
@@ -772,7 +775,7 @@ var DocumentsKanbanController = KanbanController.extend({
                 // unselect the record if it is currently the only selected one
                 this.selectedRecordIDs = [];
             } else if (shift && this.selectedRecordIDs.length) {
-                var recordIDs = state.res_ids;
+                var recordIDs = _.pluck(state.data, 'res_id');
                 var anchorIndex = recordIDs.indexOf(this.anchorID);
                 var selectedRecordIndex = recordIDs.indexOf(ev.data.resID);
                 var lowerIndex = Math.min(anchorIndex, selectedRecordIndex);

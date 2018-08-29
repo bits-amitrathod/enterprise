@@ -14,16 +14,7 @@ var DocumentsKanbanRenderer = KanbanRenderer.extend({
     config: _.extend({}, KanbanRenderer.prototype.config, {
         KanbanRecord: DocumentsKanbanRecord,
     }),
-    custom_events: _.extend({}, KanbanRenderer.prototype.custom_events, {
-    }),
 
-    /**
-     * @override
-     */
-    init: function () {
-        this._super.apply(this, arguments);
-        this.anchorID = null; // used to select records with crl/shift keys
-    },
     /**
      * @override
      */
@@ -37,21 +28,10 @@ var DocumentsKanbanRenderer = KanbanRenderer.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * @override
-     */
-    updateState: function () {
-        var self = this;
-        this.anchorID = null;
-        return this._super.apply(this, arguments).then(function () {
-            self.updateSelection();
-        });
-    },
-
-    /**
      * Marks records as selected
      *
      * @private
-     * @param {Array<Integer>} selectedRecordIDs
+     * @param {integer[]} selectedRecordIDs
      */
     updateSelection: function (selectedRecordIDs) {
         _.each(this.widgets, function (widget) {
