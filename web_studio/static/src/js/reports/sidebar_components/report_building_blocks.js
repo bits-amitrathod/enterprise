@@ -234,7 +234,7 @@ var AbstractNewComponent = Abstract.extend({
             return _.map(this.targets, function (target) {
                 var isCol = (target.node.attrs.class || '').match(/(^|\s)(col(-[0-9]+)?)(\s|$)/);
                 return {
-                    content: isCol ? options.contentInStructure : options.content,
+                    content: isCol ? options.contentInStructure || options.content : options.content,
                     position: target.position,
                     xpath: target.node.attrs['data-oe-xpath'],
                     view_id: +target.node.attrs['data-oe-id'],

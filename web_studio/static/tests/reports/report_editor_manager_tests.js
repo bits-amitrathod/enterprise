@@ -725,6 +725,71 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
+    QUnit.test('drag & drop text component in existing col', loadIframeCss(function (assert, done) {
+        assert.expect(1);
+
+        var self = this;
+        this.templates.push({
+            key: 'template1',
+            view_id: 55,
+            arch:
+                '<kikou>' +
+                    '<t t-name="template1">' +
+                        '<div class="row">' +
+                            '<div class="col-6"/>' +
+                            '<div class="col-6"/>' +
+                        '</div>' +
+                    '</t>' +
+                '</kikou>',
+        });
+
+        var rem = studioTestUtils.createReportEditorManager({
+            env: {
+                modelName: 'kikou',
+                ids: [42, 43],
+                currentId: 42,
+            },
+            report: {},
+            reportHTML: studioTestUtils.getReportHTML(this.templates),
+            reportViews: studioTestUtils.getReportViews(this.templates),
+            reportMainViewID: 42,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_report_view') {
+                    assert.deepEqual(args.operations, [{
+                        context: {},
+                        inheritance: [{
+                            content: "<span>New Text Block</span>",
+                            position: "inside",
+                            view_id: 55,
+                            xpath: "/t/div/div[1]"
+                        }],
+                        position: "inside",
+                        type: "add",
+                        view_id: 55,
+                        xpath: "/t/div/div[1]"
+                    }]);
+
+                    return $.when({
+                        report_html: studioTestUtils.getReportHTML(self.templates),
+                        views: studioTestUtils.getReportViews(self.templates),
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        rem.editorIframeDef.then(function () {
+            rem.$('.o_web_studio_sidebar .o_web_studio_sidebar_header div[name="new"]').click();
+
+            // drag and drop a Text component, which should trigger a view edition
+            var $text = rem.$('.o_web_studio_sidebar .o_web_studio_component:contains(Text)');
+            testUtils.dragAndDrop($text, rem.$('iframe').contents().find('.col-6:eq(1)'));
+
+            rem.destroy();
+            done();
+        });
+    }));
+
     QUnit.test('drag & drop components and cancel', function (assert) {
         var done = assert.async();
         assert.expect(4);
