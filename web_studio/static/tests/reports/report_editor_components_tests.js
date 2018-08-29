@@ -324,7 +324,7 @@ QUnit.module('ReportComponents', {
     });
 
     QUnit.test('tOptions component', function (assert) {
-        assert.expect(2);
+        assert.expect(3);
         var parent = new Widget();
         parent.appendTo($('#qunit-fixture'));
         var tOptions = new (editComponentsRegistry.get('tOptions'))(parent, {
@@ -347,6 +347,18 @@ QUnit.module('ReportComponents', {
             "Should select the image widget");
         assert.strictEqual(tOptions.$('.o_studio_option_show').length, 0,
             "'Show Options' should not be displayed because there is no option");
+
+        // unset the `widget`
+        testUtils.addMockEnvironment(parent, {
+            intercepts: {
+                view_change: function (ev) {
+                    assert.deepEqual(ev.data.operation.new_attrs, {'t-options-widget': '""'},
+                        "should correctly delete the group");
+                },
+            },
+        });
+        tOptions.$('select').val('').trigger('change');
+
         parent.destroy();
     });
 

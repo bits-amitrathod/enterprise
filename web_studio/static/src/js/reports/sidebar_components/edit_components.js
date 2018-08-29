@@ -1216,37 +1216,40 @@ var TOptions = AbstractEditComponent.extend( {
      */
     _triggerViewChange: function (newAttrs) {
         var self = this;
-        if (!this.widget) {
-            console.warn('must remove all t-options');
-            return;
-        }
-
-        var options = _.findWhere(this.widgets, {key: this.widget.key}).options;
         var changes = {};
 
-        if (this.values.widget !== this.widget.key) {
-            changes['t-options-widget'] = '"' + this.widget.key + '"';
-        }
-        _.each(newAttrs, function (val, key) {
-            var field = key.split(':');
-            if (self.widget.key === field[0]) {
-                var option = _.findWhere(options, {key: field[1]});
-                var value = val;
-                if (value) {
-                    if (option.type === 'char' || option.type === 'selection') {
-                        value = '"' + val.replace(/"/g, '\\"') + '"';
+        // this.widget is the recently set `widget` key
+        if (this.widget) {
+            var options = _.findWhere(this.widgets, {key: this.widget.key}).options;
+
+            if (this.values.widget !== this.widget.key) {
+                changes['t-options-widget'] = '"' + this.widget.key + '"';
+            }
+            _.each(newAttrs, function (val, key) {
+                var field = key.split(':');
+                if (self.widget.key === field[0]) {
+                    var option = _.findWhere(options, {key: field[1]});
+                    var value = val;
+                    if (value) {
+                        if (option.type === 'char' || option.type === 'selection') {
+                            value = '"' + val.replace(/"/g, '\\"') + '"';
+                        }
+                    }
+
+                    if (option.format) {
+                        value = option.format(value);
+                    }
+
+                    if ((self.widget.key !== self.values.widget || value !== self.values[key])) {
+                        changes['t-options-' + field[1]] = value;
                     }
                 }
-
-                if (option.format) {
-                    value = option.format(value);
-                }
-
-                if ((self.widget.key !== self.values.widget || value !== self.values[key])) {
-                    changes['t-options-' + field[1]] = value;
-                }
-            }
-        });
+            });
+        } else {
+            changes['t-options-widget'] = '""';
+            // TODO: remove all other set t-options-..
+            // t-options='"{}"' doesn't work because t-options-.. has precedence
+        }
         this.trigger_up('view_change', {
             node: this.node,
             operation: {
