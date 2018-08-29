@@ -437,8 +437,8 @@ class AccountReport(models.AbstractModel):
             options['selected_partner_ids'] = [self.env['res.partner'].browse(int(partner)).name for partner in options['partner_ids']]
             options['selected_partner_categories'] = [self.env['res.partner.category'].browse(int(category)).name for category in options['partner_categories']]
 
-        # Check whether there are unposted entries for the selected period or not
-        if options.get('date'):
+        # Check whether there are unposted entries for the selected period or not (if the report allows it)
+        if options.get('date') and options.get('all_entries') is not None:
             date_to = options['date'].get('date_to') or options['date'].get('date') or fields.Date.today()
             period_domain = [('state', '=', 'draft'), ('date', '<=', date_to)]
             options['unposted_in_period'] = bool(self.env['account.move'].search_count(period_domain))
