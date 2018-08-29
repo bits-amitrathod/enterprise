@@ -466,6 +466,7 @@ var DocumentsKanbanController = KanbanController.extend({
             self._renderDocumentsInspector(state);
             self._renderDocumentsSelector(state);
             self._updateChatter(state);
+            self.renderer.updateSelection(self.selectedRecordIDs);
         });
     },
     /**
@@ -536,7 +537,6 @@ var DocumentsKanbanController = KanbanController.extend({
         this.model.toggleActive(recordIDs, active, this.handle).then(function () {
             var resIDs = _.pluck(ev.data.records, 'res_id');
             self.selectedRecordIDs = _.difference(self.selectedRecordIDs, resIDs);
-            self.renderer.setSelectedRecordIDs(self.selectedRecordIDs);
             self.update({}, {reload: false}); // the reload is done by toggleActive
         });
     },
@@ -807,9 +807,7 @@ var DocumentsKanbanController = KanbanController.extend({
             selection: this.selectedRecordIDs,
         });
 
-        // update the kanban records
-        this.renderer.setSelectedRecordIDs(this.selectedRecordIDs);
-        this.renderer._updateSelection();
+        this.renderer.updateSelection(this.selectedRecordIDs);
     },
     /**
      * Replace a file of the document by prompting an input file.

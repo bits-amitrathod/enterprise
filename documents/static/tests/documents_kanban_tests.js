@@ -789,7 +789,7 @@ QUnit.module('DocumentsKanbanView', {
     });
 
     QUnit.test('document inspector: can archive records', function (assert) {
-        assert.expect(5);
+        assert.expect(6);
 
         var kanban = createView({
             View: DocumentsKanbanView,
@@ -823,6 +823,11 @@ QUnit.module('DocumentsKanbanView', {
             "should have no selected record");
         assert.strictEqual(kanban.$('.o_documents_inspector_preview .o_document_preview').length, 0,
             "should show 0 document preview in the DocumentsInspector");
+
+        kanban.reload({active: false});
+
+        assert.strictEqual(kanban.$('.o_kanban_view .o_record_selected').length, 0,
+            "should have no selected archived record");
 
         kanban.destroy();
     });

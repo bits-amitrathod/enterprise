@@ -23,7 +23,6 @@ var DocumentsKanbanRenderer = KanbanRenderer.extend({
     init: function () {
         this._super.apply(this, arguments);
         this.anchorID = null; // used to select records with crl/shift keys
-        this.selectedRecordIDs = [];
     },
     /**
      * @override
@@ -37,10 +36,6 @@ var DocumentsKanbanRenderer = KanbanRenderer.extend({
     // Public
     //--------------------------------------------------------------------------
 
-    setSelectedRecordIDs: function (selectedRecordIDs) {
-        this.selectedRecordIDs = selectedRecordIDs;
-    },
-
     /**
      * @override
      */
@@ -48,29 +43,22 @@ var DocumentsKanbanRenderer = KanbanRenderer.extend({
         var self = this;
         this.anchorID = null;
         return this._super.apply(this, arguments).then(function () {
-            self._updateSelection();
+            self.updateSelection();
         });
     },
 
-    //--------------------------------------------------------------------------
-    // Private
-    //--------------------------------------------------------------------------
-
     /**
+     * Marks records as selected
+     *
      * @private
+     * @param {Array<Integer>} selectedRecordIDs
      */
-    _updateSelection: function () {
-        var self = this;
+    updateSelection: function (selectedRecordIDs) {
         _.each(this.widgets, function (widget) {
-            var selected = _.contains(self.selectedRecordIDs, widget.getResID());
+            var selected = _.contains(selectedRecordIDs, widget.getResID());
             widget.updateSelection(selected);
         });
     },
-
-    //--------------------------------------------------------------------------
-    // Handlers
-    //--------------------------------------------------------------------------
-
 });
 
 return DocumentsKanbanRenderer;
