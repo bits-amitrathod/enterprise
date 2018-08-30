@@ -173,11 +173,11 @@
                 <t t-esc="menu.name"/>
                 <span class="fa fa-chevron-right toggle_icon float-right"/>
             </a>
-            <div>
+            <ul>
                 <t t-foreach="menu.children" t-as="menu">
                     <t t-call="Menu.link"/>
                 </t>
-            </div>
+            </ul>
         </li>
     </t>
 </t>
