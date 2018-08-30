@@ -10,7 +10,7 @@ from dateutil.relativedelta import relativedelta
 from uuid import uuid4
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools import format_date
 
 from odoo.addons import decimal_precision as dp
@@ -774,6 +774,11 @@ class SaleSubscriptionTemplate(models.Model):
     product_count = fields.Integer(compute='_compute_product_count')
     subscription_count = fields.Integer(compute='_compute_subscription_count')
     color = fields.Integer()
+
+    @api.constrains('recurring_interval')
+    def _check_recurring_interval(self):
+        if self.recurring_interval <= 0:
+            raise ValidationError(_("The recurring interval must be positive"))
 
     def _compute_subscription_count(self):
         subscription_data = self.env['sale.subscription'].read_group(domain=[('template_id', 'in', self.ids), ('state', 'in', ['open', 'pending'])],
