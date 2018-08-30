@@ -92,6 +92,10 @@ class ProviderAccount(models.Model):
         """
         return False
 
+    @api.model
+    def cron_fetch_online_transactions(self):
+        return False
+
 
 class OnlineAccount(models.Model):
     """
