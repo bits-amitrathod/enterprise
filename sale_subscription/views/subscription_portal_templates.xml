@@ -254,39 +254,34 @@
             <t t-if="not accounts">
                 <p>You don't have any subscriptions yet.</p>
             </t>
-            <div t-if="accounts" class="card">
-                <div class="table-responsive"><table class="table table-hover o_portal_my_doc_table">
-                    <thead>
-                        <tr class="active">
-                            <th>Name</th>
-                            <th/>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <t t-foreach="accounts" t-as="account">
-                        <tr>
-                            <td>
-                                <a t-att-href="'/my/subscription/'+str(account.id)+'/'+str(account.uuid)+'?'+keep_query()"><t t-esc="account.display_name"/></a>
-                            </td>
-                            <td id="subscription_state">
-                                <t t-if="account.in_progress and not account.to_renew">
-                                    <span class="badge badge-success"><i class="fa fa-fw fa-check"/> In Progress</span>
-                                </t>
-                                <t t-if="account.to_renew">
-                                    <span class="badge badge-warning"><i class="fa fa-fw fa-refresh"/> To Renew</span>
-                                </t>
-                                <t t-if="not account.in_progress">
-                                    <span class="badge badge-default"><i class="fa fa-fw fa-remove"/> Closed</span>
-                                </t>
-                            </td>
-                            <td><span t-esc="account.recurring_total" t-options="{'widget': 'monetary', 'display_currency': account.currency_id}"/></td>
-                        </tr>
-                    </t>
-                </table></div>
-                <div class="col-lg-12 text-center">
-                    <t t-call="portal.pager"/>
-                </div>
-            </div>
+            <t t-if="accounts" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th class="w-75">Subscription</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <t t-foreach="accounts" t-as="account">
+                    <tr>
+                        <td>
+                            <a t-att-href="'/my/subscription/'+str(account.id)+'/'+str(account.uuid)+'?'+keep_query()"><t t-esc="account.display_name"/></a>
+                        </td>
+                        <td class="text-center" id="subscription_state">
+                            <t t-if="account.in_progress and not account.to_renew">
+                                <span class="badge badge-pill badge-success"><i class="fa fa-fw fa-check"/> In Progress</span>
+                            </t>
+                            <t t-if="account.to_renew">
+                                <span class="badge badge-pill badge-warning"><i class="fa fa-fw fa-refresh"/> To Renew</span>
+                            </t>
+                            <t t-if="not account.in_progress">
+                                <span class="badge badge-pill badge-danger"><i class="fa fa-fw fa-remove"/> Closed</span>
+                            </t>
+                        </td>
+                        <td class="text-right"><span t-esc="account.recurring_total" t-options="{'widget': 'monetary', 'display_currency': account.currency_id}"/></td>
+                    </tr>
+                </t>
+            </t>
         </t>
     </template>
 
