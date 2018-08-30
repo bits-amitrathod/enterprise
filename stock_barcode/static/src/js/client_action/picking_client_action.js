@@ -23,6 +23,8 @@ var PickingClientAction = ClientAction.extend({
         this.commands['O-BTN.validate'] = this._validate.bind(this);
         this.commands['O-BTN.cancel'] = this._cancel.bind(this);
         this.commands['O-BTN.pack'] = this._putInPack.bind(this);
+        this.commands['O-BTN.print-slip'] = this._printDeliverySlip.bind(this);
+        this.commands['O-BTN.print-op'] = this._printPicking.bind(this);
         if (! this.actionParams.pickingId) {
             this.actionParams.pickingId = action.context.active_id;
             this.actionParams.model = 'stock.picking';
@@ -305,6 +307,27 @@ var PickingClientAction = ClientAction.extend({
         }
     },
 
+    _printPicking: function () {
+        var self = this;
+        return this._rpc({
+            'model': 'stock.picking',
+            'method': 'do_print_picking',
+            'args': [[this.actionParams.pickingId]],
+        }).then(function(res) {
+            return self.do_action(res);
+        });
+    },
+
+    _printDeliverySlip: function () {
+        return this.do_action(this.currentState.actionReportDeliverySlipId, {
+            'additional_context': {
+                'active_id': this.actionParams.pickingId,
+                'active_ids': [this.actionParams.pickingId],
+                'active_model': 'stock.picking',
+            }
+        });
+    },
+
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
@@ -355,13 +378,7 @@ var PickingClientAction = ClientAction.extend({
         var self = this;
         this.mutex.exec(function () {
             return self._save().then(function () {
-                return self._rpc({
-                    'model': 'stock.picking',
-                    'method': 'do_print_picking',
-                    'args': [[self.actionParams.pickingId]],
-                }).then(function(res) {
-                    return self.do_action(res);
-                });
+                return self._printPicking();
             });
         });
     },
@@ -379,13 +396,7 @@ var PickingClientAction = ClientAction.extend({
         var self = this;
         this.mutex.exec(function () {
             return self._save().then(function () {
-                return self.do_action(self.currentState.actionReportDeliverySlipId, {
-                    'additional_context': {
-                        'active_id': self.actionParams.pickingId,
-                        'active_ids': [self.actionParams.pickingId],
-                        'active_model': 'stock.picking',
-                    }
-                });
+                return self._printDeliverySlip();
             });
         });
     },
