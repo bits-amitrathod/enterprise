@@ -127,6 +127,8 @@ var PickingClientAction = ClientAction.extend({
 
     /**
      * Makes the rpc to `button_validate`.
+     * This method could open a wizard so it takes care of removing/adding the "barcode_scanned"
+     * event listener.
      *
      * @private
      * @returns {Deferred}
@@ -145,12 +147,14 @@ var PickingClientAction = ClientAction.extend({
                         self.do_notify(_t("Success"), _t("The transfer has been validated"));
                         self.trigger_up('exit');
                     }
+                    core.bus.on('barcode_scanned', self, self._onBarcodeScannedHandler);
                 };
                 if (_.isObject(res)) {
                     var options = {
                         on_close: exitCallback,
                     };
                     def.then(function () {
+                        core.bus.off('barcode_scanned', self, self._onBarcodeScannedHandler);
                         return self.do_action(res, options);
                     });
                 } else {
@@ -183,6 +187,8 @@ var PickingClientAction = ClientAction.extend({
 
     /**
      * Makes the rpc to `button_scrap`.
+     * This method opens a wizard so it takes care of removing/adding the "barcode_scanned" event
+     * listener.
      *
      * @private
      */
@@ -194,7 +200,14 @@ var PickingClientAction = ClientAction.extend({
                 'method': 'button_scrap',
                 'args': [[self.actionParams.pickingId]],
             }).then(function(res) {
-                return self.do_action(res);
+                var exitCallback = function () {
+                    core.bus.on('barcode_scanned', self, self._onBarcodeScannedHandler);
+                };
+                var options = {
+                    on_close: exitCallback,
+                };
+                core.bus.off('barcode_scanned', self, self._onBarcodeScannedHandler);
+                return self.do_action(res, options);
             });
         });
     },

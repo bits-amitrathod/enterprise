@@ -108,7 +108,7 @@ var ClientAction = AbstractAction.extend({
     },
 
     destroy: function () {
-        core.bus.off('barcode_scanned', this, this._onBarcodeScanned);
+        core.bus.off('barcode_scanned', this, this._onBarcodeScannedHandler);
         this._super();
     },
 
