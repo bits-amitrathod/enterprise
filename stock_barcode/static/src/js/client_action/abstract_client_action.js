@@ -821,11 +821,19 @@ var ClientAction = AbstractAction.extend({
         }
 
         var self = this;
-        var search_read = function () {
+        var search_read_quants = function () {
             return self._rpc({
                 model: 'stock.quant.package',
                 method: 'search_read',
                 domain: [['name', '=', barcode], ['location_id', 'child_of', self.currentState.location_id.id]],
+                limit: 1,
+            });
+        };
+        var read_products = function (product) {
+            return self._rpc({
+                model: 'product.product',
+                method: 'read',
+                args: [product],
                 limit: 1,
             });
         };
@@ -851,42 +859,54 @@ var ClientAction = AbstractAction.extend({
             }
             return currentNumberOfLines === expectedNumberOfLines;
         };
-        return search_read().then(function (packages) {
+        return search_read_quants().then(function (packages) {
             if (packages.length) {
                 return get_contained_quants(packages[0].id).then(function (quants) {
                     var packageAlreadyScanned = package_already_scanned(packages[0].id, quants);
                     if (packageAlreadyScanned) {
                         return $.Deferred().reject(_t('This package is already scanned.'));
                     }
-
-                    _.each(quants, function (quant) {
-                        // FIXME sle: not optimal
-                        var product_barcode = _.findKey(self.productsByBarcode, function (product) {
-                            return product.id === quant.product_id[0];
-                        });
-                        var product = self.productsByBarcode[product_barcode];
-                        var res = self._incrementLines({
-                            product: product,
-                            barcode: product_barcode,
-                            package_id: [packages[0].id, packages[0].display_name],
-                            result_package_id: [packages[0].id, packages[0].display_name],
-                            lot_id: quant.lot_id[0],
-                            lot_name: quant.lot_id[1]
-                        });
-                        self.scannedLines.push(res.lineDescription.virtual_id);
-                        if (! self.show_entire_packs) {
-                            if (res.isNewLine) {
-                                linesActions.push([self.linesWidget.addProduct, [res.lineDescription, self.actionParams.model]]);
-                            } else {
-                                linesActions.push([self.linesWidget.incrementProduct, [res.id || res.virtualId, quant.quantity, self.actionParams.model]]);
-                            }
+                    var products_without_barcode = _.map(quants, function (quant) {
+                        if (! (quant.product_id[0] in self.productsByBarcode)) {
+                            return quant.product_id[0];
                         }
                     });
-
-                    if (self.show_entire_packs && quants.length) {
-                        linesActions.push([self.linesWidget.reload, undefined]);
-                    }
-                    return $.when({linesActions: linesActions});
+                    return read_products(products_without_barcode).then(function (products_without_barcode) {
+                        _.each(quants, function (quant) {
+                            // FIXME sle: not optimal
+                            var product_barcode = _.findKey(self.productsByBarcode, function (product) {
+                                return product.id === quant.product_id[0];
+                            });
+                            var product = self.productsByBarcode[product_barcode];
+                            if (! product) {
+                                var product_key = _.findKey(products_without_barcode, function (product) {
+                                    return product.id === quant.product_id[0];
+                                });
+                                product = products_without_barcode[product_key];
+                            }
+                            product.qty = quant.quantity;
+                            var res = self._incrementLines({
+                                product: product,
+                                barcode: product_barcode,
+                                package_id: [packages[0].id, packages[0].display_name],
+                                result_package_id: [packages[0].id, packages[0].display_name],
+                                lot_id: quant.lot_id[0],
+                                lot_name: quant.lot_id[1]
+                            });
+                            self.scannedLines.push(res.lineDescription.virtual_id);
+                            if (! self.show_entire_packs) {
+                                if (res.isNewLine) {
+                                    linesActions.push([self.linesWidget.addProduct, [res.lineDescription, self.actionParams.model]]);
+                                } else {
+                                    linesActions.push([self.linesWidget.incrementProduct, [res.id || res.virtualId, quant.quantity, self.actionParams.model]]);
+                                }
+                            }
+                        });
+                        if (self.show_entire_packs && quants.length) {
+                            linesActions.push([self.linesWidget.reload, undefined]);
+                        }
+                        return $.when({linesActions: linesActions});
+                    });
                 });
             } else {
                 return $.Deferred().reject();
