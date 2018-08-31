@@ -377,7 +377,7 @@ var BuildingImageComponent = AbstractNewComponent.extend({
                 if (value) {
                     def.resolve({
                         inheritance: self._createContent({
-                            content: '<img src="' + value + '"/>',
+                            content: '<img class="img-fluid" src="' + value + '"/>',
                         })
                     });
                 } else {
