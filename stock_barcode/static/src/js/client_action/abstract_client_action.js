@@ -870,6 +870,8 @@ var ClientAction = AbstractAction.extend({
                             barcode: product_barcode,
                             package_id: [packages[0].id, packages[0].display_name],
                             result_package_id: [packages[0].id, packages[0].display_name],
+                            lot_id: quant.lot_id[0],
+                            lot_name: quant.lot_id[1]
                         });
                         self.scannedLines.push(res.lineDescription.virtual_id);
                         if (! self.show_entire_packs) {
