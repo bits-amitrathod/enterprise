@@ -4,9 +4,9 @@ import json
 import datetime
 import logging
 
-from odoo import models, api, fields
+from odoo import models, api, fields, SUPERUSER_ID
 from odoo.tools.translate import _
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
 _logger = logging.getLogger(__name__)
@@ -100,12 +100,14 @@ class PlaidProviderAccount(models.Model):
 
     @api.multi
     def update_status(self, status, code=None, message=None):
+        if not self.user_has_groups('account.group_account_user'):
+            raise AccessError(_('Only an Accountant is allowed to perform this operation.'))
         if not code:
             code = 0
         if not message:
             message = ''
         with self.pool.cursor() as cr:
-            self = self.with_env(self.env(cr=cr)).write({'status': status, 'status_code': code, 'last_refresh': fields.Datetime.now(),})
+            self = self.with_env(self.env(cr=cr, user=SUPERUSER_ID)).write({'status': status, 'status_code': code, 'last_refresh': fields.Datetime.now(),})
 
     @api.multi
     def plaid_add_update_provider_account(self, values, site_id, name, mfa=False):

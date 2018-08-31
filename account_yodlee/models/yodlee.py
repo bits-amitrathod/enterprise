@@ -9,8 +9,8 @@ import uuid
 import json
 import re
 
-from odoo import models, api, fields
-from odoo.exceptions import UserError
+from odoo import models, api, fields, SUPERUSER_ID
+from odoo.exceptions import AccessError, UserError
 from odoo.tools.translate import _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -252,6 +252,8 @@ class YodleeProviderAccount(models.Model):
 
     @api.multi
     def write_status(self, refresh_info):
+        if not self.user_has_groups('account.group_account_user'):
+            raise AccessError(_('Only an Accountant is allowed to perform this operation.'))
         vals = {
             'status': refresh_info.get('status'),
             'yodlee_additional_status': refresh_info.get('additionalStatus') or refresh_info.get('additionalInfo'),
@@ -265,7 +267,7 @@ class YodleeProviderAccount(models.Model):
         # We want a new cursor to write the transaction because if there is an error (like invalid credentials)
         # we want it to be written on the object for the user to know something wrong happened
         with self.pool.cursor() as cr:
-            self.with_env(self.env(cr=cr)).write(vals)
+            self.with_env(self.env(cr=cr, user=SUPERUSER_ID)).write(vals)
 
     @api.multi
     def refresh_status(self, count=90, return_credentials=False):
