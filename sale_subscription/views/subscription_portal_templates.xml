@@ -7,7 +7,7 @@
             <div class="oe_structure"/>
             <div class="row oe_website_contract">
                 <div class="col-lg-8">
-                    <h3 class="page-header">Subscription <span t-field="account.display_name"/>
+                    <h3 class="o_page_header">Subscription <span t-field="account.display_name"/>
                         <small class="float-right">
                             <t t-if="account.in_progress and not account.to_renew">
                                 <span class="badge badge-success"><i class="fa fa-fw fa-check"/> In Progress</span>
@@ -115,14 +115,14 @@
                     </div>
                     <t t-if="account.description">
                         <div class="oe_structure"/>
-                        <h3 class="page-header">Terms and conditions</h3>
+                        <h3 class="o_page_header">Terms and conditions</h3>
                         <div t-field="account.description"/>
                     </t>
                 </div>
                 <div class="col-lg-3 offset-lg-1">
                     <div class="oe_structure"/>
                     <div>
-                        <h3 class="page-header">Your Plan</h3>
+                        <h3 class="o_page_header">Your Plan</h3>
                         <div>Current plan: <span t-field="template.name"/></div>
                         <div>Reference: <span t-field="account.code"/></div>
                         <div>Start date: <span t-field="account.date_start"/></div>
@@ -150,7 +150,7 @@
                     </div>
                     <div t-if="account.user_id">
                         <a name="wc-your-contact"/>
-                        <h3 class="page-header">Subscription Manager</h3>
+                        <h3 class="o_page_header">Subscription Manager</h3>
                         <div t-field="account.user_id" t-options='{
                             "widget": "contact",
                             "fields": [
@@ -159,7 +159,7 @@
                                 "email"]}'/>
                     </div>
                     <div t-if="display_close" >
-                        <h3 class="page-header">Close your account</h3>
+                        <h3 class="o_page_header">Close your account</h3>
                         <p>If you close your account, it will remain active until your next invoice date (<span id="wc-next-invoice" t-field="account.recurring_next_date"/>). After this date, you can reopen your account up to <span t-esc="account.recurring_interval"/>
                                     <t t-if="account.recurring_rule_type=='daily'">
                                         day(s)
@@ -181,7 +181,7 @@
             </div>
             <div class="oe_structure"/>
              <div t-if="is_follower" class="col-lg-8">
-                <h1 class="page-header">History</h1>
+                <h1 class="o_page_header">History</h1>
                 <t t-call="portal.message_thread">
                     <t t-set="object" t-value="account"/>
                     <t t-set="chatter_mode" t-value="'json'"/>
