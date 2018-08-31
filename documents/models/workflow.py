@@ -115,17 +115,17 @@ class WorkflowAction(models.Model):
 
     def execute_action(self, attachment):
         if self.action == 'add' and self.tag_id.id:
-            attachment.write({'tag_ids': [(4, self.tag_id.id, False)]})
+            return attachment.write({'tag_ids': [(4, self.tag_id.id, False)]})
         elif self.action == 'replace' and self.facet_id.id:
             faceted_tags = self.env['documents.tag'].search([('facet_id', '=', self.facet_id.id)])
             if faceted_tags.ids:
                 for tag in faceted_tags:
-                    attachment.write({'tag_ids': [(3, tag.id, False)]})
-            attachment.write({'tag_ids': [(4, self.tag_id.id, False)]})
+                    return attachment.write({'tag_ids': [(3, tag.id, False)]})
+            return attachment.write({'tag_ids': [(4, self.tag_id.id, False)]})
         elif self.action == 'remove':
             if self.tag_id.id:
-                attachment.write({'tag_ids': [(3, self.tag_id.id, False)]})
+                return attachment.write({'tag_ids': [(3, self.tag_id.id, False)]})
             elif self.facet_id:
                 faceted_tags = self.env['documents.tag'].search([('facet_id', '=', self.facet_id.id)])
                 for tag in faceted_tags:
-                    attachment.write({'tag_ids': [(3, tag.id, False)]})
+                    return attachment.write({'tag_ids': [(3, tag.id, False)]})

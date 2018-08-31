@@ -12,7 +12,7 @@ class IrAttachment(models.Model):
 
     favorited_ids = fields.Many2many('res.users', string="Favorite of")
     tag_ids = fields.Many2many('documents.tag', 'document_tag_rel', string="Tags")
-    partner_id = fields.Many2one('res.partner', string="Partner", track_visibility='onchange')
+    partner_id = fields.Many2one('res.partner', string="Contact", track_visibility='onchange')
     owner_id = fields.Many2one('res.users', default=lambda self: self.env.user.id, string="Owner",
                                track_visibility='onchange')
     available_rule_ids = fields.Many2many('documents.workflow.rule', compute='_compute_available_rules',
