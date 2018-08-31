@@ -4,6 +4,7 @@ odoo.define('stock_barcode.ClientAction', function (require) {
 var concurrency = require('web.concurrency');
 var core = require('web.core');
 var AbstractAction = require('web.AbstractAction');
+var BarcodeParser = require('barcodes.BarcodeParser');
 
 var FormWidget = require('stock_barcode.FormWidget');
 var HeaderWidget = require('stock_barcode.HeaderWidget');
@@ -141,6 +142,9 @@ var ClientAction = AbstractAction.extend({
                 'group_uom': self.currentState.group_uom,
             };
             self.show_entire_packs = self.currentState.show_entire_packs;
+            // barcode nomenclature
+            self.barcodeParser = new BarcodeParser({'nomenclature_id': self.currentState.nomenclature_id})
+            self.barcodeParser.load();
         });
     },
 
@@ -159,6 +163,17 @@ var ClientAction = AbstractAction.extend({
         }).then(function (res) {
             self.productsByBarcode = res;
         });
+    },
+
+    _isProduct: function (barcode) {
+        var parsed = this.barcodeParser.parse_barcode(barcode);
+        if (parsed.type === 'weight') {
+            var product = this.productsByBarcode[parsed.base_code];
+            product.qty = parsed.value;
+            return product
+        } else {
+            return this.productsByBarcode[barcode];
+        }
     },
 
     /**
@@ -733,7 +748,7 @@ var ClientAction = AbstractAction.extend({
         this.currentStep = 'product';
         var errorMessage;
 
-        var product = this.productsByBarcode[barcode];
+        var product = this._isProduct(barcode);
         if (product) {
             if (product.tracking !== 'none') {
                 this.currentStep = 'lot';

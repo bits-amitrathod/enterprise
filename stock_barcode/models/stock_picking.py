@@ -73,6 +73,8 @@ class StockPicking(models.Model):
             picking['use_existing_lots'] = self.env['stock.picking.type'].browse(picking['picking_type_id'][0]).use_existing_lots
             picking['show_entire_packs'] = self.env['stock.picking.type'].browse(picking['picking_type_id'][0]).show_entire_packs
             picking['actionReportDeliverySlipId'] = self.env.ref('stock.action_report_delivery').id
+            if self.env.user.company_id.nomenclature_id:
+                picking['nomenclature_id'] = [self.env.user.company_id.nomenclature_id.id]
         return pickings
 
     @api.multi
@@ -332,6 +334,7 @@ class StockPicking(models.Model):
             params = {
                 'model': 'stock.picking',
                 'picking_id': self.id,
+                'nomenclature_id': [self.env.user.company_id.nomenclature_id.id],
             }
             return dict(action, target='fullscreen', params=params)
 
