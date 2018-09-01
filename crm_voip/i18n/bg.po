@@ -38,8 +38,8 @@ msgstr ""
 "\n"
 "<p>Привет ${object.partner_id.name},</p>\n"
 "\n"
-"<p>Изглежда, че бяхме прекъснати по време на нашия разговор за\n"
-"    '${object.name}'. Бихте ли ми казали кога ще сте на линия, за да насрочим \n"
+"<p>Изглежда, че бяхме прекъснати по време на нашия разговор относно\n"
+"    '${object.name}'. Бихте ли ми казали кога ще сте отново на линия, за да насрочим \n"
 "    нов разговор? </p>\n"
 "<p>С най-добри пожелания,</p>"
 
@@ -62,12 +62,12 @@ msgstr ""
 #: code:addons/crm_voip/wizard/crm_phonecall_log_wizard.py:87
 #, python-format
 msgid " about %s"
-msgstr ""
+msgstr " за %s"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_nbr
 msgid "# of Cases"
-msgstr ""
+msgstr "# на случаи"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
@@ -75,6 +75,8 @@ msgid ""
 "<span attrs=\"{'invisible': [('show_duration', '=', False)], "
 "'required':[('show_duration', '=',True)]}\">min(s)</span>"
 msgstr ""
+"<span attrs=\"{'invisible': [('show_duration', '=', False)], "
+"'required':[('show_duration', '=',True)]}\">мин(ути)</span>"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_voip_view
@@ -90,7 +92,7 @@ msgstr "<span class=\"o_stat_text\">Насрочете обаждане</span>"
 #: model:ir.actions.server,name:crm_voip.action_create_call_in_queue
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_call_kanban_view
 msgid "Add to Call Queue"
-msgstr "Добавете към опашката на повиквания"
+msgstr "Добавете към опашката за повиквания"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_user_id
@@ -102,7 +104,7 @@ msgstr "Разпределете към"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:111
 #, python-format
 msgid "Backspace"
-msgstr ""
+msgstr "Бутон за връщане назад"
 
 #. module: crm_voip
 #: model:ir.filters,name:crm_voip.filter_crm_phonecall_sales_team
@@ -181,7 +183,7 @@ msgstr "Дата на разговори по месец"
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
 #: model:ir.ui.view,arch_db:crm_voip.wizard_transfer_call_form_view
 msgid "Cancel"
-msgstr "Отказ"
+msgstr "Отменете"
 
 #. module: crm_voip
 #. openerp-web
@@ -211,14 +213,14 @@ msgstr ""
 #: code:addons/crm_voip/static/src/js/crm_voip.js:463
 #, python-format
 msgid "Click to unblock"
-msgstr ""
+msgstr "Натиснете, за да отблокирате"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:74
 #, python-format
 msgid "Close the Panel"
-msgstr ""
+msgstr "Цатворете панела"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_company_id
@@ -266,7 +268,7 @@ msgstr "Месец на създаване"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_custom_duration
 msgid "Custom Duration"
-msgstr ""
+msgstr "Персонализирана продължителност"
 
 #. module: crm_voip
 #. openerp-web
@@ -281,7 +283,7 @@ msgstr "Клиент"
 #: code:addons/crm_voip/static/src/js/crm_voip.js:422
 #, python-format
 msgid "Customer unavailable"
-msgstr ""
+msgstr "Клиентът не е наличен"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_date
@@ -293,7 +295,7 @@ msgstr "Дата"
 #. module: crm_voip
 #: selection:sale.config.settings,mode:0
 msgid "Demo"
-msgstr ""
+msgstr "Демо"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_description
@@ -311,26 +313,26 @@ msgstr "Описание..."
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:153
 #, python-format
 msgid "Description:"
-msgstr ""
+msgstr "Описание:"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Discard"
-msgstr "Откажи"
+msgstr "Отхвърлете"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:5
 #, python-format
 msgid "Display Dialing Panel"
-msgstr ""
+msgstr "Покажете панел за набиране"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:68
 #, python-format
 msgid "Display Keypad"
-msgstr ""
+msgstr "Покажете клавиатура"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_display_name
@@ -339,12 +341,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_display_name
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_display_name
 msgid "Display Name"
-msgstr "Име за показване"
+msgstr "Покажете име"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "Don't Reschedule"
-msgstr ""
+msgstr "Не пренасрочвайте"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_duration
@@ -361,7 +363,7 @@ msgstr "Продължителност в минути и секунди"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Edit the log"
-msgstr ""
+msgstr "Редактирайте регистрацията"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_email
@@ -373,14 +375,14 @@ msgstr "Имейл"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:110
 #, python-format
 msgid "Enter the number..."
-msgstr ""
+msgstr "Въведете номера"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:165
 #, python-format
 msgid "Expected Revenue:"
-msgstr ""
+msgstr "Очакван приход:"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
@@ -395,9 +397,9 @@ msgid ""
 "several criteria and drill down the information, by adding more groups in "
 "the report."
 msgstr ""
-"От този отчет, можете да анализирате представянето на търговския си отдел "
-"въз основа на проведениет от членовете му телефонни разговори. Можете да "
-"групирате или пресявате информация според няколко критерия и да я "
+"От този отчет можете да анализирате производителността на търговския си "
+"отдел въз основа на проведените от членовете му телефонни разговори. Можете "
+"да групирате или пресявате информация според няколко критерия и да я "
 "анализирате, като добавите повече групи в отчета."
 
 #. module: crm_voip
@@ -411,14 +413,14 @@ msgstr ""
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Group By"
-msgstr "Групиране по"
+msgstr "Групирайте по"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:94
 #, python-format
 msgid "Hang Up"
-msgstr ""
+msgstr "Изчакайте"
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
@@ -433,27 +435,27 @@ msgstr "Задържан"
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_id
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_id
 msgid "ID"
-msgstr "ID"
+msgstr "ИН"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 1 Week"
-msgstr ""
+msgstr "След 1 седмица"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 15 Day"
-msgstr ""
+msgstr "След 15 дни"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 msgid "In 2 Months"
-msgstr ""
+msgstr "След 2 месеца"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_in_automatic_mode
 msgid "In Automatic Mode"
-msgstr ""
+msgstr "В автоматичен режим"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_in_queue
@@ -466,13 +468,13 @@ msgid ""
 "In order to follow up on the call, you can trigger a request for\n"
 "          another call, a meeting or an opportunity."
 msgstr ""
-"За да продължите с този разговор, можете да задействате заявка за\n"
+"За да проследявате този разговор, можете да задействате заявка за\n"
 "          друг разговор, среща или друга възможност."
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_lead_in_call_center_queue
 msgid "Is in the Call Queue"
-msgstr "е на опашката за разговори"
+msgstr "Е на опашката за разговори"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall___last_update
@@ -481,7 +483,7 @@ msgstr "е на опашката за разговори"
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard___last_update
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall___last_update
 msgid "Last Modified on"
-msgstr "Последно променено на"
+msgstr "Последно коригирано на"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_write_uid
@@ -504,12 +506,12 @@ msgstr "Последно обновено на"
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_opportunity_id
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_opportunity_id
 msgid "Lead/Opportunity"
-msgstr "Следа/Възможност"
+msgstr "Лийд/възможност"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_opportunity_name
 msgid "Lead/Opportunity name"
-msgstr "Лийд/Име на възможност"
+msgstr "Лийд/име на възможност"
 
 #. module: crm_voip
 #. openerp-web
@@ -548,12 +550,12 @@ msgstr "Моите телефонни разговори"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "My Sales Team(s)"
-msgstr "Моят/ите търговски отдел/и"
+msgstr "Моят търговски отдел(и)"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "My Team"
-msgstr ""
+msgstr "Моят екип"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_new_title_action
@@ -570,7 +572,7 @@ msgstr "Дата на следващо действие"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:159
 #, python-format
 msgid "Next Action:"
-msgstr ""
+msgstr "Следващо действие:"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_next_activity_id
@@ -582,13 +584,13 @@ msgstr "Следваща дейност"
 #: code:addons/crm_voip/static/src/js/crm_voip.js:50
 #, python-format
 msgid "No opportunity linked"
-msgstr ""
+msgstr "Няма свързана възможност"
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Not Held"
-msgstr ""
+msgstr "Незадържан"
 
 #. module: crm_voip
 #: model:ir.actions.act_window,help:crm_voip.crm_phonecall_view
@@ -611,7 +613,7 @@ msgstr "Възможности"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_sale_config_settings_pbx_ip
 msgid "PBX Server IP"
-msgstr ""
+msgstr "IP на PBX сървър "
 
 #. module: crm_voip
 #: model:ir.model,name:crm_voip.model_res_partner
@@ -624,7 +626,7 @@ msgstr "Контрагент"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_id
 msgid "Partner id"
-msgstr "Контрагент - идентификация"
+msgstr "ИН на контрагент "
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_partner_image_small
@@ -663,7 +665,7 @@ msgstr "Телефонни разговори"
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Phone calls that are assigned to one of the sale teams I manage"
 msgstr ""
-"Телефонни разговори, възложени на един от търговските екипи, които "
+"Телефонни разговори, възложени на един от търговските отдели, които "
 "управлявам"
 
 #. module: crm_voip
@@ -732,7 +734,7 @@ msgstr "Производство"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:71
 #, python-format
 msgid "Refresh the Panel"
-msgstr ""
+msgstr "Опреснете панела"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.lead_button_call_kanban_view
@@ -744,21 +746,21 @@ msgstr "Отстранете от опашката за разговори"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:45
 #, python-format
 msgid "Remove from the queue"
-msgstr ""
+msgstr "Отстранете от опашката"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:99
 #, python-format
 msgid "Reschedule Call"
-msgstr "Пренасрочвайте разговор"
+msgstr "Пренасрочете разговор"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_user_id
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_user_id
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "Responsible"
-msgstr "Отговорник"
+msgstr "Отговорен"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_team_id
@@ -788,7 +790,7 @@ msgstr "Запис"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "Save and Open the Opportunity"
-msgstr ""
+msgstr "Запазете и отворете възможност"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_reschedule_option
@@ -815,7 +817,7 @@ msgstr "Насрочете разговор"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:139
 #, python-format
 msgid "Scheduled Date:"
-msgstr ""
+msgstr "Насрочете дата:"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
@@ -839,7 +841,7 @@ msgstr "Потърсете телефонни разговори"
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:100
 #, python-format
 msgid "Send Email"
-msgstr ""
+msgstr "Изпратете имейл"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_sequence
@@ -849,63 +851,63 @@ msgstr "Последователност"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_show_duration
 msgid "Show Duration"
-msgstr ""
+msgstr "Покажете продължителност"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_log_wizard_reschedule_date
 msgid "Specific Date"
-msgstr ""
+msgstr "Определена дата"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:866
 #, python-format
 msgid "Start Calling"
-msgstr "Стартирайте обаждане"
+msgstr "Започнете да се обаждате"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_start_time
 msgid "Start time"
-msgstr ""
+msgstr "Начален час"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_report_state
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_state
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Status"
-msgstr "Състояние"
+msgstr "Статус"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:93
 #, python-format
 msgid "Stop Automatic Call"
-msgstr ""
+msgstr "Прекратете автоматичен разговор"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_sale_config_settings_pbx_ip
 msgid "The IP adress of your PBX Server"
-msgstr ""
+msgstr "IP адресът на PBX сървъра Ви"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_sale_config_settings_wsServer
 msgid "The URL of your WebSocket"
-msgstr ""
+msgstr "URL указателят на Вашия WebSocket"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:422
 #, python-format
 msgid "The customer is temporary unavailable. Please try later."
-msgstr ""
+msgstr "Клиентът временно не е на разположение. Моля опитайте по-късно."
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/js/crm_voip.js:535
 #, python-format
 msgid "The phonecall has no number"
-msgstr ""
+msgstr "Телефонният разговор няма номер"
 
 #. module: crm_voip
 #: model:ir.model.fields,help:crm_voip.field_crm_phonecall_state
@@ -914,29 +916,32 @@ msgid ""
 "When the call is over, the status is set to Held.\n"
 "If the call is not applicable anymore, the status can be set to Cancelled."
 msgstr ""
+"Когато случаят е регистриран, статусът е настроен на 'За извършване.\n"
+"Когато разговорът приклучи, статусът е настроен на 'Задържан.\n"
+"Ако телефонният разговор вече е неприложим, статусът може да бъде настроен на 'Отменен'."
 
 #. module: crm_voip
 #: selection:crm.phonecall,state:0 selection:crm.phonecall.report,state:0
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
 msgid "To Do"
-msgstr "Да се направи"
+msgstr "За извършване"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.crm_phonecall_tree_view
 msgid "To Opportunity"
-msgstr ""
+msgstr "Към възможност"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_report_crm_phonecall_filter
 msgid "Todo"
-msgstr "Да направя"
+msgstr "За извършване"
 
 #. module: crm_voip
 #. openerp-web
 #: code:addons/crm_voip/static/src/xml/crm_voip.xml:86
 #, python-format
 msgid "Toggle Dropdown"
-msgstr ""
+msgstr "Превключване на падащо меню"
 
 #. module: crm_voip
 #: selection:crm.phonecall.log.wizard,reschedule_option:0
@@ -953,7 +958,7 @@ msgstr "Трансфер"
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_transfer_choice
 msgid "Transfer choice"
-msgstr ""
+msgstr "Избор на трансфер"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_crm_case_phonecalls_filter
@@ -970,18 +975,18 @@ msgstr "Неизвестен"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.view_voip_config
 msgid "VOIP Configuration"
-msgstr ""
+msgstr "VOIP конфигурация"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_transfer_wizard.py:34
 #, python-format
 msgid "Warning"
-msgstr "Внимание"
+msgstr "Предупреждение"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_sale_config_settings_wsServer
 msgid "WebSocket"
-msgstr ""
+msgstr "WebSocket"
 
 #. module: crm_voip
 #: code:addons/crm_voip/wizard/crm_phonecall_transfer_wizard.py:35
@@ -1024,12 +1029,12 @@ msgstr "crm.schedule_phonecall"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_change_log_form_view
 msgid "e.g. Discuss proposal"
-msgstr ""
+msgstr "напр. обсъдете предложение"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_schedule_phonecall_opportunity_id
 msgid "opportunity"
-msgstr ""
+msgstr "възможност"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_schedule_phonecall_view
@@ -1045,12 +1050,12 @@ msgstr "sale.config.settings"
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_transfer_call_form_view
 msgid "transfer Option"
-msgstr ""
+msgstr "прехвърлете опция"
 
 #. module: crm_voip
 #: model:ir.model.fields,field_description:crm_voip.field_crm_phonecall_transfer_wizard_transfer_number
 msgid "transfer To"
-msgstr ""
+msgstr "прехвърлете към"
 
 #. module: crm_voip
 #: model:ir.ui.view,arch_db:crm_voip.wizard_transfer_call_form_view
@@ -1060,9 +1065,9 @@ msgstr "прехвърлете разговора"
 #. module: crm_voip
 #: selection:crm.phonecall.transfer.wizard,transfer_choice:0
 msgid "transfer to another External Phone"
-msgstr ""
+msgstr "прехвърлете към друг външен телефон"
 
 #. module: crm_voip
 #: selection:crm.phonecall.transfer.wizard,transfer_choice:0
 msgid "transfer to your external phone"
-msgstr ""
+msgstr "прехвърлете към Вашия външен телефон "

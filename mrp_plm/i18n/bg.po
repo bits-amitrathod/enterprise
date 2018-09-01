@@ -3,10 +3,10 @@
 # * mrp_plm
 # 
 # Translators:
-# kalatchev, 2016
+# Maria Boyadjieva <marabo2000@gmail.com>, 2016
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2016
 # Martin Trigaux, 2016
-# Maria Boyadjieva <marabo2000@gmail.com>, 2016
+# kalatchev, 2016
 # Anton Vassilev, 2016
 # preslav <hackerz99999@gmail.com>, 2016
 # Vladimir Dachev <v.dachev@dalkomotors.com>, 2016
@@ -100,8 +100,8 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
-"Речник Python, който ще бъде оценен, за да предоставя стойности по "
-"подразбиране при създаването на нови записи за този alias."
+"Речник Python, който ще бъде остойностен, така че да предоставя стойности по"
+" подразбиране при създаването на нови записи за този псевдоним."
 
 #. module: mrp_plm
 #: selection:mrp.eco.bom.change,change_type:0
@@ -112,22 +112,22 @@ msgstr "Добави"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_id
 msgid "Alias"
-msgstr "Синоним"
+msgstr "Псевдоним"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_contact
 msgid "Alias Contact Security"
-msgstr "Защита на контакт-синоним"
+msgstr "Защита на контакт-псевдоним"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_name
 msgid "Alias Name"
-msgstr "Псевдоним"
+msgstr "Име-псевдоним"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_domain
 msgid "Alias domain"
-msgstr "Псевдоним - домейн"
+msgstr "Домейн-псевдоним "
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_model_id
@@ -558,7 +558,7 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "Email Alias"
-msgstr "Псевдоним за имейл"
+msgstr "Имейл-псевдоним"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change_eco_id
@@ -635,7 +635,7 @@ msgstr "Висок"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag_id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_id
 msgid "ID"
-msgstr "ID"
+msgstr "ИН"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_parent_thread_id
@@ -643,8 +643,8 @@ msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
 msgstr ""
-"Идентификатор на родителския запис, съдържащ псевдонима (пример: проект, "
-"който държи псевдонима за създаване на задачи)"
+"ИН на основния запис, съдържащ псевдонима (пример: проект, съдържащ "
+"псевдонима за създаване на задачи)"
 
 #. module: mrp_plm
 #: model:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -813,6 +813,9 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
+"Незадължителен ИН на поредица (на запис), към която ще се прикачват всички "
+"постъпващи съобщения, дори и да не са ѝ отговорили. Ако е настроено, това "
+"напълно ще прекрати създаването на нови записи."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -833,12 +836,12 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_parent_model_id
 msgid "Parent Model"
-msgstr ""
+msgstr "Основен модел"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr ""
+msgstr "ИН на основна поредица записи"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_parent_model_id
@@ -847,6 +850,9 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
+"Основен модел, съдържащ псевдонима. Моделът, съдържащ референцията за "
+"псевдонима не е непременно моделът, зададен от alias_model_id (например: "
+"проект (parent_model) и задача (модел))"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_contact
@@ -913,7 +919,7 @@ msgstr "Количество"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type_alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "ИН на поредица записи"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_name
@@ -1123,6 +1129,9 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"Моделът (Odoo вид документ), към който се съотнася този псевдоним. Всеки "
+"един входящ имейл, който не отговаря на съществуващ запис, ще предизвика "
+"създаването на нов запис на въпросния модел (напр. проектна задача)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_name
@@ -1130,6 +1139,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"Името на имейла-псевдоним, напр. 'позиции', в случай че желаете да "
+"прихващате имейли <jobs@example.odoo.com>"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type_alias_user_id
@@ -1139,6 +1150,11 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"Собственикът на записите, създадени според получаването на имейли на този "
+"псевдоним. Ако това поле не е настроено, системата ще се опита да открие "
+"правилния собственик въз основа адреса на подателя (От) или ще използва "
+"профила на администратора, в случай че на този адрес не е открит никакъв "
+"системен потребител."
 
 #. module: mrp_plm
 #. openerp-web

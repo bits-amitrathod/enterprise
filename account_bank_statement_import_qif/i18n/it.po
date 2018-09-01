@@ -7,13 +7,14 @@
 # Simone Bernini <simone@aperturelabs.it>, 2016
 # Martin Trigaux, 2016
 # Paolo Valier, 2018
+# Léonie Bouchat <lbo@odoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
 "PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Paolo Valier, 2018\n"
+"Last-Translator: Léonie Bouchat <lbo@odoo.com>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,6 +29,9 @@ msgid ""
 " be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
 msgstr ""
+"Registro Contabile legato al movimento bancario che si sta importando. Dovrà"
+" essere indicato manualmente dove il formato del movimento importato non "
+"risulti comprensibile (QIF per esempio)."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_bank_statement_import_qif_date_format
@@ -36,6 +40,10 @@ msgid ""
 "financial institutions use the local format.Therefore, it is frequent "
 "outside the US to have QIF date formated day-first (dd/mm/yy)."
 msgstr ""
+"Sebbene il formato della data QIF sia con il mese in primo luogo (mm/gg/aa),"
+" molte istituzioni finanziarie utilizzano il formato di data locale. È "
+"quindi frequente avere date QIF formattate con il giorno in primo luogo "
+"(gg/mm/aa) al di fuori degli Stati Uniti. "
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:61
@@ -79,6 +87,8 @@ msgid ""
 "Technical field used to ask the user for the date format used in the QIF "
 "file, as this format is ambiguous."
 msgstr ""
+"Campo tecnico usato per chiedere all'utente il formato di data usato nel "
+"file QIF, poiché il formato è ambiguo. "
 
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view_inherited
@@ -86,6 +96,9 @@ msgid ""
 "The QIF format is ambiguous about dates: please check with your financial "
 "institution whether they format it with month or day first.<br/>"
 msgstr ""
+"Il formato QIF è ambiguo per quanto riguarda le date. Verifica con il "
+"proprio istituto finanziario se le date sono formattate con il mese o il "
+"giorno prima.<br/>"
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:101
@@ -107,4 +120,4 @@ msgstr ""
 #. module: account_bank_statement_import_qif
 #: selection:account.bank.statement.import,qif_date_format:0
 msgid "mm/dd/yy"
-msgstr ""
+msgstr "mm/gg/aa"

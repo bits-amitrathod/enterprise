@@ -263,8 +263,8 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
-"Речник Python, който ще бъде оценен, за да предоставя стойности по "
-"подразбиране при създаването на нови записи за този alias."
+"Речник Python, който ще бъде остойностен, така че да предоставя стойности по"
+" подразбиране при създаването на нови записи за този псевдоним."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -313,17 +313,17 @@ msgstr "Активен"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_contact
 msgid "Alias Contact Security"
-msgstr "Защита на контакт-синоним"
+msgstr "Защита на контакт-псевдоним"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_name
 msgid "Alias Name"
-msgstr "Псевдоним"
+msgstr "Име-псевдоним"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_domain
 msgid "Alias domain"
-msgstr "Псевдоним - домейн"
+msgstr "Домейн-псевдоним"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_model_id
@@ -732,7 +732,7 @@ msgstr "Имейл шаблони"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_alias
 msgid "Email alias"
-msgstr ""
+msgstr "Имейл-псевдоним"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_sla_fail
@@ -892,7 +892,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type_id
 msgid "ID"
-msgstr "ID"
+msgstr "ИН"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_parent_thread_id
@@ -900,8 +900,8 @@ msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
 msgstr ""
-"Идентификатор на родителския запис, съдържащ псевдонима (пример: проект, "
-"който държи псевдонима за създаване на задачи)"
+"ИН на основния запис, съдържащ псевдонима (пример: проект, съдържащ "
+"псевдонима за създаване на задачи)"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -1127,7 +1127,7 @@ msgstr "Брой тикети от един и същ контрагент"
 #: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:85
 #, python-format
 msgid "Only Integer Value should be valid."
-msgstr ""
+msgstr "Валидни са единствено стойности на цели числа"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_ticket_type_id
@@ -1159,6 +1159,9 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
+"Незадължителен ИН на поредица (на запис), към която ще се прикачват всички "
+"постъпващи съобщения, дори и да не са ѝ отговорили. Ако е настроено, това "
+"напълно ще прекрати създаването на нови записи."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_user_id
@@ -1168,12 +1171,12 @@ msgstr "Собственик"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_parent_model_id
 msgid "Parent Model"
-msgstr ""
+msgstr "Основен модел"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr ""
+msgstr "ИН на основна поредица записи"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_parent_model_id
@@ -1182,6 +1185,9 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
+"Основен модел, съдържащ псевдонима. Моделът, съдържащ референцията за "
+"псевдонима не е непременно моделът, зададен от alias_model_id (например: "
+"проект (parent_model) и задача (модел))"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_debit_limit
@@ -1287,7 +1293,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "ИН на поредица записи"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_main
@@ -1420,6 +1426,8 @@ msgid ""
 "Specific team that uses this stage. Other teams will not be able to see or "
 "use this stage."
 msgstr ""
+"Конкретен екип, който използва този етап. Други екипи няма да могат да "
+"виждат или да използват този етап."
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_stage
@@ -1433,12 +1441,12 @@ msgstr "Етап"
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_stage
 msgid "Stage Changed"
-msgstr ""
+msgstr "Променен етап"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_stage_view_form
 msgid "Stage Search"
-msgstr ""
+msgstr "Търдене на етап"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_stage_action
@@ -1581,6 +1589,9 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"Моделът (Odoo вид документ), към който се съотнася този псевдоним. Всеки "
+"един входящ имейл, който не отговаря на съществуващ запис, ще предизвика "
+"създаването на нов запис на въпросния модел (напр. проектна задача)"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_name
@@ -1588,6 +1599,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"Името на имейла-псевдоним, напр. 'позиции', в случай че желаете да "
+"прихващате имейли <jobs@example.odoo.com>"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_user_id
@@ -1597,6 +1610,11 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"Собственикът на записите, създадени според получаването на имейли на този "
+"псевдоним. Ако това поле не е настроено, системата ще се опита да открие "
+"правилния собственик въз основа адреса на подателя (От) или ще използва "
+"профила на администратора, в случай че на този адрес не е открит никакъв "
+"системен потребител."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_res_users_has_unreconciled_entries
@@ -1654,7 +1672,7 @@ msgstr ""
 #: code:addons/helpdesk/models/helpdesk.py:311
 #, python-format
 msgid "This target does not exist."
-msgstr ""
+msgstr "Тази цел не съществува."
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket
@@ -1812,7 +1830,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Unarchive"
-msgstr ""
+msgstr "Разархивирайте"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_unassigned_tickets
@@ -1901,7 +1919,7 @@ msgstr ""
 #: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:85
 #, python-format
 msgid "Wrong value entered!"
-msgstr ""
+msgstr "Въведена грешна стойност!"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk.py:100
