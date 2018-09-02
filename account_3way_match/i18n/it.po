@@ -5,13 +5,14 @@
 # Translators:
 # Martin Trigaux, 2017
 # Paolo Valier, 2018
+# Léonie Bouchat <lbo@odoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
 "PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Paolo Valier, 2018\n"
+"Last-Translator: Léonie Bouchat <lbo@odoo.com>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,6 +27,9 @@ msgid ""
 "  * No, you should not pay the bill, you have not received the products\n"
 "  * Exception, there is a difference between received and billed quantities."
 msgstr ""
+"  * Sì, devi pagare la fattura poiché hai ricevuto i prodotti\n"
+"  * No, non devi pagare la fattura poiché non hai ricevuto i prodotti\n"
+"  * Eccezione: la quantità ricevuta e la quantità fatturata sono diverse."
 
 #. module: account_3way_match
 #: model:ir.ui.view,arch_db:account_3way_match.account_invoice_filter_inherit_account_3way_match
@@ -55,6 +59,8 @@ msgid ""
 "Indicates whether the 'Can be paid' status is defined automatically or "
 "manually."
 msgstr ""
+"Indica se lo stato \"Can be paid\" (può essere pagato) è impostato "
+"automaticamente o manualmente. "
 
 #. module: account_3way_match
 #: model:ir.model,name:account_3way_match.model_account_invoice
@@ -81,13 +87,13 @@ msgstr "N°"
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice_line_can_be_paid
 msgid "Release to Pay"
-msgstr ""
+msgstr "Consegna da Pagare"
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice_release_to_pay
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice_release_to_pay_manual
 msgid "Should be paid"
-msgstr ""
+msgstr "Dovrebbe essere pagato"
 
 #. module: account_3way_match
 #: model:ir.model.fields,help:account_3way_match.field_account_invoice_release_to_pay
@@ -98,12 +104,17 @@ msgid ""
 "  * Exception, there is a difference between received and billed quantities\n"
 "This status is defined automatically, but you can force it by ticking the 'Force Status' checkbox."
 msgstr ""
+"Questo campo può avere i seguenti valori:\n"
+"  * Sì, devi pagare la fattura poiché hai ricevuto i prodotti\n"
+"  * No, non devi pagare la fattura poiché non hai ricevuto i prodotti\n"
+"  * Eccezione: la quantità ricevuta e la quantità fatturata sono diverse.\n"
+"Questo stato viene impostato automaticamente ma è possibile forzarlo selezionando la casella \"Forza lo Stato\"."
 
 #. module: account_3way_match
 #: model:product.product,name:account_3way_match.demo_product
 #: model:product.template,name:account_3way_match.demo_product_product_template
 msgid "VR Computer"
-msgstr ""
+msgstr "Computer VR"
 
 #. module: account_3way_match
 #: selection:account.invoice,release_to_pay:0
