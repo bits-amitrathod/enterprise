@@ -7,13 +7,14 @@
 # e2f <projects@e2f.com>, 2018
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2018
 # Fabien Bourgeois <fabien@yaltik.com>, 2018
+# Eloïse Stilmant <est@odoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-24 11:28+0000\n"
 "PO-Revision-Date: 2018-08-24 11:28+0000\n"
-"Last-Translator: Fabien Bourgeois <fabien@yaltik.com>, 2018\n"
+"Last-Translator: Eloïse Stilmant <est@odoo.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +26,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
 #: model:ir.model.fields,field_description:sign.field_res_users__signature_count
 msgid "# Signatures"
-msgstr ""
+msgstr "# Signatures"
 
 #. module: sign
 #: code:addons/sign/models/sign_request.py:233
@@ -50,12 +51,12 @@ msgstr ""
 #: code:addons/sign/controllers/main.py:207
 #, python-format
 msgid "%s validated the signature by SMS with the phone number %s."
-msgstr ""
+msgstr "%s a validé la signature par SMS avec le numéro suivant:%s."
 
 #. module: sign
 #: model:ir.ui.view,arch_db:sign.sign_template_mail_follower
 msgid ") has added you as a follower of the document"
-msgstr ""
+msgstr ") vous a ajouté comme follower du document"
 
 #. module: sign
 #: model:ir.ui.view,arch_db:sign.sign_template_mail_request
@@ -65,7 +66,7 @@ msgstr ""
 #. module: sign
 #: model:ir.ui.view,arch_db:sign._doc_sign
 msgid "- <em>Waiting Signature</em>"
-msgstr ""
+msgstr "- <em>Signature en attente</em>"
 
 #. module: sign
 #: model:ir.ui.view,arch_db:sign._doc_sign
@@ -79,11 +80,14 @@ msgid ""
 "there must be either no fields to fill or only one responsible for all the "
 "fields!</span>"
 msgstr ""
+"<span attrs=\"{'invisible': [('url', '!=', False)]}\">Pour pouvoir partager,"
+" il ne doit y avoir aucun champ à remplir ou seulement un seul responsable "
+"pour tous les champs!</span>"
 
 #. module: sign
 #: model:ir.ui.view,arch_db:sign.sign_request_view_form
 msgid "<span class=\"o_stat_text\"> Signed</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\"> A signé</span>"
 
 #. module: sign
 #: model:ir.ui.view,arch_db:sign.res_partner_view_form
@@ -93,7 +97,7 @@ msgstr "<span class=\"o_stat_text\">Demandes de signature</span>"
 #. module: sign
 #: model:ir.ui.view,arch_db:sign.sign_request_view_form
 msgid "<span class=\"o_stat_text\">View</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Vue</span>"
 
 #. module: sign
 #: model:ir.ui.view,arch_db:sign.sign_template_share_view_form
@@ -103,6 +107,9 @@ msgid ""
 "who clicks on the link. The link is private, only those that receive the "
 "link will be able to sign it.</span>"
 msgstr ""
+"Partagez ce lien et Odoo créera un nouveau document à chaque fois qu'une "
+"personne cliquera sur le lien. Le lien est privé, seules les personnes "
+"disposant du lien pourront le signer."
 
 #. module: sign
 #: model:ir.ui.view,arch_db:sign.sign_item_type_view_form
@@ -116,6 +123,8 @@ msgid ""
 "<strong>Warning</strong> do not forward this email to other people!<br/>\n"
 "            They will be able to access this document and sign it as yourself."
 msgstr ""
+"<strong>Attention</strong> ne transférez pas cet email à d'autres personnes!\n"
+"            Ils pourront accéder à ce document et le signer à votre place. "
 
 #. module: sign
 #. openerp-web
@@ -125,6 +134,7 @@ msgid ""
 "A SMS will be sent to the following phone number. Please update it if it's "
 "not relevant."
 msgstr ""
+"Un SMS sera envoyé sur le numéro suivant. Modifiez-le s'il n'est plus exact."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_needaction
@@ -516,7 +526,7 @@ msgstr "Dessiner"
 #: model:ir.ui.view,arch_db:sign.sign_request_view_kanban
 #: model:ir.ui.view,arch_db:sign.sign_template_view_kanban
 msgid "Dropdown menu"
-msgstr ""
+msgstr "Menu déroulant"
 
 #. module: sign
 #. openerp-web
