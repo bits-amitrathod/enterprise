@@ -1197,6 +1197,10 @@ var ClientAction = AbstractAction.extend({
      * Handles the `edit_product` OdooEvent. It destroys `this.linesWidget` and displays an instance
      * of `FormWidget` for the line model.
      *
+     * Editing a line should not "end" the barcode flow, meaning once the changes are saved or
+     * discarded in the opened form view, the user should be able to scan a destination location
+     * (if the current flow allows it) and enforce it on `this.scanned_lines`.
+     *
      * @private
      * @param {OdooEvent} ev
      */
@@ -1225,7 +1229,10 @@ var ClientAction = AbstractAction.extend({
                             line.qty_done === lineDescription.qty_done;
                     });
                     id = rec.id;
+                    self.scannedLines = _.without(self.scannedLines, ev.data.id);
+                    self.scannedLines.push(id);
                 }
+
                 if (self.actionParams.model === 'stock.picking') {
                     self.formWidget = new FormWidget(
                         self,
@@ -1320,8 +1327,6 @@ var ClientAction = AbstractAction.extend({
                 self.currentPageIndex = newPageIndex;
             }
             self._reloadLineWidget(self.currentPageIndex);
-            // FIXME sle: when scanning a package with move entire packages, we shouldn't call this method
-            self._endBarcodeFlow();
             self.$('.o_show_information').toggleClass('o_hidden', false);
         });
     },
