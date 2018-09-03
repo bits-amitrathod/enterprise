@@ -457,9 +457,13 @@
                                    attrs="{'invisible': [('payment_mode', 'not in', ['validate_send', 'validate_send_payment'])],
                                            'required': [('payment_mode', 'in', ['validate_send', 'validate_send_payment'])]}"/>
                         </group>
-                        <group name="online" string="Online Management">
+                        <group name="online" string="Customer Portal">
                             <field name="user_closable"/>
-                            <field name="auto_close_limit" attrs="{'invisible': [('payment_mode', 'in', ['manual', 'draft_invoice'])]}"/>
+                            <label for="auto_close_limit"/>
+                            <div class="o_row">
+                                <field name="auto_close_limit" attrs="{'invisible': [('payment_mode', 'in', ['manual', 'draft_invoice'])]}"/>
+                                days
+                            </div>
                             <field name="tag_ids" string="Category" widget="many2many_tags"
                                    options="{'color_field': 'color'}" />
                         </group>

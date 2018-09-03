@@ -953,7 +953,7 @@ class SaleSubscriptionTemplate(models.Model):
     subscription_count = fields.Integer(compute='_compute_subscription_count')
     color = fields.Integer()
     auto_close_limit = fields.Integer(string="Automatic closing limit", default=15,
-                                      help="Number of days before a subscription gets closed when automatic payments is set and are not fulfilled by the customer.")
+                                      help="Number of days before a subscription gets closed when the chosen payment mode trigger automatically the payment.")
     good_health_domain = fields.Char(string='Good Health', default='[]',
                                      help="Domain used to change subscription's Kanban state with a 'Good' rating")
     bad_health_domain = fields.Char(string='Bad Health', default='[]',
