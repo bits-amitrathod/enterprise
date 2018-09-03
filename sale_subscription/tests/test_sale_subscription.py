@@ -318,3 +318,18 @@ class TestSubscription(TestSubscriptionCommon):
         sub = sub_form.save()
         self.assertEqual(sub.template_id.recurring_rule_boundary, 'time_bounding')
         self.assertIsInstance(sub.date, datetime.date)
+
+    def test_default_salesperson(self):
+        partner = self.env['res.partner'].create({'name': 'Tony Stark'})
+        sub_form = Form(self.env['sale.subscription'])
+        sub_form.template_id = self.subscription_tmpl
+        sub_form.partner_id = partner
+        sub = sub_form.save()
+        self.assertEqual(sub.user_id, self.env.user)
+
+        partner.user_id = self.user_portal
+        sub_form = Form(self.env['sale.subscription'])
+        sub_form.template_id = self.subscription_tmpl
+        sub_form.partner_id = partner
+        sub = sub_form.save()
+        self.assertEqual(sub.user_id, self.user_portal)

@@ -49,7 +49,7 @@ class SaleSubscription(models.Model):
     template_id = fields.Many2one('sale.subscription.template', string='Subscription Template', required=True, track_visibility='onchange')
     payment_mode = fields.Selection(related='template_id.payment_mode')
     description = fields.Text()
-    user_id = fields.Many2one('res.users', string='Salesperson', track_visibility='onchange')
+    user_id = fields.Many2one('res.users', string='Salesperson', track_visibility='onchange', default=lambda self: self.env.user)
     team_user_id = fields.Many2one('res.users', string="Team Leader", related="user_id.partner_id.team_id.user_id")
     invoice_count = fields.Integer(compute='_compute_invoice_count')
     country_id = fields.Many2one('res.country', related='partner_id.country_id', store=True)
