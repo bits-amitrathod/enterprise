@@ -10,7 +10,6 @@ from uuid import uuid4
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
-from odoo.osv import expression
 from odoo.tools import format_date
 from odoo.tools.safe_eval import safe_eval
 
@@ -956,9 +955,9 @@ class SaleSubscriptionTemplate(models.Model):
     auto_close_limit = fields.Integer(string="Automatic closing limit", default=15,
                                       help="Number of days before a subscription gets closed when automatic payments is set and are not fulfilled by the customer.")
     good_health_domain = fields.Char(string='Good Health', default='[]',
-        help="Domain used to change subscription's Kanban state with a 'Good' rating")
+                                     help="Domain used to change subscription's Kanban state with a 'Good' rating")
     bad_health_domain = fields.Char(string='Bad Health', default='[]',
-        help="Domain used to change subscription's Kanban state with a 'Bad' rating")
+                                    help="Domain used to change subscription's Kanban state with a 'Bad' rating")
     invoice_mail_template_id = fields.Many2one('mail.template', string='Invoice Email Template', domain=[('model', '=', 'account.invoice')])
 
     @api.constrains('recurring_interval')
@@ -1008,8 +1007,8 @@ class SaleSubscriptionStage(models.Model):
     description = fields.Text(translate=True)
     sequence = fields.Integer(default=1)
     fold = fields.Boolean(string='Folded in Kanban',
-        help='This stage is folded in the kanban view when there are not records in that stage to display.')
-    rating_template_id = fields.Many2one('mail.template', string='Rating Email Template',domain=[('model', '=', 'sale.subscription')])
+                          help='This stage is folded in the kanban view when there are not records in that stage to display.')
+    rating_template_id = fields.Many2one('mail.template', string='Rating Email Template', domain=[('model', '=', 'sale.subscription')])
     in_progress = fields.Boolean(string='In Progress', default=True)
 
 
