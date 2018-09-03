@@ -1013,7 +1013,7 @@ var ClientAction = AbstractAction.extend({
                 if (currentStateLine.qty_done - currentStateLine.product_uom_qty >= 0) {
                     // Move the line.
                     currentStateLine.location_dest_id.id = destinationLocation.id;
-                    currentStateLine.location_dest_id.name = destinationLocation.name;
+                    currentStateLine.location_dest_id.display_name = destinationLocation.display_name;
                 } else {
                     // Split the line.
                     var qty = currentStateLine.qty_done;
@@ -1021,7 +1021,7 @@ var ClientAction = AbstractAction.extend({
                     var newLine = $.extend(true, {}, currentStateLine);
                     newLine.qty_done = qty;
                     newLine.location_dest_id.id = destinationLocation.id;
-                    newLine.location_dest_id.name = destinationLocation.name;
+                    newLine.location_dest_id.display_name = destinationLocation.display_name;
                     newLine.product_uom_qty = 0;
                     var virtualId = self._getNewVirtualId();
                     newLine.virtual_id = virtualId;
