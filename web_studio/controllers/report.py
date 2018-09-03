@@ -248,4 +248,7 @@ class WebStudioReportController(main.WebStudioController):
         except Exception as err:
             # the report could not be rendered which probably means the last
             # operation was incorrect
-            return [{"error": err, "stack": err.stack}]
+            return [{
+                "error": err,
+                "message": err.message,
+            }]

@@ -243,21 +243,8 @@ var ReportEditor = Widget.extend(EditorMixin, {
      * @param {Component} component
      */
     dropComponent: function (component) {
-        var self = this;
-        var clean = function () {
-            self.$dropZone.filter('th, td').each(function () {
-                var $node = $(this).data('oe-node');
-                var colspan = $node.data('colspan');
-                if (colspan) {
-                    $node.attr('colspan', colspan);
-                }
-            });
-            self.$content.find('.o_web_studio_hook').remove();
-            self.$content.find('.o_web_studio_structure_hook').remove();
-        };
-
-        var $dropZone = this.$dropZone.filter('.o_web_studio_nearest_hook');
-        var targets = $dropZone.map(function () {
+        var $nearestHooks = this.$dropZone.filter('.o_web_studio_nearest_hook');
+        var targets = $nearestHooks.map(function () {
             var $active = $(this);
             return {
                 node: $active.data('oe-node').data('node'),
@@ -269,15 +256,15 @@ var ReportEditor = Widget.extend(EditorMixin, {
         if (targets.length) {
             this.trigger_up('view_change', {
                 component: component,
-                fail: clean,
+                fail: this._cleanHooks.bind(this),
                 targets: targets,
                 operation: {
                     type: 'add',
-                    position: $dropZone.first().data('oe-position'),
+                    position: $nearestHooks.first().data('oe-position'),
                 },
             });
         } else {
-            clean();
+            this._cleanHooks();
         }
     },
     /**
@@ -361,6 +348,7 @@ var ReportEditor = Widget.extend(EditorMixin, {
         this.nodesArchs = nodesArchs;
         this.reportHTML = reportHTML;
 
+        this.$dropZone = $();
         this._resizeIframe();
 
         return this._updateContent().then(function () {
@@ -372,7 +360,7 @@ var ReportEditor = Widget.extend(EditorMixin, {
                     self.selectedNode = null;
                     self.trigger_up('sidebar_tab_changed', {
                         mode: 'new',
-                    })
+                    });
                 }
             }
         });
@@ -381,6 +369,24 @@ var ReportEditor = Widget.extend(EditorMixin, {
     //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
+
+
+    /**
+     * Clean displayed hooks and reset colspan on modified nodes.
+     *
+     * @private
+     */
+    _cleanHooks: function () {
+        this.$dropZone.filter('th, td').each(function () {
+            var $node = $(this).data('oe-node');
+            var colspan = $node.data('colspan');
+            if (colspan) {
+                $node.attr('colspan', colspan);
+            }
+        });
+        this.$content.find('.o_web_studio_hook').remove();
+        this.$content.find('.o_web_studio_structure_hook').remove();
+    },
     /**
      * Create hook on target and compute its size.
      *
@@ -602,19 +608,6 @@ var ReportEditor = Widget.extend(EditorMixin, {
         var self = this;
         this.$content = this.$iframe.contents();
         var reportHTML = this.reportHTML;
-
-        if (reportHTML.error) {
-            var stack = reportHTML.stack
-                 .replace(/&/g, "&amp;")
-                 .replace(/</g, "&lt;")
-                 .replace(/>/g, "&gt;")
-                 .replace(/"/g, "&quot;")
-                 .replace(/'/g, "&#039;");
-            reportHTML = '<h1>' + reportHTML.error + '</h1><pre>' + stack + '</pre>';
-            this.$content.find('body').html(reportHTML);
-            this._processReportPreviewContent();
-            return $.when();
-        }
 
         var $main = this.$content.find('main:first');
         if ($main.length) {

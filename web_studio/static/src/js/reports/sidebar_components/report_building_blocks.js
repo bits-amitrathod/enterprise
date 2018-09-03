@@ -322,8 +322,8 @@ var BuildingFieldComponent = AbstractNewComponent.extend({
             var availableKeys = _.filter(self._getContextKeys(target.node), function (field) {return !!field.relation;});
             var dialog = new NewFieldDialog(self, 'record_fake_model', field, availableKeys).open();
             dialog.on('field_default_values_saved', self, function (values) {
-                if (values.related.split('.').length < 2) {
-                    Dialog.alert(self, _t('The record field name is missing'));
+                if (!_.contains(values.related, '.')) {
+                    Dialog.alert(self, _t('Please specify a field name for the selected model.'));
                     return;
                 }
                 def.resolve({
@@ -441,6 +441,10 @@ var BuildingBlockAddress = AbstractNewComponent.extend({
             // TODO: maybe filter keys to only get many2one fields to res.partner?
             var dialog = new NewFieldDialog(self, 'record_fake_model', field, availableKeys).open();
             dialog.on('field_default_values_saved', self, function (values) {
+                if (!_.contains(values.related, '.')) {
+                    Dialog.alert(self, _t('Please specify a field name for the selected model.'));
+                    return;
+                }
                 if (values.relation === 'res.partner') {
                     def.resolve({
                         inheritance: self._createContent({

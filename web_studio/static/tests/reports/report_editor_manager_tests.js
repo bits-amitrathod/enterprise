@@ -3,6 +3,7 @@ odoo.define('web_studio.ReportEditorManager_tests', function (require) {
 
 var ace = require('web_editor.ace');
 var config = require('web.config');
+var NotificationService = require('web.NotificationService');
 var testUtils = require('web.test_utils');
 var studioTestUtils = require('web_studio.testUtils');
 var session = require('web.session');
@@ -1923,6 +1924,77 @@ QUnit.module('ReportEditorManager', {
 
             // make the first op fail (will release the MutexedDropPrevious)
             firstDef.reject();
+
+            rem.destroy();
+            done();
+        });
+    });
+
+    QUnit.test('automatic undo on AST error', function (assert) {
+        var self = this;
+        var done = assert.async();
+        assert.expect(4);
+
+        this.templates.push({
+            key: 'template1',
+            view_id: 55,
+            arch:
+                '<kikou>' +
+                    '<t t-name="template1">' +
+                        '<span>Kikou</span>' +
+                    '</t>' +
+                '</kikou>',
+        });
+        var nbEdit = 0;
+        var rem = studioTestUtils.createReportEditorManager({
+            env: {
+                modelName: 'kikou',
+                ids: [42, 43],
+                currentId: 42,
+            },
+            report: {},
+            reportHTML: studioTestUtils.getReportHTML(this.templates),
+            reportViews: studioTestUtils.getReportViews(this.templates),
+            reportMainViewID: 42,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_report_view') {
+                    nbEdit++;
+                    if (nbEdit === 1) {
+                        assert.strictEqual(args.operations.length, 1, "the operation is correctly applied");
+                        // simulate an AST error
+                        return $.when({
+                            report_html: {
+                                error: 'AST error',
+                                message: 'You have probably done something wrong',
+                            },
+                        });
+                    }
+                    if (nbEdit === 2) {
+                        assert.strictEqual(args.operations.length, 0, "the operation should be undone");
+                        return $.when({
+                            report_html: studioTestUtils.getReportHTML(self.templates),
+                            views: studioTestUtils.getReportViews(self.templates),
+                        });
+                    }
+                }
+                return this._super.apply(this, arguments);
+            },
+            services: {
+                notification: NotificationService.extend({
+                    notify: function (params) {
+                        assert.step(params.type);
+                    }
+                }),
+            },
+        });
+
+        rem.editorIframeDef.then(function () {
+            rem.$('iframe').contents().find('span:contains(Kikou)').click();
+
+            // trigger a modification that will fail
+            rem.$('.o_web_studio_sidebar .card:eq(1) .o_web_studio_text_decoration button[data-property="bold"]').click();
+
+            assert.verifySteps(['warning'], "should have undone the operation");
 
             rem.destroy();
             done();

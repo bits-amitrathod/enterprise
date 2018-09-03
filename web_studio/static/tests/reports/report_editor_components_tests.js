@@ -268,8 +268,7 @@ QUnit.module('ReportComponents', {
         $('.o_web_studio_field_modal .o_field_selector_close').trigger('click');
         $('.o_web_studio_field_modal .btn-primary').trigger('click');
 
-        assert.strictEqual($('.modal main[role="alert"]').text(),
-            'The record field name is missing',
+        assert.strictEqual($('.modal main[role="alert"]').length, 1,
             "Should display an alert because the field name of the record is wrong");
         $('.modal:has(main[role="alert"]) .btn-primary').trigger('click');
 
