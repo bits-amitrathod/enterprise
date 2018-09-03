@@ -320,8 +320,10 @@ var AbstractEditorManager = Widget.extend({
             var previousState = oldSidebar.getLocalState ? oldSidebar.getLocalState() : undefined;
             self.sidebar = self._instantiateSidebar(newState, previousState);
 
-            return self.sidebar.prependTo(self.$el).then(function () {
+            var fragment = document.createDocumentFragment();
+            return self.sidebar.appendTo(fragment).then(function () {
                 oldSidebar.destroy();
+                self.sidebar.$el.prependTo(self.$el);
                 self.sidebar.$el.scrollTop(scrolltop);
                 // the XML editor replaces the sidebar in this case
                 if (self.mode === 'rendering') {

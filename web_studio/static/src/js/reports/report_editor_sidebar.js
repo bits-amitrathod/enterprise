@@ -91,21 +91,19 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
      * @override
      */
     start: function () {
-        var defs = [this._super.apply(this, arguments)];
-
+        var def;
         switch (this.state.mode) {
             case 'report':
-                defs.concat(this._startModeReport());
+                def = this._startModeReport();
                 break;
             case 'new':
-                defs.concat(this._startModeNew());
+                def = this._startModeNew();
                 break;
             case 'properties':
-                defs.concat(this._startModeProperties());
+                def = this._startModeProperties();
                 break;
         }
-
-        return $.when.apply($, defs);
+        return $.when(this._super.apply(this, arguments), def);
     },
 
     //--------------------------------------------------------------------------
@@ -336,7 +334,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
     },
     /**
      * @private
-     * @returns {$.Deferred[]}
+     * @returns {Deferred}
      */
     _startModeNew: function () {
         var self = this;
@@ -354,13 +352,13 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         });
         $sidebarContent.append($componentsContainer);
 
-        return defs;
+        return $.when.apply($, defs);
     },
     /**
      * A node has been clicked on the report, build the content of the sidebar so this node can be edited
      *
      * @private
-     * @returns {array}
+     * @returns {Deferred}
      */
     _startModeProperties: function () {
         var self = this;
@@ -448,11 +446,11 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         $lastCard.addClass('o_web_studio_active');
         $lastCard.find('.collapse').addClass('show');
 
-        return defs;
+        return $.when.apply($, defs);
     },
     /**
      * @private
-     * @returns {array}
+     * @returns {Deferred}
      */
     _startModeReport: function () {
         var defs = [];
@@ -475,7 +473,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         });
         this._registerWidget(this.groupsHandle, 'groups_id', many2many);
         defs.push(many2many.appendTo(this.$('.o_groups')));
-        return defs;
+        return $.when.apply($, defs);
     },
 
     //--------------------------------------------------------------------------
