@@ -3,7 +3,7 @@ import datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
-from odoo.tests import tagged
+from odoo.tests import tagged, Form
 from odoo.tools import mute_logger
 from odoo import fields
 
@@ -245,13 +245,13 @@ class TestSubscription(TestSubscriptionCommon):
         y_price = 100
         self.sale_order.action_confirm()
         subscription = self.sale_order.order_line.mapped('subscription_id')
-        self.assertAlmostEqual(subscription.recurring_total, y_price, "unexpected price after setup")
-        self.assertAlmostEqual(subscription.recurring_monthly, y_price / 12.0, "unexpected MRR")
+        self.assertAlmostEqual(subscription.recurring_total, y_price, msg="unexpected price after setup")
+        self.assertAlmostEqual(subscription.recurring_monthly, y_price / 12.0, msg="unexpected MRR")
         # Change interval to 3 weeks
         subscription.template_id.recurring_rule_type = 'weekly'
         subscription.template_id.recurring_interval = 3
-        self.assertAlmostEqual(subscription.recurring_total, y_price, 'total should not change when interval changes')
-        self.assertAlmostEqual(subscription.recurring_monthly, y_price * (30 / 7.0) / 3, 'unexpected MRR')
+        self.assertAlmostEqual(subscription.recurring_total, y_price, msg='total should not change when interval changes')
+        self.assertAlmostEqual(subscription.recurring_monthly, y_price * (30 / 7.0) / 3, msg='unexpected MRR')
 
     def test_analytic_account(self):
         """Analytic accounting flow."""
@@ -306,3 +306,15 @@ class TestSubscription(TestSubscriptionCommon):
         self.env['sale.subscription']._cron_update_kpi()
         after_count = Snapshot.search_count([])
         self.assertEqual(after_count, before_count + subscriptions_count)
+
+    def test_onchange_date_start(self):
+        recurring_bound_tmpl = self.env['sale.subscription.template'].create({
+            'name': 'Recurring Bound Template',
+            'recurring_rule_boundary': 'time_bounding',
+        })
+        sub_form = Form(self.env['sale.subscription'])
+        sub_form.partner_id = self.user_portal.partner_id
+        sub_form.template_id = recurring_bound_tmpl
+        sub = sub_form.save()
+        self.assertEqual(sub.template_id.recurring_rule_boundary, 'time_bounding')
+        self.assertIsInstance(sub.date, datetime.date)

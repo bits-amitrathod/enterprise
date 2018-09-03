@@ -242,7 +242,7 @@ class SaleSubscription(models.Model):
     def onchange_date_start(self):
         if self.recurring_rule_boundary == 'limited':
             periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
-            self.date = fields.Datetime.from_string(self.date_start) + relativedelta(**{
+            self.date = fields.Date.from_string(self.date_start) + relativedelta(**{
                 periods[self.recurring_rule_type]: self.template_id.recurring_rule_count * self.template_id.recurring_interval})
         else:
             self.date = False
