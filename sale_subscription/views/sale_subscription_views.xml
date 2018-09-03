@@ -212,13 +212,16 @@
                         </button>
                     </div>
                     <div class="oe_title">
-                        <h1>
+                        <h1 attrs="{'invisible': [('display_name', '=', False)]}">
                             <span class="badge badge-warning float-right border-0" attrs="{'invisible': [('to_renew', '=', False)]}">
                                 To Renew
                             </span>
                             <field name="starred" widget="boolean_favorite" class="mr-3" nolabel="1"/>
                             <field name="display_name"/>
                             <field name="health" widget="state_selection" class="ml-3" readonly="1"/>
+                        </h1>
+                        <h1 attrs="{'invisible': [('display_name', '!=', False)]}">
+                            <field name="name" readonly="1"/>
                         </h1>
                     </div>
                     <group name="main">

@@ -27,7 +27,7 @@ class SaleSubscription(models.Model):
     def _get_default_pricelist(self):
         return self.env['product.pricelist'].search([('currency_id', '=', self.env.user.company_id.currency_id.id)], limit=1).id
 
-    name = fields.Char(required=True, track_visibility="always")
+    name = fields.Char(required=True, track_visibility="always", default="New")
     code = fields.Char(string="Reference", required=True, track_visibility="onchange", index=True, copy=False)
     stage_id = fields.Many2one(
         'sale.subscription.stage', string='Stage', index=True,
