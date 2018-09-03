@@ -69,6 +69,7 @@
                         <span t-if="groups.group_uom" t-esc="line.product_uom_id[1]"/>
                     </p>
                     <p t-if="line.package_id || line.result_package_id">
+                        <span><a class="fa fa-truck fa-2x float-right o_package_content"></a></span>
                         <span class="fa fa-truck"></span> <t t-if="line.package_id" t-esc="line.package_id[1]"></t> <span class="fa fa-long-arrow-right"></span> <t t-if="line.result_package_id" t-esc="line.result_package_id[1]"></t>
                     </p>
                     <p t-if="line.owner_id">
@@ -100,8 +101,9 @@
         </t>
         <t t-if="packageLines">
             <t t-foreach="packageLines" t-as="packageLine">
-                <div class="line">
-                        <span class="fa fa-truck"></span> <t t-esc="packageLine.package_id[1]"></t>
+                <div class="line" t-att-data-id="packageLine.virtual_id || packageLine.id">
+                    <span><a class="fa fa-truck fa-2x float-right o_package_content"></a></span>
+                    <span class="fa fa-truck"></span> <t t-esc="packageLine.package_id[1]"></t>
                 </div>
             </t>
         </t>

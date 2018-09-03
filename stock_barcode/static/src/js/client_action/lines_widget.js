@@ -83,6 +83,7 @@ var LinesWidget = Widget.extend({
         }));
         $body.prepend($line);
         $line.on('click', '.o_edit', this._onClickEditLine.bind(this));
+        $line.on('click', '.o_package_content', this._onClickTruckLine.bind(this));
         this._highlightLine($line);
 
         this._handleControlButtons();
@@ -205,7 +206,7 @@ var LinesWidget = Widget.extend({
      * @param {Number} pageIndex: the index of the current page
      * @param {Number} nbPages: the total number of pages
      */
-     _renderLines: function() {
+     _renderLines: function () {
          if (this.mode === 'done') {
              if (this.model === 'stock.picking') {
                  this._toggleScanMessage('picking_already_done');
@@ -241,6 +242,7 @@ var LinesWidget = Widget.extend({
             }));
             $body.prepend($lines);
             $lines.on('click', '.o_edit', this._onClickEditLine.bind(this));
+            $lines.on('click', '.o_package_content', this._onClickTruckLine.bind(this));
         }
         // Toggle and/or enable the control buttons. At first, they're all displayed and enabled.
         var $next = this.$('.o_next_page');
@@ -459,6 +461,18 @@ var LinesWidget = Widget.extend({
     _onClickPreviousPage: function (ev) {
         ev.stopPropagation();
         this.trigger_up('previous_page');
+    },
+
+    /**
+     * Handles the click on the `package content button`.
+     *
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onClickTruckLine: function (ev) {
+        ev.stopPropagation();
+        var id = $(ev.target).closest('div').data('id');
+        this.trigger_up('open_package', {id: id});
     },
 
     /**

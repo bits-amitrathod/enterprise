@@ -15,6 +15,7 @@ var PickingClientAction = ClientAction.extend({
         'validate': '_onValidate',
         'cancel': '_onCancel',
         'put_in_pack': '_onPutInPack',
+        'open_package': '_onOpenPackage',
     }),
 
     init: function (parent, action) {
@@ -319,6 +320,43 @@ var PickingClientAction = ClientAction.extend({
             });
         }
     },
+    
+    /**
+     * Handles the `open_package` OdooEvent. It hides the main widget and
+     * display a standard kanban view with all quants inside the package.
+     *
+     * @private
+     * @param {OdooEvent} ev
+     */
+    _onOpenPackage: function (ev) {
+        ev.stopPropagation();
+        this.linesWidget.destroy();
+        this.headerWidget.toggleDisplayContext('specialized');
+
+        // If we want to edit a not yet saved line, keep its description in a variable so we'll be
+        // able to get it back once saved.
+        var lineDescription = false;
+        var currentPage = this.pages[this.currentPageIndex];
+
+        if (_.isString(ev.data.id)) {
+            lineDescription = _.findWhere(currentPage.lines, {virtual_id: ev.data.id});
+        } else {
+            lineDescription = _.findWhere(currentPage.lines, {id: ev.data.id});
+        }
+        var self = this;
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                var rec = _.find(currentPage.lines, function (line) {
+                    return line.product_id.id === lineDescription.product_id.id &&
+                        line.qty_done === lineDescription.qty_done;
+                });
+                var params = {domain: [['package_id', '=', rec.package_id[0]]]};
+                self.ViewsWidget = new ViewsWidget(self, 'stock.quant', 'stock_barcode.stock_quant_barcode_kanban', {}, params, false, 'kanban');
+                return self.ViewsWidget.appendTo(self.$el);
+            });
+        });
+    },
+
 
     _printPicking: function () {
         var self = this;
