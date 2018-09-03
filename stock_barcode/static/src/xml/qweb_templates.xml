@@ -109,9 +109,9 @@
 
     <!-- Form Widget templates -->
 
-    <t t-name="stock_barcode_form_widget">
-        <div class="barcode_form_view"></div>
-        <div t-if="widget.mode == 'edit'" class="barcode_control">
+    <t t-name="stock_barcode_views_widget">
+        <div class="barcode_generic_view"></div>
+        <div t-if="widget.mode == 'edit' &amp;&amp; widget.view_type === 'form'" class="barcode_control">
             <button class="o_button_barcode_standard o_discard">Discard</button>
             <button class="o_button_barcode_standard o_save o_button_barcode_highlight">Confirm</button>
         </div>

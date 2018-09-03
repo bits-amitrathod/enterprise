@@ -6,7 +6,7 @@ var core = require('web.core');
 var AbstractAction = require('web.AbstractAction');
 var BarcodeParser = require('barcodes.BarcodeParser');
 
-var FormWidget = require('stock_barcode.FormWidget');
+var ViewsWidget = require('stock_barcode.ViewsWidget');
 var HeaderWidget = require('stock_barcode.HeaderWidget');
 var LinesWidget = require('stock_barcode.LinesWidget');
 var SettingsWidget = require('stock_barcode.SettingsWidget');
@@ -1169,8 +1169,8 @@ var ClientAction = AbstractAction.extend({
 
     /**
      * Handles the `add_product` OdooEvent. It destroys `this.linesWidget` and displays an instance
-     * of `FormWidget` for the line model.
-     * `this.formWidget`
+     * of `ViewsWidget` for the line model.
+     * `this.ViewsWidget`
      *
      * @private
      * @param {OdooEvent} ev
@@ -1184,7 +1184,7 @@ var ClientAction = AbstractAction.extend({
             return self._save().then(function () {
                 self._endBarcodeFlow();
                 if (self.actionParams.model === 'stock.picking') {
-                    self.formWidget = new FormWidget(
+                    self.ViewsWidget = new ViewsWidget(
                         self,
                         'stock.move.line',
                         'stock_barcode.stock_move_line_product_selector',
@@ -1197,7 +1197,7 @@ var ClientAction = AbstractAction.extend({
                         false
                     );
                 } else if (self.actionParams.model === 'stock.inventory') {
-                    self.formWidget = new FormWidget(
+                    self.ViewsWidget = new ViewsWidget(
                         self,
                         'stock.inventory.line',
                         'stock_barcode.stock_inventory_line_barcode',
@@ -1210,14 +1210,14 @@ var ClientAction = AbstractAction.extend({
                         false
                     );
                 }
-                return self.formWidget.appendTo(self.$el);
+                return self.ViewsWidget.appendTo(self.$el);
             });
         });
     },
 
     /**
      * Handles the `edit_product` OdooEvent. It destroys `this.linesWidget` and displays an instance
-     * of `FormWidget` for the line model.
+     * of `ViewsWidget` for the line model.
      *
      * Editing a line should not "end" the barcode flow, meaning once the changes are saved or
      * discarded in the opened form view, the user should be able to scan a destination location
@@ -1256,23 +1256,23 @@ var ClientAction = AbstractAction.extend({
                 }
 
                 if (self.actionParams.model === 'stock.picking') {
-                    self.formWidget = new FormWidget(
+                    self.ViewsWidget = new ViewsWidget(
                         self,
                         'stock.move.line',
                         'stock_barcode.stock_move_line_product_selector',
                         {},
-                        id
+                        {currentId: id}
                     );
                 } else {
-                    self.formWidget = new FormWidget(
+                    self.ViewsWidget = new ViewsWidget(
                         self,
                         'stock.inventory.line',
                         'stock_barcode.stock_inventory_line_barcode',
                         {},
-                        id
+                        {currentId: id}
                     );
                 }
-                return self.formWidget.appendTo(self.$el);
+                return self.ViewsWidget.appendTo(self.$el);
             });
         });
     },
@@ -1305,8 +1305,8 @@ var ClientAction = AbstractAction.extend({
         var self = this;
         this.mutex.exec(function () {
             return self._save().then(function () {
-                if (self.formWidget) {
-                    self.formWidget.destroy();
+                if (self.ViewsWidget) {
+                    self.ViewsWidget.destroy();
                 }
                 if (self.linesWidget) {
                     self.linesWidget.destroy();
@@ -1319,15 +1319,15 @@ var ClientAction = AbstractAction.extend({
 
     /**
      * Handles the `reload` OdooEvent.
-     * Currently, this event is only triggered by `this.formWidget`.
+     * Currently, this event is only triggered by `this.ViewsWidget`.
      *
      * @private
      * @param {OdooEvent} ev ev.data could contain res_id
      */
     _onReload: function (ev) {
         ev.stopPropagation();
-        if (this.formWidget) {
-            this.formWidget.destroy();
+        if (this.ViewsWidget) {
+            this.ViewsWidget.destroy();
         }
         if (this.settingsWidget) {
             this.settingsWidget.do_hide();

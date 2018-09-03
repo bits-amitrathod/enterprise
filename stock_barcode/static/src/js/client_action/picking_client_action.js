@@ -3,7 +3,7 @@ odoo.define('stock_barcode.picking_client_action', function (require) {
 
 var core = require('web.core');
 var ClientAction = require('stock_barcode.ClientAction');
-var FormWidget = require('stock_barcode.FormWidget');
+var ViewsWidget = require('stock_barcode.ViewsWidget');
 
 var _t = core._t;
 
@@ -273,15 +273,15 @@ var PickingClientAction = ClientAction.extend({
                 self.formWidget.destroy();
             }
             self.linesWidget.destroy();
-            self.formWidget = new FormWidget(
+            self.ViewsWidget = new ViewsWidget(
                 self,
                 'stock.picking',
                 'stock_barcode.stock_picking_barcode',
                 {},
-                self.currentState.id,
+                {currentId: self.currentState.id},
                 'readonly'
             );
-            self.formWidget.appendTo(self.$el);
+            self.ViewsWidget.appendTo(self.$el);
         });
     },
 
