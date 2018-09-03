@@ -338,16 +338,20 @@ var BuildingFieldComponent = AbstractNewComponent.extend({
         });
     },
     _dataInheritance: function (values) {
-        var field = $('<span/>').attr('t-field', values.related).prop('outerHTML');
+        var $field = $('<span/>').attr('t-field', values.related);
+        if (values.type === 'binary') {
+             $field.attr('t-options-widget', '"image"');
+        }
+        var fieldHTML = $field.prop('outerHTML');
         if (this.node.tag === 'td' || this.node.tag === 'th') {
             return  this._createReportTableColumn({
                 head: $('<span/>').text(values.string).prop('outerHTML'),
-                bodyLoop: field,
+                bodyLoop: fieldHTML,
             });
         } else {
             return this._createContent({
-                contentInStructure: '<span><strong>' + values.string + ':</strong><br/></span>' + field,
-                content: field,
+                contentInStructure: '<span><strong>' + values.string + ':</strong><br/></span>' + fieldHTML,
+                content: fieldHTML,
             });
         }
     },

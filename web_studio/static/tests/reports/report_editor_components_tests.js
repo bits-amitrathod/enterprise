@@ -204,6 +204,7 @@ QUnit.module('ReportComponents', {
             'model.test': {
                 fields: {
                     name: {string: "Name", type: "char"},
+                    image: {string: "Image", type: "binary"},
                     child: {string: "Child", type: 'many2one', relation: 'model.test.child', searchable: true},
                     child_bis: {string: "Child Bis", type: 'many2one', relation: 'model.test.child', searchable: true},
                     children: {string: "Children", type: 'many2many', relation: 'model.test.child', searchable: true},
@@ -274,6 +275,52 @@ QUnit.module('ReportComponents', {
 
         $('.o_web_studio_field_modal .o_field_selector').trigger('focusin');
         $('.o_web_studio_field_modal .o_field_selector_item[data-name="child"]').trigger('click');
+        $('.o_web_studio_field_modal .btn-primary').trigger('click');
+
+        parent.destroy();
+    });
+
+    QUnit.test('add a binary field', function (assert) {
+        assert.expect(1);
+        var parent = new Widget();
+        testUtils.addMockEnvironment(parent, {
+            data: this.data,
+        });
+        parent.appendTo($('#qunit-fixture'));
+
+        var tOptions = new (reportNewComponentsRegistry.get('field'))(parent, {
+            models: {
+                'model.test': 'Kikou',
+            },
+        });
+
+        tOptions.add({
+            targets: [{
+                data: {},
+                node: {
+                    attrs: {
+                        'data-oe-id': 99,
+                        'data-oe-xpath': '/my/node/path/',
+                    },
+                    contextOrder: ['toto'],
+                    context: {
+                        toto: 'model.test',
+                    },
+                    parent: {
+                        children: [],
+                        attrs: {},
+                    }
+                },
+            }]
+        }).then(function (res) {
+            assert.deepEqual(res.inheritance,
+                [{content: '<span t-field="toto.image" t-options-widget="&quot;image&quot;"></span>', xpath: '/my/node/path/', view_id: 99, position: undefined}],
+                "image widget should be set");
+        });
+
+        $('.o_web_studio_field_modal .o_field_selector').trigger('focusin');
+        $('.o_web_studio_field_modal .o_field_selector_item[data-name="toto"]').trigger('click');
+        $('.o_web_studio_field_modal .o_field_selector_item[data-name="image"]').trigger('click');
         $('.o_web_studio_field_modal .btn-primary').trigger('click');
 
         parent.destroy();
