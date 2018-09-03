@@ -130,20 +130,6 @@ class IrAttachment(models.Model):
             self.lock_uid = self.env.uid
 
     @api.multi
-    def write(self, vals):
-        self.check('write', values=vals)
-        if len(self) == 1 and vals.get('datas'):
-            if re.match('image.*(gif|jpeg|jpg|png)', self[0].mimetype):
-                try:
-                    temp_image = crop_image(vals['datas'], type='center', size=(100, 100), ratio=(1, 1))
-                    thumbnail = image_resize_image(base64_source=temp_image, size=(100, 100),
-                                                   encoding='base64', filetype='PNG')
-                except Exception:
-                    thumbnail = False
-                vals.update(thumbnail=thumbnail)
-        return super(IrAttachment, self).write(vals)
-
-    @api.multi
     def refresh_write(self):
         return {
             'type': 'ir.actions.client',
