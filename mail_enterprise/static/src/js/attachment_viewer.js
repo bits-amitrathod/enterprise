@@ -24,7 +24,9 @@ var AttachmentViewer = Widget.extend({
     init: function (parent, attachments) {
         this._super.apply(this, arguments);
         this.attachments = attachments;
-        this.activeAttachment = attachments[0];
+        this.activeAttachment = _.find(attachments, function (attachment) {
+            return attachment.is_main;
+        });
     },
     /**
      * Render attachment.
@@ -48,9 +50,6 @@ var AttachmentViewer = Widget.extend({
      */
     updateContents: function (attachments, order) {
         this.attachments = attachments;
-        // Display last uploaded attachment so a user can be notified that
-        // attachments list is changed.
-        this.activeAttachment = order === 'desc' ? attachments[0] : attachments[attachments.length - 1];
         this._renderAttachment();
     },
 
@@ -71,6 +70,23 @@ var AttachmentViewer = Widget.extend({
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
+    /**
+    * Sets the attachment at position index as the new main attachment of
+    * the related model, and display it.
+    **/
+    _switch_main_attachment: function (index) {
+        var self = this;
+        this.activeAttachment = this.attachments[index];
+        this._rpc({
+            model: 'ir.attachment',
+            method: 'register_as_main_attachment',
+            args: [[this.activeAttachment['id']]],
+        }).then(
+            function() {
+                self._renderAttachment();
+            }
+        );
+    },
 
     /**
      * On click move to next attachment.
@@ -82,8 +98,7 @@ var AttachmentViewer = Widget.extend({
         ev.preventDefault();
         var index = _.findIndex(this.attachments, this.activeAttachment);
         index = index === this.attachments.length -1 ? 0 : index + 1;
-        this.activeAttachment = this.attachments[index];
-        this._renderAttachment();
+        this._switch_main_attachment(index);
     },
     /**
      * On click move to previous attachment.
@@ -95,8 +110,7 @@ var AttachmentViewer = Widget.extend({
         ev.preventDefault();
         var index = _.findIndex(this.attachments, this.activeAttachment);
         index = index === 0 ? this.attachments.length - 1 : index - 1;
-        this.activeAttachment = this.attachments[index];
-        this._renderAttachment();
+        this._switch_main_attachment(index);
     },
 });
 
