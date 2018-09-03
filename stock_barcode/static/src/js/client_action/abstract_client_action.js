@@ -878,7 +878,9 @@ var ClientAction = AbstractAction.extend({
 
             var currentPage = self.pages[self.currentPageIndex];
             for (var i=0; i < currentPage.lines.length; i++) {
-                if (currentPage.lines[i].package_id[0] === package_id) {
+                var currentLine = currentPage.lines[i];
+                // FIXME sle: float_compare?
+                if (currentLine.package_id[0] === package_id && currentLine.qty_done > 0) {
                     currentNumberOfLines += 1;
                 }
             }
@@ -927,9 +929,6 @@ var ClientAction = AbstractAction.extend({
                                 }
                             }
                         });
-                        if (self.show_entire_packs && quants.length) {
-                            linesActions.push([self.linesWidget.reload, undefined]);
-                        }
                         return $.when({linesActions: linesActions});
                     });
                 });
@@ -1170,7 +1169,12 @@ var ClientAction = AbstractAction.extend({
             if (commandeHandler) {
                 return commandeHandler();
             }
-            return self._onBarcodeScanned(barcode);
+            return self._onBarcodeScanned(barcode).then(function () {
+                // FIXME sle: not the right place to do that
+                if (self.show_entire_packs) {
+                    self._reloadLineWidget(self.currentPageIndex);
+                }
+            });
         });
     },
 

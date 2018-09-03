@@ -143,6 +143,11 @@ function assertInventoryFormQuantity(expected) {
 
 }
 
+function assertErrorMessage(expected) {
+    var $errorMessage = $('.o_notification_content').eq(-1)
+    assert($errorMessage[0].innerText, expected, 'wrong or absent error message')
+}
+
 // ----------------------------------------------------------------------------
 // Tours
 // ----------------------------------------------------------------------------
@@ -1636,5 +1641,134 @@ tour.register('test_inventory_adjustment_tracked_product', {test: true}, [
         trigger: '.o_form_label:contains("Product")',
     },
 ]);
+
+tour.register('test_pack_multiple_scan', {test: true}, [
+
+    {
+        trigger: '.o_stock_barcode_main_menu:contains("Barcode Scanning")',
+    },
+// reception
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: 'scan WH-RECEIPTS',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan product1',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan product2',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan O-BTN.pack',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")'
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: function () {
+            assertErrorMessage('The transfer has been validated');
+        },
+    },
+// Delivery transfer to check the error message
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: 'scan WH-DELIVERY',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan PACK0001000',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan PACK0001000',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Warning")'
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: function () {
+            assertErrorMessage('This package is already scanned.');
+        },
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")'
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: function () {
+            assertErrorMessage('The transfer has been validated');
+        },
+    },
+]);
+
+tour.register('test_pack_multiple_location', {test: true}, [
+
+    {
+        trigger: '.o_stock_barcode_main_menu:contains("Barcode Scanning")',
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: 'scan WH-INTERNAL',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan LOC-01-01-00'
+    },
+
+    {
+        trigger: '.o_barcode_summary_location_src:contains("WH/Stock/Shelf 1")',
+        run: 'scan PACK0000666',
+    },
+
+    {
+        trigger: ".o_package_content.o_entire_pack",
+        run: 'scan LOC-01-02-00',
+    },
+
+    {
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 2")',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")'
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: function () {
+            assertErrorMessage('The transfer has been validated');
+        },
+    },
+]);
+
 
 });

@@ -312,6 +312,7 @@ var PickingClientAction = ClientAction.extend({
                     args: [[package_id], ['name']],
                 }).then(function (package_name) {
                     // Write `package_id` as `result_package_id` on the scanned lines.
+                    // FIXME sle: change this condition, work on ml with qty_done > 0 and not reuslt package id on all pages
                     _.each(_.uniq(self.scannedLines), function (idOrVirtualId) {
                         var currentStateLine = _.find(self._getLines(self.currentState), function (line) {
                             return line.virtual_id &&

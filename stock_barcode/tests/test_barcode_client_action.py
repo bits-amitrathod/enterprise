@@ -13,8 +13,10 @@ def clean_access_rights(env):
     given as parameter"""
     grp_lot = env.ref('stock.group_production_lot')
     grp_multi_loc = env.ref('stock.group_stock_multi_locations')
+    grp_pack = env.ref('stock.group_tracking_lot')
     env.user.write({'groups_id': [(3, grp_lot.id)]})
     env.user.write({'groups_id': [(3, grp_multi_loc.id)]})
+    env.user.write({'groups_id': [(3, grp_pack.id)]})
 
 
 class TestBarcodeClientAction(HttpCase):
@@ -658,6 +660,92 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(lines[2].qty_done, 2)
         self.assertEqual(lines[1].location_dest_id.name, 'Shelf 2')
         self.assertEqual(lines[2].location_dest_id.name, 'Shelf 1')
+
+    def test_pack_multiple_scan(self):
+        """ Simulate a picking where a package is scanned two times.
+        scan the receipt picking type barcode
+        scan two products
+        scan put in pack
+        scan validate
+        scan the delivery picking type
+        scan the pack
+        scan the pack again, check the warning
+        validate
+        check that the package is in customer location"""
+        clean_access_rights(self.env)
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+
+        # set sequence packages to 1000 to find it easily in the tour
+        sequence = self.env['ir.sequence'].search([(
+            'code', '=', 'stock.quant.package',
+        )], limit=1)
+        sequence.write({'number_next_actual': 1000})
+
+        self.picking_type_out.show_entire_packs = True
+
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_pack_multiple_scan')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_pack_multiple_scan.ready",
+            login='admin',
+            timeout=180,
+        )
+
+        # Check the new package is well delivered
+        package = self.env['stock.quant.package'].search([
+            ('name', '=', 'PACK0001000')
+        ])
+        self.assertEqual(package.location_id, self.customer_location)
+
+    def test_pack_multiple_location(self):
+        """ Simulate a picking where a package is scanned two times.
+        The client action should trigger a warning
+        Make a reception a two products
+        put in pack
+        make a delivery of this pack"""
+        clean_access_rights(self.env)
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.picking_type_internal.active = True
+
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+
+        # Create a pack and 2 quants in this pack
+        pack1 = self.env['stock.quant.package'].create({
+            'name': 'PACK0000666',
+        })
+
+        self.env['stock.quant']._update_available_quantity(
+            product_id=self.product1,
+            location_id=self.shelf1,
+            quantity=5,
+            package_id=pack1,
+        )
+        self.env['stock.quant']._update_available_quantity(
+            product_id=self.product2,
+            location_id=self.shelf1,
+            quantity=5,
+            package_id=pack1,
+        )
+
+        self.picking_type_internal.show_entire_packs = True
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_pack_multiple_location')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_pack_multiple_location.ready",
+            login='admin',
+            timeout=180,
+        )
+
+        # Check the new package is well transfered
+        self.assertEqual(pack1.location_id, self.shelf2)
 
 
 @tagged('post_install', '-at_install')
