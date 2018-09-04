@@ -79,7 +79,7 @@ class SaleSubscription(models.Model):
     health = fields.Selection([
         ('normal', 'Neutral'),
         ('done', 'Good'),
-        ('bad', 'Bad')], string="Health", copy=False, default='normal', translate=True)
+        ('bad', 'Bad')], string="Health", copy=False, default='normal', translate=True, help="Set a health status")
     in_progress = fields.Boolean(related='stage_id.in_progress')
     to_renew = fields.Boolean(string='To Renew', default=False, copy=False)
 
