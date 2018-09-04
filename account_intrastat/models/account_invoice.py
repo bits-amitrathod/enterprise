@@ -25,4 +25,4 @@ class AccountInvoice(models.Model):
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
-    intrastat_transaction_id = fields.Many2one('account.intrastat.code', string='Intrastat Transaction Type', domain="[('type', '=', 'transaction')]")
+    intrastat_transaction_id = fields.Many2one('account.intrastat.code', string='Intrastat', domain="[('type', '=', 'transaction')]")
