@@ -1162,6 +1162,22 @@ tour.register('test_receipt_from_scratch_with_lots_1', {test: true}, [
 
     {
         trigger: '.barcode_client_action',
+        run: 'scan lot1',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Warning")'
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: function () {
+            assertErrorMessage('You are expected to scan one or more products.');
+        },
+    },
+
+    {
+        trigger: '.barcode_client_action',
         run: 'scan productserial1'
     },
 
@@ -1247,11 +1263,6 @@ tour.register('test_receipt_from_scratch_with_lots_2', {test: true}, [
 ]);
 
 tour.register('test_delivery_from_scratch_with_lots_1', {test: true}, [
-
-    {
-        trigger: '.barcode_client_action',
-        run: 'scan productlot1',
-    },
 
     {
         trigger: '.barcode_client_action',

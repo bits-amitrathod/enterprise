@@ -808,29 +808,38 @@ var ClientAction = AbstractAction.extend({
             this.scannedLines.push(res.id || res.virtualId);
             return $.when({linesActions: linesActions});
         } else {
-            return this._step_package(barcode, linesActions).then(function (res) {
-                return $.when({linesActions: res.linesActions});
-            }, function (specializedErrorMessage) {
-                if (specializedErrorMessage){
-                    return $.Deferred().reject(specializedErrorMessage);
-                }
-                if (! self.scannedLines.length) {
-                    if (self.groups.group_tracking_lot) {
-                        errorMessage = _t("You are expected to scan one or more products or a package available at the picking's location");
-                    } else {
-                        errorMessage = _t('You are expected to scan one or more products.');
+            var def_package = function () {
+                return self._step_package(barcode, linesActions).then(function (res) {
+                    return $.when({linesActions: res.linesActions});
+                }, function (specializedErrorMessage) {
+                    if (specializedErrorMessage){
+                        return $.Deferred().reject(specializedErrorMessage);
                     }
-                    return $.Deferred().reject(errorMessage);
-                }
+                    if (! self.scannedLines.length) {
+                        if (self.groups.group_tracking_lot) {
+                            errorMessage = _t("You are expected to scan one or more products or a package available at the picking's location");
+                        } else {
+                            errorMessage = _t('You are expected to scan one or more products.');
+                        }
+                        return $.Deferred().reject(errorMessage);
+                    }
 
-                var destinationLocation = self.locationsByBarcode[barcode];
-                if (destinationLocation) {
-                    return self._step_destination(barcode, linesActions);
-                } else {
-                    errorMessage = _t('You are expected to scan more products or a destination location.');
-                    return $.Deferred().reject(errorMessage);
-                }
-            });
+                    var destinationLocation = self.locationsByBarcode[barcode];
+                    if (destinationLocation) {
+                        return self._step_destination(barcode, linesActions);
+                    } else {
+                        errorMessage = _t('You are expected to scan more products or a destination location.');
+                        return $.Deferred().reject(errorMessage);
+                    }
+                });
+            };
+            if (self.currentState.group_production_lot && this.currentState.use_existing_lots) {
+                return self._step_lot(barcode, linesActions).then(function (res) {
+                    return $.when({linesActions: res.linesActions});
+                }, def_package);
+            } else {
+                return def_package();
+            }
         }
     },
 
@@ -840,6 +849,7 @@ var ClientAction = AbstractAction.extend({
         // call a `_packageMakeNewLines` methode overriden by picking and inventory or increment the existing lines
         // fill linesActions + scannedLines
         // if scannedLines isn't set, the caller will warn
+        this.currentStep = 'product';
         var destinationLocation = this.locationsByBarcode[barcode];
         if (destinationLocation) {
             return $.Deferred().reject();
@@ -963,15 +973,48 @@ var ClientAction = AbstractAction.extend({
         var line = _.find(self._getLines(self.currentState), function (line) {
             return line.virtual_id === idOrVirtualId || line.id === idOrVirtualId;
         });
-        var product = this.productsByBarcode[line.product_barcode];
-
+        var product;
+        if (line) {
+            product = this.productsByBarcode[line.product_barcode];
+        }
 
         var searchRead = function (barcode, product) {
-            return self._rpc({
+            var domain = [['name', '=', barcode]];
+            if (product) {
+                domain.push(['product_id', '=', product.id]);
+            }
+            var def = self._rpc({
                 model: 'stock.production.lot',
                 method: 'search_read',
-                domain: [['name', '=', barcode], ['product_id', '=', product.id]],
+                domain: domain,
                 limit: 1,
+            });
+            return def.then(function (res) {
+                if (! res.length) {
+                    errorMessage = _t('The scanned lot does not match an existing one.');
+                    return $.Deferred().reject(errorMessage);
+                }
+                var lot_info = {'lot_id': res[0].id, 'lot_name': res[0].name};
+                if (! product) {
+                    // not optimal neither
+                    // avoid rpc if possible
+                    var product_barcode = _.findKey(self.productsByBarcode, function (product) {
+                        return product.id === res[0].product_id[0];
+                    });
+                    if (product_barcode) {
+                        lot_info.product = self.productsByBarcode[product_barcode];
+                    } else {
+                        return self._rpc({
+                            model: 'product.product',
+                            method: 'read',
+                            args: [res[0].product_id[0]],
+                        }).then(function (product) {
+                            lot_info.product  = product[0];
+                            return $.when(lot_info);
+                        });
+                    }
+                }
+                return $.when(lot_info);
             });
         };
 
@@ -992,27 +1035,23 @@ var ClientAction = AbstractAction.extend({
             def = $.when({'lot_name': barcode});
         } else if (! this.currentState.use_create_lots &&
                     this.currentState.use_existing_lots) {
-            def = searchRead(barcode, product).then( function (res) {
-                if (! res.length){
-                    errorMessage = _t('The scanned lot does not match an existing one.');
-                    return $.Deferred().reject(errorMessage);
-                }
-                return $.when({ 'lot_id': res[0].id, 'lot_name': res[0].name});
-            });
+            def = searchRead(barcode, product);
         } else {
-            def = searchRead(barcode, product).then( function (res) {
-                if (! res.length){
+            def = searchRead(barcode, product).then(function (res) {
+                return $.when(res);
+            }, function (errorMessage) {
+                if (product) {
                     return create(barcode, product).then(function (lot_id) {
                         return $.when({'lot_id': lot_id, 'lot_name': barcode});
                     });
                 }
-                return $.when({ 'lot_id': res[0].id, 'lot_name': res[0].name});
+                return $.Deferred().reject(errorMessage);
             });
         }
         return def.then(function (lot_info) {
             var res = self._incrementLines({
-                'product': product,
-                'barcode': line.product_barcode,
+                'product': product || lot_info.product,
+                'barcode': line ? line.product_barcode : lot_info.product.barcode,
                 'lot_id': lot_info.lot_id,
                 'lot_name': lot_info.lot_name
             });
