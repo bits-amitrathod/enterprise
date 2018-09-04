@@ -496,7 +496,7 @@ class SignRequestItem(models.Model):
                 'record': signer,
                 'link': url_join(base_url, "sign/document/%(request_id)s/%(access_token)s" % {'request_id': signer.sign_request_id.id, 'access_token': signer.access_token}),
                 'subject': subject,
-                'body': message,
+                'body': message if message != '<p><br></p>' else False,
             }, engine='ir.qweb', minimal_qcontext=True)
 
             self.env['sign.request']._message_send_mail(
