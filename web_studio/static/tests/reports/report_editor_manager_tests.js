@@ -117,6 +117,42 @@ QUnit.module('ReportEditorManager', {
     }
 }, function () {
 
+    QUnit.test('empty editor rendering', function (assert) {
+        var done = assert.async();
+        assert.expect(2);
+
+        this.templates.push({
+            key: 'template1',
+            view_id: 55,
+            arch:
+                '<kikou>' +
+                    '<t t-name="template1">' +
+                    '</t>' +
+                '</kikou>',
+        });
+
+        var rem = studioTestUtils.createReportEditorManager({
+            env: {
+                modelName: 'kikou',
+                ids: [42, 43],
+                currentId: 42,
+            },
+            report: {},
+            reportHTML: studioTestUtils.getReportHTML(this.templates),
+            reportViews: studioTestUtils.getReportViews(this.templates),
+        });
+
+        rem.editorIframeDef.then(function () {
+            assert.strictEqual(rem.$('.o_web_studio_sidebar').length, 1,
+                "a sidebar should be rendered");
+            assert.strictEqual(rem.$('iframe').contents().find('.page .o_no_content_helper').length, 1,
+                "the iframe should be rendered with a no content helper");
+
+            rem.destroy();
+            done();
+        });
+    });
+
     QUnit.test('basic editor rendering', function (assert) {
         var done = assert.async();
         assert.expect(8);
@@ -541,6 +577,7 @@ QUnit.module('ReportEditorManager', {
             done();
         });
     });
+
     QUnit.test('display hooks when D&D component', function (assert) {
         var done = assert.async();
         assert.expect(4);

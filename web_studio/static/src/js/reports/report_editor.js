@@ -1,10 +1,12 @@
 odoo.define('web_studio.ReportEditor', function (require) {
 "use strict";
 
+var core = require('web.core');
 var Widget = require('web.Widget');
 
 var EditorMixin = require('web_studio.EditorMixin');
 
+var _t = core._t;
 
 var ReportEditor = Widget.extend(EditorMixin, {
     template: 'web_studio.ReportEditor',
@@ -28,6 +30,7 @@ var ReportEditor = Widget.extend(EditorMixin, {
         this.paperFormat = params.paperFormat || {};
 
         this.$content = $();
+        this.$noContentHelper = $();
 
         this.selectedNode = null;
         this.$targetHighlight = $();
@@ -67,7 +70,10 @@ var ReportEditor = Widget.extend(EditorMixin, {
      */
     beginDragComponent: function (component) {
         var self = this;
+
         this.$dropZone.remove();
+        this.$noContentHelper.remove();
+
         var dropIn = component.dropIn;
         if (component.dropColumns) {
             dropIn = (dropIn ? dropIn + ',' : '') + '.page > .row > div:empty';
@@ -370,7 +376,6 @@ var ReportEditor = Widget.extend(EditorMixin, {
     // Private
     //--------------------------------------------------------------------------
 
-
     /**
      * Clean displayed hooks and reset colspan on modified nodes.
      *
@@ -386,6 +391,8 @@ var ReportEditor = Widget.extend(EditorMixin, {
         });
         this.$content.find('.o_web_studio_hook').remove();
         this.$content.find('.o_web_studio_structure_hook').remove();
+
+        this._setNoContentHelper();
     },
     /**
      * Create hook on target and compute its size.
@@ -558,7 +565,6 @@ var ReportEditor = Widget.extend(EditorMixin, {
         this._resizeIframe();
 
         // association for td and colspan
-
         this.$content.find('tr').each(function () {
             var $tr = $(this);
             var $tds = $tr.children();
@@ -572,6 +578,8 @@ var ReportEditor = Widget.extend(EditorMixin, {
                 $td.data('td-position-after', lineMax);
             });
         });
+
+        this._setNoContentHelper();
     },
     /**
      * @private
@@ -597,6 +605,19 @@ var ReportEditor = Widget.extend(EditorMixin, {
         $(this.$content).find("img").load(function() {
             self.$iframe[0].style.height = self.$iframe[0].contentWindow.document.body.scrollHeight + 'px';
         });
+    },
+    /**
+     * @private
+     */
+    _setNoContentHelper: function () {
+        var $page = this.$content.find('.page');
+        if ($page.length && !$page.children().length) {
+            this.$noContentHelper = $('<div/>', {
+                class: 'o_no_content_helper',
+                text: _t('Drag building block here'),
+            });
+            $page.append(this.$noContentHelper);
+        }
     },
     /**
      * Update the iframe content.
