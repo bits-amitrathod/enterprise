@@ -1770,5 +1770,96 @@ tour.register('test_pack_multiple_location', {test: true}, [
     },
 ]);
 
+tour.register('test_put_in_pack_from_multiple_pages', {test: true}, [
+    {
+        trigger: '.barcode_client_action',
+        run: function () {
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock');
+            assertPreviousVisible(true);
+            assertPreviousEnabled(true);
+            assertNextVisible(true);
+            assertNextEnabled(true);
+            assertNextIsHighlighted(false);
+            assertLinesCount(2);
+            assertScanMessage('scan_src');
+            assertLocationHighlight(false);
+            assertDestinationLocationHighlight(false);
+            assertPager('1/2');
+            assertValidateVisible(false);
+            assertValidateIsHighlighted(false);
+            assertValidateEnabled(false);
+        },
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan LOC-01-01-00'
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: function () {
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock');
+            assertPreviousVisible(true);
+            assertPreviousEnabled(true);
+            assertNextVisible(true);
+            assertNextEnabled(true);
+            assertNextIsHighlighted(false);
+            assertLinesCount(2);
+            assertScanMessage('scan_products');
+            assertLocationHighlight(true);
+            assertDestinationLocationHighlight(false);
+            assertPager('1/2');
+            assertValidateVisible(false);
+            assertValidateIsHighlighted(false);
+            assertValidateEnabled(false);
+        },
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan product1',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan product2',
+    },
+
+    {
+        trigger: '.o_next_page',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan LOC-01-02-00',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan product1',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan product2',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan O-BTN.pack',
+    },
+
+    {
+        trigger: '.o_barcode_summary_location_src:contains("WH/Stock/Shelf 2")',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")'
+    },
+
+]);
+
 
 });

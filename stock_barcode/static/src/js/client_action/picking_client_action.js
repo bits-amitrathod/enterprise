@@ -311,15 +311,12 @@ var PickingClientAction = ClientAction.extend({
                     'method': 'read',
                     args: [[package_id], ['name']],
                 }).then(function (package_name) {
-                    // Write `package_id` as `result_package_id` on the scanned lines.
-                    // FIXME sle: change this condition, work on ml with qty_done > 0 and not reuslt package id on all pages
-                    _.each(_.uniq(self.scannedLines), function (idOrVirtualId) {
-                        var currentStateLine = _.find(self._getLines(self.currentState), function (line) {
-                            return line.virtual_id &&
-                                   line.virtual_id.toString() === idOrVirtualId ||
-                                   line.id  === idOrVirtualId;
-                        });
-                        currentStateLine.result_package_id = [package_id, package_name];
+                    // Write `package_id` as `result_package_id` on the processed lines.
+                    _.each(self._getLines(self.currentState), function (line) {
+                        // FIXME sle: float_compare
+                        if (line.qty_done > 0 && (! line.result_package_id || (line.result_package_id && !line.result_package_id.id))) {
+                            line.result_package_id = [package_id, package_name];
+                        }
                     });
                     self.trigger_up('reload');
                 });

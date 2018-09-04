@@ -747,6 +747,64 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Check the new package is well transfered
         self.assertEqual(pack1.location_id, self.shelf2)
 
+    def test_put_in_pack_from_multiple_pages(self):
+        """ In an internal picking where prod1 and prod2 are reserved in shelf1 and shelf2, processing
+        all these products and then hitting put in pack should move them all in the new pack.
+        """
+        clean_access_rights(self.env)
+        self.env['stock.picking.type'].search([('active', '=', False)]).write({'active': True})
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 1)
+        self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 1)
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf2, 1)
+        self.env['stock.quant']._update_available_quantity(self.product2, self.shelf2, 1)
+
+        self.env['stock.picking.type'].search([('active', '=', False)]).write({'active': True})
+
+        internal_picking = self.env['stock.picking'].create({
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.stock_location.id,
+            'picking_type_id': self.picking_type_internal.id,
+        })
+        move1 = self.env['stock.move'].create({
+            'name': 'test_put_in_pack_from_multiple_pages',
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.stock_location.id,
+            'product_id': self.product1.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 2,
+            'picking_id': internal_picking.id,
+        })
+        move2 = self.env['stock.move'].create({
+            'name': 'test_put_in_pack_from_multiple_pages',
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.stock_location.id,
+            'product_id': self.product2.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 2,
+            'picking_id': internal_picking.id,
+        })
+
+        url = self._get_client_action_url(internal_picking.id)
+        internal_picking.action_confirm()
+        internal_picking.action_assign()
+
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_put_in_pack_from_multiple_pages')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_put_in_pack_from_multiple_pages.ready",
+            login='admin',
+            timeout=180,
+        )
+
+        pack = self.env['stock.quant.package'].search([])[-1]
+        self.assertEqual(len(pack.quant_ids), 2)
+        self.assertEqual(sum(pack.quant_ids.mapped('quantity')), 4)
+
 
 @tagged('post_install', '-at_install')
 class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
