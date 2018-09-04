@@ -186,7 +186,8 @@
         <field name="arch" type="xml">
             <form string="Subscription" class="o_subscription_form">
                 <header>
-                    <button string="Create A Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object"/>
+                    <button string="Create Invoice" name="recurring_invoice" type="object" attrs="{'invisible': [('payment_mode', '!=', 'manual')]}" class="btn-primary"/>
+                    <button string="Create A Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}"/>
                     <button string="Upsell" help="Add options to the subscription directly or through a quotation" name="%(sale_subscription.wizard_action)d" type="action"/>
                     <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
                 </header>
@@ -246,8 +247,6 @@
                             <label for="recurring_next_date" string="Date of Next Invoice" attrs="{'invisible': [('in_progress', '=', False)]}"/>
                             <div attrs="{'invisible': [('in_progress', '=', False)]}">
                                 <field name="recurring_next_date"/>
-                                <button string="&#8658; Generate Invoice" class="oe_link" name="recurring_invoice"
-                                        type="object" attrs="{'invisible': [('payment_mode', '!=', 'manual')]}"/>
                                 <button string="&#8658; Generate Invoice" class="oe_link" name="recurring_invoice"
                                         type="object" attrs="{'invisible': [('payment_mode', '=', 'manual')]}" groups="base.group_no_one"/>
                             </div>
