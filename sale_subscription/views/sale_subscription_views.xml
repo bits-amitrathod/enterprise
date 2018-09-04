@@ -34,23 +34,12 @@
                 <filter name="my_subscriptions" string="My Subscriptions" domain="[('user_id','=',uid)]"/>
                 <filter string="Unassigned" name="contracts_not_assigned" help="Subscriptions that are not assigned to an account manager." domain="[('user_id', '=', False)]"/>
                 <separator/>
-                <filter name="open" string="In Progress" domain="[('in_progress','=',True)]" help="Subscriptions in progress"/>
+                <filter name="open" string="Running" domain="[('in_progress','=',True)]" help="Running Subscriptions"/>
                 <filter name="pending" string="To Renew" domain="[('to_renew','=',True)]" help="Pending subscriptions"/>
                 <filter name="closed" string="Closed" domain="[('in_progress','=',False)]" help="Closed subscriptions"/>
                 <separator/>
-                <filter
-                    string="Expired"
-                    name="expired"
-                    domain="[('in_progress','=',True), '|', ('date', '!=', False), ('date', '&lt;=', time.strftime('%%Y-%%m-%%d'))]"
-                    help="End date passed" />
-                <filter
-                    string="Expiring Next Month"
-                    name="expiring_soon"
-                    domain="[('date', '!=', False), ('date', '&lt;=', (context_today() + datetime.timedelta(30)).strftime('%%Y-%%m-%%d') )]"
-                    help="End date is in the next month" />
-                <separator/>
-                <filter name="good" string="Good" domain="[('health', '=', 'done')]"/>
-                <filter name="bad" string="Bad" domain="[('health', '=', 'bad')]"/>
+                <filter name="good" string="Good Health" domain="[('health', '=', 'done')]"/>
+                <filter name="bad" string="Bad Health" domain="[('health', '=', 'bad')]"/>
                 <separator/>
                 <filter string="Late Activities" name="activities_overdue"
                     domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
