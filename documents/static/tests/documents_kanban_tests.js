@@ -101,22 +101,28 @@ QUnit.module('DocumentsKanbanView', {
                 fields: {},
                 group_by_documents: function () {
                     return $.when([{
-                      facet_id: 1,
-                      facet_name: 'Status',
-                      tag_id: 1,
-                      tag_name: 'New',
-                      __count: 0,
-                    }, {
-                      facet_id: 1,
-                      facet_name: 'Status',
-                      tag_id: 2,
-                      tag_name: 'Draft',
-                      __count: 0,
-                    }, {
                       facet_id: 2,
                       facet_name: 'Priority',
+                      facet_sequence: 10,
                       tag_id: 5,
                       tag_name: 'No stress',
+                      tag_sequence: 10,
+                      __count: 0,
+                    }, {
+                      facet_id: 1,
+                      facet_name: 'Status',
+                      facet_sequence: 11,
+                      tag_id: 2,
+                      tag_name: 'Draft',
+                      tag_sequence: 10,
+                      __count: 0,
+                    }, {
+                      facet_id: 1,
+                      facet_name: 'Status',
+                      facet_sequence: 11,
+                      tag_id: 1,
+                      tag_name: 'New',
+                      tag_sequence: 11,
                       __count: 0,
                     }]);
                 },
@@ -1853,7 +1859,7 @@ QUnit.module('DocumentsKanbanView', {
     QUnit.module('DocumentsSelector');
 
     QUnit.test('document selector: basic rendering', function (assert) {
-        assert.expect(11);
+        assert.expect(15);
 
         var kanban = createView({
             View: DocumentsKanbanView,
@@ -1879,8 +1885,19 @@ QUnit.module('DocumentsKanbanView', {
             'Tags', "should have a 'tags' section");
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet').length, 2,
             "should have 2 facets");
-        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:first .o_documents_selector_tag').length, 2,
-            "should have 2 tags in the first facet");
+
+        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:first > header').text().trim(),
+            'Priority', "the first facet should be 'Priority'");
+        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last > header').text().trim(),
+            'Status', "the last facet should be 'Status'");
+
+        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last .o_documents_selector_tag').length, 2,
+            "should have 2 tags in the last facet");
+
+        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last .o_documents_selector_tag:first header').text().trim(),
+            'Draft', "the first tag in the last facet should be 'Draft'");
+        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last .o_documents_selector_tag:last header').text().trim(),
+            'New', "the last tag in the last facet should be 'New'");
 
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_models .o_documents_selector_header').text().trim(),
             'Attached To', "should have an 'attached to' section");

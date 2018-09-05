@@ -175,14 +175,15 @@ var DocumentsKanbanController = KanbanController.extend({
      */
     _groupTagsByFacets: function (tags) {
         var groupedFacets = _.reduce(tags, function (memo, tag) {
-            if (!_.has(memo, tag.facet_id)) {
-                memo[tag.facet_id] = {
+            var facetKey = tag.facet_sequence + '-' + tag.facet_name;
+            if (!_.has(memo, facetKey)) {
+                memo[facetKey] = {
                     id: tag.facet_id,
                     name: tag.facet_name,
                     tags: [],
                 };
             }
-            memo[tag.facet_id].tags.push({
+            memo[facetKey].tags.push({
                 id: tag.tag_id,
                 name: tag.tag_name,
                 __count: tag.__count

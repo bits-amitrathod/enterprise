@@ -6,6 +6,7 @@ from odoo.osv.expression import expression
 class TagsCategories(models.Model):
     _name = "documents.facet"
     _description = "Facet"
+    _order = "sequence, name"
 
     folder_id = fields.Many2one('documents.folder', ondelete="cascade")
     name = fields.Char(required=True)
@@ -21,6 +22,7 @@ class TagsCategories(models.Model):
 class Tags(models.Model):
     _name = "documents.tag"
     _description = "Tag"
+    _order = "sequence, name"
 
     folder_id = fields.Many2one('documents.folder', related='facet_id.folder_id', store=True)
     facet_id = fields.Many2one('documents.facet', ondelete='cascade', required=True)
@@ -50,19 +52,19 @@ class Tags(models.Model):
         domain_query, domain_params = expr.to_sql()
         folder_query, folder_params = expression([('folder_id', 'parent_of', folder_id)], self).to_sql()
         query = """
-            SELECT  facet.id AS facet_id,
+            SELECT  facet.sequence AS facet_sequence,
                     facet.name AS facet_name,
-                    facet.sequence AS facet_sequence,
-                    documents_tag.id AS tag_id,
-                    documents_tag.name AS tag_name,
+                    facet.id AS facet_id,
                     documents_tag.sequence AS tag_sequence,
+                    documents_tag.name AS tag_name,
+                    documents_tag.id AS tag_id,
                     COUNT(rel.ir_attachment_id) AS __count
             FROM documents_tag
                 JOIN documents_facet facet ON documents_tag.facet_id = facet.id AND %s
                 LEFT JOIN document_tag_rel rel ON documents_tag.id = rel.documents_tag_id
                     AND rel.ir_attachment_id IN (SELECT id from ir_attachment WHERE %s)
-            GROUP BY facet.id, facet.name, documents_tag.id, documents_tag.name, documents_tag.sequence, facet.sequence
-            ORDER BY facet.sequence, facet.name, documents_tag.sequence, documents_tag.name
+            GROUP BY facet.sequence, facet.name, facet.id, documents_tag.sequence, documents_tag.name, documents_tag.id
+            ORDER BY facet.sequence, facet.name, facet.id, documents_tag.sequence, documents_tag.name, documents_tag.id
         """ % (folder_query, domain_query)
         self.env.cr.execute(query, folder_params + domain_params)
         return self.env.cr.dictfetchall()
