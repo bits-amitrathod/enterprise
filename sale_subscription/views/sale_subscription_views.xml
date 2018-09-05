@@ -491,7 +491,8 @@
                 <field name="health"/>
                 <field name="to_renew"/>
                 <field name="rating_ids"/>
-                <progressbar field="health" colors='{"good": "success", "bad": "danger"}'/>
+                <field name="activity_state" />
+                <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}' help="This bar allows to filter the opportunities based on scheduled activities."/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_card oe_kanban_global_click">
