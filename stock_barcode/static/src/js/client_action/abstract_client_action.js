@@ -443,7 +443,10 @@ var ClientAction = AbstractAction.extend({
         var self = this;
 
         // keep a reference to the currentGroup
-        var currentPage = this.currentPageIndex ? this.pages[this.currentPageIndex] : {};
+        var currentPage = this.pages[this.currentPageIndex];
+        if (! currentPage) {
+            currentPage = {};
+        }
         var currentLocationId = currentPage.location_id;
         var currentLocationDestId = currentPage.location_dest_id;
 
@@ -456,8 +459,10 @@ var ClientAction = AbstractAction.extend({
                 return line.dummy_id;
             });
             _.each(virtual_ids_to_fixup, function (line) {
-                self.scannedLines = _.without(self.scannedLines, line.dummy_id);
-                self.scannedLines.push(line.id);
+                if (self.scannedLines.indexOf(line.dummy_id) !== -1) {
+                    self.scannedLines = _.without(self.scannedLines, line.dummy_id);
+                    self.scannedLines.push(line.id);
+                }
             });
 
             return self._getState(recordId, state);

@@ -805,6 +805,36 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(len(pack.quant_ids), 2)
         self.assertEqual(sum(pack.quant_ids.mapped('quantity')), 4)
 
+    def test_reload_flow(self):
+        clean_access_rights(self.env)
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_reload_flow')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_reload_flow.ready",
+            login='admin',
+            timeout=180,
+        )
+
+        move_line1 = self.env['stock.move.line'].search_count([
+            ('product_id', '=', self.product1.id),
+            ('location_dest_id', '=', self.shelf1.id),
+            ('location_id', '=', self.supplier_location.id),
+            ('qty_done', '=', 2),
+        ])
+        move_line2 = self.env['stock.move.line'].search_count([
+            ('product_id', '=', self.product2.id),
+            ('location_dest_id', '=', self.shelf1.id),
+            ('location_id', '=', self.supplier_location.id),
+            ('qty_done', '=', 1),
+        ])
+        self.assertEqual(move_line1, 1)
+        self.assertEqual(move_line2, 1)
 
 @tagged('post_install', '-at_install')
 class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):

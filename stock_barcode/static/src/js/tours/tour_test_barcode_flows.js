@@ -1872,5 +1872,66 @@ tour.register('test_put_in_pack_from_multiple_pages', {test: true}, [
 
 ]);
 
+tour.register('test_reload_flow', {test: true}, [
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: 'scan WH-RECEIPTS'
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan product1'
+    },
+
+    {
+        trigger: '.o_edit',
+    },
+
+    {
+        extra_trigger: '.o_form_label:contains("Product")',
+        trigger: 'input.o_field_widget[name=qty_done]',
+        run: 'text 2',
+    },
+
+    {
+        trigger: '.o_save',
+    },
+
+    {
+        trigger: '.o_add_line',
+    },
+
+    {
+        trigger: ".o_field_widget[name=product_id] input",
+        run: 'text product2',
+    },
+
+    {
+        trigger: ".ui-menu-item > a:contains('product2')",
+    },
+
+    {
+        trigger: '.o_save',
+    },
+
+    {
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock")',
+        run: 'scan LOC-01-01-00',
+    },
+
+    {
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock/Shelf 1")',
+    },
+
+    {
+        trigger: '.barcode_client_action',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")',
+    },
+
+]);
 
 });
