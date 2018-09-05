@@ -188,7 +188,7 @@
                     <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" string="Cancel"
                             type="action" context="{'cancel':1}"
                             attrs="{'invisible': [('state','in',['cancel','close'])]}"/>
-                    <button string="Create A Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': ['|',('state', '=', 'draft'),('recurring_rule_boundary','=','unlimited')]}"/>
+                    <button string="Create A Renewal Quotation" help="Create a sale order that will overwrite this subscription when confirmed (renewal quotation)" name="prepare_renewal_order" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <button string="Upsell" help="Add options to the subscription directly or through a quotation" name="%(sale_subscription.wizard_action)d" type="action"/>
                     <field name="state" widget="statusbar"/>
                 </header>
