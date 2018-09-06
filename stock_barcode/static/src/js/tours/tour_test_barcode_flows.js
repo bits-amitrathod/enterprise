@@ -36,9 +36,17 @@ function assert (current, expected, info) {
 }
 
 function assertPageSummary (expected) {
-    var $pageSummary = $('.o_barcode_locations');
-    var current = $pageSummary.text();
-    assert(current, expected, 'Page summary');
+    // FIXME sle: fix the tests instead of fixing the assert method
+    var res = '';
+    var $src = $('.o_barcode_summary_location_src');
+    if ($src.length) {
+        res = "From " + $src.text() + " ";
+    }
+    var $dest = $('.o_barcode_summary_location_dest');
+    if ($dest.length) {
+        res += "To " + $dest.text();
+    }
+    assert(res.trim(), expected.trim(), 'Page summary');
 }
 
 function assertPreviousVisible (expected) {
@@ -114,7 +122,7 @@ function assertDestinationLocationHighlight (expected) {
 }
 
 function assertPager (expected) {
-    var $pager = $('.barcode_move_number');
+    var $pager = $('.o_barcode_move_number');
     assert($pager.text(), expected, 'Pager is wrong');
 }
 

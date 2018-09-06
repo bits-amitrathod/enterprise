@@ -41,28 +41,25 @@
         box-shadow: inset 0 0 20px $gray-900;
     }
 
+    // Summary
+    // =====================================
     .o_barcode_lines_header {
-        border-bottom: 1px solid #9c9c9c;
-    }
-
-    .o_barcode_summary {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 2em;
-        font-size: 16px;
-    }
-
-    .o_barcode_page_summary {
-        background-color: #e1e1e1;
-        padding: 0.5em;
-
-        .o_barcode_product_line {
-            display: flex;
-            justify-content: space-between;
-
-            .o_barcode_locations {
-                font-size: 16px;
+        border: 1px solid $gray-400;
+        border-width: 1px 0;
+        background-color: desaturate($gray-200, 100%);
+        text-shadow: 0 1px 0 white;
+        color: $gray-900;
+        &:empty {
+            display: none;
+        }
+        .o_barcode_location_label {
+            padding: 1px 0 0;
+            line-height: 19px;
+        }
+        .o_barcode_summary_location_src, .o_barcode_summary_location_dest {
+            padding: 1px 4px 0 2px;
+            &.o_barcode_summary_location_highlight {
+                background-color: white;
             }
         }
     }
