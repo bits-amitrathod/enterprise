@@ -27,19 +27,18 @@
     </t>
 
     <t t-name="stock_barcode_lines_widget">
-        <div class="o_barcode_lines_header"></div>
-        <div class="o_barcode_lines">
-            <div class="text-center">
-                <span class="o_hidden o_scan_message o_scan_message_scan_products">Scan products</span>
-                <span class="o_hidden o_scan_message o_scan_message_scan_more_dest">Scan more products, or scan the destination location</span>
-                <span class="o_hidden o_scan_message o_scan_message_scan_more_src">Scan more products, or scan a new source location</span>
-                <span class="o_hidden o_scan_message o_scan_message_scan_lot">Scan the serial or lot number of the product</span>
-                <span class="o_hidden o_scan_message o_scan_message_scan_src">Scan the source location</span>
-                <h2 class="o_hidden o_scan_message o_scan_message_picking_already_done">This picking is already done</h2>
-                <h2 class="o_hidden o_scan_message o_scan_message_picking_already_cancelled">This picking is already cancelled</h2>
-                <h2 class="o_hidden o_scan_message o_scan_message_inv_already_done">This inventory adjustment is already done</h2>
-            </div>
+        <div class="o_barcode_message d-flex flex-column justify-content-center align-items-center bg-800">
+            <span class="o_hidden o_scan_message o_scan_message_scan_products">Scan products</span>
+            <span class="o_hidden o_scan_message o_scan_message_scan_more_dest">Scan more products, or scan the destination location</span>
+            <span class="o_hidden o_scan_message o_scan_message_scan_more_src">Scan more products, or scan a new source location</span>
+            <span class="o_hidden o_scan_message o_scan_message_scan_lot">Scan the serial or lot number of the product</span>
+            <span class="o_hidden o_scan_message o_scan_message_scan_src">Scan the source location</span>
+            <h2 class="o_hidden text-warning o_scan_message o_scan_message_picking_already_done">This picking is already done</h2>
+            <h2 class="o_hidden text-warning o_scan_message o_scan_message_picking_already_cancelled">This picking is already cancelled</h2>
+            <h2 class="o_hidden text-warning o_scan_message o_scan_message_inv_already_done">This inventory adjustment is already done</h2>
         </div>
+        <div class="o_barcode_lines_header"></div>
+        <div class="o_barcode_lines"></div>
 
         <div t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_barcode_control d-flex">
             <button class="btn btn-secondary text-uppercase o_add_line"><i class="fa fa-plus mr-1"/> Add product</button>
