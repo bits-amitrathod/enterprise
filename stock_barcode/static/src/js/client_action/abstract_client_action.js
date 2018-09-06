@@ -220,6 +220,15 @@ var ClientAction = AbstractAction.extend({
         return [];
     },
 
+    
+    /**
+    *
+     * @returns {Boolean} True if the lot_name for product is already present.
+     */
+    _lot_name_used: function (product, lot_name) {
+        return false;
+    },
+
     /**
      * Return an array of string used to group the lines into pages. The string are keys the
      * `lines` objects.
@@ -1054,8 +1063,13 @@ var ClientAction = AbstractAction.extend({
             });
         }
         return def.then(function (lot_info) {
+            product = product || lot_info.product;
+            if (product.tracking === 'serial' && self._lot_name_used(product, barcode)){
+                errorMessage = _t('The scanned serial number is already used.');
+                return $.Deferred().reject(errorMessage);
+            }
             var res = self._incrementLines({
-                'product': product || lot_info.product,
+                'product': product,
                 'barcode': line ? line.product_barcode : lot_info.product.barcode,
                 'lot_id': lot_info.lot_id,
                 'lot_name': lot_info.lot_name

@@ -156,8 +156,8 @@ function assertInventoryFormQuantity(expected) {
 }
 
 function assertErrorMessage(expected) {
-    var $errorMessage = $('.o_notification_content').eq(-1)
-    assert($errorMessage[0].innerText, expected, 'wrong or absent error message')
+    var $errorMessage = $('.o_notification_content').eq(-1);
+    assert($errorMessage[0].innerText, expected, 'wrong or absent error message');
 }
 
 function assertQuantsCount(expected) {
@@ -1326,6 +1326,22 @@ tour.register('test_delivery_from_scratch_with_sn_1', {test: true}, [
 
     {
         trigger: '.o_barcode_client_action',
+        run: 'scan sn1',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Warning")'
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: function () {
+            assertErrorMessage('The scanned serial number is already used.');
+        },
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
         run: 'scan sn2',
     },
 
@@ -1391,6 +1407,22 @@ tour.register('test_delivery_reserved_with_sn_1', {test: true}, [
     {
         trigger: '.o_barcode_client_action',
         run: 'scan sn3',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan sn3',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Warning")'
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: function () {
+            assertErrorMessage('The scanned serial number is already used.');
+        },
     },
 
     {
@@ -1474,6 +1506,153 @@ tour.register('test_receipt_reserved_lots_multiloc_1', {test: true}, [
 
 ]);
 
+tour.register('test_receipt_duplicate_serial_number', {test: true}, [
+    /* Create a receipt. Try to scan twice the same serial in different
+    * locations.
+    */
+    {
+        trigger: '.o_stock_barcode_main_menu:contains("Barcode Scanning")',
+    },
+    // reception
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: 'scan WH-RECEIPTS',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan productserial1',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan sn1',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan LOC-01-01-00',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan productserial1',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan sn1',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Warning")'
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: function () {
+            assertErrorMessage('The scanned serial number is already used.');
+        },
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan sn2',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan LOC-01-02-00',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")'
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: function () {
+            assertErrorMessage('The transfer has been validated');
+        },
+    },
+]);
+
+tour.register('test_delivery_duplicate_serial_number', {test: true}, [
+    /* Create a delivery. Try to scan twice the same serial in different
+    * locations.
+    */
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: 'scan WH-DELIVERY',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan LOC-01-01-00',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan productserial1',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan sn1',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan LOC-01-01-00',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan productserial1',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan sn1',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Warning")'
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: function () {
+            assertErrorMessage('The scanned serial number is already used.');
+        },
+    },
+    
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan sn2',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")'
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: function () {
+            assertErrorMessage('The transfer has been validated');
+        },
+    },
+]);
 
 tour.register('test_inventory_adjustment', {test: true}, [
 
@@ -1635,6 +1814,22 @@ tour.register('test_inventory_adjustment_tracked_product', {test: true}, [
     {
         trigger: '.o_barcode_client_action',
         run: 'scan serial1',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan serial1',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Warning")'
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: function () {
+            assertErrorMessage('The scanned serial number is already used.');
+        },
     },
 
     {

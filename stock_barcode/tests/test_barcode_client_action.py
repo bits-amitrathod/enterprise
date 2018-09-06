@@ -836,6 +836,37 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(move_line1, 1)
         self.assertEqual(move_line2, 1)
 
+    def test_duplicate_serial_number(self):
+        """ Simulate a receipt and a delivery with a product tracked by serial
+        number. It will try to break the ClientAction by using twice the same
+        serial number.
+        """
+        clean_access_rights(self.env)
+        grp_lot = self.env.ref('stock.group_production_lot')
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_receipt_duplicate_serial_number')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_receipt_duplicate_serial_number.ready",
+            login='admin',
+            timeout=180,
+        )
+
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_delivery_duplicate_serial_number')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_delivery_duplicate_serial_number.ready",
+            login='admin',
+            timeout=180,
+        )
+
+
 @tagged('post_install', '-at_install')
 class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
     def test_inventory_adjustment(self):
