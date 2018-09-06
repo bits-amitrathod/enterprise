@@ -25,9 +25,7 @@
     <t t-name="stock_barcode_lines_widget">
         <div class="o_barcode_lines_header"></div>
         <div class="o_barcode_lines">
-            <div class="o_barcode_lines_add text-center">
-                <a href="#" t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="fa fa-plus fa-3x mt16 o_add_line"></a>
-                <br/>
+            <div class="text-center">
                 <span class="o_hidden o_scan_message o_scan_message_scan_products">Scan products</span>
                 <span class="o_hidden o_scan_message o_scan_message_scan_more_dest">Scan more products, or scan the destination location</span>
                 <span class="o_hidden o_scan_message o_scan_message_scan_more_src">Scan more products, or scan a new source location</span>
@@ -38,11 +36,15 @@
                 <h2 class="o_hidden o_scan_message o_scan_message_inv_already_done">This inventory adjustment is already done</h2>
             </div>
         </div>
-        <div t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_barcode_control">
-            <button t-if="widget.groups.group_stock_multi_locations" class="o_button_barcode_standard o_previous_page"><span class="fa fa-angle-left" style='padding-right: 1em'></span>Previous</button>
-            <button t-if="widget.groups.group_tracking_lot" class="o_button_barcode_standard o_put_in_pack">Put In Pack</button>
-            <button t-if="widget.groups.group_stock_multi_locations" class="o_button_barcode_standard o_next_page">Next<span class="fa fa-angle-right" style='padding-left: 1em'></span></button>
-            <button class="o_button_barcode_standard o_validate_page">Validate</button>
+
+        <div t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_barcode_control d-flex">
+            <button class="btn btn-secondary text-uppercase o_add_line"><i class="fa fa-plus mr-1"/> Add product</button>
+            <button t-if="widget.groups.group_tracking_lot" class="btn btn-secondary text-uppercase o_put_in_pack"><i class="fa fa-cube mr-1"/> Put In Pack</button>
+        </div>
+        <div t-if="widget.mode !== 'done' &amp;&amp; widget.mode !== 'cancel'" class="o_barcode_control d-flex">
+            <button t-if="widget.groups.group_stock_multi_locations" class="btn btn-secondary text-uppercase o_previous_page"><i class="fa fa-angle-left mr-3"/>Previous</button>
+            <button t-if="widget.groups.group_stock_multi_locations" class="btn btn-secondary text-uppercase o_next_page">Next<i class="fa fa-angle-right ml-3"/></button>
+            <button class="btn btn-secondary text-uppercase o_validate_page"><i class="fa fa-check mr-1"/> Validate</button>
         </div>
     </t>
 
@@ -113,9 +115,9 @@
 
     <t t-name="stock_barcode_views_widget">
         <div class="o_barcode_generic_view"></div>
-        <div t-if="widget.mode == 'edit' &amp;&amp; widget.view_type === 'form'" class="o_barcode_control">
-            <button class="o_button_barcode_standard o_discard">Discard</button>
-            <button class="o_button_barcode_standard o_save o_button_barcode_highlight">Confirm</button>
+        <div t-if="widget.mode == 'edit' &amp;&amp; widget.view_type === 'form'" class="o_barcode_control d-flex">
+            <button class="btn btn-secondary o_discard">Discard</button>
+            <button class="btn btn-primary o_save">Confirm</button>
         </div>
     </t>
 

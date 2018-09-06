@@ -67,7 +67,7 @@ function assertNextEnabled (expected) {
 
 function assertNextIsHighlighted (expected) {
     var $nextButton = $('.o_next_page');
-    var current = $nextButton.hasClass('o_button_barcode_highlight');
+    var current = $nextButton.hasClass('btn-primary');
     assert(current, expected, 'Next button is highlighted');
 }
 
@@ -85,7 +85,7 @@ function assertValidateEnabled (expected) {
 
 function assertValidateIsHighlighted (expected) {
     var $validate = $('.o_validate_page');
-    var current = $validate.hasClass('o_button_barcode_highlight');
+    var current = $validate.hasClass('btn-success');
     assert(current, expected, 'Validte button is highlighted');
 }
 

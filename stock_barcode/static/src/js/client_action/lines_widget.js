@@ -344,12 +344,11 @@ var LinesWidget = Widget.extend({
         }
         if (shouldHighlight) {
             $next.prop('disabled', false);
-            $next.toggleClass('o_button_barcode_standard', false);
-            $next.toggleClass('o_button_barcode_standard', false);
-            $next.toggleClass('o_button_barcode_highlight', true);
+            $next.toggleClass('btn-secondary', false);
+            $next.toggleClass('btn-primary', true);
         } else {
-            $next.toggleClass('o_button_barcode_standard', true);
-            $next.toggleClass('o_button_barcode_highlight', false);
+            $next.toggleClass('btn-secondary', true);
+            $next.toggleClass('btn-primary', false);
         }
         return shouldHighlight;
     },
@@ -370,11 +369,11 @@ var LinesWidget = Widget.extend({
         if (shouldHighlight) {
             // FIXME: is it my job?
             $validate.prop('disabled', false);
-            $validate.toggleClass('o_button_barcode_standard', false);
-            $validate.toggleClass('o_button_barcode_highlight', true);
+            $validate.toggleClass('btn-secondary', false);
+            $validate.toggleClass('btn-success', true);
         } else {
-            $validate.toggleClass('o_button_barcode_standard', true);
-            $validate.toggleClass('o_button_barcode_highlight', false);
+            $validate.toggleClass('btn-secondary', true);
+            $validate.toggleClass('btn-success', false);
         }
         return shouldHighlight;
     },
