@@ -995,15 +995,10 @@ var DocumentsKanbanController = KanbanController.extend({
      */
     _onUploadFromUrl: function (ev) {
         ev.preventDefault();
-        this.do_action({
-            res_model: 'ir.attachment',
-            type: 'ir.actions.act_window',
-            context: {
-                default_type: 'url',
+        this.do_action('documents.action_url_form', {
+            additional_context: {
                 default_folder_id: this.selectedFolderID,
             },
-            views: [[false, 'form']],
-            target: 'new',
         });
     },
 });

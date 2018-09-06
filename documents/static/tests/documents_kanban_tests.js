@@ -547,16 +547,7 @@ QUnit.module('DocumentsKanbanView', {
                 '</t></templates></kanban>',
             intercepts: {
                 do_action: function (ev) {
-                    assert.deepEqual(ev.data.action, {
-                        res_model: 'ir.attachment',
-                        type: 'ir.actions.act_window',
-                        context: {
-                            default_type: 'url',
-                            default_folder_id: 1,
-                        },
-                        views: [[false, 'form']],
-                        target: 'new',
-                    }, "should open the URL form");
+                    assert.deepEqual(ev.data.action, "documents.action_url_form", "should open the URL form");
                 },
             },
         });
