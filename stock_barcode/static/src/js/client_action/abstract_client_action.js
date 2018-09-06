@@ -1092,6 +1092,14 @@ var ClientAction = AbstractAction.extend({
             errorMessage = _t('This location is not a child of the main location.');
             return $.Deferred().reject(errorMessage);
         } else {
+            if (! this.scannedLines.length) {
+                if (this.groups.group_tracking_lot) {
+                    errorMessage = _t("You are expected to scan one or more products or a package available at the picking's location");
+                } else {
+                    errorMessage = _t('You are expected to scan one or more products.');
+                }
+                return $.Deferred().reject(errorMessage);
+            }
             var self = this;
             // FIXME: remove .uniq() once the code is adapted.
             _.each(_.uniq(this.scannedLines), function (idOrVirtualId) {
