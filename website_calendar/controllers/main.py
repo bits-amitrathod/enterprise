@@ -145,6 +145,7 @@ class WebsiteCalendar(http.Controller):
             'start_date': date_start.strftime(dtf),
             'start_datetime': date_start.strftime(dtf),
             'stop': date_end.strftime(dtf),
+            'stop_datetime': date_end.strftime(dtf),
             'allday': False,
             'duration': appointment_type.appointment_duration,
             'description': description,
