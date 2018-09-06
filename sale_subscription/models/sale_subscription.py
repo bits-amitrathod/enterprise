@@ -925,10 +925,10 @@ class SaleSubscriptionTemplate(models.Model):
                                            help="Invoice automatically repeat at specified interval",
                                            default='monthly', track_visibility='onchange')
     recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
-    recurring_rule_boundary = fields.Selection(
-        [('unlimited', 'Unlimited'),
-         ('limited', 'Limited')],
-        string='Recurrence Limit', default='unlimited')
+    recurring_rule_boundary = fields.Selection([
+        ('unlimited', 'Forever'),
+        ('limited', 'Fixed')
+    ], string='Duration', default='unlimited')
     recurring_rule_count = fields.Integer(string="End After", default=1)
 
     # Read-only copy of recurring_rule_type for proper readability of recurrence limitation:
@@ -938,11 +938,11 @@ class SaleSubscriptionTemplate(models.Model):
 
     user_closable = fields.Boolean(string="Closable by customer", help="If checked, the user will be able to close his account from the frontend")
     payment_mode = fields.Selection([
-        ('manual', 'Manual Invoicing'),
-        ('draft_invoice', 'Generate Draft Invoice'),
-        ('validate_send', 'Validate & Send by Email'),
-        ('validate_send_payment', 'Validate, Send by Email & Trigger Payment'),
-        ('success_payment', 'Generate Paid Invoice After Successful Payment & Send by Email'),
+        ('manual', 'Manual'),
+        ('draft_invoice', 'Draft invoice'),
+        ('validate_send', 'Invoice'),
+        ('validate_send_payment', 'Invoice & try to charge'),
+        ('success_payment', 'Invoice only on successful payment'),
     ], default='draft_invoice')
     product_ids = fields.One2many('product.template', 'subscription_template_id', copy=True)
     journal_id = fields.Many2one('account.journal', string="Accounting Journal", domain="[('type', '=', 'sale')]", company_dependent=True,

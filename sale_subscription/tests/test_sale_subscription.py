@@ -310,13 +310,13 @@ class TestSubscription(TestSubscriptionCommon):
     def test_onchange_date_start(self):
         recurring_bound_tmpl = self.env['sale.subscription.template'].create({
             'name': 'Recurring Bound Template',
-            'recurring_rule_boundary': 'time_bounding',
+            'recurring_rule_boundary': 'limited',
         })
         sub_form = Form(self.env['sale.subscription'])
         sub_form.partner_id = self.user_portal.partner_id
         sub_form.template_id = recurring_bound_tmpl
         sub = sub_form.save()
-        self.assertEqual(sub.template_id.recurring_rule_boundary, 'time_bounding')
+        self.assertEqual(sub.template_id.recurring_rule_boundary, 'limited')
         self.assertIsInstance(sub.date, datetime.date)
 
     def test_default_salesperson(self):

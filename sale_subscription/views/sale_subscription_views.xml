@@ -425,23 +425,23 @@
                         <group>
                             <field name="code"/>
                         </group>
-                        <group name="website_subscription">
-                        </group>
                     </group>
                     <group name="config">
                         <group  name="invoicing" string="Invoicing">
                             <label for="recurring_interval" string="Recurrence"/>
                             <div class="o_row">
+                                <span class="mr-1">Every</span>
                                 <field name="recurring_interval" required="1"/>
                                 <field name="recurring_rule_type" class="field_rule_type" required="1"/>
                             </div>
                             <field name="recurring_rule_boundary" widget="radio" options="{'horizontal':true}"/>
-                            <label string="End After" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}" for="recurring_rule_count"/>
+                            <label attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}"/>
                             <div class="o_row" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}">
+                                <span class="mr-1">For</span>
                                 <field name="recurring_rule_count"/>
                                 <field name="recurring_rule_type_readonly"/>
                             </div>
-                            <field name="payment_mode"/>
+                            <field name="payment_mode" widget="radio"/>
                             <field name="invoice_mail_template_id"
                                    attrs="{'invisible': [('payment_mode', 'not in', ['validate_send', 'validate_send_payment'])],
                                            'required': [('payment_mode', 'in', ['validate_send', 'validate_send_payment'])]}"/>
@@ -451,7 +451,7 @@
                             <label for="auto_close_limit"/>
                             <div class="o_row">
                                 <field name="auto_close_limit" attrs="{'invisible': [('payment_mode', 'in', ['manual', 'draft_invoice'])]}"/>
-                                days
+                                <span class="ml-1">days</span>
                             </div>
                             <field name="tag_ids" string="Category" widget="many2many_tags"
                                    options="{'color_field': 'color'}" />
@@ -460,14 +460,15 @@
                             <field name="journal_id" string="Journal" options="{'no_create': True}" groups="account.group_account_manager"/>
                         </group>
                     </group>
-                    <group name="metrics" string="Metrics">
-                      <field name="good_health_domain" widget="domain" options="{'model': 'sale.subscription', 'in_dialog': True}"/>
-                      <field name="bad_health_domain" widget="domain" options="{'model': 'sale.subscription', 'in_dialog': True}"/>
-                    </group>
-                    <div name="description">
-                        <label for="description"/>
-                        <field name="description" placeholder="Terms and Conditions"/>
-                    </div>
+                    <notebook>
+                        <page name="description" string="Terms and Conditions">
+                            <field name="description" placeholder="Terms and Conditions"/>
+                        </page>
+                        <page name="metrics" string="Metrics">
+                          <field name="good_health_domain" widget="domain" options="{'model': 'sale.subscription', 'in_dialog': True}"/>
+                          <field name="bad_health_domain" widget="domain" options="{'model': 'sale.subscription', 'in_dialog': True}"/>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
