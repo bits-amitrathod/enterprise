@@ -176,8 +176,8 @@
         <xpath expr='//div[@name="bank_journal_cta"]' position='inside'>
           <t t-if="dashboard.bank_statements_source == 'online_sync'">
             <t t-if="record.synchronization_status.value != 'FAILED'">
-              <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="btn btn-primary btn-sm">Synchronize now</button>
-              <a t-if="dashboard.number_to_reconcile > 0" attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="oe_inline">Synchronize now</a>
+              <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="btn btn-primary btn-sm" groups="account.group_account_user">Synchronize now</button>
+              <a t-if="dashboard.number_to_reconcile > 0" attrs="{'invisible': [('account_online_journal_id', '=', False)]}" type="object" name="manual_sync" class="oe_inline" groups="account.group_account_user">Synchronize now</a>
             </t>
             <button t-if="dashboard.number_to_reconcile == 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="object" name="action_choose_institution" class="btn btn-primary btn-sm">Online Synchronization</button>
             <a t-if="dashboard.number_to_reconcile > 0" attrs="{'invisible': [('account_online_journal_id', '!=', False)]}" type="object" name="action_choose_institution" class="oe_inline">Online Synchronization</a>
