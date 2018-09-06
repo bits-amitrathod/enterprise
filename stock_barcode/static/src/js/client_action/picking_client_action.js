@@ -339,9 +339,9 @@ var PickingClientAction = ClientAction.extend({
         this.headerWidget.toggleDisplayContext('specialized');
 
         var virtual_id = _.isString(ev.data.id) ? ev.data.id : false;
-        var currentPage = this.pages[this.currentPageIndex];
         this.mutex.exec(function () {
             return self._save().then(function () {
+                var currentPage = self.pages[self.currentPageIndex];
                 var id = ev.data.id;
                 if (virtual_id) {
                     var rec = _.find(currentPage.lines, function (line) {

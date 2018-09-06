@@ -148,6 +148,10 @@ function assertErrorMessage(expected) {
     assert($errorMessage[0].innerText, expected, 'wrong or absent error message')
 }
 
+function assertQuantsCount(expected) {
+    var $quantity = $('.o_kanban_view .o_kanban_record:not(.o_kanban_ghost)').length
+    assert($quantity, expected, 'Wrong number of cards')
+}
 // ----------------------------------------------------------------------------
 // Tours
 // ----------------------------------------------------------------------------
@@ -1468,23 +1472,23 @@ tour.register('test_inventory_adjustment', {test: true}, [
         trigger: '.o_barcode_client_action',
         run: 'scan product1',
     },
-    
+
     {
         trigger: '.o_barcode_client_action',
         run: 'scan product1',
     },
-    
+
     {
         trigger: '.o_edit',
     },
-    
+
     {
         trigger: '.o_form_label:contains("Product")',
         run: function () {
             assertInventoryFormQuantity('2.000');
         }
     },
-    
+
     {
         trigger :'.o_save',
     },
@@ -1540,7 +1544,7 @@ tour.register('test_inventory_adjustment_mutli_location', {test: true}, [
         trigger: '.o_barcode_client_action',
         run: 'scan product1',
     },
-    
+
     {
         trigger: '.o_barcode_client_action',
         run: 'scan product1',
@@ -1614,7 +1618,7 @@ tour.register('test_inventory_adjustment_tracked_product', {test: true}, [
         trigger: '.o_barcode_client_action',
         run: 'scan productserial1',
     },
-    
+
     {
         trigger: '.o_barcode_client_action',
         run: 'scan serial1',
@@ -1760,7 +1764,18 @@ tour.register('test_pack_multiple_location', {test: true}, [
     },
 
     {
-        trigger: ".o_package_content.o_entire_pack",
+        trigger: '.o_package_content',
+    },
+
+    {
+        trigger: '.o_kanban_view:contains("product1")',
+        run: function () {
+            assertQuantsCount(2);
+        },
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
         run: 'scan LOC-01-02-00',
     },
 
