@@ -47,8 +47,8 @@ var LinesWidget = Widget.extend({
         var $line = this.$("[data-id='" + id_or_virtual_id + "']");
         this._highlightLine($line);
         var incrementClass = model === 'stock.picking' ? '.qty-done' : '.product_qty';
-        var qtyDone = parseInt($line.children().children(incrementClass).html(), 10);
-        $line.children().children(incrementClass).text(qtyDone + qty);
+        var qtyDone = parseInt($line.find(incrementClass).text(), 10);
+        $line.find(incrementClass).text(qtyDone + qty);
 
         this._handleControlButtons();
 
@@ -318,7 +318,7 @@ var LinesWidget = Widget.extend({
             var reservationProcessed = true;
             $lines.each(function () {
                 var $line = $(this);
-                var qties = $line.find('p:eq(2)').text();
+                var qties = $line.find('.o_barcode_scanner_qty').text();
                 qties = qties.split('/');
                 if (parseInt(qties[0], 10) < parseInt(qties[1], 10)) {
                     reservationProcessed = false;
@@ -423,16 +423,16 @@ var LinesWidget = Widget.extend({
         this.trigger_up('add_line');
     },
 
-     /**
-      * Handles the click on the `edit button` on a line.
-      *
-      * @private
-      * @param {jQuery.Event} ev
-      */
-     _onClickEditLine: function (ev) {
+    /**
+     * Handles the click on the `edit button` on a line.
+     *
+     * @private
+     * @param {jQuery.Event} ev
+     */
+    _onClickEditLine: function (ev) {
         ev.preventDefault();
         ev.stopPropagation();
-        var id = $(ev.target).parent().parent().data('id');
+        var id = $(ev.target).parents('.o_barcode_line').data('id');
         this.trigger_up('edit_line', {id: id});
     },
 
@@ -466,7 +466,7 @@ var LinesWidget = Widget.extend({
      */
     _onClickTruckLine: function (ev) {
         ev.stopPropagation();
-        var id = $(ev.target).closest('div').data('id');
+        var id = $(ev.target).parents('.o_barcode_line').data('id');
         this.trigger_up('open_package', {id: id});
     },
 

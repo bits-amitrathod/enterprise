@@ -12,15 +12,6 @@
         font-weight: bold;
     }
 
-    .o_highlight {
-        background-color: $o-brand-primary;
-        color: white;
-
-        .o_edit {
-            color: white;
-        }
-    }
-
     // Top navbar
     // =====================================
     .o_barcode_header {
@@ -70,6 +61,92 @@
         overflow: auto;
     }
 
+    // Lines Block
+    // =====================================
+    .o_barcode_lines {
+        overflow-y: auto;
+        box-shadow: inset 0 -7px 4px -5px $gray-300;
+
+        .o_barcode_line {
+            flex: 0 0 auto;
+            border-width: 1px 0;
+
+            &:first-child {
+                border-top: 0;
+            }
+
+            &:last-child {
+                box-shadow: 0 3px 10px $gray-300;
+                margin-bottom: 2rem;
+            }
+
+            .o_edit {
+                @include o-hover-opacity();
+            }
+
+            .o_barcode_scanner_qty {
+                font-size: 1em;
+                border-color: transparent; // Overwrite default badge color
+                margin-left: -$badge-padding-x; // Compensate badge padding
+
+                &[class*="badge-"] {
+                    margin-left: 0; // If a style class is applied, reset compensation margin
+                }
+
+                .qty-done, .product_qty {
+                    min-width: 20px;
+                }
+            }
+
+            &_details {
+                .fa:first-child {
+                    opacity: 0.5;
+                    margin-right: 5px;
+                }
+            }
+
+            &_actions {}
+
+            &.o_barcode_line_package {
+                .o_barcode_line_details > * {
+                    flex: 1 0 auto;
+                }
+
+                .o_barcode_line_details > .o_barcode_package_name {
+                    flex: 0 1 auto;
+                    overflow: hidden;
+
+                    > span {
+                        max-width: 100%;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+
+        &.o_js_has_highlight .o_barcode_line.o_highlight {
+            background-color: rgba($component-active-bg, 0.05);
+            border-color: $component-active-bg;
+            margin-bottom: 0;
+
+            .product-label, .o_barcode_scanner_qty {
+                color: $headings-color;
+            }
+
+            .o_barcode_scanner_qty {
+                font-size: 1.2em;
+            }
+
+            .qty-done, .product_qty {
+                font-weight: bold;
+
+                &.o_js_qty_animate {
+                    animation: o_barcode_scanner_qty_update .2s alternate;
+                }
+            }
+        }
+    }
     // Embedded views
     // =====================================
     .o_barcode_generic_view {
@@ -158,18 +235,3 @@
     }
 }
 
-.o_barcode_lines {
-    > .o_barcode_line {
-        padding: 1em;
-        border: 1px solid #9c9c9c;
-        border-top: 0px;
-
-        p:last-child {
-            margin: 0;
-        }
-    }
-}
-
-.o_barcode_summary > button {
-    text-transform: uppercase;
-}

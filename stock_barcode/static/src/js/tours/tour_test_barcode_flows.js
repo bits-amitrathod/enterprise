@@ -130,6 +130,10 @@ function assertLineIsHighlighted ($line, expected) {
     assert($line.hasClass('o_highlight'), expected, 'line should be highlighted');
 }
 
+function assertLineQty($line, qty) {
+    assert($line.find('.qty-done').text(), qty, 'line quantity is wrong');
+}
+
 function assertFormLocationSrc(expected) {
     var $location = $('.o_field_widget[name="location_id"] input')
     assert($location.val(), expected, 'Wrong source location')
@@ -263,6 +267,7 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
             assertValidateEnabled(true);
             var $line = getLine({barcode: 'product1'});
             assertLineIsHighlighted($line, true);
+            assertLineQty($line, "2");
         }
     },
 
