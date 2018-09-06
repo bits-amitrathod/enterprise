@@ -93,16 +93,19 @@
         color: #9c9c9c,
     }
 
+    // Settings menu
+    // =====================================
     .o_barcode_settings {
-        flex: auto;
-
         display: flex;
-        flex-direction: column;
-        height: 100%;
+        flex: auto;
 
         > button {
             flex: 1 0 auto;
-            border-top: none;
+            border-bottom: 1px solid $gray-700;
+
+            &:last-child {
+                border-bottom: 0;
+            }
         }
     }
 
@@ -154,6 +157,6 @@
     }
 }
 
-.o_barcode_settings > button, .o_barcode_control > button, .o_barcode_summary > button {
+.o_barcode_summary > button {
     text-transform: uppercase;
 }
