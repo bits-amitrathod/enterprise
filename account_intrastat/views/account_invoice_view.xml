@@ -26,7 +26,6 @@
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='fiscal_position_id']" position="after">
-                    <field name="state" invisible="1"/>
                     <field name="intrastat_country_id" help="Dispatch country" options="{'no_create': True}"/>
                     <field name="intrastat_transport_mode_id" attrs="{'invisible': [('intrastat_country_id', '=', False)]}"
                            context="{'search_view_ref': 'account_intrastat.view_intrastat_code_restricted_type_search',
