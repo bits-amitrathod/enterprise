@@ -66,9 +66,36 @@
         overflow: auto;
     }
 
+    // Embedded views
+    // =====================================
     .o_barcode_generic_view {
-        flex: auto;
+        flex: 1;
         overflow: auto;
+
+        .o_view_controller, .o_view_controller .o_form_view.o_form_nosheet {
+            height: 100%;
+            flex-grow: 1;
+            padding-top: 0;
+        }
+
+        .o_form_view.o_xxs_form_view {
+            .o_td_label > .o_form_label {
+                color: $gray-900;
+                font-weight: bold;
+                padding-top: 5px;
+            }
+            .o_field_widget {
+                font-size: 1.2em;
+                .btn.fa {
+                    font-size: 1em;
+                }
+            }
+            .o_list_view {
+                th, .o_field_widget {
+                    font-size: $font-size-base;
+                }
+            }
+        }
     }
 
     // Settings menu
