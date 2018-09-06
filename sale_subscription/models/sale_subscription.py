@@ -921,10 +921,10 @@ class SaleSubscriptionTemplate(models.Model):
     description = fields.Text(translate=True, string="Terms and Conditions")
     recurring_rule_type = fields.Selection([('daily', 'Day(s)'), ('weekly', 'Week(s)'),
                                             ('monthly', 'Month(s)'), ('yearly', 'Year(s)'), ],
-                                           string='Recurrence',
+                                           string='Recurrence', required=True,
                                            help="Invoice automatically repeat at specified interval",
                                            default='monthly', track_visibility='onchange')
-    recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", default=1, track_visibility='onchange')
+    recurring_interval = fields.Integer(string="Repeat Every", help="Repeat every (Days/Week/Month/Year)", required=True, default=1, track_visibility='onchange')
     recurring_rule_boundary = fields.Selection([
         ('unlimited', 'Forever'),
         ('limited', 'Fixed')
@@ -943,7 +943,7 @@ class SaleSubscriptionTemplate(models.Model):
         ('validate_send', 'Invoice'),
         ('validate_send_payment', 'Invoice & try to charge'),
         ('success_payment', 'Invoice only on successful payment'),
-    ], default='draft_invoice')
+    ], required=True, default='draft_invoice')
     product_ids = fields.One2many('product.template', 'subscription_template_id', copy=True)
     journal_id = fields.Many2one('account.journal', string="Accounting Journal", domain="[('type', '=', 'sale')]", company_dependent=True,
                                  help="If set, subscriptions with this template will invoice in this journal; "

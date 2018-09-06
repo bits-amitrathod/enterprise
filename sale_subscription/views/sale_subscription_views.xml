@@ -418,24 +418,19 @@
                     </div>
                     <div class="oe_title">
                         <h1>
-                            <field name="name" placeholder="Template Name"/>
+                            <field name="name" placeholder="e.g. Monthly Subscription" class="oe_edit_only"/>
                         </h1>
                     </div>
-                    <group name="main">
-                        <group>
-                            <field name="code"/>
-                        </group>
-                    </group>
                     <group name="config">
-                        <group  name="invoicing" string="Invoicing">
-                            <label for="recurring_interval" string="Recurrence"/>
+                        <group  name="invoicing">
+                            <label for="recurring_interval" string="Invoice"/>
                             <div class="o_row">
                                 <span class="mr-1">Every</span>
                                 <field name="recurring_interval" required="1"/>
                                 <field name="recurring_rule_type" class="field_rule_type" required="1"/>
                             </div>
                             <field name="recurring_rule_boundary" widget="radio" options="{'horizontal':true}"/>
-                            <label attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}"/>
+                            <label for="" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}"/>
                             <div class="o_row" attrs="{'invisible': [('recurring_rule_boundary','=','unlimited')]}">
                                 <span class="mr-1">For</span>
                                 <field name="recurring_rule_count"/>
@@ -455,18 +450,18 @@
                             </div>
                             <field name="tag_ids" string="Category" widget="many2many_tags"
                                    options="{'color_field': 'color'}" />
-                        </group>
-                        <group name="accounting">
-                            <field name="journal_id" string="Journal" options="{'no_create': True}" groups="account.group_account_manager"/>
+                            <group name="accounting">
+                                <field name="journal_id" string="Journal" options="{'no_create': True}" groups="account.group_account_manager"/>
+                            </group>
                         </group>
                     </group>
                     <notebook>
                         <page name="description" string="Terms and Conditions">
                             <field name="description" placeholder="Terms and Conditions"/>
                         </page>
-                        <page name="metrics" string="Metrics">
-                          <field name="good_health_domain" widget="domain" options="{'model': 'sale.subscription', 'in_dialog': True}"/>
-                          <field name="bad_health_domain" widget="domain" options="{'model': 'sale.subscription', 'in_dialog': True}"/>
+                        <page name="health" string="Health Check">
+                            <field name="good_health_domain" widget="domain" options="{'model': 'sale.subscription'}"/>
+                            <field name="bad_health_domain" widget="domain" options="{'model': 'sale.subscription'}"/>
                         </page>
                     </notebook>
                 </sheet>
