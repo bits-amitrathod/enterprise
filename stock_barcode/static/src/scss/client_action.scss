@@ -29,8 +29,17 @@
         color: $o-brand-primary;
     }
 
+    // Top navbar
+    // =====================================
     .o_barcode_header {
         flex: 0 0 46px;
+
+        .nav-link {
+            cursor: pointer;
+        }
+         .nav-link, .navbar-text {
+            font-size: 16px;
+        }
     }
 
     .o_barcode_lines_header {
@@ -124,27 +133,6 @@
             box-shadow: 0 -3px 10px $gray-300;
         }
     }
-}
-
-.o_barcode_header {
-    position: relative;
-    height: $o-navbar-height;
-    border-bottom: 1px solid $o-navbar-inverse-link-hover-bg;
-    background-color: $o-brand-primary;
-    color: white;
-
-    > a, > button, > .o_title {
-        float: left;
-        height: $o-navbar-height;
-        border: none;
-        padding: 0 $o-horizontal-padding - 4px 0 $o-horizontal-padding;
-        line-height: $o-navbar-height;
-        background-color: transparent;
-        text-align: center;
-        color: inherit;
-        font-size: 18px;
-    }
-
 }
 
 .o_barcode_lines {

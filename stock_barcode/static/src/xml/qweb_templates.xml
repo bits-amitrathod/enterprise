@@ -2,12 +2,16 @@
 <templates id="template" xml:space="preserve">
 
     <t t-name="stock_barcode_header_widget">
-        <div class="o_barcode_header">
-            <button class="fa fa-chevron-left o_exit"/>
-            <span class="o_title"><t t-esc="widget.title"></t></span>
-            <button class="fa fa-info-circle o_show_information"></button>
-            <button class="fa fa-bars float-right o_show_settings" type="button"/>
-            <button class="fa fa-times float-right o_close o_hidden" type="button"/>
+        <div class="o_barcode_header navbar navbar-expand navbar-dark bg-beta">
+            <nav class="navbar-nav mr-auto">
+                <a tabindex="" class="nav-link o_exit mr-4"><i class="fa fa-chevron-left"/></a>
+                <span class="o_title navbar-text text-white"><t t-esc="widget.title"></t></span>
+            </nav>
+            <nav class="navbar-nav">
+                <a tabindex="" class="nav-link o_show_information mr-4"><i class="fa fa-info-circle"/></a>
+                <a tabindex="" class="nav-link o_show_settings"><i class="fa fa-bars"/></a>
+                <a tabindex="" class="nav-link o_close o_hidden"><i class="fa fa-times"/></a>
+            </nav>
         </div>
     </t>
 
