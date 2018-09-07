@@ -10,7 +10,7 @@ from dateutil.relativedelta import relativedelta
 from uuid import uuid4
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools import format_date
 
 from odoo.addons import decimal_precision as dp
@@ -65,7 +65,7 @@ class SaleSubscription(models.Model):
     ]
 
     def _compute_sale_order_count(self):
-        raw_data = self.env['sale.order.line'].read_group(
+        raw_data = self.env['sale.order.line'].sudo().read_group(
             [('subscription_id', 'in', self.ids)],
             ['subscription_id', 'order_id'],
             ['subscription_id', 'order_id'],
@@ -139,7 +139,7 @@ class SaleSubscription(models.Model):
     def _compute_invoice_count(self):
         Invoice = self.env['account.invoice']
         for subscription in self:
-            subscription.invoice_count = Invoice.search_count([('invoice_line_ids.subscription_id', '=', subscription.id)])
+            subscription.invoice_count = Invoice.sudo().search_count([('invoice_line_ids.subscription_id', '=', subscription.id)])
 
     @api.depends('recurring_invoice_line_ids', 'recurring_invoice_line_ids.quantity', 'recurring_invoice_line_ids.price_subtotal')
     def _compute_recurring_total(self):
@@ -794,6 +794,11 @@ class SaleSubscriptionTemplate(models.Model):
     product_count = fields.Integer(compute='_compute_product_count')
     subscription_count = fields.Integer(compute='_compute_subscription_count')
     color = fields.Integer()
+
+    @api.constrains('recurring_interval')
+    def _check_recurring_interval(self):
+        if self.recurring_interval <= 0:
+            raise ValidationError(_("The recurring interval must be positive"))
 
     def _compute_subscription_count(self):
         subscription_data = self.env['sale.subscription'].read_group(domain=[('template_id', 'in', self.ids), ('state', 'in', ['open', 'pending'])],

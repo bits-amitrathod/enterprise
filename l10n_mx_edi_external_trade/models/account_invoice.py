@@ -61,7 +61,7 @@ class AccountInvoice(models.Model):
 
         bad_line = self.invoice_line_ids.filtered(
             lambda l: not l.l10n_mx_edi_qty_umt or not l.l10n_mx_edi_umt_aduana_id or
-            not l.l10n_mx_edi_tariff_fraction_id)
+            (l.l10n_mx_edi_umt_aduana_id.l10n_mx_edi_code_aduana != '99' and not l.l10n_mx_edi_tariff_fraction_id))
         if bad_line:
             line_name = bad_line.mapped('product_id.name')
             return {'error': _(
