@@ -23,6 +23,8 @@ var ReportEditorManager = AbstractEditorManager.extend({
         print_report: '_onPrintReport',
         element_removed: '_onElementRemoved',
         iframe_ready: '_onIframeReady',
+        begin_preview_drag_component: '_onBeginPreviewDragComponent',
+        end_preview_drag_component: '_onEndPreviewDragComponent',
     }),
     /**
      * @override
@@ -317,7 +319,14 @@ var ReportEditorManager = AbstractEditorManager.extend({
      * @param {OdooEvent} ev
      */
     _onBeginDragComponent: function (ev) {
-        this.view.beginDragComponent(ev.data.widget);
+        this.view.beginDragComponent();
+    },
+    /**
+     * @private
+     * @param {OdooEvent} ev
+     */
+    _onBeginPreviewDragComponent: function (ev) {
+        this.view.beginPreviewDragComponent(ev.data.widget);
     },
     /**
      * @override
@@ -353,6 +362,13 @@ var ReportEditorManager = AbstractEditorManager.extend({
                 });
             },
         });
+    },
+        /**
+     * @private
+     * @param {OdooEvent} ev
+     */
+    _onEndPreviewDragComponent: function (ev) {
+        this.view.endPreviewDragComponent(ev.data.widget);
     },
     /**
      * @private

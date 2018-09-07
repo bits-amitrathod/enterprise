@@ -57,7 +57,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         var defs = [this._super.apply(this, arguments)];
 
         if (this.state.mode === 'report') {
-        // make record for the many2many groups
+            // make record for the many2many groups
             var defReport = this.model.makeRecord('ir.model.fields', [{
                 name: 'groups_id',
                 fields: [{
@@ -116,14 +116,14 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
      *
      * @returns {Object}
      */
-    getLocalState: function() {
+    getLocalState: function () {
         var self = this;
         var state = {};
 
-        _.each(this.nodes, function(node) {
+        _.each(this.nodes, function (node) {
             var nodeName = self._computeUniqueNodeName(node.node);
             state[nodeName] = {};
-            _.each(node.widgets, function(comp) {
+            _.each(node.widgets, function (comp) {
                 state[nodeName][comp.name] = comp.getLocalState();
             });
         });
@@ -142,7 +142,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
      * @returns {string}
      */
     _computeUniqueNodeName: function (node) {
-        return node.attrs["data-oe-id"] + node.attrs["data-oe-xpath"].replace(/\[\]\//g,"_");
+        return node.attrs["data-oe-id"] + node.attrs["data-oe-xpath"].replace(/\[\]\//g, "_");
     },
     /**
      * Utility function that will create a fake jQuery node.
@@ -200,7 +200,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
      * @returns {string} a attempt of meaningful name for the given node
      */
     _getNodeDisplayName: function (node) {
-        var displayName = {name: node.tag, attr: '', icon: ''};
+        var displayName = { name: node.tag, attr: '', icon: '' };
 
         if (node.attrs) {
             if (node.attrs.name) {
@@ -225,7 +225,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
             displayName.attr += ' ' + node.attrs.class;
         }
 
-        switch(displayName.name) {
+        switch (displayName.name) {
             case 't':
                 displayName.icon = 'fa-cog';
                 break;
@@ -341,16 +341,18 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         var defs = [];
         var $sidebarContent = this.$('.o_web_studio_sidebar_content');
 
-        $sidebarContent.append($('<h3>', {
-            html: _t('Blocks'),
-        }));
-        var $componentsContainer = $('<div>', {
-            class: 'o_web_studio_field_type_container',
+        _.each(newComponentsRegistry.map, function (components, title) {
+            $sidebarContent.append($('<h3>', {
+                html: title,
+            }));
+            var $componentsContainer = $('<div>', {
+                class: 'o_web_studio_field_type_container',
+            });
+            _.each(components, function (Component) {
+                defs.push(new Component(self, { models: self.models }).appendTo($componentsContainer));
+            });
+            $sidebarContent.append($componentsContainer);
         });
-        _.each(newComponentsRegistry.map, function (Component) {
-            defs.push(new Component(self, {models: self.models}).appendTo($componentsContainer));
-        });
-        $sidebarContent.append($componentsContainer);
 
         return $.when.apply($, defs);
     },
@@ -371,7 +373,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
             // copy to not modifying in place the node
             var node = _.extend({}, this.state.nodes[index]);
             if (!this.debug && blacklists.length) {
-                if(this._getAssociatedDOMNode(node.node).is(blacklists.join(','))) {
+                if (this._getAssociatedDOMNode(node.node).is(blacklists.join(','))) {
                     continue;
                 }
             }
@@ -412,7 +414,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
                 });
                 var selector = '.collapse';
                 if (Component.prototype.insertAsLastChildOfPrevious) {
-                    selector+= '>div:last()';
+                    selector += '>div:last()';
                 }
                 node.widgets.push(directiveWidget);
                 defs.push(directiveWidget.appendTo($accordionSection.find(selector)));
@@ -490,7 +492,7 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         if (attribute) {
             var newAttrs = {};
             if ($input.attr('type') === 'checkbox') {
-                newAttrs[attribute] = $input.is(':checked') ? 'True': '';
+                newAttrs[attribute] = $input.is(':checked') ? 'True' : '';
             } else {
                 newAttrs[attribute] = $input.val();
             }

@@ -232,8 +232,8 @@ QUnit.module('ReportComponents', {
             data: this.data,
         });
         parent.appendTo($('#qunit-fixture'));
-
-        var tOptions = new (reportNewComponentsRegistry.get('field'))(parent, {
+        var InlineField = reportNewComponentsRegistry.get('Inline')[1];
+        var tOptions = new InlineField(parent, {
             models: {
                 'model.test': 'Toto',
             },
@@ -286,8 +286,8 @@ QUnit.module('ReportComponents', {
             data: this.data,
         });
         parent.appendTo($('#qunit-fixture'));
-
-        var tOptions = new (reportNewComponentsRegistry.get('field'))(parent, {
+        var InlineField = reportNewComponentsRegistry.get('Inline')[1];
+        var tOptions = new InlineField(parent, {
             models: {
                 'model.test': 'Kikou',
             },
