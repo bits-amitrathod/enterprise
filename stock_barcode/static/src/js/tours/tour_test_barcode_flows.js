@@ -1082,6 +1082,17 @@ tour.register('test_receipt_reserved_1', {test: true}, [
             });
         }
     },
+
+    {
+        trigger: '.o_add_line',
+    },
+
+    {
+        trigger: '.o_form_label:contains("Product")',
+        run: function() {
+            assertFormLocationDest('WH/Stock/Shelf 1');
+        },
+    },
 ]);
 
 tour.register('test_delivery_reserved_1', {test: true}, [
@@ -1631,7 +1642,7 @@ tour.register('test_delivery_duplicate_serial_number', {test: true}, [
             assertErrorMessage('The scanned serial number is already used.');
         },
     },
-    
+
     {
         trigger: '.o_barcode_client_action',
         run: 'scan sn2',

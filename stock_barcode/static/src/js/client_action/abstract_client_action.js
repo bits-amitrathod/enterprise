@@ -1276,6 +1276,10 @@ var ClientAction = AbstractAction.extend({
         this.mutex.exec(function () {
             self.linesWidget.destroy();
             self.headerWidget.toggleDisplayContext('specialized');
+            // Get the default locations before calling save to not lose a newly created page.
+            var currentPage = self.pages[self.currentPageIndex];
+            var default_location_id = currentPage.location_id;
+            var default_location_dest_id = currentPage.location_dest_id;
             return self._save().then(function () {
                 if (self.actionParams.model === 'stock.picking') {
                     self.ViewsWidget = new ViewsWidget(
@@ -1284,8 +1288,8 @@ var ClientAction = AbstractAction.extend({
                         'stock_barcode.stock_move_line_product_selector',
                         {
                             'default_picking_id': self.currentState.id,
-                            'default_location_id': self.pages[self.currentPageIndex].location_id,
-                            'default_location_dest_id': self.pages[self.currentPageIndex].location_dest_id,
+                            'default_location_id': default_location_id,
+                            'default_location_dest_id': default_location_dest_id,
                             'default_qty_done': 1,
                         },
                         false
@@ -1298,7 +1302,7 @@ var ClientAction = AbstractAction.extend({
                         {
                             'default_company_id': self.currentState.company_id[0],
                             'default_inventory_id': self.currentState.id,
-                            'default_location_id': self.pages[self.currentPageIndex].location_id,
+                            'default_location_id': default_location_id,
                             'default_product_qty': 1,
                         },
                         false
