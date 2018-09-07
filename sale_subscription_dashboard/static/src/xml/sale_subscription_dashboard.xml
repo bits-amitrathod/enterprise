@@ -5,26 +5,6 @@
 
     <!-- 1. Main dashboard -->
     <div t-name="sale_subscription_dashboard.dashboard" class="container o_account_contract_dashboard">
-        <div t-if="!has_mrr" class="o_welcome_message box">
-            <div class="o_welcome_image"><span class="fa fa-smile-o fa-5x" role="img" aria-label="Welcome!" title="Welcome!"/></div>
-            <div t-if="has_template" class="o_welcome_content">
-                <h2>Hi there!</h2>
-                <t t-if="has_def_revenues">
-                    <p class="mt0">Now that you have defined a subscription template and your revenues types,<br/> invoice your first subscription to activate your dashboard.</p>
-                    <a role="button" class="btn btn-primary on_demo_contracts">Your Subscriptions</a>
-                </t>
-                <t t-if="!has_def_revenues">
-                    <p class="mt0">You're just missing some Deferred Revenue Types to ensure your dashboard works correctly.</p>
-                    <a role="button" class="btn btn-primary on_demo_templates">Edit your Templates</a>
-                </t>
-            </div>
-            <div t-if="!has_template" class="o_welcome_content">
-                <h2>Hi there!</h2>
-                <p class="mt0">This is a sample dashboard. Your actual dashboard will be activated after<br/>having defined your subscription templates and deferred revenue categories and invoiced your first subscription.</p>
-                <a role="button" class="btn btn-primary on_demo_templates">Create a Template</a>
-            </div>
-        </div>
-
         <div class="o_stats_section">
             <div t-foreach="stat_types" t-as="stat">
                 <a href="#" class="on_stat_box" t-att-data-stat="stat['code']">

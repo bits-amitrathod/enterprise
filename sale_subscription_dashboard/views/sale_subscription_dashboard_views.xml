@@ -58,7 +58,6 @@
         <field name="help">From this view, have an analysis of your different invoice line entries.</field>
     </record>
 
-    <menuitem id="menu_sale_subscription_dashboard" name="Dashboard" sequence="1" parent="sale_subscription.menu_sale_subscription_root"/>
-    <menuitem id="menu_action_subscription_dashboard_report_main" action="sale_subscription_dashboard.action_subscription_dashboard_report_main" parent="menu_sale_subscription_dashboard" name="Revenue KPIs" groups="sale_subscription.group_sale_subscription_manager"/>
-    <menuitem id="menu_action_subscription_dashboard_report_salesman" action="sale_subscription_dashboard.action_subscription_dashboard_report_salesman" parent="menu_sale_subscription_dashboard" name="Salesperson Dashboard"/>
+    <menuitem id="menu_action_subscription_dashboard_report_main" action="sale_subscription_dashboard.action_subscription_dashboard_report_main" parent="sale_subscription.menu_sale_subscription_report" name="Revenue KPIs" groups="sale_subscription.group_sale_subscription_manager"/>
+    <menuitem id="menu_action_subscription_dashboard_report_salesman" action="sale_subscription_dashboard.action_subscription_dashboard_report_salesman" parent="sale_subscription.menu_sale_subscription_report" name="Salesperson Dashboard"/>
 </odoo>
