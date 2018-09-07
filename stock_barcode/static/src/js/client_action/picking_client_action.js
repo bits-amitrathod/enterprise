@@ -413,9 +413,7 @@ var PickingClientAction = ClientAction.extend({
         ev.stopPropagation();
         var self = this;
         this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._validate();
-            });
+            return self._validate();
         });
     },
 
@@ -430,9 +428,7 @@ var PickingClientAction = ClientAction.extend({
         ev.stopPropagation();
         var self = this;
         this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._cancel();
-            });
+            return self._cancel();
         });
     },
 

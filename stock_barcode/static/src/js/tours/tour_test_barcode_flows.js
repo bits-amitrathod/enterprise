@@ -1708,11 +1708,19 @@ tour.register('test_inventory_adjustment', {test: true}, [
     },
 
     {
-        trigger: '.o_add_line',
+        trigger: '.o_barcode_client_action',
+        run: 'scan O-BTN.validate',
     },
 
     {
-        trigger: '.o_form_label:contains("Product")',
+        trigger: '.o_notification_title:contains("Success")'
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: function () {
+            assertErrorMessage('The inventory adjustment has been validated');
+        },
     },
 
 ]);

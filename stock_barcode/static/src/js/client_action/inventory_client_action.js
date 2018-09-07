@@ -17,6 +17,8 @@ var InventoryClientAction = ClientAction.extend({
 
     init: function (parent, action) {
         this._super.apply(this, arguments);
+        this.commands['O-BTN.validate'] = this._validate.bind(this);
+        this.commands['O-BTN.cancel'] = this._cancel.bind(this);
         this.mode = 'inventory';
         if (! this.actionParams.inventoryId) {
             this.actionParams.inventoryId = action.context.active_id;
@@ -183,6 +185,47 @@ var InventoryClientAction = ClientAction.extend({
         });
     },
 
+    /**
+     * Makes the rpc to `action_validate`.
+     * This method could open a wizard so it takes care of removing/adding the "barcode_scanned"
+     * event listener.
+     *
+     * @private
+     * @returns {Deferred}
+     */
+     _validate: function (ev) {
+        var self = this;
+        return self._save().then(function () {
+            self._rpc({
+                'model': self.actionParams.model,
+                'method': 'action_validate',
+                'args': [[self.currentState.id]],
+            }).then(function () {
+                self.do_notify(_t("Success"), _t("The inventory adjustment has been validated"));
+                return self.trigger_up('exit');
+            });
+        });
+    },
+
+    /**
+     * Makes the rpc to `action_cancel`.
+     *
+     * @private
+     */
+    _cancel: function () {
+        var self = this;
+        return self._save().then(function () {
+            return self._rpc({
+                'model': self.actionParams.model,
+                'method': 'action_cancel_draft',
+                'args': [[self.currentState.id]],
+            }).then(function () {
+                self.do_notify(_t("Cancel"), _t("The inventory adjustment has been cancelled"));
+                self.trigger_up('exit');
+            });
+        });
+    },
+
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
@@ -194,21 +237,12 @@ var InventoryClientAction = ClientAction.extend({
      * @param {OdooEvent} ev
      */
      _onValidate: function (ev) {
-        ev.stopPropagation();
-        var self = this;
-        return this.mutex.exec(function () {
-            return self._save().then(function () {
-                self._rpc({
-                    'model': self.actionParams.model,
-                    'method': 'action_validate',
-                    'args': [[self.currentState.id]],
-                }).then(function () {
-                    self.do_notify(_t("Success"), _t("The inventory adjustment has been validated"));
-                    return self.trigger_up('exit');
-                });
-            });
-        });
-    },
+         ev.stopPropagation();
+         var self = this;
+         this.mutex.exec(function () {
+             return self._validate();
+         });
+     },
 
     /**
     * Handles the `cancel` OdooEvent.
@@ -220,16 +254,7 @@ var InventoryClientAction = ClientAction.extend({
         ev.stopPropagation();
         var self = this;
         this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._rpc({
-                    'model': self.actionParams.model,
-                    'method': 'action_cancel_draft',
-                    'args': [[self.currentState.id]],
-                }).then(function () {
-                    self.do_notify(_t("Cancel"), _t("The inventory adjustment has been cancelled"));
-                    self.trigger_up('exit');
-                });
-            });
+            return self._cancel();
         });
     },
 
