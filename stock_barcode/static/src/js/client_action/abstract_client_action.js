@@ -220,7 +220,7 @@ var ClientAction = AbstractAction.extend({
         return [];
     },
 
-    
+
     /**
     *
      * @returns {Boolean} True if the lot_name for product is already present.
@@ -431,6 +431,9 @@ var ClientAction = AbstractAction.extend({
         var preparedPage = $.extend(true, {}, this.pages[pageIndex]);
         this.linesWidget = new LinesWidget(this, preparedPage, pageIndex, nbPages);
         this.linesWidget.appendTo(this.$el);
+        if (this.groups.group_stock_multi_locations && this.currentStep && this.currentStep !== 'source') {
+            this.linesWidget.highlightLocation(true);
+        }
     },
 
     /**
