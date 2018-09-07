@@ -782,7 +782,9 @@ class SaleSubscriptionTemplate(models.Model):
     recurring_rule_count = fields.Integer(string="End After", default=1)
 
     # Read-only copy of recurring_rule_type for proper readability of recurrence limitation:
-    recurring_rule_type_readonly = fields.Selection(related='recurring_rule_type', readonly=True, track_visibility=False)
+    recurring_rule_type_readonly = fields.Selection(
+        string="Recurrence Unit",
+        related='recurring_rule_type', readonly=True, track_visibility=False)
 
     user_closable = fields.Boolean(string="Closable by customer", help="If checked, the user will be able to close his account from the frontend")
     payment_mandatory = fields.Boolean('Automatic Payment', help='If set, payments will be made automatically and invoices will not be generated if payment attempts are unsuccessful.')
