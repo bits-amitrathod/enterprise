@@ -28,7 +28,7 @@ msgid ""
 "A project must have a start date to use a forecast grid, found no start date"
 " for {project.display_name}"
 msgstr ""
-"Проектът трябва да има зададена стартова дата, която да използва прогнозна "
+"Проектът трябва да има зададена начална дата, която да използва прогнозна "
 "матрица, без открита начална дата за {project.display_name}"
 
 #. module: project_forecast_grid
@@ -38,8 +38,8 @@ msgid ""
 "A project must have an end date to use a forecast grid, found no end date "
 "for {project.display_name"
 msgstr ""
-"Даден проект трябва да има крайна дата, за да използва прогнозна матрица, "
-"без открита начална дата за {project.display_name"
+"Даден проект трябва да има крайна дата, за да използва прогнозна матрица, не"
+" е открита крайна дата за {project.display_name"
 
 #. module: project_forecast_grid
 #: model:ir.ui.view,arch_db:project_forecast_grid.project_forecast_grid
@@ -65,7 +65,7 @@ msgstr "По проект"
 #. module: project_forecast_grid
 #: model:ir.ui.menu,name:project_forecast_grid.menu_project_forecast_grid_by_user
 msgid "By User"
-msgstr ""
+msgstr "Чрез потребител"
 
 #. module: project_forecast_grid
 #: code:addons/project_forecast_grid/models/project.py:20
@@ -74,6 +74,9 @@ msgid ""
 "Can only be used for forecasts not spanning multiple months, found "
 "%(forecast_count)d forecast(s) spanning across months in %(project_name)s"
 msgstr ""
+"Може да се използва единствено за прогнози, които не обхващат няколко "
+"месеца, открита %(forecast_count)d прогноза(и), обхващаща няколко месеца в "
+"%(project_name)s"
 
 #. module: project_forecast_grid
 #: model:ir.model.fields,field_description:project_forecast_grid.field_project_forecast_assignment_create_uid
@@ -88,7 +91,7 @@ msgstr "Създадено на"
 #. module: project_forecast_grid
 #: model:ir.model.fields,field_description:project_forecast_grid.field_project_forecast_assignment_display_name
 msgid "Display Name"
-msgstr "Име за показване"
+msgstr "Покажете име"
 
 #. module: project_forecast_grid
 #: code:addons/project_forecast_grid/models/project.py:41
@@ -99,12 +102,12 @@ msgstr "Прогноза"
 #. module: project_forecast_grid
 #: model:ir.actions.act_window,name:project_forecast_grid.action_project_forecast_grid_by_project
 msgid "Forecast By Project"
-msgstr ""
+msgstr "Прогноза по проект"
 
 #. module: project_forecast_grid
 #: model:ir.actions.act_window,name:project_forecast_grid.action_project_forecast_grid_by_user
 msgid "Forecast By User"
-msgstr ""
+msgstr "Прогноза от потребител"
 
 #. module: project_forecast_grid
 #: model:ir.ui.view,arch_db:project_forecast_grid.view_project_set_dates
@@ -112,6 +115,8 @@ msgid ""
 "Forecasting on a project requires that the project\n"
 "                        have start and end dates"
 msgstr ""
+"Прогнозирането на проект изисква проектът\n"
+"                        да има начална и крайна дата"
 
 #. module: project_forecast_grid
 #: code:addons/project_forecast_grid/models/project_forecast.py:25
@@ -119,6 +124,8 @@ msgstr ""
 msgid ""
 "Forecasting over a project only supports monthly forecasts (got step {})"
 msgstr ""
+"Прогнозирането по даден проект само поддържа месечни прогнози (трябва стъпка"
+" {})"
 
 #. module: project_forecast_grid
 #: model:ir.ui.menu,name:project_forecast_grid.project_forecast_gantt
@@ -150,17 +157,17 @@ msgstr "ИН"
 #. module: project_forecast_grid
 #: model:ir.model.fields,field_description:project_forecast_grid.field_project_forecast_assignment___last_update
 msgid "Last Modified on"
-msgstr "Последно променено на"
+msgstr "Последно коригирано на"
 
 #. module: project_forecast_grid
 #: model:ir.model.fields,field_description:project_forecast_grid.field_project_forecast_assignment_write_uid
 msgid "Last Updated by"
-msgstr "Последно обновено от"
+msgstr "Последно актуализирано от"
 
 #. module: project_forecast_grid
 #: model:ir.model.fields,field_description:project_forecast_grid.field_project_forecast_assignment_write_date
 msgid "Last Updated on"
-msgstr "Последно обновено на"
+msgstr "Последно актуализирано на"
 
 #. module: project_forecast_grid
 #: model:ir.ui.view,arch_db:project_forecast_grid.view_project_forecast_grid_by_project

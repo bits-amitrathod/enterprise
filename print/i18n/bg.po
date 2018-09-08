@@ -48,6 +48,25 @@ msgid ""
 "              \n"
 "            "
 msgstr ""
+"\n"
+"                <body>\n"
+"                      <p>Уважаеми/а ${object.partner_id.name},</p>\n"
+"\n"
+"                      <p>В хода на последния процес по \"Разпечатайте и изпратете\" документи се появиха някои грешки. Ето опис на неуспешната поръчка за печат, на която сте автор.</p>\n"
+"                      <p>Моля, вижте кои грешки са засечени. Можете да ги откриете в <i>Настройки > Разпечатайте поръчки</i>.</p>\n"
+"\n"
+"                      % if ctx.get('print_errors'):\n"
+"                            <p>\n"
+"                            ИН на поръчка за разпечатване  |    Съобщение за грешка <br/>\n"
+"                            -------------------------------------- <br/>\n"
+"                                  % for print_order_id, error_text in ctx.get('print_errors'):\n"
+"                                        ${print_order_id}    |    ${error_text} <br/>\n"
+"                                  % endfor\n"
+"                            </p>\n"
+"                      % endif\n"
+"                </body>\n"
+"              \n"
+"            "
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
@@ -55,14 +74,14 @@ msgid ""
 "<b> Credit error :</b> Your Provider Credit account is negative. Please "
 "refill your provider account to send documents."
 msgstr ""
-"<b> Кредитна грешка :</b> Кредитният Ви лимит при този доставчик е "
-"надхвълен/изчерпан. Моля, допълнете сметката за да изпращате документи."
+"<b> Кредитна грешка :</b> Кредитната сметка на доставчика Ви е изчерпана. "
+"Моля, заредете сметката на доставчика си, за да изпращате документи."
 
 #. module: print
 #: code:addons/print/wizard/print_order_wizard.py:63
 #, python-format
 msgid "At least one of the document you want to send contains a mistake."
-msgstr "Поне един от документите, които искате да изпратите съдържа грешка."
+msgstr "Поне един от документите, които искате да изпратите, съдържа грешка."
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_user_id
@@ -72,13 +91,13 @@ msgstr "Автор"
 #. module: print
 #: selection:print.order,ink:0 selection:print.order.wizard,ink:0
 msgid "Black & White"
-msgstr "Черно и Бяло"
+msgstr "Черно & бяло"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_sendnow_wizard_view_form
 #: model:ir.ui.view,arch_db:print.print_order_wizard_view_form
 msgid "Cancel"
-msgstr "Отказ"
+msgstr "Отменете"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_city
@@ -98,7 +117,7 @@ msgstr "Изчислете цена"
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_price
 msgid "Cost to Deliver"
-msgstr "Разходи за доставка"
+msgstr "Цена за доставка"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_partner_country_id
@@ -151,7 +170,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_display_name
 #: model:ir.model.fields,field_description:print.field_print_provider_display_name
 msgid "Display Name"
-msgstr "Име за показване"
+msgstr "Покажете име"
 
 #. module: print
 #: model:ir.ui.view,arch_db:print.print_order_view_form
@@ -182,7 +201,7 @@ msgstr "Съобщение за грешка"
 #. module: print
 #: selection:print.order,state:0
 msgid "Failed"
-msgstr ""
+msgstr "Неуспешен"
 
 #. module: print
 #: model:mail.template,subject:print.print_user_notify_failed_email_template
@@ -228,7 +247,7 @@ msgstr "Валиден ли е адреса"
 #: model:ir.model.fields,field_description:print.field_print_order_wizard___last_update
 #: model:ir.model.fields,field_description:print.field_print_provider___last_update
 msgid "Last Modified on"
-msgstr "Последно променено на"
+msgstr "Последно коригирано на"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_account_invoice_print_sent_date
@@ -249,7 +268,7 @@ msgstr "Дата на последно изпращане"
 #: model:ir.model.fields,field_description:print.field_print_order_write_uid
 #: model:ir.model.fields,field_description:print.field_print_provider_write_uid
 msgid "Last Updated by"
-msgstr "Последно обновено от"
+msgstr "Последно актуализирано от"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_line_wizard_write_date
@@ -258,7 +277,7 @@ msgstr "Последно обновено от"
 #: model:ir.model.fields,field_description:print.field_print_order_write_date
 #: model:ir.model.fields,field_description:print.field_print_provider_write_date
 msgid "Last Updated on"
-msgstr "Последно обновено на"
+msgstr "Последно актуализирано на"
 
 #. module: print
 #: model:ir.model.fields,field_description:print.field_print_order_wizard_print_order_line_wizard_ids
