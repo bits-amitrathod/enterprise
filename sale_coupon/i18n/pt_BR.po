@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 11:28+0000\n"
-"PO-Revision-Date: 2018-08-24 11:28+0000\n"
+"POT-Creation-Date: 2018-09-05 09:12+0000\n"
+"PO-Revision-Date: 2018-09-05 09:12+0000\n"
 "Last-Translator: mariana rodrigues <mariana12v@gmail.com>, 2018\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgstr "Um cupom já foi aplicado para a mesma recompensa"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:62
-#: code:addons/sale_coupon/models/sale_coupon_program.py:150
+#: code:addons/sale_coupon/models/sale_coupon_program.py:160
 #, python-format
 msgid "A minimum of %s %s should be purchased to get the reward"
 msgstr "Um mínimo de %s%sdeve ser comprado para obter a recompensa"
@@ -301,7 +301,7 @@ msgstr "Aplicar em Primeiro"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:79
-#: code:addons/sale_coupon/models/sale_coupon_program.py:171
+#: code:addons/sale_coupon/models/sale_coupon_program.py:181
 #, python-format
 msgid "At least one of the required conditions is not met to get the reward!"
 msgstr ""
@@ -674,7 +674,7 @@ msgid "Global discounts are not cumulable."
 msgstr "Os descontos globais não são cumuláveis."
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:162
+#: code:addons/sale_coupon/models/sale_coupon_program.py:172
 #, python-format
 msgid "Global discounts are not cumulative."
 msgstr "Os descontos globais não são cumulativos."
@@ -951,19 +951,19 @@ msgid "Promo Code Usage"
 msgstr "Uso do Código de Promoção"
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:148
+#: code:addons/sale_coupon/models/sale_coupon_program.py:158
 #, python-format
 msgid "Promo code %s has been expired."
 msgstr "O código promocional%s já expirou."
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:158
+#: code:addons/sale_coupon/models/sale_coupon_program.py:168
 #, python-format
 msgid "Promo code is expired"
 msgstr "O código promocional expirou"
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:156
+#: code:addons/sale_coupon/models/sale_coupon_program.py:166
 #, python-format
 msgid "Promo code is invalid"
 msgstr "Código promocional inválido"
@@ -996,7 +996,7 @@ msgid "Promotional Program"
 msgstr "Programa Promocional"
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:160
+#: code:addons/sale_coupon/models/sale_coupon_program.py:170
 #, python-format
 msgid "Promotionals codes are not cumulative."
 msgstr "Os códigos de promoção não são cumulativos."
@@ -1017,6 +1017,11 @@ msgstr "Cotação"
 #: selection:sale.coupon,state:0
 msgid "Reserved"
 msgstr "Reservado"
+
+#. module: sale_coupon
+#: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program__website_id
+msgid "Restrict publishing to this website."
+msgstr ""
 
 #. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__reward_id
@@ -1113,7 +1118,7 @@ msgid "Sales Order Line"
 msgstr "Linha do Pedido de Vendas"
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:130
+#: code:addons/sale_coupon/models/sale_coupon_program.py:140
 #, python-format
 msgid "Sales Orders"
 msgstr "Ordens de Vendas"
@@ -1188,7 +1193,7 @@ msgstr "O programa de cupom %s está em estado rascunho ou fechado"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:74
-#: code:addons/sale_coupon/models/sale_coupon_program.py:166
+#: code:addons/sale_coupon/models/sale_coupon_program.py:176
 #, python-format
 msgid "The customer doesn't have access to this reward."
 msgstr "O cliente não tem acesso a essa recompensa."
@@ -1206,25 +1211,26 @@ msgid "The discount in percentage, between 1 to 100"
 msgstr "O desconto em porcentagem, entre 1 e 100"
 
 #. module: sale_coupon
-#: sql_constraint:sale.coupon.program:0
-msgid "The program code must be unique!"
-msgstr "O código do programa deve ser exclusivo!"
+#: code:addons/sale_coupon/models/sale_coupon_program.py:68
+#, python-format
+msgid "The program code must be unique by website!"
+msgstr ""
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:152
+#: code:addons/sale_coupon/models/sale_coupon_program.py:162
 #, python-format
 msgid "The promo code is already applied on this order"
 msgstr "O código de promoção já está aplicado nesta ordem"
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:154
+#: code:addons/sale_coupon/models/sale_coupon_program.py:164
 #, python-format
 msgid "The promotional offer is already applied on this order"
 msgstr "A oferta promocional já está aplicada nesta ordem"
 
 #. module: sale_coupon
 #: code:addons/sale_coupon/models/sale_coupon.py:72
-#: code:addons/sale_coupon/models/sale_coupon_program.py:164
+#: code:addons/sale_coupon/models/sale_coupon_program.py:174
 #, python-format
 msgid ""
 "The reward products should be in the sales order lines to apply the "
@@ -1310,7 +1316,12 @@ msgid "Validity duration for a coupon after its generation"
 msgstr ""
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:116
+#: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_program__website_id
+msgid "Website"
+msgstr "Site"
+
+#. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_coupon_program.py:126
 #, python-format
 msgid "You can not delete a program in active state"
 msgstr ""
@@ -1325,7 +1336,7 @@ msgid ""
 msgstr ""
 
 #. module: sale_coupon
-#: code:addons/sale_coupon/models/sale_coupon_program.py:168
+#: code:addons/sale_coupon/models/sale_coupon_program.py:178
 #, python-format
 msgid ""
 "You don't have the required product quantities on your sales order. If the "

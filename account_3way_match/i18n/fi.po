@@ -28,16 +28,19 @@ msgid ""
 "  * No, you should not pay the bill, you have not received the products\n"
 "  * Exception, there is a difference between received and billed quantities."
 msgstr ""
+"  * Yes: lasku pitäisi maksaa, koska olet vastaanottanut tuotteet\n"
+"  * No: laskua ei pitäisi maksaa, koska tuotteet eivät ole saapuneet\n"
+"  * Exception: vastaanotetut ja laskutetut määrät eivät täsmää."
 
 #. module: account_3way_match
 #: model:ir.ui.view,arch_db:account_3way_match.account_invoice_filter_inherit_account_3way_match
 msgid "Bills in Exception"
-msgstr ""
+msgstr "Laskut poikkeustilassa"
 
 #. module: account_3way_match
 #: model:ir.ui.view,arch_db:account_3way_match.account_invoice_filter_inherit_account_3way_match
 msgid "Bills to Pay"
-msgstr ""
+msgstr "Laskut maksatukseen"
 
 #. module: account_3way_match
 #: selection:account.invoice,release_to_pay:0
@@ -49,7 +52,7 @@ msgstr "Poikkeus"
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice__force_release_to_pay
 msgid "Force status"
-msgstr ""
+msgstr "Pakota tila"
 
 #. module: account_3way_match
 #: model:ir.model.fields,help:account_3way_match.field_account_invoice__force_release_to_pay
@@ -83,13 +86,13 @@ msgstr "Ei"
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice_line__can_be_paid
 msgid "Release to Pay"
-msgstr ""
+msgstr "Vapauta maksatukseen"
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice__release_to_pay
 #: model:ir.ui.view,arch_db:account_3way_match.account_invoice_form_inherit
 msgid "Should be paid"
-msgstr ""
+msgstr "Pitäisi maksaa"
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_invoice__release_to_pay_manual

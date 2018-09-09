@@ -5,13 +5,14 @@
 # Translators:
 # Martin Trigaux, 2018
 # Eloïse Stilmant <est@odoo.com>, 2018
+# Laura Piraux <lap@odoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-24 11:28+0000\n"
 "PO-Revision-Date: 2018-08-24 11:28+0000\n"
-"Last-Translator: Eloïse Stilmant <est@odoo.com>, 2018\n"
+"Last-Translator: Laura Piraux <lap@odoo.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,6 +37,8 @@ msgid ""
 "<a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">Meeting</a> for <a "
 "href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s's</a> appraisal"
 msgstr ""
+"<a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">Réunion</a> pour "
+"l'évaluation de <a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s</a>"
 
 #. module: hr_appraisal
 #: model:mail.template,body_html:hr_appraisal.send_appraisal_template
@@ -59,6 +62,24 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Bonjour ${ctx.get('employee').name}<br/><br/>\n"
+"        % if ctx.get('employee').id == object.employee_id.id:\n"
+"            Veuillez remplir le formulaire suivant en vue de votre évaluation.\n"
+"        % else:\n"
+"            Veuillez remplir le formulaire suivant en rapport avec l'évaluation de ${object.employee_id.name}'s appraisal.\n"
+"        % endif\n"
+"        <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"            <a href=\"__URL__\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
+"                Commencer\n"
+"            </a>\n"
+"        </div>\n"
+"        Merci de répondre avant ${format_date(object.date_close)}.<br/>\n"
+"        Merci pour votre participation.\n"
+"    </p>\n"
+"</div>\n"
+"            "
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -190,7 +211,7 @@ msgstr "Statistiques d'évaluation"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__manager_appraisal
 msgid "Appraisal by Manager"
-msgstr ""
+msgstr "Evaluation par Manager"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:181
@@ -300,7 +321,7 @@ msgstr "Date de création"
 #. module: hr_appraisal
 #: model:ir.actions.act_window,help:hr_appraisal.open_view_hr_appraisal_tree
 msgid "Create a new appraisal"
-msgstr ""
+msgstr "Créez une nouvelle évaluation"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__create_uid
@@ -492,7 +513,7 @@ msgstr "Si coché, de nouveaux messages demandent votre attention."
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Si actif, certains messages ont une erreur de livraison."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__action_plan
@@ -506,7 +527,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "In #{kanban_getcolorname(record.color.raw_value)}"
-msgstr ""
+msgstr "Dans #{kanban_getcolorname(record.color.raw_value)}"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
@@ -695,7 +716,7 @@ msgstr "Répéter tous les"
 #. module: hr_appraisal
 #: model:ir.ui.menu,name:hr_appraisal.menu_hr_appraisal_report
 msgid "Reporting"
-msgstr "Rapport"
+msgstr "Analyse"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_user_id
@@ -865,6 +886,7 @@ msgstr "Année"
 #, python-format
 msgid "You cannot delete appraisal which is in %s state"
 msgstr ""
+"Vous ne pouvez pas supprimer une évaluation qui se trouve à l'étape %s"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,help:hr_appraisal.open_view_hr_appraisal_tree
