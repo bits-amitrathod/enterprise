@@ -45,6 +45,17 @@ msgid ""
 "                \n"
 "            "
 msgstr ""
+"\n"
+"\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); \">\n"
+"        <p>Gửi anh/chị  ${ctx.get('employee').name},</p>\n"
+" % if ctx.get('employee').id == object.employee_id.id:\n"
+"             <p>Vui lòng điền vào bản khảo sát sau đây liên quan đến thẩm định của bạn.</p>\n"
+"                      % else:\n"
+"                      <p><a href=\"__URL__\">Nhấp vào đây để truy cập khảo sát.</a></p>\n"
+"<p>Đăng câu trả lời của bạn cho đánh giá nhân viên đến: ${object.date_close}</p>\n"
+"                     <p>Cảm ơn bạn vì sự tham gia của bạn.</p>\n"
+"                 </div>"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -64,7 +75,7 @@ msgstr "<strong><span>Pỏng vấn lần cuối: </span></strong>"
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_1
 msgid "Ability to cope with multidisciplinarity of team"
-msgstr ""
+msgstr "Khả năng đối phó với sự thích nghi của đội"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_6
@@ -87,6 +98,8 @@ msgid ""
 "Actions by Executive management show genuine interest in the well-being of "
 "employees"
 msgstr ""
+"Hành động của quản lý điều hành thể hiện sự quan tâm thực sự đối với đời "
+"sống của nhân viên"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_active
@@ -99,21 +112,23 @@ msgid ""
 "Adaptability: Ability to adapt oneself to organizational changes while "
 "keeping efficiency"
 msgstr ""
+"Khả năng thích ứng: Khả năng thích ứng với những thay đổi của tổ chức trong "
+"khi vẫn giữ được hiệu quả"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_2_3
 msgid "Additional Comments"
-msgstr ""
+msgstr "Thêm bình luận"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_7
 msgid "Additional comments"
-msgstr ""
+msgstr "Thêm bình luận"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_11
 msgid "Analytical and synthetic mind"
-msgstr ""
+msgstr "Phân tích và tổng hợp định hướng"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_survey_completed_ids
@@ -131,7 +146,7 @@ msgstr "Các câu trả lời"
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_tree
 msgid "Appraisal"
-msgstr ""
+msgstr "Đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.action_appraisal_report_all
@@ -144,60 +159,60 @@ msgstr "Phân tích Đánh giá"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_collaborators_ids
 msgid "Appraisal Collaborators"
-msgstr ""
+msgstr "Đánh giá công tác viên"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_colleagues_ids
 msgid "Appraisal Colleagues"
-msgstr ""
+msgstr "Đánh giá động nghiệp"
 
 #. module: hr_appraisal
 #: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_new
 #: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_new
 msgid "Appraisal Created"
-msgstr ""
+msgstr "Đánh giá đã tạo"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_date_close
 msgid "Appraisal Deadline"
-msgstr ""
+msgstr "Hạn chót đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Appraisal Form..."
-msgstr ""
+msgstr "Đánh giá từ..."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_frequency_unit
 msgid "Appraisal Frequency"
-msgstr ""
+msgstr "Tần suất đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_manager_ids
 msgid "Appraisal Manager"
-msgstr ""
+msgstr "Quản lý đánh giá"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:118
 #, python-format
 msgid "Appraisal Meeting For %s"
-msgstr ""
+msgstr "Họp đánh giá để %s"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.opinion_1
 msgid "Appraisal Process"
-msgstr ""
+msgstr "Tiến trình đánh giá"
 
 #. module: hr_appraisal
 #: model:mail.template,subject:hr_appraisal.send_appraisal_template
 msgid "Appraisal Regarding"
-msgstr ""
+msgstr "Lưu ý đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_frequency
 msgid "Appraisal Repeat Every"
-msgstr ""
+msgstr "Lặp lại đánh giá mỗi"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:212
@@ -206,32 +221,32 @@ msgstr ""
 #: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_sent
 #, python-format
 msgid "Appraisal Sent"
-msgstr ""
+msgstr "Đánh giá đã gửi"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_appraisal_report
 msgid "Appraisal Statistics"
-msgstr ""
+msgstr "Thống kê đánh giá"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_3
 msgid "Appraisal for Period"
-msgstr ""
+msgstr "Đánh giá theo chu kỳ"
 
 #. module: hr_appraisal
 #: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_sent
 msgid "Appraisal sent"
-msgstr ""
+msgstr "Đánh giá đã gửi"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.hr_appraisal_action_from_department
 msgid "Appraisal to start"
-msgstr ""
+msgstr "Đánh giá cần bắt đầu"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_department_view_kanban
 msgid "Appraisal(s)"
-msgstr ""
+msgstr "Đánh giá"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:161
@@ -270,17 +285,17 @@ msgstr "Đã lưu "
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid "At the conclusion of the appraisal time period"
-msgstr ""
+msgstr "Khi kết thúc giai đoạn đánh giá"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid "At the outset of the appraisal time period"
-msgstr ""
+msgstr "Ngay từ đầu thời gian đánh giá"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "At the supervisor's appraisal date"
-msgstr ""
+msgstr "Vào ngày đánh giá của giám sát viên"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -302,30 +317,30 @@ msgstr "Bấm vào đây để tạo một đánh giá mới"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_collaborators_appraisal
 msgid "Collaborator"
-msgstr ""
+msgstr "Cộng tác viên"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_collaborators_survey_id
 msgid "Collaborator's Appraisal"
-msgstr ""
+msgstr "Đánh giá của cộng tác viên"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_collaborators_ids
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_by_collaborators
 msgid "Collaborators"
-msgstr ""
+msgstr "Cộng tác viên"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_colleagues_survey_id
 msgid "Colleague's Appraisal"
-msgstr ""
+msgstr "Đánh giá của đồng nghiệp"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_colleagues_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_colleagues_ids
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_by_colleagues
 msgid "Colleagues"
-msgstr ""
+msgstr "Đồng nghiệp"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_color
@@ -337,6 +352,8 @@ msgstr "Mã màu"
 msgid ""
 "Communication skills (written & verbally): clearness, concision, exactitude"
 msgstr ""
+"Kỹ năng giao tiếp (bằng văn bản và bằng lời nói): độ sắc nét, sự đồng bộ, "
+"chính xác"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_company_id
@@ -349,17 +366,20 @@ msgid ""
 "Compared to similar jobs in other companies where I could work, my total "
 "compensation..."
 msgstr ""
+"So với các công việc tương tự ở các công ty khác, nơi tôi có thể làm việc, "
+"tổng số tiền có thể lãnh của tôi ..."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_3
 msgid ""
 "Compliance to internal rules and processes (timesheets completion, etc.)"
 msgstr ""
+"Tuân thủ các quy tắc và quy trình nội bộ (hoàn thành bảng chấm công, v.v.)"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_4
 msgid "Continuous Improvement"
-msgstr ""
+msgstr "Cải tiến liên tục"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report_create_date
@@ -384,7 +404,7 @@ msgstr "Tháng tạo"
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_14
 msgid "Creativity and forward looking aptitude"
-msgstr ""
+msgstr "Tính sáng tạo và hướng tới tương lai"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -392,6 +412,8 @@ msgid ""
 "Critical or key elements of performance and professional development needs "
 "(if any), should also be noted at this time"
 msgstr ""
+"Các yếu tố quan trọng hoặc quan trọng về hiệu suất và nhu cầu phát triển "
+"nghề nghiệp (nếu có), cũng cần được lưu ý tại thời điểm này"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_8
@@ -406,7 +428,7 @@ msgstr "Ngày tháng"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_4
 msgid "Date of review"
-msgstr ""
+msgstr "Ngày đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report_deadline
@@ -421,12 +443,12 @@ msgstr "Hạn chót:"
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_7
 msgid "Decision making"
-msgstr ""
+msgstr "Quyết định"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_2
 msgid "Delegation: Ability to efficiently assign tasks to other people"
-msgstr ""
+msgstr "Tập thể: Khả năng giao nhiệm vụ hiệu quả cho người khác"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -436,7 +458,7 @@ msgstr "Xóa"
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_2_1
 msgid "Demonstrates genuine concern for me as a person"
-msgstr ""
+msgstr "Thể hiện mối quan tâm thực sự đối với tôi với tư cách là một người"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_department_id
@@ -448,7 +470,7 @@ msgstr "Phòng ban"
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "Did not meet standards and expectations"
-msgstr ""
+msgstr "Không đáp ứng các tiêu chuẩn và kỳ vọng"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_display_name
@@ -478,7 +500,7 @@ msgstr "Hiệu quả"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_mail_template_id
 msgid "Email Template for Appraisal"
-msgstr ""
+msgstr "Mẫu email đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_employee
@@ -521,7 +543,7 @@ msgstr "Mẫu ý kiến nhân viên"
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_3
 msgid "Employee Performance in Key Areas"
-msgstr ""
+msgstr "Hiệu suất của nhân viên trong các lĩnh vực chính"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_colleagues_survey_id
@@ -536,17 +558,17 @@ msgstr "Tên nhân viên"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_1
 msgid "Engagement"
-msgstr ""
+msgstr "Tương tác"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_2
 msgid "Enthusiasm & implication toward projects/assignments"
-msgstr ""
+msgstr "Sự nhiệt tình và thành ý đối với các dự án/nhiệm vụ"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.opinion_2
 msgid "Evaluation"
-msgstr ""
+msgstr "Đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_calendar_event
@@ -557,7 +579,7 @@ msgstr "Sự kiện"
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "Exceeds standards and expectations"
-msgstr ""
+msgstr "Vượt tiêu chuẩn và kỳ vọng"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
@@ -567,17 +589,17 @@ msgstr "Các bộ lọc mở rộng..."
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Final Evaluation"
-msgstr ""
+msgstr "Đánh giá cuối cùng"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_date_final_interview
 msgid "Final Interview"
-msgstr ""
+msgstr "Phỏng vấn cuối cùng"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "Final Interview Date"
-msgstr ""
+msgstr "Ngày phỏng vấn cuối cùng"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -607,11 +629,14 @@ msgid ""
 "engagement and effectiveness, the continuous improvement and openness in "
 "action in thecompany..."
 msgstr ""
+"Các báo cáo trực tiếp của ông sẽ được mời thông qua Hệ thống để thể hiện một"
+" phản hồi về sự lãnh đạo của người giám sát và đưa ra ý kiến về sự tham gia "
+"và hiệu quả của họ, sự cải tiến liên tục và sự cởi mở trong hành động ..."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_1
 msgid "I am proud to tell others I work here"
-msgstr ""
+msgstr "Tôi tự hào nói với những người khác tôi làm việc ở đây"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_5
@@ -619,11 +644,13 @@ msgid ""
 "I am willing to put in a great deal of effort beyond what is expected to "
 "help my workgroup succeed"
 msgstr ""
+"Tôi sẵn sàng nỗ lực hết mình để hoàn thành tốtcác nhiệm vụ được giao giúp "
+"nhóm làm việc của tôi thành công"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_2_4
 msgid "I believe the information that I get from the person I report to."
-msgstr ""
+msgstr "Tôi tin các thông tin mà tôi nhận được từ người tôi báo cáo."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_2_2
@@ -631,11 +658,14 @@ msgid ""
 "I consistently acquire new knowledge, skills or understanding through "
 "contact with my supervisor. He helps me growing my compete"
 msgstr ""
+"Tôi liên tục có được kiến thức, kỹ năng hoặc sự hiểu biết mới thông qua tiếp"
+" xúc với người giám sát của tôi. Anh ấy giúp tôi phát triển và hoàn thiện "
+"bản thân mình"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_3_2
 msgid "I have enough work"
-msgstr ""
+msgstr "Tôi có công việc vừa sức"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_6_2
@@ -643,11 +673,13 @@ msgid ""
 "I have the same opportunity to succeed as others with similar experiences, "
 "performance and educational background"
 msgstr ""
+"Tôi có cùng cơ hội thành công khi những người khác có trải nghiệm, hiệu suất"
+" và nền tảng giáo dục tương tự"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_5_1
 msgid "I know the company's values and live them"
-msgstr ""
+msgstr "Tôi biết giá trị của công ty và sống với họ"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_3_3
@@ -655,11 +687,14 @@ msgid ""
 "I mostly work on value-added tasks for the company, the products or the "
 "services"
 msgstr ""
+"Tôi chủ yếu làm việc trên các nhiệm vụ giá trị gia tăng cho công ty, sản "
+"phẩm hoặc dịch vụ"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_6_4
 msgid "I understand the company strategy and how my workgroup supports it"
 msgstr ""
+"Tôi hiểu chiến lược của công ty và cách nhóm làm việc của tôi hỗ trợ nó"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_3
@@ -667,11 +702,14 @@ msgid ""
 "I would prefer to remain with this company even if a comparable job were "
 "available in another company"
 msgstr ""
+"Tôi muốn ở lại với công ty này ngay cả khi một công việc tương đương có sẵn "
+"ở một công ty khác"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_3_1
 msgid "I'm efficient at work and my achievements are successful"
 msgstr ""
+"Tôi đạt hiệu quả trong công việc và thành tích của tôi luôn thành công"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_id
@@ -685,6 +723,8 @@ msgid ""
 "Identify professional, performance, or project objectives you recommend for employee’s continued career development\n"
 "over the coming year."
 msgstr ""
+"Xác định các mục tiêu chuyên môn, hiệu suất hoặc dự án mà bạn đề xuất cho sự phát triển nghề nghiệp liên tục của nhân viên\n"
+"trong năm tới."
 
 #. module: hr_appraisal
 #: model:survey.question,comments_message:hr_appraisal.appraisal_1_1
@@ -719,16 +759,18 @@ msgid ""
 "If the evaluation does not meet the expectations, you can propose an action "
 "plan"
 msgstr ""
+"Nếu đánh giá không đáp ứng được kỳ vọng, bạn có thể đề xuất một kế hoạch "
+"hành động"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "In progress Evaluations"
-msgstr ""
+msgstr "Đang tiến hành Đánh giá"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_5
 msgid "Initiative and self autonomy"
-msgstr ""
+msgstr "Sáng kiến và tự chủ"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report_final_interview
@@ -742,6 +784,9 @@ msgid ""
 "coming year, including major employee responsibilities and corresponding benchmarks against which results will be\n"
 "evaluated."
 msgstr ""
+"Đó là trách nhiệm chung của nhân viên và người giám sát (người thẩm định) để thiết lập một kế hoạch làm việc khả thi cho\n"
+"năm tới, bao gồm trách nhiệm của nhân viên chính và điểm chuẩn tương ứng dựa trên kết quả sẽ là\n"
+"được đánh giá."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -750,6 +795,9 @@ msgid ""
 "(internal and/or external customers, peers). In case of collaboration with Odoo SA Belgium, the supervisor must\n"
 "receive completed evaluation form from the employee's Belgian project manager."
 msgstr ""
+"Trách nhiệm chính của người giám sát là thu thập thông tin đầu vào cần thiết từ các nguồn phản hồi thích hợp\n"
+"(khách hàng nội bộ và / hoặc bên ngoài, đồng nghiệp). Trong trường hợp hợp tác với Odoo SA Bỉ, người giám sát phải\n"
+"nhận được mẫu đánh giá hoàn thành từ người quản lý dự án của nhân viên Bỉ."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal___last_update
@@ -775,7 +823,7 @@ msgstr "Các hoạt động gần nhất"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_2
 msgid "Leadership"
-msgstr ""
+msgstr "Lãnh đạo"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_3
@@ -783,11 +831,13 @@ msgid ""
 "Leadership: create a challenging and motivating work environment aligned "
 "with the company's strategy"
 msgstr ""
+"Lãnh đạo: tạo ra một môi trường làm việc đầy thách thức và năng động phù hợp"
+" với chiến lược của công ty"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_4
 msgid "Leadership: sustain subordinates in their professional growth"
-msgstr ""
+msgstr "Lãnh đạo: duy trì cấp dưới với sự phát triển chuyên môn của họ"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_2_3
@@ -795,6 +845,8 @@ msgid ""
 "Listens and takes into account all ideas and do his best to put in place the"
 " best of these"
 msgstr ""
+"Lắng nghe và đưa vào tài khoản tất cả các ý tưởng và làm hết sức mình để đưa"
+" ra tốt nhất trong số này"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_manager_appraisal
@@ -853,11 +905,13 @@ msgid ""
 "My best achievements have been communicated to the community, internally or "
 "to customers"
 msgstr ""
+"Thành tích tốt nhất của tôi đã được truyền đạt đến cộng đồng, nội bộ hoặc "
+"khách hàng"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_2
 msgid "My job provides me with a sense of personal accomplishment"
-msgstr ""
+msgstr "Công việc của tôi mang lại cho tôi cảm giác hoàn thiện bản thân"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_4_1
@@ -865,6 +919,8 @@ msgid ""
 "My work contributes towards the continuous improvement of the company, our "
 "services or products"
 msgstr ""
+"Công việc của tôi góp phần vào việc cải tiến liên tục của công ty, dịch vụ "
+"hoặc sản phẩm của chúng tôi"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_tree
@@ -875,12 +931,12 @@ msgstr "Tên"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_1_1
 msgid "Name of your direct supervisor"
-msgstr ""
+msgstr "Tên người quản lý trực tiếp của bạn"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_date
 msgid "Next Appraisal Date"
-msgstr ""
+msgstr "Ngày đánh giá kế tiếp"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_count_completed_survey
@@ -890,7 +946,7 @@ msgstr "Số lượng câu trả lời"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_count_sent_survey
 msgid "Number of Sent Forms"
-msgstr ""
+msgstr "Số lượng mẫu gửi"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_2_1
@@ -905,7 +961,7 @@ msgstr "Cán bộ"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_5
 msgid "Openness"
-msgstr ""
+msgstr "Sự cởi mở"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_4_4
@@ -913,11 +969,13 @@ msgid ""
 "Our workgroup identifies and reduces waste of time in our activities and "
 "processes"
 msgstr ""
+"Nhóm làm việc của chúng tôi xác định và giảm lãng phí thời gian trong các "
+"hoạt động và quy trình của chúng tôi"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid "Overall Purpose Of Employee Appraisal"
-msgstr ""
+msgstr "Mục đích tổng thể của đánh giá nhân viên"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_4_3
@@ -925,6 +983,8 @@ msgid ""
 "Overall, I believe the quality of products and/or services my workgroup "
 "delivers is improving"
 msgstr ""
+"Nhìn chung, tôi tin rằng chất lượng sản phẩm và/hoặc dịch vụ mà nhóm làm "
+"việc của tôi mang lại đang được cải thiện"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_periodic_appraisal
@@ -935,7 +995,7 @@ msgstr "Đánh giá định kỳ"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_periodic_appraisal_created
 msgid "Periodic Appraisal has been created"
-msgstr ""
+msgstr "Đánh giá định kỳ đã được tạo"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
@@ -945,7 +1005,7 @@ msgstr "Định kỳ"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_4_2
 msgid "Personal Performance Objectives"
-msgstr ""
+msgstr "Mục tiêu hiệu suất cá nhân"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -955,27 +1015,27 @@ msgstr "Kế hoạch"
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_2
 msgid "Position Title"
-msgstr ""
+msgstr "Chức danh"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_4_1
 msgid "Professional Development Objectives"
-msgstr ""
+msgstr "Mục tiêu phát triển chuyên nghiệp"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_4
 msgid "Professional Development and Performance Plan"
-msgstr ""
+msgstr "Kế hoạch phát triển và tác phong chuyên nghiệp"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_4_3
 msgid "Project Objectives"
-msgstr ""
+msgstr "Mục tiêu dự án"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_12
 msgid "Promptness and attendance record"
-msgstr ""
+msgstr "Nhắc nhở và hồ sơ điểm danh"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_related_partner_id
@@ -1003,11 +1063,13 @@ msgid ""
 "Results of the bottom-up survey and mitigation actions to face technical, "
 "organizational, structural and/or relational issues"
 msgstr ""
+"Kết quả của các hoạt động khảo sát và giảm nhẹ từ dưới lên để đối mặt với "
+"các vấn đề kỹ thuật, tổ chức, cấu trúc và/hoặc quan hệ"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "Schedule The Final Interview"
-msgstr ""
+msgstr "Lên lịch phỏng vấn cuối cùng"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -1024,17 +1086,17 @@ msgstr "Chọn người xem lại đánh giá"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_employee_survey_id
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_self_survey_id
 msgid "Self Appraisal"
-msgstr ""
+msgstr "Đánh giá bản thân"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
 msgid "Send Appraisal Form To"
-msgstr ""
+msgstr "Gửi mẫu Đánh giá đến"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_survey_sent_ids
 msgid "Sent Forms"
-msgstr ""
+msgstr "Gửi mẫu"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -1045,19 +1107,19 @@ msgstr "Hiển thị tất cả dữ liệu có ngày xử lý tiếp theo trư�
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid "Significantly below standards and expectations"
-msgstr ""
+msgstr "Đáng kể dưới tiêu chuẩn và kỳ vọng"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_3
 #: model:survey.page,description:hr_appraisal.opinion_1
 msgid ""
 "Significantly exceeds standards and expectations required of the position"
-msgstr ""
+msgstr "Đáng kể vượt quá tiêu chuẩn và kỳ vọng bắt buộc của vị trí"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Start Appraisal and Send Forms"
-msgstr ""
+msgstr "Bắt đầu đánh giá và gửi mẫu"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_report_state
@@ -1086,6 +1148,7 @@ msgstr "Dữ liệu người dùng nhập vào Khảo sát"
 msgid ""
 "Taking everything into account, how satisfied are you with your current job?"
 msgstr ""
+"Cân nhắc mọi thứ, bạn hài lòng với công việc hiện tại của mình như thế nào?"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_4
@@ -1093,11 +1156,13 @@ msgid ""
 "Team spirit: ability to work efficiently with peers, manage the conflicts "
 "with diplomacy"
 msgstr ""
+"Tinh thần đồng đội: khả năng làm việc hiệu quả với các đồng nghiệp, quản lý "
+"xung đột với ngoại giao"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_10
 msgid "Technical skills regarding to the job requirements"
-msgstr ""
+msgstr "Kỹ năng kỹ thuật liên quan đến yêu cầu công việc"
 
 #. module: hr_appraisal
 #: model:survey.question,validation_error_msg:hr_appraisal.appraisal_1_1
@@ -1132,6 +1197,8 @@ msgid ""
 "The appraiser should rate the employee's major work accomplishments and "
 "performance according to the metric provided below"
 msgstr ""
+"Người thẩm định nên đánh giá thành tích và thành tích công việc chính của "
+"nhân viên theo số liệu được cung cấp bên dưới"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_3
@@ -1139,12 +1206,14 @@ msgid ""
 "The appraiser should rate the employee’s major work accomplishments and performance according to the metric provided\n"
 "below:"
 msgstr ""
+"Người đánh giá nên đánh giá thành tích và thành tích công việc chính của nhân viên theo số liệu được cung cấp\n"
+"phía dưới:"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_employee.py:76
 #, python-format
 msgid "The date of the next appraisal cannot be in the past"
-msgstr ""
+msgstr "Ngày đánh giá tiếp theo không thể là trong quá khứ"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_employee_appraisal_date
@@ -1152,6 +1221,8 @@ msgid ""
 "The date of the next appraisal is computed by the appraisal plan's dates "
 "(first appraisal + periodicity)."
 msgstr ""
+"Ngày đánh giá tiếp theo được tính theo ngày của kế hoạch đánh giá (lần đánh "
+"giá đầu tiên + chu kỳ)."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1159,6 +1230,8 @@ msgid ""
 "The employee may choose to offer comments or explanation regarding the "
 "completed review."
 msgstr ""
+"Nhân viên có thể chọn đưa ra nhận xét hoặc giải thích liên quan đến đánh giá"
+" đã hoàn thành."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1167,6 +1240,9 @@ msgid ""
 "point for the supervisor’s evaluation. The employee can add examples of achievements for each criterion.\n"
 "Once the form had been filled, the employee send it to his supervisor."
 msgstr ""
+"Nhân viên sẽ chịu trách nhiệm hoàn thành bản dự thảo của Mẫu thẩm định như một công cụ để tự thẩm định và bắt đầu\n"
+"để đánh giá giám sát viên. Nhân viên có thể thêm các ví dụ về thành tích cho từng tiêu chí.\n"
+"Một khi mẫu đơn đã được điền đầy đủ, nhân viên sẽ gửi nó cho người quản lý của mình."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.opinion_1
@@ -1175,12 +1251,16 @@ msgid ""
 "be handled by the HR manager and a brief summary of the data will be sent to"
 " the concerned supervisor, to his team and to the supervisor's supervisor."
 msgstr ""
+"Các nhân viên sẽ gửi lại câu trả lời ẩn danh của họ cho Hệ thống. Dữ liệu sẽ"
+" được quản lý bởi người quản lý nhân sự và một bản tóm tắt ngắn gọn về dữ "
+"liệu sẽ được gửi đến người giám sát có liên quan, cho nhóm của anh ta và cho"
+" người giám sát của người giám sát."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid ""
 "The supervisor send the form to the HR department in India and in Belgium"
-msgstr ""
+msgstr "Người giám sát gửi biểu mẫu đến bộ phận nhân sự ở Ấn Độ và Bỉ"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1188,31 +1268,33 @@ msgid ""
 "The supervisor synthesizes and integrates all input into the completed appraisal. The motivation of the evaluation\n"
 "is explained in the ad hoc fields."
 msgstr ""
+"Người giám sát tổng hợp và tích hợp tất cả các đầu vào vào thẩm định đã hoàn thành. Động lực của việc đánh giá\n"
+"được giải thích trong các trường quảng cáo."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_color
 msgid "This color will be used in the kanban view."
-msgstr ""
+msgstr "Màu này sẽ được dùng trong hiển thị Kanban"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_collaborators_appraisal
 msgid "This employee will be appraised by his collaborators"
-msgstr ""
+msgstr "Nhân viên này sẽ được cộng tác viên đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_colleagues_appraisal
 msgid "This employee will be appraised by his colleagues"
-msgstr ""
+msgstr "Nhân viên này sẽ được đồng nghiệp của anh ta Đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_manager_appraisal
 msgid "This employee will be appraised by his managers"
-msgstr ""
+msgstr "Nhân viên này sẽ được các người quản lý của anh ta đánh giá"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_employee_appraisal
 msgid "This employee will do a self-appraisal"
-msgstr ""
+msgstr "Nhân viên này sẽ tự đánh giá bản thân"
 
 #. module: hr_appraisal
 #: model:survey.question,constr_error_msg:hr_appraisal.appraisal_1_1
@@ -1244,7 +1326,7 @@ msgstr "Câu trả lời là bắt buộc."
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_15
 msgid "Time management: projects/tasks are completed on time"
-msgstr ""
+msgstr "Quản lý thời gian: các dự án/nhiệm vụ được hoàn thành đúng thời hạn"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:212
@@ -1252,7 +1334,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #, python-format
 msgid "To Start"
-msgstr ""
+msgstr "Bắt đầu"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
@@ -1260,11 +1342,13 @@ msgid ""
 "To assist employees in their professional growth, through the identification of strengths and opportunities for\n"
 "development"
 msgstr ""
+"Để hỗ trợ nhân viên trong sự phát triển chuyên môn của họ, thông qua việc xác định các điểm mạnh và cơ hội cho\n"
+"phát triển"
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.appraisal_1
 msgid "To initiate a clear and open communication of performance expectations"
-msgstr ""
+msgstr "Để bắt đầu một giao tiếp rõ ràng và cởi mở về kỳ vọng hiệu suất"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -1277,6 +1361,8 @@ msgid ""
 "Use the following space to make any comments regarding the above performance"
 " evaluation."
 msgstr ""
+"Sử dụng không gian sau đây để đưa ra bất kỳ nhận xét nào liên quan đến đánh "
+"giá hiệu suất ở trên."
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_4_2
@@ -1284,11 +1370,13 @@ msgid ""
 "What I did several months ago is still of use to the company, the services "
 "or the products today"
 msgstr ""
+"Những gì tôi đã làm vài tháng trước đây vẫn được sử dụng cho công ty, các "
+"dịch vụ hoặc sản phẩm ngày nay"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_2
 msgid "Work Plan"
-msgstr ""
+msgstr "Kế hoạch làm việc"
 
 #. module: hr_appraisal
 #: selection:hr.employee,appraisal_frequency_unit:0
@@ -1299,7 +1387,7 @@ msgstr "Năm"
 #: code:addons/hr_appraisal/models/hr_appraisal.py:205
 #, python-format
 msgid "You cannot delete appraisal which is in '%s' state"
-msgstr ""
+msgstr "Bạn không thể xóa đánh giá mà nó đang trong trạng thái '%s'"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,help:hr_appraisal.open_view_hr_appraisal_tree
@@ -1308,11 +1396,14 @@ msgid ""
 "            to whom and the evaluation deadline. Once you have defined it,\n"
 "            change the stage to send it and view the results."
 msgstr ""
+"Bạn sẽ có thể chọn biểu mẫu nào sẽ được gửi (Nhân viên, Người quản lý, Cộng tác viên hoặc Đồng nghiệp),\n"
+"             cho ai và thời hạn đánh giá. Một khi bạn đã định nghĩa nó,\n"
+"             thay đổi giai đoạn để gửi và xem kết quả."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_collaborators_survey_id
 msgid "collaborate's Appraisal"
-msgstr ""
+msgstr "đánh giá của cộng tác viên"
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban

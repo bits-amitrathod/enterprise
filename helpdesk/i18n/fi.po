@@ -17,14 +17,14 @@
 # Iipponen <erno@web-veistamo.fi>, 2017
 # Eino Mäkitalo <eino.makitalo@netitbe.fi>, 2017
 # Jukka Paulin <jukka.paulin@gmail.com>, 2017
-# Heikki Katajisto <heikki.katajisto@myyntivoima.fi>, 2018
+# Melina Mäntylä <melina.mantyla@web-veistamo.fi>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-15 14:46+0000\n"
 "PO-Revision-Date: 2018-01-15 14:46+0000\n"
-"Last-Translator: Heikki Katajisto <heikki.katajisto@myyntivoima.fi>, 2018\n"
+"Last-Translator: Melina Mäntylä <melina.mantyla@web-veistamo.fi>, 2018\n"
 "Language-Team: Finnish (https://www.transifex.com/odoo/teams/41243/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,6 +38,8 @@ msgid ""
 "${object.company_id.name or object.user_id.company_id.name or 'Helpdesk'}: "
 "Service Rating Request"
 msgstr ""
+"${object.company_id.name or object.user_id.company_id.name or 'Helpdesk'}: "
+"Asiakaspalvelun arviointipyyntö"
 
 #. module: helpdesk
 #: model:mail.template,subject:helpdesk.new_ticket_request_email_template
@@ -177,6 +179,8 @@ msgid ""
 "<b>Stars</b> mark the <b>ticket priority</b>. You can change it directly "
 "from here!"
 msgstr ""
+"<b>Tähdet</b> merkitsevät <b>tiketin prioriteettiä</b>. Voit muokata niitä "
+"suoraan täällä!"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
@@ -191,7 +195,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> View documentation"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-right\"/> Katso dokumentaatio"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
@@ -206,7 +210,7 @@ msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
 msgid "<i/> Customer Satisfaction Ration:"
-msgstr ""
+msgstr "<i/> Asiakastyytyväisyyden suhde:"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -216,7 +220,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.view_partner_form_inherit_helpdesk
 msgid "<span class=\"o_stat_text\"> Tickets</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\"> Tiketit</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_merge_view_form
@@ -224,31 +228,33 @@ msgid ""
 "<span class=\"text-muted\">NB: This will archive the selected tickets "
 "(Except the destination ticket)</span>"
 msgstr ""
+"<span class=\"text-muted\">Huom: Tämä arkistoi valitut tiketit "
+"(lukuunottamatta kohdetikettiä)</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<span>Reporting</span>"
-msgstr "<span>Raportointi"
+msgstr "<span>Raportointi</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<span>View Tickets</span>"
-msgstr ""
+msgstr "<span>Katso tiketit</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-md-2\">Description</strong>"
-msgstr ""
+msgstr "<strong class=\"col-md-2\">Kuvaus</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-md-2\">Reported by</strong>"
-msgstr ""
+msgstr "<strong class=\"col-md-2\">Raportoija</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-md-2\">Reported on</strong>"
-msgstr ""
+msgstr "<strong class=\"col-md-2\">Raportoitu</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -285,7 +291,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_api
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_description
@@ -337,7 +343,7 @@ msgstr "Kaikki"
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_main_tree
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_menu_main
 msgid "All Tickets"
-msgstr ""
+msgstr "Kaikki tiketit"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -365,44 +371,44 @@ msgstr "Arkistoitu"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "Assign To Me"
-msgstr ""
+msgstr "Ota tiketti vastuullesi"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:39
 #, python-format
 msgid "Assign the ticket to someone."
-msgstr ""
+msgstr "Vastuuta tiketti jollekulle."
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk_ticket.py:410
 #, python-format
 msgid "Assign to me"
-msgstr ""
+msgstr "Ota tiketti vastuullesi"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_assign_method
 msgid "Assignation Method"
-msgstr ""
+msgstr "Vastuutustapa"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_user_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_user_id
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "Assigned to"
-msgstr "Annettu tehtäväksi"
+msgstr "Vastuuhenkilö"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Assignee"
-msgstr ""
+msgstr "Vastuuhenkilö"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_template_id
 msgid "Automated Answer Email Template"
-msgstr ""
+msgstr "Automaattinen sähköpostivastaus"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage_template_id
@@ -430,14 +436,14 @@ msgstr "Keskinkertainen"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:104
 #, python-format
 msgid "Avg 7 days"
-msgstr ""
+msgstr "Keskim. 7 päivää"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:35
 #, python-format
 msgid "Avg Open Hours"
-msgstr ""
+msgstr "Keskim. avoinna (h)"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
@@ -447,7 +453,7 @@ msgstr "Huono"
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
 msgid "Balanced"
-msgstr "Tasattu"
+msgstr "Tasapainotettu"
 
 #. module: helpdesk
 #: selection:helpdesk.ticket,kanban_state:0
@@ -482,7 +488,7 @@ msgstr "Valitse sähköposti:"
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_team
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_unassigned
 msgid "Click create a new ticket."
-msgstr ""
+msgstr "Paina lisätäksesi uusi tiketti."
 
 #. module: helpdesk
 #. openerp-web
@@ -553,7 +559,7 @@ msgstr "Aseta klikkaamalla"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_close_date
 msgid "Close date"
-msgstr ""
+msgstr "Sulkemispäivä"
 
 #. module: helpdesk
 #. openerp-web
@@ -562,18 +568,18 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 #, python-format
 msgid "Closed Tickets"
-msgstr ""
+msgstr "Suljetut tiketit"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_7days_analysis
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_close_analysis
 msgid "Closed Tickets Analysis"
-msgstr ""
+msgstr "Suljettujen tikettien analyysi"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_is_close
 msgid "Closing Kanban Stage"
-msgstr ""
+msgstr "Tiketin sulkeva kanban-vaihe"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_color
@@ -616,12 +622,12 @@ msgstr "Kontakti"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_create_new_ticket
 msgid "Create a new ticket"
-msgstr ""
+msgstr "Luo uusi tiketti"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Create new Helpdesk Teams"
-msgstr ""
+msgstr "Luo uusi asiakaspalvelutiimi"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_create_uid
@@ -675,33 +681,33 @@ msgstr "Asiakkaan nimi"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:89
 #, python-format
 msgid "Customer Rating"
-msgstr ""
+msgstr "Asiakasarvio"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Customer Satisfaction"
-msgstr ""
+msgstr "Asiakastyytyväisyys"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk_ticket.py:320
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "Customer Tickets"
-msgstr ""
+msgstr "Asiakastiketit"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:85
 #, python-format
 msgid "Customer satisfaction analysis"
-msgstr ""
+msgstr "Asiakastyytyväisyyden analyysi"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:121
 #, python-format
 msgid "Daily Target"
-msgstr ""
+msgstr "Päivittäinen tavoite"
 
 #. module: helpdesk
 #. openerp-web
@@ -746,13 +752,13 @@ msgstr "Kuvaus"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Description for customer portal"
-msgstr ""
+msgstr "Asiakasportaalin kuvaus"
 
 #. module: helpdesk
 #: code:addons/helpdesk/wizard/helpdesk_ticket_merge.py:59
 #, python-format
 msgid "Description from ticket %s: %s"
-msgstr ""
+msgstr "Tiketin %s kuvausteksti: %s"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -762,7 +768,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "Description of the ticket..."
-msgstr ""
+msgstr "Tiketin kuvaus..."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_display_name
@@ -778,7 +784,7 @@ msgstr "Näyttönimi"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_portal_show_rating
 msgid "Display Rating on Customer Portal"
-msgstr ""
+msgstr "Näytä arviointi asiakasportaalissa"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -788,12 +794,12 @@ msgstr "Muokkaa"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "Edit Ticket"
-msgstr ""
+msgstr "Muokkaa tikettiä"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_alias
 msgid "Email alias"
-msgstr ""
+msgstr "Sähköpostialias"
 
 #. module: helpdesk
 #. openerp-web
@@ -819,7 +825,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_assign_date
 msgid "First assignation date"
-msgstr ""
+msgstr "Ensimmäinen vastuutuspäivä"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_fold
@@ -871,7 +877,7 @@ msgstr "Iloinen"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_forum
 msgid "Help Center"
-msgstr ""
+msgstr "Tukikeskus"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.menu_helpdesk_root
@@ -889,17 +895,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_team_id
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_tree
 msgid "Helpdesk Team"
-msgstr ""
+msgstr "Asiakaspalvelutiimi"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
 msgid "Helpdesk Team Satisfaction"
-msgstr ""
+msgstr "Asiakaspalvelutiimin arvioinnit"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Helpdesk Team..."
-msgstr ""
+msgstr "Asiakaspalvelutiimi..."
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk.py:137
@@ -907,25 +913,25 @@ msgstr ""
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_team_action_form
 #, python-format
 msgid "Helpdesk Teams"
-msgstr ""
+msgstr "Asiakaspalvelutiimit"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "Helpdesk Ticket"
-msgstr ""
+msgstr "Asiakaspalvelutiketti"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_analysis_action
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_graph_analysis
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_pivot_analysis
 msgid "Helpdesk Ticket Analysis"
-msgstr ""
+msgstr "Asiakaspalvelutikettien analyysi"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_graph_main
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_pivot_main
 msgid "Helpdesk Tickets"
-msgstr ""
+msgstr "Asiakaspalvelutiketit"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -951,12 +957,12 @@ msgstr ""
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:23
 #, python-format
 msgid "High Priority ("
-msgstr ""
+msgstr "Korkea prioriteetti ("
 
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
 msgid "High priority"
-msgstr ""
+msgstr "Korkea prioriteetti"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_time_hours
@@ -1013,7 +1019,7 @@ msgstr "Käynnissä"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Incoming emails create tickets"
-msgstr ""
+msgstr "Sisääntulevat sähköpostit luovat tikettejä"
 
 #. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_incident
@@ -1028,7 +1034,7 @@ msgstr "Kanban tila"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Keep empty for everyone to see this team"
-msgstr ""
+msgstr "Kaikki näkevät tämän tiimin, jos jätät kentän tyhjäksi"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_data
@@ -1081,7 +1087,7 @@ msgstr "Viimeksi päivitetty"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Late Activities"
-msgstr "Yliaikaiset toiminnot"
+msgstr "Myöhästyneet toimenpiteet"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_data
@@ -1103,7 +1109,7 @@ msgstr ""
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
 msgid "Low priority"
-msgstr ""
+msgstr "Matala prioriteetti"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -1118,27 +1124,27 @@ msgstr "Päällikkö"
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
 msgid "Manually"
-msgstr "Manuaalisesti"
+msgstr "Manuaalinen"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_actions_act_window_merge_tickets
 msgid "Merge Selected Tickets"
-msgstr ""
+msgstr "Yhdistä valitut tiketit"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_merge_view_form
 msgid "Merge Tickets"
-msgstr ""
+msgstr "Yhdistä tikettejä"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_target_ticket_id
 msgid "Merge into an existing ticket"
-msgstr ""
+msgstr "Yhdistä olemassa olevaan tikettiin"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_priority
 msgid "Minimum Priority"
-msgstr ""
+msgstr "Minimiprioriteetti"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_stage_id
@@ -1148,14 +1154,14 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "My Activities"
-msgstr "Omat toimintoni"
+msgstr "Omat toimenpiteeni"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:74
 #, python-format
 msgid "My Performance"
-msgstr ""
+msgstr "Minun suoriutuminen"
 
 #. module: helpdesk
 #. openerp-web
@@ -1165,28 +1171,28 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 #, python-format
 msgid "My Tickets"
-msgstr ""
+msgstr "Omat tikettini"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:21
 #, python-format
 msgid "My high priority tickets"
-msgstr ""
+msgstr "Omat korkean prioriteetin tiketit"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:15
 #, python-format
 msgid "My open tickets"
-msgstr ""
+msgstr "Omat avoimet tiketit"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:27
 #, python-format
 msgid "My urgent tickets"
-msgstr ""
+msgstr "Omat kiireiset tiketit"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_name
@@ -1198,7 +1204,7 @@ msgstr "Nimi"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_target_ticket_name
 msgid "New ticket name"
-msgstr ""
+msgstr "Uuden tiketin nimi"
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:27
@@ -1210,7 +1216,7 @@ msgstr "Uusimmat"
 #: code:addons/helpdesk/wizard/helpdesk_ticket_merge.py:59
 #, python-format
 msgid "No description"
-msgstr ""
+msgstr "Ei kuvausta"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_high_priorities
@@ -1221,7 +1227,7 @@ msgstr ""
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_sla_urgent
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_urgent
 msgid "No tickets to display."
-msgstr ""
+msgstr "Ei näytettäviä tikettejä."
 
 #. module: helpdesk
 #: selection:helpdesk.ticket,kanban_state:0
@@ -1231,7 +1237,7 @@ msgstr "Normaali"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Not Satisfied"
-msgstr ""
+msgstr "Ei tyytyväinen"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_tickets
@@ -1256,7 +1262,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Open Tickets"
-msgstr ""
+msgstr "Avoimet tiketit"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_close_hours
@@ -1266,7 +1272,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Opened Tickets Analysis"
-msgstr ""
+msgstr "Avattujen tikettien analyysi"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_force_thread_id
@@ -1310,7 +1316,7 @@ msgstr "Suoriutuminen"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_pivot_analysis
 msgid "Performance Analysis"
-msgstr ""
+msgstr "Suoriutumisanalyysi"
 
 #. module: helpdesk
 #. openerp-web
@@ -1318,7 +1324,7 @@ msgstr ""
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:94
 #, python-format
 msgid "Performance Report"
-msgstr ""
+msgstr "Suoriutumisraportti"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_contact
@@ -1357,12 +1363,12 @@ msgstr ""
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
 msgid "Randomly"
-msgstr ""
+msgstr "Satunnainen"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_rating
 msgid "Ratings"
-msgstr ""
+msgstr "Arviointi"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -1399,7 +1405,7 @@ msgstr "Raportointi"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Restore"
-msgstr "Palauta!"
+msgstr "Palauta"
 
 #. module: helpdesk
 #. openerp-web
@@ -1484,19 +1490,19 @@ msgstr ""
 #: code:addons/helpdesk/controllers/portal.py:34
 #, python-format
 msgid "Search in All"
-msgstr ""
+msgstr "Etsi kaikista"
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:33
 #, python-format
 msgid "Search in Customer"
-msgstr ""
+msgstr "Etsi asiakkaista"
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:32
 #, python-format
 msgid "Search in Messages"
-msgstr ""
+msgstr "Etsi viesteistä"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_access_token
@@ -1506,7 +1512,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "See Customer Satisfaction"
-msgstr ""
+msgstr "Katso asiakastyytyväisyys"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -1571,7 +1577,7 @@ msgstr ""
 #. module: helpdesk
 #: model:helpdesk.stage,name:helpdesk.stage_solved
 msgid "Solved"
-msgstr ""
+msgstr "Ratkaistu"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage_team_ids
@@ -1748,12 +1754,12 @@ msgstr "Mallit"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
 msgid "The following ticket has been merged into this one:"
-msgstr ""
+msgstr "Seuraava tiketti on yhdistetty tähän tikettiin:"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
 msgid "The following tickets have been merged into this one:"
-msgstr ""
+msgstr "Seuraavat tiketit ovat yhdistetty tähän tikettiin:"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_alias_model_id
@@ -1794,7 +1800,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_use_helpdesk_timesheet
 msgid "This required to have project module installed."
-msgstr ""
+msgstr "Vaatii projektimoduulin asennuksen."
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk.py:345
@@ -1805,12 +1811,12 @@ msgstr "Kohdetta ei ole olemassa."
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.mail_template_ticket_merge
 msgid "This ticket has been merged into the following ticket:"
-msgstr ""
+msgstr "Tämä tiketti on yhdistetty tikettiin:"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket
 msgid "Ticket"
-msgstr ""
+msgstr "Tiketti"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_dashboard
@@ -1824,13 +1830,13 @@ msgstr ""
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_assigned
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_assigned
 msgid "Ticket Assigned"
-msgstr ""
+msgstr "Tiketti vastuutettu"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_new
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_new
 msgid "Ticket Created"
-msgstr ""
+msgstr "Tiketti luotu"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -1846,7 +1852,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_tag_action
 #: model:ir.ui.menu,name:helpdesk.helpdesk_tag_menu
 msgid "Ticket Tags"
-msgstr ""
+msgstr "Tikettien tunnisteet"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_type_action
@@ -1863,7 +1869,7 @@ msgstr "Lipputyyppi"
 #: model:mail.message.subtype,description:helpdesk.mt_ticket_assigned
 #: model:mail.message.subtype,description:helpdesk.mt_ticket_new
 msgid "Ticket created"
-msgstr ""
+msgstr "Tiketti luotu"
 
 #. module: helpdesk
 #. openerp-web
@@ -1909,12 +1915,12 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_merge_ticket_ids
 msgid "Tickets to Merge"
-msgstr ""
+msgstr "Yhdistettävät tiketit"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Tickets to Review"
-msgstr ""
+msgstr "Tarkastettavat tiketit"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_priority
@@ -1924,12 +1930,12 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_assign_hours
 msgid "Time to first assignation (hours)"
-msgstr ""
+msgstr "Kesto (tunneissa) ensimmäiseen vastuutukseen"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_helpdesk_timesheet
 msgid "Timesheet on Ticket"
-msgstr ""
+msgstr "Tiketin tuntikirjaukset"
 
 #. module: helpdesk
 #. openerp-web
@@ -1946,7 +1952,7 @@ msgstr "Tämän päivän toimenpiteet"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_twitter
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_ticket_type_action
@@ -1970,7 +1976,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Unassigned Tickets"
-msgstr ""
+msgstr "Vastuuttamattomat tiketit"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -1997,7 +2003,7 @@ msgstr "Kiireellinen"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:29
 #, python-format
 msgid "Urgent ("
-msgstr ""
+msgstr "Kiireellinen ("
 
 #. module: helpdesk
 #. openerp-web
@@ -2021,14 +2027,14 @@ msgstr "Käyttäjät"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:52
 #, python-format
 msgid "View failed tickets"
-msgstr ""
+msgstr "Katso epäonnistuneet tiketit"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:57
 #, python-format
 msgid "View high priority failed tickets"
-msgstr ""
+msgstr "Katso epäonnistuneet korkean prioriteetin tiketit"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -2040,7 +2046,7 @@ msgstr ""
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:62
 #, python-format
 msgid "View urgent failed tickets"
-msgstr ""
+msgstr "Katso epäonnistuneet kriittisen prioriteetin tiketit"
 
 #. module: helpdesk
 #. openerp-web
@@ -2054,7 +2060,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_form
 msgid "Website Form"
-msgstr ""
+msgstr "Verkkosivuston lomake"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -2085,7 +2091,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "days<br/>"
-msgstr ""
+msgstr "päivää<br/>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -2100,12 +2106,12 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket_merge
 msgid "helpdesk.ticket.merge"
-msgstr ""
+msgstr "helpdesk.ticket.merge"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "hours<br/>"
-msgstr ""
+msgstr "tuntia<br/>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban

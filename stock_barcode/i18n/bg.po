@@ -41,7 +41,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "<strong>Actions barcodes:</strong> use the barcodes from"
-msgstr ""
+msgstr "<strong>Баркодове за действия :</strong> използвайте баркодове от"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -53,6 +53,12 @@ msgid ""
 "                            same EAN code). Still, as Odoo supports any string as a barcode, so\n"
 "                            you can always define your own barcode format for internal use."
 msgstr ""
+"<strong>Баркодове EAN-13:</strong> използвани от повечето продукти на дребно, те не могат да бъдат извършени\n"
+"                            без подходящо упълномощаване: трябва да платите таксата на Международната\n"
+"                            асоциация за номериране на артикулите в замяна на кодовата последователност EAN\n"
+"                            (това е и причината, поради която два продукта в склада немогат никога да имат\n"
+"                            един и същ EAN код). Все пак, тъй като Odoo поддържа всеки стринг като баркод,\n"
+"                            можете винаги да определяте собствения си баркодов формат за вътрешни цели."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -70,6 +76,8 @@ msgid ""
 "<strong>Good location nomenclature:</strong> <i>warehouse short name - location short name - (Corridor X - Shelf Y - Height Z) </i><br/>\n"
 "                                Example: A032-025-133 (Note that you can use any string in the barcode field)"
 msgstr ""
+"<strong>Добра локационна номенклатура:</strong> <i>кратко име на склад - кратко име на локация - (коридорr X - рафт Y - височина Z) </i><br/>\n"
+"                                Пример: A032-025-133 (Обърнете внимание, че можете да използвате всеки стринг в полето за баркод)"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -77,6 +85,8 @@ msgid ""
 "<strong>Lots Numbers</strong> can be encoded from incoming shipments, "
 "internal moves and outgoing deliveries:"
 msgstr ""
+"<strong>Партидни номера</strong> могат да се кодират от входящи пратки, "
+"вътрешни движения и изходящи доставки:"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -85,6 +95,9 @@ msgid ""
 "the variant, and not the template product (otherwise you won't be able to "
 "differentiate them)."
 msgstr ""
+"<strong>Продуктови варианти:</strong> бъдете внимателни, когато добавяте "
+"баркодове директно към варианта, а не към шаблонния продукт (в противен "
+"случай няма да можете да ги различавате)."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -101,6 +114,8 @@ msgid ""
 "<strong>Scan barcodes on products:</strong> suitable if all your products "
 "already have a barcode"
 msgstr ""
+"<strong>Сканирайте баркодове на продукти:</strong> подходящо, ако всичките "
+"Ви продукти вече имат баркод"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -109,6 +124,9 @@ msgid ""
 "but allows for a full traceability of the parts. It's usually used by "
 "manufacturers of sensitive products."
 msgstr ""
+"<strong>Сканирайте партидни или серийни номера:</strong> това отнема повече "
+"време, но пък позволява пълна проследимост на частите. Обикновено се "
+"използва от производителите на чувствителни продукти."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -131,6 +149,8 @@ msgid ""
 "<strong>To attribute a barcode to a Location,</strong> simply enter one on "
 "the Location form (accessible from your"
 msgstr ""
+"<strong>За да припишете баркод на дадена локация,</strong> просто въведете "
+"един на формата на локацията (достъпна от Вашия"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -405,7 +425,7 @@ msgstr "Ред от инвентаризация"
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
 msgid "Keyboard layout"
-msgstr ""
+msgstr "Оформление на клавиатура"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_lot___last_update
@@ -530,7 +550,7 @@ msgstr ""
 #: code:addons/stock_barcode/models/inherited_stock_picking.py:54
 #, python-format
 msgid "No lot found"
-msgstr ""
+msgstr "Не е открита партида"
 
 #. module: stock_barcode
 #: code:addons/stock_barcode/controllers/main.py:23
@@ -565,6 +585,8 @@ msgid ""
 "Odoo supports most USB, Wireless and Bluetooth barcode scanners (as they all"
 " emulate a keyboard)."
 msgstr ""
+"Odoo поддържа повечето юесби, безжични и блутут баркодови скенери (тъй като "
+"всички те конкурират клавиатурата)."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -737,6 +759,8 @@ msgid ""
 "Scan all the products of the location (if you have 5 identical articles, "
 "scan it 5 times, or use the keyboard to set the quantity)"
 msgstr ""
+"Сканирайте всички продукти на локацията (ако имате 5 еднакви артикула, ги "
+"сканирайте 5 пъти или използвайте клавиатурата, за да зададете количеството)"
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -835,6 +859,8 @@ msgid ""
 "There is no production lot for \"%(product)s\" corresponding to "
 "\"%(barcode)s\""
 msgstr ""
+"Липсва продуктова партида за \"%(product)s\", съответстваща на "
+"\"%(barcode)s\""
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -995,6 +1021,11 @@ msgid ""
 " correctly (replacing a 'A' with a 'Q' for example). Most scanners are "
 "configured by scanning the appropriate barcode in the user's manual."
 msgstr ""
+"Баркодовият Ви скенер трябва да е така конфигуриран, че да използва същата "
+"клавиатура като операционната Ви система. В противен случай скененрът Ви  "
+"няма да превежда правилно знаците (а ще заменя примерно \"A\" с \"Q\"). "
+"Повечето скенери са конфигурирани чрез сканиране на съответния баркод в "
+"ръководството за потребителя."
 
 #. module: stock_barcode
 #: model:ir.ui.view,arch_db:stock_barcode.barcode_planner
@@ -1051,3 +1082,5 @@ msgid ""
 "to launch actions in Odoo like Save, Next Item or Validate instead of using "
 "your mouse or keyboard."
 msgstr ""
+"за да стартирате действия в Odoo като Save, Next Item или Validate, вместо "
+"да използвате мишката или клавиатурата."

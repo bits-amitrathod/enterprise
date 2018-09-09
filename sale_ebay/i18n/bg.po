@@ -32,6 +32,11 @@ msgid ""
 "        \n"
 "      "
 msgstr ""
+"\n"
+"                  \n"
+"          ${object.ebay_description | safe}\n"
+"        \n"
+"      "
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/models/product.py:383
@@ -40,6 +45,9 @@ msgid ""
 " If you want to set quantity to 0, the Out Of Stock option should be enabled"
 " and the listing duration should set to Good 'Til Canceled"
 msgstr ""
+"В случай че желаете да настроите количеството на 0, трябва да активирате "
+"опицията 'Изчерпано количество', а продължителността на регистрацията трябва"
+" да бъде настроена на 'Добър до отмяна'"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/models/product.py:386
@@ -48,16 +56,18 @@ msgid ""
 " You need to have at least 2 variations selected for a multi-variations listing.\n"
 " Or if you try to delete a variation, you cannot do it by unselecting it. Setting the quantity to 0 is the safest method to make a variation unavailable."
 msgstr ""
+" Трябва да имате поне 2 избрани варианта за списък с много варианти.\n"
+" Или ако се опитате да изтриете вариант, не можете да го направите, като го премахнете. Настройване количеството на 0 се явява най-безопасният метод за премахване на варианта."
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "10 Days"
-msgstr ""
+msgstr "10 дни"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "3 Days"
-msgstr ""
+msgstr "3 дни"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
@@ -67,12 +77,12 @@ msgstr "30 дни (само за фиксирани цени)"
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "5 Days"
-msgstr ""
+msgstr "5 дни"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_duration:0
 msgid "7 Days"
-msgstr ""
+msgstr "7 дни"
 
 #. module: sale_ebay
 #: code:addons/sale_ebay/models/product.py:259
@@ -81,23 +91,25 @@ msgid ""
 "All the quantities must be greater than 0 or you need to enable the Out Of "
 "Stock option."
 msgstr ""
+"Всичките количества трябва да са по-големи от 0 или трябва да активирате "
+"опцията \"Без наличност\"."
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_best_offer
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_best_offer
 msgid "Allow Best Offer"
-msgstr ""
+msgstr "Позволете най-добра оферта"
 
 #. module: sale_ebay
 #: selection:product.template,ebay_listing_type:0
 msgid "Auction"
-msgstr ""
+msgstr "Търг"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_country_ebay_available
 #: model:ir.model.fields,field_description:sale_ebay.field_res_currency_ebay_available
 msgid "Availability To Use For eBay API"
-msgstr ""
+msgstr "Наличност, която да се използва за eBay API"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_buy_it_now_price
@@ -120,7 +132,7 @@ msgstr "Категория"
 #: model:ir.model.fields,field_description:sale_ebay.field_product_product_ebay_category_2_id
 #: model:ir.model.fields,field_description:sale_ebay.field_product_template_ebay_category_2_id
 msgid "Category 2 (Optional)"
-msgstr ""
+msgstr "Категория 2 (Незадължителна)"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_category_id
@@ -207,7 +219,7 @@ msgstr ""
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_dev_id
 msgid "Developer Key"
-msgstr ""
+msgstr "Ключ за разработчици"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_ebay_category_display_name
@@ -506,12 +518,12 @@ msgstr "Продукция"
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_prod_app_id
 msgid "Production App Key"
-msgstr ""
+msgstr "Ключ за производствени приложения"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_prod_cert_id
 msgid "Production Cert Key"
-msgstr ""
+msgstr "Ключ за сертификатни приложения"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_prod_token
@@ -576,12 +588,12 @@ msgstr ""
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_sandbox_app_id
 msgid "Sandbox App Key"
-msgstr ""
+msgstr "Ключ за приложение Sandbox"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_sandbox_cert_id
 msgid "Sandbox Cert Key"
-msgstr ""
+msgstr "Ключ за сертификат в Sandbox"
 
 #. module: sale_ebay
 #: model:ir.model.fields,field_description:sale_ebay.field_res_config_settings_ebay_sandbox_token

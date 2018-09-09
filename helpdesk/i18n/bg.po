@@ -33,17 +33,19 @@ msgid ""
 "${object.company_id.name or object.user_id.company_id.name or 'Helpdesk'}: "
 "Service Rating Request"
 msgstr ""
+"${object.company_id.name или object.user_id.company_id.name или 'Helpdesk'}:"
+" Заявка за сервизен рейтинг"
 
 #. module: helpdesk
 #: model:mail.template,subject:helpdesk.new_ticket_request_email_template
 #: model:mail.template,subject:helpdesk.solved_ticket_request_email_template
 msgid "${object.display_name}"
-msgstr ""
+msgstr "${object.display_name}"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_percentage_satisfaction
 msgid "% Happy"
-msgstr ""
+msgstr "% Доволен"
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
@@ -176,7 +178,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
 msgid "<i class=\"fa fa-arrow-circle-right \"/> See the feedbacks"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-circle-right \"/> Вижте отзивите"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -191,7 +193,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
 msgid "<i class=\"fa fa-envelope\"/> Email :"
-msgstr ""
+msgstr "<i class=\"fa fa-envelope\"/> Имейл :"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -201,12 +203,12 @@ msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
 msgid "<i/> Customer Satisfaction Ration:"
-msgstr ""
+msgstr "<i/> Степен на удовлетвореност на клиентите:"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i>No customer feedback yet.</i>"
-msgstr ""
+msgstr "<i>Още няма отзиви от клиенти.</i>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.view_partner_form_inherit_helpdesk
@@ -228,7 +230,7 @@ msgstr "<span>Отчети</span>"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<span>View Tickets</span>"
-msgstr ""
+msgstr "<span>Вижте тикети</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -267,6 +269,9 @@ msgid ""
 "            customers that specifies performance measures for support\n"
 "            by ticket priority."
 msgstr ""
+"Споразумението за ниво на обслужване представлява договор между Вас и Вашите\n"
+"            клиенти, който определя ефективните мерки за поддръжка\n"
+"            по приоритет на тикетите."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket_kanban_state
@@ -276,16 +281,20 @@ msgid ""
 "* Blocked indicates something is preventing the progress of this issue\n"
 "* Ready for next stage indicates the issue is ready to be pulled to the next stage"
 msgstr ""
+"Състояние Канбан на тикет посочва специални ситуации, които го засягат:\n"
+"* 'Нормално' е стандартна ситуация\n"
+"* 'Блокирано' посочва, че нещо предотвратява развитието на тази грешка\n"
+"* 'Готово за следваща фаза' посочва, че грешката е готова да бъда придвижена към следващия етап."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_api
 msgid "API"
-msgstr ""
+msgstr "Приложно-програмен интерфейс - API"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_description
 msgid "About Team"
-msgstr ""
+msgstr "За екипа"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_active
@@ -422,7 +431,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
 msgid "Average"
-msgstr ""
+msgstr "Средно аритметично"
 
 #. module: helpdesk
 #. openerp-web
@@ -441,7 +450,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
 msgid "Bad"
-msgstr ""
+msgstr "Лош"
 
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
@@ -466,7 +475,7 @@ msgstr "Отказанa"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Channels"
-msgstr ""
+msgstr "Канали"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -547,7 +556,7 @@ msgstr ""
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:153
 #, python-format
 msgid "Click to set"
-msgstr ""
+msgstr "Натиснете, за да настроите"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_close_date
@@ -647,7 +656,7 @@ msgstr "Създадено на"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "Current stage of this ticket"
-msgstr ""
+msgstr "Настоящ етап на този тикет"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk_ticket.py:333
@@ -679,7 +688,7 @@ msgstr "Рейтинг на клиент"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Customer Satisfaction"
-msgstr ""
+msgstr "Удовлетвореност на клиентите"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk_ticket.py:320
@@ -787,7 +796,7 @@ msgstr "Редакция"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "Edit Ticket"
-msgstr ""
+msgstr "Редактирайте тикет"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_alias
@@ -865,7 +874,7 @@ msgstr "Групиране по"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
 msgid "Happy"
-msgstr ""
+msgstr "Доволен"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_forum
@@ -888,7 +897,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_team_id
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_tree
 msgid "Helpdesk Team"
-msgstr ""
+msgstr "Екип Хелпдеск"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
@@ -1035,17 +1044,17 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Last 3 months"
-msgstr ""
+msgstr "Последните 3 месеца"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Last 30 days"
-msgstr ""
+msgstr "Последните 30 дни"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Last 7 days"
-msgstr ""
+msgstr "Последните 7 дни"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla___last_update
@@ -1088,7 +1097,7 @@ msgstr "Последни дейности"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Latest Feedbacks"
-msgstr ""
+msgstr "Последни отзиви"
 
 #. module: helpdesk
 #. openerp-web
@@ -1206,7 +1215,7 @@ msgstr ""
 #: code:addons/helpdesk/controllers/portal.py:27
 #, python-format
 msgid "Newest"
-msgstr ""
+msgstr "Най-новите"
 
 #. module: helpdesk
 #: code:addons/helpdesk/wizard/helpdesk_ticket_merge.py:59
@@ -1233,7 +1242,7 @@ msgstr "Нормален"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Not Satisfied"
-msgstr ""
+msgstr "Незадоволителен"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_partner_tickets
@@ -1374,7 +1383,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_rating
 msgid "Ratings"
-msgstr ""
+msgstr "Оценки"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -1987,7 +1996,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_portal_rating_url
 msgid "URL to Submit Issue"
-msgstr ""
+msgstr "URL адрес за внасяне на грешка"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_unassigned_tickets

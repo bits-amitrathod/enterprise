@@ -41,6 +41,21 @@ msgid ""
 "                \n"
 "            "
 msgstr ""
+"\n"
+"                \n"
+"                <div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); \">\n"
+"                    <p>Уважаеми/а ${ctx.get('employee').name},</p>\n"
+"                    % if ctx.get('employee').id == object.employee_id.id:\n"
+"                        <p>Мола попълнете следното проучване, свързано с оценката Ви.</p>\n"
+"                    % else:\n"
+"                        <p>Моля, попълнете следното проучване, свързано с с${object.employee_id.name}оценката на...</p>\n"
+"                    % endif\n"
+"                    <p><a href=\"__URL__\">Натиснете тук, за да получите достъп до проучването.</a></p>\n"
+"                    <p>Публикувайте отговора си за оценката до : ${object.date_close}</p>\n"
+"                    <p>Влагодарим за участието.</p>\n"
+"                </div>\n"
+"                \n"
+"            "
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -65,12 +80,14 @@ msgstr "Способност за справяне с мултидисципли
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_6
 msgid "Ability to follow and complete work as instructed"
-msgstr ""
+msgstr "Способност да следвате и свършите работата според инструкциите"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_2_5
 msgid "Ability to manage planning resources, risks, budgets and deadlines"
 msgstr ""
+"Способност да се управлява планирането на ресурси, рискове, бюджети и крайни"
+" срокове"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_action_plan
@@ -83,6 +100,8 @@ msgid ""
 "Actions by Executive management show genuine interest in the well-being of "
 "employees"
 msgstr ""
+"Действията на Изпълнителното ръководство показват неподправен интерес към "
+"благосъстоянието на служителите"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_active
@@ -95,21 +114,23 @@ msgid ""
 "Adaptability: Ability to adapt oneself to organizational changes while "
 "keeping efficiency"
 msgstr ""
+"Адаптивност: Способността някой/нещо да се адаптира към организационните "
+"промени без да губи ефективността си"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_2_3
 msgid "Additional Comments"
-msgstr ""
+msgstr "Допълнителни коментари"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.opinion_2_7
 msgid "Additional comments"
-msgstr ""
+msgstr "Допълнителни коментари"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_11
 msgid "Analytical and synthetic mind"
-msgstr ""
+msgstr "Аналитичен и синтетичен ум"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_survey_completed_ids
@@ -151,7 +172,7 @@ msgstr ""
 #: model:mail.message.subtype,description:hr_appraisal.mt_appraisal_new
 #: model:mail.message.subtype,name:hr_appraisal.mt_appraisal_new
 msgid "Appraisal Created"
-msgstr ""
+msgstr "Създадено оценяване"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_date_close
@@ -388,6 +409,9 @@ msgid ""
 "Critical or key elements of performance and professional development needs "
 "(if any), should also be noted at this time"
 msgstr ""
+"Критичните или ключовите елементи на нуждите от добро представяне и "
+"професионално развитие (ако има такива) също трябва да се отбележат в този "
+"период"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_8
@@ -518,7 +542,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_3
 msgid "Employee Performance in Key Areas"
-msgstr ""
+msgstr "Ефективност на служителите в ключови области"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_appraisal_colleagues_survey_id
@@ -1095,6 +1119,7 @@ msgstr ""
 msgid ""
 "Taking everything into account, how satisfied are you with your current job?"
 msgstr ""
+"Като вземете всичко предвид, доколко сте доволни от текущата си работа?"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_4
@@ -1176,6 +1201,9 @@ msgid ""
 "point for the supervisor’s evaluation. The employee can add examples of achievements for each criterion.\n"
 "Once the form had been filled, the employee send it to his supervisor."
 msgstr ""
+"Служителят ще отговаря за изготвянето на чернова на формата за оценка като инструмент за самооценка и начална\n"
+"точка за оценката на надзора. Служителят може да добави примери за постижения по всеки критерий.\n"
+"След като формата е попълнена, служителят я изпраща на своя надзорен орган."
 
 #. module: hr_appraisal
 #: model:survey.page,description:hr_appraisal.opinion_1
