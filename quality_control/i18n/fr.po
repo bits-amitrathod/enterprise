@@ -12,7 +12,7 @@
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2017
 # Martin Trigaux, 2017
 # Clo <clo@odoo.com>, 2017
-# Sébastien Le Ray <sebastien-github@orniz.org>, 2017
+# f5f0a0dac17dde787a1d812a6989680e, 2017
 # Jérémy Donas <LeDistordu@users.noreply.github.com>, 2017
 # Benjamin Delagoutte <ben@ampletus.fr>, 2017
 # Melanie Bernard <mbe@odoo.com>, 2017
@@ -25,13 +25,14 @@
 # Leo Schmitt <inactive+lschmitt@transifex.com>, 2017
 # Xavier Symons <xsy@openerp.com>, 2017
 # LEONARD Jean-Christophe <jeanchristophe.leonard@gmail.com>, 2018
+# Thomas Dobbelsteyn <tdo@odoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-25 08:34+0000\n"
 "PO-Revision-Date: 2018-06-25 08:34+0000\n"
-"Last-Translator: LEONARD Jean-Christophe <jeanchristophe.leonard@gmail.com>, 2018\n"
+"Last-Translator: Thomas Dobbelsteyn <tdo@odoo.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,6 +74,8 @@ msgid ""
 "<span class=\"o_stat_text\">AVG:</span>\n"
 "                        <span class=\"o_stat_text\">STD:</span>"
 msgstr ""
+"<span class=\"o_stat_text\">MOY:</span>\n"
+" <span class=\"o_stat_text\">STD:</span> "
 
 #. module: quality_control
 #: model:ir.ui.view,arch_db:quality_control.stock_picking_view_form_inherit_quality
@@ -208,23 +211,23 @@ msgstr "Mesures correctives"
 #. module: quality_control
 #: model:ir.actions.act_window,help:quality_control.quality_alert_action_check
 msgid "Create a new quality alert"
-msgstr ""
+msgstr "Créer une nouvelle alerte qualité"
 
 #. module: quality_control
 #: model:ir.actions.act_window,help:quality_control.quality_alert_stage_action
 msgid "Create a new quality alert stage"
-msgstr ""
+msgstr "Créer une nouvelle étape d'alerte qualité"
 
 #. module: quality_control
 #: model:ir.actions.act_window,help:quality_control.quality_check_action_main
 #: model:ir.actions.act_window,help:quality_control.quality_check_action_team
 msgid "Create a new quality check"
-msgstr ""
+msgstr "Créer un nouveau contrôle qualité"
 
 #. module: quality_control
 #: model:ir.actions.act_window,help:quality_control.quality_point_action
 msgid "Create a new quality control point"
-msgstr ""
+msgstr "Créer un nouveau point de contrôle qualité"
 
 #. module: quality_control
 #: model:ir.ui.view,arch_db:quality_control.quality_alert_view_search
@@ -297,7 +300,7 @@ msgstr "Fréquence"
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__measure_frequency_unit_value
 msgid "Frequency Unit Value"
-msgstr ""
+msgstr "Unité de fréquence de valeur"
 
 #. module: quality_control
 #: model:ir.ui.view,arch_db:quality_control.quality_alert_view_search
@@ -386,12 +389,12 @@ msgstr "Aucune mesure"
 #. module: quality_control
 #: model:ir.actions.act_window,help:quality_control.quality_alert_action_report
 msgid "No quality alert"
-msgstr ""
+msgstr "Aucune alerte qualité"
 
 #. module: quality_control
 #: model:ir.actions.act_window,help:quality_control.quality_check_action_report
 msgid "No quality checks found"
-msgstr ""
+msgstr "Aucun contrôle qualité trouvé"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__norm
@@ -402,7 +405,7 @@ msgstr "Norme"
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__norm_unit
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__norm_unit
 msgid "Norm Unit"
-msgstr ""
+msgstr "Unité de norme"
 
 #. module: quality_control
 #: model:ir.actions.act_window,help:quality_control.quality_check_action_main
@@ -411,6 +414,8 @@ msgid ""
 "Note that the easiest way to create a quality check is to do it directly from a logistic operation,\n"
 "              thanks to the use of quality control points."
 msgstr ""
+"Notez que la façon la plus simple de créer un contrôle qualité est de le faire directement depuis une opération logistique,\n"
+" via l'utilisation des points de contrôle qualité."
 
 #. module: quality_control
 #: model:ir.ui.view,arch_db:quality_control.quality_check_view_form
@@ -619,6 +624,8 @@ msgid ""
 "Quality Teams group the different quality alerts/checks\n"
 "              according to the roles (teams) that need them."
 msgstr ""
+"Les équipes qualité regroupent les différentes alertes et vérifications \n"
+"en fonction des rôles (équipes) qui en ont besoin."
 
 #. module: quality_control
 #: selection:quality.point,measure_frequency_type:0
@@ -694,7 +701,7 @@ msgstr "Transfert"
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__measure_frequency_type
 msgid "Type of Frequency"
-msgstr ""
+msgstr "Type de Fréquence"
 
 #. module: quality_control
 #: model:ir.ui.view,arch_db:quality_control.quality_check_view_form_small
