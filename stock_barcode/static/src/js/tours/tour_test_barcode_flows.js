@@ -1884,6 +1884,45 @@ tour.register('test_inventory_adjustment_tracked_product', {test: true}, [
     },
 ]);
 
+tour.register('test_inventory_nomenclature', {test: true}, [
+
+    {
+        trigger: '.button_inventory',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: function() {
+            assertScanMessage('scan_products');
+        },
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan 2145631123457', // 12.345 kg
+    },
+
+    {
+        trigger: '.product-label:contains("product_weight")'
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")'
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: function () {
+            assertErrorMessage('The inventory adjustment has been validated');
+        },
+    },
+]);
+
 tour.register('test_pack_multiple_scan', {test: true}, [
 
     {

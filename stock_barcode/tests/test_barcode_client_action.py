@@ -973,3 +973,34 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(lines_with_lot.prod_lot_id.name, 'lot1')
         self.assertEqual(lines_with_lot.product_qty, 3)
         self.assertEqual(set(lines_with_sn.mapped('prod_lot_id.name')), set(['serial1', 'serial2', 'serial3']))
+
+    def test_inventory_nomenclature(self):
+        """ Simulate scanning a product and its weight
+        thanks to the barcode nomenclature """
+        clean_access_rights(self.env)
+        self.env.user.company_id.nomenclature_id = self.env.ref('barcodes.default_barcode_nomenclature')
+
+        product_weight = self.env['product.product'].create({
+            'name': 'product_weight',
+            'type': 'product',
+            'categ_id': self.env.ref('product.product_category_all').id,
+            'barcode': '2145631000000',
+        })
+
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_inventory_nomenclature')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_inventory_nomenclature.ready",
+            login='admin',
+            timeout=180,
+        )
+        quantity = self.env['stock.move.line'].search([
+            ('product_id', '=', product_weight.id),
+            ('state', '=', 'done'),
+            ('location_id', '=', self.env.ref('stock.location_inventory').id),
+        ])
+
+        self.assertEqual(quantity.qty_done, 12.345)
