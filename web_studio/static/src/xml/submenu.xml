@@ -61,6 +61,9 @@
           <t t-if="_.contains(widget.active_view_types, 'gantt')">
             <a href="#" data-name="gantt" title="Gantt View" aria-label="Gantt View"><i class="fa fa-tasks"/></a>
           </t>
+          <t t-if="_.contains(widget.active_view_types, 'dashboard')">
+            <a href="#" data-name="dashboard"><i class="fa fa-tachometer"/></a>
+          </t>
           <t t-if="_.contains(widget.active_view_types, 'cohort')">
             <a href="#" data-name="cohort" title="Cohort View" aria-label="Cohort View"><i class="fa fa-signal"/></a>
           </t>

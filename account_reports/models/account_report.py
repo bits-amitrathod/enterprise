@@ -669,6 +669,11 @@ class AccountReport(models.AbstractModel):
                 }
         if additional_context and type(additional_context) == dict:
             rcontext.update(additional_context)
+        if self.env.context.get('analytic_account_ids'):
+            rcontext['options']['analytic_account_ids'] = [
+                {'id': acc.id, 'name': acc.name} for acc in self.env.context['analytic_account_ids']
+            ]
+
         render_template = templates.get('main_template', 'account_reports.main_template')
         if line_id is not None:
             render_template = templates.get('line_template', 'account_reports.line_template')
