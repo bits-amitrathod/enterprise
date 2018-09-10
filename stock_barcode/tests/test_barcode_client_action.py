@@ -17,7 +17,6 @@ def clean_access_rights(env):
     env.user.write({'groups_id': [(3, grp_multi_loc.id)]})
 
 
-@tagged('post_install', '-at_install')
 class TestBarcodeClientAction(HttpCase):
     def setUp(self):
         super(TestBarcodeClientAction, self).setUp()
@@ -83,6 +82,9 @@ class TestBarcodeClientAction(HttpCase):
     def _get_client_action_url(self, picking_id):
         return '/web#model=stock.picking&picking_id=%s&action=stock_barcode_picking_client_action' % picking_id
 
+
+@tagged('post_install', '-at_install')
+class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_internal_picking_from_scratch_1(self):
         """ Open an empty internal picking
           - move 2 `self.product1` from shelf1 to shelf2
@@ -657,6 +659,9 @@ class TestBarcodeClientAction(HttpCase):
         self.assertEqual(lines[1].location_dest_id.name, 'Shelf 2')
         self.assertEqual(lines[2].location_dest_id.name, 'Shelf 1')
 
+
+@tagged('post_install', '-at_install')
+class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
     def test_inventory_adjustment(self):
         """ Simulate the following actions:
         - Open the inventory from the barcode app.
