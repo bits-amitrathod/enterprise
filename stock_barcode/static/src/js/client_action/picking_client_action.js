@@ -247,17 +247,22 @@ var PickingClientAction = ClientAction.extend({
                     'state': 'assigned',
                     'package_id': line.package_id ? line.package_id[0] : false,
                     'result_package_id': line.result_package_id ? line.result_package_id[0] : false,
+                    'dummy_id': line.virtual_id,
                 }];
                 formattedCommands.push(cmd);
             }
         }
         if (formattedCommands.length > 0){
+            var params = {
+                'mode': 'write',
+                'model_name': this.actionParams.model,
+                'record_id': this.currentState.id,
+                'write_vals': formattedCommands,
+                'write_field': 'move_line_ids',
+            };
             return this._rpc({
-                'model': this.actionParams.model,
-                'method': 'write',
-                'args': [[this.currentState.id], {
-                    'move_line_ids': formattedCommands,
-                }],
+                'route': '/stock_barcode/get_set_barcode_view_state',
+                'params': params,
             });
         } else {
             return $.Deferred().reject();
@@ -320,7 +325,7 @@ var PickingClientAction = ClientAction.extend({
             });
         }
     },
-    
+
     /**
      * Handles the `open_package` OdooEvent. It hides the main widget and
      * display a standard kanban view with all quants inside the package.
@@ -329,28 +334,29 @@ var PickingClientAction = ClientAction.extend({
      * @param {OdooEvent} ev
      */
     _onOpenPackage: function (ev) {
+        var self = this;
+
         ev.stopPropagation();
         this.linesWidget.destroy();
         this.headerWidget.toggleDisplayContext('specialized');
 
-        // If we want to edit a not yet saved line, keep its description in a variable so we'll be
-        // able to get it back once saved.
-        var lineDescription = false;
+        var virtual_id = _.isString(ev.data.id) ? ev.data.id : false;
         var currentPage = this.pages[this.currentPageIndex];
-
-        if (_.isString(ev.data.id)) {
-            lineDescription = _.findWhere(currentPage.lines, {virtual_id: ev.data.id});
-        } else {
-            lineDescription = _.findWhere(currentPage.lines, {id: ev.data.id});
-        }
-        var self = this;
         this.mutex.exec(function () {
             return self._save().then(function () {
-                var rec = _.find(currentPage.lines, function (line) {
-                    return line.product_id.id === lineDescription.product_id.id &&
-                        line.qty_done === lineDescription.qty_done;
+                var id = ev.data.id;
+                if (virtual_id) {
+                    var rec = _.find(currentPage.lines, function (line) {
+                        return line.dummy_id === virtual_id;
+                    });
+                    id = rec.id;
+                }
+                var package_id = _.find(currentPage.lines, function (line) {
+                    return line.id === id;
                 });
-                var params = {domain: [['package_id', '=', rec.package_id[0]]]};
+                package_id = package_id.package_id[0];
+
+                var params = {domain: [['package_id', '=', package_id]]};
                 self.ViewsWidget = new ViewsWidget(self, 'stock.quant', 'stock_barcode.stock_quant_barcode_kanban', {}, params, false, 'kanban');
                 return self.ViewsWidget.appendTo(self.$el);
             });

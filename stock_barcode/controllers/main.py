@@ -130,3 +130,10 @@ class StockBarcodeController(http.Controller):
         """ Edit the main_menu client action so that it doesn't display the 'print demo barcodes sheet' message """
         action = request.env.ref('stock_barcode.stock_barcode_action_main_menu')
         action and action.sudo().write({'params': {'message_demo_barcodes': False}})
+
+    @http.route('/stock_barcode/get_set_barcode_view_state', type='json', auth='user')
+    def get_set_barcode_view_state(self, model_name, record_id, mode, write_field=None, write_vals=None):
+        if mode != 'read':
+            request.env[model_name].browse(record_id).write({write_field: write_vals})
+        return request.env[model_name].browse(record_id).get_barcode_view_state()
+

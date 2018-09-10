@@ -13,6 +13,13 @@ class StockMoveLine(models.Model):
 
     product_barcode = fields.Char(related='product_id.barcode')
     location_processed = fields.Boolean()
+    dummy_id = fields.Char(compute='_compute_dummy_id', inverse='_inverse_dummy_id')
+
+    def _compute_dummy_id(self):
+        pass
+
+    def _inverse_dummy_id(self):
+        pass
 
 
 class StockPicking(models.Model):
@@ -21,7 +28,6 @@ class StockPicking(models.Model):
 
     def get_barcode_view_state(self):
         """ Return the initial state of the barcode view as a dict.
-        blablabla.
         """
         pickings = self.read([
             'move_line_ids',
@@ -47,6 +53,7 @@ class StockPicking(models.Model):
                 'lot_name',
                 'package_id',
                 'result_package_id',
+                'dummy_id',
             ])
             for move_line_id in picking['move_line_ids']:
                 move_line_id['product_id'] = self.env['product.product'].browse(move_line_id.pop('product_id')[0]).read([

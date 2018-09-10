@@ -118,19 +118,30 @@ var ClientAction = AbstractAction.extend({
 
     /**
      * Make an rpc to get the state and afterwards set `this.currentState` and `this.initialState`.
-     * It also completes `this.title`.
+     * It also completes `this.title`. If the `state` argument is passed, use it instead of doing
+     * an extra RPC.
      *
      * @private
      * @param {Object} [recordID] Id of the active picking or inventory adjustment.
+     * @param {Object} [state] state
      * @return {Deferred}
      */
-    _getState: function (recordId) {
+    _getState: function (recordId, state) {
         var self = this;
-        return this._rpc({
-            'model': self.actionParams.model,
-            'method': 'get_barcode_view_state',
-            'args': [[recordId]],
-        }).then(function (res) {
+        var def;
+        if (state) {
+            def = $.Deferred().resolve(state);
+        } else {
+            def = this._rpc({
+                'route': '/stock_barcode/get_set_barcode_view_state',
+                'params': {
+                    'record_id': recordId,
+                    'mode': 'read',
+                    'model_name': self.actionParams.model,
+                },
+            });
+        }
+        return def.then(function (res) {
             self.currentState = res[0];
             self.initialState = $.extend(true, {}, res[0]);
             self.title += self.initialState.name;
@@ -142,9 +153,12 @@ var ClientAction = AbstractAction.extend({
                 'group_uom': self.currentState.group_uom,
             };
             self.show_entire_packs = self.currentState.show_entire_packs;
+
             // barcode nomenclature
-            self.barcodeParser = new BarcodeParser({'nomenclature_id': self.currentState.nomenclature_id})
+            self.barcodeParser = new BarcodeParser({'nomenclature_id': self.currentState.nomenclature_id});
             self.barcodeParser.load();
+
+            return res;
         });
     },
 
@@ -170,7 +184,7 @@ var ClientAction = AbstractAction.extend({
         if (parsed.type === 'weight') {
             var product = this.productsByBarcode[parsed.base_code];
             product.qty = parsed.value;
-            return product
+            return product;
         } else {
             return this.productsByBarcode[barcode];
         }
@@ -433,10 +447,20 @@ var ClientAction = AbstractAction.extend({
         var currentLocationId = currentPage.location_id;
         var currentLocationDestId = currentPage.location_dest_id;
 
+
         // make a write with the current changes
         var recordId = this.actionParams.pickingId || this.actionParams.inventoryId;
-        var applyChangesDef =  this._applyChanges(this._compareStates()).then(function () {
-            return self._getState(recordId);
+        var applyChangesDef =  this._applyChanges(this._compareStates()).then(function (state) {
+            // Fixup virtual ids in `self.scanned_lines`
+            var virtual_ids_to_fixup = _.filter(self._getLines(state[0]), function (line) {
+                return line.dummy_id;
+            });
+            _.each(virtual_ids_to_fixup, function (line) {
+                self.scannedLines = _.without(self.scannedLines, line.dummy_id);
+                self.scannedLines.push(line.id);
+            });
+
+            return self._getState(recordId, state);
         }, function () {
             if (params.forceReload) {
                 return self._getState(recordId);
@@ -447,6 +471,7 @@ var ClientAction = AbstractAction.extend({
 
         return applyChangesDef.then(function () {
             self.pages = self._makePages();
+
             var newPageIndex = _.findIndex(self.pages, function (page) {
                 return page.location_id === (params.new_location_id || currentLocationId) &&
                     (self.actionParams.model === 'stock.inventory' ||
@@ -1182,7 +1207,6 @@ var ClientAction = AbstractAction.extend({
             self.linesWidget.destroy();
             self.headerWidget.toggleDisplayContext('specialized');
             return self._save().then(function () {
-                self._endBarcodeFlow();
                 if (self.actionParams.model === 'stock.picking') {
                     self.ViewsWidget = new ViewsWidget(
                         self,
@@ -1231,28 +1255,20 @@ var ClientAction = AbstractAction.extend({
         this.linesWidget.destroy();
         this.headerWidget.toggleDisplayContext('specialized');
 
-        // If we want to edit a not yet saved line, keep its description in a variable so we'll be
-        // able to get it back once saved.
-        var lineDescription = false;
-        if (_.isString(ev.data.id)) {
-            var currentPage = this.pages[this.currentPageIndex];
-            lineDescription = _.findWhere(currentPage.lines, {virtual_id: ev.data.id});
-        }
+        // If we want to edit a not yet saved line, keep its virtual_id to match it with the result
+        // of the `applyChanges` RPC.
+        var virtual_id = _.isString(ev.data.id) ? ev.data.id : false;
 
         var self = this;
         this.mutex.exec(function () {
             return self._save().then(function () {
                 var id = ev.data.id;
-                if (_.isString(id) && lineDescription) {
+                if (virtual_id) {
                     var currentPage = self.pages[self.currentPageIndex];
-                    // FIXME use _.isEqual but the state there are missing keys...
                     var rec = _.find(currentPage.lines, function (line) {
-                        return line.product_id.id === lineDescription.product_id.id &&
-                            line.qty_done === lineDescription.qty_done;
+                        return line.dummy_id === virtual_id;
                     });
                     id = rec.id;
-                    self.scannedLines = _.without(self.scannedLines, ev.data.id);
-                    self.scannedLines.push(id);
                 }
 
                 if (self.actionParams.model === 'stock.picking') {
@@ -1347,7 +1363,14 @@ var ClientAction = AbstractAction.extend({
                     new Error('broken');
                 }
                 self.currentPageIndex = newPageIndex;
+
+                // Add the edited/added product in `this.scannedLines` if not already present. The
+                // goal is to impact them on the potential next step.
+                if (self.scannedLines.indexOf(record.data.id) === -1) {
+                    self.scannedLines.push(record.data.id);
+                }
             }
+
             self._reloadLineWidget(self.currentPageIndex);
             self.$('.o_show_information').toggleClass('o_hidden', false);
         });

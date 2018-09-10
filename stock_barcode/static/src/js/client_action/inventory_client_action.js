@@ -123,25 +123,28 @@ var InventoryClientAction = ClientAction.extend({
                     'product_uom_id': line.product_uom_id,
                     'product_qty': line.product_qty,
                     'location_id': line.location_id.id,
-                    'prod_lot_id': line.prod_lot_id && line.prod_lot_id[0]
+                    'prod_lot_id': line.prod_lot_id && line.prod_lot_id[0],
+                    'dummy_id': line.virtual_id,
                 }];
                 formattedCommands.push(cmd);
             }
         }
-        var self = this;
-        var deferred = $.when();
         if (formattedCommands.length > 0){
-            deferred = this._rpc({
-                'model': this.actionParams.model,
-                'method': 'write',
-                'args': [[this.currentState.id], {
-                    'line_ids': formattedCommands,
-                }],
-            }).then( function () {
-                return self._getState(self.currentState.id);
+            var params = {
+                'mode': 'write',
+                'model_name': this.actionParams.model,
+                'record_id': this.currentState.id,
+                'write_vals': formattedCommands,
+                'write_field': 'line_ids',
+            };
+
+            return this._rpc({
+                'route': '/stock_barcode/get_set_barcode_view_state',
+                'params': params,
             });
+        } else {
+            return $.Deferred().reject();
         }
-        return deferred;
     },
 
     /**
