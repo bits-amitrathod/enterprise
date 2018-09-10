@@ -19,7 +19,7 @@ from odoo import models, fields, api, _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, pycompat, config, date_utils
 from odoo.osv import expression
 from babel.dates import get_quarter_names
-from odoo.tools.misc import formatLang, format_date
+from odoo.tools.misc import formatLang, format_date, get_user_companies
 from odoo.addons.web.controllers.main import clean_action
 from odoo.tools.safe_eval import safe_eval
 from odoo.exceptions import UserError
@@ -81,10 +81,10 @@ class AccountReport(models.AbstractModel):
             filter_name = element[7:]
             options[filter_name] = getattr(self, element)
 
-        group_multi_company = self.env['ir.model.data'].xmlid_to_object('base.group_multi_company')
-        if self.env.user.id in group_multi_company.users.ids and 'multi_company' not in options:
-            # We have a user with multi-company
-            options['multi_company'] = [{'id': c.id, 'name': c.name, 'selected': True if c.id == self.env.user.company_id.id else False} for c in self.env.user.company_ids]
+        company_ids = get_user_companies(self._cr, self.env.user.id)
+        if len(company_ids) > 1:
+            companies = self.env['res.company'].browse(company_ids)
+            options['multi_company'] = [{'id': c.id, 'name': c.name, 'selected': True if c.id == self.env.user.company_id.id else False} for c in companies]
         if options.get('journals'):
             options['journals'] = self._get_journals()
 
