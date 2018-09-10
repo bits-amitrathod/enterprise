@@ -75,7 +75,7 @@ var LinesWidget = Widget.extend({
      *                 line's template, including the qty to add.
      */
     addProduct: function (lineDescription, model) {
-        var $body = this.$el.filter('.barcode_lines');
+        var $body = this.$el.filter('.o_barcode_lines');
         var $line = $(QWeb.render('stock_barcode_lines_template', {
             lines: [lineDescription],
             groups: this.groups,
@@ -135,7 +135,7 @@ var LinesWidget = Widget.extend({
      * Removes the highlight on the lines.
      */
     clearLineHighlight: function () {
-        var $body = this.$el.filter('.barcode_lines');
+        var $body = this.$el.filter('.o_barcode_lines');
         // Remove the highlight from the other line.
         $body.find('.o_highlight').removeClass('o_highlight');
     },
@@ -216,7 +216,7 @@ var LinesWidget = Widget.extend({
          }
 
         // Render and append the page summary.
-        var $header = this.$el.filter('.barcode_lines_header');
+        var $header = this.$el.filter('.o_barcode_lines_header');
         var $pageSummary = $(QWeb.render('stock_barcode_summary_template', {
             locationName: this.page.location_name,
             locationDestName: this.page.location_dest_name,
@@ -228,7 +228,7 @@ var LinesWidget = Widget.extend({
         $header.append($pageSummary);
 
         // Render and append the lines, if any.
-        var $body = this.$el.filter('.barcode_lines');
+        var $body = this.$el.filter('.o_barcode_lines');
         if (this.page.lines.length) {
             var $lines = $(QWeb.render('stock_barcode_lines_template', {
                 lines: this.getProductLines(this.page.lines),
@@ -311,7 +311,7 @@ var LinesWidget = Widget.extend({
      * @returns {boolean} whether the reservation is processed on the page or not
      */
     _isReservationProcessed: function () {
-        var $lines = this.$('.line');
+        var $lines = this.$('.o_barcode_line');
         if (! $lines.length) {
             return false;
         } else {
@@ -387,7 +387,7 @@ var LinesWidget = Widget.extend({
      * @param {Jquery} $line
      */
     _highlightLine: function ($line) {
-        var $body = this.$el.filter('.barcode_lines');
+        var $body = this.$el.filter('.o_barcode_lines');
         this.clearLineHighlight();
         // Highlight `$line`.
         $line.toggleClass('o_highlight', true);

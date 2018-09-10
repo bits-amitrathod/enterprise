@@ -19,7 +19,7 @@ function isChildOf(locationParent, locationChild) {
 }
 
 var ClientAction = AbstractAction.extend({
-    className: 'barcode_client_action',
+    className: 'o_barcode_client_action',
     custom_events: {
         show_information: '_onShowInformation',
         show_settings: '_onShowSettings',

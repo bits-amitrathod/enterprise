@@ -1,4 +1,4 @@
-.barcode_client_action {
+.o_barcode_client_action {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -47,14 +47,14 @@
         margin-bottom: 0.5em;
     }
 
-    .barcode_header {
+    .o_barcode_header {
         flex: 0 0 46px;
     }
-    .barcode_lines_header {
+    .o_barcode_lines_header {
         border-bottom: 1px solid #9c9c9c;
     }
 
-    .barcode_summary {
+    .o_barcode_summary {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -62,38 +62,38 @@
         font-size: 16px;
     }
 
-    .barcode_page_summary {
+    .o_barcode_page_summary {
         background-color: #e1e1e1;
         padding: 0.5em;
 
-        .barcode_product_line {
+        .o_barcode_product_line {
             display: flex;
             justify-content: space-between;
 
-            .barcode_locations {
+            .o_barcode_locations {
                 font-size: 16px;
             }
         }
     }
 
-    .barcode_lines {
+    .o_barcode_lines {
         clear: both;
         flex: auto;
         overflow: auto;
     }
 
-    .barcode_generic_view {
+    .o_barcode_generic_view {
         flex: auto;
         overflow: auto;
     }
 
-    .barcode_lines_add {
+    .o_barcode_lines_add {
         flex: auto;
         overflow: auto;
         color: #9c9c9c,
     }
 
-    .barcode_settings {
+    .o_barcode_settings {
         flex: auto;
 
         display: flex;
@@ -106,7 +106,7 @@
         }
     }
 
-    .barcode_control {
+    .o_barcode_control {
         flex: 0 0 46px;
 
         display: flex;
@@ -116,12 +116,12 @@
         }
     }
 
-    .barcode_control.disabled {
+    .o_barcode_control.disabled {
         display: none;
     }
 }
 
-.barcode_header {
+.o_barcode_header {
     position: relative;
     height: $o-navbar-height;
     border-bottom: 1px solid $o-navbar-inverse-link-hover-bg;
@@ -142,8 +142,8 @@
 
 }
 
-.barcode_lines {
-    > .line {
+.o_barcode_lines {
+    > .o_barcode_line {
         padding: 1em;
         border: 1px solid #9c9c9c;
         border-top: 0px;
@@ -154,6 +154,6 @@
     }
 }
 
-.barcode_settings > button, .barcode_control > button, .barcode_summary > button {
+.o_barcode_settings > button, .o_barcode_control > button, .o_barcode_summary > button {
     text-transform: uppercase;
 }
