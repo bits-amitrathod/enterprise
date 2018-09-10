@@ -66,8 +66,9 @@ class BpostRequest():
         if partner.country_id.code == 'BE':
             # match the first or the last number of an address
             # for Belgian "boîte/bus", they should be put in street2
-            # so that if you live "Rue du 40e régiment 12", 12 is returned
-            ex = re.compile(r'^\d+|\d+$')
+            # so that if you live "Rue du 40e régiment 12A", 12A is returned
+            # also supports "Rue du 40e régiment 12/3"
+            ex = re.compile(r'^\d+|\d+([a-zA-Z]|/\d)?$')
         else:
             # match the first number in street because we don't know other
             # countries rules
