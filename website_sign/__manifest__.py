@@ -20,8 +20,6 @@ Let your customers follow the signature process easily.
         'views/signature_request_views.xml',
         'views/signature_request_template_views.xml',
 
-        'views/res_users_views.xml',
-
         'data/signature_request_data.xml',
         'data/signature_request_template_data.xml',
 
