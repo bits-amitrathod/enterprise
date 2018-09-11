@@ -301,6 +301,7 @@
                     <filter name="rebase" string="Rebase" domain="[('state', '=', 'rebase')]"/>
                     <filter name="conflict" string="Conflict" domain="[('state', '=', 'conflict')]"/>
                     <filter name="done" string="Done" domain="[('state', '=', 'done')]"/>
+                    <separator/>
                     <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
                     <separator/>
                     <filter name="bomchange" string="BoM" domain="[('type', '!=', 'routing')]"/>
@@ -823,14 +824,9 @@
     <menuitem
         id="menu_mrp_plm_changes"
         name="Changes"
+        action="mrp_eco_action_main"
         parent="menu_mrp_plm_root"
         sequence="10"/>
-    <menuitem
-        id="menu_mrp_plm_ecos"
-        name="Engineering Change Orders"
-        action="mrp_eco_action_main"
-        parent="menu_mrp_plm_changes"
-        sequence="5"/>
 
     <menuitem
         id="menu_mrp_plm_master_data"
