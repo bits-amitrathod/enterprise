@@ -469,6 +469,7 @@ $o-dms-inspector-bg-darker: #1A1A1A;
     }
 
     .o_document_chatter {
+        position: relative;
         overflow: auto;
         box-shadow: inset 0 5px 0 $o-dms-inspector-bg-light;
         flex: 0 0 $o-dms-chatter-width;
@@ -482,14 +483,6 @@ $o-dms-inspector-bg-darker: #1A1A1A;
         .o_chatter_topbar {
             .o_followers {
                 margin-right: 40px; // prevent the 'close' button from overlapping
-            }
-        }
-    }
-
-    &:not(.o_chatter_open) {
-        @media (min-width: 1400px) {
-            .o_kanban_record.o_kanban_attachment {
-                flex: 0 1 31.3%;
             }
         }
     }
