@@ -44,6 +44,7 @@ var DocumentsKanbanView = KanbanView.extend({
             'lock_uid',
             'message_follower_ids',
             'message_ids',
+            'activity_ids',
             'mimetype',
             'name',
             'owner_id',

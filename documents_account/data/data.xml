@@ -16,5 +16,27 @@
             <field name="domain_folder_id" ref="documents.documents_finance_folder"/>
         </record>
 
+        <!-- activity types -->
+
+        <record id="mail_documents_activity_data_vat" model="mail.activity.type">
+            <field name="name">VAT return</field>
+        </record>
+
+        <record id="mail_documents_activity_data_Inbox" model="mail.activity.type">
+            <field name="name">Inbox</field>
+        </record>
+
+        <record id="mail_documents_activity_data_tv" model="mail.activity.type">
+            <field name="name">To validate</field>
+        </record>
+
+        <record id="mail_documents_activity_data_fs" model="mail.activity.type">
+            <field name="name">Fiscal Statement</field>
+        </record>
+
+        <record id="mail_documents_activity_data_md" model="mail.activity.type">
+            <field name="name">Missing document</field>
+        </record>
+
     </data>
 </odoo>

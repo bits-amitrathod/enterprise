@@ -39,11 +39,16 @@ QUnit.module('DocumentsKanbanView', {
                     tag_ids: {string: "Tags", type: 'many2many', relation: 'documents.tag'},
                     type: {string: "Type", type: 'selection', selection: [['url', "URL"], ['binary', "File"]], default: 1},
                     url: {string: "Url", type: 'char'},
+                    activity_ids: {string: 'Activities', type: 'one2many', relation: 'mail.activity',
+                        relation_field: 'res_id'},
+                    activity_state: {string: 'State', type: 'selection',
+                        selection: [['overdue', 'Overdue'], ['today', 'Today'], ['planned', 'Planned']]},
                 },
                 records: [
                     {id: 1, datas_fname: 'yop', file_size: 30000, owner_id: 1, partner_id: 2,
-                        public: true, res_id: 1, res_model: 'task', res_model_name: 'Task',
-                        res_name: 'Write specs', tag_ids: [1, 2], share_ids: [], folder_id: 1, available_rule_ids: [1, 2]},
+                        public: true, res_id: 1, res_model: 'task', res_model_name: 'Task', activity_ids: [1,],
+                        activity_state: 'today', res_name: 'Write specs', tag_ids: [1, 2], share_ids: [], folder_id: 1,
+                        available_rule_ids: [1, 2]},
                     {id: 2, datas_fname: 'blip', file_size: 20000, owner_id: 2, partner_id: 2,
                         public: false, res_id: 2, res_model: 'task', res_model_name: 'Task',
                         res_name: 'Write tests', tag_ids: [2], share_ids: [], folder_id: 1, available_rule_ids: [1]},
@@ -161,6 +166,30 @@ QUnit.module('DocumentsKanbanView', {
                     res_id: {string: "Related Document ID", type: 'integer'},
                 },
                 records: [],
+            },
+            'mail.activity': {
+                fields: {
+                    activity_type_id: { string: "Activity type", type: "many2one", relation: "mail.activity.type" },
+                    create_uid: { string: "Assigned to", type: "many2one", relation: 'partner' },
+                    create_user_id: { string: "Creator", type: "many2one", relation: 'partner' },
+                    display_name: { string: "Display name", type: "char" },
+                    date_deadline: { string: "Due Date", type: "date" },
+                    user_id: { string: "Assigned to", type: "many2one", relation: 'partner' },
+                    state: {
+                        string: 'State',
+                        type: 'selection',
+                        selection: [['overdue', 'Overdue'], ['today', 'Today'], ['planned', 'Planned']],
+                    },
+                },
+            },
+            'mail.activity.type': {
+                fields: {
+                    name: { string: "Name", type: "char" },
+                },
+                records: [
+                    { id: 1, name: "Type 1" },
+                    { id: 2, name: "Type 2" },
+                ],
             },
         };
     },
@@ -1644,6 +1673,128 @@ QUnit.module('DocumentsKanbanView', {
         assert.strictEqual(kanban.$('.o_document_chatter .o_followers_count').text(), "2",
             "should have two followers");
 
+        kanban.destroy();
+    });
+
+    QUnit.test('document chatter: render the activity button', function (assert) {
+        assert.expect(3);
+
+        var kanban = createView({
+            View: DocumentsKanbanView,
+            model: 'ir.attachment',
+            data: this.data,
+            services: mailTestUtils.getMailServices(),
+            arch: '<kanban><templates><t t-name="kanban-box">' +
+                    '<div>' +
+                        '<field name="datas_fname"/>' +
+                    '</div>' +
+                '</t></templates></kanban>',
+            intercepts: {
+                do_action: function (ev) {
+                    assert.deepEqual(ev.data.action, {
+                        context: {
+                            default_res_id: 1,
+                            default_res_model: 'ir.attachment'
+                        },
+                        res_id: false,
+                        res_model: 'mail.activity',
+                        target: 'new',
+                        type: 'ir.actions.act_window',
+                        view_mode: 'form',
+                        view_type: 'form',
+                        views: [[false, 'form']]
+                        },
+                        "the activity button should trigger do_action with the correct args"
+                    );
+                },
+            },
+        });
+
+        kanban.$('.o_kanban_record:contains(yop)').click();
+        kanban.$('.o_documents_inspector .o_inspector_open_chatter').click();
+
+        assert.strictEqual(kanban.$('.o_document_chatter .o_chatter').length, 1,
+            "should display the chatter");
+
+        var $activityButton = kanban.$('.o_document_chatter .o_chatter_button_schedule_activity');
+        assert.strictEqual($activityButton.length, 1,
+            "should display the activity button");
+        $activityButton.click();
+
+        kanban.destroy();
+    });
+
+    QUnit.test('document chatter: render the activity button', function (assert) {
+        assert.expect(8);
+
+        this.data['mail.activity'].records = [{
+            id: 1,
+            display_name: "An activity",
+            date_deadline: moment().format("YYYY-MM-DD"),
+            state: "today",
+            user_id: 2,
+            create_user_id: 2,
+            activity_type_id: 1,
+        }];
+        this.data.partner = {
+            fields: {
+                display_name: { string: "Displayed name", type: "char" },
+                message_ids: {
+                    string: "messages",
+                    type: "one2many",
+                    relation: 'mail.message',
+                    relation_field: "res_id",
+                },
+                activity_ids: {
+                    string: 'Activities',
+                    type: 'one2many',
+                    relation: 'mail.activity',
+                    relation_field: 'res_id',
+                },
+            },
+            records: [{
+                id: 2,
+                display_name: "first partner",
+                message_ids: [],
+                activity_ids: [],
+            }]
+        };
+        var kanban = createView({
+            View: DocumentsKanbanView,
+            model: 'ir.attachment',
+            data: this.data,
+            services: mailTestUtils.getMailServices(),
+            arch: '<kanban><templates><t t-name="kanban-box">' +
+                    '<div>' +
+                        '<field name="datas_fname"/>' +
+                    '</div>' +
+                '</t></templates></kanban>',
+        });
+
+        kanban.$('.o_kanban_record:contains(yop)').click();
+        kanban.$('.o_documents_inspector .o_inspector_open_chatter').click();
+
+        assert.strictEqual(kanban.$('.o_document_chatter .o_chatter').length, 1,
+            "should display the chatter");
+
+        assert.strictEqual(kanban.$('.o_mail_activity').length, 1,
+            "should display the activity area");
+        assert.strictEqual(kanban.$('#o_chatter_activity_info_1').length, 1,
+            "should display an activity");
+        assert.strictEqual(kanban.$('.o_activity_link:contains(Mark Done)').length, 1,
+            "should display the activity mark done button");
+        assert.strictEqual(kanban.$('.o_edit_activity').length, 1,
+            "should display the activity Edit button");
+        assert.strictEqual(kanban.$('.o_unlink_activity').length, 1,
+            "should display the activity Cancel button");
+
+        kanban.$('.o_kanban_record:contains(blip)').click();
+
+        assert.strictEqual(kanban.$('.o_document_chatter .o_chatter').length, 1,
+            "should display the chatter");
+
+        assert.strictEqual(kanban.$('#o_chatter_activity_info_1').length, 0,
+            "should not display an activity");
         kanban.destroy();
     });
 

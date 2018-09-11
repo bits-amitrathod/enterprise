@@ -215,22 +215,28 @@ var DocumentsKanbanController = KanbanController.extend({
      * Opens the chatter of the given record.
      *
      * @private
+     * @param {Object} record
+     * @returns {Deferred}
      */
     _openChatter: function (record) {
         var self = this;
-        if (this.chatter) {
-            return;
-        }
-        var $chatterContainer = $('<div>').addClass('o_document_chatter p-relative bg-white');
-        var options = {
-            display_log_button: true,
-        };
-        var mailFields = {mail_thread: 'message_ids', mail_followers: 'message_follower_ids'};
-        this.chatter = new Chatter(this, record, mailFields, options);
-        return this.chatter.appendTo($chatterContainer).then(function () {
-            $chatterContainer.append($('<span>').addClass('o_document_close_chatter text-center').html('&#215;'));
-            self.$el.addClass('o_chatter_open');
-            self.$el.append($chatterContainer);
+        return this.model.fetchActivities(record.id).then(function () {
+            record = self.model.get(record.id);
+            var $chatterContainer = $('<div>').addClass('o_document_chatter p-relative bg-white');
+            var options = {
+                display_log_button: true,
+            };
+            var mailFields = {mail_thread: 'message_ids',
+                          mail_followers: 'message_follower_ids',
+                          mail_activity: 'activity_ids'};
+
+            self._closeChatter();
+            self.chatter = new Chatter(self, record, mailFields, options);
+            return self.chatter.appendTo($chatterContainer).then(function () {
+                $chatterContainer.append($('<span>').addClass('o_document_close_chatter text-center').html('&#215;'));
+                self.$el.addClass('o_chatter_open');
+                self.$el.append($chatterContainer);
+            });
         });
     },
     /**
@@ -310,7 +316,7 @@ var DocumentsKanbanController = KanbanController.extend({
             state: state,
         };
         this.documentsInspector = new DocumentsInspector(this, params);
-        this.documentsInspector.appendTo(this.$el);
+        this.documentsInspector.insertAfter(this.$('.o_kanban_view'));
         if (localState) {
             this.documentsInspector.setLocalState(localState);
         }
@@ -468,11 +474,12 @@ var DocumentsKanbanController = KanbanController.extend({
             var state = self.model.get(self.handle);
             var recordIDs = _.pluck(state.data, 'res_id');
             self.selectedRecordIDs = _.intersection(self.selectedRecordIDs, recordIDs);
-            self._renderDocumentsInspector(state);
-            self._renderDocumentsSelector(state);
-            self._updateChatter(state);
-            self.anchorID = null;
-            self.renderer.updateSelection(self.selectedRecordIDs);
+            return self._updateChatter(state).then(function () {
+                self._renderDocumentsInspector(state);
+                self._renderDocumentsSelector(state);
+                self.anchorID = null;
+                self.renderer.updateSelection(self.selectedRecordIDs);
+            });
         });
     },
     /**
@@ -481,18 +488,20 @@ var DocumentsKanbanController = KanbanController.extend({
      *
      * @private
      * @param {Object} state
+     * @returns {Deferred}
      */
     _updateChatter: function (state) {
         if (this.chatter) {
-            this._closeChatter();
             // re-open the chatter if the new selection still contains 1 record
             if (this.selectedRecordIDs.length === 1) {
                 var record = _.findWhere(state.data, {res_id: this.selectedRecordIDs[0]});
                 if (record) {
-                    this._openChatter(record);
+                    return this._openChatter(record);
                 }
             }
+            this._closeChatter();
         }
+        return $.when();
     },
     /**
      * Iterate of o_foldable elements (folders and facets) in this.$el, and set
@@ -893,10 +902,12 @@ var DocumentsKanbanController = KanbanController.extend({
      */
     _onSelectionChanged: function (ev) {
         ev.stopPropagation();
+        var self = this;
         this.selectedRecordIDs = ev.data.selection;
         var state = this.model.get(this.handle);
-        this._renderDocumentsInspector(state);
-        this._updateChatter(state);
+        this._updateChatter(state).then(function () {
+            self._renderDocumentsInspector(state);
+        });
     },
     /**
      * Share the current domain.

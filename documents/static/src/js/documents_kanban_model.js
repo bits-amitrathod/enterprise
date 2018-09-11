@@ -17,6 +17,16 @@ var DocumentsKanbanModel = KanbanModel.extend({
     //--------------------------------------------------------------------------
 
     /**
+     * @param {Integer} recordID
+     * @returns {Deferred}
+     */
+    fetchActivities: function (recordID) {
+        var record = this.localData[recordID];
+        return this._fetchSpecialActivity(record, 'activity_ids').then(function (data) {
+            record.specialData.activity_ids = data;
+        });
+    },
+    /**
      * @override
      */
     get: function (dataPointID) {

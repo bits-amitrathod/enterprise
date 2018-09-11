@@ -35,6 +35,7 @@ class WorkflowActionRule(models.Model):
     create_model = fields.Selection([], string="Attach to")
 
     # Activity
+    remove_activities = fields.Boolean(string='Remove all Activities')
     activity_option = fields.Boolean(string='Create a new activity')
     activity_type_id = fields.Many2one('mail.activity.type', string="Activity type")
     activity_summary = fields.Char('Summary')
@@ -77,15 +78,18 @@ class WorkflowActionRule(models.Model):
 
         for attachment in attachments:
             # partner/owner/share_link/folder changes
-            if self.user_id.id:
-                attachment.owner_id = self.user_id
-            if self.partner_id.id:
-                attachment.partner_id = self.partner_id
-            # by ensuring that the write dict has either the new or the old folder_id, it
-            # prevents the write overwrite to assign it to a folder based on the res_model.
-            attachment.write({
-                'folder_id': self.folder_id.id if self.folder_id else attachment.folder_id.id,
-            })
+            attachment_dict = {}
+            if self.user_id:
+                attachment_dict['owner_id'] = self.user_id
+            if self.partner_id:
+                attachment_dict['partner_id'] = self.partner_id
+            if self.folder_id:
+                attachment_dict['folder_id'] = self.folder_id.id
+
+            attachment.write(attachment_dict)
+
+            if self.remove_activities:
+                attachment.activity_ids.unlink()
 
             if self.activity_option and self.activity_type_id:
                 activity_vals = {
@@ -96,10 +100,10 @@ class WorkflowActionRule(models.Model):
                 if self.activity_date_deadline_range > 0:
                     activity_vals['date_deadline'] = fields.Date.context_today(self) + relativedelta(
                         **{self.activity_date_deadline_range_type: self.activity_date_deadline_range})
-                attachment.activity_schedule(**activity_vals)
                 user = self.activity_user_id or self.user_id
                 if user:
                     activity_vals['user_id'] = user.id
+                attachment.activity_schedule(**activity_vals)
 
             # tag and facet actions
             for tag_action in self.tag_action_ids:
@@ -148,7 +152,7 @@ class WorkflowAction(models.Model):
             faceted_tags = self.env['documents.tag'].search([('facet_id', '=', self.facet_id.id)])
             if faceted_tags.ids:
                 for tag in faceted_tags:
-                    return attachment.write({'tag_ids': [(3, tag.id, False)]})
+                    attachment.write({'tag_ids': [(3, tag.id, False)]})
             return attachment.write({'tag_ids': [(4, self.tag_id.id, False)]})
         elif self.action == 'remove':
             if self.tag_id.id:

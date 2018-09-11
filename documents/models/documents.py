@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, exceptions, SUPERUSER_ID
-from odoo.tools import crop_image, image_resize_image
 from ast import literal_eval
-import re
+from dateutil.relativedelta import relativedelta
 import base64
 
 
 class IrAttachment(models.Model):
     _name = 'ir.attachment'
-    _inherit = ['ir.attachment', 'mail.thread']
+    _inherit = ['ir.attachment', 'mail.thread', 'mail.activity.mixin']
 
     favorited_ids = fields.Many2many('res.users', string="Favorite of")
     tag_ids = fields.Many2many('documents.tag', 'document_tag_rel', string="Tags")
@@ -83,10 +82,11 @@ class IrAttachment(models.Model):
         }
         defaults.update(custom_values)
 
-        mail_attachment = super(IrAttachment, self).message_new(msg_dict, defaults).with_context(attachment_values=
-                                                                                                 custom_values)
-
-        return mail_attachment
+        email_from = msg_dict.get('to')
+        alias = email_from[:email_from.find('@')]
+        share = self.env['documents.share'].search([('alias_name', '=', alias)])
+        return super(IrAttachment, self).message_new(msg_dict, defaults).with_context(attachment_values=custom_values,
+                                                                                      share=share)
 
     @api.model
     def _message_post_process_attachments(self, attachments, attachment_ids, message_data):
@@ -98,15 +98,32 @@ class IrAttachment(models.Model):
         """
         rv = super(IrAttachment, self)._message_post_process_attachments(attachments, attachment_ids, message_data)
         dv = self._context.get('attachment_values')
+        share = self._context.get('share')
         if message_data['model'] == 'ir.attachment' and dv:
             write_vals = {
                 'partner_id': dv['partner_id'],
                 'tag_ids': dv['tag_ids'],
                 'folder_id': dv['folder_id'],
+                'res_model': False,
+                'res_id': False,
             }
             attachments = self.env['ir.attachment'].browse([x[1] for x in rv])
             for attachment in attachments:
                 attachment.write(write_vals)
+                if share.activity_option and share.activity_type_id:
+                    activity_vals = {
+                        'summary': share.activity_summary or '',
+                        'note': share.activity_note or '',
+                        'activity_type_id': share.activity_type_id.id,
+                    }
+                    if share.activity_date_deadline_range > 0:
+                        activity_vals['date_deadline'] = fields.Date.context_today(share) + relativedelta(
+                            **{share.activity_date_deadline_range_type: share.activity_date_deadline_range})
+
+                    user = share.activity_user_id or share.partner_id or share.owner_id
+                    if user:
+                        activity_vals['user_id'] = user.id
+                    attachment.activity_schedule(**activity_vals)
         return rv
 
     @api.multi
