@@ -74,7 +74,7 @@ class BpostRequest():
             # countries rules
             ex = re.compile(r'\d+')
         match = ex.search(partner.street)
-        number = match.group(0) if match else ''
+        number = match.group(0) if match else '0'
         streetName = u'%s %s' % (partner.street.replace(number, ''), partner.street2 if partner.street2 else '')
         return (streetName, number)
 
