@@ -601,7 +601,7 @@ tour.register('test_internal_picking_from_scratch_2', {test: true}, [
         run: function() {
             assertFormLocationSrc("WH/Stock/Shelf 1");
             assertFormLocationDest("WH/Stock/Shelf 2");
-            assertFormQuantity("2.000");
+            assertFormQuantity("2");
         },
     },
 
