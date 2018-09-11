@@ -375,6 +375,21 @@
                             </div>
                         </group>
                     </group>
+                    <group string="Activity" name="next_activity" autofocus="autofocus" attrs="{'invisible': [('activity_option', '=', False)]}">
+                        <group>
+                            <field name="activity_type_id" options="{'no_create': True, 'no_open': True}" attrs="{'required': [('activity_option', '=', True)]}"/>
+                            <field name="activity_summary" placeholder="e.g. Discuss proposal"/>
+                        </group>
+                        <group>
+                            <label for="activity_date_deadline_range"/>
+                            <div class="o_row">
+                                <field name="activity_date_deadline_range"/>
+                                <field name="activity_date_deadline_range_type"/>
+                            </div>
+                            <field name="activity_user_id"/>
+                        </group>
+                        <field name="activity_note" placeholder="Log a note..."/>
+                    </group>
                     <field name="attachment_ids" groups="base.group_no_one" readonly="1"/>
                     <footer>
                         <button name="write" type="object" string="Done" class="btn btn-primary"/>
@@ -447,6 +462,22 @@
                                             <field name="tag_id" domain="[('facet_id','=',facet_id)]"/>
                                         </tree>
                                     </field>
+                                    <field name="activity_option"/>
+                                </group>
+                                <group string="Activity" name="next_activity" autofocus="autofocus" attrs="{'invisible': [('activity_option', '=', False)]}">
+                                    <group>
+                                        <field name="activity_type_id" options="{'no_create': True, 'no_open': True}" attrs="{'required': [('activity_option', '=', True)]}"/>
+                                        <field name="activity_summary" placeholder="e.g. Discuss proposal"/>
+                                    </group>
+                                    <group>
+                                        <label for="activity_date_deadline_range"/>
+                                        <div class="o_row">
+                                            <field name="activity_date_deadline_range"/>
+                                            <field name="activity_date_deadline_range_type"/>
+                                        </div>
+                                        <field name="activity_user_id"/>
+                                    </group>
+                                    <field name="activity_note" placeholder="Log a note..."/>
                                 </group>
                             </page>
                             <page string="Notes">

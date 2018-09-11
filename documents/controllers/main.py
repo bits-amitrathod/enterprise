@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import base64
-import mimetypes
 import zipfile
 import io
 import logging
@@ -13,8 +12,9 @@ import werkzeug.urls
 import werkzeug.utils
 
 from ast import literal_eval
+from dateutil.relativedelta import relativedelta
 
-from odoo import http
+from odoo import http, fields
 from odoo.http import request, content_disposition
 from odoo.tools import pycompat, consteq
 
@@ -196,6 +196,7 @@ class ShareRoute(http.Controller):
             try:
                 for file in request.httprequest.files.getlist('files'):
                     data = file.read()
+
                     attachment_dict = {
                         'tag_ids': [(6, 0, share.tag_ids.ids)],
                         'partner_id': share.partner_id.id,
@@ -206,7 +207,23 @@ class ShareRoute(http.Controller):
                         'datas_fname': file.filename,
                         'datas': base64.b64encode(data),
                     }
-                    attachments.sudo().create(attachment_dict)
+                    attachment = attachments.sudo().create(attachment_dict)
+
+                    if share.activity_option and share.activity_type_id:
+                        activity_vals = {
+                            'summary': share.activity_summary or '',
+                            'note': share.activity_note or '',
+                            'activity_type_id': share.activity_type_id.id,
+                        }
+                        if share.activity_date_deadline_range > 0:
+                            activity_vals['date_deadline'] = fields.Date.context_today(share) + relativedelta(
+                                **{share.activity_date_deadline_range_type: share.activity_date_deadline_range})
+
+                        user = share.activity_user_id or share.partner_id or share.owner_id
+                        if user:
+                            activity_vals['user_id'] = user.id
+                        attachment.activity_schedule(**activity_vals)
+
             except Exception as e:
                 logger.exception("Failed to upload attachment")
         else:

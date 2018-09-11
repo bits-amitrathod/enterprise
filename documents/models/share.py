@@ -36,6 +36,19 @@ class DocumentShare(models.Model):
     owner_id = fields.Many2one('res.users', string="Default Owner")
     email_drop = fields.Boolean(string='Upload by Email')
 
+    # Activity
+    activity_option = fields.Boolean(string='Create a new activity')
+    activity_type_id = fields.Many2one('mail.activity.type', string="Activity type")
+    activity_summary = fields.Char('Summary')
+    activity_date_deadline_range = fields.Integer(string='Due Date In')
+    activity_date_deadline_range_type = fields.Selection([
+        ('days', 'Days'),
+        ('weeks', 'Weeks'),
+        ('months', 'Months'),
+    ], string='Due type', default='days')
+    activity_note = fields.Html(string="Note")
+    activity_user_id = fields.Many2one('res.users', string='Responsible')
+
     _sql_constraints = [
         ('share_unique', 'unique (access_token)', "This access token already exists"),
     ]

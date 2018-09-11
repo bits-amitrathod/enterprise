@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from dateutil.relativedelta import relativedelta
+
 from odoo import models, fields, api
 
 
@@ -32,6 +34,19 @@ class WorkflowActionRule(models.Model):
     has_business_option = fields.Boolean(compute='_get_business')
     create_model = fields.Selection([], string="Attach to")
 
+    # Activity
+    activity_option = fields.Boolean(string='Create a new activity')
+    activity_type_id = fields.Many2one('mail.activity.type', string="Activity type")
+    activity_summary = fields.Char('Summary')
+    activity_date_deadline_range = fields.Integer(string='Due Date In')
+    activity_date_deadline_range_type = fields.Selection([
+        ('days', 'Days'),
+        ('weeks', 'Weeks'),
+        ('months', 'Months'),
+    ], string='Due type', default='days')
+    activity_note = fields.Html(string="Note")
+    activity_user_id = fields.Many2one('res.users', string='Responsible')
+
     @api.multi
     def _get_business(self):
         """
@@ -62,7 +77,6 @@ class WorkflowActionRule(models.Model):
 
         for attachment in attachments:
             # partner/owner/share_link/folder changes
-
             if self.user_id.id:
                 attachment.owner_id = self.user_id
             if self.partner_id.id:
@@ -72,6 +86,20 @@ class WorkflowActionRule(models.Model):
             attachment.write({
                 'folder_id': self.folder_id.id if self.folder_id else attachment.folder_id.id,
             })
+
+            if self.activity_option and self.activity_type_id:
+                activity_vals = {
+                    'summary': self.activity_summary or '',
+                    'note': self.activity_note or '',
+                    'activity_type_id': self.activity_type_id.id,
+                }
+                if self.activity_date_deadline_range > 0:
+                    activity_vals['date_deadline'] = fields.Date.context_today(self) + relativedelta(
+                        **{self.activity_date_deadline_range_type: self.activity_date_deadline_range})
+                attachment.activity_schedule(**activity_vals)
+                user = self.activity_user_id or self.user_id
+                if user:
+                    activity_vals['user_id'] = user.id
 
             # tag and facet actions
             for tag_action in self.tag_action_ids:
