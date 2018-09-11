@@ -42,11 +42,12 @@
                 <filter string="Model" name="by_model" domain="[]" context="{'group_by': 'res_model'}"/>
             </xpath>
             <xpath expr="//filter[@name='my_documents_filter']" position="replace">
+                <filter name="my_documents_filter" string="My Documents" domain="[('owner_id', '=', uid)]"/>
                 <filter name="my_favorites_filter" string="My Favorites" domain="[('favorited_ids', 'in', uid)]"/>
-                <filter name="my_documents_filter" string="My documents" domain="[('owner_id', '=', uid)]"/>
                 <separator/>
                 <filter name="my_locked_filter" string="My locked files" domain="[('lock_uid', '=', uid)]"/>
                 <filter name="all_locked_filter" string="All locked files" domain="[('lock_uid', '!=', False)]"/>
+                <separator/>
             </xpath>
         </field>
     </record>
@@ -239,7 +240,7 @@
         <search>
             <field name="name"/>
             <field name="parent_folder_id"/>
-            <filter string="parent" name="by_parent" domain="[]" context="{'group_by': 'parent_folder_id'}"/>
+            <filter string="Parent Folder" name="by_parent" domain="[]" context="{'group_by': 'parent_folder_id'}"/>
          </search>
         </field>
     </record>
@@ -733,7 +734,7 @@
     <!-- actions -->
 
     <record model="ir.actions.act_window" id="document_debug_action">
-      <field name="name">[debug] Document list view</field>
+      <field name="name">Attachments</field>
       <field name="res_model">ir.attachment</field>
       <field name="view_mode">tree,form</field>
       <field name="view_ids" eval="[(5, 0, 0),
