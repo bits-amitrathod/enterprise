@@ -146,7 +146,6 @@ var DashboardRenderer = FormRenderer.extend({
         var $el = $('<div>')
             .attr('name', node.attrs.name)
             .append($label);
-
         var $value;
         var statisticName = node.attrs.name;
         var variation;
@@ -223,18 +222,31 @@ var DashboardRenderer = FormRenderer.extend({
      * @private
      */
     _renderSubViewButtons: function ($el, controller) {
-        var $buttons = $('<div>', {class: 'o_' + controller.viewType + '_buttons'});
+        var $buttons = $('<div>', {class: 'o_' + controller.viewType + '_buttons o_dashboard_subview_buttons'});
 
         // render the view's buttons
         controller.renderButtons($buttons);
 
+        // we create a button's group, get the primary button(s)
+        // and put it/them into this group
+        var $buttonGroup = $('<div class="btn-group">');
+        $buttonGroup.append($buttons.find('[aria-label="Main actions"]'));
+        $buttonGroup.append($buttons.find('.btn-group[class*="groupbys"]'));
+        $buttonGroup.prependTo($buttons);
+
         // render the button to open the view in full screen
         $('<button>')
-            .addClass("btn btn-secondary fa fa-expand float-right o_button_switch")
+            .addClass("btn btn-outline-secondary fa fa-arrows-alt float-right o_button_switch")
             .attr({title: 'Full Screen View', viewType: controller.viewType})
             .tooltip()
             .on('click', this._onViewSwitcherClicked.bind(this))
             .appendTo($buttons);
+
+        // select primary and interval buttons and alter their style
+        $buttons.find('.btn-primary').removeClass('btn-primary').addClass("btn-outline-secondary");
+        $buttons.find('[class*=interval_button]').addClass('text-muted text-capitalize');
+        // remove bars icon on "Group by" button
+        $buttons.find('.fa.fa-bars').removeClass('fa fa-bars');
 
         $buttons.prependTo($el);
     },
@@ -248,7 +260,7 @@ var DashboardRenderer = FormRenderer.extend({
         var isClickable = node.attrs.clickable === undefined || pyUtils.py_eval(node.attrs.clickable);
         $aggregate.toggleClass('o_clickable', isClickable);
 
-        var $result = $('<div>').append($aggregate);
+        var $result = $('<div>').addClass('o_aggregate_col').append($aggregate);
         this._registerModifiers(node, this.state, $result);
         return $result;
     },
@@ -268,7 +280,11 @@ var DashboardRenderer = FormRenderer.extend({
      * @private
      */
     _renderTagGroup: function (node) {
-        return this._renderOuterGroup(node);
+        var $group = this._renderOuterGroup(node);
+        if (node.children.length && node.children[0].tag === 'widget') {
+            $group.addClass('o_has_widget');
+        }
+        return $group;
     },
     /**
      * Handles nodes with tagname 'view': instanciates the requested view,
@@ -307,8 +323,8 @@ var DashboardRenderer = FormRenderer.extend({
     },
     /**
      * Overrides to destroy potentially previously instantiates sub views, and
-     * to call 'on_attach_callback' on the new sub views and the widgets if the 
-     * dashboard is already in the DOM when being rendered. 
+     * to call 'on_attach_callback' on the new sub views and the widgets if the
+     * dashboard is already in the DOM when being rendered.
      *
      * @override
      * @private

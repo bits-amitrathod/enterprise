@@ -16,69 +16,34 @@
     padding: $o-sheet-vpadding 0;
     background-color: white;
 
+    %o-dashboard-label-design {
+        color: $headings-color;
+        margin-bottom: 0;
+    }
+
     > .o_group, .o_subview {
         // By default dashboard entries are full-width...
         flex: 1 1 100%;
-        margin: 0 $padding $padding;
-
-        .o_graph_container {
-            display: flex;
-
-            > .o_graph_svg_container {
-                flex: 1 1 auto;
-                height: 250px;
-                > label {
-                    position: absolute;
-                }
-            }
-        }
+        margin: 0 $padding ($spacer * 4);
     }
 
     .o_group {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: flex-start;
-
-        @for $i from 1 through $o-form-group-cols {
-            .o_group_col_#{$i} {
-                width: 50%;
-                flex: 1 1 50%;
-
-                @include media-breakpoint-down(sm) {
-                    &.o_group {
-                        width: 100%;
-                        flex: 1 1 100%;
-                    }
-                }
-
-                 @include media-breakpoint-up(md) {
-                    flex: 0 0 floor(100% / 12 * $i);
-                }
-            }
+        > .o_aggregate_col, .o_formula {
+            display: inline-block;
+            width: 200px;
+            margin-bottom: ($spacer * 1.5);
         }
 
-        .o_group {
-            .o_aggregate, .o_formula {
-                min-width: 185px;
-            }
-        }
-
-        .o_horizontal_separator {
-            margin-bottom: $padding-small;
+        .o_group.o_group_col_12 {
             width: 100%;
-            padding: 3px $padding-small;
-            font-size: 1.3em;
-            color: gray('600');
         }
 
         .o_aggregate, .o_formula {
-            margin-bottom: $padding-small;
-            width: 220px;
-            padding-left: 8px;
-            border-left: 2px solid grey;
+            padding: 0 ($padding + $padding-small) 0 $padding-small;
+            border-left: $border-width solid $border-color;
 
             > label {
-                margin-bottom: 0;
+                @extend %o-dashboard-label-design;
 
                 &:empty {
                     display: none;
@@ -92,19 +57,38 @@
             .o_value {
                 font-size: 1.6em;
             }
+
             .o_comparison {
                 font-size: 1em
             }
+
             .o_variation {
+                margin-top: ($spacer * .25);
                 font-size: 1.6em;
-                &.o_positive {
-                    color: green;
-                }
-                &.o_negative {
-                    color: red;
+                line-height: 1;
+
+                + .o_comparison {
+                    margin-top: ($spacer * .5);
+                    font-weight: bold;
+                    > span {
+                        font-weight: normal;
+                    }
                 }
             }
 
+            &.border-danger, &.border-success {
+                border-left-width: 2px;
+            }
+
+            @include text-emphasis-variant(".o_variation.o_positive", $success);
+            @include text-emphasis-variant(".o_variation.o_negative", $danger);
+        }
+
+        .o_horizontal_separator {
+            width: 100%;
+            padding-bottom: $headings-margin-bottom;
+            font-size: 1.3em;
+            color: $headings-color;
         }
 
         .o_pie_chart {
@@ -113,7 +97,6 @@
 
         .o_aggregate.o_clickable {
             .o_value, .o_variation {
-                // .btn-link(); FIXME
                 cursor: pointer;
 
                 &:after {
@@ -121,7 +104,6 @@
                     content: '\f002';
                     vertical-align: middle;
                     margin-left: $padding-small;
-                    color: theme-color('primary');
                     opacity: 0;
                 }
 
@@ -132,33 +114,49 @@
         }
     }
 
-    // Let expand first's group columns to fit the card size.
+    // Expand first's group columns to fit the card size.
     > .o_group {
         justify-content: stretch;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: flex-start;
 
-        > [class*="o_group_col_"] {
-            @include media-breakpoint-between(vsm, md, $o-extra-grid-breakpoints) {
-                width: 100%;
-                flex: 1 0 100%;
-            }
+        > .o_group.o_group_col_2 {
+            width: auto;
+            flex: 1 1 50%;
 
-            @include media-breakpoint-up(lg) {
-                flex: 1 1 auto;
-                margin-right: -$padding-small*0.5;
+            &.o_has_widget {
+                flex: 1;
+
+                .o_graph_container {
+                    display: flex;
+
+                    .o_graph_svg_container {
+                        min-width: 300px;
+                        margin-bottom: ($spacer * 1.5);
+
+                        &:first-child {
+                            border-left: $border-width solid $border-color;
+                            padding-left: $padding;
+                        }
+                    }
+                    label {
+                        @extend %o-dashboard-label-design;
+                    }
+                }
             }
         }
     }
 
-    .o_graph_buttons, .o_pivot_buttons {
-        padding: $padding-small $padding;
-        margin: (-$padding) (-$padding) $padding-small (-$padding);
-    }
     .o_pivot > table {
         width: 100%;
     }
 
-    .o_graph_buttons .btn-group + .btn-group.o_dropdown {
-        margin-left: 4px;
+    .o_dashboard_subview_buttons  {
+        // Icons toolbar
+        > .btn-group[role=toolbar] {
+            margin-left: 8px;
+        }
     }
 
     .o_subview {
@@ -173,12 +171,16 @@
         }
 
         &[type=graph] {
-            padding: 0;
-
-            .o_view_controller {
-                width: 100%;
-                min-height: 300px;
+            .o_graph.o_view_controller {
                 position: relative;
+                width: 100%;
+                padding-top: 20%;
+                min-height: 250px;
+                max-height: 350px;
+
+                .o_graph_container {
+                    @include o-position-absolute(0,0,0,0);
+                }
             }
         }
     }
