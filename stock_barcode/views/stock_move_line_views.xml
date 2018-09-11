@@ -16,7 +16,7 @@
                     attrs="{'readonly': ['|', ('state', '=', 'done'), ('move_id', '!=', False)]}"
                     domain="[('type', 'in', ['product', 'consu'])]"
                     required="1"/>
-                <field name="qty_done" string="Quantity"/>
+                <field name="qty_done" options='{"type": "number"}' string="Quantity"/>
                 <field name="product_uom_id" groups="uom.group_uom" attrs="{'readonly': [('product_uom_qty', '!=', 0.0)]}" />
                 <field name="location_id" groups="stock.group_stock_multi_locations"/>
                 <field name="location_dest_id" groups="stock.group_stock_multi_locations"/>
