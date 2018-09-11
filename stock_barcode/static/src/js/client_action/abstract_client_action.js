@@ -183,7 +183,10 @@ var ClientAction = AbstractAction.extend({
         var parsed = this.barcodeParser.parse_barcode(barcode);
         if (parsed.type === 'weight') {
             var product = this.productsByBarcode[parsed.base_code];
-            product.qty = parsed.value;
+            // if base barcode is not a product, error will be thrown in _step_product() 
+            if (product) {
+                product.qty = parsed.value;
+            }
             return product;
         } else {
             return this.productsByBarcode[barcode];
