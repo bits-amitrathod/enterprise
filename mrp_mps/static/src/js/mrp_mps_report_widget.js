@@ -149,7 +149,7 @@ var mrp_mps_report = AbstractAction.extend(ControlPanelMixin, {
     },
     option_mps_period: function(e){
         var self = this;
-        this.period = $(e.target).parent().data('value');
+        this.period = $(e.target).data('value');
         return this._rpc({
                 model: 'mrp.mps.report',
                 method: 'search',
