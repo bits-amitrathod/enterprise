@@ -109,6 +109,7 @@ var LinesWidget = Widget.extend({
      */
     highlightLocation: function (toggle) {
         this.$('.o_barcode_summary_location_src').toggleClass('o_strong', toggle);
+        this.$('.o_barcode_summary_location_dest').toggleClass('o_barcode_summary_location_highlight', toggle);
         this._toggleScanMessage('scan_products');
     },
 
@@ -270,7 +271,16 @@ var LinesWidget = Widget.extend({
         } else if (this.mode === 'no_multi_locations') {
             this._toggleScanMessage('scan_products');
         }
-    },
+
+         var $summary_src = this.$('.o_barcode_summary_location_src');
+         var $summary_dest = this.$('.o_barcode_summary_location_dest');
+
+         if (this.mode === 'receipt') {
+             $summary_dest.toggleClass('o_barcode_summary_location_highlight', true);
+         } else if (this.mode === 'delivery' || this.mode === 'internal') {
+             $summary_src.toggleClass('o_barcode_summary_location_highlight', true);
+         }
+     },
 
     /**
      * Highlight and enable the control buttons according to the reservation processed on the page.
