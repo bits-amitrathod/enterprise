@@ -400,6 +400,7 @@ var LinesWidget = Widget.extend({
         this.clearLineHighlight();
         // Highlight `$line`.
         $line.toggleClass('o_highlight', true);
+        $line.parents('.o_barcode_lines').toggleClass('o_js_has_highlight', true);
         // Scroll to `$line`.
         $body.animate({
             scrollTop: $body.scrollTop() + $line.position().top - $body.height()/2 + $line.height()/2
