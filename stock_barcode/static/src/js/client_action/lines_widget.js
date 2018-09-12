@@ -314,6 +314,15 @@ var LinesWidget = Widget.extend({
         this.$('.o_scan_message_' + message).toggleClass('o_hidden', false);
     },
 
+    _isReservationProcessedLine: function ($line) {
+        var qties = $line.find('.o_barcode_scanner_qty').text();
+        qties = qties.split('/');
+        if (parseInt(qties[0], 10) < parseInt(qties[1], 10)) {
+            return false;
+        }
+        return true;
+    },
+
     /**
      * Helper checking if the reservaton is processed on the page or not.
      *
@@ -321,6 +330,7 @@ var LinesWidget = Widget.extend({
      * @returns {boolean} whether the reservation is processed on the page or not
      */
     _isReservationProcessed: function () {
+        var self = this;
         var $lines = this.$('.o_barcode_line');
         if (! $lines.length) {
             return false;
@@ -328,10 +338,8 @@ var LinesWidget = Widget.extend({
             var reservationProcessed = true;
             $lines.each(function () {
                 var $line = $(this);
-                var qties = $line.find('.o_barcode_scanner_qty').text();
-                qties = qties.split('/');
-                if (parseInt(qties[0], 10) < parseInt(qties[1], 10)) {
-                    reservationProcessed = false;
+                reservationProcessed = self._isReservationProcessedLine($line);
+                if (!reservationProcessed) {
                     return;
                 }
             });
@@ -401,6 +409,21 @@ var LinesWidget = Widget.extend({
         // Highlight `$line`.
         $line.toggleClass('o_highlight', true);
         $line.parents('.o_barcode_lines').toggleClass('o_js_has_highlight', true);
+
+        var isReservationProcessed;
+        if ($line.find('.o_barcode_scanner_qty').text().trim().split('/')[1].trim() === '0') {
+            isReservationProcessed = false;
+        } else {
+            isReservationProcessed = this._isReservationProcessedLine($line);
+        }
+        if (isReservationProcessed) {
+            $line.toggleClass('o_highlight_green', false);
+            $line.toggleClass('o_highlight_red', true);
+        } else {
+            $line.toggleClass('o_highlight_green', true);
+            $line.toggleClass('o_highlight_red', false);
+        }
+
         // Scroll to `$line`.
         $body.animate({
             scrollTop: $body.scrollTop() + $line.position().top - $body.height()/2 + $line.height()/2

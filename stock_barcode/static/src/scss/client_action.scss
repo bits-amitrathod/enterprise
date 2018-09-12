@@ -129,8 +129,14 @@
         }
 
         &.o_js_has_highlight .o_barcode_line.o_highlight {
-            background-color: rgba($component-active-bg, 0.05);
-            border-color: $component-active-bg;
+            &.o_highlight_red {
+                background-color: rgba($o-notification-error-bg-color, 0.05);
+                border-color: $o-notification-error-bg-color;
+            }
+            &.o_highlight_green {
+                background-color: rgba($component-active-bg, 0.05);
+                border-color: $component-active-bg;
+            }
             margin-bottom: 0;
 
             .product-label, .o_barcode_scanner_qty {
