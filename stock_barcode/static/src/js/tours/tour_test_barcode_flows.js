@@ -1740,11 +1740,6 @@ tour.register('test_bypass_source_scan', {test: true}, [
 
     {
         trigger: '.o_barcode_client_action',
-        run: 'scan productlot1',
-    },
-
-    {
-        trigger: '.o_barcode_client_action',
         run: 'scan lot1',
     },
 

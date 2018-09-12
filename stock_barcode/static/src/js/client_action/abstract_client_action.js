@@ -1008,66 +1008,100 @@ var ClientAction = AbstractAction.extend({
             return this._step_destination(barcode, linesActions);
         }
 
-        var product;
-        // Get product
-        // Get the latest scanned line.
-        if (this.scannedLines.length) {
-            var idOrVirtualId = this.scannedLines[this.scannedLines.length - 1];
-            var line = _.find(self._getLines(self.currentState), function (line) {
-                return line.virtual_id === idOrVirtualId || line.id === idOrVirtualId;
-            });
-            if (line) {
-                product = this.productsByBarcode[line.product_barcode];
+        var getProductFromLastScannedLine = function () {
+            if (self.scannedLines.length) {
+                var idOrVirtualId = self.scannedLines[self.scannedLines.length - 1];
+                var line = _.find(self._getLines(self.currentState), function (line) {
+                    return line.virtual_id === idOrVirtualId || line.id === idOrVirtualId;
+                });
+                if (line) {
+                    var product = self.productsByBarcode[line.product_barcode];
+                    product.barcode = line.product_barcode;
+                    return product;
+                }
             }
-        }
+            return false;
+        };
 
-        var searchRead = function (barcode, product) {
-            var domain = [['name', '=', barcode]];
-            if (product) {
-                domain.push(['product_id', '=', product.id]);
+        var getProductFromCurrentPage = function () {
+            return _.map(self.pages[self.currentPageIndex].lines, function (line) {
+                return line.product_id.id;
+            });
+        };
+
+        var getProductFromOperation = function () {
+            return _.map(self._getLines(self.currentState), function (line) {
+                return line.product_id.id;
+            });
+        };
+
+        var readProduct = function (product_id) {
+            var product_barcode = _.findKey(self.productsByBarcode, function (product) {
+                return product.id === product_id;
+            });
+            
+            if (product_barcode) {
+                var product = self.productsByBarcode[product_barcode];
+                product.barcode = product_barcode;
+                return $.when(product);
+            } else {
+                return self._rpc({
+                    model: 'product.product',
+                    method: 'read',
+                    args: [product_id],
+                }).then(function (product) {
+                    return $.when(product[0]);
+                });
             }
+        };
+
+        var getLotInfo = function (lots) {
+            var products_in_lots = _.map(lots, function (lot) {
+                return lot.product_id[0];
+            });
+            var products = getProductFromLastScannedLine();
+            var product_id = _.intersection(products, products_in_lots);
+            if (! product_id.length) {
+                products = getProductFromCurrentPage();
+                product_id = _.intersection(products, products_in_lots);
+            }
+            if (! product_id.length) {
+                products = getProductFromOperation();
+                product_id = _.intersection(products, products_in_lots);
+            }
+            if (! product_id.length) {
+                product_id = lots[0].product_id[0];
+            }
+            return readProduct(product_id).then(function (product) {
+                var lot = _.find(lots, function (lot) {
+                    return lot.product_id[0] === product.id;
+                });
+                return $.when({lot_id: lot.id, lot_name: lot.display_name, product: product});
+            });
+        };
+
+        var searchRead = function (barcode) {
             var def = self._rpc({
                 model: 'stock.production.lot',
                 method: 'search_read',
-                domain: domain,
-                limit: 1,
+                domain: [['name', '=', barcode]],
             });
             return def.then(function (res) {
                 if (! res.length) {
                     errorMessage = _t('The scanned lot does not match an existing one.');
                     return $.Deferred().reject(errorMessage);
                 }
-                var lot_info = {'lot_id': res[0].id, 'lot_name': res[0].name};
-                if (! product) {
-                    // not optimal neither
-                    // avoid rpc if possible
-                    var product_barcode = _.findKey(self.productsByBarcode, function (product) {
-                        return product.id === res[0].product_id[0];
-                    });
-                    if (product_barcode) {
-                        lot_info.product = self.productsByBarcode[product_barcode];
-                    } else {
-                        return self._rpc({
-                            model: 'product.product',
-                            method: 'read',
-                            args: [res[0].product_id[0]],
-                        }).then(function (product) {
-                            lot_info.product  = product[0];
-                            return $.when(lot_info);
-                        });
-                    }
-                }
-                return $.when(lot_info);
+                return getLotInfo(res);
             });
         };
 
-        var create = function (barcode, product_id) {
+        var create = function (barcode, product) {
             return self._rpc({
                 model: 'stock.production.lot',
                 method: 'create',
                 args: [{
                     'name': barcode,
-                    'product_id': product_id.id,
+                    'product_id': product.id,
                 }],
             });
         };
@@ -1077,34 +1111,36 @@ var ClientAction = AbstractAction.extend({
             ! this.currentState.use_existing_lots) {
             // Do not create lot if product is not set. It could happens by a
             // direct lot scan from product or source location step.
+            var product = getProductFromLastScannedLine();
             if (! product) {
                 return $.Deferred().reject();
             }
-            def = $.when({'lot_name': barcode});
+            def = $.when({lot_name: barcode, product: product});
         } else if (! this.currentState.use_create_lots &&
                     this.currentState.use_existing_lots) {
-            def = searchRead(barcode, product);
+            def = searchRead(barcode);
         } else {
-            def = searchRead(barcode, product).then(function (res) {
+            def = searchRead(barcode).then(function (res) {
                 return $.when(res);
             }, function (errorMessage) {
+                var product = getProductFromLastScannedLine();
                 if (product) {
                     return create(barcode, product).then(function (lot_id) {
-                        return $.when({'lot_id': lot_id, 'lot_name': barcode});
+                        return $.when({lot_id: lot_id, lot_name: barcode, product: product});
                     });
                 }
                 return $.Deferred().reject(errorMessage);
             });
         }
         return def.then(function (lot_info) {
-            product = product || lot_info.product;
+            var product = lot_info.product;
             if (product.tracking === 'serial' && self._lot_name_used(product, barcode)){
                 errorMessage = _t('The scanned serial number is already used.');
                 return $.Deferred().reject(errorMessage);
             }
             var res = self._incrementLines({
                 'product': product,
-                'barcode': line ? line.product_barcode : lot_info.product.barcode,
+                'barcode': lot_info.product.barcode,
                 'lot_id': lot_info.lot_id,
                 'lot_name': lot_info.lot_name
             });
