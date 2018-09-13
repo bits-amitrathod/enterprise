@@ -135,7 +135,12 @@
         <field name="res_model">sale.subscription</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,pivot,graph,kanban,cohort</field>
-        <field name="context">{'search_default_user_id':uid, 'search_default_pending':1, 'search_default_renew':1}</field>
+        <field name="context">{
+            'group_by': 'stage_id',
+            'search_default_user_id':uid,
+            'search_default_pending':1,
+            'search_default_renew':1
+        }</field>
         <field name="domain">[]</field>
         <field name="search_view_id" eval='False'/>
         <field name="help" type="html">
