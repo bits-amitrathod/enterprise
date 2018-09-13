@@ -152,6 +152,7 @@ var DashboardRenderer = FormRenderer.extend({
         var variation;
         var formatter;
         var statistic = self.state.fieldsInfo.dashboard[statisticName];
+        var valueLabel =  statistic.value_label ? (' ' + statistic.value_label) : '';
         if (!node.attrs.widget || (node.attrs.widget in fieldUtils.format)) {
             // use a formatter to render the value if there exists one for the
             // specified widget attribute, or there is no widget attribute
@@ -162,9 +163,11 @@ var DashboardRenderer = FormRenderer.extend({
                 var comparisonValue = this.state.comparisonData[statisticName];
                 variation = this.state.variationData[statisticName];
                 renderComparison($el, fieldValue, comparisonValue, variation, formatter, statistic, this.formatOptions);
+                $('.o_comparison', $el).append(valueLabel);
+
             } else {
                 fieldValue = isNaN(fieldValue) ? '-' : formatter(fieldValue, statistic, this.formatOptions);
-                $value = $('<div>', {class: 'o_value'}).html(fieldValue);
+                $value = $('<div>', {class: 'o_value'}).html(fieldValue + valueLabel);
                 $el.append($value);
             }
         } else {

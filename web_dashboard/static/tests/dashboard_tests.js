@@ -507,6 +507,32 @@ QUnit.module('Views', {
         dashboard.destroy();
     });
 
+    QUnit.test('rendering of an aggregate with value label', function (assert) {
+        assert.expect(2);
+
+        var data = this.data;
+        data.test_report.fields.days = {string: "Days to Confirm", type: "float"};
+        data.test_report.records[0].days = 5.3;
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: data,
+            arch: '<dashboard>' +
+                '<group>' +
+                    '<aggregate name="days" field="days" value_label="day(s)"/>' +
+                    '<aggregate name="sold" field="sold"/>' +
+                '</group>' +
+            '</dashboard>',
+        });
+
+        assert.strictEqual(dashboard.$('.o_value:first').text(), '5.30 day(s)',
+        "should have a value label");
+        assert.strictEqual(dashboard.$('.o_value:last').text(), '8.00',
+        "shouldn't have any value label");
+
+        dashboard.destroy();
+    });
+
     QUnit.test('rendering of field of type many2one', function (assert) {
         assert.expect(2);
 
