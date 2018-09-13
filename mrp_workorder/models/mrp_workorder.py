@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from datetime import datetime
 from odoo.tools import float_compare, float_round
 from odoo.addons import decimal_precision as dp
@@ -450,17 +450,30 @@ class MrpProductionWorkcenterLine(models.Model):
         return self._next()
 
     def action_open_manufacturing_order(self):
-        self.record_production()
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'mrp.production',
-            'views': [[self.env.ref('mrp.mrp_production_form_view').id, 'form']],
-            'res_id': self.production_id.id,
-            'target': 'main',
-            'flags': {
-                'headless': False,
-            },
-        }
+        action = self.do_finish()
+        try:
+            self.production_id.button_mark_done()
+        except (UserError, ValidationError) as e:
+            # log next activity on MO with error message
+            self.env['mail.activity'].create({
+                'res_id': self.production_id.id,
+                'res_model_id': self.env['ir.model']._get(self.production_id._name).id,
+                'activity_type_id': self.env.ref('mail.mail_activity_data_warning').id,
+                'summary': ('The %s could not be closed') % (self.production_id.name),
+                'note': e.name,
+                'user_id': self.env.user.id,
+            })
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'mrp.production',
+                'views': [[self.env.ref('mrp.mrp_production_form_view').id, 'form']],
+                'res_id': self.production_id.id,
+                'target': 'main',
+                'flags': {
+                    'headless': False,
+                },
+            }
+        return action
 
     def do_finish(self):
         self.record_production()
@@ -502,4 +515,3 @@ class MrpProductionWorkcenterLine(models.Model):
                     'product_id': self.product_id.id,
                 })
             self.final_lot_id = lot
-
