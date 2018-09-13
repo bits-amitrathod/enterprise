@@ -2475,7 +2475,7 @@ tour.register('test_put_in_pack_before_dest', {test: true}, [
     },
 
     {
-        trigger: '.o_barcode_client_action',
+        trigger: '.o_dialog_warning',
         run: function() {
             assertRaise('You cannot move the same package content more than once in the same transfer or split the same package into two location.');
         }
