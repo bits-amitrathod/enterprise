@@ -58,7 +58,6 @@ class StockBarcodeController(http.Controller):
         """
         corresponding_picking = request.env['stock.picking'].search([
             ('name', '=', barcode),
-            ('state', 'in', ('partially_available', 'assigned'))
         ], limit=1)
         if corresponding_picking:
             return self.get_action(corresponding_picking.id)
