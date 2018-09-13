@@ -88,7 +88,9 @@ var ClientAction = AbstractAction.extend({
             self._getState(recordId),
             self._getProductBarcodes(),
             self._getLocationBarcodes()
-        );
+        ).then(function () {
+            self._loadNomenclature();
+        });
     },
 
     start: function () {
@@ -154,10 +156,6 @@ var ClientAction = AbstractAction.extend({
             };
             self.show_entire_packs = self.currentState.show_entire_packs;
 
-            // barcode nomenclature
-            self.barcodeParser = new BarcodeParser({'nomenclature_id': self.currentState.nomenclature_id});
-            self.barcodeParser.load();
-
             return res;
         });
     },
@@ -179,11 +177,19 @@ var ClientAction = AbstractAction.extend({
         });
     },
 
+    _loadNomenclature: function () {
+        // barcode nomenclature
+        this.barcodeParser = new BarcodeParser({'nomenclature_id': this.currentState.nomenclature_id});
+        if (this.barcodeParser) {
+            this.barcodeParser.load();
+        }
+    },
+
     _isProduct: function (barcode) {
         var parsed = this.barcodeParser.parse_barcode(barcode);
         if (parsed.type === 'weight') {
             var product = this.productsByBarcode[parsed.base_code];
-            // if base barcode is not a product, error will be thrown in _step_product() 
+            // if base barcode is not a product, error will be thrown in _step_product()
             if (product) {
                 product.qty = parsed.value;
             }
