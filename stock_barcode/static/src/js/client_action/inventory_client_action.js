@@ -195,14 +195,16 @@ var InventoryClientAction = ClientAction.extend({
      */
      _validate: function (ev) {
         var self = this;
-        return self._save().then(function () {
-            self._rpc({
-                'model': self.actionParams.model,
-                'method': 'action_validate',
-                'args': [[self.currentState.id]],
-            }).then(function () {
-                self.do_notify(_t("Success"), _t("The inventory adjustment has been validated"));
-                return self.trigger_up('exit');
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                self._rpc({
+                    'model': self.actionParams.model,
+                    'method': 'action_validate',
+                    'args': [[self.currentState.id]],
+                }).then(function () {
+                    self.do_notify(_t("Success"), _t("The inventory adjustment has been validated"));
+                    return self.trigger_up('exit');
+                });
             });
         });
     },
@@ -214,14 +216,16 @@ var InventoryClientAction = ClientAction.extend({
      */
     _cancel: function () {
         var self = this;
-        return self._save().then(function () {
-            return self._rpc({
-                'model': self.actionParams.model,
-                'method': 'action_cancel_draft',
-                'args': [[self.currentState.id]],
-            }).then(function () {
-                self.do_notify(_t("Cancel"), _t("The inventory adjustment has been cancelled"));
-                self.trigger_up('exit');
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._rpc({
+                    'model': self.actionParams.model,
+                    'method': 'action_cancel_draft',
+                    'args': [[self.currentState.id]],
+                }).then(function () {
+                    self.do_notify(_t("Cancel"), _t("The inventory adjustment has been cancelled"));
+                    self.trigger_up('exit');
+                });
             });
         });
     },
@@ -238,10 +242,7 @@ var InventoryClientAction = ClientAction.extend({
      */
      _onValidate: function (ev) {
          ev.stopPropagation();
-         var self = this;
-         this.mutex.exec(function () {
-             return self._validate();
-         });
+         this._validate();
      },
 
     /**
@@ -252,10 +253,7 @@ var InventoryClientAction = ClientAction.extend({
     */
     _onCancel: function (ev) {
         ev.stopPropagation();
-        var self = this;
-        this.mutex.exec(function () {
-            return self._cancel();
-        });
+        this._cancel();
     },
 
     /**

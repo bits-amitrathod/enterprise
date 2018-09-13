@@ -305,8 +305,11 @@ var ClientAction = AbstractAction.extend({
      * @returns {Deferred}
      */
     _showInformation: function () {
-        this.headerWidget.toggleDisplayContext('specialized');
-        return this._save();
+        var self = this;
+        this.mutex.exec(function () {
+            self.headerWidget.toggleDisplayContext('specialized');
+            return self._save();
+        });
     },
 
     /**
@@ -1159,12 +1162,14 @@ var ClientAction = AbstractAction.extend({
      */
     _nextPage: function (){
         var self = this;
-        return self._save().then(function () {
-            if (self.currentPageIndex < self.pages.length - 1) {
-                self.currentPageIndex++;
-            }
-            self._reloadLineWidget(self.currentPageIndex);
-            self._endBarcodeFlow();
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                if (self.currentPageIndex < self.pages.length - 1) {
+                    self.currentPageIndex++;
+                }
+                self._reloadLineWidget(self.currentPageIndex);
+                self._endBarcodeFlow();
+            });
         });
     },
 
@@ -1175,14 +1180,16 @@ var ClientAction = AbstractAction.extend({
      */
     _previousPage: function () {
         var self = this;
-        return self._save().then(function () {
-            if (self.currentPageIndex > 0) {
-                self.currentPageIndex--;
-            } else {
-                self.currentPageIndex = self.pages.length - 1;
-            }
-            self._reloadLineWidget(self.currentPageIndex);
-            self._endBarcodeFlow();
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                if (self.currentPageIndex > 0) {
+                    self.currentPageIndex--;
+                } else {
+                    self.currentPageIndex = self.pages.length - 1;
+                }
+                self._reloadLineWidget(self.currentPageIndex);
+                self._endBarcodeFlow();
+            });
         });
     },
     /**
@@ -1378,12 +1385,7 @@ var ClientAction = AbstractAction.extend({
      * @param {OdooEvent} ev
      */
     _onShowInformation: function (ev) {  // jshint ignore:line
-        var self = this;
-        this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._showInformation();
-            });
-        });
+        this._showInformation();
     },
 
     /**
@@ -1461,13 +1463,8 @@ var ClientAction = AbstractAction.extend({
      * @param {OdooEvent} ev
      */
     _onNextPage: function (ev) {
-        var self = this;
         ev.stopPropagation();
-        this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._nextPage();
-            });
-        });
+        this._nextPage();
     },
 
     /**
@@ -1478,13 +1475,8 @@ var ClientAction = AbstractAction.extend({
      * @param {OdooEvent} ev
      */
     _onPreviousPage: function (ev) {
-        var self = this;
         ev.stopPropagation();
-        this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._previousPage();
-            });
-        });
+        this._previousPage();
     },
 
     /**

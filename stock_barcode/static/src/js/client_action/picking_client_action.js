@@ -152,33 +152,35 @@ var PickingClientAction = ClientAction.extend({
      */
     _validate: function () {
         var self = this;
-        return self._save().then(function () {
-            return self._rpc({
-                'model': self.actionParams.model,
-                'method': 'button_validate',
-                'args': [[self.actionParams.pickingId]],
-            }).then(function (res) {
-                var def = $.when();
-                var exitCallback = function (infos) {
-                    if (infos !== 'special') {
-                        self.do_notify(_t("Success"), _t("The transfer has been validated"));
-                        self.trigger_up('exit');
-                    }
-                    core.bus.on('barcode_scanned', self, self._onBarcodeScannedHandler);
-                };
-                if (_.isObject(res)) {
-                    var options = {
-                        on_close: exitCallback,
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._rpc({
+                    'model': self.actionParams.model,
+                    'method': 'button_validate',
+                    'args': [[self.actionParams.pickingId]],
+                }).then(function (res) {
+                    var def = $.when();
+                    var exitCallback = function (infos) {
+                        if (infos !== 'special') {
+                            self.do_notify(_t("Success"), _t("The transfer has been validated"));
+                            self.trigger_up('exit');
+                        }
+                        core.bus.on('barcode_scanned', self, self._onBarcodeScannedHandler);
                     };
-                    def.then(function () {
-                        core.bus.off('barcode_scanned', self, self._onBarcodeScannedHandler);
-                        return self.do_action(res, options);
-                    });
-                } else {
-                    return def.then(function () {
-                        return exitCallback();
-                    });
-                }
+                    if (_.isObject(res)) {
+                        var options = {
+                            on_close: exitCallback,
+                        };
+                        def.then(function () {
+                            core.bus.off('barcode_scanned', self, self._onBarcodeScannedHandler);
+                            return self.do_action(res, options);
+                        });
+                    } else {
+                        return def.then(function () {
+                            return exitCallback();
+                        });
+                    }
+                });
             });
         });
     },
@@ -190,14 +192,16 @@ var PickingClientAction = ClientAction.extend({
      */
     _cancel: function () {
         var self = this;
-        return self._save().then(function () {
-            return self._rpc({
-                'model': self.actionParams.model,
-                'method': 'action_cancel',
-                'args': [[self.actionParams.pickingId]],
-            }).then(function () {
-                self.do_notify(_t("Cancel"), _t("The transfer has been cancelled"));
-                self.trigger_up('exit');
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._rpc({
+                    'model': self.actionParams.model,
+                    'method': 'action_cancel',
+                    'args': [[self.actionParams.pickingId]],
+                }).then(function () {
+                    self.do_notify(_t("Cancel"), _t("The transfer has been cancelled"));
+                    self.trigger_up('exit');
+                });
             });
         });
     },
@@ -211,20 +215,22 @@ var PickingClientAction = ClientAction.extend({
      */
     _scrap: function () {
         var self = this;
-        return self._save().then(function () {
-            return self._rpc({
-                'model': 'stock.picking',
-                'method': 'button_scrap',
-                'args': [[self.actionParams.pickingId]],
-            }).then(function(res) {
-                var exitCallback = function () {
-                    core.bus.on('barcode_scanned', self, self._onBarcodeScannedHandler);
-                };
-                var options = {
-                    on_close: exitCallback,
-                };
-                core.bus.off('barcode_scanned', self, self._onBarcodeScannedHandler);
-                return self.do_action(res, options);
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self._rpc({
+                    'model': 'stock.picking',
+                    'method': 'button_scrap',
+                    'args': [[self.actionParams.pickingId]],
+                }).then(function(res) {
+                    var exitCallback = function () {
+                        core.bus.on('barcode_scanned', self, self._onBarcodeScannedHandler);
+                    };
+                    var options = {
+                        on_close: exitCallback,
+                    };
+                    core.bus.off('barcode_scanned', self, self._onBarcodeScannedHandler);
+                    return self.do_action(res, options);
+                });
             });
         });
     },
@@ -375,22 +381,31 @@ var PickingClientAction = ClientAction.extend({
 
     _printPicking: function () {
         var self = this;
-        return this._rpc({
-            'model': 'stock.picking',
-            'method': 'do_print_picking',
-            'args': [[this.actionParams.pickingId]],
-        }).then(function(res) {
-            return self.do_action(res);
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return this._rpc({
+                    'model': 'stock.picking',
+                    'method': 'do_print_picking',
+                    'args': [[this.actionParams.pickingId]],
+                }).then(function(res) {
+                    return self.do_action(res);
+                });
+            });
         });
     },
 
     _printDeliverySlip: function () {
-        return this.do_action(this.currentState.actionReportDeliverySlipId, {
-            'additional_context': {
-                'active_id': this.actionParams.pickingId,
-                'active_ids': [this.actionParams.pickingId],
-                'active_model': 'stock.picking',
-            }
+        var self = this;
+        this.mutex.exec(function () {
+            return self._save().then(function () {
+                return self.do_action(self.currentState.actionReportDeliverySlipId, {
+                    'additional_context': {
+                        'active_id': self.actionParams.pickingId,
+                        'active_ids': [self.actionParams.pickingId],
+                        'active_model': 'stock.picking',
+                    }
+                });
+            });
         });
     },
 
@@ -407,10 +422,7 @@ var PickingClientAction = ClientAction.extend({
      */
     _onValidate: function (ev) {
         ev.stopPropagation();
-        var self = this;
-        this.mutex.exec(function () {
-            return self._validate();
-        });
+        this._validate();
     },
 
     /**
@@ -422,10 +434,7 @@ var PickingClientAction = ClientAction.extend({
      */
     _onCancel: function (ev) {
         ev.stopPropagation();
-        var self = this;
-        this.mutex.exec(function () {
-            return self._cancel();
-        });
+        this._cancel();
     },
 
     /**
@@ -437,12 +446,7 @@ var PickingClientAction = ClientAction.extend({
      */
     _onPrintPicking: function (ev) {
         ev.stopPropagation();
-        var self = this;
-        this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._printPicking();
-            });
-        });
+        this._printPicking();
     },
 
     /**
@@ -455,12 +459,7 @@ var PickingClientAction = ClientAction.extend({
      */
     _onPrintDeliverySlip: function (ev) {
         ev.stopPropagation();
-        var self = this;
-        this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._printDeliverySlip();
-            });
-        });
+        this._printDeliverySlip();
     },
 
     /**
@@ -472,12 +471,7 @@ var PickingClientAction = ClientAction.extend({
      */
     _onScrap: function (ev) {
         ev.stopPropagation();
-        var self = this;
-        this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._scrap();
-            });
-        });
+        this._scrap();
     },
 
     /**
@@ -489,12 +483,7 @@ var PickingClientAction = ClientAction.extend({
      */
     _onPutInPack: function (ev) {
         ev.stopPropagation();
-        var self = this;
-        this.mutex.exec(function () {
-            return self._save().then(function () {
-                return self._putInPack();
-            });
-        });
+        this._putInPack();
     },
 });
 
