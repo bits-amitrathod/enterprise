@@ -866,6 +866,101 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             timeout=180,
         )
 
+    def test_put_in_pack_from_different_location(self):
+        clean_access_rights(self.env)
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.picking_type_internal.active = True
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 1)
+        self.env['stock.quant']._update_available_quantity(self.product2, self.shelf3, 1)
+
+        internal_picking = self.env['stock.picking'].create({
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.stock_location.id,
+            'picking_type_id': self.picking_type_internal.id,
+        })
+        move1 = self.env['stock.move'].create({
+            'name': 'test_put_in_pack_from_different_location',
+            'location_id': self.shelf1.id,
+            'location_dest_id': self.shelf2.id,
+            'product_id': self.product1.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 1,
+            'picking_id': internal_picking.id,
+        })
+        move2 = self.env['stock.move'].create({
+            'name': 'test_put_in_pack_from_different_location2',
+            'location_id': self.shelf3.id,
+            'location_dest_id': self.shelf2.id,
+            'product_id': self.product2.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 1,
+            'picking_id': internal_picking.id,
+        })
+
+        url = self._get_client_action_url(internal_picking.id)
+        internal_picking.action_confirm()
+        internal_picking.action_assign()
+
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_put_in_pack_from_different_location')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_put_in_pack_from_different_location.ready",
+            login='admin',
+            timeout=180,
+        )
+        pack = self.env['stock.quant.package'].search([])[-1]
+        self.assertEqual(len(pack.quant_ids), 2)
+        self.assertEqual(pack.location_id, self.shelf2)
+
+    def test_put_in_pack_before_dest(self):
+        clean_access_rights(self.env)
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.picking_type_internal.active = True
+
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 1)
+        self.env['stock.quant']._update_available_quantity(self.product2, self.shelf3, 1)
+
+        internal_picking = self.env['stock.picking'].create({
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.stock_location.id,
+            'picking_type_id': self.picking_type_internal.id,
+        })
+        move1 = self.env['stock.move'].create({
+            'name': 'test_put_in_pack_before_dest',
+            'location_id': self.shelf1.id,
+            'location_dest_id': self.shelf2.id,
+            'product_id': self.product1.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 1,
+            'picking_id': internal_picking.id,
+        })
+        move2 = self.env['stock.move'].create({
+            'name': 'test_put_in_pack_before_dest',
+            'location_id': self.shelf3.id,
+            'location_dest_id': self.shelf4.id,
+            'product_id': self.product2.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 1,
+            'picking_id': internal_picking.id,
+        })
+
+        url = self._get_client_action_url(internal_picking.id)
+        internal_picking.action_confirm()
+        internal_picking.action_assign()
+
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_put_in_pack_before_dest')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_put_in_pack_before_dest.ready",
+            login='admin',
+            timeout=180,
+        )
 
 @tagged('post_install', '-at_install')
 class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):

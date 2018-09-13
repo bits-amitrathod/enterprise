@@ -161,8 +161,13 @@ function assertErrorMessage(expected) {
 }
 
 function assertQuantsCount(expected) {
-    var $quantity = $('.o_kanban_view .o_kanban_record:not(.o_kanban_ghost)').length
-    assert($quantity, expected, 'Wrong number of cards')
+    var $quantity = $('.o_kanban_view .o_kanban_record:not(.o_kanban_ghost)').length;
+    assert($quantity, expected, 'Wrong number of cards');
+}
+
+function assertRaise(expected) {
+    var $dialog = $('.o_dialog_warning');
+    assert(_.trim($dialog.innerText), expected, 'wrong error message from the server');
 }
 // ----------------------------------------------------------------------------
 // Tours
@@ -2211,6 +2216,127 @@ tour.register('test_reload_flow', {test: true}, [
 
     {
         trigger: '.o_notification_title:contains("Success")',
+    },
+
+]);
+
+tour.register('test_put_in_pack_from_different_location', {test: true}, [
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan LOC-01-01-00',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan product1',
+    },
+
+    {
+        trigger: '.o_next_page',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan shelf3',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan product2',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan O-BTN.pack',
+    },
+
+    {
+        trigger: '.fa-truck',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan LOC-01-01-00',
+    },
+
+    {
+        trigger: '.o_barcode_summary_location_src:contains("WH/Stock/Shelf 1")',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: function () {
+            assertPageSummary('From WH/Stock/Shelf 1 To WH/Stock');
+            assertPreviousVisible(true);
+            assertPreviousEnabled(true);
+            assertNextVisible(false);
+            assertNextEnabled(false);
+            assertNextIsHighlighted(false);
+            assertLinesCount(0);
+            assertScanMessage('scan_products');
+            assertLocationHighlight(true);
+            assertDestinationLocationHighlight(false);
+            assertPager('3/3');
+            assertValidateVisible(true);
+            assertValidateIsHighlighted(false);
+            assertValidateEnabled(false);
+        },
+    },
+
+    {
+        trigger: '.o_previous_page',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")',
+    },
+]);
+
+tour.register('test_put_in_pack_before_dest', {test: true}, [
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan LOC-01-01-00',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan product1',
+    },
+
+    {
+        trigger: '.o_next_page',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan shelf3',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan product2',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan shelf4',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan O-BTN.pack'
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: function() {
+            assertRaise('You cannot move the same package content more than once in the same transfer or split the same package into two location.');
+        }
     },
 
 ]);

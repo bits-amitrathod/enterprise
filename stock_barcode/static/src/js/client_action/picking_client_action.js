@@ -20,6 +20,7 @@ var PickingClientAction = ClientAction.extend({
 
     init: function (parent, action) {
         this._super.apply(this, arguments);
+        this.context = action.context;
         this.commands['O-BTN.scrap'] = this._scrap.bind(this);
         this.commands['O-BTN.validate'] = this._validate.bind(this);
         this.commands['O-BTN.cancel'] = this._cancel.bind(this);
@@ -311,32 +312,27 @@ var PickingClientAction = ClientAction.extend({
      */
     _putInPack: function () {
         var self = this;
-        if (! this.scannedLines) {
-            this.do_warn(_t('Warning'), _t('You are expected to scan one or more products before moving them to a package.'));
-            return $.when();
-        } else {
-            // First, we create a new stock.quant.package and get back its id.
-            return this._rpc({
-                'model': 'stock.quant.package',
-                'method': 'create',
-                'args': [{}],
-            }).then(function (package_id) {
+        this.mutex.exec(function () {
+            return self._save().then(function () {
                 return self._rpc({
-                    'model': 'stock.quant.package',
-                    'method': 'read',
-                    args: [[package_id], ['name']],
-                }).then(function (package_name) {
-                    // Write `package_id` as `result_package_id` on the processed lines.
-                    _.each(self._getLines(self.currentState), function (line) {
-                        // FIXME sle: float_compare
-                        if (line.qty_done > 0 && (! line.result_package_id || (line.result_package_id && !line.result_package_id.id))) {
-                            line.result_package_id = [package_id, package_name];
-                        }
-                    });
-                    self.trigger_up('reload');
+                    'model': 'stock.picking',
+                    'method': 'put_in_pack',
+                    'args': [[self.actionParams.pickingId]],
+                    kwargs: {context: self.context},
+                }).then(function (res) {
+                    self._endBarcodeFlow();
+                    if (res.type && res.type === 'ir.actions.act_window') {
+                        core.bus.off('barcode_scanned', self, self._onBarcodeScannedHandler);
+                        return self.do_action(res).then(function() {
+                            core.bus.on('barcode_scanned', self, self._onBarcodeScannedHandler);
+                            self.trigger_up('reload');
+                        });
+                    } else {
+                        return self.trigger_up('reload');
+                    }
                 });
             });
-        }
+        });
     },
 
     /**
@@ -484,11 +480,20 @@ var PickingClientAction = ClientAction.extend({
         });
     },
 
+    /**
+     * Handles the `Put in pack` OdooEvent. It makes an RPC call
+     * to the method 'put_in_pack' to create a pack and link move lines to it.
+     *
+     * @private
+     * @param {OdooEvent} ev
+     */
     _onPutInPack: function (ev) {
         ev.stopPropagation();
         var self = this;
         this.mutex.exec(function () {
-            return self._putInPack();
+            return self._save().then(function () {
+                return self._putInPack();
+            });
         });
     },
 });
