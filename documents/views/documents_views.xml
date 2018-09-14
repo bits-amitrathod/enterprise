@@ -102,6 +102,7 @@
                                                t-att-title="record.lock_uid.value"/>
                                         </time>
                                         <div class="oe_kanban_bottom_right">
+                                            <field name="activity_ids" widget="kanban_activity"/>
                                             <a type="object" name="toggle_favorited"
                                                 t-attf-class="fa fa-lg fa-star#{(record.favorited_ids.raw_value.indexOf(user_context.uid) &lt; 0)? '-o' : ' favorite_sign_button_enabled'} favorite_sign_button"/>
                                             <img t-att-src="kanban_image('res.users', 'image_small', record.owner_id.raw_value)" t-att-data-member_id="record.owner_id.raw_value" t-att-alt="record.owner_id.raw_value" width="32" height="32" class="oe_kanban_avatar"/>
@@ -242,7 +243,7 @@
                 <sheet>
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only"/>
-                        <h1><field name="name" placeholder="i.e Finance"/></h1>
+                        <h1><field name="name" placeholder="E.g. Finance"/></h1>
                     </div>
                     <group>
                         <group>
@@ -313,7 +314,7 @@
                         <group  attrs="{'invisible' : [('action', 'in', ['download'])] }">
                             <field name="owner_id"/>
                             <field name="partner_id"/>
-                            <field name="tag_ids" widget="many2many_tags" groups="base.group_no_one"/>
+                            <field name="tag_ids" widget="many2many_tags" readonly="1"/>
                             <label for="email_drop"/>
                             <div>
                                 <field name="email_drop"/>
@@ -354,7 +355,7 @@
     </record>
 
     <record id="share_view_form_popup" model="ir.ui.view">
-        <field name="name">Share form</field>
+        <field name="name">Share Document</field>
         <field name="model">documents.share</field>
         <field name="arch" type="xml">
             <form class="o_share_form">
@@ -364,20 +365,16 @@
                     </group>
                     <group>
                         <group>
-                            <field name="type" groups="base.group_no_one"/>
-                            <field name="action" widget="radio" attrs="{'invisible' : [('type', 'in', ['ids'])] }"/>
-                            <field name="name" placeholder="Name of the share link"/>
-                            <field name="date_deadline" widget="date"/>
-                            <field name="folder_id" readonly="1" groups="base.group_no_one" attrs="{'invisible' : [('type', 'in', ['ids'])] }"/>
+                        <field name="type" groups="base.group_no_one"/>
+                        <field name="name" placeholder="Name of the share link"/>
+                        <field name="action" widget="radio" attrs="{'invisible' : [('type', 'in', ['ids'])] }"/>
                         </group>
-                        <group attrs="{'invisible' : [('action', 'in', ['download'])] }">
-                            <field name="owner_id"/>
-                            <field name="partner_id"/>
-                            <field name="tag_ids" widget="many2many_tags" groups="base.group_no_one"/>
-                            <label for="email_drop"/>
-                            <div>
-                                <field name="email_drop"/>
-                                <div attrs="{'invisible': [('email_drop', '!=', True)]}">
+                        <group>
+                            <field name="date_deadline" widget="date"/>
+                            <label for="email_drop" attrs="{'invisible' : [('action', 'in', ['download'])] }"/>
+                            <div attrs="{'invisible' : [('action', 'in', ['download'])] }">
+                                <field name="email_drop" class="oe_inline"/>
+                                <div attrs="{'invisible': [('email_drop', '!=', True)]}" class="oe_inline">
                                     <div name="alias_def" attrs="{'invisible': [('alias_domain', '=', False)]}">
                                         <field name="alias_id" class="oe_read_only oe_inline" required="0"/>
                                         <div class="oe_edit_only oe_inline" name="edit_alias" style="display: inline;">
@@ -389,6 +386,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <field name="folder_id" readonly="1" groups="base.group_no_one" attrs="{'invisible' : [('type', 'in', ['ids'])] }"/>
+                        </group>
+                    </group>
+                    <group string="Default values for uploaded documents" attrs="{'invisible' : [('action', 'in', ['download'])] }">
+                        <group>
+                            <field name="owner_id"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="tag_ids" widget="many2many_tags" invisible="1"/>
                             <field name="activity_option"/>
                         </group>
                     </group>
@@ -407,7 +414,7 @@
                         </group>
                         <field name="activity_note" placeholder="Log a note..."/>
                     </group>
-                    <field name="attachment_ids" groups="base.group_no_one" readonly="1"/>
+                    <field name="attachment_ids" invisible="1" readonly="1"/>
                     <footer>
                         <button name="write" type="object" string="Done" class="btn btn-primary"/>
                     </footer>
@@ -439,7 +446,7 @@
                 <sheet>
                     <div class="oe_title">
                       <label for="name" class="oe_edit_only"/>
-                      <h1><field name="name" placeholder="i.e. Validate document"/></h1>
+                      <h1><field name="name" placeholder="E.g. Validate document"/></h1>
                     </div>
                     <group>
                         <notebook>
@@ -585,8 +592,11 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="folder_id"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="E.g. Status"/></h1>
+                        </div>
+                        <field name="folder_id" required="1"/>
                         <field name="tooltip"/>
                     </group>
                     <group>
@@ -679,7 +689,10 @@
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('settings')]" position="inside">
                 <div class="app_settings_block o_documents_block" data-string="Documents" string="Documents" data-key="documents">
+                    <h2>Default Folders</h2>
+                    <div class="row mt16 o_settings_container o_documents_settings">
 
+                    </div>
                 </div>
             </xpath>
         </field>

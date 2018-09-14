@@ -22,7 +22,7 @@ class WorkflowActionRule(models.Model):
     domain = fields.Char()
 
     # Criteria
-    criteria_partner_id = fields.Many2one('res.partner', string="Partner")
+    criteria_partner_id = fields.Many2one('res.partner', string="Contact")
     criteria_owner_id = fields.Many2one('res.users', string="Owner")
     criteria_tag_ids = fields.One2many('documents.workflow.tag.criteria', 'workflow_rule_id', string="Tags")
 
@@ -32,7 +32,7 @@ class WorkflowActionRule(models.Model):
     tag_action_ids = fields.One2many('documents.workflow.action', 'workflow_rule_id', string='Set Tags')
     folder_id = fields.Many2one('documents.folder', string="Move to Folder")
     has_business_option = fields.Boolean(compute='_get_business')
-    create_model = fields.Selection([], string="Attach to")
+    create_model = fields.Selection([], string="Create")
 
     # Activity
     remove_activities = fields.Boolean(string='Remove all Activities')
@@ -45,7 +45,7 @@ class WorkflowActionRule(models.Model):
         ('weeks', 'Weeks'),
         ('months', 'Months'),
     ], string='Due type', default='days')
-    activity_note = fields.Html(string="Note")
+    activity_note = fields.Html(string="Activity Note")
     activity_user_id = fields.Many2one('res.users', string='Responsible')
 
     @api.multi

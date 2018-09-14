@@ -1,14 +1,14 @@
 from odoo import models, fields, api, exceptions
 
 
-class WorkflowActionRuleMRP(models.Model):
+class WorkflowActionRuleProduct(models.Model):
     _inherit = ['documents.workflow.rule']
 
     has_business_option = fields.Boolean(default=True, compute='_get_business')
-    create_model = fields.Selection(selection_add=[('product.template', "MRP Product template")])
+    create_model = fields.Selection(selection_add=[('product.template', "Product Product template")])
 
     def create_record(self, attachments=None):
-        rv = super(WorkflowActionRuleMRP, self).create_record(attachments=attachments)
+        rv = super(WorkflowActionRuleProduct, self).create_record(attachments=attachments)
         if self.create_model == 'product.template':
             new_obj = self.env[self.create_model].create({'name': 'product created from DMS'})
 
@@ -17,8 +17,9 @@ class WorkflowActionRuleMRP(models.Model):
                 if attachment.res_model or attachment.res_id:
                     this_attachment = attachment.copy()
 
-                this_attachment.res_model = self.create_model
-                this_attachment.res_id = new_obj.id
+                this_attachment.write({'res_model': self.create_model,
+                                       'res_id': new_obj.id,
+                                       'folder_id': this_attachment.folder_id})
 
             view_id = new_obj.get_formview_id()
             return {

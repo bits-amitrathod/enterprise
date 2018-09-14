@@ -12,7 +12,7 @@ class DocumentShare(models.Model):
 
     access_token = fields.Char(default=lambda x: str(uuid.uuid4()))
     full_url = fields.Char(string="URL", compute='_compute_full_url')
-    date_deadline = fields.Date(string="Expiration Date")
+    date_deadline = fields.Date(string="Valid Until")
     state = fields.Selection([
         ('live', "Live"),
         ('expired', "Expired"),

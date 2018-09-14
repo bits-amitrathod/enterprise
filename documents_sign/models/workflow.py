@@ -29,8 +29,10 @@ class WorkflowActionRuleSign(models.Model):
                 if attachment.res_model or attachment.res_id:
                     this_attachment = attachment.copy()
 
-                this_attachment.res_model = self.create_model
-                this_attachment.res_id = new_obj.id
+                this_attachment.write({'res_model': self.create_model,
+                                       'res_id': new_obj.id,
+                                       'folder_id': this_attachment.folder_id.id})
+
                 template_ids.append(new_obj.id)
 
             action = {
