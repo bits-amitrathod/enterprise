@@ -143,24 +143,22 @@ class AccountInvoiceLine(models.Model):
     @api.onchange('name')
     def _onchange_name(self):
         if self.invoice_id.type == 'in_invoice' and self.name:
-            predict_account = True
-            if self.name != self._get_invoice_line_name_from_product() and self.env.user.has_group('account.group_products_in_bills'):
-                # First part of the condition ensures that we don't call product
-                # prediction when the name change is triggered by a change of product
+            # don't call prediction when the name change is triggered by a change of product
+            if self.name != self._get_invoice_line_name_from_product():
+                predict_account = True
+                if self.env.user.has_group('account.group_products_in_bills'):
+                    predicted_product_id = self._predict_product(self.name)
+                    # We only change the product if we manage to predict its value
+                    if predicted_product_id:
+                        # We pass a context key to tell that we don't want the product
+                        # onchange function to override the description that was entered by the user
+                        self.env.context = frozendict(self.env.context, skip_product_onchange_rename=True)
+                        self.product_id = predicted_product_id
+                        # the account has been set via the onchange, there's no need to predict it any longer
+                        predict_account = False
 
-                predicted_product_id = self._predict_product(self.name)
-
-                # We only change the product if we manage to predict its value
-                if predicted_product_id:
-                    # We pass a context key to tell that we don't want the product
-                    # onchange function to override the description that was entered by the user
-                    self.env.context = frozendict(self.env.context, skip_product_onchange_rename=True)
-                    self.product_id = predicted_product_id
-                    # the account has been set via the onchange, there's no need to predict it any longer
-                    predict_account = False
-
-            if predict_account:
-                predicted_account_id = self._predict_account(self.name, self.partner_id)
-                # We only change the account if we manage to predict its value
-                if predicted_account_id:
-                    self.account_id = predicted_account_id
+                if predict_account:
+                    predicted_account_id = self._predict_account(self.name, self.partner_id)
+                    # We only change the account if we manage to predict its value
+                    if predicted_account_id:
+                        self.account_id = predicted_account_id
