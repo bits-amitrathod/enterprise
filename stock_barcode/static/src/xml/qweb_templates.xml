@@ -80,7 +80,7 @@
                             <i class="fa fa-fw fa-cube"/>
                             <span t-attf-class="o_barcode_scanner_qty text-monospace badge #{' '}"> <!-- @SLE: Eventually add contextual classes: "badge-warning", "badge-danger", "badge-success"  -->
                                 <span class="qty-done d-inline-block text-left" t-esc="line.qty_done"/>
-                                <span t-if="1 == 1" t-esc="'/ ' + line.product_uom_qty"/> <!-- @SLE, TMP condition: sometimes we want to hide the "/ 0". To be implemented, check with LAP  -->
+                                <span t-if="line.product_uom_qty" t-esc="'/ ' + line.product_uom_qty"/>
                             </span>
                             <span t-if="groups.group_uom" t-esc="line.product_uom_id[1]"/>
                         </div>
@@ -107,7 +107,7 @@
                             <i class="fa fa-fw fa-cube"/>
                             <span t-attf-class="o_barcode_scanner_qty text-monospace badge #{' '}"> <!-- @SLE, Eventually add contextual classes: "badge-warning", "badge-danger", "badge-success"  -->
                                 <span class="product_qty d-inline-block text-left" t-esc="line.product_qty"/>
-                                <span t-if="1 == 1" t-esc="'/ ' + line.theoretical_qty"/> <!-- @SLE, TMP condition: sometimese we want to hide the "/ 0". To be implemented, check with LAP  -->
+                                <span t-if="line.theoretical_qty" t-esc="'/ ' + line.theoretical_qty"/>
                             </span>
                             <span t-if="groups.group_uom" t-esc="line.product_uom_id[1]"/>
                         </div>
