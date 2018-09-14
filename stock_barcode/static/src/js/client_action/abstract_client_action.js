@@ -312,7 +312,7 @@ var ClientAction = AbstractAction.extend({
      */
     _showInformation: function () {
         var self = this;
-        this.mutex.exec(function () {
+        return this.mutex.exec(function () {
             self.headerWidget.toggleDisplayContext('specialized');
             return self._save();
         });

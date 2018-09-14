@@ -193,6 +193,23 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
         }
     },
 
+    //Check show information.
+    {
+        trigger: '.o_show_information',
+    },
+    
+    {
+        trigger: '.o_form_label:contains("Status")',
+    },
+    
+    {
+        trigger: '.o_close',
+    },
+
+    {
+        trigger: '.o_barcode_summary_location_dest:contains("Stock")',
+    },
+
     /* We'll create a movement for 2 product1 from shelf1 to shelf2. The flow for this to happen is
      * to scan shelf1, product1, shelf2.
      */
@@ -1782,6 +1799,23 @@ tour.register('test_inventory_adjustment', {test: true}, [
 
     {
         trigger: '.button_inventory',
+    },
+
+    //Check show information.
+    {
+        trigger: '.o_show_information',
+    },
+    
+    {
+        trigger: '.o_form_label:contains("Status")',
+    },
+    
+    {
+        trigger: '.o_close',
+    },
+
+    {
+        trigger: '.o_barcode_message:contains("Scan products")',
     },
 
     {
