@@ -37,7 +37,7 @@ msgstr "# seniors handicapés (&gt;=65):"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "# people (&lt;65):"
-msgstr ""
+msgstr "# personne (&lt;65):"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
@@ -98,6 +98,14 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <h2>Félicitations!</h2>\n"
+"    Vous pouvez configurer votre régime de rémunération en cliquant sur le lien ci-dessous.\n"
+"    <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"        <a href=\"${ctx.get('salary_package_url')}\" target=\"_blank\" style=\"background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;\">Configurer votre régime de rémunération</a>\n"
+"    </div>\n"
+"</div>\n"
+"        "
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -777,12 +785,12 @@ msgstr "Courriel :"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Emergency Contact:"
-msgstr ""
+msgstr "Contact d'urgence:"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Emergency Phone:"
-msgstr ""
+msgstr "Téléphone d'urgence:"
 
 #. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_employee
@@ -793,7 +801,7 @@ msgstr "Employé"
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_generate_simulation_link__final_yearly_costs
 msgid "Employee Budget"
-msgstr ""
+msgstr "Budget de l'employé"
 
 #. module: hr_contract_salary
 #: model:ir.model,name:hr_contract_salary.model_hr_contract
@@ -804,7 +812,7 @@ msgstr "Contrat de l'employé"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Employee Name:"
-msgstr ""
+msgstr "Nom de l'employé:"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -824,7 +832,7 @@ msgstr "Champ d’étude"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Field of Study:"
-msgstr ""
+msgstr "Domaine d'étude:"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
@@ -859,14 +867,14 @@ msgstr "Générer le lien de l'offre"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_view_form
 msgid "Generate Simulation Link"
-msgstr ""
+msgstr "Générer le lien de simulation"
 
 #. module: hr_contract_salary
 #: model:ir.actions.act_window,name:hr_contract_salary.generate_offer_link_action
 #: model:ir.actions.act_window,name:hr_contract_salary.generate_simulation_link_action
 #: model:ir.ui.view,arch_db:hr_contract_salary.generate_simulation_link_view_form
 msgid "Generate a Simulation Link"
-msgstr ""
+msgstr "Générer un lien de simulation "
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -887,12 +895,12 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Has Company Car: Yes"
-msgstr ""
+msgstr "A une Voiture de Société: Oui"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Has Public Transportation: Yes"
-msgstr ""
+msgstr "A les Transports en Commun: Oui"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package_thank_you
@@ -926,12 +934,12 @@ msgstr "ID"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "IP percentage:"
-msgstr ""
+msgstr "Pourcentage PI:"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "IP: No"
-msgstr ""
+msgstr "PI: Non"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
@@ -1070,7 +1078,7 @@ msgstr "Maître"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Meal Vouchers:"
-msgstr ""
+msgstr "Chèques-repas:"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
@@ -1189,7 +1197,7 @@ msgstr ""
 #: code:addons/hr_contract_salary/wizard/generate_simulation_link.py:123
 #, python-format
 msgid "No private address defined on the employee!"
-msgstr ""
+msgstr "Pas d'adresse privée définie sur l'employé!"
 
 #. module: hr_contract_salary
 #: code:addons/hr_contract_salary/controllers/main.py:576
@@ -1224,7 +1232,7 @@ msgstr "Contrat initial"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Original Link:"
-msgstr ""
+msgstr "Lien original:"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1458,7 +1466,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Spouse Professional Situation: Without Income"
-msgstr ""
+msgstr "Situation Professionnelle de l'Epouse: Sans Revenus"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1538,6 +1546,8 @@ msgid ""
 "This commission is only effective if the target is reached. This results to "
 "a net commission value of"
 msgstr ""
+"Cette commission n'est effective que si la cible est atteinte. Ceci revient "
+"à une commission nette de"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1573,7 +1583,7 @@ msgstr "Véhicule"
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_email_template
 msgid "Wage:"
-msgstr ""
+msgstr "Salaire:"
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package
@@ -1642,6 +1652,8 @@ msgid ""
 "Your gross salary is below the scale. You can change values of the "
 "configurator to increase the gross according to the CP 200 scales."
 msgstr ""
+"Votre salaire brut est en-dessous du palier. Vous pouvez changer les valeurs"
+" du configurateur pour augmenter le brut, en accord avec les paliers CP 200."
 
 #. module: hr_contract_salary
 #: model:ir.ui.view,arch_db:hr_contract_salary.salary_package

@@ -52,6 +52,9 @@ msgid ""
 "    % if email_alias\n"
 "    <strong style=\"font-size: 16px;\">Try the mail gateway</strong>"
 msgstr ""
+"% set email_alias = object.env['helpdesk.team'].search([('alias_name','!=', False)],limit=1).alias_id.display_name\n"
+"    % if email_alias\n"
+"    <strong style=\"font-size: 16px;\">Essayez la passerelle de messagerie</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -184,6 +187,17 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div>\n"
+"    Cher(e) ${object.sudo().partner_id.name or 'Madame, Monsieur'},<br/><br/>\n"
+"    Ce message automatique vous informe que nous avons clotûré votre ticket (reference ${object.id}).\n"
+"    Nous espérons que le service fourni était à la mesure de vos attentes.\n"
+"    Si vous avez d'autres questions ou commentaires, n'hésitez pas à répondre à cet email ou à ouvrir un nouveau ticket.<br/><br/>\n"
+"    Merci de votre coopération.<br/>\n"
+"    Salutations,<br/><br/>\n"
+"    L'équipe ${object.team_id.name or 'Helpdesk'}.\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
@@ -276,7 +290,7 @@ msgstr "<span class=\"o_stat_text\"/>"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-lg-2\">Description</strong>"
-msgstr ""
+msgstr "<strong class=\"col-lg-2\">Description</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -286,7 +300,7 @@ msgstr "<strong class=\"col-lg-2\">Reporté par</strong>"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-lg-2\">Reported on</strong>"
-msgstr ""
+msgstr "<strong class=\"col-lg-2\">Reporté sur</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -339,7 +353,7 @@ msgstr "À propos équipes"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__access_warning
 msgid "Access warning"
-msgstr ""
+msgstr "Avertissement d'accès"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_needaction
@@ -906,7 +920,7 @@ msgstr "Email alias"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__email
 msgid "Email on Customer"
-msgstr ""
+msgstr "Email sur le client"
 
 #. module: helpdesk
 #: model:digest.tip,tip_description:helpdesk.digest_tip_helpdesk_0
@@ -914,6 +928,8 @@ msgid ""
 "Emails sent to <strong>${email_alias}</strong> generate new tickets in your "
 "Helpdesk funnel.<br>"
 msgstr ""
+"Les emails envoyés à <strong>${email_alias}</strong> génèrent de nouveaux "
+"tickets dans votre tunnel Helpdesk."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_slides
@@ -1020,7 +1036,7 @@ msgstr "Grouper par"
 #. module: helpdesk
 #: model:mail.activity.type,name:helpdesk.mail_act_helpdesk_handle
 msgid "Handle Ticket"
-msgstr ""
+msgstr "Gérer le ticket"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
@@ -2188,7 +2204,7 @@ msgstr "Ticket Créé"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Ticket ID"
-msgstr ""
+msgstr "ID du ticket"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -2495,7 +2511,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_team_dashboard_action_main
 msgid "Your teams will appear here"
-msgstr ""
+msgstr "Vos équipes apparaitront ici"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
