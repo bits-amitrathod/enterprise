@@ -21,12 +21,9 @@ class IntrastatReport(models.AbstractModel):
         :param options: The report options.
         :return: The xml export file content.
         '''
-        date_from, date_to, company_ids, incl_arrivals, incl_dispatches, extended = self._decode_options(options)
+        date_from, date_to, journal_ids, incl_arrivals, incl_dispatches, extended = self._decode_options(options)
 
-        if len(company_ids) != 1:
-            raise ValidationError(_('One and only one company must be selected.'))
-
-        company = self.env['res.company'].browse(company_ids[0])
+        company = self.env.user.company_id
 
         cache = {}
 
@@ -34,19 +31,19 @@ class IntrastatReport(models.AbstractModel):
         in_vals = []
         if incl_arrivals:
             query, params = self._prepare_query(
-                date_from, date_to, company_ids=[company.id], invoice_types=('in_invoice', 'out_refund'))
+                date_from, date_to, journal_ids=journal_ids, invoice_types=('in_invoice', 'out_refund'))
             self._cr.execute(query, params)
-            in_vals = self._cr.dictfetchall()
-            [self._fill_missing_values(v, cache) for v in in_vals]
+            query_res = self._cr.dictfetchall()
+            in_vals = self._fill_missing_values(query_res, cache)
 
         # create out_vals corresponding to invoices with cash-out
         out_vals = []
         if incl_dispatches:
             query, params = self._prepare_query(
-                date_from, date_to, company_ids=[company.id], invoice_types=('out_invoice', 'in_refund'))
+                date_from, date_to, journal_ids=journal_ids, invoice_types=('out_invoice', 'in_refund'))
             self._cr.execute(query, params)
-            out_vals = self._cr.dictfetchall()
-            [self._fill_missing_values(v, cache) for v in out_vals]
+            query_res = self._cr.dictfetchall()
+            out_vals = self._fill_missing_values(query_res, cache)
 
         return self.env.ref('l10n_be_intrastat.intrastat_report_export_xml').render({
             'company': company,

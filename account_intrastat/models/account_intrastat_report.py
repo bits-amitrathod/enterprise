@@ -162,14 +162,15 @@ class IntrastatReport(models.AbstractModel):
         return query, params
 
     @api.model
-    def _fill_missing_values(self, vals):
+    def _fill_missing_values(self, vals, cache=None):
         ''' Some values are too complex to be retrieved in the SQL query.
         Then, this method is used to compute the missing values fetched from the database.
 
         :param vals:    A dictionary created by the dictfetchall method.
         :param cache:   A cache dictionary used to avoid performance loss.
         '''
-        cache = {}
+        if cache is None:
+            cache = {}
         for index in range(len(vals)):
             # Check account.intrastat.code
             # If missing, retrieve the commodity code by looking in the product category recursively.
