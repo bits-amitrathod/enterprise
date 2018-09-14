@@ -782,7 +782,10 @@ odoo.define('website_sign.document_signing', function(require) {
                 }
 
                 setTimeout(function() {
+                    var ignoredContext = _.pick(context, ['shadowOffsetX', 'shadowOffsetY']);
+                    _.extend(context, {shadowOffsetX: 0, shadowOffsetY: 0});
                     context.drawImage(image, 0, 0, image.width, image.height, ($canvas[0].width - width)/2, ($canvas[0].height - height)/2, width, height);
+                    _.extend(context, ignoredContext);
                 }, 0);
             };
             image.src = imgSrc;
