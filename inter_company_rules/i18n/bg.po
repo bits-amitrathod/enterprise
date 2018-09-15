@@ -100,9 +100,9 @@ msgid ""
 "Default value to set on Purchase(Sales) Orders that will be created based on"
 " Sale(Purchase) Orders made to this company"
 msgstr ""
-"Стойност по подразбиране, която да се настрои за поръчките за покупка "
-"(продажба), които ще бъдат създадени въз основа на поръчки за продажба "
-"(покупка), направени към тази компания"
+"Стандартна стойност, която да се настрои за поръчките за покупка (продажба),"
+" които ще бъдат създадени въз основа на поръчки за продажба (покупка), "
+"направени към тази компания"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_generate_invoices
@@ -120,7 +120,7 @@ msgid ""
 " created."
 msgstr ""
 "Създайте поръчка за покупка, при създаването на поръчка за продажба за тази "
-"компания в качеството й на клиент."
+"компания в качеството ѝ на клиент."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_po_from_so
@@ -138,7 +138,7 @@ msgid ""
 "created."
 msgstr ""
 "Създайте поръчка за продажба при създаването на поръчката за покупка с тази "
-"компания в качеството й на доставчик."
+"компания в качеството ѝ на доставчик."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_so_from_po
@@ -160,7 +160,7 @@ msgstr "Потребител на интеркомпания"
 #, python-format
 msgid "Inter company user of company %s doesn't have enough access rights"
 msgstr ""
-"Потребителят на ентуркомпанията %s не притежава достатъчно права за достъп"
+"Потребителят на интеркомпанията %s не притежава достатъчно права за достъп"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
@@ -182,14 +182,14 @@ msgstr "Моля определете %s журнал за тази компан
 #: code:addons/inter_company_rules/models/purchase_order.py:40
 #, python-format
 msgid "Provide at least one user for inter company relation for % "
-msgstr ""
+msgstr "Осигурете поне един потребител за връзка с интеркомпания за % "
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/account_invoice.py:40
 #: code:addons/inter_company_rules/models/sale_order.py:43
 #, python-format
 msgid "Provide one user for intercompany relation for % "
-msgstr ""
+msgstr "Осигурете един потребител за връзка с интеркомпания за % "
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_purchase_order
@@ -201,24 +201,25 @@ msgstr "Поръчка за покупка"
 msgid ""
 "Responsible user for creation of documents triggered by intercompany rules."
 msgstr ""
-"Отговорен потребител за създаването на документи, задействани от "
-"вътрешнофирмени правила."
+"Отговорен потребител за създаването на документи, задействани от правила на "
+"интеркомпания."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_rule_type
 msgid "Rule type"
-msgstr ""
+msgstr "Вид правило"
 
 #. module: inter_company_rules
 #: selection:base.config.settings,rule_type:0
 msgid "SO and PO setting for inter company"
 msgstr ""
+"Настройка за поръчка за продажба и поръчка за покупка за интеркомпания"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_auto_validation
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_auto_validation
 msgid "Sale/Purchase Orders Auto Validation"
-msgstr ""
+msgstr "Автоматично валидиране на поръчка за продажба/покупка"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_sale_order
@@ -228,12 +229,12 @@ msgstr "Поръчка за продажба"
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_rule_type
 msgid "Select the type to setup inter company rules in selected company."
-msgstr ""
+msgstr "Изберете типа, за да настроите правилата за избраната компания."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice_auto_invoice_id
 msgid "Source Invoice"
-msgstr ""
+msgstr "Източник на фактура"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_sale_order_auto_purchase_order_id
@@ -243,7 +244,7 @@ msgstr "Поръчка за покупка на източник"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_purchase_order_auto_sale_order_id
 msgid "Source Sale Order"
-msgstr "Поръчка за покупка на източник"
+msgstr "Поръчка за продажба на източник"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_warehouse_id
@@ -253,7 +254,7 @@ msgstr "Склад"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_warehouse_id
 msgid "Warehouse For Purchase Orders"
-msgstr ""
+msgstr "Склад за поръчки за покупки"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_auto_validation
@@ -261,6 +262,8 @@ msgid ""
 "When a Sale Order or a Purchase Order is created by a multi\n"
 "            company rule for this company, it will automatically validate it."
 msgstr ""
+"Когато се създава поръчка за продажба или покупка от правило на мултикомпания\n"
+"            за тази компания, това ще я валидира автоматично."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_validation
@@ -268,6 +271,8 @@ msgid ""
 "When a Sale Order or a Purchase Order is created by a multi company rule for"
 " this company, it will automatically validate it"
 msgstr ""
+"Когато се създава поръчка за продажба или покупка от правило на "
+"мултикомпания за тази компания, това ще я валидира автоматично."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
@@ -276,6 +281,9 @@ msgid ""
 "You cannot create SO from PO because sale price list currency is different "
 "than purchase price list currency."
 msgstr ""
+"Не можете да създадете поръчка за продажба от поръчка за покупка, тъй като  "
+"валутата в списъка с продажните цени е различна от валутата в списъка с "
+"покупните цени."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/res_company.py:32
@@ -285,6 +293,9 @@ msgid ""
 "                    simultaneously with another option ('Create Sale Orders when buying to this\n"
 "                    company' or 'Create Purchase Orders when selling to this company')!"
 msgstr ""
+"Не можете да избирате да създавате фактури въз основа на други фактури\n"
+"                    едновременно с друга опция ('Създавайте поръчки за продажба, когато пазарувате от тази\n"
+"                    компания' или 'Създавайте поръчки за покупка, когато продавате на тази компания')!"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_base_config_settings
