@@ -11,6 +11,7 @@ var DocumentsKanbanRecord = KanbanRecord.extend({
     events: _.extend({}, KanbanRecord.prototype.events, {
         'click': '_onSelectRecord',
         'click .o_record_selector': '_onAddRecordToSelection',
+        'click .oe_kanban_previewer': '_onKanbanImage',
     }),
 
     //--------------------------------------------------------------------------
@@ -88,6 +89,15 @@ var DocumentsKanbanRecord = KanbanRecord.extend({
         ev.preventDefault();
         ev.stopPropagation();
         this._toggleSelect(false, ev);
+    },
+    /**
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onKanbanImage: function (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.trigger_up('kanban_image_clicked', {record: this.recordData});
     },
     /**
      * Overrides to force the select/unselect as default action (instead of

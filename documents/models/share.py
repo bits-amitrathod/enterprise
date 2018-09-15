@@ -8,7 +8,7 @@ class DocumentShare(models.Model):
     _inherit = ['mail.thread', 'mail.alias.mixin']
 
     folder_id = fields.Many2one('documents.folder', requried=True)
-    name = fields.Char(string="Optional Name")
+    name = fields.Char(string="Name")
 
     access_token = fields.Char(default=lambda x: str(uuid.uuid4()))
     full_url = fields.Char(string="URL", compute='_compute_full_url')
@@ -31,9 +31,9 @@ class DocumentShare(models.Model):
         ('download', "Download"),
         ('downloadupload', "Download and Upload"),
     ], default='download', string="Allows to")
-    tag_ids = fields.Many2many('documents.tag', string="Default Tags")
-    partner_id = fields.Many2one('res.partner', string="Default Contact")
-    owner_id = fields.Many2one('res.users', string="Default Owner")
+    tag_ids = fields.Many2many('documents.tag', string="Shared Tags")
+    partner_id = fields.Many2one('res.partner', string="Contact")
+    owner_id = fields.Many2one('res.users', string="Document Owner")
     email_drop = fields.Boolean(string='Upload by Email')
 
     # Activity

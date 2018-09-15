@@ -7,6 +7,7 @@ odoo.define('documents.DocumentsKanbanController', function (require) {
  */
 
 var DocumentsInspector = require('documents.DocumentsInspector');
+var DocumentViewer = require('mail.DocumentViewer');
 
 var Chatter = require('mail.Chatter');
 
@@ -33,6 +34,7 @@ var DocumentsKanbanController = KanbanController.extend({
         delete_records: '_onDeleteRecords',
         document_viewer_attachment_changed: '_onDocumentViewerAttachmentChanged',
         download: '_onDownload',
+        kanban_image_clicked: '_onKanbanPreview',
         lock_attachment: '_onLock',
         open_chatter: '_onOpenChatter',
         open_record: '_onOpenRecord',
@@ -671,6 +673,17 @@ var DocumentsKanbanController = KanbanController.extend({
             self.$('.o_upload_text').remove();
             self.reload();
         });
+    },
+    /**
+     * @private
+     * @param {OdooEvent} ev
+     * @param {Object} recordData ev.data.record
+     */
+    _onKanbanPreview: function (ev) {
+        ev.stopPropagation();
+        var self = this;
+        var documentViewer = new DocumentViewer(this, [ev.data.record], ev.data.record.id);
+        documentViewer.appendTo($('.o_documents_kanban_view'));
     },
     /**
      * @private
