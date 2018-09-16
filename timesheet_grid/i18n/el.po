@@ -3,18 +3,14 @@
 # * timesheet_grid
 # 
 # Translators:
-# Kostas Goutoudis <goutoudis@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Giota Dandidou <giotadandidou@gmail.com>, 2017
-# Costas Pittalis <cpittalis@gmail.com>, 2017
-# George Tarasidis <george_tarasidis@yahoo.com>, 2017
+# Martin Trigaux, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 09:24+0000\n"
-"PO-Revision-Date: 2017-10-24 09:24+0000\n"
-"Last-Translator: George Tarasidis <george_tarasidis@yahoo.com>, 2017\n"
+"POT-Creation-Date: 2018-08-02 11:20+0000\n"
+"PO-Revision-Date: 2018-08-02 11:20+0000\n"
+"Last-Translator: Martin Trigaux, 2018\n"
 "Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -122,24 +118,24 @@ msgid "Activate a periodical email reminder for timesheet users"
 msgstr ""
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:79
+#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
+msgid "Add a Task"
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/analytic.py:80
 #, python-format
 msgid "All selected timesheets are already validated"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_account_analytic_line
-msgid "Analytic Line"
-msgstr "Γραμμή Αναλυτικής"
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-msgid "Android App"
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__amount
+msgid "Amount"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-msgid "Apple App"
+#: model:ir.model,name:timesheet_grid.model_account_analytic_line
+msgid "Analytic Line"
 msgstr ""
 
 #. module: timesheet_grid
@@ -149,19 +145,9 @@ msgstr "Ακύρωση"
 
 #. module: timesheet_grid
 #. openerp-web
-#: code:addons/timesheet_grid/static/src/js/tour.js:22
+#: code:addons/timesheet_grid/static/src/js/tour.js:21
 #, python-format
 msgid "Choose a <b>project name</b>. (e.g. name of a customer, or product)"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-msgid "Chrome Plugin"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-msgid "Click to add projects and tasks"
 msgstr ""
 
 #. module: timesheet_grid
@@ -170,139 +156,133 @@ msgid "Companies"
 msgstr "Εταιρίες"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_create_uid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_create_uid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__create_uid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__create_uid
 msgid "Created by"
 msgstr "Δημιουργήθηκε από"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_create_date
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_create_date
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__create_date
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__create_date
 msgid "Created on"
 msgstr "Δημιουργήθηκε στις"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_validated
+#: model:ir.model.fields,help:timesheet_grid.field_hr_employee__timesheet_validated
 msgid "Date until which the employee's timesheets have been validated"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
-msgid "Describe your activity"
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_manager_delay
+msgid "Days to Remind Manager"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_display_name
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_display_name
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_delay
+msgid "Days to Remind User"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__display_name
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__display_name
 msgid "Display Name"
 msgstr "Εμφάνιση Ονόματος"
 
 #. module: timesheet_grid
-#. openerp-web
-#: code:addons/timesheet_grid/static/src/js/tour.js:43
-#, python-format
-msgid "Easily switch to the monthly or daily view to control your time"
-msgstr ""
-
-#. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_employee_id
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__employee_id
 msgid "Employee"
 msgstr "Υπάλληλος"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_allow
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_allow
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_interval
+msgid "Employee Frequency"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_allow
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_allow
 msgid "Employee Reminder"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_interval
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_interval
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_interval
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_interval
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_delay
+msgid "Employee Reminder Days"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Frequency"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-msgid "Get Android app"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-msgid "Get Chrome plugin"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-msgid "Get iOS app"
-msgstr ""
-
-#. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_id
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_id
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__id
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__id
 msgid "ID"
 msgstr "Κωδικός"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_manager_allow
+#: model:ir.model.fields,help:timesheet_grid.field_res_config_settings__reminder_manager_allow
 msgid "If checked, send an email to all manager"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_manager_allow
+#: model:ir.model.fields,help:timesheet_grid.field_res_company__timesheet_mail_manager_allow
 msgid ""
 "If checked, send an email to all managers who have not validated their "
 "timesheet"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_res_company_timesheet_mail_employee_allow
-#: model:ir.model.fields,help:timesheet_grid.field_res_config_settings_reminder_user_allow
+#: model:ir.model.fields,help:timesheet_grid.field_res_company__timesheet_mail_employee_allow
+#: model:ir.model.fields,help:timesheet_grid.field_res_config_settings__reminder_user_allow
 msgid ""
 "If checked, send an email to all users who have not recorded their timesheet"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation___last_update
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line___last_update
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation____last_update
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line____last_update
 msgid "Last Modified on"
 msgstr "Τελευταία τροποποίηση στις"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_month
 msgid "Last Month"
-msgstr "Τελευταίος Μήνας"
+msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_write_uid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_write_uid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__write_uid
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__write_uid
 msgid "Last Updated by"
 msgstr "Τελευταία Ενημέρωση από"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_write_date
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_write_date
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__write_date
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__write_date
 msgid "Last Updated on"
 msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
 msgid "Last Week"
-msgstr "Προηγ. Εβδομάδα"
-
-#. module: timesheet_grid
-#. openerp-web
-#: code:addons/timesheet_grid/static/src/js/tour.js:17
-#, python-format
-msgid "Let's create your first timesheet entry."
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_allow
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_allow
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_allow
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_manager_allow
 msgid "Manager Reminder"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_delay
+msgid "Manager Reminder Days"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_interval
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_manager_interval
+msgid "Manager Reminder Frequency"
 msgstr ""
 
 #. module: timesheet_grid
@@ -310,58 +290,34 @@ msgstr ""
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
 msgid "Month"
-msgstr "Μήνας"
-
-#. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:133
-#, python-format
-msgid ""
-"Multiple timesheet entries match the modified value. Please change the "
-"search options or modify the entries individually."
 msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "My Team"
-msgstr "Η Ομάδα μου"
+msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_nextdate
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_nextdate
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_nextdate
+msgid "Next scheduled date for employee reminder"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_nextdate
 msgid "Next scheduled date for manager reminder"
 msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Non Validated"
-msgstr "Μη Επικυρωμένο"
+msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_employee_delay
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_company_timesheet_mail_manager_delay
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_manager_delay
-#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings_reminder_user_delay
-msgid "Number of days"
-msgstr "Αριθμός ημερών"
-
-#. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:101
+#: code:addons/timesheet_grid/models/analytic.py:105
 #, python-format
 msgid ""
-"Only a Timesheets Officer is allowed to create an entry older than the "
+"Only a Timesheets Manager is allowed to create an entry older than the "
 "validation limit."
-msgstr ""
-
-#. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:116
-#, python-format
-msgid "Only a Timesheets Officer is allowed to delete a validated entry."
-msgstr ""
-
-#. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:110
-#, python-format
-msgid "Only a Timesheets Officer is allowed to modify a validated entry."
 msgstr ""
 
 #. module: timesheet_grid
@@ -375,21 +331,26 @@ msgid "Reminder: please log your hours"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line_is_timesheet
+#: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line__is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
 msgstr ""
 
 #. module: timesheet_grid
 #. openerp-web
-#: code:addons/timesheet_grid/static/src/js/tour.js:36
+#: code:addons/timesheet_grid/static/src/js/tour.js:35
 #, python-format
 msgid ""
-"Set the number of hours done on this project, for every day of the week. "
-"(e.g. 1.5 or 1:30)"
+"Set the number of hours done on this task, for every day of the week. (e.g. "
+"1.5 or 1:30)"
 msgstr ""
 
 #. module: timesheet_grid
-#: code:addons/timesheet_grid/models/models.py:74
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__task_id
+msgid "Task"
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/analytic.py:75
 #, python-format
 msgid "There aren't any timesheet to validate"
 msgstr ""
@@ -397,7 +358,14 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
 msgid "Time Spent"
-msgstr "Χρόνος που Αναλώθηκε"
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/analytic.py:125
+#: code:addons/timesheet_grid/models/analytic.py:135
+#, python-format
+msgid "Timesheet Adjustment"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -405,12 +373,12 @@ msgid "Timesheet Control"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_is_timesheet
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__is_timesheet
 msgid "Timesheet Line"
-msgstr "Γραμμή Φύλλου Χρόνου Εργασίας"
+msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_manager_id
+#: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee__timesheet_manager_id
 msgid "Timesheet Responsible"
 msgstr ""
 
@@ -436,8 +404,15 @@ msgid "Timesheets"
 msgstr "Κάρτες Χρόνου"
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_timesheet_validated
+#: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee__timesheet_validated
 msgid "Timesheets Validation Date"
+msgstr ""
+
+#. module: timesheet_grid
+#. openerp-web
+#: code:addons/timesheet_grid/static/src/js/tour.js:17
+#, python-format
+msgid "Timesheets are done on tasks, click here to create your first one."
 msgstr ""
 
 #. module: timesheet_grid
@@ -449,14 +424,12 @@ msgstr ""
 #. openerp-web
 #: code:addons/timesheet_grid/static/src/js/tour.js:13
 #, python-format
-msgid ""
-"Track your timesheets to invoice easily, or control costs. <i>It starts "
-"here.</i>"
+msgid "Track the time spent on your projects. <i>It starts here.</i>"
 msgstr ""
 
 #. module: timesheet_grid
 #. openerp-web
-#: code:addons/timesheet_grid/static/src/js/tour.js:29
+#: code:addons/timesheet_grid/static/src/js/tour.js:28
 #, python-format
 msgid ""
 "Use tasks to track the different type of activities. (e.g. Graphic Design, "
@@ -464,16 +437,21 @@ msgid ""
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_manager_id
+#: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_interval
+msgid "User Reminder Frequency"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model.fields,help:timesheet_grid.field_hr_employee__timesheet_manager_id
 msgid "User responsible of timesheet validation. Should be Timesheet Manager."
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_validate
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__validate
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee_validation
 msgid "Validate"
-msgstr "Επικύρωση"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
@@ -486,19 +464,19 @@ msgid "Validate the timesheets of the selected employees up to"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,help:timesheet_grid.field_timesheet_validation_line_validate
+#: model:ir.model.fields,help:timesheet_grid.field_timesheet_validation_line__validate
 msgid "Validate this employee's timesheet up to the chosen date"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_validation_date
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__validation_date
 msgid "Validate up to"
 msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Validated"
-msgstr "Επικυρωμένη"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_month
@@ -507,17 +485,17 @@ msgid "Validated Timesheets"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_validated
+#: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__validated
 msgid "Validated line"
-msgstr "Επικυρωμένη γραμμή"
+msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line_validation_id
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__validation_id
 msgid "Validation"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_validation_line_ids
+#: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__validation_line_ids
 msgid "Validation Line"
 msgstr ""
 
@@ -526,11 +504,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 #: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
 msgid "Week"
-msgstr "Εβδομάδα"
-
-#. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-msgid "You will be able to register your working hours on the given task."
 msgstr ""
 
 #. module: timesheet_grid
@@ -548,7 +521,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "days"
-msgstr "ημέρες"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_config_settings
@@ -563,4 +536,4 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheet_validation_line
 msgid "timesheet.validation.line"
-msgstr "timesheet.validation.line"
+msgstr ""

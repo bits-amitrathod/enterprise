@@ -35,7 +35,7 @@ msgstr "Facture :"
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
 msgid ", generate a"
-msgstr ""
+msgstr ", génère un"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
@@ -46,6 +46,11 @@ msgid ""
 "                                    <span attrs=\"{'invisible':[('applicable_on','!=', 'sale_purchase')]}\" class=\"ml4\"> Sale and Purchase Order</span>\n"
 "                                </strong> using"
 msgstr ""
+"<strong>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml4\">Bon de Vente</span>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml4\">Bon d'Achat</span>\n"
+"                                    <span attrs=\"{'invisible':[('applicable_on','!=', 'sale_purchase')]}\" class=\"ml4\"> Bons d'Achat et de Vente</span>\n"
+"                                </strong> utilisant"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
@@ -57,6 +62,12 @@ msgid ""
 "                            </strong>\n"
 "                            using"
 msgstr ""
+"<strong>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml8\">Bon de Vente </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml8\">Bon d'Achat </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale_purchase')]}\" class=\"ml8\"> Bons d'Achat et de Vente </span>\n"
+"                            </strong>\n"
+"                            utilisant"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__applicable_on
@@ -199,7 +210,7 @@ msgstr "Bon de commande"
 #: selection:res.company,applicable_on:0
 #: selection:res.config.settings,applicable_on:0
 msgid "Sale and Purchase Order"
-msgstr ""
+msgstr "Bons de commande fournisseurs et clients"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__rules_company_id
@@ -242,7 +253,7 @@ msgstr ""
 #. module: inter_company_rules
 #: selection:res.company,rule_type:0 selection:res.config.settings,rule_type:0
 msgid "Synchronize Sales & Purchase Orders"
-msgstr ""
+msgstr "Synchroniser les Bons de Commande d'Achat et de Vente"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__warehouse_id
