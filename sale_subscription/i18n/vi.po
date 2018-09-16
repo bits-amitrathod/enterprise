@@ -393,7 +393,7 @@ msgstr "Kế toán"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_journal_id
 msgid "Accounting Journal"
-msgstr ""
+msgstr "Nhật kí kế toán"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_active
@@ -467,7 +467,7 @@ msgstr "Hủy"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Cancel Subscription"
-msgstr ""
+msgstr "Hủy thuê bao"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -526,7 +526,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_template_action
 msgid "Click here to create a template of subscription."
-msgstr ""
+msgstr "Nhấp vào đây để tạo 1 hợp đồng."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.sale_subscription_action
@@ -554,7 +554,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard_close_reason_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_close_reason_id
 msgid "Close Reason"
-msgstr ""
+msgstr "Lý do đóng"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_close_reason_action
@@ -562,12 +562,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_form
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_tree
 msgid "Close Reasons"
-msgstr ""
+msgstr "Các lý do đóng"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Close Subscription"
-msgstr ""
+msgstr "Đóng thuê bao"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -582,7 +582,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_close_reason_wizard_action
 msgid "Close/Cancel Reason"
-msgstr ""
+msgstr "Lý do Đóng/Hủy"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:48
@@ -617,7 +617,7 @@ msgstr "Màu sắc"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_commercial_partner_id
 msgid "Commercial Partner"
-msgstr ""
+msgstr "Đối tác thương mại"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_company_id
@@ -715,6 +715,9 @@ msgid ""
 "Upselling: The Sales Order added lines to the subscription\n"
 "Renewal: The Sales Order replaced the subscription's content with its own"
 msgstr ""
+"Tạo: Đơn hàng được tạo hợp đồng\n"
+"Bán thêm: Đơn hàng thêm dòng vào hợp đồng\n"
+"Tạo thêm: Đơn hàng thay nội dung của hợp đồng của nó"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_currency_id
@@ -817,7 +820,7 @@ msgstr "Ngày bắt đầu"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_next_date
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Date of Next Invoice"
-msgstr ""
+msgstr "Ngày lập hóa đơn tiếp theo"
 
 #. module: sale_subscription
 #: selection:sale.subscription.template,recurring_rule_type:0
@@ -876,12 +879,12 @@ msgstr "Tháng kết thúc"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "End date is in the next month"
-msgstr ""
+msgstr "Ngày kết thúc trong tháng tiếp theo"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "End date passed"
-msgstr ""
+msgstr "Ngày kết thúc đã qua"
 
 #. module: sale_subscription
 #. openerp-web
@@ -898,7 +901,7 @@ msgstr "Hết hạn"
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 msgid "Expiring soon"
-msgstr ""
+msgstr "Hạn đang đến gần"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -920,7 +923,7 @@ msgstr "Nhóm theo"
 #. module: sale_subscription
 #: model:ir.module.category,description:sale_subscription.module_category_subscription_management
 msgid "Helps you handle subscriptions and recurring invoicing."
-msgstr ""
+msgstr "Giúp bạn kiểm soát hợp đồng và lập hóa đơn định kì."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -961,6 +964,8 @@ msgid ""
 "If set in advance, the subscription will be set to pending 1 month before "
 "the date and will be closed on the date set in this field."
 msgstr ""
+"Nếu đặt nâng cao, hợp đồng sẽ được thiết lập đợi 1 tháng trước ngày đóng hợp"
+" đồng được quy định."
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_product_product_recurring_invoice
@@ -985,6 +990,8 @@ msgid ""
 "If set, subscriptions with this template will invoice in this journal; "
 "otherwise the sales journal with the lowest sequence is used."
 msgstr ""
+"Nếu chọn, hợp đồng có mẫu này sẽ lập hóa đơn theo nhật kí này; nó được dùng "
+"cho các nhật kí bán hàng có thứ tự thấp hơn."
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1058,7 +1065,7 @@ msgstr "Chi tiết hóa đơn"
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_recurring_rule_type
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template_recurring_rule_type
 msgid "Invoice automatically repeat at specified interval"
-msgstr ""
+msgstr "Hóa được được tự động lập lại theo khoản thời gian quy định"
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_success
@@ -1149,7 +1156,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_manager
 msgid "Manage Subscriptions"
-msgstr ""
+msgstr "Quản lý hợp đồng"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1307,7 +1314,7 @@ msgstr ""
 #: code:addons/sale_subscription/models/sale_subscription.py:290
 #, python-format
 msgid "Please define a sale journal for the company \"%s\"."
-msgstr ""
+msgstr "Vui lòng xác định 1 nhật kí bán hàng cho công ty \"%s\"."
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_pricelist_id
@@ -1390,12 +1397,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_recurring_total
 msgid "Recurring Price"
-msgstr ""
+msgstr "Số tiền kì phát sinh"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_recurring_price
 msgid "Recurring price(per period)"
-msgstr ""
+msgstr "Số tiền phát sinh(từng kì)"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_code
@@ -1415,7 +1422,7 @@ msgstr ""
 #. module: sale_subscription
 #: selection:sale.order,subscription_management:0
 msgid "Renewal"
-msgstr ""
+msgstr "Gia hạn"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1448,7 +1455,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription
 msgid "Sale Subscription"
-msgstr ""
+msgstr "Hợp đồng bán hàng"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_res_config_settings_module_sale_subscription_dashboard
@@ -1458,7 +1465,7 @@ msgstr "Trang tổng quan đăng ký bán hàng"
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_template
 msgid "Sale Subscription Template"
-msgstr ""
+msgstr "Mẫu hợp đồng bán hàng"
 
 #. module: sale_subscription
 #: model:ir.actions.server,name:sale_subscription.account_analytic_cron_for_invoice_ir_actions_server
@@ -1477,7 +1484,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_list
 msgid "Sale Subscriptions"
-msgstr ""
+msgstr "Hợp đồng bán hàng"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1499,7 +1506,7 @@ msgstr "Đơn hàng"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_user_id
 msgid "Sales Rep"
-msgstr ""
+msgstr "NV bán hàng"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_user_id
@@ -1525,7 +1532,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_view
 msgid "See Subscriptions"
-msgstr ""
+msgstr "Xem các hợp đồng"
 
 #. module: sale_subscription
 #. openerp-web
@@ -1582,7 +1589,7 @@ msgstr "Giai đoạn"
 #. module: sale_subscription
 #: model:mail.message.subtype,name:sale_subscription.subtype_state_change
 msgid "State Change"
-msgstr ""
+msgstr "Đổi giai đoạn"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_state
@@ -1593,7 +1600,7 @@ msgstr "Trạng thái"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_line_price_subtotal
 msgid "Sub Total"
-msgstr ""
+msgstr "Thành tiền"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_close_reason_view_form
@@ -1617,7 +1624,7 @@ msgstr "Subscription"
 #: model:ir.ui.view,arch_db:sale_subscription.view_subcription_report_graph
 #: model:ir.ui.view,arch_db:sale_subscription.view_subcription_report_pivot
 msgid "Subscription Analysis"
-msgstr ""
+msgstr "Phân tích hợp đồng"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_close_reason
@@ -1655,18 +1662,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product_recurring_invoice
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template_recurring_invoice
 msgid "Subscription Product"
-msgstr ""
+msgstr "Sản phẩm dùng cho hợp đồng"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.product_action_subscription
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_product
 msgid "Subscription Products"
-msgstr ""
+msgstr "Sản phẩm dùng cho hợp đồng"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_report
 msgid "Subscription Statistics"
-msgstr ""
+msgstr "Thống kê hợp đồng"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product_subscription_template_id
@@ -1674,7 +1681,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report_template_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template_id
 msgid "Subscription Template"
-msgstr ""
+msgstr "Mẫu hợp đồng"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_template_action
@@ -1682,7 +1689,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_list
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_search
 msgid "Subscription Templates"
-msgstr ""
+msgstr "Mẫu hợp đồng"
 
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_2
@@ -1697,7 +1704,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.product_template_search_view_inherit_sale_subscription
 msgid "Subscription products"
-msgstr ""
+msgstr "Sản phẩm dùng cho hợp đồng"
 
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_3
@@ -1707,7 +1714,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:mail.message.subtype,description:sale_subscription.subtype_state_change
 msgid "Subscription state has changed"
-msgstr ""
+msgstr "Tình trạng hợp đồng đã thay đổi"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action
@@ -1761,7 +1768,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_pending
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_pending
 msgid "Subscriptions to Renew"
-msgstr ""
+msgstr "Hợp đồng cần gia hạn"
 
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1807,6 +1814,9 @@ msgid ""
 "                can be selected by the salespeople to quickly configure the\n"
 "                terms and conditions of the subscription."
 msgstr ""
+"Mẫu được dùng để cấu hình sẵn các hợp đồng\n"
+"                có thể được chọn bởi nhân viên bán hàng để thực hiện nhanh việc cấu hình\n"
+"                các điều khoản và điều kiện của hợp đồng."
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_close
@@ -1842,7 +1852,7 @@ msgstr "URL đầy đủ để truy cập tài liệu thông qua website."
 msgid ""
 "The next invoice will be created on this date then the period will be "
 "extended."
-msgstr ""
+msgstr "Hóa đơn tiếp theo sẽ được tạo vào ngày này khi kì này được gia hạn."
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_action_subscription
@@ -1851,6 +1861,9 @@ msgid ""
 "            process: price, notes in the quotation, accounting data,\n"
 "            procurement methods, etc."
 msgstr ""
+"Mẫu sản phẩm bao gồm các thông tin cơ bản của quy trình\n"
+"            bán hàng: giá, lưu ý khi đưa vào báo giá, dữ liệu tài khoản,\n"
+"            phương thức cung ứng, vv."
 
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_view
@@ -1860,13 +1873,13 @@ msgstr ""
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_manager
 msgid "The user will have write access to Subscriptions."
-msgstr ""
+msgstr "Người dùng có quyền truy cập thay đổi Hợp đồng."
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:311
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
-msgstr ""
+msgstr "Hóa đơn này bao gồm các kì sau : %s - %s"
 
 #. module: sale_subscription
 #: model:product.uom.categ,name:sale_subscription.uom_categ_time
@@ -1999,12 +2012,15 @@ msgid ""
 "            a physical product, a consumable or a service you offer to\n"
 "            customers."
 msgstr ""
+"Bạn phải xác định 1 sản phẩm cho mỗi thứ bạn bán, bất kể là sản phẩm\n"
+"            vật lý tồn kho, tiêu thụ hay một dịch vụ bạn đề nghị cho\n"
+"            khách hàng."
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/models/sale_subscription.py:279
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
-msgstr ""
+msgstr "Đầu tiên bạn phải chọn 1 khách hàng cho Hợp đồng %s!"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,help:sale_subscription.product_template_action_subscription
@@ -2104,4 +2120,4 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "⇒ Generate Invoice"
-msgstr ""
+msgstr "⇒ Tạo Hóa đơn"
