@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 
 class MrpEcoType(models.Model):
     _name = "mrp.eco.type"
-    _description = 'Manufacturing Process'
+    _description = 'ECO Type'
     _inherit = ['mail.alias.mixin', 'mail.thread']
 
     name = fields.Char('Name', required=True, translate=True)
@@ -44,6 +44,7 @@ class MrpEcoType(models.Model):
 class MrpEcoApprovalTemplate(models.Model):
     _name = "mrp.eco.approval.template"
     _order = "sequence"
+    _description = 'ECO Approval Template'
 
     name = fields.Char('Role', required=True)
     sequence = fields.Integer('Sequence')
@@ -58,6 +59,7 @@ class MrpEcoApprovalTemplate(models.Model):
 
 class MrpEcoApproval(models.Model):
     _name = "mrp.eco.approval"
+    _description = 'ECO Approval'
 
     eco_id = fields.Many2one(
         'mrp.eco', 'ECO',
@@ -106,7 +108,7 @@ class MrpEcoApproval(models.Model):
 
 class MrpEcoStage(models.Model):
     _name = 'mrp.eco.stage'
-    _description = 'Engineering Change Order Stage'
+    _description = 'ECO Stage'
     _order = "sequence, id"
     _fold_name = 'folded'
 
@@ -140,7 +142,7 @@ class MrpEcoStage(models.Model):
 
 class MrpEco(models.Model):
     _name = 'mrp.eco'
-    _description = 'Engineering Change Order'
+    _description = 'Engineering Change Order (ECO)'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     @api.model
@@ -681,7 +683,7 @@ class MrpEco(models.Model):
 
 class MrpEcoBomChange(models.Model):
     _name = 'mrp.eco.bom.change'
-    _description = 'ECO Material changes'
+    _description = 'ECO BoM changes'
 
     eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade')
     eco_rebase_id = fields.Many2one('mrp.eco', 'ECO Rebase', ondelete='cascade')
