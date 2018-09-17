@@ -6,6 +6,7 @@ import uuid
 class DocumentShare(models.Model):
     _name = 'documents.share'
     _inherit = ['mail.thread', 'mail.alias.mixin']
+    _description = 'Documents Share'
 
     folder_id = fields.Many2one('documents.folder', requried=True)
     name = fields.Char(string="Name")
