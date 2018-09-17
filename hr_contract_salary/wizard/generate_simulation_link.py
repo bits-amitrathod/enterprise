@@ -12,6 +12,7 @@ from werkzeug.urls import url_encode
 
 class GenerateSimulationLink(models.TransientModel):
     _name = 'generate.simulation.link'
+    _description = 'Gamification Simulation Link'
 
     @api.model
     def default_get(self, fields):
