@@ -195,7 +195,7 @@ QUnit.module('DocumentsKanbanView', {
     },
 }, function () {
     QUnit.test('basic rendering', function (assert) {
-        assert.expect(11);
+        assert.expect(12);
 
         var kanban = createView({
             View: DocumentsKanbanView,
@@ -225,13 +225,15 @@ QUnit.module('DocumentsKanbanView', {
             "should have a 'documents inspector' column");
 
         // check control panel buttons
-        assert.strictEqual(kanban.$buttons.find('.btn-primary').length, 2,
-            "should have two primary buttons");
+        assert.strictEqual(kanban.$buttons.find('.btn-primary').length, 3,
+            "should have three primary buttons");
         assert.strictEqual(kanban.$buttons.find('.btn-primary:first').text().trim(), 'Upload',
             "should have a primary 'Upload' button");
         assert.strictEqual(kanban.$buttons.find('button.o_documents_kanban_url').length, 1,
             "should allow to save a URL");
-        assert.strictEqual(kanban.$buttons.find('.btn-secondary').text().trim(), 'Share',
+        assert.strictEqual(kanban.$buttons.find('button.o_documents_kanban_request').text().trim(), 'Request Document',
+            "should have a primary 'request' button");
+        assert.strictEqual(kanban.$buttons.find('button.btn-secondary').text().trim(), 'Share',
             "should have a secondary 'Share' button");
 
         kanban.destroy();
@@ -582,6 +584,30 @@ QUnit.module('DocumentsKanbanView', {
         });
 
         kanban.$buttons.find('button.o_documents_kanban_url').click();
+
+        kanban.destroy();
+    });
+
+    QUnit.test('can Request a file', function (assert) {
+        assert.expect(1);
+
+        var kanban = createView({
+            View: DocumentsKanbanView,
+            model: 'ir.attachment',
+            data: this.data,
+            arch: '<kanban><templates><t t-name="kanban-box">' +
+                    '<div>' +
+                        '<field name="datas_fname"/>' +
+                    '</div>' +
+                '</t></templates></kanban>',
+            intercepts: {
+                do_action: function (ev) {
+                    assert.deepEqual(ev.data.action, "documents.action_request_form", "should open the Request form");
+                },
+            },
+        });
+
+        kanban.$buttons.find('button.o_documents_kanban_request').click();
 
         kanban.destroy();
     });

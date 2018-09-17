@@ -9,6 +9,7 @@ class IrAttachment(models.Model):
     _name = 'ir.attachment'
     _inherit = ['ir.attachment', 'mail.thread', 'mail.activity.mixin']
 
+    type = fields.Selection(selection_add=[('empty', "Empty")])
     favorited_ids = fields.Many2many('res.users', string="Favorite of")
     tag_ids = fields.Many2many('documents.tag', 'document_tag_rel', string="Tags")
     partner_id = fields.Many2one('res.partner', string="Contact", track_visibility='onchange')
@@ -45,7 +46,7 @@ class IrAttachment(models.Model):
                 if rule.criteria_owner_id:
                     domain += [['owner_id', '=', rule.criteria_owner_id.id]]
                 if rule.create_model:
-                    domain += [['type', '!=', 'url']]
+                    domain += [['type', 'not in', ['url', 'empty']]]
                 if rule.criteria_tag_ids:
                     contains_array = []
                     not_contains_array = []
@@ -120,7 +121,7 @@ class IrAttachment(models.Model):
                         activity_vals['date_deadline'] = fields.Date.context_today(share) + relativedelta(
                             **{share.activity_date_deadline_range_type: share.activity_date_deadline_range})
 
-                    user = share.activity_user_id or share.partner_id or share.owner_id
+                    user = share.activity_user_id or share.owner_id or self.env.user
                     if user:
                         activity_vals['user_id'] = user.id
                     attachment.activity_schedule(**activity_vals)
@@ -152,3 +153,12 @@ class IrAttachment(models.Model):
             'type': 'ir.actions.client',
             'tag': 'reload',
         }
+
+    @api.multi
+    def activity_write(self):
+        self.ensure_one()
+        self.activity_schedule(date_deadline=self.activity_date_deadline,
+                               summary="Requested Document",
+                               user_id=self.partner_id)
+
+        return self.refresh_write()

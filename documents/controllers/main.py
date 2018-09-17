@@ -58,7 +58,7 @@ class ShareRoute(http.Controller):
         try:
             with zipfile.ZipFile(stream, 'w') as doc_zip:
                 for attachment in attachments:
-                    if attachment.type == 'url':
+                    if attachment.type in ['url', 'empty']:
                         continue
                     filename = attachment.datas_fname
                     doc_zip.writestr(filename, base64.b64decode(attachment['datas']),
@@ -219,7 +219,7 @@ class ShareRoute(http.Controller):
                             activity_vals['date_deadline'] = fields.Date.context_today(share) + relativedelta(
                                 **{share.activity_date_deadline_range_type: share.activity_date_deadline_range})
 
-                        user = share.activity_user_id or share.partner_id or share.owner_id
+                        user = share.activity_user_id or share.owner_id or self.env.user
                         if user:
                             activity_vals['user_id'] = user.id
                         attachment.activity_schedule(**activity_vals)

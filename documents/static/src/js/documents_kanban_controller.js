@@ -88,6 +88,7 @@ var DocumentsKanbanController = KanbanController.extend({
         this.$buttons.on('click', '.o_documents_kanban_share', this._onShareDomain.bind(this));
         this.$buttons.on('click', '.o_documents_kanban_upload', this._onUpload.bind(this));
         this.$buttons.on('click', '.o_documents_kanban_url', this._onUploadFromUrl.bind(this));
+        this.$buttons.on('click', '.o_documents_kanban_request', this._onRequestFile.bind(this));
     },
     /**
      * @override
@@ -250,7 +251,7 @@ var DocumentsKanbanController = KanbanController.extend({
     _processFiles: function (files) {
         var self = this;
         var defs = [];
-        this.tagIDs = _.flatten(_.values(this.selectedFilterTagIDs));
+        var tagIDs = _.flatten(_.values(this.selectedFilterTagIDs));
         _.each(files, function (f) {
             var def = $.Deferred();
             defs.push(def);
@@ -270,8 +271,8 @@ var DocumentsKanbanController = KanbanController.extend({
                 // convert data from "data:application/zip;base64,R0lGODdhAQBADs=" to "R0lGODdhAQBADs="
                 l[i].datas = l[i].datas.split(',',2)[1];
                 l[i].folder_id = self.selectedFolderID;
-                if (self.tagIDs) {
-                    l[i].tag_ids = [[6, 0, self.tagIDs]];
+                if (tagIDs) {
+                    l[i].tag_ids = [[6, 0, tagIDs]];
                 }
             }
             return self._rpc({
@@ -683,7 +684,7 @@ var DocumentsKanbanController = KanbanController.extend({
         ev.stopPropagation();
         var self = this;
         var documentViewer = new DocumentViewer(this, [ev.data.record], ev.data.record.id);
-        documentViewer.appendTo($('.o_documents_kanban_view'));
+        documentViewer.appendTo(this.$('.o_documents_kanban_view'));
     },
     /**
      * @private
@@ -840,6 +841,7 @@ var DocumentsKanbanController = KanbanController.extend({
      *
      * @private
      * @param {OdooEvent} ev
+     * @param {integer} ev.data.id
      */
     _onReplaceFile: function (ev) {
         var self = this;
@@ -847,7 +849,6 @@ var DocumentsKanbanController = KanbanController.extend({
         $upload_input.on('change', function (e) {
             var f = e.target.files[0];
             var state = self.model.get(self.handle);
-            var record = _.findWhere(state.data, {id: ev.data.id});
             var reader = new FileReader();
 
             reader.onload = function (e) {
@@ -861,7 +862,7 @@ var DocumentsKanbanController = KanbanController.extend({
                 self._rpc({
                     model: 'ir.attachment',
                     method: 'write',
-                    args: [[record.data.id], {datas: data, mimetype: mimetype, datas_fname: f.name}],
+                    args: [[ev.data.id], {datas: data, type: 'binary', mimetype: mimetype, datas_fname: f.name}],
                 }).always(function () {
                     $upload_input.removeAttr('disabled');
                     $upload_input.val("");
@@ -876,6 +877,20 @@ var DocumentsKanbanController = KanbanController.extend({
             }
         });
         $upload_input.click();
+    },
+    /**
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onRequestFile: function (ev) {
+        ev.preventDefault();
+        var tagIDs = _.flatten(_.values(this.selectedFilterTagIDs));
+        this.do_action('documents.action_request_form', {
+            additional_context: {
+                default_folder_id: this.selectedFolderID,
+                default_tag_ids: [[6, 0, tagIDs]],
+            },
+        });
     },
     /**
      * Save the changes done in the DocumentsInspector and re-render the view.
@@ -1019,9 +1034,11 @@ var DocumentsKanbanController = KanbanController.extend({
      */
     _onUploadFromUrl: function (ev) {
         ev.preventDefault();
+        var tagIDs = _.flatten(_.values(this.selectedFilterTagIDs));
         this.do_action('documents.action_url_form', {
             additional_context: {
                 default_folder_id: this.selectedFolderID,
+                default_tag_ids: [[6, 0, tagIDs]],
             },
         });
     },

@@ -100,6 +100,21 @@
             <field name="sequence">6</field>
         </record>
 
+
+        <!-- activity types -->
+
+        <record id="mail_documents_activity_data_Inbox" model="mail.activity.type">
+            <field name="name">Inbox</field>
+        </record>
+
+        <record id="mail_documents_activity_data_tv" model="mail.activity.type">
+            <field name="name">To validate</field>
+        </record>
+
+        <record id="mail_documents_activity_data_md" model="mail.activity.type">
+            <field name="name">Missing document</field>
+        </record>
+
         <!-- -->
 
         <record id="documents_internal_status_draft" model="documents.tag" forcecreate="0">
