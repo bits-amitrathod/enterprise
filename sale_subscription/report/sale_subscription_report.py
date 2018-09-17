@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 class sale_subscription_report(models.Model):
     _name = "sale.subscription.report"
-    _description = "Subscription Statistics"
+    _description = "Subscription Analysis"
     _auto = False
 
     name = fields.Char()

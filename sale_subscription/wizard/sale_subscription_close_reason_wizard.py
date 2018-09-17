@@ -4,6 +4,7 @@ from odoo import api, fields, models
 
 class SaleSubscriptionCloseReasonWizard(models.TransientModel):
     _name = "sale.subscription.close.reason.wizard"
+    _description = 'Subscription Close Reason Wizard'
 
     close_reason_id = fields.Many2one("sale.subscription.close.reason", string="Close Reason", required=True)
 
