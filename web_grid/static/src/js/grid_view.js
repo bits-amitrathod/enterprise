@@ -55,6 +55,7 @@ var GridView = AbstractView.extend({
         this.loadParams.sectionField = sectionField;
         this.loadParams.colField = colField;
         this.loadParams.cellField = cellField;
+        this.loadParams.groupedBy = params.groupBy;
 
         // renderer
         this.rendererParams.canCreate = this.controllerParams.activeActions.create;

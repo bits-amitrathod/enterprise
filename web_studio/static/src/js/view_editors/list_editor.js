@@ -8,7 +8,7 @@ return ListRenderer.extend(EditorMixin, {
     nearest_hook_tolerance: 200,
     className: ListRenderer.prototype.className + ' o_web_studio_list_view_editor',
     events: _.extend({}, ListRenderer.prototype.events, {
-        'click th:not(.o_web_studio_hook, .o_group_name), td:not(.o_web_studio_hook)': '_onExistingColumn',
+        'click th:not(.o_web_studio_hook), td:not(.o_web_studio_hook)': '_onExistingColumn',
     }),
     /**
      * @constructor
@@ -76,15 +76,6 @@ return ListRenderer.extend(EditorMixin, {
     // Private
     //--------------------------------------------------------------------------
 
-    /**
-     * @override
-     */
-    _processColumns: function () {
-        this._super.apply(this, arguments);
-        // we don't want to be able to resequence in the editor
-        this.hasHandle = false;
-        this.handleField = null;
-    },
     /**
      * @override
      * @private
@@ -155,6 +146,15 @@ return ListRenderer.extend(EditorMixin, {
         });
 
         return def;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _renderBody: function () {
+        // we don't want to be able to resequence in the editor
+        this.hasHandle = false;
+        return this._super();
     },
     /**
      * @override
@@ -238,16 +238,6 @@ return ListRenderer.extend(EditorMixin, {
      * @private
      */
     _renderRow: function () {
-        var $row = this._super.apply(this, arguments);
-        this._addStudioHooksOnBodyRow($row);
-
-        return $row;
-    },
-    /**
-     * @override
-     * @private
-     */
-    _renderGroupRow: function () {
         var $row = this._super.apply(this, arguments);
         this._addStudioHooksOnBodyRow($row);
 
