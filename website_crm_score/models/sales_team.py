@@ -36,6 +36,7 @@ else:
 class team_user(models.Model):
     _name = 'team.user'
     _inherit = ['mail.thread']
+    _description = 'Salesperson (Team Member)'
 
     @api.one
     def _count_leads(self):
