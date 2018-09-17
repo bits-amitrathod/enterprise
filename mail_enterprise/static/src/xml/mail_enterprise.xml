@@ -2,6 +2,7 @@
 <templates>
 
     <t t-name="mail_enterprise.AttachmentPreview">
+      <t t-if="widget.activeAttachment">
         <t t-set="activeAttachment" t-value="widget.activeAttachment"/>
         <a class="btn btn-link pull-right" t-att-href="activeAttachment.url"><i class="fa fa-download"/> Download</a>
         <h3 class="mt0 mb8 pl-2 text-muted"> <t t-esc="activeAttachment.filename"/> </h3>
@@ -17,6 +18,7 @@
                 <span class="fa fa-chevron-right"/>
             </a>
         </t>
+      </t>
     </t>
 
 </templates>

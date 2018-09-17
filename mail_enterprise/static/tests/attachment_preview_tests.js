@@ -124,6 +124,9 @@ QUnit.module('MailAttachmentOnSide', {
                     });
                     return $.when(5);
                 }
+                if (args.method === 'register_as_main_attachment') {
+                    return $.when(true);
+                }
                 return this._super.apply(this, arguments);
             },
             intercepts: {

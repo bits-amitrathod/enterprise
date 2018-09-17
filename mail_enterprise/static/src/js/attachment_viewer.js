@@ -26,7 +26,7 @@ var AttachmentViewer = Widget.extend({
         this.attachments = attachments;
         this.activeAttachment = _.find(attachments, function (attachment) {
             return attachment.is_main;
-        });
+        }) || this.attachments[0];
     },
     /**
      * Render attachment.
@@ -50,6 +50,9 @@ var AttachmentViewer = Widget.extend({
      */
     updateContents: function (attachments, order) {
         this.attachments = attachments;
+        this.activeAttachment = _.find(attachments, function (attachment) {
+            return attachment.is_main;
+        }) || this.attachments[0];
         this._renderAttachment();
     },
 
