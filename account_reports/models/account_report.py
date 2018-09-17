@@ -432,7 +432,8 @@ class AccountReport(models.AbstractModel):
             searchview_dict['analytic_tags'] = self.env.user.id in self.env.ref('analytic.group_analytic_tags').users.ids and [(t.id, t.name) for t in self.env['account.analytic.tag'].search([])] or False
             options['selected_analytic_tag_names'] = [self.env['account.analytic.tag'].browse(int(tag)).name for tag in options['analytic_tags']]
         if options.get('partner'):
-            searchview_dict['res_partners'] = [(partner.id, partner.name) for partner in self.env['res.partner'].search([])] or False
+            partners = self.env['account.move.line'].read_group([('partner_id', '!=', False)], ['partner_id'], ['partner_id'])
+            searchview_dict['res_partners'] = [partner['partner_id'] for partner in partners] or False # list of tuple(id, name)
             searchview_dict['res_partner_categories'] = [(category.id, category.name) for category in self.env['res.partner.category'].search([])] or False
             options['selected_partner_ids'] = [self.env['res.partner'].browse(int(partner)).name for partner in options['partner_ids']]
             options['selected_partner_categories'] = [self.env['res.partner.category'].browse(int(category)).name for category in options['partner_categories']]
