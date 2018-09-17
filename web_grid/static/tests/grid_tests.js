@@ -143,7 +143,6 @@ QUnit.module('Views', {
             grid.destroy();
             done();
         });
-
     });
 
     QUnit.test('basic grouped grid view', function (assert) {
@@ -340,6 +339,32 @@ QUnit.module('Views', {
         grid.destroy();
     });
 
+    QUnit.test('groupBy a date with groupby function', function (assert) {
+        assert.expect(1);
+
+        var grid = createView({
+            View: GridView,
+            model: 'analytic.line',
+            data: this.data,
+            arch: '<grid string="Timesheet By Project">' +
+                    '<field name="project_id" type="row" section="1"/>' +
+                    '<field name="task_id" type="row"/>' +
+                    '<field name="date" type="col">' +
+                        '<range name="week" string="Week" span="week" step="day"/>' +
+                    '</field>'+
+                    '<field name="unit_amount" type="measure" widget="float_time"/>' +
+                '</grid>',
+            groupBy: "date:month",
+            currentDate: "2017-01-25",
+        });
+
+        assert.strictEqual(grid.$('tbody tr:first th').text(), 'January 2017',
+            "groupBy should have been taken into account when loading the view"
+        );
+
+        grid.destroy();
+    });
+
     QUnit.test('Removing groupBy defaults to initial groupings', function (assert) {
         assert.expect(6);
 
@@ -452,9 +477,6 @@ QUnit.module('Views', {
             data: this.data,
             arch: this.arch,
             currentDate: "2017-01-25",
-            mockRPC: function (route, args) {
-                return this._super.apply(this, arguments);
-            },
         });
 
         return concurrency.delay(0).then(function () {
@@ -588,7 +610,6 @@ QUnit.module('Views', {
             grid.destroy();
             done();
         });
-
     });
 
     QUnit.test('switching active range', function (assert) {
@@ -635,7 +656,6 @@ QUnit.module('Views', {
             grid.destroy();
             done();
         });
-
     });
 
     QUnit.test('clicking on the info icon on a cell triggers a do_action', function (assert) {
@@ -771,7 +791,7 @@ QUnit.module('Views', {
             assert.strictEqual($input.text(), "08:30",
                 "text should have been properly parsed/formatted");
 
-            grid.$buttons.find('button:contains("Action")').click()
+            grid.$buttons.find('button:contains("Action")').click();
 
             grid.destroy();
             done();
