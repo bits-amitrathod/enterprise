@@ -15,7 +15,7 @@ class AccountReportFollowupManager(models.Model):
 
 class AccountFollowupReport(models.AbstractModel):
     _name = "account.followup.report"
-    _description = "Followup Report"
+    _description = "Follow-up Report"
     _inherit = 'account.report'
 
     filter_partner_id = False

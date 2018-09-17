@@ -29,7 +29,7 @@ _logger = logging.getLogger(__name__)
 
 class AccountReportManager(models.Model):
     _name = 'account.report.manager'
-    _description = 'manage summary and footnotes of reports'
+    _description = 'Manage Summary and Footnotes of Reports'
 
     # must work with multi-company, in case of multi company, no company_id defined
     report_name = fields.Char(required=True, help='name of the model of the report')
@@ -43,7 +43,7 @@ class AccountReportManager(models.Model):
 
 class AccountReportFootnote(models.Model):
     _name = 'account.report.footnote'
-    _description = 'Footnote for reports'
+    _description = 'Account Report Footnote'
 
     text = fields.Char()
     line = fields.Char(index=True)
@@ -51,6 +51,7 @@ class AccountReportFootnote(models.Model):
 
 class AccountReport(models.AbstractModel):
     _name = 'account.report'
+    _description = 'Account Report'
 
     MAX_LINES = 80
     filter_date = None
