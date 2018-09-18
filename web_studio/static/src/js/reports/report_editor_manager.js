@@ -62,7 +62,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
     start: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function () {
-            self.renderPager();
+            self._renderPager();
             self._setPaperFormat();
         });
     },
@@ -70,37 +70,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
     //--------------------------------------------------------------------------
     // Public
     //--------------------------------------------------------------------------
-    /**
-     * @override
-     */
-    renderPager: function () {
-        var self = this;
-        this.pager = new Pager(this, this.env.ids.length, 1, 1);
-        this.pager.on('pager_changed', this, function (newState) {
-            this._cleanOperationsStack();
-            this.env.currentId = this.env.ids[newState.current_min - 1];
-            // TODO: maybe we should trigger_up and the action should handle
-            // this? But the pager will be reinstantiate and useless RPCs will
-            // be done (see willStart)
-            // OR should we put _getReportViews of report_editor_action here?
-            // But then it should be mocked in tests?
-            this._getReportViews().then(function (result) {
-                self.reportHTML = result.report_html;
-                self.reportViews = result.views;
-                self.updateEditor();
-            });
-        });
-        var $pager = $('<div>', {
-            class: 'o_web_studio_report_pager',
-        });
-        this.pager.appendTo($pager).then(function () {
-            self.pager.enable();
-        });
 
-        if (self.pager.state.size > 1) {
-            $pager.appendTo(this.$el);
-        }
-    },
     /**
      * @override
      */
@@ -267,6 +237,37 @@ var ReportEditorManager = AbstractEditorManager.extend({
             state: state,
             previousState: previousState,
         });
+    },
+    /**
+     * @override
+     */
+    _renderPager: function () {
+        var self = this;
+        this.pager = new Pager(this, this.env.ids.length, 1, 1);
+        this.pager.on('pager_changed', this, function (newState) {
+            this._cleanOperationsStack();
+            this.env.currentId = this.env.ids[newState.current_min - 1];
+            // TODO: maybe we should trigger_up and the action should handle
+            // this? But the pager will be reinstantiate and useless RPCs will
+            // be done (see willStart)
+            // OR should we put _getReportViews of report_editor_action here?
+            // But then it should be mocked in tests?
+            this._getReportViews().then(function (result) {
+                self.reportHTML = result.report_html;
+                self.reportViews = result.views;
+                self.updateEditor();
+            });
+        });
+        var $pager = $('<div>', {
+            class: 'o_web_studio_report_pager',
+        });
+        this.pager.appendTo($pager).then(function () {
+            self.pager.enable();
+        });
+
+        if (self.pager.state.size > 1) {
+            $pager.appendTo(this.$el);
+        }
     },
     /**
      * @private
