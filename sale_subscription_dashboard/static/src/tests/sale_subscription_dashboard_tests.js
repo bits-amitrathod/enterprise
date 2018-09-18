@@ -115,14 +115,14 @@ odoo.define('sale_subscription_dashboard.sale_subscription_tests', function (req
                     currency_id: 3,
                     default_salesman: {
                         id: 1,
-                        name: "Mitchell Stephens"
+                        name: "Mitchell Admin"
                     },
                     salesman_ids: [{
                         id: 1,
-                        name: "Mitchell Stephens"
+                        name: "Mitchell Admin"
                     }, {
                         id: 5,
-                        name: "Marc Brown"
+                        name: "Marc Demo"
                     }]
                 },
                 salesman_values: {

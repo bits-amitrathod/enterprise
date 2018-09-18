@@ -40,7 +40,7 @@ Tour.register('hr_contract_salary_tour', {
         {
             content: "Applicant\'s Name",
             trigger: '.oe_title input[name="partner_name"]',
-            run: 'text Mitchell Stephen',
+            run: 'text Mitchell Admin',
         },
         {
             content: "Applicant Contact",
@@ -80,7 +80,7 @@ Tour.register('hr_contract_salary_tour', {
         {
             content: "Contract Reference",
             trigger: '.oe_title input[name="name"]',
-            run: 'text Mitchell Stephen PFI Contract',
+            run: 'text Mitchell Admin PFI Contract',
         },
         {
             content: "Salary Structure",
