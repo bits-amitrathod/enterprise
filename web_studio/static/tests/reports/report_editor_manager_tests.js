@@ -119,7 +119,7 @@ QUnit.module('ReportEditorManager', {
 
     QUnit.test('empty editor rendering', function (assert) {
         var done = assert.async();
-        assert.expect(2);
+        assert.expect(5);
 
         this.templates.push({
             key: 'template1',
@@ -137,9 +137,21 @@ QUnit.module('ReportEditorManager', {
                 ids: [42, 43],
                 currentId: 42,
             },
-            report: {},
+            report: {
+                report_name: 'awesome_report',
+            },
             reportHTML: studioTestUtils.getReportHTML(this.templates),
             reportViews: studioTestUtils.getReportViews(this.templates),
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/print_report') {
+                    assert.strictEqual(args.report_name, 'awesome_report',
+                        "the correct report should be printed");
+                    assert.strictEqual(args.record_id, 42,
+                        "the report should be printed with the correct record");
+                    return $.when();
+                }
+                return this._super.apply(this, arguments);
+            },
         });
 
         rem.editorIframeDef.then(function () {
@@ -147,6 +159,9 @@ QUnit.module('ReportEditorManager', {
                 "a sidebar should be rendered");
             assert.strictEqual(rem.$('iframe').contents().find('.page .o_no_content_helper').length, 1,
                 "the iframe should be rendered with a no content helper");
+            assert.strictEqual(rem.$('.o_web_studio_report_print').length, 1,
+                "it should be possible to print the report");
+            rem.$('.o_web_studio_report_print').click();
 
             rem.destroy();
             done();

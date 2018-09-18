@@ -71,7 +71,7 @@ QUnit.module('Studio', {}, function () {
         });
 
         QUnit.test("'Report' tab behaviour", function (assert) {
-            assert.expect(6);
+            assert.expect(5);
 
             var sidebar = studioTestUtils.createSidebar({
                 data: this.data,
@@ -107,12 +107,6 @@ QUnit.module('Studio', {}, function () {
             var $dropdown2 = sidebar.$('[name="groups_id"] input').autocomplete('widget');
             sidebar.$('[name="groups_id"] input').click();
             $dropdown2.find('li:contains(Group7)').mouseenter().click();
-
-            // print the report
-            testUtils.intercept(sidebar, 'print_report', function (ev) {
-                assert.deepEqual(ev.data, {});
-            });
-            sidebar.$('.o_web_studio_print').click();
 
             sidebar.destroy();
         });

@@ -11,8 +11,8 @@ var ReportEditorSidebar = require('web_studio.ReportEditorSidebar');
 var ReportEditor = require('web_studio.ReportEditor');
 var AbstractEditorManager = require('web_studio.AbstractEditorManager');
 
+var qweb = core.qweb;
 var _t = core._t;
-
 
 var ReportEditorManager = AbstractEditorManager.extend({
     className: AbstractEditorManager.prototype.className + ' o_web_studio_report_editor_manager',
@@ -20,11 +20,13 @@ var ReportEditorManager = AbstractEditorManager.extend({
         hover_editor: '_onHighlightPreview',
         drop_component: '_onDropComponent',
         begin_drag_component: '_onBeginDragComponent',
-        print_report: '_onPrintReport',
         element_removed: '_onElementRemoved',
         iframe_ready: '_onIframeReady',
         begin_preview_drag_component: '_onBeginPreviewDragComponent',
         end_preview_drag_component: '_onEndPreviewDragComponent',
+    }),
+    events: _.extend({}, AbstractEditorManager.prototype.events, {
+        'click .o_web_studio_report_print': '_onPrintReport',
     }),
     /**
      * @override
@@ -62,7 +64,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
     start: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function () {
-            self._renderPager();
+            self._renderActionsSection();
             self._setPaperFormat();
         });
     },
@@ -239,7 +241,28 @@ var ReportEditorManager = AbstractEditorManager.extend({
         });
     },
     /**
+     * This section contains the 'Print' button and the pager.
+     *
+     * @private
+     */
+    _renderActionsSection: function () {
+        var $actionsSection = $('<div>', {
+            class: 'o_web_studio_report_actions',
+        });
+        $actionsSection.appendTo(this.$el);
+
+        var $printSection = $(qweb.render('web_studio.PrintSection'));
+        $printSection.appendTo($actionsSection);
+
+        var $pager = this._renderPager();
+        if (this.pager.state.size > 1) {
+            // only display the pager if useful
+            $pager.appendTo($actionsSection);
+        }
+    },
+    /**
      * @override
+     * @returns {jQuery} the pager node
      */
     _renderPager: function () {
         var self = this;
@@ -264,10 +287,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
         this.pager.appendTo($pager).then(function () {
             self.pager.enable();
         });
-
-        if (self.pager.state.size > 1) {
-            $pager.appendTo(this.$el);
-        }
+        return $pager;
     },
     /**
      * @private

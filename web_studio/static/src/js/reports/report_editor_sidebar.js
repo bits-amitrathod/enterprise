@@ -25,7 +25,6 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
         'click .o_web_studio_sidebar_header > div:not(.inactive)': '_onTab',
         'click .o_web_studio_xml_editor': '_onXMLEditor',
         'click .o_web_studio_parameters': '_onParameters',
-        'click .o_web_studio_print': '_onPrint',
         'click .o_web_studio_remove': '_onRemove',
     },
     /**
@@ -526,12 +525,6 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
      */
     _onParameters: function () {
         this.trigger_up('open_record_form_view');
-    },
-    /**
-     * @private
-     */
-    _onPrint: function () {
-        this.trigger_up('print_report');
     },
     /**
      * @private
