@@ -191,7 +191,7 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="url" string="URL" widget="url"/>
+                        <field name="url" string="URL" widget="url" required="1"/>
                         <field name="name"/>
                         <field name="folder_id" invisible="1"/>
                         <field name="tag_ids" invisible="1"/>
@@ -199,7 +199,7 @@
                         <field name="datas_fname" invisible="1"/>
                     </group>
                 <footer>
-                    <button name="refresh_write" type="object" string="Add" class="btn btn-primary"/>
+                    <button name="write" type="object" string="Add" class="btn btn-primary"/>
                 </footer>
                 </sheet>
             </form>

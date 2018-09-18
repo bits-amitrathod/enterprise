@@ -147,13 +147,6 @@ class IrAttachment(models.Model):
         else:
             self.lock_uid = self.env.uid
 
-    @api.multi
-    def refresh_write(self):
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'reload',
-        }
-
     def _set_folder_settings(self, vals):
         """Implemented by bridge modules to set their folders and tags to attachments
         @param vals: a create/write dict.

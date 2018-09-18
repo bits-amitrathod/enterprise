@@ -884,11 +884,15 @@ var DocumentsKanbanController = KanbanController.extend({
      */
     _onRequestFile: function (ev) {
         ev.preventDefault();
+        var self = this;
         var tagIDs = _.flatten(_.values(this.selectedFilterTagIDs));
         this.do_action('documents.action_request_form', {
             additional_context: {
                 default_folder_id: this.selectedFolderID,
                 default_tag_ids: [[6, 0, tagIDs]],
+            },
+            on_close: function () {
+                self.reload();
             },
         });
     },
@@ -1034,11 +1038,15 @@ var DocumentsKanbanController = KanbanController.extend({
      */
     _onUploadFromUrl: function (ev) {
         ev.preventDefault();
+        var self = this;
         var tagIDs = _.flatten(_.values(this.selectedFilterTagIDs));
         this.do_action('documents.action_url_form', {
             additional_context: {
                 default_folder_id: this.selectedFolderID,
                 default_tag_ids: [[6, 0, tagIDs]],
+            },
+            on_close: function () {
+                self.reload();
             },
         });
     },
