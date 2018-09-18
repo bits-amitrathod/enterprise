@@ -172,7 +172,8 @@ class SaleOrder(models.Model):
 
     def _website_product_id_change(self, order_id, product_id, qty=0):
         res = super(SaleOrder, self)._website_product_id_change(order_id, product_id, qty)
-        line = self._cart_find_product_line(product_id=product_id)
+        lines = self._cart_find_product_line(product_id=product_id)
+        line = len(lines) and lines[0]
         if line and line.force_price:
             res['price_unit'] = line.price_unit
             res['product_uom'] = line.product_uom.id
