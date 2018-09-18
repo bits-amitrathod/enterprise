@@ -53,7 +53,6 @@
             <t t-call="web_studio.Sidebar.Toolbox">
                 <t t-call="web_studio.Sidebar.Parameters" t-if="widget.debug"/>
                 <t t-call="web_studio.Sidebar.XMLEditor" t-if="widget.debug"/>
-                <t t-call="web_studio.Sidebar.Print"/>
             </t>
         </t>
         <t t-if="widget.state.mode === 'properties'">
@@ -130,7 +129,7 @@
     <div class="o_web_studio_tas_asexpression" />
 </div>
 
-<div t-name="web_studio.ReportDirectiveTOptions" class="o_web_studio_sidebar_text">
+<div t-name="web_studio.ReportDirectiveTOptions" class="o_web_studio_sidebar_select">
     <label>Widget</label>
     <div class="o_web_studio_toption_widget">
         <select>
@@ -244,20 +243,34 @@
         </div>
     </div>
     <div class="row no-gutters">
-        <div class="col-10 o_web_studio_sidebar_text o_web_studio_classes">
-            <label>Class</label>
-            <input type="text" t-att-value="widget.allClasses" />
-        </div>
-        <div class="col-2 o_web_studio_sidebar_text o_web_studio_heading">
-            <label>Heading</label>
+        <div class="col-6 o_web_studio_sidebar_select o_web_studio_font_size">
+            <label>Font Size</label>
             <select>
                 <option></option>
-                <option t-att-selected="widget.heading == 'h1' or null" value="h1">H1</option>
-                <option t-att-selected="widget.heading == 'h2' or null" value="h2">H2</option>
-                <option t-att-selected="widget.heading == 'h3' or null" value="h3">H3</option>
-                <option t-att-selected="widget.heading == 'h4' or null" value="h4">H4</option>
-                <option t-att-selected="widget.heading == 'h5' or null" value="h5">H5</option>
+                <option t-att-selected="widget.fontSize == 'h1' or null" value="h1">H1</option>
+                <option t-att-selected="widget.fontSize == 'h2' or null" value="h2">H2</option>
+                <option t-att-selected="widget.fontSize == 'h3' or null" value="h3">H3</option>
+                <option t-att-selected="widget.fontSize == 'h4' or null" value="h4">H4</option>
+                <option t-att-selected="widget.fontSize == 'h5' or null" value="h5">H5</option>
+                <option t-att-selected="widget.fontSize == 'h6' or null" value="h6">H6</option>
+                <option t-att-selected="widget.fontSize == 'small' or null" value="small">Small</option>
             </select>
+        </div>
+        <div t-if="widget.isTable" class="col-6 o_web_studio_sidebar_select o_web_studio_table_style">
+            <label>Table</label>
+            <select>
+                <option></option>
+                <option t-att-selected="widget.tableStyle == 'table-sm' or null" value="table-sm">SM</option>
+                <option t-att-selected="widget.tableStyle == 'table-striped' or null" value="table-striped">Striped</option>
+                <option t-att-selected="widget.tableStyle == 'table-bordered' or null" value="table-bordered">Bordered</option>
+                <option t-att-selected="widget.tableStyle == 'table-borderless' or null" value="table-borderless">Borderless</option>
+            </select>
+        </div>
+    </div>
+    <div t-if="widget.debug" class="row no-gutters">
+        <div class="col o_web_studio_sidebar_text o_web_studio_classes">
+            <label>Class</label>
+            <input type="text" t-att-value="widget.allClasses" />
         </div>
     </div>
 </div>

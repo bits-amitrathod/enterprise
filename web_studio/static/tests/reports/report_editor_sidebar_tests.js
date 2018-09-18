@@ -1,6 +1,7 @@
 odoo.define('web_studio.ReportEditorSidebar_tests', function (require) {
 "use strict";
 
+var config = require('web.config');
 var testUtils = require('web.test_utils');
 
 var studioTestUtils = require('web_studio.testUtils');
@@ -499,7 +500,7 @@ QUnit.module('Studio', {}, function () {
                     testName: "set the heading level",
                     nodeToUse: layoutChangeNode,
                     eventToTrigger: "change",
-                    sidebarOperationInputSelector: '.o_web_studio_heading select',
+                    sidebarOperationInputSelector: '.o_web_studio_font_size select',
                     valueToPut: "h3",
                     expectedRPC: {
                         inheritance: [{
@@ -649,7 +650,7 @@ QUnit.module('Studio', {}, function () {
                     testName: "unset the heading level",
                     nodeToUse: nodeWithAllLayoutPropertiesSet,
                     eventToTrigger: "change",
-                    sidebarOperationInputSelector: '.o_web_studio_heading select',
+                    sidebarOperationInputSelector: '.o_web_studio_font_size select',
                     valueToPut: "",
                     expectedRPC: {
                         inheritance: [{
@@ -717,6 +718,10 @@ QUnit.module('Studio', {}, function () {
             // there is one assert by operation
             assert.expect(layoutChangesOperations.length);
 
+            var initialDebugMode = config.debug;
+            // show 'class' in the sidebar
+            config.debug = true;
+
             _.each(layoutChangesOperations, function (changeOperation) {
                 var node = {
                     node: changeOperation.nodeToUse,
@@ -740,6 +745,8 @@ QUnit.module('Studio', {}, function () {
 
                 sidebar.destroy();
             });
+
+            config.debug = initialDebugMode;
         });
     });
 
