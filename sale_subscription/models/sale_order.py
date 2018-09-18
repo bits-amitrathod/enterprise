@@ -46,6 +46,7 @@ class SaleOrder(models.Model):
             'template_id': template.id,
             'partner_id': self.partner_invoice_id.id,
             'user_id': self.user_id.id,
+            'team_id': self.team_id.id,
             'date_start': fields.Date.today(),
             'description': self.note or template.description,
             'pricelist_id': self.pricelist_id.id,
