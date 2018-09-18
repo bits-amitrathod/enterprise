@@ -46,7 +46,7 @@ class IrAttachment(models.Model):
                 if rule.criteria_owner_id:
                     domain += [['owner_id', '=', rule.criteria_owner_id.id]]
                 if rule.create_model:
-                    domain += [['type', 'not in', ['url', 'empty']]]
+                    domain += [['type', '=', 'binary']]
                 if rule.criteria_tag_ids:
                     contains_array = []
                     not_contains_array = []
@@ -111,21 +111,32 @@ class IrAttachment(models.Model):
             attachments = self.env['ir.attachment'].browse([x[1] for x in rv])
             for attachment in attachments:
                 attachment.write(write_vals)
-                if share.activity_option and share.activity_type_id:
-                    activity_vals = {
-                        'summary': share.activity_summary or '',
-                        'note': share.activity_note or '',
-                        'activity_type_id': share.activity_type_id.id,
-                    }
-                    if share.activity_date_deadline_range > 0:
-                        activity_vals['date_deadline'] = fields.Date.context_today(share) + relativedelta(
-                            **{share.activity_date_deadline_range_type: share.activity_date_deadline_range})
+                attachment.documents_set_activity(settings_model=share)
 
-                    user = share.activity_user_id or share.owner_id or self.env.user
-                    if user:
-                        activity_vals['user_id'] = user.id
-                    attachment.activity_schedule(**activity_vals)
         return rv
+
+    @api.multi
+    def documents_set_activity(self, settings_model=None):
+        """
+        Generate an activity based on the fields of settings_model.
+
+        :param settings_model: the model that contains the activity fields.
+        """
+        if settings_model:
+            if settings_model.activity_option and settings_model.activity_type_id:
+                activity_vals = {
+                    'summary': settings_model.activity_summary or '',
+                    'note': settings_model.activity_note or '',
+                    'activity_type_id': settings_model.activity_type_id.id,
+                }
+                if settings_model.activity_date_deadline_range > 0:
+                    activity_vals['date_deadline'] = fields.Date.context_today(settings_model) + relativedelta(
+                        **{settings_model.activity_date_deadline_range_type: settings_model.activity_date_deadline_range})
+
+                user = settings_model.activity_user_id or settings_model.owner_id or self.env.user
+                if user:
+                    activity_vals['user_id'] = user.id
+                self.activity_schedule(**activity_vals)
 
     @api.multi
     def toggle_favorited(self):
@@ -166,12 +177,3 @@ class IrAttachment(models.Model):
             self.activity_ids.action_feedback(feedback="File Added")
         vals = self._set_folder_settings(vals)
         return super(IrAttachment, self).write(vals)
-
-    @api.multi
-    def activity_write(self):
-        self.ensure_one()
-        self.activity_schedule(date_deadline=self.activity_date_deadline,
-                               summary="Requested Document",
-                               user_id=self.partner_id)
-
-        return self.refresh_write()

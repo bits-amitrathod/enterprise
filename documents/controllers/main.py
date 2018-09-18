@@ -208,21 +208,7 @@ class ShareRoute(http.Controller):
                         'datas': base64.b64encode(data),
                     }
                     attachment = attachments.sudo().create(attachment_dict)
-
-                    if share.activity_option and share.activity_type_id:
-                        activity_vals = {
-                            'summary': share.activity_summary or '',
-                            'note': share.activity_note or '',
-                            'activity_type_id': share.activity_type_id.id,
-                        }
-                        if share.activity_date_deadline_range > 0:
-                            activity_vals['date_deadline'] = fields.Date.context_today(share) + relativedelta(
-                                **{share.activity_date_deadline_range_type: share.activity_date_deadline_range})
-
-                        user = share.activity_user_id or share.owner_id or self.env.user
-                        if user:
-                            activity_vals['user_id'] = user.id
-                        attachment.activity_schedule(**activity_vals)
+                    attachment.documents_set_activity(settings_model=share)
 
             except Exception as e:
                 logger.exception("Failed to upload attachment")

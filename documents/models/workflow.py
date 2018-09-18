@@ -92,18 +92,7 @@ class WorkflowActionRule(models.Model):
                 attachment.activity_ids.unlink()
 
             if self.activity_option and self.activity_type_id:
-                activity_vals = {
-                    'summary': self.activity_summary or '',
-                    'note': self.activity_note or '',
-                    'activity_type_id': self.activity_type_id.id,
-                }
-                if self.activity_date_deadline_range > 0:
-                    activity_vals['date_deadline'] = fields.Date.context_today(self) + relativedelta(
-                        **{self.activity_date_deadline_range_type: self.activity_date_deadline_range})
-                user = self.activity_user_id or self.user_id
-                if user:
-                    activity_vals['user_id'] = user.id
-                attachment.activity_schedule(**activity_vals)
+                attachment.documents_set_activity(settings_model=self)
 
             # tag and facet actions
             for tag_action in self.tag_action_ids:
