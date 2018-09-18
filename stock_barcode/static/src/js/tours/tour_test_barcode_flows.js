@@ -165,10 +165,6 @@ function assertQuantsCount(expected) {
     assert($quantity, expected, 'Wrong number of cards');
 }
 
-function assertRaise(expected) {
-    var $dialog = $('.o_dialog_warning');
-    assert(_.trim($dialog.innerText), expected, 'wrong error message from the server');
-}
 // ----------------------------------------------------------------------------
 // Tours
 // ----------------------------------------------------------------------------
@@ -197,11 +193,11 @@ tour.register('test_internal_picking_from_scratch_1', {test: true}, [
     {
         trigger: '.o_show_information',
     },
-    
+
     {
         trigger: '.o_form_label:contains("Status")',
     },
-    
+
     {
         trigger: '.o_close',
     },
@@ -1732,11 +1728,11 @@ tour.register('test_bypass_source_scan', {test: true}, [
         trigger: '.o_barcode_client_action',
         run: 'scan serial1',
     },
-    
+
     {
         trigger: '.o_edit'
     },
-    
+
     {
         trigger: '.o_field_many2one[name=lot_id]',
         extra_trigger: '.o_form_label:contains("Product")',
@@ -1745,12 +1741,12 @@ tour.register('test_bypass_source_scan', {test: true}, [
             actions.text("", this.$anchor.find("input"));
         },
     },
-    
+
     {
         trigger: 'input.o_field_widget[name=qty_done]',
         run: 'text 0',
     },
-    
+
     {
         trigger: '.o_save'
     },
@@ -1805,11 +1801,11 @@ tour.register('test_inventory_adjustment', {test: true}, [
     {
         trigger: '.o_show_information',
     },
-    
+
     {
         trigger: '.o_form_label:contains("Status")',
     },
-    
+
     {
         trigger: '.o_close',
     },
@@ -2475,10 +2471,20 @@ tour.register('test_put_in_pack_before_dest', {test: true}, [
     },
 
     {
-        trigger: '.o_dialog_warning',
-        run: function() {
-            assertRaise('You cannot move the same package content more than once in the same transfer or split the same package into two location.');
-        }
+        trigger: '.modal-title:contains("Choose destination location")',
+    },
+
+    {
+        trigger: '.btn-primary',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")',
     },
 
 ]);

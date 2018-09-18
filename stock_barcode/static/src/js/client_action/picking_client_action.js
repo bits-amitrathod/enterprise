@@ -326,12 +326,21 @@ var PickingClientAction = ClientAction.extend({
                     'args': [[self.actionParams.pickingId]],
                     kwargs: {context: self.context},
                 }).then(function (res) {
+                    var def = $.when()
                     self._endBarcodeFlow();
                     if (res.type && res.type === 'ir.actions.act_window') {
-                        core.bus.off('barcode_scanned', self, self._onBarcodeScannedHandler);
-                        return self.do_action(res).then(function() {
+                        var exitCallback = function (infos) {
+                            if (infos !== 'special') {
+                                self.trigger_up('reload');
+                            }
                             core.bus.on('barcode_scanned', self, self._onBarcodeScannedHandler);
-                            self.trigger_up('reload');
+                        };
+                        var options = {
+                            on_close: exitCallback,
+                        };
+                        def.then(function () {
+                            core.bus.off('barcode_scanned', self, self._onBarcodeScannedHandler);
+                            return self.do_action(res, options);
                         });
                     } else {
                         return self.trigger_up('reload');

@@ -1027,6 +1027,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             login='admin',
             timeout=180,
         )
+        pack = self.env['stock.quant.package'].search([])[-1]
+        self.assertEqual(len(pack.quant_ids), 2)
+        self.assertEqual(pack.location_id, self.shelf2)
+
 
 @tagged('post_install', '-at_install')
 class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
