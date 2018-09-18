@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api, exceptions, SUPERUSER_ID
+from odoo import models, fields, api, exceptions, SUPERUSER_ID, modules
 from ast import literal_eval
 from dateutil.relativedelta import relativedelta
 import base64
@@ -7,6 +7,7 @@ import base64
 
 class IrAttachment(models.Model):
     _name = 'ir.attachment'
+    _description = 'Document'
     _inherit = ['ir.attachment', 'mail.thread', 'mail.activity.mixin']
 
     type = fields.Selection(selection_add=[('empty', "Empty")])
@@ -177,3 +178,5 @@ class IrAttachment(models.Model):
             self.activity_ids.action_feedback(feedback="File Added")
         vals = self._set_folder_settings(vals)
         return super(IrAttachment, self).write(vals)
+
+

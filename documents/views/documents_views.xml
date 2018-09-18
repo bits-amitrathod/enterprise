@@ -23,6 +23,16 @@
                 <field name="tag_ids"/>
                 <field name="owner_id"/>
                 <field name="partner_id" string="Contact"/>
+                <separator/>
+                    <filter string="Late Activities" name="activities_overdue"
+                        domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                        help="Show all records which has next action date is before today"/>
+                    <filter string="Today Activities" name="activities_today"
+                        domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter string="Future Activities" name="activities_upcoming_all"
+                        domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
+                        ]"/>
+                <filter name="requested_filter" string="Requested files" domain="[('type', '=', 'empty')]"/>
                 <filter string="PDF" name="pdf" domain="[('mimetype', 'ilike', 'pdf')]"/>
                 <filter string="Image" name="img" domain="[('mimetype', 'ilike', 'image')]"/>
                 <filter string="Video" name="video" domain="[('mimetype', 'ilike', 'video')]"/>
@@ -35,7 +45,6 @@
                 <filter name="my_favorites_filter" string="My Favorites" domain="[('favorited_ids', 'in', uid)]"/>
                 <filter name="my_documents_filter" string="My documents" domain="[('owner_id', '=', uid)]"/>
                 <separator/>
-                <filter name="requested_filter" string="Requested files" domain="[('type', '=', 'empty')]"/>
                 <filter name="my_locked_filter" string="My locked files" domain="[('lock_uid', '=', uid)]"/>
                 <filter name="all_locked_filter" string="All locked files" domain="[('lock_uid', '!=', False)]"/>
             </xpath>
@@ -139,9 +148,11 @@
                             <field name="name"/>
                             <field name="owner_id"/>
                             <field name="partner_id"/>
-                            <field name="res_model"/>
-                            <field name="res_name"/>
-                            <field name="url" attrs="{ 'invisible' : [('url', '!=', False)]}"/>
+                            <field name="res_model" readonly="1"/>
+                            <field name="file_size"/>
+                            <field name="type"/>
+                            <field name="url" attrs="{ 'invisible' : [('type', '!=', 'url')]}"/>
+                            <field name="tag_ids" widget="many2many_tags" nolabel="1"/>
                         </group>
                         <group>
                             <group>
@@ -151,34 +162,35 @@
                             </group>
                         </group>
                     </group>
-                    <group>
-                        <group string="Tags">
-                            <field name="tag_ids" nolabel="1"/>
-                        </group>
-                        <group string="Actions">
-                            <field name="available_rule_ids" nolabel="1"/>
-                        </group>
-                    </group>
-                    <group string="Technical" groups="base.group_no_one">
-                        <field name="lock_uid"/>
-                        <field name="datas_fname"/>
-                        <field name="folder_id"/>
-                        <field name="res_model_name"/>
-                        <field name="res_field"/>
-                        <field name="datas"/>
-                        <field name="res_id"/>
-                        <field name="create_date"/>
-                        <field name="create_uid"/>
-                        <field name="company_id"/>
-                        <field name="access_token" readonly="1"/>
-                        <field name="db_datas"/>
-                        <field name="store_fname"/>
-                        <field name="file_size"/>
-                        <field name="checksum"/>
-                        <field name="mimetype"/>
-                        <field name="index_content"/>
-                    </group>
+                    <notebook>
+                        <page string="Indexed Content">
+                            <group>
+                                <field name="index_content"/>
+                            </group>
+                        </page>
+                        <page string="Technical" groups="base.group_no_one">
+                            <group>
+                                <field name="lock_uid" readonly="1"/>
+                                <field name="datas_fname"/>
+                                <field name="folder_id"/>
+                                <field name="res_model_name" readonly="1"/>
+                                <field name="res_field" readonly="1"/>
+                                <field name="datas" readonly="1"/>
+                                <field name="res_id" readonly="1"/>
+                                <field name="create_date" readonly="1"/>
+                                <field name="create_uid" readonly="1"/>
+                                <field name="company_id" readonly="1"/>
+                                <field name="access_token" readonly="1"/>
+                                <field name="mimetype" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
