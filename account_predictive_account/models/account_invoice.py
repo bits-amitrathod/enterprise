@@ -107,7 +107,7 @@ class AccountInvoiceLine(models.Model):
                     (SELECT
                         ail.account_id,
                         (setweight(to_tsvector(%(lang)s, ail.name), 'B')) ||
-                        (setweight(to_tsvector('simple', p.display_name), 'A')) AS document
+                        (setweight(to_tsvector('simple', 'part-'||p.id::text), 'A')) AS document
                     FROM account_invoice_line ail
                     JOIN account_invoice inv
                         ON ail.invoice_id = inv.id
