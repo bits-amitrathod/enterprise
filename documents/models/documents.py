@@ -154,6 +154,24 @@ class IrAttachment(models.Model):
             'tag': 'reload',
         }
 
+    def _set_folder_settings(self, vals):
+        """Implemented by bridge modules to set their folders and tags to attachments
+        @param vals: a create/write dict.
+        """
+        return vals
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals_dict in vals_list:
+            if vals_dict.get('res_model'):
+                vals_dict.update(self._set_folder_settings(vals_dict))
+
+        return super(IrAttachment, self).create(vals_list)
+
+    def write(self, vals):
+        vals = self._set_folder_settings(vals)
+        return super(IrAttachment, self).write(vals)
+
     @api.multi
     def activity_write(self):
         self.ensure_one()
