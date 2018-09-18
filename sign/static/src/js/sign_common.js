@@ -4,7 +4,7 @@ odoo.define('sign.PDFIframe', function (require) {
     var core = require('web.core');
     var Dialog = require('web.Dialog');
     var Widget = require('web.Widget');
-    
+
     var _t = core._t;
 
     var PDFIframe = Widget.extend({
@@ -419,6 +419,7 @@ odoo.define('sign.document_signing', function(require) {
     var Document = require('sign.Document');
     var PDFIframe = require('sign.PDFIframe');
     var session = require('web.session');
+    var Tour = require('web_tour.tour');
 
     var _t = core._t;
 

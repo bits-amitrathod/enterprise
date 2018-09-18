@@ -10,6 +10,12 @@
         </xpath>
     </template>
 
+    <template id="assets_common" name="hr_contract_salary_assets_common" inherit_id="web.assets_common">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/hr_contract_salary/static/src/js/hr_contract_salary_tours.js"></script>
+        </xpath>
+    </template>
+
     <template id="salary_package" name="My Contract">
         <t t-call="website.layout">
             <div id="wrap">
