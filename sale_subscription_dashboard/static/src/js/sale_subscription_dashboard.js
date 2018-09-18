@@ -728,15 +728,12 @@ var sale_subscription_dashboard_forecast = sale_subscription_dashboard_abstract.
     },
 
     fetch_default_values_forecast: function(forecast_type) {
-        addLoader(this.$('#forecast_chart_div_mrr, #forecast_chart_div_contracts'));
-
         var self = this;
         return self._rpc({
                 route: '/sale_subscription_dashboard/get_default_values_forecast',
                 params: {
                     end_date: this.end_date.format('YYYY-MM-DD'),
                     forecast_type: forecast_type,
-                    points_limit: 0,
                     filters: this.filters,
                 },
             }).then(function(result) {
@@ -1530,6 +1527,7 @@ core.action_registry.add('sale_subscription_dashboard_forecast', sale_subscripti
 core.action_registry.add('sale_subscription_dashboard_salesman', sale_subscription_dashboard_salesman);
 
 return {sale_subscription_dashboard_main: sale_subscription_dashboard_main,
+        sale_subscription_dashboard_forecast: sale_subscription_dashboard_forecast,
         sale_subscription_dashboard_salesman: sale_subscription_dashboard_salesman,
         sale_subscription_dashboard_cohort: sale_subscription_dashboard_cohort
     };

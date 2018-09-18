@@ -283,6 +283,53 @@ odoo.define('sale_subscription_dashboard.sale_subscription_tests', function (req
             done();
         });
 
+        QUnit.test('sale_subscription_forecast', function (assert) {
+            var done = assert.async();
+            var self = this;
+            assert.expect(10);
+            var dashboard = new SubscriptionDashBoard.sale_subscription_dashboard_forecast(null, null, {
+                main_dashboard_action_id: null,
+                start_date: moment(),
+                end_date: moment().add(1, 'month'),
+                currency_id: 3,
+                contract_templates: null,
+                tags: null,
+                companies: null,
+                filters: null,
+            });
+            testUtils.addMockEnvironment(dashboard, {
+                mockRPC: function (route, args) {
+                    if (route === '/sale_subscription_dashboard/get_default_values_forecast') {
+                        assert.deepEqual(_.keys(args).sort(), ['end_date', 'filters', 'forecast_type'], "should be requested only with defined parameters");
+                        return $.when(self.data.forecast_values);
+                    }
+                    return $.when();
+                },
+                session: {
+                    currencies: {
+                        3: {
+                            digits: [69, 2],
+                            position: "before",
+                            symbol: "$"
+                        }
+                    }
+                },
+            });
+            dashboard.appendTo($('#qunit-fixture'));
+            assert.strictEqual(dashboard.$('.o_account_contract_dashboard').length, 1, "should have a dashboard");
+            assert.strictEqual(dashboard.$('.o_account_contract_dashboard .box').length, 2, "should have a dashboard with 2 forecasts");
+
+            assert.strictEqual(dashboard.$('.o_account_contract_dashboard .box:first #forecast_summary_mrr').length, 1, "first forecast should have summary header");
+            assert.strictEqual(dashboard.$('.o_account_contract_dashboard .box:first .o_forecast_options').length, 1, "first forecast should have options");
+            assert.strictEqual(dashboard.$('.o_account_contract_dashboard .box:first #forecast_chart_div_mrr').length, 1, "first forecast should have chart");
+
+            assert.strictEqual(dashboard.$('.o_account_contract_dashboard .box:last #forecast_summary_contracts').length, 1, "last forecast should have summary header");
+            assert.strictEqual(dashboard.$('.o_account_contract_dashboard .box:last .o_forecast_options').length, 1, "last forecast should have options");
+            assert.strictEqual(dashboard.$('.o_account_contract_dashboard .box:last #forecast_chart_div_contracts').length, 1, "last forecast should have chart");
+            dashboard.destroy();
+            done();
+        });
+
         QUnit.test('sale_subscription_salesman', function (assert) {
             var done = assert.async();
             var self = this;
