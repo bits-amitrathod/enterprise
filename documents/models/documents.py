@@ -169,6 +169,8 @@ class IrAttachment(models.Model):
         return super(IrAttachment, self).create(vals_list)
 
     def write(self, vals):
+        if len(self) == 1 and self.type == 'empty' and vals.get('type') == 'binary' and len(self.activity_ids):
+            self.activity_ids.action_feedback(feedback="File Added")
         vals = self._set_folder_settings(vals)
         return super(IrAttachment, self).write(vals)
 
