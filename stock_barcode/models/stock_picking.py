@@ -350,17 +350,6 @@ class StockPickingType(models.Model):
 
     _inherit = 'stock.picking.type'
 
-    barcode = fields.Char('Barcode', copy=False)
-
-    def _add_barcode(self):
-        """ add a barcode value to the three demo picking types
-        of WH warehouse
-        """
-        picking_types = self.env['stock.picking.type'].with_context(active_test=False).search([])
-        for picking_type in picking_types.filtered(lambda type: type.warehouse_id):
-            barcode = picking_type.warehouse_id.code.replace(" ", "") + "-" + picking_type.name.split(' ')[0]
-            picking_type.barcode = barcode.upper()
-
     @api.multi
     def get_action_picking_tree_ready_kanban(self):
         return self._get_action('stock_barcode.stock_picking_action_kanban')
