@@ -46,7 +46,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
             })
             .then(function(view_id){
                 self.dataset = new data.DataSetSearch(this, 'product.product');
-                self.loadFieldView(self.dataset, view_id[1], 'search')
+                return self.loadFieldView(self.dataset, view_id[1], 'search')
                 .then(function (fields_view) {
                     self.fields_view = fields_view;
                     var options = {
@@ -55,7 +55,7 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
                         disable_groupby: true,
                     };
                     self.searchview = new SearchView(self, self.dataset, self.fields_view, options);
-                    self.searchview.appendTo($("<div>")).then(function () {
+                    return self.searchview.appendTo($("<div>")).then(function () {
                         defs.push(self.update_cp());
                         self.$searchview_buttons = self.searchview.$buttons.contents();
                     });
@@ -67,9 +67,10 @@ var mrp_mps_report = Widget.extend(ControlPanelMixin, {
     },
     start: function() {
         var self = this;
-        this.render_search_view();
         return this._super.apply(this, arguments).then(function () {
-            self.$el.html(self.html);
+            return self.render_search_view().then(function () {
+                self.$el.html(self.html);
+            });
         });
     },
     on_change_quantity: function(e) {
