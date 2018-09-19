@@ -65,6 +65,7 @@ var DocumentsKanbanView = KanbanView.extend({
         this.fieldsInfo[this.viewType].available_rule_ids = _.extend({}, {
             relatedFields: {
                 display_name: {type: 'string'},
+                note: {type: 'string'},
             },
         }, this.fieldsInfo[this.viewType].available_rule_ids);
     },

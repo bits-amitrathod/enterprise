@@ -465,7 +465,6 @@
             <tree>
                 <field name="domain_folder_id"/>
                 <field name="name"/>
-                <field name="note"/>
             </tree>
         </field>
     </record>
@@ -488,6 +487,7 @@
                                 <field name="domain" string="Domain" nolabel="1" widget="domain" colspan="2" options="{'model':'ir.attachment'}" attrs="{ 'invisible' : [('condition_type', '=', 'criteria')]}"/>
                                 <group>
                                     <group>
+                                        <field name="note" placeholder="Write a tooltip for the action here"/>
                                         <field name="domain_folder_id" required="1"/>
                                         <field name="criteria_partner_id"  attrs="{ 'invisible' : [('condition_type', '=', 'domain')]}"/>
                                         <field name="criteria_owner_id"  attrs="{ 'invisible' : [('condition_type', '=', 'domain')]}"/>
@@ -537,9 +537,6 @@
                                     </group>
                                     <field name="activity_note" placeholder="Log a note..."/>
                                 </group>
-                            </page>
-                            <page string="Notes">
-                               <field name="note" placeholder="Write a tooltip for the action here"/>
                             </page>
                         </notebook>
                     </group>

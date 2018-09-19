@@ -148,10 +148,11 @@ QUnit.module('DocumentsKanbanView', {
             },
             'documents.workflow.rule': {
                 fields: {
-                    display_name: {string: 'Name', type: 'char'}
+                    display_name: {string: 'Name', type: 'char'},
+                    note: {string: 'Tooltip', type: 'char'},
                 },
                 records: [
-                    {id: 1, display_name: 'Convincing AI not to turn evil'},
+                    {id: 1, display_name: 'Convincing AI not to turn evil', note:'Racing for AI Supremacy'},
                     {id: 2, display_name: 'Follow the white rabbit'},
                     {id: 3, display_name: 'Entangling superstrings'},
                 ],
@@ -1518,7 +1519,7 @@ QUnit.module('DocumentsKanbanView', {
     });
 
     QUnit.test('document inspector: display rules of selected documents', function (assert) {
-        assert.expect(5);
+        assert.expect(6);
 
         var kanban = createView({
             View: DocumentsKanbanView,
@@ -1546,6 +1547,8 @@ QUnit.module('DocumentsKanbanView', {
             "should display the button for the common rule");
         assert.strictEqual(kanban.$('.o_inspector_rule').text().trim(), 'Convincing AI not to turn evil',
             "should correctly display the content of the rule");
+        assert.strictEqual(kanban.$('.o_inspector_rule span').attr('title'), "Racing for AI Supremacy",
+            "should correctly display the tooltip of the rule");
 
         kanban.destroy();
     });
