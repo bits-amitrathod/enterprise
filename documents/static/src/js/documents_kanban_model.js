@@ -163,6 +163,7 @@ var DocumentsKanbanModel = KanbanModel.extend({
             return {
                 id: folder.id,
                 name: folder.name,
+                description: folder.description,
                 children: self._buildFoldersTree(subFolders, folder.id)
             };
         });
@@ -200,7 +201,7 @@ var DocumentsKanbanModel = KanbanModel.extend({
         return this._rpc({
             model: 'documents.folder',
             method: 'search_read',
-            fields: ['parent_folder_id', 'name', 'id'],
+            fields: ['parent_folder_id', 'name', 'id', 'description'],
         }).then(function (folders) {
             return self._buildFoldersTree(folders, false);
         });

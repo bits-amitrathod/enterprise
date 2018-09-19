@@ -95,9 +95,10 @@ QUnit.module('DocumentsKanbanView', {
                 fields: {
                     name: {string: 'Name', type: 'char'},
                     parent_folder_id: {string: 'Parent Folder', type: 'many2one', relation: 'documents.folder'},
+                    description: {string: 'Description', type:'text'},
                 },
                 records: [
-                        {id: 1, name: 'Folder1', parent_folder_id: false},
+                        {id: 1, name: 'Folder1', description: '_F1-test-description_', parent_folder_id: false},
                         {id: 2, name: 'Folder2', parent_folder_id: false},
                         {id: 3, name: 'Folder3', parent_folder_id: 1},
                 ],
@@ -636,7 +637,7 @@ QUnit.module('DocumentsKanbanView', {
     QUnit.module('DocumentsInspector');
 
     QUnit.test('documents inspector with no document selected', function (assert) {
-        assert.expect(2);
+        assert.expect(3);
 
         var kanban = createView({
             View: DocumentsKanbanView,
@@ -648,7 +649,8 @@ QUnit.module('DocumentsKanbanView', {
                     '</div>' +
                 '</t></templates></kanban>',
         });
-
+        assert.strictEqual(kanban.$('.o_documents_inspector_preview').text().replace(/\s+/g, ''),
+            'Folder1:_F1-test-description_', "should display the current folder description");
         assert.strictEqual(kanban.$('.o_documents_inspector_info .o_inspector_value:first').text().trim(),
             '5', "should display the correct number of documents");
         assert.strictEqual(kanban.$('.o_documents_inspector_info .o_inspector_value:nth(1)').text().trim(),

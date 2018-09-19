@@ -53,6 +53,7 @@ var DocumentsInspector = Widget.extend({
 
         this.nbDocuments = params.state.count;
         this.size = params.state.size;
+        this.currentFolder = _.findWhere(params.state.folders, {id: params.state.folderID});
 
         this.records = [];
         _.each(params.recordIDs, function (resID) {

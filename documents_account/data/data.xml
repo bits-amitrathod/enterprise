@@ -19,13 +19,28 @@
         <!-- activity types -->
 
         <record id="mail_documents_activity_data_vat" model="mail.activity.type">
-            <field name="name">VAT return</field>
+            <field name="name">Tax Statement</field>
+            <field name="delay_count">3</field>
+            <field name="delay_unit">months</field>
+            <field name="delay_from">previous_activity</field>
+        </record>
+
+        <record id="mail_documents_activity_data_vat" model="mail.activity.type">
+            <field name="force_next">True</field>
+            <field name="default_next_type_id" ref="mail_documents_activity_data_vat"/>
         </record>
 
 
         <record id="mail_documents_activity_data_fs" model="mail.activity.type">
             <field name="name">Fiscal Statement</field>
+            <field name="delay_count">12</field>
+            <field name="delay_unit">months</field>
+            <field name="delay_from">previous_activity</field>
         </record>
 
+        <record id="mail_documents_activity_data_fs" model="mail.activity.type">
+            <field name="force_next">True</field>
+            <field name="default_next_type_id" ref="mail_documents_activity_data_fs"/>
+        </record>
     </data>
 </odoo>
