@@ -422,7 +422,7 @@ var sale_subscription_dashboard_detailed = sale_subscription_dashboard_abstract.
     fetch_computed_stat: function() {
 
         var self = this;
-        self._rpc({
+        return self._rpc({
                 route: '/sale_subscription_dashboard/compute_stat',
                 params: {
                     stat_type: this.selected_stat,
@@ -1527,6 +1527,7 @@ core.action_registry.add('sale_subscription_dashboard_forecast', sale_subscripti
 core.action_registry.add('sale_subscription_dashboard_salesman', sale_subscription_dashboard_salesman);
 
 return {sale_subscription_dashboard_main: sale_subscription_dashboard_main,
+        sale_subscription_dashboard_detailed: sale_subscription_dashboard_detailed,
         sale_subscription_dashboard_forecast: sale_subscription_dashboard_forecast,
         sale_subscription_dashboard_salesman: sale_subscription_dashboard_salesman,
         sale_subscription_dashboard_cohort: sale_subscription_dashboard_cohort
