@@ -424,7 +424,7 @@
                         </h1>
                     </div>
                     <group name="config">
-                        <group  name="invoicing">
+                        <group name="invoicing">
                             <label for="recurring_interval" string="Invoice"/>
                             <div class="o_row">
                                 <span class="mr-1">Every</span>
@@ -445,16 +445,13 @@
                         </group>
                         <group name="online" string="Customer Portal">
                             <field name="user_closable"/>
-                            <label for="auto_close_limit"/>
-                            <div class="o_row">
-                                <field name="auto_close_limit" attrs="{'invisible': [('payment_mode', 'in', ['manual', 'draft_invoice'])]}"/>
+                            <label for="auto_close_limit" attrs="{'invisible': [('payment_mode', 'in', ['manual', 'draft_invoice'])]}"/>
+                            <div class="o_row" attrs="{'invisible': [('payment_mode', 'in', ['manual', 'draft_invoice'])]}">
+                                <field name="auto_close_limit"/>
                                 <span class="ml-1">days</span>
                             </div>
-                            <field name="tag_ids" string="Category" widget="many2many_tags"
-                                   options="{'color_field': 'color'}" />
-                            <group name="accounting">
-                                <field name="journal_id" string="Journal" options="{'no_create': True}" groups="account.group_account_manager"/>
-                            </group>
+                            <field name="tag_ids" string="Group of Subscription" widget="many2many_tags" options="{'color_field': 'color'}" />
+                            <field name="journal_id" string="Journal" options="{'no_create': True}" groups="account.group_account_manager"/>
                         </group>
                     </group>
                     <notebook>
