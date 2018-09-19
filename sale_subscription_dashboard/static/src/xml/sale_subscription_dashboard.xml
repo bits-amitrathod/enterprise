@@ -227,7 +227,7 @@
 
     <div t-name="sale_subscription_dashboard.salesman_searchview" class="o_datepickers_searchview">
         <span class="o_datepicker_separator"> to </span>
-        <select class="o_salesman_selection" name="salesman">
+        <select class="o_salesman_selection form-control" name="salesman">
             <option></option>
             <t t-foreach="salesman_ids" t-as="sman">
                 <option name="salesman" t-att-selected="salesman &amp;&amp; salesman['id'] === sman['id'] ? 'selected' : undefined" t-att-value="sman['id']"><t t-esc="sman['name']"/></option>
@@ -275,11 +275,11 @@
         <!-- Sales Team -->
         <div t-if="widget.sales_team &amp;&amp; widget.sales_team.length > 1" class="o_dropdown dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown">Filter on sales team<span class="caret"/></a>
-            <ul class="dropdown-menu o_filters_menu" role="menu">
-                <li t-foreach="widget.sales_team" t-as="sale_team">
+            <div class="dropdown-menu o_filters_menu" role="menu">
+                <t t-foreach="widget.sales_team" t-as="sale_team">
                     <a role="menuitem" href="#" class="dropdown-item o_sales_team_filter js_tag" t-att-data-id="sale_team.id"><t t-esc="sale_team.name"/></a>
-                </li>
-            </ul>
+                </t>
+            </div>
         </div>
     </t>
 
