@@ -229,6 +229,7 @@ var DocumentsKanbanController = KanbanController.extend({
             var $chatterContainer = $('<div>').addClass('o_document_chatter p-relative bg-white');
             var options = {
                 display_log_button: true,
+                isEditable: true,
             };
             var mailFields = {mail_thread: 'message_ids',
                           mail_followers: 'message_follower_ids',
