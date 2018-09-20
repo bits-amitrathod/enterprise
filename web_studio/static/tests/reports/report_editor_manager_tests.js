@@ -899,7 +899,7 @@ QUnit.module('ReportEditorManager', {
         });
     }));
 
-    QUnit.skip('drag & drop field in table', loadIframeCss(function (assert, done) {
+    QUnit.test('drag & drop field in table', loadIframeCss(function (assert, done) {
         assert.expect(20);
 
         this.templates.push({
@@ -908,37 +908,33 @@ QUnit.module('ReportEditorManager', {
             arch:
                 '<kikou>' +
                     '<t t-name="template1">' +
-                        '<div class="row">' +
-                            '<div class="col-12">' +
-                                '<table class="table table-sm" style="width: 100%;">' +
-                                    '<thead>' +
-                                        '<tr>' +
-                                            '<th colspan="2"><span>Titre 1</span></th>' +
-                                            '<th><span>Titre 2</span></th>' +
-                                            '<th colspan="2"><span>Titre 3</span></th>' +
-                                            '<th><span>Titre 4</span></th>' +
-                                        '</tr>' +
-                                   '</thead>' +
-                                   '<tbody>' +
-                                        '<tr t-foreach="docs" t-as="l">' +
-                                            '<td><span><t t-esc="l.firstname"/></span></td>' +
-                                            '<td><span><t t-esc="l.name"/></span></td>' +
-                                            '<td><span><t t-esc="l.product"/></span></td>' +
-                                            '<td><span><t t-esc="l.price"/></span></td>' +
-                                            '<td><span><t t-esc="l.quantity"/></span></td>' +
-                                            '<td><span><t t-esc="l.total"/></span></td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td/>' +
-                                            '<td/>' +
-                                            '<td/>' +
-                                            '<td class="text-right" colspan="2"><span class="o_bold">Total</span></td>' +
-                                            '<td class="text-right"><span class="o_bold"><t t-esc="sum(docs.mapped(\'total\'))"/></span></td>' +
-                                        '</tr>' +
-                                    '</tbody>' +
-                                '</table>' +
-                            '</div>' +
-                        '</div>' +
+                        '<table class="table table-sm" style="width: 600px">' +
+                            '<thead>' +
+                                '<tr>' +
+                                    '<th colspan="2"><span>Titre 1</span></th>' +
+                                    '<th><span>Titre 2</span></th>' +
+                                    '<th colspan="2"><span>Titre 3</span></th>' +
+                                    '<th><span>Titre 4</span></th>' +
+                                '</tr>' +
+                            '</thead>' +
+                            '<tbody>' +
+                                '<tr t-foreach="docs" t-as="l">' +
+                                    '<td width="100px"><span><t t-esc="l.firstname"/></span></td>' +
+                                    '<td width="100px"><span><t t-esc="l.name"/></span></td>' +
+                                    '<td width="100px"><span><t t-esc="l.product"/></span></td>' +
+                                    '<td width="100px"><span><t t-esc="l.price"/></span></td>' +
+                                    '<td width="100px"><span><t t-esc="l.quantity"/></span></td>' +
+                                    '<td width="100px"><span><t t-esc="l.total"/></span></td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td/>' +
+                                    '<td/>' +
+                                    '<td/>' +
+                                    '<td class="text-right" colspan="2"><span class="o_bold">Total</span></td>' +
+                                    '<td class="text-right"><span class="o_bold"><t t-esc="sum(docs.mapped(\'total\'))"/></span></td>' +
+                                '</tr>' +
+                            '</tbody>' +
+                        '</table>' +
                     '</t>' +
                 '</kikou>',
         });
@@ -996,7 +992,7 @@ QUnit.module('ReportEditorManager', {
                     content: "<span t-field=\"o.child.name\"></span>",
                     position: "before",
                     view_id: 55,
-                    xpath: "/t/div/div/table/thead/tr/th/span"
+                    xpath: "/t/table/thead/tr/th/span"
                 }],
             }, {
                 text: "Should select the column (1)",
@@ -1008,17 +1004,17 @@ QUnit.module('ReportEditorManager', {
                     content: "<th><span>Name</span></th>",
                     position: "before",
                     view_id: 55,
-                    xpath: "/t/div/div/table/thead/tr/th"
+                    xpath: "/t/table/thead/tr/th"
                 }, {
                     content: "<td><span t-field=\"o.child.name\"></span></td>",
                     position: "before",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td"
+                    xpath: "/t/table/tbody/tr/td"
                 }, {
                     content: "<td></td>",
                     position: "before",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr[1]/td"
+                    xpath: "/t/table/tbody/tr[1]/td"
                 }],
                 onDragAndDrop: function ($table) {
                     assert.strictEqual($table.find('tr th:first-child.o_web_studio_nearest_hook').length, 1,
@@ -1036,7 +1032,7 @@ QUnit.module('ReportEditorManager', {
                     content: "<span t-field=\"o.child.name\"></span>",
                     position: "before",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td/span"
+                    xpath: "/t/table/tbody/tr/td/span"
                 }]
             }, {
                 text: "Should select the hooks inside the td, on the right",
@@ -1048,7 +1044,7 @@ QUnit.module('ReportEditorManager', {
                     content: "<span t-field=\"o.child.name\"></span>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td/span"
+                    xpath: "/t/table/tbody/tr/td/span"
                 }],
             },{
                 text: "Should select column without the header because it's colspan=2",
@@ -1060,46 +1056,46 @@ QUnit.module('ReportEditorManager', {
                     content: "<td><span t-field=\"o.child.name\"></span></td>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td"
+                    xpath: "/t/table/tbody/tr/td"
                 }, {
                     content: "<td></td>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr[1]/td"
+                    xpath: "/t/table/tbody/tr[1]/td"
                 }, {
                     content: "<attribute name=\"colspan\">3</attribute>",
                     position: "attributes",
                     view_id: 55,
-                    xpath: "/t/div/div/table/thead/tr/th"
+                    xpath: "/t/table/thead/tr/th"
                 }],
             }, {
                 text: "Should insert between 2nd and 3rd column",
                 buildingBlockSelector: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(2) .o_web_studio_component:contains(Field Column)',
                 selector: 'tbody tr:eq(1) td:eq(2)',
-                position: {left: -45, top: 0},
+                position: {left: -10, top: 0},
                 nearestHookNumber: 5,
                 inheritance: [{
                     content: "<th><span>Name</span></th>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/thead/tr/th"
+                    xpath: "/t/table/thead/tr/th"
                 }, {
                     content: "<td><span t-field=\"o.child.name\"></span></td>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td[1]"
+                    xpath: "/t/table/tbody/tr/td[1]"
                   },
                   {
                     content: "<td></td>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr[1]/td[1]"
+                    xpath: "/t/table/tbody/tr[1]/td[1]"
                   },
                   {
                     content: "<attribute name=\"colspan\">3</attribute>",
                     position: "attributes",
                     view_id: 55,
-                    xpath: "/t/div/div/table/thead/tr/th"
+                    xpath: "/t/table/thead/tr/th"
                   }],
             }, {
                 text: "Should select column without the header because there are two colspan=2",
@@ -1111,17 +1107,17 @@ QUnit.module('ReportEditorManager', {
                     content: "<td><span t-field=\"o.child.name\"></span></td>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td[3]"
+                    xpath: "/t/table/tbody/tr/td[3]"
                 }, {
                     content: "<attribute name=\"colspan\">3</attribute>",
                     position: "attributes",
                     view_id: 55,
-                    xpath: "/t/div/div/table/thead/tr/th[2]"
+                    xpath: "/t/table/thead/tr/th[2]"
                 }, {
                     content: "<attribute name=\"colspan\">3</attribute>",
                     position: "attributes",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr[1]/td[3]"
+                    xpath: "/t/table/tbody/tr[1]/td[3]"
                 }],
             }, {
                 text: "Should select the column (3)",
@@ -1133,27 +1129,27 @@ QUnit.module('ReportEditorManager', {
                     content: "<th><span>Name</span></th>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/thead/tr/th[2]"
+                    xpath: "/t/table/thead/tr/th[2]"
                 }, {
                     content: "<td><span t-field=\"o.child.name\"></span></td>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr/td[4]"
+                    xpath: "/t/table/tbody/tr/td[4]"
                 }, {
                     content: "<td></td>",
                     position: "after",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr[1]/td[3]"
+                    xpath: "/t/table/tbody/tr[1]/td[3]"
                 }, {
                     content: "<attribute name=\"colspan\">3</attribute>",
                     position: "attributes",
                     view_id: 55,
-                    xpath: "/t/div/div/table/tbody/tr[1]/td[3]"
+                    xpath: "/t/table/tbody/tr[1]/td[3]"
                 }, {
                     content: "<attribute name=\"colspan\">3</attribute>",
                     position: "attributes",
                     view_id: 55,
-                    xpath: "/t/div/div/table/thead/tr/th[2]"
+                    xpath: "/t/table/thead/tr/th[2]"
                 }],
             }, {
                 text: "Should select the column (4)",
@@ -1165,19 +1161,19 @@ QUnit.module('ReportEditorManager', {
                         content: "<th><span>Name</span></th>",
                         position: "after",
                         view_id: 55,
-                        xpath: "/t/div/div/table/thead/tr/th[3]"
+                        xpath: "/t/table/thead/tr/th[3]"
                       },
                       {
                         content: "<td><span t-field=\"o.child.name\"></span></td>",
                         position: "after",
                         view_id: 55,
-                        xpath: "/t/div/div/table/tbody/tr/td[5]"
+                        xpath: "/t/table/tbody/tr/td[5]"
                       },
                       {
                         content: "<td></td>",
                         position: "after",
                         view_id: 55,
-                        xpath: "/t/div/div/table/tbody/tr[1]/td[4]"
+                        xpath: "/t/table/tbody/tr[1]/td[4]"
                       }
                 ],
             },
@@ -1192,9 +1188,6 @@ QUnit.module('ReportEditorManager', {
 
             for (testIndex; testIndex < tests.length; testIndex++) {
                 var test = tests[testIndex];
-                if (test.shouldDebug) {
-                    debugger;
-                }
                 var $buildingBlock = rem.$(test.buildingBlockSelector);
                 var $target = $table.find(test.selector);
                 $target.css('border','1px solid black'); // makes debugging easier
@@ -1210,7 +1203,7 @@ QUnit.module('ReportEditorManager', {
                 $('.o_web_studio_field_modal .o_field_selector_item[data-name="name"]').trigger('click');
                 $('.o_web_studio_field_modal .btn-primary').trigger('click');
             }
-           rem.destroy();
+            rem.destroy();
             done();
         });
     }));
