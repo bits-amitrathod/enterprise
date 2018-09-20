@@ -2035,7 +2035,7 @@ QUnit.module('DocumentsKanbanView', {
     QUnit.module('DocumentsSelector');
 
     QUnit.test('document selector: basic rendering', function (assert) {
-        assert.expect(17);
+        assert.expect(19);
 
         var kanban = createView({
             View: DocumentsKanbanView,
@@ -2076,8 +2076,12 @@ QUnit.module('DocumentsKanbanView', {
 
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last .o_documents_selector_tag:first header').text().trim(),
             'Draft', "the first tag in the last facet should be 'Draft'");
+        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last .o_documents_selector_tag:first header').attr('title').trim(),
+            'A Status tooltip', "the first tag in the last facet have a tooltip");
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last .o_documents_selector_tag:last header').text().trim(),
             'New', "the last tag in the last facet should be 'New'");
+        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last .o_documents_selector_tag:last header').attr('title').trim(),
+            'A Status tooltip', "the last tag in the last facet have a tooltip");
 
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_models .o_documents_selector_header').text().trim(),
             'Attached To', "should have an 'attached to' section");
