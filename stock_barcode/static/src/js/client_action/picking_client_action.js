@@ -394,10 +394,10 @@ var PickingClientAction = ClientAction.extend({
         var self = this;
         this.mutex.exec(function () {
             return self._save().then(function () {
-                return this._rpc({
+                return self._rpc({
                     'model': 'stock.picking',
                     'method': 'do_print_picking',
-                    'args': [[this.actionParams.pickingId]],
+                    'args': [[self.actionParams.pickingId]],
                 }).then(function(res) {
                     return self.do_action(res);
                 });
