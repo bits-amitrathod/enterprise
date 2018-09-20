@@ -186,6 +186,17 @@ var LinesWidget = Widget.extend({
         }
         return packageLines;
     },
+    /**
+     * Get the current user interface states. Needed when the linesWidget is
+     * reload in order to highlight location and display correct scan message
+     */
+    getState: function () {
+        return {
+            'highlightLocationSource': this.$('.o_barcode_summary_location_src').hasClass('o_barcode_summary_location_highlight'),
+            'highlightDestinationLocation': this.$('.o_barcode_summary_location_dest').hasClass('o_barcode_summary_location_highlight'),
+            'scan_message': this.$('.o_scan_message:not(.o_hidden)').attr('class').split('o_scan_message_')[1].split(' ')[0],
+        };
+    },
 
     //--------------------------------------------------------------------------
     // Private

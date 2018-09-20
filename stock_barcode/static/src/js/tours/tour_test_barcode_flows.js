@@ -2340,6 +2340,15 @@ tour.register('test_reload_flow', {test: true}, [
 
     {
         trigger: '.o_barcode_summary_location_dest:contains("WH/Stock")',
+        run: function () {
+            assertScanMessage('scan_more_dest');
+            assertLocationHighlight(false);
+            assertDestinationLocationHighlight(true);
+        },
+    },
+
+    {
+        trigger: '.o_barcode_summary_location_dest:contains("WH/Stock")',
         run: 'scan LOC-01-01-00',
     },
 

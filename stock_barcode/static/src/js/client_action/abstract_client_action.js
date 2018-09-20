@@ -443,6 +443,14 @@ var ClientAction = AbstractAction.extend({
         var preparedPage = $.extend(true, {}, this.pages[pageIndex]);
         this.linesWidget = new LinesWidget(this, preparedPage, pageIndex, nbPages);
         this.linesWidget.appendTo(this.$el);
+        // In some cases, we want to restore the GUI state of the linesWidget
+        // (on a reload not calling _endBarcodeFlow)
+        if (this.linesWidgetState) {
+            this.linesWidget.highlightLocation(this.linesWidgetState.highlightLocationSource);
+            this.linesWidget.highlightDestinationLocation(this.linesWidgetState.highlightLocationDestination);
+            this.linesWidget._toggleScanMessage(this.linesWidgetState.scan_message);
+            delete this.linesWidgetState;
+        }
     },
 
     /**
@@ -1348,6 +1356,7 @@ var ClientAction = AbstractAction.extend({
         ev.stopPropagation();
         var self = this;
         this.mutex.exec(function () {
+            self.linesWidgetState = self.linesWidget.getState();
             self.linesWidget.destroy();
             self.headerWidget.toggleDisplayContext('specialized');
             // Get the default locations before calling save to not lose a newly created page.
@@ -1400,6 +1409,7 @@ var ClientAction = AbstractAction.extend({
      */
     _onEditLine: function (ev) {
         ev.stopPropagation();
+        this.linesWidgetState = this.linesWidget.getState();
         this.linesWidget.destroy();
         this.headerWidget.toggleDisplayContext('specialized');
 
