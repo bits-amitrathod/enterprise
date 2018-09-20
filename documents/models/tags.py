@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
-from odoo.osv.expression import expression
+from odoo.osv.expression import expression, generate_table_alias
 
 
 class TagsCategories(models.Model):
@@ -51,6 +51,7 @@ class Tags(models.Model):
         expr = expression(domain, model)
         domain_query, domain_params = expr.to_sql()
         folder_query, folder_params = expression([('folder_id', 'parent_of', folder_id)], self).to_sql()
+        _, from_activities = generate_table_alias('ir_attachment', [('mail_activity', 'activity_ids')])
         query = """
             SELECT  facet.sequence AS facet_sequence,
                     facet.name AS facet_name,
@@ -62,9 +63,9 @@ class Tags(models.Model):
             FROM documents_tag
                 JOIN documents_facet facet ON documents_tag.facet_id = facet.id AND %s
                 LEFT JOIN document_tag_rel rel ON documents_tag.id = rel.documents_tag_id
-                    AND rel.ir_attachment_id IN (SELECT id from ir_attachment WHERE %s)
+                    AND rel.ir_attachment_id IN (SELECT ir_attachment.id FROM ir_attachment LEFT JOIN %s ON 1=1 WHERE %s)
             GROUP BY facet.sequence, facet.name, facet.id, documents_tag.sequence, documents_tag.name, documents_tag.id
             ORDER BY facet.sequence, facet.name, facet.id, documents_tag.sequence, documents_tag.name, documents_tag.id
-        """ % (folder_query, domain_query)
+        """ % (folder_query, from_activities, domain_query)
         self.env.cr.execute(query, folder_params + domain_params)
         return self.env.cr.dictfetchall()
