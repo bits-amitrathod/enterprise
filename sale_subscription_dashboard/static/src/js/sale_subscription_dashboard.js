@@ -111,12 +111,12 @@ var sale_subscription_dashboard_abstract = AbstractAction.extend(ControlPanelMix
     },
 
     get_filtered_template_ids: function() {
-        var $contract_inputs = this.$searchview_buttons.find(".selected > .o_contract_template_filter");
+        var $contract_inputs = this.$searchview_buttons.find(".o_contract_template_filter.selected");
         return _.map($contract_inputs, function(el) { return $(el).data('id'); });
     },
 
     get_filtered_tag_ids: function() {
-        var $tag_inputs = this.$searchview_buttons.find(".selected > .o_tags_filter");
+        var $tag_inputs = this.$searchview_buttons.find(".o_tags_filter.selected");
         return _.map($tag_inputs, function(el) { return $(el).data('id'); });
     },
 
@@ -124,13 +124,13 @@ var sale_subscription_dashboard_abstract = AbstractAction.extend(ControlPanelMix
         if (this.companies && this.companies.length === 1) {
             return [this.companies[0].id];
         } else {
-            var $company_inputs = this.$searchview_buttons.find(".selected > .o_companies_filter");
+            var $company_inputs = this.$searchview_buttons.find(".o_companies_filter.selected");
             return _.map($company_inputs, function(el) { return $(el).data('id'); });
         }
     },
 
     get_filtered_sales_team_ids: function() {
-        var $sales_team_inputs = this.$searchview_buttons.find(".selected > .o_sales_team_filter");
+        var $sales_team_inputs = this.$searchview_buttons.find(".o_sales_team_filter.selected");
         return _.map($sales_team_inputs, function(el) { return $(el).data('id'); });
     },
 
@@ -141,22 +141,22 @@ var sale_subscription_dashboard_abstract = AbstractAction.extend(ControlPanelMix
         }
         this.$searchview_buttons.on('click', '.js_tag', function(e) {
             e.preventDefault();
-            $(e.target).parent().toggleClass('selected');
+            $(e.target).toggleClass('selected');
         });
 
         // Check the boxes if it was already checked before the update
         var self = this;
         _.each(this.filters.template_ids, function(id) {
-            self.$searchview_buttons.find('.o_contract_template_filter[data-id=' + id + ']').parent().addClass('selected');
+            self.$searchview_buttons.find('.o_contract_template_filter[data-id=' + id + ']').addClass('selected');
         });
         _.each(this.filters.tag_ids, function(id) {
-            self.$searchview_buttons.find('.o_tags_filter[data-id=' + id + ']').parent().addClass('selected');
+            self.$searchview_buttons.find('.o_tags_filter[data-id=' + id + ']').addClass('selected');
         });
         _.each(this.filters.company_ids, function(id) {
-            self.$searchview_buttons.find('.o_companies_filter[data-id=' + id + ']').parent().addClass('selected');
+            self.$searchview_buttons.find('.o_companies_filter[data-id=' + id + ']').addClass('selected');
         });
         _.each(this.filters.sale_team_ids, function(id) {
-            self.$searchview_buttons.find('.o_sales_team_filter[data-id=' + id + ']').parent().addClass('selected');
+            self.$searchview_buttons.find('.o_sales_team_filter[data-id=' + id + ']').addClass('selected');
         });
     },
 
