@@ -147,8 +147,9 @@ QUnit.module('Views', {
                     assert.deepEqual(args.model,"test_report");
                     assert.deepEqual(args.method,"read_group");
                     assert.deepEqual(args.kwargs, {
+                      context: {fill_temporal: true},
                       domain: [],
-                      fields: ["sold"],
+                      fields: ["categ_id", "sold"],
                       groupby: ["categ_id"],
                       lazy: false,
                     });

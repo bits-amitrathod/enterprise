@@ -35,8 +35,6 @@ var DashboardRenderer = FormRenderer.extend({
         this.subControllers = {};
         this.subControllersContext = _.pick(state.context || {}, 'pivot', 'graph', 'cohort');
         this.subcontrollersNextMeasures = {pivot: {}, graph: {}, cohort: {}};
-        this.timeRangeDescription = params.timeRangeDescription;
-        this.comparisonTimeRangeDescription = params.comparisonTimeRangeDescription;
         this.formatOptions = {
             // in the dashboard view, all monetary values are displayed in the
             // currency of the current company of the user
@@ -89,16 +87,6 @@ var DashboardRenderer = FormRenderer.extend({
         for (viewType in this.subControllers) {
             _.extend(this.subControllersContext[viewType], this.subcontrollersNextMeasures[viewType]);
             this.subcontrollersNextMeasures[viewType] = {};
-        }
-        if (params.context !== undefined) {
-            var timeRangeMenuData = params.context.timeRangeMenuData;
-            if (timeRangeMenuData) {
-                this.timeRangeDescription = timeRangeMenuData.timeRangeDescription;
-                this.comparisonTimeRangeDescription = timeRangeMenuData.comparisonTimeRangeDescription;
-            } else {
-                this.timeRangeDescription = undefined;
-                this.comparisonTimeRangeDescription = undefined;
-            }
         }
         return this._super.apply(this, arguments);
     },
@@ -316,8 +304,8 @@ var DashboardRenderer = FormRenderer.extend({
     },
     /**
      * Overrides to destroy potentially previously instantiates sub views, and
-     * to call 'on_attach_callback' on the new sub views if the dashboard if
-     * already in the DOM when being rendered.
+     * to call 'on_attach_callback' on the new sub views and the widgets if the 
+     * dashboard is already in the DOM when being rendered. 
      *
      * @override
      * @private
@@ -330,39 +318,9 @@ var DashboardRenderer = FormRenderer.extend({
             _.invoke(oldControllers, 'destroy');
             if (self.isInDOM) {
                 _.invoke(self.subControllers, 'on_attach_callback');
+                _.invoke(self.widgets, 'on_attach_callback');
             }
         });
-    },
-    /**
-     * @override
-     * @private
-     * @param {JQueryElement} $node
-     * @returns {JQueryElement}
-     */
-    _renderTagWidget: function (node) {
-        if (!this.state.compare) {
-            return this._super.apply(this, arguments);
-        } else {
-            var $div = $('<div>');
-            var originalTitle = node.attrs.modifiers.title ? node.attrs.modifiers.title : undefined;
-            var fakeState = _.clone(this.state);
-            var fakeNode = JSON.parse(JSON.stringify(node));
-
-            fakeState.domain = fakeState.domain.concat(this.state.timeRange || []);
-            if (originalTitle) {
-                fakeNode.attrs.modifiers.title = originalTitle + ' (' + this.timeRangeDescription + ')';
-            }
-
-            $div.append(this._renderWidget(fakeState, fakeNode));
-
-            fakeState.domain = this.state.domain.concat(this.state.comparisonTimeRange || []);
-            fakeState.data = this.state.comparisonData;
-            if (originalTitle) {
-                fakeNode.attrs.modifiers.title = originalTitle + ' (' + this.comparisonTimeRangeDescription + ')';
-            }
-            $div.append(this._renderWidget(fakeState, fakeNode));
-            return $div;
-        }
     },
     /**
      * Overrides to get rid of the FormRenderer logic about fields, as there is

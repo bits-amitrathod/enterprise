@@ -14,19 +14,23 @@
     width: 100%;
     height: auto;
     padding: $o-sheet-vpadding 0;
+    background-color: white;
 
     > .o_group, .o_subview {
         // By default dashboard entries are full-width...
         flex: 1 1 100%;
-        margin: 0 $padding $padding*2;
-        padding: $padding;
-        border: 1px solid gray('400');
-        background-color: white;
-        box-shadow: 0px 5px 2px -5px;
+        margin: 0 $padding $padding;
 
-        //...trig masonery layout for very large screens
-        @include media-breakpoint-up(xxl, $o-extra-grid-breakpoints) {
-            flex: 1 1 47%;
+        .o_graph_container {
+            display: flex;
+
+            > .o_graph_svg_container {
+                flex: 1 1 auto;
+                height: 250px;
+                > label {
+                    position: absolute;
+                }
+            }
         }
     }
 
@@ -37,33 +41,32 @@
 
         @for $i from 1 through $o-form-group-cols {
             .o_group_col_#{$i} {
-                padding: 0 $padding-small;
                 width: 50%;
                 flex: 1 1 50%;
 
-                @include media-breakpoint-down(md) {
+                @include media-breakpoint-down(sm) {
                     &.o_group {
                         width: 100%;
                         flex: 1 1 100%;
                     }
                 }
 
-                @include media-breakpoint-up(lg) {
-                    width: floor(100% / 12 * $i);
+                 @include media-breakpoint-up(md) {
                     flex: 0 0 floor(100% / 12 * $i);
                 }
             }
         }
 
         .o_group {
-            margin: 0 -10px $padding;
+            .o_aggregate, .o_formula {
+                min-width: 185px;
+            }
         }
 
         .o_horizontal_separator {
             margin-bottom: $padding-small;
             width: 100%;
             padding: 3px $padding-small;
-            border-bottom: 1px solid  gray('300');
             font-size: 1.3em;
             color: gray('600');
         }
@@ -104,29 +107,8 @@
 
         }
 
-        .o_widget, .o_pie_chart {
-            margin-bottom: $padding-small;
-            display: flex;
-            flex-flow: row wrap;
-            align-items: flex-start;
-            flex : 1 1 auto;
-            > label:empty {
-                display: none;
-
-                + .o_value {
-                    font-size: 2.5em;
-                }
-            }
-
-            @include media-breakpoint-between(vsm, md, $o-extra-grid-breakpoints) {
-                width: 100%;
-                flex: 1 0 100%;
-            }
-
-            @include media-breakpoint-up(lg) {
-                flex: 1 1 auto;
-                margin-right: -$padding-small*0.5;
-            }
+        .o_pie_chart {
+            width: 100%;
         }
 
         .o_aggregate.o_clickable {
@@ -170,7 +152,9 @@
     .o_graph_buttons, .o_pivot_buttons {
         padding: $padding-small $padding;
         margin: (-$padding) (-$padding) $padding-small (-$padding);
-        border-bottom: 1px solid gray('400');
+    }
+    .o_pivot > table {
+        width: 100%;
     }
 
     .o_graph_buttons .btn-group + .btn-group.o_dropdown {
@@ -189,20 +173,12 @@
         }
 
         &[type=graph] {
-            padding-bottom: 0;
+            padding: 0;
 
             .o_view_controller {
                 width: 100%;
                 min-height: 300px;
                 position: relative;
-
-                .o_graph_container {
-                    display: flex;
-                    @include o-position-absolute(0, 0, 0, 0);
-                }
-                .o_graph_svg_container {
-                    flex: 1 1 auto;
-                }
             }
         }
     }
