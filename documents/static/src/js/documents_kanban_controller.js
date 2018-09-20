@@ -183,6 +183,7 @@ var DocumentsKanbanController = KanbanController.extend({
                 memo[facetKey] = {
                     id: tag.facet_id,
                     name: tag.facet_name,
+                    tooltip: tag.facet_tooltip,
                     tags: [],
                 };
             }

@@ -110,6 +110,7 @@ QUnit.module('DocumentsKanbanView', {
                       facet_id: 2,
                       facet_name: 'Priority',
                       facet_sequence: 10,
+                      facet_tooltip: 'A priority tooltip',
                       tag_id: 5,
                       tag_name: 'No stress',
                       tag_sequence: 10,
@@ -118,6 +119,7 @@ QUnit.module('DocumentsKanbanView', {
                       facet_id: 1,
                       facet_name: 'Status',
                       facet_sequence: 11,
+                      facet_tooltip: 'A Status tooltip',
                       tag_id: 2,
                       tag_name: 'Draft',
                       tag_sequence: 10,
@@ -126,6 +128,7 @@ QUnit.module('DocumentsKanbanView', {
                       facet_id: 1,
                       facet_name: 'Status',
                       facet_sequence: 11,
+                      facet_tooltip: 'A Status tooltip',
                       tag_id: 1,
                       tag_name: 'New',
                       tag_sequence: 11,
@@ -2032,7 +2035,7 @@ QUnit.module('DocumentsKanbanView', {
     QUnit.module('DocumentsSelector');
 
     QUnit.test('document selector: basic rendering', function (assert) {
-        assert.expect(15);
+        assert.expect(17);
 
         var kanban = createView({
             View: DocumentsKanbanView,
@@ -2061,8 +2064,12 @@ QUnit.module('DocumentsKanbanView', {
 
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:first > header').text().trim(),
             'Priority', "the first facet should be 'Priority'");
+        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:first > header').attr('title').trim(),
+            'A priority tooltip', "the first facet have a tooltip");
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last > header').text().trim(),
             'Status', "the last facet should be 'Status'");
+        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last > header').attr('title').trim(),
+            'A Status tooltip', "the last facet should be 'Status'");
 
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_facet:last .o_documents_selector_tag').length, 2,
             "should have 2 tags in the last facet");

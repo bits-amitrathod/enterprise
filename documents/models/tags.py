@@ -56,6 +56,7 @@ class Tags(models.Model):
             SELECT  facet.sequence AS facet_sequence,
                     facet.name AS facet_name,
                     facet.id AS facet_id,
+                    facet.tooltip AS facet_tooltip,
                     documents_tag.sequence AS tag_sequence,
                     documents_tag.name AS tag_name,
                     documents_tag.id AS tag_id,
@@ -64,8 +65,8 @@ class Tags(models.Model):
                 JOIN documents_facet facet ON documents_tag.facet_id = facet.id AND %s
                 LEFT JOIN document_tag_rel rel ON documents_tag.id = rel.documents_tag_id
                     AND rel.ir_attachment_id IN (SELECT ir_attachment.id FROM ir_attachment LEFT JOIN %s ON 1=1 WHERE %s)
-            GROUP BY facet.sequence, facet.name, facet.id, documents_tag.sequence, documents_tag.name, documents_tag.id
-            ORDER BY facet.sequence, facet.name, facet.id, documents_tag.sequence, documents_tag.name, documents_tag.id
+            GROUP BY facet.sequence, facet.name, facet.id, facet.tooltip, documents_tag.sequence, documents_tag.name, documents_tag.id
+            ORDER BY facet.sequence, facet.name, facet.id, facet.tooltip, documents_tag.sequence, documents_tag.name, documents_tag.id
         """ % (folder_query, from_activities, domain_query)
         self.env.cr.execute(query, folder_params + domain_params)
         return self.env.cr.dictfetchall()

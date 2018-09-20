@@ -254,7 +254,7 @@ var DocumentsKanbanModel = KanbanModel.extend({
     },
     /**
      * Fetch all tags. A tag as a 'tag_id', a 'tag_name', a 'facet_id', a
-     * 'facet_name' and a 'count' (the number of records linked to this tag).
+     * 'facet_name', a 'facet_tooltip' and a 'count' (the number of records linked to this tag).
      *
      * @private
      * @param {Object} params parameters/options passed to the load/reload function

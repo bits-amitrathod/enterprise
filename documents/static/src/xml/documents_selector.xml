@@ -18,7 +18,7 @@
             <ol class="list-group d-block">
                 <li t-foreach="facets" t-as="facet" t-att-data-id="facet.id" class="o_documents_selector_facet o_foldable list-group-item border-0">
                     <t t-set="facet_att_id" t-value="_.uniqueId('facet_')"/>
-                    <header class="list-group-item-action">
+                    <header class="list-group-item-action" t-att-title="facet.tooltip">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" t-att-name="facet_att_id" t-att-id="facet_att_id" t-att-checked="facet.selected ? 'checked' : undefined" class="custom-control-input"/>
                             <label class="custom-control-label d-block" t-att-for="facet_att_id">
