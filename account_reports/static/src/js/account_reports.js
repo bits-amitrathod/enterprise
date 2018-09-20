@@ -258,6 +258,7 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
         // bind actions
         _.each(this.$buttons.siblings('button'), function(el) {
             $(el).click(function() {
+                self.$buttons.attr('disabled', true);
                 return self._rpc({
                         model: self.report_model,
                         method: $(el).attr('action'),
@@ -266,6 +267,9 @@ var accountReportsWidget = Widget.extend(ControlPanelMixin, {
                     })
                     .then(function(result){
                         return self.do_action(result);
+                    })
+                    .always(function() {
+                        self.$buttons.attr('disabled', false);
                     });
             });
         });
