@@ -27,6 +27,9 @@
                 <field name="owner_id"/>
                 <field name="partner_id" string="Contact"/>
                 <separator/>
+                <filter string="My Activities" name="activities_my"
+                        domain="[('activity_ids.user_id', '=', uid)]"/>
+                <separator/>
                 <filter string="Late Activities" name="activities_overdue"
                     domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
                     help="Show all records which has next action date is before today"/>
@@ -89,7 +92,7 @@
                                    t-value="new RegExp('(image|video|application/pdf|text)').test(record.mimetype.value) &amp;&amp; record.type.raw_value === 'binary'"/>
                                 <!-- should be made more generic if we support different websites for videos -->
                                 <t t-set="supportedUrlVideo"
-                                   t-value="record.url.raw_value.length ? new RegExp('^(http(s)??\:\/\/)?(www\.)?((youtu.be\/))([a-zA-Z0-9\-_])|(youtube\.com\/watch\?v=)+$').test(record.url.raw_value) : false"/>
+                                   t-value="record.url.raw_value.length ? new RegExp('((http(s)?:\/\/)?)(www\.)?((youtube\.com\/)|(youtu.be\/))').test(record.url.raw_value) : false"/>
                                 <div t-attf-class="o_kanban_image_wrapper #{(webimage || binaryPreviewable || supportedUrlVideo) ? 'oe_kanban_previewer' : ''}">
                                     <div t-if="supportedUrlVideo" class="o_image o_image_thumbnail" data-mimetype="video"/>
                                     <div t-elif="record.type.raw_value == 'url'" class="o_url_image fa fa-link fa-3x text-muted"/>
@@ -278,7 +281,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="description"/>
+                            <field name="description" widget="html"/>
                             <field name="parent_folder_id"/>
                             <field name="company_id"/>
                             <field name="group_ids" widget="many2many_tags"/>
