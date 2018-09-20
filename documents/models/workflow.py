@@ -35,7 +35,7 @@ class WorkflowActionRule(models.Model):
     create_model = fields.Selection([], string="Create")
 
     # Activity
-    remove_activities = fields.Boolean(string='Remove all Activities')
+    remove_activities = fields.Boolean(string='Mark all Activities as done')
     activity_option = fields.Boolean(string='Create a new activity')
     activity_type_id = fields.Many2one('mail.activity.type', string="Activity type")
     activity_summary = fields.Char('Summary')
@@ -80,16 +80,16 @@ class WorkflowActionRule(models.Model):
             # partner/owner/share_link/folder changes
             attachment_dict = {}
             if self.user_id:
-                attachment_dict['owner_id'] = self.user_id
+                attachment_dict['owner_id'] = self.user_id.id
             if self.partner_id:
-                attachment_dict['partner_id'] = self.partner_id
+                attachment_dict['partner_id'] = self.partner_id.id
             if self.folder_id:
                 attachment_dict['folder_id'] = self.folder_id.id
 
             attachment.write(attachment_dict)
 
             if self.remove_activities:
-                attachment.activity_ids.unlink()
+                attachment.activity_ids.action_feedback(feedback=f"completed by rule: {self.name}. {self.note or ''}")
 
             if self.activity_option and self.activity_type_id:
                 attachment.documents_set_activity(settings_model=self)

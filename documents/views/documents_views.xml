@@ -18,21 +18,24 @@
         <field name="model">ir.attachment</field>
         <field name="inherit_id" ref="base.view_attachment_search"/>
         <field name="arch" type="xml">
+            <xpath expr="//filter[@name='binary_filter']" position="after">
+                <filter name="requested_filter" string="Requested files" domain="[('type', '=', 'empty')]"/>
+            </xpath>
             <xpath expr="//search" position="inside">
                 <field name="datas_fname"/>
                 <field name="tag_ids"/>
                 <field name="owner_id"/>
                 <field name="partner_id" string="Contact"/>
                 <separator/>
-                    <filter string="Late Activities" name="activities_overdue"
-                        domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
-                        help="Show all records which has next action date is before today"/>
-                    <filter string="Today Activities" name="activities_today"
-                        domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                    <filter string="Future Activities" name="activities_upcoming_all"
-                        domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
-                        ]"/>
-                <filter name="requested_filter" string="Requested files" domain="[('type', '=', 'empty')]"/>
+                <filter string="Late Activities" name="activities_overdue"
+                    domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                    help="Show all records which has next action date is before today"/>
+                <filter string="Today Activities" name="activities_today"
+                    domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Future Activities" name="activities_upcoming_all"
+                    domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
+                    ]"/>
+                <separator/>
                 <filter string="PDF" name="pdf" domain="[('mimetype', 'ilike', 'pdf')]"/>
                 <filter string="Image" name="img" domain="[('mimetype', 'ilike', 'image')]"/>
                 <filter string="Video" name="video" domain="[('mimetype', 'ilike', 'video')]"/>
@@ -80,11 +83,16 @@
                         <t t-set="fileRequest" t-value="record.type.raw_value === 'empty'"/>
                         <div t-attf-class="oe_kanban_global_area o_kanban_attachment #{fileRequest ? 'oe_file_request' : ''}">
                             <div t-attf-class="o_kanban_image #{fileRequest ? 'o_request_image' : ''}">
-                                <t t-set="webimage" t-value="new RegExp('image.*(gif|jpeg|jpg|png)').test(record.mimetype.value)"/>
-                                <t t-set="binaryPreviewable" t-value="new RegExp('(image|video|application/pdf|text)').test(record.mimetype.value) &amp;&amp; record.type === 'binary'"/>
-                                <t t-set="urlPreviewable" t-value="record.url.raw_value.length ? record.url.raw_value.indexOf('youtu') >= 0 : false"/>
-                                <div t-attf-class="o_kanban_image_wrapper #{(webimage || binaryPreviewable || urlPreviewable) ? 'oe_kanban_previewer' : ''}">
-                                    <div t-if="record.type.raw_value == 'url'" class="o_url_image fa fa-link fa-3x text-muted"/>
+                                <t t-set="webimage"
+                                   t-value="new RegExp('image.*(gif|jpeg|jpg|png)').test(record.mimetype.value)"/>
+                                <t t-set="binaryPreviewable"
+                                   t-value="new RegExp('(image|video|application/pdf|text)').test(record.mimetype.value) &amp;&amp; record.type.raw_value === 'binary'"/>
+                                <!-- should be made more generic if we support different websites for videos -->
+                                <t t-set="supportedUrlVideo"
+                                   t-value="record.url.raw_value.length ? new RegExp('^(http(s)??\:\/\/)?(www\.)?((youtu.be\/))([a-zA-Z0-9\-_])|(youtube\.com\/watch\?v=)+$').test(record.url.raw_value) : false"/>
+                                <div t-attf-class="o_kanban_image_wrapper #{(webimage || binaryPreviewable || supportedUrlVideo) ? 'oe_kanban_previewer' : ''}">
+                                    <div t-if="supportedUrlVideo" class="o_image o_image_thumbnail" data-mimetype="video"/>
+                                    <div t-elif="record.type.raw_value == 'url'" class="o_url_image fa fa-link fa-3x text-muted"/>
                                     <img t-elif="webimage" t-attf-src="/web/image/#{record.id.raw_value}?field=thumbnail&amp;signature=#{record.checksum.value}" width="100" height="100" alt="Document" class="o_attachment_image"/>
                                     <div t-elif="fileRequest" class="fa fa-download fa-3x text-muted"/>
                                     <div t-else="!webimage" class="o_image o_image_thumbnail" t-att-data-mimetype="record.mimetype.value"/>
@@ -465,6 +473,7 @@
             <tree>
                 <field name="domain_folder_id"/>
                 <field name="name"/>
+                <field name="create_date"/>
             </tree>
         </field>
     </record>
@@ -621,16 +630,18 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="E.g. Status"/></h1>
+                    </div>
                     <group>
-                        <div class="oe_title">
-                            <label for="name" class="oe_edit_only"/>
-                            <h1><field name="name" placeholder="E.g. Status"/></h1>
-                        </div>
-                        <field name="folder_id" required="1"/>
-                        <field name="tooltip"/>
-                    </group>
-                    <group>
-                        <field name="tag_ids"/>
+                        <group>
+                            <field name="folder_id" required="1"/>
+                            <field name="tooltip"/>
+                        </group>
+                        <group>
+                            <field name="tag_ids"/>
+                        </group>
                     </group>
                 </sheet>
             </form>
@@ -754,7 +765,7 @@
       <field name="view_id" ref="documents.documents_view_kanban"/>
       <field name="domain">['&amp;', ('res_model', 'not in', ['ir.ui.view', 'Country', 'ir.ui.menu', 'Contact']), ('res_field', '=', False), ('folder_id', '!=', False)]</field>
       <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">Upload <small>a file or</small> drag <small>it here.</small></p>
+            <p class="o_view_nocontent_smiling_face">Upload <span class="font-weight-normal">a file or</span> drag <span class="font-weight-normal">it here.</span></p>
         </field>
     </record>
 

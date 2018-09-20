@@ -112,7 +112,8 @@ class IrAttachment(models.Model):
             attachments = self.env['ir.attachment'].browse([x[1] for x in rv])
             for attachment in attachments:
                 attachment.write(write_vals)
-                attachment.documents_set_activity(settings_model=share)
+                if share.activity_option:
+                    attachment.documents_set_activity(settings_model=share)
 
         return rv
 
@@ -122,22 +123,34 @@ class IrAttachment(models.Model):
         Generate an activity based on the fields of settings_model.
 
         :param settings_model: the model that contains the activity fields.
+                    settings_model.activity_type_id (required)
+                    settings_model.activity_summary
+                    settings_model.activity_note
+                    settings_model.activity_date_deadline_range
+                    settings_model.activity_date_deadline_range_type
+                    settings_model.activity_user_id
         """
-        if settings_model:
-            if settings_model.activity_option and settings_model.activity_type_id:
-                activity_vals = {
-                    'summary': settings_model.activity_summary or '',
-                    'note': settings_model.activity_note or '',
-                    'activity_type_id': settings_model.activity_type_id.id,
-                }
-                if settings_model.activity_date_deadline_range > 0:
-                    activity_vals['date_deadline'] = fields.Date.context_today(settings_model) + relativedelta(
-                        **{settings_model.activity_date_deadline_range_type: settings_model.activity_date_deadline_range})
+        if settings_model and settings_model.activity_type_id:
+            activity_vals = {
+                'activity_type_id': settings_model.activity_type_id.id,
+                'summary': settings_model.activity_summary or '',
+                'note': settings_model.activity_note or '',
+            }
+            if settings_model.activity_date_deadline_range > 0:
+                activity_vals['date_deadline'] = fields.Date.context_today(settings_model) + relativedelta(
+                    **{settings_model.activity_date_deadline_range_type: settings_model.activity_date_deadline_range})
 
-                user = settings_model.activity_user_id or settings_model.owner_id or self.env.user
-                if user:
-                    activity_vals['user_id'] = user.id
-                self.activity_schedule(**activity_vals)
+            if settings_model._fields.get('activity_user_id') and settings_model.activity_user_id:
+                user = settings_model.activity_user_id
+            elif settings_model._fields.get('user_id') and settings_model.user_id:
+                user = settings_model.user_id
+            elif settings_model._fields.get('owner_id') and settings_model.owner_id:
+                user = settings_model.owner_id
+            else:
+                user = self.env.user
+            if user:
+                activity_vals['user_id'] = user.id
+            self.activity_schedule(**activity_vals)
 
     @api.multi
     def toggle_favorited(self):

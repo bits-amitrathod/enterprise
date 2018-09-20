@@ -5,7 +5,7 @@ class WorkflowActionRuleProduct(models.Model):
     _inherit = ['documents.workflow.rule']
 
     has_business_option = fields.Boolean(default=True, compute='_get_business')
-    create_model = fields.Selection(selection_add=[('product.template', "Product Product template")])
+    create_model = fields.Selection(selection_add=[('product.template', "Product template")])
 
     def create_record(self, attachments=None):
         rv = super(WorkflowActionRuleProduct, self).create_record(attachments=attachments)

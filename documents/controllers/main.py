@@ -99,7 +99,7 @@ class ShareRoute(http.Controller):
             share = env['documents.share'].sudo().browse(share_id)
             if share.state == 'expired':
                 return request.not_found()
-            if consteq(share.access_token, access_token):
+            if consteq(access_token, share.access_token):
                 if share.action != 'upload':
                     attachments = False
                     if share.type == 'domain':
@@ -125,7 +125,7 @@ class ShareRoute(http.Controller):
         try:
             env = request.env
             share = env['documents.share'].sudo().browse(share_id)
-            if consteq(share.access_token, access_token):
+            if consteq(access_token, share.access_token):
                 return base64.b64decode(env['res.users'].sudo().browse(share.create_uid.id).image_small)
             else:
                 return request.not_found()
@@ -167,7 +167,7 @@ class ShareRoute(http.Controller):
         """
         env = request.env
         share = env['documents.share'].sudo().browse(share_id)
-        if consteq(share.access_token, access_token):
+        if consteq(access_token, share.access_token):
             try:
                 if share.action != 'upload' and share.state != 'expired':
                     return self._get_file_response(id, share_id=share_id, share_token=share.access_token, field='datas')
@@ -189,7 +189,7 @@ class ShareRoute(http.Controller):
         share = http.request.env['documents.share'].sudo().search([('id', '=', arg_id)])
         if 'upload' not in share.action or share.state == 'expired':
             return http.request.not_found()
-        if consteq(share.access_token, token):
+        if consteq(token, share.access_token):
             attachments = request.env['ir.attachment']
             folder = share.folder_id
             folder_id = folder.id or False
@@ -208,7 +208,8 @@ class ShareRoute(http.Controller):
                         'datas': base64.b64encode(data),
                     }
                     attachment = attachments.sudo().create(attachment_dict)
-                    attachment.documents_set_activity(settings_model=share)
+                    if share.activity_option:
+                        attachment.documents_set_activity(settings_model=share)
 
             except Exception as e:
                 logger.exception("Failed to upload attachment")
@@ -238,7 +239,7 @@ class ShareRoute(http.Controller):
                     'author': share.create_uid.name,
                 }
                 return request.render('documents.not_available', expired_options)
-            if not consteq(share.access_token, token):
+            if not consteq(token, share.access_token):
                 return request.not_found()
 
             if share.type == 'domain':

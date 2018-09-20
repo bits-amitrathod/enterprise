@@ -17,8 +17,6 @@ class WorkflowActionRuleSign(models.Model):
                     'name': attachment.datas_fname[:attachment.datas_fname.rfind('.')],
                     'attachment_id': attachment.id,
                 }
-                for tag_action in self.tag_action_ids:
-                    tag_action.execute_action(new_obj)
                 if self.folder_id:
                     create_values['folder_id'] = self.folder_id.id
                 elif self.domain_folder_id:
