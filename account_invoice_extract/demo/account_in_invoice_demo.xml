@@ -4,6 +4,8 @@
         <record id="ir_attachment_in_invoice_draft" model="ir.attachment">
             <field name="name">in_invoice_pdf</field>
             <field name="type">binary</field>
+            <field name="res_model">account.invoice</field>
+            <field name="res_id" ref="l10n_generic_coa.demo_invoice_0"/>
             <field name="datas" type="base64" file="account_invoice_extract/static/src/demo/in_invoice_yourcompany_demo.pdf"/>
             <field name="datas_fname">in_invoice_yourcompany_demo.pdf</field>
         </record>
@@ -15,6 +17,10 @@
             <field name="author_id" ref="base.partner_demo"/>
             <field name="date" eval="(DateTime.today() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M')"/>
             <field name="attachment_ids" eval="[(6, 0, [ref('ir_attachment_in_invoice_draft')])]"/>
+        </record>
+        <!--Main attachment is usually registered by message_post, so here we must set it manually-->
+        <record id="l10n_generic_coa.demo_invoice_0" model="account.invoice">
+            <field name="message_main_attachment_id" ref="ir_attachment_in_invoice_draft"/>
         </record>
     </data>
 </odoo>
