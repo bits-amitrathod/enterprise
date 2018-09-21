@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 11:28+0000\n"
-"PO-Revision-Date: 2018-08-24 11:28+0000\n"
+"POT-Creation-Date: 2018-09-21 14:06+0000\n"
+"PO-Revision-Date: 2018-09-21 14:06+0000\n"
 "Last-Translator: Martin Trigaux, 2018\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
@@ -191,17 +191,17 @@ msgid ""
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet managers"
 msgstr "Regelmäßige E-Mail-Erinnerung für Stundenzettel-Manager aktivieren"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet users"
 msgstr "Regelmäßige Erinnerung für Stundenzettel-Benutzer aktivieren"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
 msgid "Add a Task"
 msgstr ""
 
@@ -222,7 +222,7 @@ msgid "Analytic Line"
 msgstr "Analytischer Buchungssatz"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -239,6 +239,11 @@ msgstr ""
 #: model:ir.model,name:timesheet_grid.model_res_company
 msgid "Companies"
 msgstr "Unternehmen"
+
+#. module: timesheet_grid
+#: model:ir.model,name:timesheet_grid.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation__create_uid
@@ -296,7 +301,7 @@ msgid "Employee Reminder Days"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Frequency"
 msgstr "Frequenz"
 
@@ -375,14 +380,14 @@ msgid "Manager Reminder Frequency"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
 msgid "Month"
 msgstr "Monat"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "My Team"
 msgstr "Mein Team"
 
@@ -397,7 +402,7 @@ msgid "Next scheduled date for manager reminder"
 msgstr "Nächstes geplantes Datum für Manager-Erinnerung"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Non Validated"
 msgstr "Nicht validiert"
 
@@ -447,7 +452,7 @@ msgid "There aren't any timesheet to validate"
 msgstr "Keine Stundenzettel zum Validieren vorhanden."
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
 msgid "Time Spent"
 msgstr "Geleistete Stunden"
 
@@ -459,7 +464,7 @@ msgid "Timesheet Adjustment"
 msgstr ""
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Timesheet Control"
 msgstr "Stundenzettel-Kontrolle"
 
@@ -472,6 +477,16 @@ msgstr "Zeiterfassungsposition"
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee__timesheet_manager_id
 msgid "Timesheet Responsible"
 msgstr "Verantwortlich für Stundenzettel"
+
+#. module: timesheet_grid
+#: model:ir.model,name:timesheet_grid.model_timesheet_validation
+msgid "Timesheet Validation"
+msgstr ""
+
+#. module: timesheet_grid
+#: model:ir.model,name:timesheet_grid.model_timesheet_validation_line
+msgid "Timesheet Validation Line"
+msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_user_ir_actions_server
@@ -488,9 +503,9 @@ msgid "Timesheet: Managers Email Reminder"
 msgstr "Stundenzettel: E-Mail-Erinnerung für Manager"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
 msgid "Timesheets"
 msgstr "Zeiterfassung"
 
@@ -543,18 +558,18 @@ msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_validation_line__validate
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee_validation
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee_validation
 msgid "Validate"
 msgstr "Bestätigen"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 msgid "Validate Timesheets"
 msgstr "Stundenzettel validieren"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 msgid "Validate the timesheets of the selected employees up to"
 msgstr "Stundenzettel dieser Mitarbeiter bis zum gewählten Datum validieren"
 
@@ -569,7 +584,7 @@ msgid "Validate up to"
 msgstr "Validieren bis zu"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Validated"
 msgstr "Bestätigt"
 
@@ -595,9 +610,9 @@ msgid "Validation Line"
 msgstr "Validierungszeile"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
-#: model:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_task_readonly
 msgid "Week"
 msgstr "Woche"
 
@@ -614,21 +629,6 @@ msgid "after end of week"
 msgstr "nach Ende der Woche"
 
 #. module: timesheet_grid
-#: model:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "days"
 msgstr "Tage"
-
-#. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_res_config_settings
-msgid "res.config.settings"
-msgstr "res.config.settings"
-
-#. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_timesheet_validation
-msgid "timesheet.validation"
-msgstr "timesheet.validation"
-
-#. module: timesheet_grid
-#: model:ir.model,name:timesheet_grid.model_timesheet_validation_line
-msgid "timesheet.validation.line"
-msgstr "timesheet.validation.line"

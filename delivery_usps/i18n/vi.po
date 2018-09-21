@@ -2,12 +2,16 @@
 # This file contains the translation of the following modules:
 # * delivery_usps
 # 
+# Translators:
+# thanh nguyen <thanhnguyen.icsc@gmail.com>, 2018
+# Duy BQ <duybq86@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 11:28+0000\n"
-"PO-Revision-Date: 2018-08-24 11:28+0000\n"
+"POT-Creation-Date: 2018-09-21 14:06+0000\n"
+"PO-Revision-Date: 2018-09-21 14:06+0000\n"
+"Last-Translator: Duy BQ <duybq86@gmail.com>, 2018\n"
 "Language-Team: Vietnamese (https://www.transifex.com/odoo/teams/41243/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,11 +35,6 @@ msgid "Based on Rules"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model,name:delivery_usps.model_delivery_carrier
-msgid "Carrier"
-msgstr ""
-
-#. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_account_validated
 msgid "Check this box if your account is validated by USPS"
 msgstr ""
@@ -55,6 +54,11 @@ msgstr ""
 #: selection:delivery.carrier,delivery_type:0
 msgid "DHL"
 msgstr ""
+
+#. module: delivery_usps
+#: model:ir.model,name:delivery_usps.model_delivery_carrier
+msgid "Delivery Methods"
+msgstr "Phương thức giao hàng"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
@@ -128,7 +132,7 @@ msgid "Flat Rate Envelope"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
+#: model_terms:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
 msgid "From Company"
 msgstr ""
 
@@ -197,12 +201,12 @@ msgstr ""
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_label_file_type:0
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_mail_type:0
 msgid "Package"
-msgstr ""
+msgstr "Gói"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
@@ -287,7 +291,7 @@ msgstr ""
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
 msgid "Priority"
-msgstr ""
+msgstr "Độ ưu tiên"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__delivery_type
@@ -318,7 +322,7 @@ msgstr ""
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_size_container:0
 msgid "Regular"
-msgstr ""
+msgstr "Thông thường"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_container:0
@@ -394,7 +398,7 @@ msgid "The selected USPS service (%s) cannot be used to deliver this package."
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
+#: model_terms:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
 msgid "To Company"
 msgstr ""
 
@@ -424,13 +428,13 @@ msgid "USPS"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
+#: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "USPS Configuration"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
-#: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
+#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
+#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
 msgid "USPS Delivery Methods"
 msgstr ""
 

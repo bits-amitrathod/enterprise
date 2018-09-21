@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 11:28+0000\n"
-"PO-Revision-Date: 2018-08-24 11:28+0000\n"
+"POT-Creation-Date: 2018-09-21 14:06+0000\n"
+"PO-Revision-Date: 2018-09-21 14:06+0000\n"
 "Last-Translator: Martin Trigaux, 2018\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/odoo/teams/41243/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -27,13 +27,15 @@ msgstr ""
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_company__account_folder
+#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder
 msgid "Account Folder"
 msgstr ""
 
 #. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__create_model
-msgid "Attach to"
-msgstr ""
+#: model:ir.model.fields,field_description:documents_account.field_res_company__account_tags
+#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_tags
+msgid "Account Tags"
+msgstr "科目標籤"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_res_company
@@ -41,18 +43,54 @@ msgid "Companies"
 msgstr "公司"
 
 #. module: documents_account
+#: model:ir.model,name:documents_account.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: documents_account
+#: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__create_model
+msgid "Create"
+msgstr "創建"
+
+#. module: documents_account
 #: selection:documents.workflow.rule,create_model:0
 msgid "Credit note"
 msgstr ""
 
 #. module: documents_account
-#: model:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
-msgid "Default destination for the attachments created in accounting."
+#: model:ir.model.fields,field_description:documents_account.field_res_company__dms_account_settings
+#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__dms_account_settings
+msgid "Dms Account Settings"
+msgstr ""
+
+#. module: documents_account
+#: model:ir.model,name:documents_account.model_ir_attachment
+msgid "Document"
+msgstr "文件"
+
+#. module: documents_account
+#: model:mail.activity.type,name:documents_account.mail_documents_activity_data_fs
+msgid "Fiscal Statement"
 msgstr ""
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__has_business_option
 msgid "Has Business Option"
+msgstr ""
+
+#. module: documents_account
+#: selection:documents.workflow.rule,create_model:0
+msgid "Product Product template"
+msgstr ""
+
+#. module: documents_account
+#: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
+msgid "Select the folder to be used for accounting's documents."
+msgstr ""
+
+#. module: documents_account
+#: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
+msgid "Select the tags to be applied to the accounting's new documents"
 msgstr ""
 
 #. module: documents_account
@@ -66,21 +104,11 @@ msgid "Task"
 msgstr "任務"
 
 #. module: documents_account
+#: model:mail.activity.type,name:documents_account.mail_documents_activity_data_vat
+msgid "VAT return"
+msgstr ""
+
+#. module: documents_account
 #: selection:documents.workflow.rule,create_model:0
 msgid "Vendor bill"
 msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder
-msgid "account folder"
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model,name:documents_account.model_ir_attachment
-msgid "ir.attachment"
-msgstr "附件"
-
-#. module: documents_account
-#: model:ir.model,name:documents_account.model_res_config_settings
-msgid "res.config.settings"
-msgstr "res.config.settings"
