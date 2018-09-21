@@ -49,7 +49,7 @@ class TestL10nMxEdiInvoice33(common.InvoiceTransactionCase):
             'name': 'YourCompany',
         })
         self.company.partner_id.write({
-            'vat': 'ACO560518KW7',
+            'vat': 'TCM970625MB1',
             'country_id': self.env.ref('base.mx').id,
             'zip': '37200',
             'property_account_position_id': self.fiscal_position.id,
