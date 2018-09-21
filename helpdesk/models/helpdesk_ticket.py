@@ -439,5 +439,9 @@ class HelpdeskTicket(models.Model):
     # Rating Mixin
     # ------------------------------------------------------------
 
+    @api.multi
+    def rating_apply(self, rate, token=None, feedback=None, subtype=None):
+        return super(HelpdeskTicket, self).rating_apply(rate, token=token, feedback=feedback, subtype="helpdesk.mt_ticket_rated")
+
     def rating_get_parent(self):
         return 'team_id'
