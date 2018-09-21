@@ -20,7 +20,7 @@ QUnit.module('DocumentsKanbanView', {
                 fields: {
                     active: {string: "Active", type: 'boolean', default: true},
                     available_rule_ids: {string: "Rules", type: 'many2many', relation: 'documents.workflow.rule'},
-                    datas_fname: {string: "Foo", type: 'char'},
+                    name: {string: "Foo", type: 'char'},
                     file_size: {string: "Size", type: 'integer'},
                     folder_id: {string: "Folders", type: 'many2one', relation: 'documents.folder'},
                     lock_uid: {string: "Locked by", type: "many2one", relation: 'user'},
@@ -45,32 +45,32 @@ QUnit.module('DocumentsKanbanView', {
                         selection: [['overdue', 'Overdue'], ['today', 'Today'], ['planned', 'Planned']]},
                 },
                 records: [
-                    {id: 1, datas_fname: 'yop', file_size: 30000, owner_id: 1, partner_id: 2,
+                    {id: 1, name: 'yop', name: 'yop', file_size: 30000, owner_id: 1, partner_id: 2,
                         public: true, res_id: 1, res_model: 'task', res_model_name: 'Task', activity_ids: [1,],
                         activity_state: 'today', res_name: 'Write specs', tag_ids: [1, 2], share_ids: [], folder_id: 1,
                         available_rule_ids: [1, 2]},
-                    {id: 2, datas_fname: 'blip', file_size: 20000, owner_id: 2, partner_id: 2,
+                    {id: 2, name: 'blip',name: 'blip', file_size: 20000, owner_id: 2, partner_id: 2,
                         public: false, res_id: 2, res_model: 'task', res_model_name: 'Task',
                         res_name: 'Write tests', tag_ids: [2], share_ids: [], folder_id: 1, available_rule_ids: [1]},
-                    {id: 3, datas_fname: 'gnap', file_size: 15000, lock_uid: 3, owner_id: 2, partner_id: 1,
+                    {id: 3, name: 'gnap',name: 'gnap', file_size: 15000, lock_uid: 3, owner_id: 2, partner_id: 1,
                         public: false, res_id: 2, res_model: 'task', res_model_name: 'Task',
                         res_name: 'Write doc', tag_ids: [1, 2, 5], share_ids: [], folder_id: 1, available_rule_ids: [1, 2, 3]},
-                    {id: 4, datas_fname: 'burp', file_size: 10000, mimetype: 'image/png', owner_id: 1, partner_id: 3,
+                    {id: 4, name: 'burp',name: 'burp', file_size: 10000, mimetype: 'image/png', owner_id: 1, partner_id: 3,
                         public: true, res_id: 1, res_model: 'order', res_model_name: 'Sale Order',
                         res_name: 'SO 0001', tag_ids: [], share_ids: [], folder_id: 1, available_rule_ids: []},
-                    {id: 5, datas_fname: 'zip', file_size: 40000, lock_uid: 1, owner_id: 2, partner_id: 2,
+                    {id: 5, name: 'zip',name: 'zip', file_size: 40000, lock_uid: 1, owner_id: 2, partner_id: 2,
                         public: false, res_id: 3, res_model: false, res_model_name: false,
                         res_name: false, tag_ids: [], share_ids: [], folder_id: 1, available_rule_ids: [1, 2]},
-                    {id: 6, datas_fname: 'pom', file_size: 70000, partner_id: 3,
+                    {id: 6, name: 'pom',name: 'pom', file_size: 70000, partner_id: 3,
                         public: true, res_id: 1, res_model: 'order', res_model_name: 'Sale order',
                         res_name: 'SO 0003', tag_ids: [], share_ids: [], folder_id: 2, available_rule_ids: []},
-                    {id: 7, datas_fname: 'zoup', file_size: 20000, mimetype: 'image/png',
+                    {id: 7, name: 'zoup',name: 'zoup', file_size: 20000, mimetype: 'image/png',
                         owner_id: 3, partner_id: 3, public: true, res_id: false, res_model: false,
                         res_model_name: false, res_name: false, tag_ids: [], share_ids: [], folder_id: false, available_rule_ids: []},
-                    {id: 8, active: false, datas_fname: 'wip', file_size: 70000, owner_id: 3, partner_id: 3,
+                    {id: 8, active: false, name: 'wip', name: 'wip', file_size: 70000, owner_id: 3, partner_id: 3,
                         public: true, res_id: 1, res_model: 'order', res_model_name: 'Sale Order',
                         res_name: 'SO 0003', tag_ids: [], share_ids: [], folder_id: 1, available_rule_ids: []},
-                    {id: 9, active: false, datas_fname: 'zorro', file_size: 20000, mimetype: 'image/png',
+                    {id: 9, active: false, name: 'zorro', name: 'zorro', file_size: 20000, mimetype: 'image/png',
                         owner_id: 3, partner_id: 3, public: true, res_id: false, res_model: false,
                         res_model_name: false, res_name: false, tag_ids: [], share_ids: [], folder_id: 1, available_rule_ids: []},
                 ],
@@ -208,7 +208,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -253,7 +253,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -290,7 +290,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -324,7 +324,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -353,7 +353,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                         '<button name="some_method" type="object"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
@@ -396,7 +396,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                         '<button name="some_method" type="object"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
@@ -445,7 +445,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                         '<button name="some_method" type="object"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
@@ -460,7 +460,7 @@ QUnit.module('DocumentsKanbanView', {
         assert.strictEqual(kanban.$('.o_documents_inspector_preview .o_document_preview').length, 3,
             "should show 3 document previews in the DocumentsInspector");
 
-        kanban.reload({domain: [['datas_fname', '=', 'burp']]});
+        kanban.reload({domain: [['name', '=', 'burp']]});
 
         assert.strictEqual(kanban.$('.o_record_selected').length, 1,
             "should have 1 selected record");
@@ -487,7 +487,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                         '<button name="some_method" type="object"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
@@ -502,7 +502,7 @@ QUnit.module('DocumentsKanbanView', {
                 execute_action: function (ev) {
                     assert.strictEqual(ev.data.action_data.name, 'some_method',
                         "should call the correct method");
-                    self.data['ir.attachment'].records[0].datas_fname = 'yop changed';
+                    self.data['ir.attachment'].records[0].name = 'yop changed';
                     ev.data.on_closed();
                 },
             },
@@ -539,7 +539,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             domain: domain,
@@ -578,7 +578,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             intercepts: {
@@ -602,7 +602,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             intercepts: {
@@ -627,7 +627,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -649,7 +649,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -672,7 +672,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -707,7 +707,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -736,7 +736,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban limit="2"><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -774,7 +774,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -816,7 +816,7 @@ QUnit.module('DocumentsKanbanView', {
             domain: [['active', '=', false]],
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route, args) {
@@ -855,7 +855,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route, args) {
@@ -899,7 +899,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route, args) {
@@ -934,7 +934,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             session: {
@@ -975,7 +975,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             session: {
@@ -1022,15 +1022,15 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
 
         kanban.$('.o_kanban_record:contains(yop)').click();
 
-        assert.strictEqual(kanban.$('.o_field_widget[name=datas_fname]').val(),
-            'yop', "should correctly display the filename");
+        assert.strictEqual(kanban.$('.o_field_widget[name=name]').val(),
+            'yop', "should correctly display the name");
         assert.strictEqual(kanban.$('.o_field_widget[name=owner_id] input').val(),
             'Hazard', "should correctly display the owner");
         assert.strictEqual(kanban.$('.o_field_widget[name=partner_id] input').val(),
@@ -1058,7 +1058,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                         '<field name="owner_id"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
@@ -1108,7 +1108,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1155,7 +1155,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                         '<field name="owner_id"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
@@ -1219,7 +1219,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route, args) {
@@ -1227,7 +1227,7 @@ QUnit.module('DocumentsKanbanView', {
                 if (args.method === 'write') {
                     assert.step('write');
                     nbWrite++;
-                    assert.deepEqual(args.args, [[1], {datas_fname: value}],
+                    assert.deepEqual(args.args, [[1], {name: value}],
                         "should correctly save the changes");
                     if (nbWrite === 1) {
                         return def.then(_.constant(result));
@@ -1243,7 +1243,7 @@ QUnit.module('DocumentsKanbanView', {
 
         // change filename value of selected record (but block RPC)
         value = 'temp name';
-        kanban.$('.o_field_char[name=datas_fname]').val(value).trigger('input');
+        kanban.$('.o_field_char[name=name]').val(value).trigger('input');
 
         assert.strictEqual(kanban.$('.o_kanban_record:first').text(), 'yop',
             "should still display the old filename");
@@ -1251,7 +1251,7 @@ QUnit.module('DocumentsKanbanView', {
         // change filename value again (this RPC isn't blocked but must wait for
         // the first one to return)
         value = 'new name';
-        kanban.$('.o_field_char[name=datas_fname]').val(value).trigger('input');
+        kanban.$('.o_field_char[name=name]').val(value).trigger('input');
 
         assert.strictEqual(kanban.$('.o_kanban_record:first').text(), 'yop',
             "should still display the old filename");
@@ -1261,7 +1261,7 @@ QUnit.module('DocumentsKanbanView', {
 
         assert.strictEqual(kanban.$('.o_kanban_record:first').text(), 'new name',
             "should still display the new filename in the record");
-        assert.strictEqual(kanban.$('.o_field_char[name=datas_fname]').val(), 'new name',
+        assert.strictEqual(kanban.$('.o_field_char[name=name]').val(), 'new name',
             "should still display the new filename in the documents inspector");
 
         assert.verifySteps(['write', 'resolve', 'write']);
@@ -1278,7 +1278,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             intercepts: {
@@ -1308,7 +1308,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1339,7 +1339,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1363,7 +1363,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route, args) {
@@ -1402,7 +1402,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route, args) {
@@ -1448,7 +1448,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1479,7 +1479,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1508,7 +1508,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1530,7 +1530,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1565,7 +1565,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route, args) {
@@ -1602,7 +1602,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1652,7 +1652,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1680,7 +1680,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route) {
@@ -1720,7 +1720,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             intercepts: {
@@ -1800,7 +1800,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1842,7 +1842,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route, args) {
@@ -1906,7 +1906,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1945,7 +1945,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -1978,7 +1978,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -2009,7 +2009,7 @@ QUnit.module('DocumentsKanbanView', {
             services: mailTestUtils.getMailServices(),
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -2043,7 +2043,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -2110,7 +2110,7 @@ QUnit.module('DocumentsKanbanView', {
             },
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -2136,7 +2136,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             domain: [['res_model', '=', false]],
@@ -2161,7 +2161,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -2208,7 +2208,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -2255,7 +2255,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -2309,7 +2309,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
             mockRPC: function (route, args) {
@@ -2350,7 +2350,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });
@@ -2388,7 +2388,7 @@ QUnit.module('DocumentsKanbanView', {
             data: this.data,
             arch: '<kanban><templates><t t-name="kanban-box">' +
                     '<div>' +
-                        '<field name="datas_fname"/>' +
+                        '<field name="name"/>' +
                     '</div>' +
                 '</t></templates></kanban>',
         });

@@ -202,10 +202,8 @@ var DocumentsInspector = Widget.extend({
     _renderFields: function () {
         var options = {mode: 'edit'};
         if (this.records.length === 1) {
-            if (this.records[0].data.type !== 'url') {
-                this._renderField('datas_fname', options);
-            } else {
-                this._renderField('name', options);
+            this._renderField('name', options);
+            if (this.records[0].data.type === 'url') {
                 this._renderField('url', options);
             }
             this._renderField('partner_id', options);
