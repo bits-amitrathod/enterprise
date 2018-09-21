@@ -217,7 +217,7 @@ class IntrastatReport(models.AbstractModel):
             total_value += vals['value']
 
         # Create total line if only one type selected.
-        if (incl_arrivals or incl_dispatches) and not (incl_arrivals and incl_dispatches):
+        if incl_arrivals != incl_dispatches:
             colspan = 12 if extended else 10
             lines.append({
                 'id': 0,
