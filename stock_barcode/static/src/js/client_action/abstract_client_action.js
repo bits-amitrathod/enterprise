@@ -1174,7 +1174,7 @@ var ClientAction = AbstractAction.extend({
         var errorMessage;
 
         // Bypass the step if needed.
-        if (this.mode === 'delivery' || this.mode === 'no_multi_locations'  || this.actionParams.model === 'stock.inventory') {
+        if (this.mode === 'delivery' || this.actionParams.model === 'stock.inventory') {
             this._endBarcodeFlow();
             return this._step_source(barcode, linesActions);
         }
@@ -1184,7 +1184,7 @@ var ClientAction = AbstractAction.extend({
             errorMessage = _t('This location is not a child of the main location.');
             return $.Deferred().reject(errorMessage);
         } else {
-            if (! this.scannedLines.length) {
+            if (! this.scannedLines.length || this.mode === 'no_multi_locations') {
                 if (this.groups.group_tracking_lot) {
                     errorMessage = _t("You are expected to scan one or more products or a package available at the picking's location");
                 } else {
