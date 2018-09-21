@@ -153,7 +153,7 @@
             t-att-data-pagebreak="'before' if (line.get('page_break') and context.get('print_mode')) else None"
             t-att-data-parent-id="line.get('parent_id', False)"
             t-att-style="line.get('style', '')">
-            <td t-att-data-id="line['id']" t-att-class="'o_account_report_line ' + (line.get('unfoldable') and 'js_account_report_foldable' or '')" t-att-data-unfolded="line.get('unfolded', False)" t-att-colspan="line.get('colspan', '1')"
+            <td t-att-data-id="line['id']" t-att-class="'o_account_report_line ' + (line.get('unfoldable') and 'js_account_report_foldable o_foldable_total' or '')" t-att-data-unfolded="line.get('unfolded', False)" t-att-colspan="line.get('colspan', '1')"
             t-att-data-offset="line.get('offset', False)" t-att-data-progress="line.get('progress', False)"
             >
                     <t t-if="line.get('unfoldable')">
@@ -189,7 +189,7 @@
                     </t>
             </td>
             <t t-foreach="line.get('columns')" t-as="column">
-                <td t-att-class="'o_account_report_line ' + (column.get('class', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('class', '')))" t-att-style="column.get('style', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('style', ''))">
+                <td t-att-class="'o_account_report_line ' + (column.get('class', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('class', '')) + (line.get('unfoldable') and ' o_foldable_total' or ''))" t-att-style="column.get('style', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('style', ''))">
                     <span class="o_account_report_column_value" t-att-title="column.get('title')">
                         <t t-esc="column.get('name')"/>
                     </span>
@@ -276,7 +276,7 @@
                 <button class="btn btn-primary js_account_report_save_summary">Save</button>
             </div>
             <div>
-                <table class="o_account_reports_table">
+                <table t-att-class="'o_account_reports_table' + (' o_account_reports_total_below' if env.user.company_id.totals_below_sections else '')">
                     <t t-call="{{model._get_templates()['main_table_header_template']}}"/>
                     <tbody>
                         <t t-if="lines.get('lines')">

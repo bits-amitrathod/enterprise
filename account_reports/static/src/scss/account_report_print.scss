@@ -9,12 +9,20 @@
     color: black !important;
     font-size: 12px !important;
     .o_account_reports_table {
-        font-size: 14px !important;
+        font-size: 12px !important;
         white-space: nowrap !important;
         > tbody > tr {
             /* fix thead overlapping http://github.com/wkhtmltopdf/wkhtmltopdf/issues/1524 */
             page-break-inside: avoid;
         }
+    }
+    .o_account_reports_level0, .o_account_reports_level1, .o_account_reports_level2, .o_account_reports_domain_total, .total {
+        .text-muted {
+            color: black !important;
+        }
+    }
+    .o_foldable_total {
+        color: black !important;
     }
 }
 a {
@@ -25,6 +33,9 @@ a {
 }
 .print_only {
     display: block !important;
+    &.row {
+        display: flex !important;
+    }
 }
 [name="summary"] {
     display: none;

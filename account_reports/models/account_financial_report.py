@@ -889,6 +889,7 @@ class AccountFinancialReportLine(models.Model):
             if currency_id.is_zero(value['name']):
                 # don't print -0.0 in reports
                 value['name'] = abs(value['name'])
+                value['class'] = 'number text-muted'
             value['name'] = formatLang(self.env, value['name'], currency_obj=currency_id)
             return value
         if self.figure_type == 'percents':
@@ -1126,7 +1127,7 @@ class AccountFinancialReportLine(models.Model):
                     vals = {
                         'id': domain_id,
                         'name': name and len(name) >= 45 and name[0:40] + '...' or name,
-                        'level': 4,
+                        'level': line.level,
                         'parent_id': line.id,
                         'columns': [{'name': l} for l in res[domain_id]],
                         'caret_options': groupby == 'account_id' and 'account.account' or groupby,
@@ -1138,6 +1139,7 @@ class AccountFinancialReportLine(models.Model):
                     lines.append({
                         'id': 'total_' + str(line.id),
                         'name': _('Total') + ' ' + line.name,
+                        'level': line.level,
                         'class': 'o_account_reports_domain_total',
                         'parent_id': line.id,
                         'columns': copy.deepcopy(lines[0]['columns']),
