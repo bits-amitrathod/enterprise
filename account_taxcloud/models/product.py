@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 class ProductTicCategory(models.Model):
     _name = 'product.tic.category'
-    _descrition = "Product TIC Category"
+    _description = "Product TIC Category"
     _rec_name = 'code'
 
     code = fields.Integer(string="TIC Category Code", required=True)

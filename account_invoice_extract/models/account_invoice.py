@@ -31,8 +31,8 @@ def to_float(text):
         return None 
 
 class AccountInvoiceExtractionWords(models.Model):
-
     _name = "account.invoice.extraction_words"
+    _description = "Account Invoice Words Extraction"
 
     invoice_id = fields.Many2one("account.invoice", help="Invoice id")
     field = fields.Char("account.invoice_extract.field", help="field for which the word has been extracted")
