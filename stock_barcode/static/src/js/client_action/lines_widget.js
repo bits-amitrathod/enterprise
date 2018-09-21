@@ -411,7 +411,7 @@ var LinesWidget = Widget.extend({
         $line.parents('.o_barcode_lines').toggleClass('o_js_has_highlight', true);
 
         var isReservationProcessed;
-        if ($line.find('.o_barcode_scanner_qty').text().indexOf('/').length > -1) {
+        if ($line.find('.o_barcode_scanner_qty').text().indexOf('/') === -1) {
             isReservationProcessed = false;
         } else {
             isReservationProcessed = this._isReservationProcessedLine($line);
