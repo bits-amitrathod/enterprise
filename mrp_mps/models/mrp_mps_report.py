@@ -17,6 +17,7 @@ NUMBER_OF_COLS = 12
 #
 class MrpMpsReport(models.TransientModel):
     _name = 'mrp.mps.report'
+    _description = 'MPS Report'
 
     def _default_manufacturing_period(self):
         return self.env.user.company_id.manufacturing_period

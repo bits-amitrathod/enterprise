@@ -23,6 +23,7 @@ CONTAINER_TYPES = (
 
 class View(models.Model):
     _name = 'ir.ui.view'
+    _description = 'View'
     _inherit = ['studio.mixin', 'ir.ui.view']
 
     TEMPLATE_VIEWS_BLACKLIST = [

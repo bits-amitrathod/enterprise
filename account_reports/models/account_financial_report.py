@@ -14,7 +14,7 @@ from odoo.tools.pycompat import izip
 
 class ReportAccountFinancialReport(models.Model):
     _name = "account.financial.html.report"
-    _description = "Account Report"
+    _description = "Account Report (HTML)"
     _inherit = "account.report"
 
     name = fields.Char(translate=True)
@@ -377,7 +377,7 @@ class ReportAccountFinancialReport(models.Model):
 
 class AccountFinancialReportLine(models.Model):
     _name = "account.financial.html.report.line"
-    _description = "Account Report Line"
+    _description = "Account Report (HTML Line)"
     _order = "sequence"
     _parent_store = True
 

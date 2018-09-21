@@ -18,7 +18,7 @@ TICKET_PRIORITY = [
 
 class HelpdeskTag(models.Model):
     _name = 'helpdesk.tag'
-    _description = 'Tags'
+    _description = 'Helpdesk Tags'
     _order = 'name'
 
     name = fields.Char(required=True)
@@ -31,7 +31,7 @@ class HelpdeskTag(models.Model):
 
 class HelpdeskTicketType(models.Model):
     _name = 'helpdesk.ticket.type'
-    _description = 'Ticket Type'
+    _description = 'Helpdesk Ticket Type'
     _order = 'sequence'
 
     name = fields.Char(required=True, translate=True)
@@ -44,7 +44,7 @@ class HelpdeskTicketType(models.Model):
 
 class HelpdeskTicket(models.Model):
     _name = 'helpdesk.ticket'
-    _description = 'Ticket'
+    _description = 'Helpdesk Ticket'
     _order = 'priority desc, id desc'
     _inherit = ['portal.mixin', 'mail.thread', 'utm.mixin', 'rating.mixin', 'mail.activity.mixin']
 

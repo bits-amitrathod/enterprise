@@ -20,6 +20,7 @@ _logger = logging.getLogger(__name__)
 
 class ProjectForecast(models.Model):
     _name = 'project.forecast'
+    _description = 'Project Forecast'
 
     def _default_employee_id(self):
         user_id = self.env.context.get('default_user_id', self.env.uid)

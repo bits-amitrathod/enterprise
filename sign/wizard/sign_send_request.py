@@ -6,6 +6,7 @@ from odoo import api, fields, models, _
 
 class SignSendRequest(models.TransientModel):
     _name = 'sign.send.request'
+    _description = 'Sign send request'
 
     @api.model
     def default_get(self, fields):
@@ -91,6 +92,7 @@ class SignSendRequest(models.TransientModel):
 
 class SignSendRequestSigner(models.TransientModel):
     _name = "sign.send.request.signer"
+    _description = 'Sign send request signer'
 
     role_id = fields.Many2one('sign.item.role', readonly=True)
     partner_id = fields.Many2one('res.partner', required=True)

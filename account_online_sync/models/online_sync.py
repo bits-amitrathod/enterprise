@@ -173,7 +173,7 @@ class OnlineAccount(models.Model):
     It is used to save the state of the current online accout.
     """
     _name = 'account.online.journal'
-    _description = 'Interface for online account journal'
+    _description = 'Interface for Online Account Journal'
 
     name = fields.Char(string="Journal Name", required=True)
     account_online_provider_id = fields.Many2one('account.online.provider', ondelete='cascade', readonly=True)
@@ -240,7 +240,7 @@ class OnlineAccount(models.Model):
 
 class OnlineAccountLinkWizard(models.TransientModel):
     _name = 'account.online.link.wizard'
-    _description = 'Link a particular synchronized account to a journal'
+    _description = 'Link synchronized account to a journal'
 
     journal_id = fields.Many2one('account.journal', domain="[('type', '=', 'bank'), ('account_online_journal_id', '=', False)]")
     online_account_id = fields.Many2one('account.online.journal')

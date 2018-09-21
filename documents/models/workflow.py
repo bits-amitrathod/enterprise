@@ -106,7 +106,7 @@ class WorkflowActionRule(models.Model):
 
 class WorkflowTagCriteria(models.Model):
     _name = "documents.workflow.tag.criteria"
-    _description = "tag based condition"
+    _description = "Document Workflow Tag"
 
     workflow_rule_id = fields.Many2one('documents.workflow.rule', ondelete='cascade')
 
@@ -121,7 +121,7 @@ class WorkflowTagCriteria(models.Model):
 
 class WorkflowAction(models.Model):
     _name = "documents.workflow.action"
-    _description = "tag and facet manipulation"
+    _description = "Document Workflow Action"
 
     workflow_rule_id = fields.Many2one('documents.workflow.rule', ondelete='cascade')
 

@@ -118,7 +118,7 @@ class StockBarcodeLot(models.TransientModel):
 
 class StockBarcodeLotLine(models.TransientModel):
     _name = "stock_barcode.lot.line"
-    _description = "Line of LN/SN scanned of a product"
+    _description = "LN/SN Product Lines"
 
     lot_name = fields.Char('Lot')
     qty_reserved = fields.Float('Quantity Reserved')
