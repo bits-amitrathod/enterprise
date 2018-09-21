@@ -9,17 +9,16 @@
             <form>
                 <sheet>
                     <group>
-                    <field name="name"/>
-                    <field name="owner_id"/>
-                    <field name="partner_id"/>
+                        <field name="name" required="1"/>
+                        <field name="owner_id" required="1"/>
                     </group>
-                    <group string="Activity settings">
-                    <field name="activity_type_id" options="{'no_create': True, 'no_open': True}" required="1"/>
-                    <label for="activity_date_deadline_range"/>
-                    <div class="o_row">
-                        <field name="activity_date_deadline_range"/>
-                        <field name="activity_date_deadline_range_type"/>
-                    </div>
+                    <group>
+                        <label for="activity_date_deadline_range"/>
+                        <div class="o_row">
+                            <field name="activity_date_deadline_range"/>
+                            <field name="activity_date_deadline_range_type"/>
+                        </div>
+                        <field name="activity_note" widget="html"/>
                     </group>
                     <field name="folder_id" invisible="1"/>
                     <field name="tag_ids" invisible="1"/>
