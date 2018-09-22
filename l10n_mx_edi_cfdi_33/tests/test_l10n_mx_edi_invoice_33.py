@@ -3,6 +3,7 @@
 import base64
 import os
 import datetime
+import time
 
 from lxml import etree, objectify
 
@@ -251,6 +252,11 @@ class TestL10nMxEdiInvoice33(common.InvoiceTransactionCase):
         # -----------------------
         invoice.sudo().journal_id.update_posted = True
         invoice.action_invoice_cancel()
+        for x in range(10):
+            if invoice.l10n_mx_edi_pac_status == 'cancelled':
+                break
+            time.sleep(2)
+            invoice._l10n_mx_edi_cancel()
         self.assertEqual(invoice.state, "cancel")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, 'cancelled',
                          invoice.message_ids.mapped('body'))
