@@ -5,19 +5,20 @@
 # Translators:
 # Marcin Młynarczyk <mlynarczyk@gmail.com>, 2016
 # Piotr Szlązak <szlazakpiotr@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Grzegorz Grzelak <grzegorz.grzelak@openglobe.pl>, 2016
 # Judyta Kaźmierczak <judyta.kazmierczak@openglobe.pl>, 2016
 # zbik2607 <darek@krokus.com.pl>, 2016
 # Paweł Michoń <michon.pawel@wp.pl>, 2017
 # Monika Grzelak <m.e.grzelak@gmail.com>, 2017
+# Maksym <ms@myodoo.pl>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-19 12:58+0000\n"
 "PO-Revision-Date: 2016-09-19 12:58+0000\n"
-"Last-Translator: Monika Grzelak <m.e.grzelak@gmail.com>, 2017\n"
+"Last-Translator: Maksym <ms@myodoo.pl>, 2018\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,6 +44,18 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Drogi/a %(partner_name)s,\n"
+"\n"
+"Pomimo kilku przypomnień, Twoje konto nadal nie jest rozliczone.\n"
+"\n"
+"O ile pełna opłata nie zostanie dokonana w ciągu 8 dni, wówczas postępowanie sądowe o odzyskanie długu zostanie podjęte bez powiadomienia.\n"
+"\n"
+"Ufam, że to działanie okaże się niepotrzebne, a szczegóły dotyczące należnych płatności zostaną wydrukowane poniżej.\n"
+"\n"
+"W przypadku jakichkolwiek pytań dotyczących tej sprawy, nie wahaj się skontaktować z naszym działem księgowości.\n"
+"\n"
+"Z poważaniem\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line1
@@ -56,6 +69,14 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Drogi/a %(partner_name)s,\n"
+"\n"
+"Jest to wyjątek, jeśli popełniliśmy błąd. Wygląda na to, że następująca kwota pozostaje niezapłacona. Podejmij odpowiednie środki, aby zrealizować tę płatność w ciągu najbliższych 8 dni.\n"
+"\n"
+"Gdyby Twoja płatność została zrealizowana po wysłaniu tej wiadomości, zignoruj tę wiadomość. Nie wahaj się skontaktować z naszym działem księgowości. \n"
+"\n"
+"Z poważaniem\n"
 
 #. module: account_reports_followup
 #: model:account_followup.followup.line,description:account_reports_followup.demo_followup_line2
@@ -74,6 +95,19 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Drogi/a %(partner_name)s,\n"
+"\n"
+"Z rozczarowaniem widzimy, że mimo wysłania przypomnienia, Twoje konto jest już poważnie zadłużone.\n"
+"\n"
+"Istotne jest, aby dokonać natychmiastowej płatności, w przeciwnym razie będziemy musieli rozważyć umieszczenie zatrzymania na twoim koncie, co oznacza, że nie będziemy już w stanie dostarczyć twojej firmie (towarów / usług).\n"
+"Podejmij odpowiednie środki, aby zrealizować tę płatność w ciągu najbliższych 8 dni.\n"
+"\n"
+"Jeśli wystąpi problem z płatnością faktury, o którym nam nie wiadomo, nie wahaj się skontaktować z naszym działem księgowości, abyśmy mogli szybko rozwiązać problem.\n"
+"\n"
+"Szczegóły dotyczące należnych płatności są wyświetlone poniżej.\n"
+"\n"
+"Z poważaniem\n"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -127,6 +161,7 @@ msgstr "Saldo"
 #: model:ir.actions.act_window,help:account_reports_followup.action_account_followup_definition_form
 msgid "Click to define follow-up levels and their related actions."
 msgstr ""
+"Kliknij, aby zdefiniować poziomy kontrolne i powiązane z nimi działania."
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_res_company
@@ -194,7 +229,7 @@ msgstr "Dni zwłoki"
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line1
 msgid "First reminder email"
-msgstr ""
+msgstr "Pierwszy e-mail z przypomnieniem"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_followup_id
@@ -246,6 +281,9 @@ msgid ""
 "                possible to use print and e-mail templates to send specific messages to\n"
 "                the customer."
 msgstr ""
+"Dla każdego kroku określ czynności, które należy podjąć i opóźnij je w dniach.\n"
+"                Możliwe jest korzystanie z szablonów drukowania i wiadomości e-mail w celu wysyłania konkretnych wiadomości\n"
+"                do klienta."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_sequence
@@ -297,7 +335,7 @@ msgstr "Poziom"
 #: code:addons/account_reports_followup/account_followup_report.py:62
 #, python-format
 msgid "Level: "
-msgstr ""
+msgstr "Poziom: "
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.report_followup_body
@@ -319,7 +357,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_res_company_min_days_between_followup
 msgid "Minimum days between two follow-ups"
-msgstr ""
+msgstr "Minimum dni między dwoma kolejnymi uzupełnieniami"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_config_settings_min_days_between_followup
@@ -333,6 +371,8 @@ msgid ""
 "No follow-up is defined for the company \"%s\".\n"
 " Please define one."
 msgstr ""
+"Nie określono dalszych działań dla firmy \"%s\".\n"
+" Zdefiniuj jeden."
 
 #. module: account_reports_followup
 #: sql_constraint:account_followup.followup:0
@@ -386,7 +426,7 @@ msgstr "Przeszukaj monity o płatność"
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line2
 msgid "Second reminder letter and email"
-msgstr ""
+msgstr "Drugi przypominający list i e-mail"
 
 #. module: account_reports_followup
 #: model:ir.model.fields,field_description:account_reports_followup.field_account_followup_followup_line_send_letter
@@ -427,7 +467,7 @@ msgstr ""
 #. module: account_reports_followup
 #: model:account_followup.followup.line,name:account_reports_followup.demo_followup_line3
 msgid "Third reminder: phone the customer"
-msgstr ""
+msgstr "Trzecie przypomnienie: zadzwoń do klienta"
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_form
@@ -441,6 +481,14 @@ msgid ""
 "                        same customer, the actions of the most \n"
 "                        overdue invoice will be executed."
 msgstr ""
+"Aby przypomnieć klientom o opłacaniu faktur, możesz\n"
+"                        zdefiniować różne działania w zależności od tego, jak poważnie\n"
+"                        opóźnia się klient. Działania te są łączone w\n"
+"                        kolejne poziomy, które są uruchamiane, gdy termin\n"
+"                        faktury upłynął określoną\n"
+"                        liczbę dni. Jeśli istnieją inne zaległe faktury dla \n"
+"                        tego samego klienta, zostaną wykonane akcje \n"
+"                        najbardziej zaległej faktury."
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.account_move_line_partner_tree
@@ -469,6 +517,8 @@ msgid ""
 "Use this if you want to be sure than a minimum number of days occurs between"
 " two follow-ups."
 msgstr ""
+"Skorzystaj z tego, jeśli chcesz mieć pewność, że pomiędzy dwoma kolejnymi "
+"kontrolami minie minimalna liczba dni."
 
 #. module: account_reports_followup
 #: model:ir.model.fields,help:account_reports_followup.field_account_followup_followup_line_send_letter
@@ -486,6 +536,8 @@ msgid ""
 "When processing, it will set the manual action to be taken for that "
 "customer. "
 msgstr ""
+"Podczas przetwarzania ustawi ręczne działanie, które należy podjąć dla tego "
+"klienta. "
 
 #. module: account_reports_followup
 #: model:ir.ui.view,arch_db:account_reports_followup.view_account_followup_followup_line_form
@@ -496,6 +548,11 @@ msgid ""
 "                            forget to translate in all languages you installed\n"
 "                            using to top right icon."
 msgstr ""
+"Napisz tutaj wprowadzenie do listu,\n"
+"                            zgodnie z poziomem kontroli. Możesz\n"
+"                            użyć następujących słów kluczowych w tekście. Nie\n"
+"                            zapomnij przetłumaczyć we wszystkich językach, które zainstalowałeś,\n"
+"                            używając ikony w prawym górnym rogu."
 
 #. module: account_reports_followup
 #: code:addons/account_reports_followup/account_followup.py:64
@@ -504,6 +561,8 @@ msgid ""
 "Your description is invalid, use the right legend or %% if you want to use "
 "the percent character."
 msgstr ""
+"Twój opis jest nieprawidłowy, użyj odpowiedniej legendy lub %% jeśli chcesz "
+"użyć znaku procentu."
 
 #. module: account_reports_followup
 #: model:ir.model,name:account_reports_followup.model_account_config_settings

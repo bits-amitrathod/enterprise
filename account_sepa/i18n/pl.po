@@ -7,16 +7,17 @@
 # Marcin Młynarczyk <mlynarczyk@gmail.com>, 2016
 # Piotr Szlązak <szlazakpiotr@gmail.com>, 2016
 # Judyta Kaźmierczak <judyta.kazmierczak@openglobe.pl>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # zieloo <zieloo@gmail.com>, 2016
 # Paweł Michoń <michon.pawel@wp.pl>, 2017
+# Maksym <ms@myodoo.pl>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-03 14:36+0000\n"
 "PO-Revision-Date: 2017-02-03 14:36+0000\n"
-"Last-Translator: Paweł Michoń <michon.pawel@wp.pl>, 2017\n"
+"Last-Translator: Maksym <ms@myodoo.pl>, 2018\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,6 +47,8 @@ msgid ""
 "Click on the file to save it somewhere on your computer. Then upload that "
 "file on your bank's homebanking website to order the credit transfer."
 msgstr ""
+"Kliknij plik, aby zapisać go gdzieś na swoim komputerze. Następnie prześlij "
+"ten plik na stronie Twojego banku, aby zlecić przelew."
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_res_company
@@ -125,7 +128,7 @@ msgstr "Identyfikacja *"
 #: model:ir.model.fields,help:account_sepa.field_account_config_settings_sepa_orgid_id
 #: model:ir.model.fields,help:account_sepa.field_res_company_sepa_orgid_id
 msgid "Identification assigned by an institution (eg. VAT number)."
-msgstr ""
+msgstr "Identyfikacja przypisana przez instytucję (np. numer VAT)."
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:70
@@ -134,6 +137,8 @@ msgid ""
 "In order to export a SEPA Credit Transfer file, please only select payments "
 "belonging to the same bank journal."
 msgstr ""
+"Aby wyeksportować plik przelewu SEPA, wybierz tylko płatności należące do "
+"tego samego dziennika bankowego."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
@@ -177,6 +182,8 @@ msgid ""
 "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
 "in length."
 msgstr ""
+"Nazwa strony referencyjnej wierzyciela. Reguła użytkowania: ograniczona do "
+"70 znaków."
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -200,6 +207,8 @@ msgid ""
 "Payments to export as SEPA Credit Transfer must have 'SEPA Credit Transfer' "
 "selected as payment method and be posted"
 msgstr ""
+"Płatności do eksportu jako Przelew SEPA muszą mieć wybrany \"Przelew SEPA\" "
+"jako metoda płatności i zostać zaksięgowane"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
@@ -236,7 +245,7 @@ msgstr "SEPA przelewy do wysłania"
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
 msgid "SEPA Pain Version"
-msgstr ""
+msgstr "Wersja Pain SEPA"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_config_settings_sepa_pain_version
@@ -256,6 +265,9 @@ msgid ""
 "recommandations made by the EPC (European Payment Councile) and thus the XML"
 " created need some tweakenings."
 msgstr ""
+"SEPA może być formatem ogólnym, niektóre kraje różnią się od zaleceń SEPA "
+"wprowadzonych przez ERP (Europejska Rada ds. Płatności), a zatem stworzony "
+"XML wymaga pewnych ulepszeń."
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_search
@@ -275,6 +287,11 @@ msgid ""
 "transfer. That is if the bank journal is not in €, a transaction is not in €"
 " or a payee is not identified by an IBAN account number and a bank BIC."
 msgstr ""
+"Funkcja techniczna używana podczas tworzenia pliku. Komunikat SEPA jest "
+"określany jako \"rodzajowy\", jeżeli nie można go uznać za standardowy "
+"europejski przelew kredytowy. Oznacza to, że jeśli dziennik bankowy nie jest"
+" w €, transakcja nie jest w € lub odbiorca nie jest identyfikowany przez "
+"numer konta IBAN i BIC banku."
 
 #. module: account_sepa
 #: code:addons/account_sepa/sepa_credit_transfer.py:350
