@@ -2,12 +2,15 @@
 # This file contains the translation of the following modules:
 # * account_reports
 # 
+# Translators:
+# Maksym <ms@myodoo.pl>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-02 11:20+0000\n"
 "PO-Revision-Date: 2018-08-02 11:20+0000\n"
+"Last-Translator: Maksym <ms@myodoo.pl>, 2018\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -753,6 +756,9 @@ msgid ""
 "Date where the next action should be taken for a receivable item. Usually, "
 "automatically set when sending reminders through the customer statement."
 msgstr ""
+"Data, w której należy podjąć następne działanie w odniesieniu do przedmiotu "
+"należnego. Zwykle automatycznie ustawiane podczas wysyłania przypomnień "
+"przez oświadczenie klienta."
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.followup_filter_info_template
@@ -865,7 +871,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report__hierarchy_option
 msgid "Enable the hierarchy option"
-msgstr ""
+msgstr "Włącz opcję hierarchii"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_comparison
@@ -892,7 +898,7 @@ msgstr ""
 #: code:addons/account_reports/models/account_bank_reconciliation_report.py:191
 #, python-format
 msgid "Equal Last Statement Balance"
-msgstr ""
+msgstr "Równe saldo ostatniego wyciągu"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_equity0
@@ -939,6 +945,9 @@ msgid ""
 "if you had the customer on the phone and want to remember the date he "
 "promised he would pay)"
 msgstr ""
+"Oczekiwana data płatności ustawiona ręcznie w oświadczeniu klienta (np. "
+"jeśli rozmawiasz z klientem przez telefon i chciał zapamiętać datę, kiedy "
+"obiecał zapłacić)"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_expenses0
@@ -1128,13 +1137,13 @@ msgstr ""
 #: code:addons/account_reports/models/account_financial_report.py:832
 #, python-format
 msgid "Groupby should be a field from account.move.line"
-msgstr ""
+msgstr "Groupby powinno być polem z account.move.line"
 
 #. module: account_reports
 #: code:addons/account_reports/models/account_financial_report.py:683
 #, python-format
 msgid "Groupby should be a journal item field"
-msgstr ""
+msgstr "Groupby powinno być polem pozycji dziennika"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report_line__hide_if_zero
@@ -1495,6 +1504,8 @@ msgid ""
 "Note you can set through the customer statement about a receivable journal "
 "item"
 msgstr ""
+"Zauważ, że możesz ustawić za pośrednictwem oświadczenia klienta o należnej "
+"pozycji księgowej"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__days_between_two_followups
@@ -1839,6 +1850,8 @@ msgid ""
 "Set to True to automatically filter out journal items that have the boolean "
 "field 'tax_exigible' set to False"
 msgstr ""
+"Ustaw na wartość True, aby automatycznie odfiltrowywać pozycje księgowe, dla"
+" których pole logiczne \"tax_exigible\" ma wartość False"
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_executivesummary_st_cash_forecast0
@@ -1937,12 +1950,13 @@ msgstr ""
 #: model:ir.model.fields,help:account_reports.field_res_partner__partner_ledger_label
 #: model:ir.model.fields,help:account_reports.field_res_users__partner_ledger_label
 msgid "The label to display on partner ledger button, in form view"
-msgstr ""
+msgstr "Etykieta wyświetlana na przycisku księgi partnera w widoku formularza"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report__generated_menu_id
 msgid "The menu item generated for this report, or None if there isn't any."
 msgstr ""
+"Element menu wygenerowany dla tego raportu lub None, jeśli nie ma żadnego."
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.template_followup_report
@@ -2065,7 +2079,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports.field_res_partner__unreconciled_aml_ids
 #: model:ir.model.fields,field_description:account_reports.field_res_users__unreconciled_aml_ids
 msgid "Unreconciled Aml"
-msgstr ""
+msgstr "Nieuzgodnione Aml"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report__cash_basis
@@ -2182,6 +2196,8 @@ msgid ""
 "if true, report will always use cash basis, if false, user can choose from "
 "filter inside the report"
 msgstr ""
+"jeśli True, raport zawsze będzie używał metody kasowej, jeśli false, "
+"użytkownik może wybrać filtr w raporcie"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_manager
@@ -2207,7 +2223,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_financial_html_report__date_range
 msgid "specify if the report use date_range or single date"
-msgstr ""
+msgstr "określ, czy raport używa date_range, czy pojedynczej daty"
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_comparison
