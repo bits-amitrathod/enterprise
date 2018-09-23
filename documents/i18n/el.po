@@ -119,6 +119,8 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
+"Ένα Python λεξικό που θα αξιολογηθεί για να παρέχει προεπιλεγμένες τιμές "
+"όταν δημιουργείτε νέες εγγραφές για αυτό το ψευδώνυμο."
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_workflow_rule
@@ -146,7 +148,7 @@ msgstr "Ενέργεια"
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_needaction
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Απαιτείται ενέργεια"
 
 #. module: documents
 #. openerp-web
@@ -195,7 +197,7 @@ msgstr "Τύπος Δραστηριότητας"
 #: selection:documents.workflow.action,action:0
 #: model_terms:ir.ui.view,arch_db:documents.documents_upload_url_view
 msgid "Add"
-msgstr ""
+msgstr "Προσθήκη"
 
 #. module: documents
 #. openerp-web
@@ -212,27 +214,27 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_id
 msgid "Alias"
-msgstr ""
+msgstr "Ψευδώνυμο"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_contact
 msgid "Alias Contact Security"
-msgstr ""
+msgstr "Ψευδώνυμο Ασφάλειας Επαφής"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_name
 msgid "Alias Name"
-msgstr ""
+msgstr "Ψευδώνυμο ονόματος"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_domain
 msgid "Alias domain"
-msgstr ""
+msgstr "Ψευδώνυμο τομέα"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_model_id
 msgid "Aliased Model"
-msgstr ""
+msgstr "Μοντέλο Ψευδωνύμου"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
@@ -254,7 +256,7 @@ msgstr ""
 #: code:addons/documents/static/src/xml/documents_inspector.xml:152
 #, python-format
 msgid "Archive"
-msgstr ""
+msgstr "Αρχειοθετήθηκαν"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
@@ -325,7 +327,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.workflow_rule_form_view
 msgid "Conditions"
-msgstr ""
+msgstr "Συνθήκες"
 
 #. module: documents
 #: model:ir.ui.menu,name:documents.Config
@@ -344,7 +346,7 @@ msgstr "Επαφή"
 #. module: documents
 #: selection:documents.workflow.tag.criteria,operator:0
 msgid "Contains"
-msgstr ""
+msgstr "Περιέχει"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__create_model
@@ -411,7 +413,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_defaults
 msgid "Default Values"
-msgstr ""
+msgstr "Προεπιλεγμένες τιμές"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_view_form
@@ -424,7 +426,7 @@ msgstr ""
 #: code:addons/documents/static/src/xml/documents_inspector.xml:154
 #, python-format
 msgid "Delete"
-msgstr ""
+msgstr "Διαγραφή"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__description
@@ -489,7 +491,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:documents.res_config_settings_view_form
 #, python-format
 msgid "Documents"
-msgstr ""
+msgstr "Έγγραφα"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_folder
@@ -536,7 +538,7 @@ msgstr ""
 #: selection:documents.share,action:0
 #, python-format
 msgid "Download"
-msgstr ""
+msgstr "Λήψη"
 
 #. module: documents
 #: selection:documents.share,action:0
@@ -626,19 +628,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_follower_ids
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Ακόλουθοι"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_channel_ids
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Ακόλουθοι (Κανάλια)"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_partner_ids
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Ακόλουθοι (Συνεργάτες)"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
@@ -677,18 +679,20 @@ msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
 msgstr ""
+"Αναγνωριστικό της μητρικής εγγραφής που κρατά το ψευδώνυμο (παράδειγμα: έργο"
+" που κατέχει το ψευδώνυμο της δημιουργίας εργασίας)"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_unread
 #: model:ir.model.fields,help:documents.field_ir_attachment__message_unread
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζονται την προσοχή σας"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_needaction
 #: model:ir.model.fields,help:documents.field_ir_attachment__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζονται την προσοχή σας."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_has_error
@@ -715,7 +719,7 @@ msgstr "Αρχειοθετημένα Περιεχόμενα"
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_is_follower
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Είναι Ακόλουθος"
 
 #. module: documents
 #. openerp-web
@@ -773,14 +777,14 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_single
 msgid "Loading"
-msgstr ""
+msgstr "Γίνεται φόρτωση"
 
 #. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/xml/documents_inspector.xml:147
 #, python-format
 msgid "Lock"
-msgstr ""
+msgstr "Κλείδωμα"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__lock_uid
@@ -802,7 +806,7 @@ msgstr "Σύνδεση"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid "Logout"
-msgstr ""
+msgstr "Αποσύνδεση"
 
 #. module: documents
 #. openerp-web
@@ -843,7 +847,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_ids
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Μηνύματα"
 
 #. module: documents
 #: model:mail.activity.type,name:documents.mail_documents_activity_data_md
@@ -882,7 +886,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "My Favorites"
-msgstr ""
+msgstr "Τα Αγαπημένα μου"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
@@ -937,7 +941,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents.field_documents_share__activity_note
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__note
 msgid "Note"
-msgstr ""
+msgstr "Σημείωση"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.workflow_rule_form_view
@@ -948,7 +952,7 @@ msgstr "Σημειώσεις"
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_needaction_counter
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Πλήθος ενεργειών"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_has_error_counter
@@ -960,7 +964,7 @@ msgstr ""
 #: model:ir.model.fields,help:documents.field_documents_share__message_needaction_counter
 #: model:ir.model.fields,help:documents.field_ir_attachment__message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Πλήθος μηνυμάτων που απαιτούν ενέργεια"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_has_error_counter
@@ -972,12 +976,12 @@ msgstr ""
 #: model:ir.model.fields,help:documents.field_documents_share__message_unread_counter
 #: model:ir.model.fields,help:documents.field_ir_attachment__message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Πλήθος μη αναγνωσμένων μηνυμάτων"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid "Odoo Logo"
-msgstr ""
+msgstr "Λογότυπο Odoo"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
@@ -987,7 +991,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_tag_criteria__operator
 msgid "Operator"
-msgstr ""
+msgstr "Χειριστής"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_force_thread_id
@@ -996,6 +1000,9 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
+"Προαιρετική ταυτότητα ενός νήματος (εγγραφής), στην οποία όλα τα εισερχόμενα"
+" μηνύματα θα πρέπει να επισυνάπτονται, ακόμη και αν δεν απαντήσει σ 'αυτό. "
+"Εάν οριστεί, αυτό θα απενεργοποιήσει εντελώς τη δημιουργία νέων αρχείων."
 
 #. module: documents
 #: selection:ir.attachment,activity_state:0
@@ -1029,12 +1036,12 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_parent_model_id
 msgid "Parent Model"
-msgstr ""
+msgstr "Μοντέλο Γονέα"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr ""
+msgstr "Κωδικός γονικής εγγραφής νήματος"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_parent_model_id
@@ -1043,6 +1050,9 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
+"Γονικό μοντέλο κρατώντας το ψευδώνυμο. Το μοντέλο που κρατά το ψευδώνυμο "
+"αναφοράς δεν είναι απαραίτητο το μοντέλο να δίνεται από alias_model_id "
+"(παράδειγμα: Έργο (parent_model) και Εργασία (μοντέλο))"
 
 #. module: documents
 #: selection:ir.attachment,activity_state:0
@@ -1057,6 +1067,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"Πολιτική για τη αποστολή μηνύματος στο έγγραφο χρησιμοποιώντας το mailgateway.\n"
+"- όλοι: ο καθένας μπορεί να αποστείλει\n"
+"- συνεργάτες: μόνο οι επικυρωμένοι συνεργάτες \n"
+"- ακόλουθοι: μόνο οι ακόλουθοι του σχετικού εγγράφου ή μέλη των παρακάτω καναλιών\n"
 
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
@@ -1066,12 +1080,12 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "Ταυτότητα εγγραφής νήματος"
 
 #. module: documents
 #: selection:documents.workflow.action,action:0
 msgid "Remove"
-msgstr ""
+msgstr "Αφαίρεση"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__remove_activities
@@ -1175,7 +1189,7 @@ msgstr "Ρυθμίσεις"
 #: code:addons/documents/static/src/xml/documents_kanban.xml:14
 #, python-format
 msgid "Share"
-msgstr ""
+msgstr "Κοινοποίηση"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__share_link_ids
@@ -1295,7 +1309,7 @@ msgstr "Ετικέτες"
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Task"
-msgstr ""
+msgstr "Εργασία"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_form
@@ -1309,6 +1323,10 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"Το μοντέλο (Odoo Document Kind) στο οποίο αντιστοιχεί αυτό το ψευδώνυμο. "
+"Κάθε εισερχόμενο email που δεν έχει απαντηθεί σε υπάρχουσα εγγραφή, θα "
+"προκαλέσει τη δημιουργία μίας νέας εγγραφής αυτού του μοντέλου (π.χ. Εργασία"
+" Έργου)"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_name
@@ -1316,6 +1334,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"Το όνομα του ψευδώνυμου email , π.χ. 'jobs', αν θέλετε να πάρετε emails για "
+"<jobs@example.odoo.com>"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_user_id
@@ -1325,6 +1345,8 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"Ο ιδιοκτήτης των εγγραφών που δημιουργούνται κατά τη λήψη μηνυμάτων ηλεκτρονικού ταχυδρομείου σε αυτό το ψευδώνυμο. Αν αυτό το πεδίο δεν είναι ρυθμισμένο το σύστημα θα προσπαθήσει να βρει το σωστό ιδιοκτήτη με βάση τον αποστολέα (Από) τη διεύθυνση.\n"
+"Διαφορετικά, θα χρησιμοποιήσει το λογαριασμό διαχειριστή, αν ο χρήστης δεν έχει βρεθεί στο σύστημα για τη συγκεκριμένη διεύθυνση."
 
 #. module: documents
 #: sql_constraint:documents.share:0
@@ -1382,7 +1404,7 @@ msgstr "Σημερινές Δραστηριότητες"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_facet__tooltip
 msgid "Tooltip"
-msgstr ""
+msgstr "Επεξήγηση"
 
 #. module: documents
 #. openerp-web
@@ -1416,13 +1438,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_unread
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__message_unread
 msgid "Unread Messages"
-msgstr ""
+msgstr "Μη αναγνωσμένα μηνύματα"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_unread_counter
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Μετρητής μη αναγνωσμένων μηνυμάτων"
 
 #. module: documents
 #. openerp-web
@@ -1487,13 +1509,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents.field_documents_share__website_message_ids
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Μηνύματα Ιστότοπου"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__website_message_ids
 #: model:ir.model.fields,help:documents.field_ir_attachment__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Ιστορικό επικοινωνίας ιστότοπου"
 
 #. module: documents
 #: selection:documents.request_wizard,activity_date_deadline_range_type:0
