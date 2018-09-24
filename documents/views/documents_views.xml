@@ -58,6 +58,24 @@
         </field>
     </record>
 
+    <record id="inherit_mail_attachment_view_kanban" model="ir.ui.view">
+        <field name="name">Attachment Kanban View</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="mail.view_document_file_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_kanban_record_title')]" position="replace">
+                <div class="o_kanban_record_title">
+                    <field name="name" class="o_text_overflow"/>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('o_kanban_record_body')]" position="inside">
+                <t t-if="record.type.raw_value === 'empty'">
+                    <span><b>Requested Document</b></span>
+                </t>
+            </xpath>
+        </field>
+    </record>
+
     <record model="ir.ui.view" id="documents_view_kanban">
         <field name="name">ir.attachment kanban</field>
         <field name="model">ir.attachment</field>
@@ -154,12 +172,14 @@
                         <group>
                             <field name="name"/>
                             <field name="folder_id"/>
-                            <field name="tag_ids" widget="many2many_tags" nolabel="1"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="datas" filename="datas_fname" attrs="{'invisible':[('type','=','url')]}"/>
+                            <field name="datas_fname" invisible="1" attrs="{'invisible':[('type','=','url')]}" class="oe_inline oe_right"/>
                             <field name="owner_id"/>
                             <field name="partner_id"/>
                             <field name="res_model" readonly="1"/>
                             <field name="file_size" attrs="{ 'invisible' : [('type', '!=', 'binary')]}"/>
-                            <field name="type"/>
+                            <field name="type" readonly="1"/>
                             <field name="url" attrs="{ 'invisible' : [('type', '!=', 'url')]}"/>
                         </group>
                         <group>
@@ -177,11 +197,9 @@
                         <page string="Technical" groups="base.group_no_one">
                             <group>
                                 <field name="lock_uid" readonly="1"/>
-                                <field name="datas_fname"/>
                                 <field name="folder_id"/>
                                 <field name="res_model_name" readonly="1"/>
                                 <field name="res_field" readonly="1"/>
-                                <field name="datas" readonly="1"/>
                                 <field name="res_id" readonly="1"/>
                                 <field name="create_date" readonly="1"/>
                                 <field name="create_uid" readonly="1"/>
@@ -218,6 +236,7 @@
                     </group>
                 <footer>
                     <button name="write" type="object" string="Add" class="btn btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
                 </sheet>
             </form>
