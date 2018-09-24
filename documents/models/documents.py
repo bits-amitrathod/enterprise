@@ -18,7 +18,7 @@ class IrAttachment(models.Model):
                                track_visibility='onchange')
     available_rule_ids = fields.Many2many('documents.workflow.rule', compute='_compute_available_rules',
                                           string='Available Rules')
-    folder_id = fields.Many2one('documents.folder', ondelete="restrict", track_visibility="onchange")
+    folder_id = fields.Many2one('documents.folder', ondelete="restrict", track_visibility="onchange", index=True)
     lock_uid = fields.Many2one('res.users', string="Locked by")
 
     @api.onchange('url')
@@ -166,9 +166,10 @@ class IrAttachment(models.Model):
         Members of the group documents.group_document_manager and the superuser can unlock the file regardless.
         """
         self.ensure_one()
-        if self.lock_uid and (self.lock_uid in (self.env.user, SUPERUSER_ID) or self.user_has_groups(
-                'documents.group_document_manager')):
-            self.lock_uid = False
+        if self.lock_uid:
+            if self.env.user == self.lock_uid or self.env.user._is_admin() or self.user_has_groups(
+                    'documents.group_document_manager'):
+                self.lock_uid = False
         else:
             self.lock_uid = self.env.uid
 

@@ -12,10 +12,10 @@ import werkzeug.urls
 import werkzeug.utils
 
 from ast import literal_eval
-from dateutil.relativedelta import relativedelta
 
 from odoo import http, fields
 from odoo.http import request, content_disposition
+from odoo.osv import expression
 from odoo.tools import pycompat, consteq
 
 logger = logging.getLogger(__name__)
@@ -106,7 +106,7 @@ class ShareRoute(http.Controller):
                         domain = []
                         if share.domain:
                             domain = literal_eval(share.domain)
-                        domain += [['folder_id', '=', share.folder_id.id]]
+                        domain = expression.AND(domain, [['folder_id', '=', share.folder_id.id]])
                         attachments = http.request.env['ir.attachment'].sudo().search(domain)
                     elif share.type == 'ids':
                         attachments = share.attachment_ids
