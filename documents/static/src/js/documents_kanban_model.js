@@ -118,9 +118,7 @@ var DocumentsKanbanModel = KanbanModel.extend({
      * @returns {Deferred<string>} resolves with the parentID
      */
     saveMulti: function (recordIDs, values, parentID) {
-        return this.mutex
-            .exec(this._saveMulti.bind(this, recordIDs, values, parentID))
-            .then(this.reload.bind(this, parentID, {}));
+        return this.mutex.exec(this._saveMulti.bind(this, recordIDs, values, parentID));
     },
 
     //--------------------------------------------------------------------------

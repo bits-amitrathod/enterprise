@@ -20,7 +20,6 @@ QUnit.module('DocumentsKanbanView', {
                 fields: {
                     active: {string: "Active", type: 'boolean', default: true},
                     available_rule_ids: {string: "Rules", type: 'many2many', relation: 'documents.workflow.rule'},
-                    name: {string: "Foo", type: 'char'},
                     file_size: {string: "Size", type: 'integer'},
                     folder_id: {string: "Folders", type: 'many2one', relation: 'documents.folder'},
                     lock_uid: {string: "Locked by", type: "many2one", relation: 'user'},
@@ -45,32 +44,32 @@ QUnit.module('DocumentsKanbanView', {
                         selection: [['overdue', 'Overdue'], ['today', 'Today'], ['planned', 'Planned']]},
                 },
                 records: [
-                    {id: 1, name: 'yop', name: 'yop', file_size: 30000, owner_id: 1, partner_id: 2,
+                    {id: 1, name: 'yop', file_size: 30000, owner_id: 1, partner_id: 2,
                         public: true, res_id: 1, res_model: 'task', res_model_name: 'Task', activity_ids: [1,],
                         activity_state: 'today', res_name: 'Write specs', tag_ids: [1, 2], share_ids: [], folder_id: 1,
                         available_rule_ids: [1, 2]},
-                    {id: 2, name: 'blip',name: 'blip', file_size: 20000, owner_id: 2, partner_id: 2,
+                    {id: 2, name: 'blip', file_size: 20000, owner_id: 2, partner_id: 2,
                         public: false, res_id: 2, res_model: 'task', res_model_name: 'Task',
                         res_name: 'Write tests', tag_ids: [2], share_ids: [], folder_id: 1, available_rule_ids: [1]},
-                    {id: 3, name: 'gnap',name: 'gnap', file_size: 15000, lock_uid: 3, owner_id: 2, partner_id: 1,
+                    {id: 3, name: 'gnap', file_size: 15000, lock_uid: 3, owner_id: 2, partner_id: 1,
                         public: false, res_id: 2, res_model: 'task', res_model_name: 'Task',
                         res_name: 'Write doc', tag_ids: [1, 2, 5], share_ids: [], folder_id: 1, available_rule_ids: [1, 2, 3]},
-                    {id: 4, name: 'burp',name: 'burp', file_size: 10000, mimetype: 'image/png', owner_id: 1, partner_id: 3,
+                    {id: 4, name: 'burp', file_size: 10000, mimetype: 'image/png', owner_id: 1, partner_id: 3,
                         public: true, res_id: 1, res_model: 'order', res_model_name: 'Sale Order',
                         res_name: 'SO 0001', tag_ids: [], share_ids: [], folder_id: 1, available_rule_ids: []},
-                    {id: 5, name: 'zip',name: 'zip', file_size: 40000, lock_uid: 1, owner_id: 2, partner_id: 2,
+                    {id: 5, name: 'zip', file_size: 40000, lock_uid: 1, owner_id: 2, partner_id: 2,
                         public: false, res_id: 3, res_model: false, res_model_name: false,
                         res_name: false, tag_ids: [], share_ids: [], folder_id: 1, available_rule_ids: [1, 2]},
-                    {id: 6, name: 'pom',name: 'pom', file_size: 70000, partner_id: 3,
+                    {id: 6, name: 'pom', file_size: 70000, partner_id: 3,
                         public: true, res_id: 1, res_model: 'order', res_model_name: 'Sale order',
                         res_name: 'SO 0003', tag_ids: [], share_ids: [], folder_id: 2, available_rule_ids: []},
-                    {id: 7, name: 'zoup',name: 'zoup', file_size: 20000, mimetype: 'image/png',
+                    {id: 7, name: 'zoup', file_size: 20000, mimetype: 'image/png',
                         owner_id: 3, partner_id: 3, public: true, res_id: false, res_model: false,
                         res_model_name: false, res_name: false, tag_ids: [], share_ids: [], folder_id: false, available_rule_ids: []},
-                    {id: 8, active: false, name: 'wip', name: 'wip', file_size: 70000, owner_id: 3, partner_id: 3,
+                    {id: 8, active: false, name: 'wip', file_size: 70000, owner_id: 3, partner_id: 3,
                         public: true, res_id: 1, res_model: 'order', res_model_name: 'Sale Order',
                         res_name: 'SO 0003', tag_ids: [], share_ids: [], folder_id: 1, available_rule_ids: []},
-                    {id: 9, active: false, name: 'zorro', name: 'zorro', file_size: 20000, mimetype: 'image/png',
+                    {id: 9, active: false, name: 'zorro', file_size: 20000, mimetype: 'image/png',
                         owner_id: 3, partner_id: 3, public: true, res_id: false, res_model: false,
                         res_model_name: false, res_name: false, tag_ids: [], share_ids: [], folder_id: 1, available_rule_ids: []},
                 ],
@@ -2339,6 +2338,49 @@ QUnit.module('DocumentsKanbanView', {
         ]);
 
         kanban.destroy();
+    });
+
+    QUnit.test('document selector: should keep its selection when adding a tag', function (assert) {
+        assert.expect(5);
+        var done = assert.async();
+
+        var kanban = createView({
+            View: DocumentsKanbanView,
+            model: 'ir.attachment',
+            data: this.data,
+            arch: '<kanban><templates><t t-name="kanban-box">' +
+                    '<div>' +
+                        '<field name="name"/>' +
+                    '</div>' +
+                '</t></templates></kanban>',
+        });
+
+        // filter on records having tag Draft
+        kanban.$('.o_documents_selector_tag:contains(Draft) input').click();
+
+        assert.ok(kanban.$('.o_documents_selector_tag:contains(Draft) input').is(':checked'),
+            "tag selector should be checked");
+
+        assert.strictEqual(kanban.$('.o_kanban_view .o_kanban_record:not(.o_kanban_ghost)').length,
+            1, "should have records in the renderer");
+
+        kanban.$('.o_kanban_record:first .o_record_selector').click();
+
+        kanban.$('.o_inspector_tag_add').val('stress').trigger('keydown');
+        concurrency.delay(0).then(function () {
+            var $dropdown = kanban.$('.o_inspector_tag_add').autocomplete('widget');
+            assert.strictEqual($dropdown.find('li').length, 1,
+                "should have an entry in the autocomplete drodown");
+            $dropdown.find('li > a').click();
+
+            assert.ok(kanban.$('.o_documents_selector_tag:contains(Draft) input').is(':checked'),
+                        "tag selector should still be checked");
+            assert.strictEqual(kanban.$('.o_kanban_view .o_kanban_record:not(.o_kanban_ghost)').length,
+            1, "should still have the same records in the renderer");
+
+            kanban.destroy();
+            done();
+        });
     });
 
     QUnit.test('document selector: can (un)fold parent folders', function (assert) {

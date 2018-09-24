@@ -908,7 +908,7 @@ var DocumentsKanbanController = KanbanController.extend({
         ev.stopPropagation();
         this.model
             .saveMulti(ev.data.dataPointIDs, ev.data.changes, this.handle)
-            .then(this.update.bind(this, {}, {reload: false}));
+            .then(this.update.bind(this, {}, {}));
     },
     /**
      * React to folder selector to filter the records.
