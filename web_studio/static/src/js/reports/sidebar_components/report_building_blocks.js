@@ -785,7 +785,7 @@ var BlockTable = AbstractNewBuildingBlock.extend({
         var target = this.targets[0];
         return [{
             content:
-                '<table class="table table-sm o_report_block_table">' +
+                '<table class="table o_report_block_table">' +
                 '<thead>' +
                 '<tr>' +
                 '<th><span>Name</span></th>' +

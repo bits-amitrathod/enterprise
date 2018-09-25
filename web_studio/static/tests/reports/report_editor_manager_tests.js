@@ -1470,7 +1470,7 @@ QUnit.module('ReportEditorManager', {
                     }
                     assert.deepEqual(operation.inheritance, [{
                         content:
-                            '<table class="table table-sm o_report_block_table">' +
+                            '<table class="table o_report_block_table">' +
                                 '<thead>' +
                                     '<tr>' +
                                         '<th><span>Name</span></th>' +
