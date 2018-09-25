@@ -1064,6 +1064,16 @@ var TOptions = AbstractEditComponent.extend( {
 
         this.changes = {};
         this.widgetsOptions = params.widgetsOptions;
+
+        // for contact widget, we don't want to display all options
+        if (this.widgetsOptions && this.widgetsOptions.contact) {
+            this.widgetsOptions.contact = _.pick(this.widgetsOptions.contact, [
+                'fields',
+                'separator',
+                'no_marker',
+            ]);
+        }
+
         this.widget = null;  // the selected widget
         this.values = {};  // dict containing the t-options values
 

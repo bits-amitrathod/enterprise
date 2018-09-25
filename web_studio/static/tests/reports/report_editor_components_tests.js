@@ -552,8 +552,8 @@ QUnit.module('ReportComponents', {
 
         var tOptions = new (editComponentsRegistry.get('tOptions'))(parent, params);
         tOptions.appendTo(parent.$el);
-        assert.strictEqual(tOptions.$('.o_web_studio_toption_option').length, 6,
-            "there should be 6 available options for the contact widget");
+        assert.strictEqual(tOptions.$('.o_web_studio_toption_option').length, 3,
+            "there should be 3 available options for the contact widget (they are filtered)");
         assert.strictEqual(tOptions.$('.o_badge_text').text(), 'nameaddressphonemobileemail', 'Should display default value');
         tOptions.$('.o_input_dropdown input').click();
         assert.strictEqual($('ul.ui-autocomplete .ui-menu-item:not(.o_m2o_dropdown_option)').length, 5, 'Should not display the unselected items');
