@@ -157,8 +157,16 @@ QUnit.module('ReportEditorManager', {
         rem.editorIframeDef.then(function () {
             assert.strictEqual(rem.$('.o_web_studio_sidebar').length, 1,
                 "a sidebar should be rendered");
+
+            // no content helper
             assert.strictEqual(rem.$('iframe').contents().find('.page .o_no_content_helper').length, 1,
                 "the iframe should be rendered with a no content helper");
+            testUtils.intercept(rem, 'node_clicked', function () {
+                throw new Error("The no content helper shouldn't be clickable.");
+            });
+            rem.$('iframe').contents().find('.page .o_no_content_helper').click();
+
+            // printing the report
             assert.strictEqual(rem.$('.o_web_studio_report_print').length, 1,
                 "it should be possible to print the report");
             rem.$('.o_web_studio_report_print').click();

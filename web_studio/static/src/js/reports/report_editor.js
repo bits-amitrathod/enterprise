@@ -712,6 +712,10 @@ var ReportEditor = Widget.extend(EditorMixin, {
         e.preventDefault();
         e.stopPropagation();
 
+        if ($(e.target).hasClass('o_no_content_helper')) {
+            return;
+        }
+
         var $node = $(e.target).closest('[data-oe-xpath]');
         if ($node.closest('[t-field], [t-esc]').length) {
             $node = $node.closest('[t-field], [t-esc]');
