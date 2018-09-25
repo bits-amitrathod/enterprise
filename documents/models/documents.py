@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from odoo import models, fields, api, exceptions, SUPERUSER_ID, modules
 from ast import literal_eval
 from dateutil.relativedelta import relativedelta
@@ -20,6 +21,36 @@ class IrAttachment(models.Model):
                                           string='Available Rules')
     folder_id = fields.Many2one('documents.folder', ondelete="restrict", track_visibility="onchange", index=True)
     lock_uid = fields.Many2one('res.users', string="Locked by")
+
+    # AND
+    @api.model
+    def check(self, mode, values=None):
+        super(IrAttachment, self).check(mode, values)
+        if self:
+            # Upstream check did not raise, so default access is granted.
+            # Now perform extra check for folder permissions in the case of files that
+            # are not attached to a specific business document (when attached, the permissions
+            # of the business document prevail)
+            self._cr.execute('''
+                SELECT folder_id 
+                  FROM ir_attachment
+                 WHERE id IN %s AND
+                       folder_id IS NOT NULL AND
+                       res_id IS NULL AND
+                       res_model IS NULL AND
+                       (public = false OR public IS NULL)
+              GROUP BY folder_id, public
+            ''', [tuple(self.ids)])
+            folder_ids = [r[0] for r in self._cr.fetchall()]
+            if values and values.get('folder_id'):
+                folder_ids.append(values['folder_id'])
+
+            if len(folder_ids):
+                # Forbid deleting attachments unless the user has write access to the folder.
+                # All other operations are permitted if the user has read access to the folder.
+                folders = self.env['documents.folder'].browse(folder_ids).exists()
+                folders.check_access_rights('write' if mode == 'unlink' else 'read')
+                folders.check_access_rule(mode)
 
     @api.onchange('url')
     def _on_url_change(self):
