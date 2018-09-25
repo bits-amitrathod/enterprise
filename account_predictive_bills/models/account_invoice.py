@@ -107,7 +107,7 @@ class AccountInvoiceLine(models.Model):
                     (SELECT
                         ail.account_id,
                         (setweight(to_tsvector(%(lang)s, ail.name), 'B')) ||
-                        (setweight(to_tsvector('simple', 'p--'||ail.partner_id::text), 'A')) AS document
+                        (setweight(to_tsvector('simple', 'partnerid'|| replace(ail.partner_id::text, '-', 'x')), 'A')) AS document
                     FROM account_invoice_line ail
                     JOIN account_invoice inv
                         ON ail.invoice_id = inv.id
@@ -133,7 +133,7 @@ class AccountInvoiceLine(models.Model):
             GROUP BY f.account_id
             ORDER BY ranking desc, count desc
         """
-        description += ' p--' + str(partner.id or '')
+        description += ' partnerid' + str(partner.id or '').replace('-', 'x')
         return self._predict_field(sql_query, description)
 
     def _get_invoice_line_name_from_product(self):
