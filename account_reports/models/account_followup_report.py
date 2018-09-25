@@ -85,6 +85,7 @@ class report_account_followup_report(models.AbstractModel):
                     'move_id': aml.move_id.id,
                     'type': is_payment and 'payment' or 'unreconciled_aml',
                     'unfoldable': False,
+                    'has_invoice': bool(aml.invoice_id),
                     'columns': [type(v) == dict and v or {'name': v} for v in columns],
                 })
             totalXXX = formatLang(self.env, total, currency_obj=currency)
