@@ -156,6 +156,7 @@ class TestSubscription(TestSubscriptionCommon):
             'company_id': self.company.id,
             'payment_token_id': self.payment_method.id,
             'recurring_invoice_line_ids': [(0, 0, {'product_id': self.product.id, 'name': 'TestRecurringLine', 'price_unit': 50, 'uom_id': self.product.uom_id.id})],
+            'stage_id': self.ref('sale_subscription.sale_subscription_stage_in_progress'),
         })
         self.mock_send_success_count = 0
         # __import__('pudb').set_trace()
@@ -301,7 +302,7 @@ class TestSubscription(TestSubscriptionCommon):
 
     def test_cron_update_kpi(self):
         Snapshot = self.env['sale.subscription.snapshot']
-        subscriptions_count = self.env['sale.subscription'].search_count([])
+        subscriptions_count = self.env['sale.subscription'].search_count([('in_progress', '=', True)])
         before_count = Snapshot.search_count([])
         self.env['sale.subscription']._cron_update_kpi()
         after_count = Snapshot.search_count([])

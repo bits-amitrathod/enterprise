@@ -408,8 +408,14 @@ class SaleSubscription(models.Model):
         return self.write({'date': False})
 
     def set_close(self):
-        stage = self.env['sale.subscription.stage'].search([('in_progress', '=', False)], order='sequence', limit=1)
-        return self.write({'stage_id': stage.id, 'to_renew': False, 'date': fields.Date.from_string(fields.Date.today())})
+        today = fields.Date.from_string(fields.Date.today())
+        search = self.env['sale.subscription.stage'].search
+        for sub in self:
+            stage = search([('in_progress', '=', False), ('sequence', '>', sub.stage_id.sequence)], limit=1)
+            if not stage:
+                stage = search([('in_progress', '=', False)], limit=1)
+            sub.write({'stage_id': stage.id, 'to_renew': False, 'date': today})
+        return True
 
     def _prepare_invoice_data(self):
         self.ensure_one()
