@@ -480,7 +480,7 @@ class SignRequestItem(models.Model):
             items = request_item.sign_request_id.template_id.sign_item_ids.filtered(lambda r: r.responsible_id == request_item.role_id)
             signature_item = items.filtered(lambda item: item.type_id.type == 'signature')
             initial_item = items.filtered(lambda item: item.type_id.type == 'initial')
-            user = self.env['res.users'].search([('partner_id', '=', request_item.partner_id.id)], limit=1)
+            user = self.env['res.users'].search([('partner_id', '=', request_item.partner_id.id)], limit=1).sudo()
             if user and user.sign_signature and signature_item:
                 self.env['sign.item.value'].create({
                     'sign_item_id': signature_item.id,
@@ -542,7 +542,7 @@ class SignRequestItem(models.Model):
             if not (itemIDs <= autorizedIDs and requiredIDs <= itemIDs): # Security check
                 return False
 
-            user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
+            user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1).sudo()
             for itemId in signature:
                 item_value = SignItemValue.search([('sign_item_id', '=', int(itemId)), ('sign_request_id', '=', request.id)])
                 if not item_value:
