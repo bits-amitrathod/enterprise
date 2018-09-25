@@ -36,8 +36,8 @@ class AccountInvoiceExtractionWords(models.Model):
 
     invoice_id = fields.Many2one("account.invoice", help="Invoice id")
     field = fields.Char()
-    selected_status = fields.Integer("Invoice extract selected status.", help="0 for 'not selected', \
-                                            1 for ocr choosed and 2 for ocr selected but not choosed by user")
+    selected_status = fields.Integer("Invoice extract selected status.",
+        help="0 for 'not selected', 1 for ocr choosed and 2 for ocr selected but not choosed by user")
     user_selected = fields.Boolean()
     word_text = fields.Char()
     word_page = fields.Integer()
