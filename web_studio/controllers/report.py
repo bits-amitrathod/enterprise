@@ -15,19 +15,29 @@ class WebStudioReportController(main.WebStudioController):
     @http.route('/web_studio/create_new_report', type='json', auth='user')
     def create_new_report(self, model_name, layout):
 
-        arch = etree.fromstring("""
-            <t t-name="report_blank">
-                <t t-call="web.html_container">
-                    <t t-foreach="docs" t-as="doc">
-                        <t t-call="%(layout)s">
+        if layout == 'web.basic_layout':
+            arch = etree.fromstring("""
+                <t t-name="studio_report">
+                    <t t-call="%(layout)s">
+                        <t t-foreach="docs" t-as="doc">
                             <div class="page"/>
                         </t>
                     </t>
                 </t>
-            </t>
-        """ % {
-            'layout': layout,
-        })
+            """ % { 'layout': layout })
+        else:
+            arch = etree.fromstring("""
+                <t t-name="studio_report">
+                    <t t-call="web.html_container">
+                        <t t-foreach="docs" t-as="doc">
+                            <t t-call="%(layout)s">
+                                <div class="page"/>
+                            </t>
+                        </t>
+                    </t>
+                </t>
+            """ % { 'layout': layout })
+
         view = request.env['ir.ui.view'].create({
             'name': 'report',
             'type': 'qweb',
