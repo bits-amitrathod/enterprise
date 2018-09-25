@@ -2423,6 +2423,45 @@ tour.register('test_reload_flow', {test: true}, [
 
 ]);
 
+tour.register('test_highlight_packs', {test: true}, [
+    {
+        trigger: '.o_barcode_client_action',
+        run: function () {
+            assertLinesCount(1);
+            assertScanMessage('scan_products');
+            assertValidateVisible(true);
+            assertValidateIsHighlighted(false);
+            assertValidateEnabled(true);
+            var $line = $('.o_barcode_line');
+            assertLineIsHighlighted($line, false);
+
+        },
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan PACK002',
+    },
+
+    {
+        trigger: '.o_barcode_client_action:contains("PACK002")',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: function () {
+            assertLinesCount(2);
+            assertScanMessage('scan_products');
+            assertValidateVisible(true);
+            assertValidateIsHighlighted(true);
+            assertValidateEnabled(true);
+            var $line = $('.o_barcode_line').eq(1);
+            assertLineIsHighlighted($line, true);
+        },
+    },
+
+]);
+
 tour.register('test_put_in_pack_from_different_location', {test: true}, [
     {
         trigger: '.o_barcode_client_action',

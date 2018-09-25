@@ -102,6 +102,11 @@ var LinesWidget = Widget.extend({
 
     },
 
+    highlightPackage: function (barcode) {
+        var $line = this.$('.o_barcode_line:contains(' + barcode + ')');
+        this._highlightLine($line);
+    },
+
     /**
      * Emphase the source location name in the summary bar
      *
@@ -180,7 +185,16 @@ var LinesWidget = Widget.extend({
         });
         var packageLines = [];
         for (var key in groupedLines) {
+            // check if the package is 'reserved' to display '/ 1' on the line
+            var reservedPackage = true;
+            for (var index in groupedLines[key]) {
+                if (groupedLines[key][index].product_uom_qty === 0){
+                    reservedPackage = false;
+                    break;
+                }
+            }
             if (groupedLines.hasOwnProperty(key)) {
+                groupedLines[key][0].reservedPackage = reservedPackage;
                 packageLines.push(groupedLines[key][0]);
             }
         }

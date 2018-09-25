@@ -451,6 +451,11 @@ var ClientAction = AbstractAction.extend({
             this.linesWidget._toggleScanMessage(this.linesWidgetState.scan_message);
             delete this.linesWidgetState;
         }
+        if (this.lastScannedPackage) {
+            this.linesWidget.highlightPackage(this.lastScannedPackage);
+            delete this.lastScannedPackage;
+
+        }
     },
 
     /**
@@ -952,6 +957,7 @@ var ClientAction = AbstractAction.extend({
         };
         return search_read_quants().then(function (packages) {
             if (packages.length) {
+                self.lastScannedPackage = packages[0].name;
                 return get_contained_quants(packages[0].id).then(function (quants) {
                     var packageAlreadyScanned = package_already_scanned(packages[0].id, quants);
                     if (packageAlreadyScanned) {

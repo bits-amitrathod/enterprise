@@ -132,6 +132,14 @@
                         <div>
                             <i class="fa fa-fw fa-truck"/> <t t-esc="packageLine.package_id[1]"></t> <span class="fa fa-long-arrow-right"></span> <t t-esc="packageLine.result_package_id[1]"></t>
                         </div>
+                        <div>
+                            <i class="fa fa-fw fa-cube"/>
+                            <span t-attf-class="o_barcode_scanner_qty text-monospace badge #{' '}"> <!-- @SLE, Eventually add contextual classes: "badge-warning", "badge-danger", "badge-success"  -->
+                                <span class="d-inline-block text-left" t-if="packageLine.qty_done != 0">1</span>
+                                <span class="d-inline-block text-left" t-else="">0</span>
+                                <span t-if="packageLine.reservedPackage">/  1</span>
+                            </span>
+                        </div>
                     </div>
                     <div class="o_barcode_line_actions d-flex align-items-center pl-4">
                         <span><a class="fa fa-dropbox text-muted float-right o_package_content"></a></span>
