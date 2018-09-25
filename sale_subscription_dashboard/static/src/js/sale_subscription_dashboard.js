@@ -210,6 +210,7 @@ var sale_subscription_dashboard_abstract = AbstractAction.extend(ControlPanelMix
     render_dashboard: function() {}, // Abstract
 
     format_number: function(value, symbol) {
+        value = value || 0.0; // sometime, value is 'undefined'
         value = utils.human_number(value);
         if (symbol === 'currency') {
             return render_monetary_field(value, this.currency_id);
