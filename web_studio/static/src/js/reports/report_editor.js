@@ -458,7 +458,10 @@ var ReportEditor = Widget.extend(EditorMixin, {
                     }
                     $childNode.after($newHook);
                 });
-        } else if ($node.text()) {
+        } else if ($node.text() &&
+                    $node[0].tagName.toLowerCase() !== 'th' &&
+                    $node[0].tagName.toLowerCase() !== 'td') {
+                    // in tables, we cannot add span hooks else it breaks the layout
             if (component.hookAutoHeight) {
                 $newHook.data('height', $node.height() + 'px');
                 $newHook.css('height', $node.height() + 'px');
@@ -468,7 +471,7 @@ var ReportEditor = Widget.extend(EditorMixin, {
         }
         else {
             $newHook.data('oe-node', $node).data('oe-position', 'inside');
-            $node.prepend($newHook);
+            $node.append($newHook);
         }
     },
     _computeNearestHookAndShowIt: function () {
