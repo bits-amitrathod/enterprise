@@ -164,7 +164,7 @@
     .o_account_reports_caret_icon {
         position: absolute;
     }
-    tr.o_js_account_report_inner_row {
+    tr[data-parent-id] {
         border-bottom: 1px solid #eee;
     }
     .o_account_reports_domain_line_0 {
@@ -226,7 +226,7 @@
     .o_foldable_total {
         color: #666666 !important;
     }
-    .o_account_reports_total_below .o_js_account_report_parent_row_unfolded {
+    .o_account_reports_totals_below_sections.o_js_account_report_parent_row_unfolded {
         .o_account_report_column_value {
             visibility: hidden;
         }
@@ -412,4 +412,65 @@
 }
     .o_account_reports_filtered_lines {
     display: none;
+}
+
+// Summary to be edited
+// -----------------------------------------
+.o_account_reports_summary {
+    display: inline-block;
+    position: relative;
+
+    .o_account_report_summary {
+        padding: 10px 0;
+
+        &, > span, .o_input, .o_account_reports_edit_summary_pencil {
+            transition: all .2s ease 0s;
+        }
+        > span {
+            padding: 10px 0;
+            display: block;
+            white-space: pre-wrap;
+            line-height: 1;
+        }
+    }
+
+    .o_input {
+        border: none;
+        padding: 10px;
+    }
+
+    .o_account_reports_edit_summary_pencil {
+        @include o-position-absolute(22px, $left: 5px);
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    &:hover {
+        .o_account_reports_edit_summary_pencil {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .o_account_report_summary .o_input, .o_account_report_summary span {
+            padding-left: 25px;
+            padding-right: 0;
+        }
+    }
+}
+
+.o_account_reports_summary_edit {
+    padding-bottom: 25px;
+    padding-top: 10px;
+
+    textarea {
+        border: 1px solid gray('600');
+        resize: vertical;
+        width: 100%;
+    }
+}
+
+// Print mode report summary
+// -----------------------------------------
+p.o_account_reports_contact_info {
+    min-height: 30px;
 }

@@ -1104,7 +1104,7 @@ class AccountFinancialReportLine(models.Model):
                 'id': line.id,
                 'name': line.name,
                 'level': line.level,
-                'class': '',
+                'class': 'o_account_reports_totals_below_sections' if self.env.user.company_id.totals_below_sections else '',
                 'columns': [{'name': l} for l in res['line']],
                 'unfoldable': len(domain_ids) > 1 and line.show_domain != 'always',
                 'unfolded': line.id in options.get('unfolded_lines', []) or line.show_domain == 'always',
