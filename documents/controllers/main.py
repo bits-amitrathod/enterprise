@@ -13,7 +13,7 @@ import werkzeug.utils
 
 from ast import literal_eval
 
-from odoo import http, fields
+from odoo import http, fields, models
 from odoo.http import request, content_disposition
 from odoo.osv import expression
 from odoo.tools import pycompat, consteq
@@ -31,8 +31,8 @@ class ShareRoute(http.Controller):
 
         """
         status, headers, content = request.registry['ir.http'].binary_content(
-            id=id, field=field, filename=filename, share_id=share_id,
-            share_token=share_token, download=True)
+            id=id, field=field, filename=filename, related_id=share_id,
+            access_token=share_token, access_mode='documents_share', download=True)
 
         if status == 304:
             response = werkzeug.wrappers.Response(status=status, headers=headers)
@@ -106,7 +106,7 @@ class ShareRoute(http.Controller):
                         domain = []
                         if share.domain:
                             domain = literal_eval(share.domain)
-                        domain = expression.AND(domain, [['folder_id', '=', share.folder_id.id]])
+                        domain = expression.AND([domain, [['folder_id', '=', share.folder_id.id]]])
                         attachments = http.request.env['ir.attachment'].sudo().search(domain)
                     elif share.type == 'ids':
                         attachments = share.attachment_ids
@@ -270,3 +270,40 @@ class ShareRoute(http.Controller):
         except Exception:
             logger.exception("Failed to generate the multi file share portal")
         return request.not_found()
+
+
+class IrHttp(models.AbstractModel):
+    _inherit = 'ir.http'
+
+    @classmethod
+    def check_access_mode(cls, env, id, access_mode, model, access_token=None, related_id=None):
+        """
+        Implemented by each module to define an additional way to check access.
+
+        :param env: the env of binary_content
+        :param id: id of the record from which to fetch the binary
+        :param access_mode: typically a string that describes the behaviour of the custom check
+        :param model: the model of the object for which binary_content was called
+        :param related_id: the id of the documents.share.
+        :return: object binary if the access_token matches the share and the attachment is in the share.
+        """
+        if access_mode == 'documents_share' and related_id:
+            share = env['documents.share'].sudo().browse(int(related_id))
+            if share:
+                if share.state == 'expired':
+                    return None
+                if access_token and not consteq(access_token, share.access_token):
+                    return None
+                elif share.type == 'ids' and (id in share.attachment_ids.ids):
+                    return env[model].sudo().browse(int(id))
+                elif share.type == 'domain':
+                    obj = env[model].sudo().browse(int(id))
+                    share_domain = []
+                    if share.domain:
+                        share_domain = literal_eval(share.domain)
+                    domain = [['folder_id', '=', share.folder_id.id]] + share_domain
+                    attachments_check = http.request.env['ir.attachment'].sudo().search(domain)
+                    if obj in attachments_check:
+                        return obj
+        return super(IrHttp, cls).check_access_mode(env, id, access_mode, model,
+                                                    access_token=access_token, related_id=related_id)
