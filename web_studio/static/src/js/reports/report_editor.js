@@ -627,9 +627,10 @@ var ReportEditor = Widget.extend(EditorMixin, {
         // the iframe height is recomputed to the height of the content images included
         self.$iframe[0].style.height = self.$iframe[0].contentWindow.document.body.scrollHeight + 'px';
 
-        this.$content.find('.header').css({
-            'margin-bottom': (this.paperFormat.header_spacing || 0) + 'mm',
-        });
+        // TODO: it seems that the paperformat doesn't exactly do that
+        // this.$content.find('.header').css({
+        //     'margin-bottom': (this.paperFormat.header_spacing || 0) + 'mm',
+        // });
         // TODO: won't be pretty if the content is larger than the format
         this.$content.find('.footer').css({
             'position': 'fixed',
