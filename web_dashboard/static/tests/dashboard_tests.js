@@ -181,6 +181,38 @@ QUnit.module('Views', {
         });
     });
 
+    QUnit.test('basic rendering of empty pie chart widget', function (assert) {
+        // Pie Chart is rendered asynchronously.
+        // concurrency.delay is a fragile way that we use to wait until the
+        // graph is rendered.
+        // Roughly: 2 concurrency.delay = 2 levels of inner async calls.
+        var done = assert.async();
+        assert.expect(1);
+
+        this.data.test_report.records = [];
+
+        var self = this;
+        createAsyncView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard>' +
+                      '<widget name="pie_chart" attrs="{\'measure\': \'sold\', \'groupby\': \'categ_id\'}"/>' +
+                  '</dashboard>',
+        })
+        .then(function (dashboard) {
+            self.dashboard = dashboard;
+        })
+        .then(concurrency.delay.bind(concurrency, 0))
+        .then(concurrency.delay.bind(concurrency, 0))
+        .then(function () {
+            assert.strictEqual(self.dashboard.$('.o_graph_svg_container .nvd3-svg > text').text(),
+                "No data to display", "the error should be embedded in the pie chart");
+            self.dashboard.destroy();
+            done();
+        });
+    });
+
     QUnit.test('rendering of a pie chart widget and comparison active', function (assert) {
         // Pie Chart is rendered asynchronously.
         // concurrency.delay is a fragile way that we use to wait until the
