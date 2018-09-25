@@ -89,7 +89,9 @@ class WorkflowActionRule(models.Model):
             attachment.write(attachment_dict)
 
             if self.remove_activities:
-                attachment.activity_ids.action_feedback(feedback=f"completed by rule: {self.name}. {self.note or ''}")
+                attachment.activity_ids.action_feedback(
+                    feedback="completed by rule: %s. %s" % (self.name, self.note or '')
+                )
 
             if self.activity_option and self.activity_type_id:
                 attachment.documents_set_activity(settings_model=self)
