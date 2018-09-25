@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
-from odoo.osv.expression import expression, generate_table_alias
+from odoo.osv import expression
 
 
 class TagsCategories(models.Model):
@@ -47,11 +47,9 @@ class Tags(models.Model):
         """
         if not domain:
             domain = []
-        model = self.env['ir.attachment']
-        expr = expression(domain, model)
-        domain_query, domain_params = expr.to_sql()
-        folder_query, folder_params = expression([('folder_id', 'parent_of', folder_id)], self).to_sql()
-        _, from_activities = generate_table_alias('ir_attachment', [('mail_activity', 'activity_ids')])
+
+        attachments = self.env['ir.attachment'].search(expression.AND([domain, [('folder_id', '=', folder_id)]]))
+        folders = self.env['documents.folder'].search([('parent_folder_id', 'parent_of', folder_id)])
         query = """
             SELECT  facet.sequence AS facet_sequence,
                     facet.name AS facet_name,
@@ -62,11 +60,16 @@ class Tags(models.Model):
                     documents_tag.id AS tag_id,
                     COUNT(rel.ir_attachment_id) AS __count
             FROM documents_tag
-                JOIN documents_facet facet ON documents_tag.facet_id = facet.id AND %s
+                JOIN documents_facet facet ON documents_tag.facet_id = facet.id
+                    AND facet.folder_id IN %s
                 LEFT JOIN document_tag_rel rel ON documents_tag.id = rel.documents_tag_id
-                    AND rel.ir_attachment_id IN (SELECT ir_attachment.id FROM ir_attachment LEFT JOIN %s ON 1=1 WHERE %s)
+                    AND rel.ir_attachment_id = ANY(%s)
             GROUP BY facet.sequence, facet.name, facet.id, facet.tooltip, documents_tag.sequence, documents_tag.name, documents_tag.id
             ORDER BY facet.sequence, facet.name, facet.id, facet.tooltip, documents_tag.sequence, documents_tag.name, documents_tag.id
-        """ % (folder_query, from_activities, domain_query)
-        self.env.cr.execute(query, folder_params + domain_params)
+        """
+        params = [
+            tuple(folders.ids),
+            list(attachments.ids),  # using Postgresql's ANY() with a list to prevent empty list of attachments
+        ]
+        self.env.cr.execute(query, params)
         return self.env.cr.dictfetchall()
