@@ -84,6 +84,11 @@ class WebStudioReportController(main.WebStudioController):
 
         return report.read()
 
+    @http.route('/web_studio/read_paperformat', type='json', auth='user')
+    def read_paperformat(self, report_id):
+        report = request.env['ir.actions.report'].browse(report_id)
+        return report.get_paperformat().read()
+
     @http.route('/web_studio/get_widgets_available_options', type='json', auth='user')
     def get_widgets_available_options(self):
         fields = dict()
