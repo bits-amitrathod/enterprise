@@ -139,9 +139,6 @@
             </t>
         </select>
         <div class="o_studio_report_options_container"></div>
-        <a t-if="widget.widget and widget.widget.options.length" href="#" class="o_studio_option_show float-right mt4">
-            <small>Options</small>
-        </a>
     </div>
 </div>
 
@@ -276,7 +273,7 @@
 </div>
 
 <t t-name="web_studio.ReportDirectiveTOptions.options">
-    <div t-attf-class="d-none o_web_studio_toption_options o_web_studio_toption_#{widget.key}">
+    <div t-attf-class="o_web_studio_toption_options o_web_studio_toption_#{widget.key}">
         <t t-foreach="widget.options" t-as="o">
             <div t-attf-class="o_web_studio_toption_option o_web_studio_toption_option_#{widget.key}_#{o.key} #{o.required ? 'o_web_studio_required_option' : ''}">
                 <label>

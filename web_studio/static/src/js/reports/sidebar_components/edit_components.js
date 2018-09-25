@@ -1054,7 +1054,6 @@ var TOptions = AbstractEditComponent.extend( {
     insertAsLastChildOfPrevious: true,
     events: _.extend({}, AbstractEditComponent.prototype.events, {
         'change select:first': '_onChangeWidget',
-        'click .o_studio_option_show': '_onShowOptions',
     }),
     /**
      * @override
@@ -1283,14 +1282,6 @@ var TOptions = AbstractEditComponent.extend( {
             this._triggerViewChange({});
         }
         this._updateWidgetOptions();
-    },
-    /**
-     * @private
-     * @param {JQEvent} e
-     */
-    _onShowOptions: function (e) {
-        e.preventDefault();
-        this.$('.o_web_studio_toption_options').toggleClass('d-none');
     },
     /**
      * @override
