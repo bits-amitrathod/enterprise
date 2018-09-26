@@ -571,4 +571,4 @@ class SignRequestItem(models.Model):
     def _send_sms(self):
         self.ensure_one()
         self._reset_sms_token()
-        self.env['sms.api']._send_sms([self.sms_number], _('Your confirmation code is %s' % self.sms_token))
+        self.env['sms.api']._send_sms([self.sms_number], _('Your confirmation code is %s') % self.sms_token)
