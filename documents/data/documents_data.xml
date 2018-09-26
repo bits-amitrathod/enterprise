@@ -308,7 +308,7 @@
         <!-- finance to review -->
 
         <record id="documents_Finance_validate_tr" model="documents.workflow.rule">
-            <field name="name">To Review</field>
+            <field name="name">Review Document(s)</field>
             <field name="domain_folder_id" ref="documents_finance_folder"/>
         </record>
 
@@ -328,7 +328,7 @@
         <!-- finance to draft -->
 
         <record id="documents_Finance_validate_to_draft" model="documents.workflow.rule">
-            <field name="name">Send to Draft</field>
+            <field name="name">Reset to Draft</field>
             <field name="domain_folder_id" ref="documents_finance_folder"/>
         </record>
 
@@ -388,7 +388,7 @@
         <!-- internal validate-->
 
         <record id="documents_Internal_to_review" model="documents.workflow.rule">
-            <field name="name">To Review</field>
+            <field name="name">Review Document(s)</field>
             <field name="domain_folder_id" ref="documents_internal_folder"/>
         </record>
 
@@ -408,7 +408,7 @@
         <!-- internal Draft-->
 
         <record id="documents_Internal_to_draft" model="documents.workflow.rule">
-            <field name="name">Send to Draft</field>
+            <field name="name">Reset to Draft</field>
             <field name="domain_folder_id" ref="documents_internal_folder"/>
         </record>
 
@@ -428,7 +428,7 @@
         <!--if inbox: contracts + 2018-->
 
         <record id="documents_Finance_validate_inbox_contracts" model="documents.workflow.rule">
-            <field name="name">Move to 2018 contracts</field>
+            <field name="name">2018 contracts</field>
             <field name="domain_folder_id" ref="documents_finance_folder"/>
         </record>
 

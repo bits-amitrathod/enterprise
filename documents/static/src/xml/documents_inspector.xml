@@ -9,7 +9,7 @@
             <div t-if="nbPreviews === 0">
                 <t t-if="widget.currentFolder">
                 <div class="o_inspector_folder_name"><center><t t-esc="widget.currentFolder.name"/>:</center></div>
-                <center><div class="o_inspector_folder_description"><t t-if="widget.currentFolder.description" t-raw="widget.currentFolder.description"/></div></center>
+                    <div class="o_inspector_folder_description"><t t-if="widget.currentFolder.description" t-raw="widget.currentFolder.description"/></div>
                 </t>
             </div>
             <t t-else="" t-call="documents.DocumentsInspector.previews"/>

@@ -18,16 +18,18 @@
             <field name="activity_date_deadline_range_type">days</field>
         </record>
 
+
+
         <!-- Workflow Rules -->
 
         <record id="vendor_bill_rule" model="documents.workflow.rule" forcecreate="0">
-            <field name="name">Create a vendor bill</field>
+            <field name="name">Create vendor bill</field>
             <field name="create_model">account.invoice.in_invoice</field>
             <field name="domain_folder_id" ref="documents.documents_finance_folder"/>
         </record>
 
         <record id="credit_note_rule" model="documents.workflow.rule" forcecreate="0">
-            <field name="name">Create a credit note</field>
+            <field name="name">Create vendor refund</field>
             <field name="create_model">account.invoice.out_refund</field>
             <field name="domain_folder_id" ref="documents.documents_finance_folder"/>
         </record>
