@@ -2,6 +2,7 @@
 
 import base64
 import os
+import time
 
 from lxml import etree, objectify
 
@@ -38,7 +39,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
             'name': 'YourCompany',
         })
         self.company.partner_id.write({
-            'vat': 'ACO560518KW7',
+            'vat': 'TCM970625MB1',
             'country_id': self.env.ref('base.mx').id,
             'zip': '37200',
             'property_account_position_id': self.fiscal_position.id,
@@ -115,6 +116,11 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         # -----------------------
         invoice.sudo().journal_id.update_posted = True
         invoice.action_invoice_cancel()
+        for _x in range(10):
+            if invoice.l10n_mx_edi_pac_status == 'cancelled':
+                break
+            time.sleep(2)
+            invoice._l10n_mx_edi_cancel()
         self.assertEqual(invoice.state, "cancel")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, 'cancelled',
                          invoice.message_ids.mapped('body'))
@@ -215,6 +221,8 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
         invoice = self.create_invoice()
         invoice.action_invoice_open()
         ctx = {'active_model': 'account.invoice', 'active_ids': [invoice.id]}
+        bank_journal = self.env['account.journal'].search([
+            ('type', '=', 'bank')], limit=1)
         register_payments = self.env['account.register.payments'].with_context(
             ctx).create({
                 'payment_date': invoice.date,
@@ -222,7 +230,7 @@ class TestL10nMxEdiInvoice(common.InvoiceTransactionCase):
                     'l10n_mx_edi.payment_method_efectivo').id,
                 'payment_method_id': self.env.ref(
                     "account.account_payment_method_manual_in").id,
-                'journal_id': invoice.journal_id.id,
+                'journal_id': bank_journal.id,
                 'communication': invoice.number,
                 'amount': invoice.amount_total, })
         payment = register_payments.create_payments()

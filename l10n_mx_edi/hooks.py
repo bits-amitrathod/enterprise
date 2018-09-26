@@ -7,6 +7,8 @@ from contextlib import closing
 from os.path import join, dirname, realpath
 from lxml import etree, objectify
 
+from werkzeug import url_quote
+
 from odoo import api, tools, SUPERUSER_ID
 import requests
 
@@ -64,7 +66,7 @@ def _load_xsd_files(cr, registry, url):
     sub_urls = res.xpath('//xs:import', namespaces=namespace)
     for s_url in sub_urls:
         s_url_catch = _load_xsd_files(cr, registry, s_url.get('schemaLocation'))
-        s_url.attrib['schemaLocation'] = s_url_catch
+        s_url.attrib['schemaLocation'] = url_quote(s_url_catch)
     try:
         xsd_string = etree.tostring(res, pretty_print=True)
     except etree.XMLSyntaxError:
