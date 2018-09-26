@@ -67,8 +67,13 @@ var ReportEditor = Widget.extend(EditorMixin, {
      * Start dragging the component, notify that no cleanup should occur
      * because a drag operation is ongoing.
      */
-    beginDragComponent: function () {
+    beginDragComponent: function (component) {
         this.isDragging = true;
+        if (this.$content.find('.o_web_studio_hook').length === 0) {
+            // for the case where computing the hooks takes long and
+            // the user is too fast with the mouse
+            this._prepareHooksOnIframeBeforeDrag(component);
+        }
     },
     beginPreviewDragComponent: function (component) {
         if (this.isDragging) {

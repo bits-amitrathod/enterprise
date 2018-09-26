@@ -340,7 +340,7 @@ var ReportEditorManager = AbstractEditorManager.extend({
      * @param {OdooEvent} ev
      */
     _onBeginDragComponent: function (ev) {
-        this.view.beginDragComponent();
+        this.view.beginDragComponent(ev.data.widget);
     },
     /**
      * @private
