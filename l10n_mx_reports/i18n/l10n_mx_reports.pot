@@ -844,6 +844,12 @@ msgid "Indicate the type of third that is the supplier. Is the first column in D
 msgstr ""
 
 #. module: l10n_mx_reports
+#: code:addons/l10n_mx_reports/models/trial_balance.py:56
+#, python-format
+msgid "Initial Balance"
+msgstr ""
+
+#. module: l10n_mx_reports
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner_l10n_mx_nationality
 msgid "L10N Mx Nationality"
 msgstr ""
@@ -871,13 +877,19 @@ msgid "Mexican Chart of Account Report"
 msgstr ""
 
 #. module: l10n_mx_reports
-#: model:ir.ui.menu,name:l10n_mx_reports.account_reports_legal_mexican_statements_menu
-msgid "Mexican Statements"
+#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_trial_report
+msgid "Mexican Trial Balance Report"
 msgstr ""
 
 #. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_l10n_mx_trial_report
-msgid "Mexican Trial Balance Report"
+#: model:ir.ui.menu,name:l10n_mx_reports.account_reports_legal_mexican_statements_menu
+msgid "Mexico"
+msgstr ""
+
+#. module: l10n_mx_reports
+#: code:addons/l10n_mx_reports/models/coa.py:75
+#, python-format
+msgid "Misconfigured Accounts"
 msgstr ""
 
 #. module: l10n_mx_reports
@@ -910,8 +922,9 @@ msgid "Paid 16%"
 msgstr ""
 
 #. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_res_partner
-msgid "Partner"
+#: code:addons/l10n_mx_reports/models/account_diot.py:33
+#, python-format
+msgid "Paid 16% - Non-Creditable"
 msgstr ""
 
 #. module: l10n_mx_reports
@@ -921,15 +934,41 @@ msgid "Print DIOT (TXT)"
 msgstr ""
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:256
+#: code:addons/l10n_mx_reports/models/trial_balance.py:219
+#, python-format
+msgid "The account %s is incorrectly configured. Only one tag is allowed."
+msgstr ""
+
+#. module: l10n_mx_reports
+#: code:addons/l10n_mx_reports/models/account_diot.py:118
+#, python-format
+msgid "The report cannot be generated because of: "
+msgstr ""
+
+#. module: l10n_mx_reports
+#: code:addons/l10n_mx_reports/models/account_diot.py:291
 #, python-format
 msgid "There are more than 80 items in this list, click here to see all of them"
 msgstr ""
 
 #. module: l10n_mx_reports
-#: code:addons/l10n_mx_reports/models/account_diot.py:248
+#: code:addons/l10n_mx_reports/models/coa.py:112
+#, python-format
+msgid "This XML could not be generated because some accounts are not correctly configured and can not be added in this report. This accounts are found in the section \"Misconfigured Accounts\", please configure your tag and try generate the report XML again."
+msgstr ""
+
+#. module: l10n_mx_reports
+#: code:addons/l10n_mx_reports/models/account_diot.py:283
+#: code:addons/l10n_mx_reports/models/trial_balance.py:66
+#: code:addons/l10n_mx_reports/models/trial_balance.py:112
 #, python-format
 msgid "Total"
+msgstr ""
+
+#. module: l10n_mx_reports
+#: code:addons/l10n_mx_reports/models/trial_balance.py:104
+#, python-format
+msgid "Total %s"
 msgstr ""
 
 #. module: l10n_mx_reports
