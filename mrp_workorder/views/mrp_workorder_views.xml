@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="workorder_actions">
-                    <div class="o_workorder_bar_content">
+                    <div class="o_workorder_bar_content o_workorder_actions">
                         <button name="action_menu" type="object" class="btn-secondary o_workorder_icon_btn" string="" icon="fa-bars" aria-label="Dropdown menu" title="Dropdown menu"/>
                         <button name="button_pending" type="object" class="btn-secondary mr8" attrs="{'invisible': ['|', ('is_user_working', '=', False), ('working_state', '=', 'blocked')]}" barcode_trigger="pause" string="Pause"/>
                         <button name="button_start" type="object" class="btn-warning" attrs="{'invisible': ['|', ('is_user_working', '=', True), ('working_state', '=', 'blocked')]}" barcode_trigger="pause" string="Continue"/>

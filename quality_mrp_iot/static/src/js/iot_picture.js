@@ -17,10 +17,10 @@ var TabletImageIot = FieldBinaryImage.extend({
         this.ip = this.record.data[ipField];
         var identifierField = this.nodeOptions.identifier;
         this.identifier = this.record.data[identifierField];
-
     },
+
     _onButtonClick: function(ev) {
-        var url = 'http://' + this.ip + ":8069/driveraction/camera"
+        var url = 'http://' + this.ip + ":8069/hw_drivers/driveraction/camera"
         var data = {'action': 'camera', 'identifier': this.identifier}
         console.log(this)
         var self = this;
