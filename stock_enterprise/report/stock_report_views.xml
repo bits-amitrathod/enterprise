@@ -94,7 +94,7 @@
             <field name="arch" type="xml">
                 <dashboard>
                     <view type="graph" ref="stock_enterprise.stock_report_graph_view"/>
-                    <group col="1" string="At A Glance">
+                    <group col="1">
                         <group col="4">
                             <aggregate name="delivery_time_avg" string="Deliveries Cycle Time" field="cycle_time" group_operator="avg"
                                 domain="[('picking_type_code', '=', 'outgoing')]" domain_label="Done Deliveries"

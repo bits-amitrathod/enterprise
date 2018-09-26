@@ -303,7 +303,7 @@ QUnit.module('Views', {
             model: 'test_report',
             data: this.data,
             arch: '<dashboard>' +
-                        '<group string="At a glance">' +
+                        '<group>' +
                             '<aggregate name="sold" field="sold" widget="float_time"/>' +
                         '</group>' +
                     '</dashboard>',
