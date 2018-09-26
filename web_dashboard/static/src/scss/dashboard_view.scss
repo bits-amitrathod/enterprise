@@ -25,6 +25,20 @@
         // By default dashboard entries are full-width...
         flex: 1 1 100%;
         margin: 0 $padding ($spacer * 4);
+
+        .o_graph_container {
+            display: flex;
+
+             > .o_graph_svg_container {
+                flex: 1 1 auto;
+                height: 250px;
+
+                > label {
+                    position: absolute;
+                    @extend %o-dashboard-label-design;
+                }
+            }
+        }
     }
 
     .o_group {
@@ -171,16 +185,9 @@
         }
 
         &[type=graph] {
-            .o_graph.o_view_controller {
-                position: relative;
+            .o_view_controller {
                 width: 100%;
-                padding-top: 20%;
-                min-height: 250px;
-                max-height: 350px;
-
-                .o_graph_container {
-                    @include o-position-absolute(0,0,0,0);
-                }
+                min-height: 300px;
             }
         }
     }
