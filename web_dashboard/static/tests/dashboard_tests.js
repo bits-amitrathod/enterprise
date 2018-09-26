@@ -2388,5 +2388,44 @@ QUnit.module('Views', {
         actionManager.destroy();
         window.Date = RealDate;
     });
+
+    QUnit.test('basic rendering of aggregates with big values', function (assert) {
+        assert.expect(12);
+
+        var readGroupNo = -3;
+        var results = [
+            "0.02", "0.15", "1.52", "15.23", "152.35",
+            "1.52k", "15.24k", "152.35k", "1.52M" , "15.23M",
+            "152.35M" , "1.52G"];
+
+        var dashboard = createView({
+            View: DashboardView,
+            model: 'test_report',
+            data: this.data,
+            arch: '<dashboard>' +
+                        '<group>' +
+                            '<aggregate name="sold" field="sold" widget="monetary"/>' +
+                        '</group>' +
+                    '</dashboard>',
+            mockRPC: function (route, args) {
+                if (args.method === 'read_group') {
+                    readGroupNo++;
+                    return $.when([{sold: Math.pow(10,readGroupNo) * 1.52346}]);
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assert.strictEqual(dashboard.$('.o_value').text(), results.shift(),
+            "should correctly display the aggregate's value");
+
+        for (var i = 0; i < 11; i++) {
+            dashboard.update({});
+            assert.strictEqual(dashboard.$('.o_value').text(), results.shift(),
+            "should correctly display the aggregate's value");
+        }
+
+        dashboard.destroy();
+    });
 });
 });

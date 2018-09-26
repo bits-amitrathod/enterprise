@@ -39,6 +39,17 @@ var DashboardRenderer = FormRenderer.extend({
             // in the dashboard view, all monetary values are displayed in the
             // currency of the current company of the user
             currency_id: this.getSession().company_currency_id,
+            // allow to decide if utils.human_number should be used
+            humanReadable: function (value) {
+                return Math.abs(value) >= 1000;
+            },
+            // with the choices below, 1236 is represented by 1.24k
+            minDigits: 1,
+            decimals: 2,
+            // avoid comma separators for thousands in numbers when human_number is used
+            formatterCallback: function (str) {
+                return str;
+            }
         };
     },
     /**
