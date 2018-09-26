@@ -685,8 +685,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         )], limit=1)
         sequence.write({'number_next_actual': 1000})
 
-        self.picking_type_out.show_entire_packs = True
-
         self.phantom_js(
             url,
             "odoo.__DEBUG__.services['web_tour.tour'].run('test_pack_multiple_scan')",

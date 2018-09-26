@@ -43,12 +43,12 @@ var LinesWidget = Widget.extend({
      * @param {Number} qty
      * @param {string} model
      */
-    incrementProduct: function(id_or_virtual_id, qty, model) {
+    incrementProduct: function(id_or_virtual_id, qty, model, doNotClearLineHighlight) {
         var $line = this.$("[data-id='" + id_or_virtual_id + "']");
         var incrementClass = model === 'stock.picking' ? '.qty-done' : '.product_qty';
         var qtyDone = parseInt($line.find(incrementClass).text(), 10);
         $line.find(incrementClass).text(qtyDone + qty);
-        this._highlightLine($line);
+        this._highlightLine($line, doNotClearLineHighlight);
 
         this._handleControlButtons();
 
@@ -74,7 +74,7 @@ var LinesWidget = Widget.extend({
      * @param {Object} lineDescription: and object with all theinformation needed to render the
      *                 line's template, including the qty to add.
      */
-    addProduct: function (lineDescription, model) {
+    addProduct: function (lineDescription, model, doNotClearLineHighlight) {
         var $body = this.$el.filter('.o_barcode_lines');
         var $line = $(QWeb.render('stock_barcode_lines_template', {
             lines: [lineDescription],
@@ -84,7 +84,7 @@ var LinesWidget = Widget.extend({
         $body.prepend($line);
         $line.on('click', '.o_edit', this._onClickEditLine.bind(this));
         $line.on('click', '.o_package_content', this._onClickTruckLine.bind(this));
-        this._highlightLine($line);
+        this._highlightLine($line, doNotClearLineHighlight);
 
         this._handleControlButtons();
 
@@ -435,9 +435,11 @@ var LinesWidget = Widget.extend({
      * @private
      * @param {Jquery} $line
      */
-    _highlightLine: function ($line) {
+    _highlightLine: function ($line, doNotClearLineHighlight) {
         var $body = this.$el.filter('.o_barcode_lines');
-        this.clearLineHighlight();
+        if (! doNotClearLineHighlight) {
+            this.clearLineHighlight();
+        }
         // Highlight `$line`.
         $line.toggleClass('o_highlight', true);
         $line.parents('.o_barcode_lines').toggleClass('o_js_has_highlight', true);

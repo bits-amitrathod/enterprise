@@ -24,7 +24,7 @@ function getLine (description) {
         }
     });
     if (! $res) {
-        fail('cannot get the line');
+        fail('cannot get the line with the barcode ' + description.barcode);
     }
     return $res;
 }
@@ -2131,6 +2131,10 @@ tour.register('test_pack_multiple_scan', {test: true}, [
         trigger: '.o_barcode_client_action',
         run: function () {
             assertErrorMessage('This package is already scanned.');
+            var $line = getLine({barcode: 'product1'});
+            assertLineIsHighlighted($line, true);
+            var $line = getLine({barcode: 'product2'});
+            assertLineIsHighlighted($line, true);
         },
     },
 

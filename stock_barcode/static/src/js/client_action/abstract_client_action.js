@@ -706,6 +706,8 @@ var ClientAction = AbstractAction.extend({
      * @param {Object} params.lot_name
      * @param {Object} params.package_id
      * @param {Object} params.result_package_id
+     * @param {Boolean} params.doNotClearLineHighlight don't clear the previous line highlight when
+     *     highlighting a new one
      * @return {object} object wrapping the incremented line and some other informations
      */
     _incrementLines: function (params) {
@@ -985,6 +987,7 @@ var ClientAction = AbstractAction.extend({
                             var res = self._incrementLines({
                                 product: product,
                                 barcode: product_barcode,
+                                product_barcode: product_barcode,
                                 package_id: [packages[0].id, packages[0].display_name],
                                 result_package_id: [packages[0].id, packages[0].display_name],
                                 lot_id: quant.lot_id[0],
@@ -993,9 +996,9 @@ var ClientAction = AbstractAction.extend({
                             self.scannedLines.push(res.lineDescription.virtual_id);
                             if (! self.show_entire_packs) {
                                 if (res.isNewLine) {
-                                    linesActions.push([self.linesWidget.addProduct, [res.lineDescription, self.actionParams.model]]);
+                                    linesActions.push([self.linesWidget.addProduct, [res.lineDescription, self.actionParams.model, true]]);
                                 } else {
-                                    linesActions.push([self.linesWidget.incrementProduct, [res.id || res.virtualId, quant.quantity, self.actionParams.model]]);
+                                    linesActions.push([self.linesWidget.incrementProduct, [res.id || res.virtualId, quant.quantity, self.actionParams.model, true]]);
                                 }
                             }
                         });
