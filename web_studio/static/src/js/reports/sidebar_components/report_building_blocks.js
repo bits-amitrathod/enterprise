@@ -493,8 +493,7 @@ var BlockField = AbstractFieldBlock.extend({
         var fieldHTML = $field.prop('outerHTML');
 
         return this._createContent({
-            contentInStructure: '<span><strong>' + values.string + ':</strong><br/></span>' + fieldHTML,
-            content: fieldHTML,
+            content: "<div class='row'><div class='col'>" + fieldHTML + "</div></div>",
         });
     },
 });

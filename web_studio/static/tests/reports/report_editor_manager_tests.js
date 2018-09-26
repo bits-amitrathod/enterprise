@@ -806,6 +806,74 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
+    QUnit.test('drag & drop field block', function (assert) {
+        assert.expect(1);
+        var done = assert.async();
+
+        this.templates.push({
+            key: 'template1',
+            view_id: 55,
+            arch:
+                '<kikou>' +
+                    '<t t-name="template1">' +
+                    '</t>' +
+                '</kikou>',
+        });
+
+        var templateData = {
+            dataOeContext: '{"o": "model.test"}'
+        };
+
+        var rem = studioTestUtils.createReportEditorManager({
+            data: this.data,
+            models: this.models,
+            env: {
+                modelName: 'kikou',
+                ids: [42, 43],
+                currentId: 42,
+            },
+            report: {
+                report_name: 'awesome_report',
+            },
+            reportHTML: studioTestUtils.getReportHTML(this.templates, templateData),
+            reportViews: studioTestUtils.getReportViews(this.templates, templateData),
+            reportMainViewID: 42,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_report_view') {
+                    var operation = _.last(args.operations);
+                    if (!operation) {
+                        // this is to deal with undo operation (which is
+                        // triggered after the first deferred reject)
+                        return $.Deferred().reject();
+                    }
+                    assert.deepEqual(operation.inheritance[0].content, "<div class='row'><div class='col'><span t-field=\"o.child.name\"></span></div></div>",
+                        "the block should be correctly added");
+                    return $.Deferred().reject();
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        rem.editorIframeDef.then(function () {
+            rem.$('.o_web_studio_sidebar .o_web_studio_sidebar_header div[name="new"]').click();
+
+            var $field = rem.$('.o_web_studio_sidebar .o_web_studio_field_type_container:eq(0) .o_web_studio_component:contains(Field):eq(0)');
+            var $target = rem.$('iframe').contents().find('.page');
+
+            // drag and drop a Field component, which should trigger a view edition
+            testUtils.dragAndDrop($field, $target, {position: 'inside'});
+
+            $('.o_web_studio_field_modal .o_field_selector').trigger('focusin');
+            $('.o_web_studio_field_modal .o_field_selector_item[data-name="o"]').trigger('click');
+            $('.o_web_studio_field_modal .o_field_selector_item[data-name="child"]').trigger('click');
+            $('.o_web_studio_field_modal .o_field_selector_item[data-name="name"]').trigger('click');
+            $('.o_web_studio_field_modal .btn-primary').trigger('click');
+
+            rem.destroy();
+            done();
+        });
+    });
+
     QUnit.test('drag & drop field in row', loadIframeCss(function (assert, done) {
         assert.expect(4); // 2 asserts by test
 
