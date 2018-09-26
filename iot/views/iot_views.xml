@@ -24,6 +24,7 @@
                         <group>
                             <field name="identifier" readonly="True"/>
                             <field name="ip"/>
+                            <field name="ip_url" widget="url"/>
                             <field name="screen_url"/>
                         </group>
                     </group>
@@ -32,8 +33,9 @@
                             <field name="device_ids">
                                 <tree>
                                     <field name="name"/>
-                                    <field name="type"/>
                                     <field name="identifier"/>
+                                    <field name="type"/>
+                                    <field name="connection"/>
                                 </tree>
                             </field>
                         </page>
@@ -46,14 +48,15 @@
         <field name="name">iot.box.view.kanban</field>
         <field name="model">iot.box</field>
         <field name="arch" type="xml">
-            <kanban create="false">
+            <kanban create="false" js_class="box_kanban_view">
                 <field name="name"/>
                 <field name="identifier"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click">
-                            <div class="o_kanban_record_top mb0">
-                                <strong class="o_kanban_record_title"><field name="name"/></strong>
+                        <div class="oe_kanban_global_click p-0">
+                            <div class="col-9 p-2 border-left">
+                                <div class="text-truncate font-weight-bold" t-att-title="record.name.raw_value"><field name="name"/></div>
+                                <div class="text-truncate"><field name="identifier"/></div>
                             </div>
                         </div>
                     </t>
@@ -65,16 +68,25 @@
         <field name="name">iot.box.view.list</field>
         <field name="model">iot.box</field>
         <field name="arch" type="xml">
-            <tree create="false">
+            <tree create="false" js_class="box_list_view">
                 <field name="name"/>
                 <field name="identifier"/>
             </tree>
         </field>
     </record>
     <record id="iot_box_action" model="ir.actions.act_window">
-        <field name="name">Iot Boxes</field>
+        <field name="name">IoT Boxes</field>
         <field name="res_model">iot.box</field>
         <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No IoT Box found !
+            </p><p>
+                Click on the 
+                <a name="%(iot.action_add_iot_box)d" type="action" tabindex="-1">connect</a>
+                 to add an IoT Box.
+            </p>
+        </field>
     </record>
 
     <!-- IoT Devices -->
@@ -99,7 +111,7 @@
                     </group>
                     <notebook>
                         <page string="Printer Reports" name="reports" attrs="{'invisible': [('type', '!=', 'printer')]}">
-                            <field name="report_ids" widget="many2many"/>
+                            <field name="report_ids" widget="many2many" context="{'tree_view_ref': 'iot.act_report_xml_view_tree_iot'}"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -110,16 +122,26 @@
         <field name="name">iot.device.view.kanban</field>
         <field name="model">iot.device</field>
         <field name="arch" type="xml">
-            <kanban create="false">
+            <kanban create="false" group_create="false">
                 <field name="name"/>
-                <field name="identifier"/>
+                <field name="type"/>
+                <field name="connection"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click">
-                            <div class="o_kanban_record_top mb0">
-                                <strong class="o_kanban_record_title"><field name="name"/></strong>
+                        <div class="oe_kanban_global_click p-0">
+                            <div class="row no-gutters">
+                                <div class="col-3 p-2 text-center align-self-center">
+                                    <t t-set="types" t-value="{'camera': 'video-camera', 'printer': 'print', 'device': 'wrench'}"/>
+                                    <i t-attf-class="fa fa-#{types[record.type.raw_value]} fa-3x"></i>
+                                </div>
+                                <div class="col-9 p-2 border-left">
+                                    <div class="text-truncate font-weight-bold" t-att-title="record.name.raw_value"><field name="name"/></div>
+                                    <div class="text-truncate"><field name="identifier"/></div>
+                                    <span class="text-muted font-italic text-truncate"><field name="iot_id"/></span>
+                                    <t t-set="connections" t-value="{'network': 'wifi', 'direct': 'usb', 'bluetooth': 'bluetooth-b'}"/>
+                                    <span class="float-right" t-att-title="record.connection.raw_value"><i t-attf-class="fa fa-#{connections[record.connection.raw_value]}"></i></span>
+                                </div>
                             </div>
-                            <field name="iot_id"/>
                         </div>
                     </t>
                 </templates>
@@ -144,6 +166,7 @@
             <search string="IoT Device">
                 <group expand="0" string="Group By">
                     <filter name="group_by_type" string="Device type" context="{'group_by': 'type'}"/>
+                    <filter name="group_by_iot_id" string="IoT Box" context="{'group_by':'iot_id'}"/>
                 </group>
             </search>
         </field>
@@ -152,16 +175,21 @@
         <field name="name">Devices</field>
         <field name="res_model">iot.device</field>
         <field name="view_mode">kanban,list,form</field>
-        <field name="context">{'search_default_group_by_type': 1}</field>
+        <field name="context">{'search_default_group_by_iot_id': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                There is no device connected to your IoT boxes
+            </p>
+        </field>
     </record>
-    <menuitem
-        id="iot_device_menu_action"
-        action="iot_device_action"
-        parent="iot_menu_root"
-        sequence="1"/>
     <menuitem
         id="iot_box_menu_action"
         action="iot_box_action"
+        parent="iot_menu_root"
+        sequence="1"/>
+    <menuitem
+        id="iot_device_menu_action"
+        action="iot_device_action"
         parent="iot_menu_root"
         sequence="2"/>
 
@@ -177,11 +205,25 @@
          </field>
     </record>
 
+    <record id="act_report_xml_view_tree_iot" model="ir.ui.view">
+        <field name="name">ir.actions.report.tree.iot</field>
+        <field name="model">ir.actions.report</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <tree string="Report xml">
+                <field name="name"/>
+                <field name="model"/>
+                <field name="report_type"/>
+            </tree>
+        </field>
+    </record>
+
     <!-- JS assets -->
     <template id="assets_backend" inherit_id="web.assets_backend" name="IoT assets">
         <xpath expr="." position="inside">
             <link rel="stylesheet" href="/iot/static/src/css/iot.css"/>
             <script type="text/javascript" src="/iot/static/src/js/iot.js"></script>
+            <script type="text/javascript" src="/iot/static/src/js/iot_wizard.js"></script>
         </xpath>
     </template>
 
