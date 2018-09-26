@@ -2151,6 +2151,62 @@ tour.register('test_pack_multiple_scan', {test: true}, [
     },
 ]);
 
+tour.register('test_pack_common_content_scan', {test: true}, [
+    /* Scan 2 packages PACK1 and PACK2 that contains both product1 and
+     * product 2. It also scan a single product1 before scanning both pacakges.
+     * the purpose is to check that lines with a same product are not merged
+     * together. For product 1, we should have 3 lines. One with PACK 1, one
+     * with PACK2 and the last without package.
+     */
+    {
+        trigger: '.o_stock_barcode_main_menu:contains("Barcode Scanning")',
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: 'scan WH-DELIVERY',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan product1',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan PACK1',
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan PACK2',
+    },
+
+    {
+        trigger: '.o_barcode_client_action:contains("PACK2")',
+        run: function () {
+            assertLinesCount(5);
+        },
+    },
+
+    {
+        trigger: '.o_barcode_client_action',
+        run: 'scan O-BTN.validate',
+    },
+
+    {
+        trigger: '.o_notification_title:contains("Success")'
+    },
+
+    {
+        trigger: '.o_stock_barcode_main_menu',
+        run: function () {
+            assertErrorMessage('The transfer has been validated');
+        },
+    },
+]);
+
+
 tour.register('test_pack_multiple_location', {test: true}, [
 
     {

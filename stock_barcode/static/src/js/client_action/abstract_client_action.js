@@ -618,6 +618,7 @@ var ClientAction = AbstractAction.extend({
         var product = params.product;
         var lotId = params.lot_id;
         var lotName = params.lot_name;
+        var packageId = params.package_id;
         var currentPage = this.pages[this.currentPageIndex];
         var res = false;
         for (var z = 0; z < currentPage.lines.length; z++) {
@@ -629,7 +630,8 @@ var ClientAction = AbstractAction.extend({
                      ! lineInCurrentPage.qty_done &&
                      ! lineInCurrentPage.product_uom_qty &&
                      ! lineInCurrentPage.lot_id &&
-                     !lineInCurrentPage.lot_name
+                     ! lineInCurrentPage.lot_name &&
+                     ! lineInCurrentPage.package_id
                     ) ||
                     (this.actionParams.model === 'stock.inventory' &&
                      ! lineInCurrentPage.product_qty &&
@@ -671,6 +673,12 @@ var ClientAction = AbstractAction.extend({
                 if (lotName &&
                     lineInCurrentPage.lot_name &&
                     lineInCurrentPage.lot_name !== lotName
+                    ) {
+                    continue;
+                }
+                if (packageId &&
+                    (! lineInCurrentPage.package_id ||
+                    lineInCurrentPage.package_id.id !== packageId[0])
                     ) {
                     continue;
                 }
@@ -936,7 +944,7 @@ var ClientAction = AbstractAction.extend({
             for (var i=0; i < currentPage.lines.length; i++) {
                 var currentLine = currentPage.lines[i];
                 // FIXME sle: float_compare?
-                if (currentLine.package_id[0] === package_id && currentLine.qty_done > 0) {
+                if (currentLine.package_id && currentLine.package_id[0] === package_id && currentLine.qty_done > 0) {
                     currentNumberOfLines += 1;
                 }
             }

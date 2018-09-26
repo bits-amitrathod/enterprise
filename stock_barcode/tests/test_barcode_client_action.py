@@ -701,6 +701,60 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         ])
         self.assertEqual(package.location_id, self.customer_location)
 
+    def test_pack_common_content_scan(self):
+        """ Simulate a picking where 2 packages have the same products
+        inside. It should display one barcode line for each package and
+        not a common barcode line for both packages.
+        """
+        clean_access_rights(self.env)
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+
+        # Create a pack and 2 quants in this pack
+        pack1 = self.env['stock.quant.package'].create({
+            'name': 'PACK1',
+        })
+        pack2 = self.env['stock.quant.package'].create({
+            'name': 'PACK2',
+        })
+
+        self.env['stock.quant']._update_available_quantity(
+            product_id=self.product1,
+            location_id=self.stock_location,
+            quantity=5,
+            package_id=pack1,
+        )
+        self.env['stock.quant']._update_available_quantity(
+            product_id=self.product2,
+            location_id=self.stock_location,
+            quantity=1,
+            package_id=pack1,
+        )
+
+        self.env['stock.quant']._update_available_quantity(
+            product_id=self.product1,
+            location_id=self.stock_location,
+            quantity=5,
+            package_id=pack2,
+        )
+        self.env['stock.quant']._update_available_quantity(
+            product_id=self.product2,
+            location_id=self.stock_location,
+            quantity=1,
+            package_id=pack2,
+        )
+
+        self.phantom_js(
+            url,
+            "odoo.__DEBUG__.services['web_tour.tour'].run('test_pack_common_content_scan')",
+            "odoo.__DEBUG__.services['web_tour.tour'].tours.test_pack_common_content_scan.ready",
+            login='admin',
+            timeout=180,
+        )
+
     def test_pack_multiple_location(self):
         """ Simulate a picking where a package is scanned two times.
         The client action should trigger a warning
