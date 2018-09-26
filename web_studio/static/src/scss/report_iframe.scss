@@ -11,6 +11,15 @@ div.page {
     position: relative;
 }
 
+// TODO: to be removed when the crap done in web_editor.common.scss will be
+// removed ; these rules are here to reverse them
+#wrapwrap table.table.table-bordered {
+    table-layout: auto;
+    td {
+        min-width: auto;
+    }
+}
+
 .o_no_content_helper {
     border: 2px dashed gray('400');
     margin-top: 10px;
