@@ -14,10 +14,11 @@ class ResConfigSettings(models.TransientModel):
         return False
 
     dms_product_settings = fields.Boolean(related='company_id.dms_product_settings',
-                                      default=lambda self: self.env.user.company_id.dms_product_settings)
+                                          default=lambda self: self.env.user.company_id.dms_product_settings,
+                                          string="Product Folder")
     product_folder = fields.Many2one('documents.folder', related='company_id.product_folder',
-                                 default=_get_default_product_folder,
-                                 string="Product Folder")
+                                     default=_get_default_product_folder,
+                                     string="product default folder")
     product_tags = fields.Many2many('documents.tag', 'product_tags_table', related='company_id.product_tags',
-                                default=lambda self: self.env.user.company_id.product_tags.ids,
-                                string="Product Tags")
+                                    default=lambda self: self.env.user.company_id.product_tags.ids,
+                                    string="Product Tags")

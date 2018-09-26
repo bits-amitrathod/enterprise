@@ -14,10 +14,11 @@ class ResConfigSettings(models.TransientModel):
         return False
 
     dms_project_settings = fields.Boolean(related='company_id.dms_project_settings',
-                                          default=lambda self: self.env.user.company_id.dms_project_settings)
+                                          default=lambda self: self.env.user.company_id.dms_project_settings,
+                                          string="Project Folder")
     project_folder = fields.Many2one('documents.folder', related='company_id.project_folder',
                                      default=_get_default_project_folder,
-                                     string="Project Folder")
+                                     string="project default folder")
     project_tags = fields.Many2many('documents.tag', 'project_tags_table', related='company_id.project_tags',
                                     default=lambda self: self.env.user.company_id.project_tags.ids,
                                     string="Project Tags")

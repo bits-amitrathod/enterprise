@@ -14,10 +14,11 @@ class ResConfigSettings(models.TransientModel):
         return False
 
     dms_account_settings = fields.Boolean(related='company_id.dms_account_settings',
-                                          default=lambda self: self.env.user.company_id.dms_account_settings)
+                                          default=lambda self: self.env.user.company_id.dms_account_settings,
+                                          string="Account Folder")
     account_folder = fields.Many2one('documents.folder', related='company_id.account_folder',
                                      default=_get_default_account_folder,
-                                     string="Account Folder")
+                                     string="account default folder")
     account_tags = fields.Many2many('documents.tag', 'account_tags_table', related='company_id.account_tags',
                                     default=lambda self: self.env.user.company_id.account_tags.ids,
                                     string="Account Tags")
