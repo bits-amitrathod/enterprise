@@ -227,7 +227,7 @@ class ReportAccountFinancialReport(models.Model):
                 }
                 action_xmlid = "%s.%s" % (module, 'account_financial_html_report_action_' + str(report.id))
                 data = dict(xml_id=action_xmlid, values=action_vals, noupdate=True)
-                action = self.env['ir.actions.client']._load_records([data])
+                action = self.env['ir.actions.client'].sudo()._load_records([data])
 
                 menu_vals = {
                     'name': report._get_report_name(),
@@ -236,7 +236,7 @@ class ReportAccountFinancialReport(models.Model):
                 }
                 menu_xmlid = "%s.%s" % (module, 'account_financial_html_report_menu_' + str(report.id))
                 data = dict(xml_id=menu_xmlid, values=menu_vals, noupdate=True)
-                menu = self.env['ir.ui.menu']._load_records([data])
+                menu = self.env['ir.ui.menu'].sudo()._load_records([data])
 
                 self.write({'generated_menu_id': menu.id})
 
