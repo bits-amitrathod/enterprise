@@ -266,7 +266,7 @@ var DocumentsKanbanModel = KanbanModel.extend({
             method: 'group_by_documents',
             kwargs: {
                 folder_id: params.folderID,
-                domain: this._addFolderToDomain(params.searchDomain, params.folderID),
+                domain: this._addFolderToDomain(params.domain, params.folderID),
             },
         });
     },
