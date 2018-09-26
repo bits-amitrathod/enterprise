@@ -295,7 +295,6 @@
                     </div>
                     <group>
                         <group>
-                            <field name="description" widget="html"/>
                             <field name="parent_folder_id"/>
                             <field name="company_id"/>
                             <field name="group_ids" widget="many2many_tags"/>
@@ -308,6 +307,8 @@
                                 </tree>
                             </field>
                         </group>
+                        <label for="description"/>
+                        <field name="description" widget="html"/>
                     </group>
                 </sheet>
             </form>
