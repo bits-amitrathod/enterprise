@@ -72,7 +72,7 @@ QUnit.module('Studio', {}, function () {
         });
 
         QUnit.test("'Report' tab behaviour", function (assert) {
-            assert.expect(5);
+            assert.expect(6);
 
             var sidebar = studioTestUtils.createSidebar({
                 data: this.data,
@@ -90,8 +90,8 @@ QUnit.module('Studio', {}, function () {
             testUtils.intercept(sidebar, 'studio_edit_report', function (ev) {
                 if (ev.data.name) {
                     assert.deepEqual(ev.data, { name: "wow_report" });
-                } else if (ev.data.paperformat_id) {
-                    assert.deepEqual(ev.data, { paperformat_id: 42 });
+                } else if ('paperformat_id' in ev.data) {
+                    paperformatValues.push(ev.data);
                 } else if (ev.data.groups_id) {
                     assert.deepEqual(ev.data, { groups_id: [7] });
                 }
@@ -100,9 +100,15 @@ QUnit.module('Studio', {}, function () {
             sidebar.$('input[name="name"]').val("wow_report").trigger('change');
 
             // edit the report paperformat
+            var paperformatValues = [];
             var $dropdown1 = sidebar.$('[name="paperformat_id"] input').autocomplete('widget');
             sidebar.$('[name="paperformat_id"] input').click();
             $dropdown1.find('li:contains(My Awesome Format)').mouseenter().click();
+            assert.deepEqual(paperformatValues, [{ paperformat_id: 42 }]);
+
+            // remove the report paperformat
+            sidebar.$('[name="paperformat_id"] input').val('').trigger('keyup').trigger('focusout');
+            assert.deepEqual(paperformatValues, [{ paperformat_id: 42 }, { paperformat_id: false }]);
 
             // edit groups
             var $dropdown2 = sidebar.$('[name="groups_id"] input').autocomplete('widget');

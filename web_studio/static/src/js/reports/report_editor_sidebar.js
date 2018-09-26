@@ -516,7 +516,8 @@ var ReportEditorSidebar = Widget.extend(StandaloneFieldManagerMixin, {
             record = this.model.get(this.groupsHandle);
             newAttrs[fieldName] = record.data.groups_id.res_ids;
         } else if (fieldName === 'paperformat_id') {
-            newAttrs[fieldName] = this.paperformatMany2one.value.res_id;
+            record = this.model.get(this.paperformatHandle);
+            newAttrs[fieldName] = record.data.paperformat_id && record.data.paperformat_id.res_id;
         }
         this.trigger_up('studio_edit_report', newAttrs);
     },
