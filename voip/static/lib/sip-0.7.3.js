@@ -11576,7 +11576,14 @@ MediaStreamManager.render = function render (streams, elements) {
   function attachMediaStream(element, stream) {
     if (typeof element.src !== 'undefined') {
       environment.revokeObjectURL(element.src);
-      element.src = environment.createObjectURL(stream);
+      // START ODOO FIX
+      // createObjectURL no longer accepts MediaStream as argument
+      // See:
+      // - https://www.fxsitecompat.com/en-CA/docs/2018/url-createobjecturl-no-longer-accepts-mediastream-as-argument/
+      // - https://www.chromestatus.com/features/5618491470118912
+      //element.src = environment.createObjectURL(stream);
+      element.srcObject = stream;
+      // END ODOO FIX
     } else if (typeof (element.srcObject || element.mozSrcObject) !== 'undefined') {
       element.srcObject = element.mozSrcObject = stream;
     } else {
