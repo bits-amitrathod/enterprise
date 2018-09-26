@@ -100,14 +100,14 @@ class AccountInvoice(models.Model):
         the res_config is on "auto_send" and if this is the first attachment."""
         res = super(AccountInvoice, self).message_post(**kwargs)
         if self.env.user.company_id.extract_show_ocr_option_selection == 'auto_send':
+            account_token = self.env['iap.account'].get('invoice_ocr')
             for record in self:
                 if record.type in ["out_invoice", "out_refund"]:
                     return super(AccountInvoice, self).message_post(**kwargs)
-                if record.message_main_attachment_id == None:
+                if record.extract_state == "no_extract_requested":
                     if "attachment_ids" in kwargs:
                         attachments = self.env["ir.attachment"].search([("id", "in", kwargs["attachment_ids"])])
                         if attachments.exists():
-                            account_token = self.env['iap.account'].get('invoice_ocr')
                             endpoint = self.env['ir.config_parameter'].sudo().get_param(
                                 'account_invoice_extract_endpoint', 'https://iap-extract.odoo.com') + '/iap/invoice_extract/parse'
                             params = {

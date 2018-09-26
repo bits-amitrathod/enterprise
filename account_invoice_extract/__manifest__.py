@@ -13,4 +13,5 @@
         'data/extraction_status.xml',
         'data/res_config_settings_views.xml',
     ],
+    'auto-install': True,
 }
