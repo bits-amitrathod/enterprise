@@ -225,7 +225,7 @@ class AccountInvoice(models.Model):
                 try:
                     _logger.warning(params) #TODO remove
                     result = jsonrpc(endpoint, params=params)
-                    record.extract_state = 'completed_flow'
+                    record.extract_state = 'done'
                 except AccessError:
                     pass
         #we don't need word data anymore, we can delete them
