@@ -112,6 +112,7 @@ class IrAttachment(models.Model):
             'datas_fname': "Mail: %s.txt" % subject,
             'mimetype': 'text/plain',
             'datas': base64.b64encode(bytes(body, 'utf-8')),
+            'active': False,
         }
         defaults.update(custom_values)
 
@@ -119,7 +120,8 @@ class IrAttachment(models.Model):
         alias = email_from[:email_from.find('@')]
         share = self.env['documents.share'].search([('alias_name', '=', alias)])
         return super(IrAttachment, self).message_new(msg_dict, defaults).with_context(attachment_values=custom_values,
-                                                                                      share=share)
+                                                                                      share=share,
+                                                                                      res_mail_dict=msg_dict)
 
     @api.model
     def _message_post_process_attachments(self, attachments, attachment_ids, message_data):
@@ -131,6 +133,7 @@ class IrAttachment(models.Model):
         """
         rv = super(IrAttachment, self)._message_post_process_attachments(attachments, attachment_ids, message_data)
         dv = self._context.get('attachment_values')
+        res_mail_dict = self._context.get('res_mail_dict')
         share = self._context.get('share')
         if message_data['model'] == 'ir.attachment' and dv:
             write_vals = {
@@ -143,6 +146,7 @@ class IrAttachment(models.Model):
             attachments = self.env['ir.attachment'].browse([x[1] for x in rv])
             for attachment in attachments:
                 attachment.write(write_vals)
+                attachment.message_post(body=res_mail_dict.get('body', ''), subject=res_mail_dict.get('subject', ''))
                 if share.activity_option:
                     attachment.documents_set_activity(settings_model=share)
 

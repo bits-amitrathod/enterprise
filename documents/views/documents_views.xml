@@ -24,6 +24,7 @@
             <xpath expr="//search" position="inside">
                 <field name="datas_fname"/>
                 <field name="tag_ids"/>
+                <field name="index_content"/>
                 <field name="owner_id"/>
                 <field name="partner_id" string="Contact"/>
                 <separator/>
@@ -54,6 +55,9 @@
                 <filter name="my_locked_filter" string="My locked files" domain="[('lock_uid', '=', uid)]"/>
                 <filter name="all_locked_filter" string="All locked files" domain="[('lock_uid', '!=', False)]"/>
                 <separator/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">Document</attribute>
             </xpath>
         </field>
     </record>

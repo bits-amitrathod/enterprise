@@ -653,7 +653,7 @@ QUnit.module('DocumentsKanbanView', {
                 '</t></templates></kanban>',
         });
         assert.strictEqual(kanban.$('.o_documents_inspector_preview').text().replace(/\s+/g, ''),
-            'Folder1:_F1-test-description_', "should display the current folder description");
+            '_F1-test-description_', "should display the current folder description");
         assert.strictEqual(kanban.$('.o_documents_inspector_info .o_inspector_value:first').text().trim(),
             '5', "should display the correct number of documents");
         assert.strictEqual(kanban.$('.o_documents_inspector_info .o_inspector_value:nth(1)').text().trim(),
@@ -2053,8 +2053,8 @@ QUnit.module('DocumentsKanbanView', {
             "should have 3 folders");
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_folder:visible').length, 2,
             "two of them should be visible");
-        assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_folder .active').text().trim(),
-            'Folder1', "'Folder1' should be active by default");
+        assert.strictEqual(kanban.$('.o_documents_inspector_preview').text().replace(/\s+/g, ''),
+            '_F1-test-description_', "should display the first folder");
 
         assert.strictEqual(kanban.$('.o_documents_selector .o_documents_selector_tags .o_documents_selector_header').text().trim(),
             'Tags', "should have a 'tags' section");
