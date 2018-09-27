@@ -37,3 +37,7 @@ class GattSylvacBtDriver(gatt.Device):
 
     def characteristic_enable_notification_failed(self):
         print("Problem connecting")
+
+    def disconnect_succeeded(self):
+        super().disconnect_succeeded()
+        self.btdriver.disconnect()
