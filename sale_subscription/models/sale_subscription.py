@@ -47,14 +47,14 @@ class SaleSubscription(models.Model):
     recurring_monthly = fields.Float(compute='_compute_recurring_monthly', string="Monthly Recurring Revenue", store=True)
     close_reason_id = fields.Many2one("sale.subscription.close.reason", string="Close Reason", track_visibility='onchange')
     template_id = fields.Many2one('sale.subscription.template', string='Subscription Template', required=True, track_visibility='onchange')
-    payment_mode = fields.Selection(related='template_id.payment_mode')
+    payment_mode = fields.Selection(related='template_id.payment_mode', readonly=False)
     description = fields.Text()
     user_id = fields.Many2one('res.users', string='Salesperson', track_visibility='onchange', default=lambda self: self.env.user)
     team_id = fields.Many2one('crm.team', 'Sales Team', change_default=True, default=False)
-    team_user_id = fields.Many2one('res.users', string="Team Leader", related="team_id.user_id")
+    team_user_id = fields.Many2one('res.users', string="Team Leader", related="team_id.user_id", readonly=False)
     invoice_count = fields.Integer(compute='_compute_invoice_count')
-    country_id = fields.Many2one('res.country', related='partner_id.country_id', store=True)
-    industry_id = fields.Many2one('res.partner.industry', related='partner_id.industry_id', store=True)
+    country_id = fields.Many2one('res.country', related='partner_id.country_id', store=True, readonly=False)
+    industry_id = fields.Many2one('res.partner.industry', related='partner_id.industry_id', store=True, readonly=False)
     sale_order_count = fields.Integer(compute='_compute_sale_order_count')
     # customer portal
     uuid = fields.Char('Account UUID', default=lambda self: str(uuid4()), copy=False, required=True)
@@ -63,7 +63,7 @@ class SaleSubscription(models.Model):
     # add tax calculation
     recurring_amount_tax = fields.Float('Taxes', compute="_amount_all")
     recurring_amount_total = fields.Float('Total', compute="_amount_all")
-    recurring_rule_boundary = fields.Selection(related="template_id.recurring_rule_boundary")
+    recurring_rule_boundary = fields.Selection(related="template_id.recurring_rule_boundary", readonly=False)
     starred_user_ids = fields.Many2many(
         'res.users', 'subscription_starred_user_rel', 'subscription_id', 'user_id',
         default=lambda s: s._get_default_starred_user_ids(),
@@ -81,7 +81,7 @@ class SaleSubscription(models.Model):
         ('normal', 'Neutral'),
         ('done', 'Good'),
         ('bad', 'Bad')], string="Health", copy=False, default='normal', translate=True, help="Set a health status")
-    in_progress = fields.Boolean(related='stage_id.in_progress')
+    in_progress = fields.Boolean(related='stage_id.in_progress', readonly=False)
     to_renew = fields.Boolean(string='To Renew', default=False, copy=False)
 
     _sql_constraints = [

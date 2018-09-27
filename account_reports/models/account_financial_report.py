@@ -32,7 +32,7 @@ class ReportAccountFinancialReport(models.Model):
         string='Menu Item', comodel_name='ir.ui.menu', copy=False,
         help="The menu item generated for this report, or None if there isn't any."
     )
-    parent_id = fields.Many2one('ir.ui.menu', related="generated_menu_id.parent_id")
+    parent_id = fields.Many2one('ir.ui.menu', related="generated_menu_id.parent_id", readonly=False)
     tax_report = fields.Boolean('Tax Report', help="Set to True to automatically filter out journal items that have the boolean field 'tax_exigible' set to False")
     applicable_filters_ids = fields.Many2many('ir.filters', domain="[('model_id', '=', 'account.move.line')]",
                                               help='Filters that can be used to filter and group lines in this report.')

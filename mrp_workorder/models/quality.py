@@ -33,9 +33,9 @@ class MrpRouting(models.Model):
 class QualityPoint(models.Model):
     _inherit = "quality.point"
 
-    code = fields.Selection(related='picking_type_id.code')  # TDE FIXME: necessary ?
+    code = fields.Selection(related='picking_type_id.code', readonly=False)  # TDE FIXME: necessary ?
     operation_id = fields.Many2one('mrp.routing.workcenter', 'Step')
-    routing_id = fields.Many2one(related='operation_id.routing_id')
+    routing_id = fields.Many2one(related='operation_id.routing_id', readonly=False)
     test_type_id = fields.Many2one(domain="[('allow_registration', '=', operation_id and code == 'mrp_operation')]")
     worksheet = fields.Selection([
         ('noupdate', 'Do not update page'),

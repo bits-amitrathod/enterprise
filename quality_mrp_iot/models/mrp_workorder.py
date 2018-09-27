@@ -9,8 +9,8 @@ import json
 class MrpProductionWorkcenterLine(models.Model):
     _inherit = "mrp.workorder"
 
-    ip = fields.Char(related='current_quality_check_id.point_id.device_id.iot_id.ip')
-    identifier = fields.Char(related='current_quality_check_id.point_id.device_id.identifier')
+    ip = fields.Char(related='current_quality_check_id.point_id.device_id.iot_id.ip', readonly=False)
+    identifier = fields.Char(related='current_quality_check_id.point_id.device_id.identifier', readonly=False)
     boxes = fields.Char(compute='_compute_boxes')
     device_name = fields.Char(related='current_quality_check_id.point_id.device_id.name', size=30, string='Device Name: ')
 

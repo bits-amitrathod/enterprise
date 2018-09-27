@@ -24,7 +24,7 @@ class Tags(models.Model):
     _description = "Tag"
     _order = "sequence, name"
 
-    folder_id = fields.Many2one('documents.folder', related='facet_id.folder_id', store=True)
+    folder_id = fields.Many2one('documents.folder', related='facet_id.folder_id', store=True, readonly=False)
     facet_id = fields.Many2one('documents.facet', ondelete='cascade', required=True)
     name = fields.Char(required=True)
     sequence = fields.Integer('Sequence', default=10)

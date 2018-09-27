@@ -327,8 +327,8 @@ class AccountJournal(models.Model):
 
     next_synchronization = fields.Datetime("Next synchronization", compute='_compute_next_synchronization')
     account_online_journal_id = fields.Many2one('account.online.journal', string='Online Account')
-    account_online_provider_id = fields.Many2one('account.online.provider', related='account_online_journal_id.account_online_provider_id')
-    synchronization_status = fields.Char(related='account_online_provider_id.status')
+    account_online_provider_id = fields.Many2one('account.online.provider', related='account_online_journal_id.account_online_provider_id', readonly=False)
+    synchronization_status = fields.Char(related='account_online_provider_id.status', readonly=False)
     bank_statement_creation = fields.Selection(selection=get_statement_creation_possible_values,
                                                help="""Defines when a new bank statement
                                                will be created when fetching new transactions

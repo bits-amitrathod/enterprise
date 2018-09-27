@@ -444,7 +444,7 @@ class SignRequestItem(models.Model):
 
     access_token = fields.Char('Security Token', required=True, default=_default_access_token, readonly=True)
     role_id = fields.Many2one('sign.item.role', string="Role")
-    sms_number = fields.Char(related='partner_id.mobile')
+    sms_number = fields.Char(related='partner_id.mobile', readonly=False)
     sms_token = fields.Char('SMS Token', readonly=True)
 
     signature = fields.Binary(attachment=True)
@@ -455,7 +455,7 @@ class SignRequestItem(models.Model):
         ("completed", "Completed")
     ], readonly=True, default="draft")
 
-    signer_email = fields.Char(related='partner_id.email')
+    signer_email = fields.Char(related='partner_id.email', readonly=False)
 
     latitude = fields.Float(digits=(10, 7))
     longitude = fields.Float(digits=(10, 7))

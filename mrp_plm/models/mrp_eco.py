@@ -67,17 +67,17 @@ class MrpEcoApproval(models.Model):
     approval_template_id = fields.Many2one(
         'mrp.eco.approval.template', 'Template',
         ondelete='cascade', required=True)
-    name = fields.Char('Role', related='approval_template_id.name', store=True)
+    name = fields.Char('Role', related='approval_template_id.name', store=True, readonly=False)
     user_id = fields.Many2one(
         'res.users', 'Approved by')
     required_user_ids = fields.Many2many(
-        'res.users', string='Requested Users', related='approval_template_id.user_ids')
+        'res.users', string='Requested Users', related='approval_template_id.user_ids', readonly=False)
     template_stage_id = fields.Many2one(
         'mrp.eco.stage', 'Approval Stage',
-        related='approval_template_id.stage_id', store=True)
+        related='approval_template_id.stage_id', store=True, readonly=False)
     eco_stage_id = fields.Many2one(
         'mrp.eco.stage', 'ECO Stage',
-        related='eco_id.stage_id', store=True)
+        related='eco_id.stage_id', store=True, readonly=False)
     status = fields.Selection([
         ('none', 'Not Yet'),
         ('comment', 'Commented'),
@@ -208,12 +208,12 @@ class MrpEco(models.Model):
     new_bom_id = fields.Many2one(
         'mrp.bom', 'New Bill of Materials',
         copy=False)
-    new_bom_revision = fields.Integer('BoM Revision', related='new_bom_id.version', store=True)
+    new_bom_revision = fields.Integer('BoM Revision', related='new_bom_id.version', store=True, readonly=False)
     routing_id = fields.Many2one('mrp.routing', "Routing")
     new_routing_id = fields.Many2one(
         'mrp.routing', 'New Routing',
         copy=False)
-    new_routing_revision = fields.Integer('Routing Revision', related='new_routing_id.version', store=True)
+    new_routing_revision = fields.Integer('Routing Revision', related='new_routing_id.version', store=True, readonly=False)
     bom_change_ids = fields.One2many(
         'mrp.eco.bom.change', 'eco_id', string="ECO BoM Changes",
         compute='_compute_bom_change_ids', help='Difference between old BoM and new BoM revision', store=True)
@@ -228,7 +228,7 @@ class MrpEco(models.Model):
     displayed_image_id = fields.Many2one(
         'mrp.document', 'Displayed Image',
         domain="[('res_model', '=', 'mrp.eco'), ('res_id', '=', id), ('mimetype', 'ilike', 'image')]")
-    displayed_image_attachment_id = fields.Many2one('ir.attachment', related='displayed_image_id.ir_attachment_id')
+    displayed_image_attachment_id = fields.Many2one('ir.attachment', related='displayed_image_id.ir_attachment_id', readonly=False)
     color = fields.Integer('Color')
     active = fields.Boolean('Active', default=True, help="If the active field is set to False, it will allow you to hide the engineering change order without removing it.")
     current_bom_id = fields.Many2one('mrp.bom', string="New Bom")

@@ -14,7 +14,7 @@ class SaleForecast(models.Model):
 
     date = fields.Date('Date', required=True)
     product_id = fields.Many2one('product.product', string='Product', required=True)
-    product_uom_id = fields.Many2one('uom.uom', string='Product UoM', related='product_id.uom_id')
+    product_uom_id = fields.Many2one('uom.uom', string='Product UoM', related='product_id.uom_id', readonly=False)
     forecast_qty = fields.Float('Demand Forecast')
     to_supply = fields.Float('To Supply', help="If mode is Manual, this is the forced value")
     group_id = fields.Many2one('procurement.group', 'Procurement Group')
