@@ -285,6 +285,14 @@ var DocumentsKanbanController = KanbanController.extend({
         });
     },
     /**
+     * @Override
+     * @private
+     * used to fetch all the necessary data of action rules.
+     */
+    _reloadAfterButtonClick: function () {
+        this.reload();
+    },
+    /**
      * Generic method to remove a filter from selector panel
      *
      * @private
@@ -970,21 +978,6 @@ var DocumentsKanbanController = KanbanController.extend({
             attachment_ids: [[6, 0, ev.data.resIDs]],
             folder_id: this.selectedFolderID,
             type: 'ids',
-        });
-    },
-    /**
-     * @private
-     */
-    _onToggleFavorite: function (ev) {
-        ev.stopPropagation();
-        var self = this;
-        self._rpc({
-            model: 'ir.attachment',
-            method: 'toggle_favorited',
-            args: [ev.data.resID],
-        })
-        .then(function () {
-            self.reload();
         });
     },
     /**
