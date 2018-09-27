@@ -436,7 +436,11 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
                         inviteSession.on('bye',_.bind(self._onBye,self));
                     },
                     cancel_callback: function () {
-                        inviteSession.reject();
+                        try {
+                            inviteSession.reject();
+                        } catch (err) {
+                            console.error('Reject failed:', err);
+                        }
                         self.incomingtone.pause();
                     },
                 };
