@@ -418,6 +418,7 @@ odoo.define('sign.document_signing', function(require) {
     var Widget = require('web.Widget');
     var Document = require('sign.Document');
     var PDFIframe = require('sign.PDFIframe');
+    var rpc = require('web.rpc');
     var session = require('web.session');
     var Tour = require('web_tour.tour');
 
@@ -506,6 +507,7 @@ odoo.define('sign.document_signing', function(require) {
             }
 
             this._super(parent, options);
+            this.options = options || {};
 
             this.signerName = signerName;
 
@@ -547,6 +549,22 @@ odoo.define('sign.document_signing', function(require) {
                     'width': width,
                     'height': height
                 });
+
+                // TDE FIXME: ugly FP-request RPC to dynamically fetch signature instead of
+                // pre-filled sign.request.item
+                if (self.options.signatureType !== undefined) {
+                    rpc.query({
+                        route: '/sign/get_signature/' + self.getParent().getParent().requestID + '/' + self.getParent().getParent().accessToken,
+                        params: {
+                            signature_type: self.options.signatureType,
+                        }
+                    }).then(function (signature) {
+                        if (signature) {
+                            signature = 'data:image/png;base64,' + signature;
+                            self.$signatureField.jSignature("importData", signature);
+                        }
+                    });
+                }
                 self.emptySignature = self.$signatureField.jSignature("getData");
 
                 self.$modeButtons.filter('.btn-primary').click();
@@ -947,7 +965,9 @@ odoo.define('sign.document_signing', function(require) {
                             $signatureItem.html('<span class="o_sign_helper"/><img src="' + $signatureItem.data('signature') + '"/>');
                             $signatureItem.trigger('input');
                         } else {
-                            var signDialog = new SignatureDialog(self, self.getParent().signerName || "");
+                            var signDialog = new SignatureDialog(self, self.getParent().signerName || "", {
+                                signatureType: type['type'],
+                            });
                             signDialog.signatureType = type['type'];
                             signDialog.signatureRatio = parseFloat($signatureItem.css('width'))/parseFloat($signatureItem.css('height'));
 

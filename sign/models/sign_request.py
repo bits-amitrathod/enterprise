@@ -476,23 +476,6 @@ class SignRequestItem(models.Model):
     @api.multi
     def action_sent(self):
         self.write({'state': 'sent'})
-        for request_item in self:
-            items = request_item.sign_request_id.template_id.sign_item_ids.filtered(lambda r: r.responsible_id == request_item.role_id)
-            signature_item = items.filtered(lambda item: item.type_id.type == 'signature')
-            initial_item = items.filtered(lambda item: item.type_id.type == 'initial')
-            user = self.env['res.users'].search([('partner_id', '=', request_item.partner_id.id)], limit=1).sudo()
-            if user and user.sign_signature and signature_item:
-                self.env['sign.item.value'].create({
-                    'sign_item_id': signature_item.id,
-                    'sign_request_id': request_item.sign_request_id.id,
-                    'value': 'data:image/png;base64,' + str(user.sign_signature, 'utf-8'),
-                })
-            if user and user.sign_initials and initial_item:
-                self.env['sign.item.value'].create({
-                    'sign_item_id': initial_item.id,
-                    'sign_request_id': request_item.sign_request_id.id,
-                    'value': 'data:image/png;base64,' + str(user.sign_initials, 'utf-8'),
-                })
         self.mapped('sign_request_id')._check_after_compute()
 
     @api.multi

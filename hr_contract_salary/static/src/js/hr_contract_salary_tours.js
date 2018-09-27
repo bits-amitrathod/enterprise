@@ -302,6 +302,23 @@ Tour.register('hr_contract_salary_tour', {
             trigger: 'iframe input.ui-selected',
             run: 'text 58/4',
         },
+        // fill signature
+        {
+            content: "Next",
+            trigger: 'iframe .o_sign_sign_item_navigator',
+            run: 'click',
+        },
+        {
+            content: "Click Signature",
+            trigger: 'iframe button.o_sign_sign_item',
+            run: 'click',
+        },
+        {
+            content: "Adopt and Sign",
+            trigger: 'footer.modal-footer button.btn-primary',
+            run: 'click',
+        },
+        // fill date
         {
             content: "Next",
             trigger: 'iframe .o_sign_sign_item_navigator',
