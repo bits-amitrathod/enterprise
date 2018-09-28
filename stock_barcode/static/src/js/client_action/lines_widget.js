@@ -45,10 +45,10 @@ var LinesWidget = Widget.extend({
      */
     incrementProduct: function(id_or_virtual_id, qty, model) {
         var $line = this.$("[data-id='" + id_or_virtual_id + "']");
-        this._highlightLine($line);
         var incrementClass = model === 'stock.picking' ? '.qty-done' : '.product_qty';
         var qtyDone = parseInt($line.find(incrementClass).text(), 10);
         $line.find(incrementClass).text(qtyDone + qty);
+        this._highlightLine($line);
 
         this._handleControlButtons();
 
@@ -343,9 +343,12 @@ var LinesWidget = Widget.extend({
         var qties = $line.find('.o_barcode_scanner_qty').text();
         qties = qties.split('/');
         if (parseInt(qties[0], 10) < parseInt(qties[1], 10)) {
-            return false;
+            return -1;
+        } else if (parseInt(qties[0], 10) === parseInt(qties[1], 10)) {
+            return 0;
+        } else {
+            return 1;
         }
-        return true;
     },
 
     /**
@@ -364,10 +367,14 @@ var LinesWidget = Widget.extend({
             $lines.each(function () {
                 var $line = $(this);
                 reservationProcessed = self._isReservationProcessedLine($line);
-                if (!reservationProcessed) {
+                if (reservationProcessed === -1) {
+                    reservationProcessed = false;
                     return;
                 }
             });
+            if (reservationProcessed === 0 || reservationProcessed === 1){
+                reservationProcessed = true;
+            }
             return reservationProcessed;
         }
     },
@@ -441,7 +448,7 @@ var LinesWidget = Widget.extend({
         } else {
             isReservationProcessed = this._isReservationProcessedLine($line);
         }
-        if (isReservationProcessed) {
+        if (isReservationProcessed === 1) {
             $line.toggleClass('o_highlight_green', false);
             $line.toggleClass('o_highlight_red', true);
         } else {
