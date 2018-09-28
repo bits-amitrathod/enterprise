@@ -34,7 +34,7 @@ class MrpProductionWorkcenterLine(models.Model):
     is_last_lot = fields.Boolean('Is Last lot', compute='_compute_is_last_lot')
     lot_id = fields.Many2one(related='current_quality_check_id.lot_id', readonly=False)
     move_line_id = fields.Many2one(related='current_quality_check_id.move_line_id', readonly=False)
-    note = fields.Html(related='current_quality_check_id.note', readonly=False)
+    note = fields.Html(related='current_quality_check_id.note')
     skip_completed_checks = fields.Boolean('Skip Completed Checks', readonly=True)
     quality_state = fields.Selection(related='current_quality_check_id.quality_state', string="Quality State", readonly=False)
     qty_done = fields.Float(related='current_quality_check_id.qty_done', readonly=False)
