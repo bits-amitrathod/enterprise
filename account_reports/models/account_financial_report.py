@@ -298,7 +298,7 @@ class AccountFinancialReportLine(models.Model):
                         FROM account_partial_reconcile part
                         LEFT JOIN account_move_line aml ON aml.id = part.debit_move_id
                         LEFT JOIN account_move_line aml2 ON aml2.id = part.credit_move_id
-                        RIGHT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account FROM account_move_line GROUP BY move_id, account_id) sub ON (aml2.account_id = sub.account_id AND sub.move_id=aml2.move_id)
+                        LEFT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account FROM account_move_line GROUP BY move_id, account_id) sub ON (aml2.account_id = sub.account_id AND sub.move_id=aml2.move_id)
                         LEFT JOIN account_account acc ON aml.account_id = acc.id
                         WHERE part.credit_move_id = aml2.id
                         AND acc.reconcile
@@ -318,7 +318,7 @@ class AccountFinancialReportLine(models.Model):
                         FROM account_partial_reconcile part
                         LEFT JOIN account_move_line aml ON aml.id = part.credit_move_id
                         LEFT JOIN account_move_line aml2 ON aml2.id = part.debit_move_id
-                        RIGHT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account FROM account_move_line GROUP BY move_id, account_id) sub ON (aml2.account_id = sub.account_id AND sub.move_id=aml2.move_id)
+                        LEFT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account FROM account_move_line GROUP BY move_id, account_id) sub ON (aml2.account_id = sub.account_id AND sub.move_id=aml2.move_id)
                         LEFT JOIN account_account acc ON aml.account_id = acc.id
                         WHERE part.debit_move_id = aml2.id
                         AND acc.reconcile
