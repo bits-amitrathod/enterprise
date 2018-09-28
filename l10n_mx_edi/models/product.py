@@ -38,7 +38,7 @@ class ProductSatCode(models.Model):
     This model also is used to define the uom code defined by the SAT
     """
     _name = 'l10n_mx_edi.product.sat.code'
-    _description = __doc__.split('\n')[0]
+    _description = "Product and UOM Codes from SAT Data"
 
     code = fields.Char(
         help='This value is required in CFDI version 3.3 to express the '

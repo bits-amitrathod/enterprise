@@ -18,7 +18,7 @@ class PaymentMethod(models.Model):
     lose odoo's features"""
 
     _name = 'l10n_mx_edi.payment.method'
-    _description = __doc__.split('\n')[0]
+    _description = "Payment Method for Mexico from SAT Data"
 
     name = fields.Char(
         required=True,

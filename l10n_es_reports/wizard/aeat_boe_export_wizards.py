@@ -11,6 +11,7 @@ import re
 
 class AEATBOEExportWizard(models.TransientModel):
     _name = 'l10n_es_reports.aeat.boe.export.wizard'
+    _description = "BOE Export Wizard"
 
     def download_boe_action(self):
         # We add the generation context to the options, as it is not passed
@@ -116,6 +117,7 @@ class Mod347BOEWizard(models.TransientModel):
 
 class Mod347BOEManuaPartnerData(models.TransientModel):
     _name = 'l10n_es_reports.aeat.mod347.manual.partner.data'
+    _description = "Manually Entered Data for Mod 347 Report"
 
     parent_wizard_id = fields.Many2one(comodel_name='l10n_es_reports.aeat.boe.mod347.export.wizard')
     partner_id = fields.Many2one(comodel_name='res.partner', string='Partner', required=True)
