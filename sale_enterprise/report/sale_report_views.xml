@@ -24,15 +24,18 @@
                     <view type="graph" ref="sale.view_order_product_graph"/>
                     <group>
                         <group>
-                            <aggregate name="price_subtotal_confirmed_orders" field="price_total" string="Total Sales" help="Total, Tax Included" widget="monetary"/>
+                            <aggregate name="price_subtotal_confirmed_orders" string="Total Sales" field="price_total" help="Total, Tax Included" widget="monetary"/>
+                            <aggregate name="price_subtotal_all_orders" string="Untaxed Total" field="price_subtotal" widget="monetary"/>
                             <aggregate name="order_id_confirmed_orders" field="order_id" string="Orders"/>
-                            <aggregate name="price_subtotal_all_orders" field="price_subtotal" invisible="1"/>
                             <formula name="total" string="Average Order" value="record.price_subtotal_confirmed_orders / record.order_id_confirmed_orders" widget="monetary"/>
                             <aggregate name="days_to_confirm" string="Days to Confirm" field="days_to_confirm" group_operator="avg"
-                            value_label="day(s)"/>
+                        value_label="day(s)"/>
+                            <aggregate name="customers" string="# Customers" field="partner_id"/>
+                            <aggregate name="lines" string="# Lines" field="nbr"/>
                         </group>
                         <group col="1">
                             <widget name="pie_chart" attrs="{'title': 'Sales Teams', 'groupby': 'team_id'}"/>
+                            <widget name="pie_chart" attrs="{'title': 'Order Status', 'groupby': 'state'}"/>
                         </group>
                     </group>
                     <view type="pivot" ref="sale_enterprise.sale_report_view_pivot"/>
@@ -45,7 +48,7 @@
             <field name="res_model">sale.report</field>
             <field name="view_mode">dashboard,pivot,graph</field>
             <field name="search_view_id" ref="sale.view_order_product_search"/>
-            <field name="context" eval="{'time_ranges': {'field':'confirmation_date', 'range':'last_30_days'}}"/>
+            <field name="context" eval="{'search_default_Sales': 1, 'time_ranges': {'field':'confirmation_date', 'range':'last_30_days'}}"/>
         </record>
 
         <record id="sale_report_action_dashboard_dashboard" model="ir.actions.act_window.view">

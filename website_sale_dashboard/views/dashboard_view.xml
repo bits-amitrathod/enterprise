@@ -35,11 +35,14 @@
                     <view type="graph" ref="website_sale_dashboard.view_online_sales_graph"/>
                     <group>
                         <group>
-                            <aggregate name="price_subtotal_confirmed_orders" field="price_total" string="Total Sales" help="Total, Tax Included" widget="monetary"/>
+                            <aggregate name="price_subtotal_confirmed_orders" string="Total Sales" field="price_total" help="Total, Tax Included" widget="monetary"/>
+                            <aggregate name="price_subtotal_all_orders" string="Untaxed Total" field="price_subtotal" widget="monetary"/>
                             <aggregate name="order_id_confirmed_orders" field="order_id" string="Orders"/>
-                            <aggregate name="price_subtotal_all_orders" field="price_subtotal" invisible="1"/>
                             <formula name="total" string="Average Order" value="record.price_subtotal_confirmed_orders / record.order_id_confirmed_orders" widget="monetary"/>
-                            <aggregate name="product_qty" string="Products per Order" field="product_uom_qty" group_operator="avg"/>
+                            <aggregate name="days_to_confirm" string="Days to Confirm" field="days_to_confirm" group_operator="avg"
+                        value_label="day(s)"/>
+                             <aggregate name="customers" string="# Customers" field="partner_id"/>
+                             <aggregate name="lines" string="# Lines" field="nbr"/>
                         </group>
                         <group col="1">
                             <widget name="pie_chart" attrs="{'title': 'Conversion Rate', 'groupby': 'is_abandoned_cart', 'labels': 'Sold,Abandonned'}"/>
