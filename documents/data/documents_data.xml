@@ -21,12 +21,12 @@
 
         <!-- Folders -->
 
-        <record id="documents_internal_folder" model="documents.folder" forcecreate="0">
+        <record id="documents_internal_folder" model="documents.folder">
             <field name="name">Internal</field>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_finance_folder" model="documents.folder" forcecreate="0">
+        <record id="documents_finance_folder" model="documents.folder">
             <field name="name">Finance</field>
             <field name="description" type="html">
                 <center>
@@ -36,67 +36,67 @@
             <field name="sequence">11</field>
         </record>
 
-        <record id="documents_hr_folder" model="documents.folder" forcecreate="0">
+        <record id="documents_hr_folder" model="documents.folder">
             <field name="name">HR</field>
             <field name="sequence">12</field>
         </record>
 
-        <record id="documents_marketing_folder" model="documents.folder" forcecreate="0">
+        <record id="documents_marketing_folder" model="documents.folder">
             <field name="name">Marketing</field>
             <field name="sequence">13</field>
         </record>
 
         <!-- Facets -->
 
-        <record id="documents_marketing_assets_facet" model="documents.facet" forcecreate="0">
+        <record id="documents_marketing_assets_facet" model="documents.facet">
             <field name="name">Assets</field>
             <field name="sequence">5</field>
             <field name="folder_id" ref="documents_marketing_folder"/>
         </record>
 
-        <record id="documents_hr_documents_facet" model="documents.facet" forcecreate="0">
+        <record id="documents_hr_documents_facet" model="documents.facet">
             <field name="name">Documents</field>
             <field name="sequence">6</field>
             <field name="folder_id" ref="documents_hr_folder"/>
         </record>
 
-         <record id="documents_internal_template_facet" model="documents.facet" forcecreate="0">
+         <record id="documents_internal_template_facet" model="documents.facet">
             <field name="name">Templates</field>
             <field name="sequence">6</field>
             <field name="folder_id" ref="documents_internal_folder"/>
          </record>
 
-        <record id="documents_internal_knowledge_facet" model="documents.facet" forcecreate="0">
+        <record id="documents_internal_knowledge_facet" model="documents.facet">
             <field name="name">Knowledge</field>
             <field name="sequence">6</field>
             <field name="folder_id" ref="documents_internal_folder"/>
         </record>
 
-        <record id="documents_internal_status_folder" model="documents.facet" forcecreate="0">
+        <record id="documents_internal_status_folder" model="documents.facet">
             <field name="name">Status</field>
             <field name="sequence">1</field>
             <field name="folder_id" ref="documents_internal_folder"/>
         </record>
 
-        <record id="documents_hr_status_folder" model="documents.facet" forcecreate="0">
+        <record id="documents_hr_status_folder" model="documents.facet">
             <field name="name">Status</field>
             <field name="sequence">1</field>
             <field name="folder_id" ref="documents_hr_folder"/>
         </record>
 
-        <record id="documents_finance_Fiscal_year_folder" model="documents.facet" forcecreate="0">
+        <record id="documents_finance_Fiscal_year_folder" model="documents.facet">
             <field name="name">Fiscal years</field>
             <field name="sequence">5</field>
             <field name="folder_id" ref="documents_finance_folder"/>
         </record>
 
-        <record id="documents_finance_Documents_folder" model="documents.facet" forcecreate="0">
+        <record id="documents_finance_Documents_folder" model="documents.facet">
             <field name="name">Documents</field>
             <field name="sequence">5</field>
             <field name="folder_id" ref="documents_finance_folder"/>
         </record>
 
-        <record id="documents_finance_status_folder" model="documents.facet" forcecreate="0">
+        <record id="documents_finance_status_folder" model="documents.facet">
             <field name="name">Status</field>
             <field name="sequence">1</field>
             <field name="folder_id" ref="documents_finance_folder"/>
@@ -104,19 +104,19 @@
 
         <!-- tags: finance - status -->
 
-        <record id="documents_finance_status_inbox" model="documents.tag" forcecreate="0">
+        <record id="documents_finance_status_inbox" model="documents.tag">
             <field name="name">Inbox</field>
             <field name="facet_id" ref="documents_finance_status_folder"/>
             <field name="sequence">6</field>
         </record>
 
-        <record id="documents_finance_status_tc" model="documents.tag" forcecreate="0">
+        <record id="documents_finance_status_tc" model="documents.tag">
             <field name="name">To Review</field>
             <field name="facet_id" ref="documents_finance_status_folder"/>
             <field name="sequence">6</field>
         </record>
 
-        <record id="documents_finance_status_validated" model="documents.tag" forcecreate="0">
+        <record id="documents_finance_status_validated" model="documents.tag">
             <field name="name">Validated</field>
             <field name="facet_id" ref="documents_finance_status_folder"/>
             <field name="sequence">6</field>
@@ -124,25 +124,25 @@
 
         <!-- tags: Internal - status -->
 
-        <record id="documents_internal_status_draft" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_status_draft" model="documents.tag">
             <field name="name">Draft</field>
             <field name="facet_id" ref="documents_internal_status_folder"/>
             <field name="sequence">2</field>
         </record>
 
-        <record id="documents_internal_status_tc" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_status_tc" model="documents.tag">
             <field name="name">To Review</field>
             <field name="facet_id" ref="documents_internal_status_folder"/>
             <field name="sequence">3</field>
         </record>
 
-        <record id="documents_internal_status_validated" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_status_validated" model="documents.tag">
             <field name="name">Validated</field>
             <field name="facet_id" ref="documents_internal_status_folder"/>
             <field name="sequence">5</field>
         </record>
 
-        <record id="documents_internal_status_deprecated" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_status_deprecated" model="documents.tag">
             <field name="name">Deprecated</field>
             <field name="facet_id" ref="documents_internal_status_folder"/>
             <field name="sequence">6</field>
@@ -150,19 +150,19 @@
 
         <!-- -->
 
-        <record id="documents_hr_status_inbox" model="documents.tag" forcecreate="0">
+        <record id="documents_hr_status_inbox" model="documents.tag">
             <field name="name">Inbox</field>
             <field name="facet_id" ref="documents_hr_status_folder"/>
             <field name="sequence">2</field>
         </record>
 
-        <record id="documents_hr_status_tc" model="documents.tag" forcecreate="0">
+        <record id="documents_hr_status_tc" model="documents.tag">
             <field name="name">To Review</field>
             <field name="facet_id" ref="documents_hr_status_folder"/>
             <field name="sequence">3</field>
         </record>
 
-        <record id="documents_hr_status_validated" model="documents.tag" forcecreate="0">
+        <record id="documents_hr_status_validated" model="documents.tag">
             <field name="name">Validated</field>
             <field name="facet_id" ref="documents_hr_status_folder"/>
             <field name="sequence">5</field>
@@ -170,115 +170,115 @@
 
         <!-- -->
 
-        <record id="documents_finance_documents_legal" model="documents.tag" forcecreate="0">
+        <record id="documents_finance_documents_legal" model="documents.tag">
             <field name="name">Legal statements</field>
             <field name="facet_id" ref="documents_finance_Documents_folder"/>
             <field name="sequence">3</field>
         </record>
 
-        <record id="documents_finance_documents_Contracts" model="documents.tag" forcecreate="0">
+        <record id="documents_finance_documents_Contracts" model="documents.tag">
             <field name="name">Contracts</field>
             <field name="facet_id" ref="documents_finance_Documents_folder"/>
             <field name="sequence">4</field>
         </record>
 
-        <record id="documents_finance_documents_vendor_bill" model="documents.tag" forcecreate="0">
+        <record id="documents_finance_documents_vendor_bill" model="documents.tag">
             <field name="name">Vendor Bills</field>
             <field name="facet_id" ref="documents_finance_Documents_folder"/>
             <field name="sequence">7</field>
         </record>
 
-        <record id="documents_finance_fiscal_year_2018" model="documents.tag" forcecreate="0">
+        <record id="documents_finance_fiscal_year_2018" model="documents.tag">
             <field name="name" eval="str(datetime.now().year)"/>
             <field name="facet_id" ref="documents_finance_Fiscal_year_folder"/>
             <field name="sequence">6</field>
         </record>
 
-        <record id="documents_finance_fiscal_year_2017" model="documents.tag" forcecreate="0">
+        <record id="documents_finance_fiscal_year_2017" model="documents.tag">
             <field name="name" eval="str(datetime.now().year-1)"/>
             <field name="facet_id" ref="documents_finance_Fiscal_year_folder"/>
             <field name="sequence">5</field>
         </record>
 
-        <record id="documents_internal_knowledge_hr_policies" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_knowledge_hr_policies" model="documents.tag">
             <field name="name">HR policies</field>
             <field name="facet_id" ref="documents_internal_knowledge_facet"/>
             <field name="sequence">9</field>
         </record>
 
-        <record id="documents_internal_knowledge_Sales" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_knowledge_Sales" model="documents.tag">
             <field name="name">Sales</field>
             <field name="facet_id" ref="documents_internal_knowledge_facet"/>
             <field name="sequence">9</field>
         </record>
 
-        <record id="documents_internal_knowledge_other" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_knowledge_other" model="documents.tag">
             <field name="name">Other</field>
             <field name="facet_id" ref="documents_internal_knowledge_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_internal_template_Presentations" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_template_Presentations" model="documents.tag">
             <field name="name">Presentations</field>
             <field name="facet_id" ref="documents_internal_template_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_internal_template_contracts" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_template_contracts" model="documents.tag">
             <field name="name">Contracts</field>
             <field name="facet_id" ref="documents_internal_template_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_internal_template_sign" model="documents.tag" forcecreate="0">
+        <record id="documents_internal_template_sign" model="documents.tag">
             <field name="name">Sign</field>
             <field name="facet_id" ref="documents_internal_template_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_marketing_assets_logos" model="documents.tag" forcecreate="0">
+        <record id="documents_marketing_assets_logos" model="documents.tag">
             <field name="name">Logos</field>
             <field name="facet_id" ref="documents_marketing_assets_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_marketing_assets_brochures" model="documents.tag" forcecreate="0">
+        <record id="documents_marketing_assets_brochures" model="documents.tag">
             <field name="name">Brochures</field>
             <field name="facet_id" ref="documents_marketing_assets_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_marketing_assets_ads" model="documents.tag" forcecreate="0">
+        <record id="documents_marketing_assets_ads" model="documents.tag">
             <field name="name">Ads</field>
             <field name="facet_id" ref="documents_marketing_assets_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_marketing_assets_images" model="documents.tag" forcecreate="0">
+        <record id="documents_marketing_assets_images" model="documents.tag">
             <field name="name">Images</field>
             <field name="facet_id" ref="documents_marketing_assets_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_marketing_assets_Videos" model="documents.tag" forcecreate="0">
+        <record id="documents_marketing_assets_Videos" model="documents.tag">
             <field name="name">Videos</field>
             <field name="facet_id" ref="documents_marketing_assets_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_hr_documents_contracts" model="documents.tag" forcecreate="0">
+        <record id="documents_hr_documents_contracts" model="documents.tag">
             <field name="name">Contracts</field>
             <field name="facet_id" ref="documents_hr_documents_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_hr_documents_payslips" model="documents.tag" forcecreate="0">
+        <record id="documents_hr_documents_payslips" model="documents.tag">
             <field name="name">Payslips</field>
             <field name="facet_id" ref="documents_hr_documents_facet"/>
             <field name="sequence">10</field>
         </record>
 
-        <record id="documents_hr_documents_absences" model="documents.tag" forcecreate="0">
+        <record id="documents_hr_documents_absences" model="documents.tag">
             <field name="name">Absences</field>
             <field name="facet_id" ref="documents_hr_documents_facet"/>
             <field name="sequence">10</field>
@@ -311,6 +311,8 @@
 
         <record id="documents_Finance_validate_tr" model="documents.workflow.rule">
             <field name="name">Review Document(s)</field>
+            <field name="activity_option">True</field>
+            <field name="activity_type_id" ref="mail_documents_activity_data_tv"/>
             <field name="domain_folder_id" ref="documents_finance_folder"/>
         </record>
 
@@ -372,6 +374,8 @@
 
         <record id="documents_Internal_to_review" model="documents.workflow.rule">
             <field name="name">Review Document(s)</field>
+            <field name="activity_option">True</field>
+            <field name="activity_type_id" ref="mail_documents_activity_data_tv"/>
             <field name="domain_folder_id" ref="documents_internal_folder"/>
         </record>
 
@@ -390,7 +394,7 @@
 
         <!-- internal Draft-->
 
-        <record id="documents_Internal_to_draft" model="documents.workflow.rule" forcecreate="0">
+        <record id="documents_Internal_to_draft" model="documents.workflow.rule">
             <field name="name">Reset to Draft</field>
             <field name="domain_folder_id" ref="documents_internal_folder"/>
         </record>
@@ -401,7 +405,7 @@
             <field name="tag_id" ref="documents_internal_status_draft"/>
         </record>
 
-        <record id="documents_replace_internal_to_draft" model="documents.workflow.action" forcecreate="0">
+        <record id="documents_replace_internal_to_draft" model="documents.workflow.action">
             <field name="workflow_rule_id" ref="documents_Internal_to_draft"/>
             <field name="action">replace</field>
             <field name="facet_id" ref="documents_internal_status_folder"/>
@@ -410,24 +414,24 @@
 
         <!--if inbox: contracts + 2018-->
 
-        <record id="documents_Finance_validate_inbox_contracts" model="documents.workflow.rule" forcecreate="0">
+        <record id="documents_Finance_validate_inbox_contracts" model="documents.workflow.rule">
             <field name="name">2018 contracts</field>
             <field name="domain_folder_id" ref="documents_finance_folder"/>
         </record>
 
-        <record id="documents_inbox_contracts_criteria" model="documents.workflow.tag.criteria" forcecreate="0">
+        <record id="documents_inbox_contracts_criteria" model="documents.workflow.tag.criteria">
             <field name="workflow_rule_id" ref="documents_Finance_validate_inbox_contracts"/>
             <field name="operator">contains</field>
             <field name="tag_id" ref="documents_finance_status_inbox"/>
         </record>
 
-        <record id="documents_add_inbox_contracts" model="documents.workflow.action" forcecreate="0">
+        <record id="documents_add_inbox_contracts" model="documents.workflow.action">
             <field name="workflow_rule_id" ref="documents_Finance_validate_inbox_contracts"/>
             <field name="action">add</field>
             <field name="tag_id" ref="documents_hr_documents_contracts"/>
         </record>
 
-        <record id="documents_add_inbox_2018" model="documents.workflow.action" forcecreate="0">
+        <record id="documents_add_inbox_2018" model="documents.workflow.action">
             <field name="workflow_rule_id" ref="documents_Finance_validate_inbox_contracts"/>
             <field name="action">add</field>
             <field name="tag_id" ref="documents_finance_fiscal_year_2018"/>
@@ -441,7 +445,7 @@
 
         <!-- base data -->
 
-        <record id="documents_image_La_landscape" model="ir.attachment" forcecreate="0">
+        <record id="documents_image_La_landscape" model="ir.attachment">
             <field name="name">LA landscape</field>
             <field name="datas_fname">LA-landscape.jpg</field>
             <field name="datas" type="base64" file="documents/demo/files/la.jpg"/>
@@ -449,7 +453,7 @@
             <field name="tag_ids" eval="[(6,0,[ref('documents_marketing_assets_images')])]"/>
         </record>
 
-        <record id="documents_image_city" model="ir.attachment" forcecreate="0">
+        <record id="documents_image_city" model="ir.attachment">
             <field name="name">City</field>
             <field name="datas_fname">city.jpg</field>
             <field name="datas" type="base64" file="documents/demo/files/city.jpg"/>
@@ -458,7 +462,7 @@
                                                ref('documents_internal_status_draft')])]"/>
         </record>
 
-        <record id="documents_image_people" model="ir.attachment" forcecreate="0">
+        <record id="documents_image_people" model="ir.attachment">
             <field name="name">People</field>
             <field name="datas_fname">people.jpg</field>
             <field name="datas" type="base64" file="documents/demo/files/people.jpg"/>
@@ -467,7 +471,7 @@
                                                ref('documents_internal_status_draft')])]"/>
         </record>
 
-        <record id="documents_attachment_sorry_netsuite" model="ir.attachment" forcecreate="0">
+        <record id="documents_attachment_sorry_netsuite" model="ir.attachment">
             <field name="name">Sorry Netsuite</field>
             <field name="datas_fname">Sorry-Netsuite.jpg</field>
             <field name="datas" type="base64" file="documents/demo/files/sorry_netsuite.jpg"/>
@@ -475,7 +479,7 @@
             <field name="tag_ids" eval="[(6,0,[ref('documents_marketing_assets_ads')])]"/>
         </record>
 
-        <record id="documents_attachment_video_studio" model="ir.attachment" forcecreate="0">
+        <record id="documents_attachment_video_studio" model="ir.attachment">
             <field name="name">Video: Odoo Studio</field>
             <field name="datas_fname">Odoo Studio</field>
             <field name="type">url</field>
@@ -485,7 +489,7 @@
                                                ref('documents_internal_status_draft')])]"/>
         </record>
 
-        <record id="documents_vendor_bill_clean" model="ir.attachment" forcecreate="0">
+        <record id="documents_vendor_bill_clean" model="ir.attachment">
             <field name="name">preview_clean</field>
             <field name="datas_fname">invoice_preview_clean.pdf</field>
             <field name="datas" type="base64" file="documents/demo/files/preview_clean.pdf"/>
@@ -496,7 +500,7 @@
                                                     ref('documents_finance_status_inbox')])]"/>
         </record>
 
-        <record id="documents_vendor_bill_backgorund" model="ir.attachment" forcecreate="0">
+        <record id="documents_vendor_bill_backgorund" model="ir.attachment">
             <field name="name">preview_background</field>
             <field name="datas_fname">invoice_preview_background.pdf</field>
             <field name="datas" type="base64" file="documents/demo/files/preview_background.pdf"/>
@@ -509,7 +513,7 @@
 
         <!-- share links -->
 
-        <record id="share_account_folder" model="documents.share" forcecreate="0">
+        <record id="share_account_folder" model="documents.share">
             <field name="name">Inbox Financial</field>
             <field name="alias_name">inbox-financial</field>
             <field name="type">domain</field>
