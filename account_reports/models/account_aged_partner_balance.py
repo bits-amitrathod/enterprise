@@ -17,10 +17,10 @@ class report_account_aged_partner(models.AbstractModel):
         columns = [{}]
         columns += [{'name': v, 'class': 'number', 'style': 'white-space:nowrap;'} for v in [
             _("Not&nbsp;due&nbsp;on %s").replace('&nbsp;', ' ') % format_date(self.env, options['date']['date']), 
-            _("0&nbsp;-&nbsp;30").replace('&nbsp;', ' '), 
-            _("30&nbsp;-&nbsp;60").replace('&nbsp;', ' '), 
-            _("60&nbsp;-&nbsp;90").replace('&nbsp;', ' '), 
-            _("90&nbsp;-&nbsp;120").replace('&nbsp;', ' '), 
+            _("1&nbsp;-&nbsp;30").replace('&nbsp;', ' '),
+            _("31&nbsp;-&nbsp;60").replace('&nbsp;', ' '),
+            _("61&nbsp;-&nbsp;90").replace('&nbsp;', ' '),
+            _("91&nbsp;-&nbsp;120").replace('&nbsp;', ' '),
             _("Older"), _("Total")]]
         return columns
 
