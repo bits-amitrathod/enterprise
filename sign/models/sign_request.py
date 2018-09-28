@@ -319,7 +319,7 @@ class SignRequest(models.Model):
             self.completed_document = self.template_id.attachment_id.datas
             return
 
-        old_pdf = PdfFileReader(io.BytesIO(base64.b64decode(self.template_id.attachment_id.datas)), overwriteWarnings=False)
+        old_pdf = PdfFileReader(io.BytesIO(base64.b64decode(self.template_id.attachment_id.datas)), strict=False, overwriteWarnings=False)
         font = "Helvetica"
         normalFontSize = 0.015
 
