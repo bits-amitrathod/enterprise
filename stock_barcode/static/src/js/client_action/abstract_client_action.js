@@ -1333,7 +1333,7 @@ var ClientAction = AbstractAction.extend({
             }
             return self._onBarcodeScanned(barcode).then(function () {
                 // FIXME sle: not the right place to do that
-                if (self.show_entire_packs) {
+                if (self.show_entire_packs && self.lastScannedPackage) {
                     self._reloadLineWidget(self.currentPageIndex);
                 }
             });
