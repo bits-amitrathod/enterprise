@@ -7,7 +7,7 @@ from odoo import api, fields, models, exceptions
 # ----------------------------------------------------------
 class IotBox(models.Model):
     _name = 'iot.box'
-    _description = 'IOT Box'
+    _description = 'IoT Box'
 
     name = fields.Char('Name', readonly=True)
     identifier = fields.Char(string='Identifier (Mac Address)', readonly=True)

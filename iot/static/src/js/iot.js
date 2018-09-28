@@ -91,7 +91,7 @@ ActionManager.include({
                         //console.log('Printed successfully!');
                     },
                     error: function (data) {
-                        self.do_warn(_t('Connection with the IoTBox failed!'));
+                        self.do_warn(_t('Connection with the IoT Box failed!'));
                     },
 
                 });
