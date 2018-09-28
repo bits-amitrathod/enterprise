@@ -127,5 +127,13 @@
                 </table>
             </t>
         </xpath>
+        <!--remove payment method-->
+        <xpath expr="//div[@t-if='o.payment_method_id']" position="replace">
+            <div class="col-xs-6" t-if="o.payment_method_id">
+                <t t-if="not o.l10n_mx_edi_cfdi_uuid">
+                    <strong>Payment Method: </strong><span t-field="o.payment_method_id.name"/>
+                </t>
+            </div>
+        </xpath>
     </template>
 </odoo>
