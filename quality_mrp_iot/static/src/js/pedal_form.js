@@ -90,7 +90,7 @@ var PedalController = FormController.extend({
             var promises = [];
             console.log(data);
             for (var key in data) {
-                var url = 'http://' + key + ':8069/hw_drivers/owner/check';
+                var url = key + '/hw_drivers/owner/check';
                 var devices = [];
                 for (var device in data[key]) {
                     devices.push(data[key][device][0]);
@@ -142,7 +142,7 @@ var PedalController = FormController.extend({
         this.renderer.showPedalStatusButton(true);
         var data = this.triggers;
         for (var key in data) {
-            var url = 'http://' + key + ':8069/hw_drivers/owner/take';
+            var url = key + '/hw_drivers/owner/take';
             var devices = [];
             for (var device in data[key]) {
                 devices.push(data[key][device][0]);
@@ -171,7 +171,7 @@ var PedalController = FormController.extend({
         var self = this;
         var data = this.triggers;
         for (var box in data) {
-            var url = 'http://' + box + ':8069/hw_drivers/owner/ping';
+            var url = box + '/hw_drivers/owner/ping';
             var devices = [];
             for (var device in data[box]) {
                 devices.push(data[box][device][0]);

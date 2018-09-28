@@ -18,7 +18,11 @@ class IotBox(models.Model):
 
     def _compute_ip_url(self):
         for box in self:
-            box.ip_url = 'http://' + box.ip + ':8069'
+            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            if base_url[:5] == 'https':
+                box.ip_url = 'https://' + box.ip
+            else:
+                box.ip_url = 'http://' + box.ip + ':8069'
 
 
 class IotTrigger(models.Model):
@@ -86,7 +90,7 @@ class IrActionReport(models.Model):
             device = self.mapped('device_id')[0]
         else:
             device = self.env['iot.device'].browse(data['device_id'])
-        composite_url = "http://" + device.iot_id.ip + ":8069/hw_drivers/driveraction/" + device.identifier
+        composite_url = device.iot_id.ip_url + "/hw_drivers/driveraction/" + device.identifier
         datas = self.render(res_ids, data=data)
         type = datas[1]
         data_bytes = datas[0]

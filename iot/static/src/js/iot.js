@@ -48,7 +48,7 @@ var IotFieldFloat = FieldFloat.extend({
 
         var identifierField = this.nodeOptions.identifier_field;
         var identifier = this.record.data[identifierField];
-        var composite_url = "http://" + ip + ":8069/hw_drivers/driverdetails/" + identifier;
+        var composite_url = ip + "/hw_drivers/driverdetails/" + identifier;
 
         $.get(composite_url, function (data) {
             self._setValue(data);
@@ -337,7 +337,7 @@ var IotTakeMeasureButton = Widget.extend({
         var self = this;
         var ip = this.record.data[this.options.ip_field];
         var identifier = this.record.data[this.options.identifier_field];
-        var composite_url = "http://" + ip + ":8069/hw_drivers/driverdetails/" + identifier;
+        var composite_url = ip + "/hw_drivers/driverdetails/" + identifier;
         var measure_field = this.options.measure_field;
 
         $.get(composite_url, function (measure) {
