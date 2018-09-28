@@ -643,6 +643,7 @@ var ReportEditor = Widget.extend(EditorMixin, {
         this.$content.find('.footer').css({
             'position': 'fixed',
             'bottom': '0',
+            'width': this.$content.find('.page').css('width'),
         });
 
         this.$content.find('html')[0].style.overflow = 'hidden';
