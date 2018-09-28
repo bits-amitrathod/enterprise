@@ -459,7 +459,10 @@
                             <field name="description" placeholder="Terms and Conditions"/>
                         </page>
                         <page name="health" string="Health Check">
+                            <label for="good_health_domain" string="Good Health"/>
                             <field name="good_health_domain" widget="domain" options="{'model': 'sale.subscription'}"/>
+                            <separator/>
+                            <label for="bad_health_domain" string="Bad Health"/>
                             <field name="bad_health_domain" widget="domain" options="{'model': 'sale.subscription'}"/>
                         </page>
                     </notebook>
