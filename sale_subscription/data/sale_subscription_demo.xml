@@ -30,6 +30,8 @@
             <field name="user_closable">True</field>
             <field name="payment_mode">success_payment</field>
             <field name="tag_ids" eval="[(6,0, (ref('sale_subscription.cleaning_tag'),))]"/>
+            <field name="good_health_domain">[('recurring_monthly', '&gt;=', 20)]</field>
+            <field name="bad_health_domain">[('recurring_monthly', '&lt;', 20)]</field>
             <field name="description">
 Payment
 All payments are due upon receipt. If a payment is not received or payment method is declined, the buyer forfeits the ownership of any items purchased. If no payment is received, no items will be shipped.
@@ -255,7 +257,7 @@ Any complaints about items or sellers may be sent to our support team: support@w
             <field name="analytic_account_id" ref="subscription_portal_27"/>
             <field name="product_id" ref="sale_subscription.product_office_cleaning"/>
             <field name="quantity">1</field>
-            <field name="price_unit">20.0</field>
+            <field name="price_unit">15.0</field>
             <field name="uom_id" ref="sale_subscription.subscription_uom_month"/>
         </record>
 
