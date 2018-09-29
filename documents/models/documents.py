@@ -39,7 +39,7 @@ class IrAttachment(models.Model):
                        res_id IS NULL AND
                        res_model IS NULL AND
                        (public = false OR public IS NULL)
-              GROUP BY folder_id, public
+              GROUP BY folder_id
             ''', [tuple(self.ids)])
             folder_ids = [r[0] for r in self._cr.fetchall()]
             if values and values.get('folder_id'):
