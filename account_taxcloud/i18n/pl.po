@@ -2,12 +2,15 @@
 # This file contains the translation of the following modules:
 # * account_taxcloud
 # 
+# Translators:
+# Maksym <ms@myodoo.pl>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.3+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-25 08:34+0000\n"
 "PO-Revision-Date: 2018-06-25 08:34+0000\n"
+"Last-Translator: Maksym <ms@myodoo.pl>, 2018\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,6 +66,8 @@ msgid ""
 "Default TICs(Taxability information codes) code to get sales tax from "
 "TaxCloud by product category."
 msgstr ""
+"Domyślny kod TIC (kod informacji podatkowych), aby uzyskać podatek od "
+"sprzedaży od TaxCloud według kategorii produktu."
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_tic_category__display_name
@@ -154,7 +159,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:account_taxcloud.account_taxcloud_tic_category_action
 #: model:ir.ui.menu,name:account_taxcloud.menu_taxcloud_tic_category_action
 msgid "TaxCloud Categories"
-msgstr ""
+msgstr "Kategorie TaxCloud"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_product__tic_category_id
@@ -162,7 +167,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_taxcloud.product_category_view_form_inherit_account_taxcloud
 #: model:ir.ui.view,arch_db:account_taxcloud.product_template_taxcloud_inherit_form
 msgid "TaxCloud Category"
-msgstr ""
+msgstr "Kategoria TaxCloud"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,help:account_taxcloud.field_product_category__tic_category_id
@@ -177,6 +182,15 @@ msgid ""
 "automatically assigns products to this TIC as a default, so unless you've "
 "changed an item's TIC in the past, it should already be set to 00000."
 msgstr ""
+"TaxCloud używa kodów informacji podatkowych (TIC), aby upewnić się, że każda"
+" pozycja w twoim katalogu jest opodatkowana według właściwej stawki (lub, w "
+"przypadku produktów zwolnionych z podatku, w ogóle nie opodatkowana), "
+"dlatego ważne jest, aby upewnić się, że każdy element ma przypisany TIC . "
+"Jeśli nie możesz znaleźć właściwej kategorii podatkowej dla pozycji w swoim "
+"katalogu, możesz ją przypisać do TIC \"Ogólne towary i usługi\", 00000. "
+"TaxCloud automatycznie przypisuje produkty do tego TIC jako domyślny, więc "
+"jeśli nie zmieniłeś W przeszłości TIC produktu, powinien już być ustawiony "
+"na 00000."
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_account_fiscal_position_template
@@ -197,6 +211,8 @@ msgid ""
 "The source document on the refund is not valid and thus the refunded cart "
 "won't be logged on your taxcloud account"
 msgstr ""
+"Dokument źródłowy dotyczący zwrotu nie jest ważny, a zatem zwrócony koszyk "
+"nie zostanie zarejestrowany na koncie taxcloud"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_invoice.py:85
@@ -204,6 +220,8 @@ msgstr ""
 msgid ""
 "The tax rates have been updated, you may want to check it before validation"
 msgstr ""
+"Stawki podatkowe zostały zaktualizowane, możesz to sprawdzić przed "
+"zatwierdzeniem"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_invoice.py:43
