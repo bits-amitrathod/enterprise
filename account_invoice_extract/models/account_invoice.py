@@ -462,6 +462,15 @@ class AccountInvoice(models.Model):
                 self.partner_id = partner_id
                 self._onchange_partner_id()
 
+    def read(self, fields=None, load='_classic_read'):
+        # We only need in form view, doing two separate IF statements to avoid reading record is not needed
+        if (fields is None) or ('extract_state' in fields):
+            if (self.env.context.get('type')=='in_invoice') and (len(self)==1) and not self.env.context.get('checking_status'):
+                self2 = self.with_context(checking_status=True)
+                if (self2.extract_state in ('waiting_extraction','extract_not_ready')):
+                    self2.check_status()
+                    self = self2
+        return super(AccountInvoice, self).read(fields, load)
 
     @api.multi
     def check_status(self):
@@ -488,9 +497,9 @@ class AccountInvoice(models.Model):
                 for feature, value in result.items():
                     if feature != "supplier":
                         self.set_field_with_text(feature, value["selected_text"][0])
+                    data = []
                     for word in value["words"]:
-                        self.extract_word_ids.create({
-                            "invoice_id": self.id,
+                        data.append((0, 0, {
                             "field": feature,
                             "selected_status": 1 if value["selected_text"] == word else 0,
                             "word_text": word[0],
@@ -500,7 +509,8 @@ class AccountInvoice(models.Model):
                             "word_box_width": word[2][2],
                             "word_box_height": word[2][3],
                             "word_box_angle": word[2][4],
-                        })
+                        }))
+                    self.write({'extract_word_ids': data})
 
     @api.multi
     def buy_credits(self):
