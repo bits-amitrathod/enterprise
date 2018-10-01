@@ -356,28 +356,36 @@ class AccountInvoice(models.Model):
             else:
                 vat = word.word_text.replace(" ", "")
                 url = '%s/check_vat' % PARTNER_REMOTE_URL
-                name = None
                 params = {
                     'db_uuid': self.env['ir.config_parameter'].sudo().get_param('database.uuid'),
                     'vat': vat,
                 }
                 try:
                     response = jsonrpc(url=url, params=params)
-                    if response:
-                        name = response.get('name', '')
                 except Exception as exception:
                     _logger.error('Check VAT error: %s' % str(exception))
                     return 0
-                if name:
-                    new_partner = self.env["res.partner"].create({
-                        "name": name,
-                        "vat": vat
-                    })
+
+                if response.get('name'):
+                    country_id = self.env['res.country'].search([('code', '=', response.pop('country_code',''))])
+                    values = {field: response.get(field, None) for field in self._get_partner_fields()}
+                    values.update({
+                        'supplier': True,
+                        'customer': False,
+                        'is_company': True,
+                        'country_id': country_id and country_id.id,
+                        })
+                    new_partner = self.env["res.partner"].create(values)
                     return new_partner.id
             return 0
+
         if word.field == "supplier":
             return self.find_partner_id_with_name(word.word_text)
         return word.word_text.strip()
+
+    def _get_partner_fields(self): 
+        return ['name','vat' ,'street', 'city', 'zip']
+        
 
     @api.multi
     def _set_vat(self, text):
