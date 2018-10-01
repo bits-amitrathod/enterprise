@@ -47,10 +47,10 @@ class SaleSubscription(models.Model):
     payment_mandatory = fields.Boolean(related='template_id.payment_mandatory')
     description = fields.Text()
     user_id = fields.Many2one('res.users', string='Salesperson', track_visibility='onchange')
-    invoice_count = fields.Integer(compute='_compute_invoice_count')
+    invoice_count = fields.Integer(compute='_compute_invoice_count', groups="account.group_account_invoice")
     country_id = fields.Many2one('res.country', related='partner_id.country_id', store=True)
     industry_id = fields.Many2one('res.partner.industry', related='partner_id.industry_id', store=True)
-    sale_order_count = fields.Integer(compute='_compute_sale_order_count')
+    sale_order_count = fields.Integer(compute='_compute_sale_order_count', groups="sales_team.group_sale_salesman")
     # customer portal
     uuid = fields.Char('Account UUID', default=lambda self: str(uuid4()), copy=False, required=True)
     website_url = fields.Char('Website URL', compute='_website_url', help='The full URL to access the document through the website.')
@@ -65,13 +65,17 @@ class SaleSubscription(models.Model):
     ]
 
     def _compute_sale_order_count(self):
-        raw_data = self.env['sale.order.line'].sudo().read_group(
-            [('subscription_id', 'in', self.ids)],
-            ['subscription_id', 'order_id'],
-            ['subscription_id', 'order_id'],
-            lazy=False,
-        )
-        count = Counter(g['subscription_id'][0] for g in raw_data)
+        sol = self.env['sale.order.line']
+        if sol.check_access_rights('read', raise_exception=False):
+            raw_data = sol.read_group(
+                [('subscription_id', 'in', self.ids)],
+                ['subscription_id', 'order_id'],
+                ['subscription_id', 'order_id'],
+                lazy=False,
+            )
+            count = Counter(g['subscription_id'][0] for g in raw_data)
+        else:
+            count = Counter()
 
         for subscription in self:
             subscription.sale_order_count = count[subscription.id]
@@ -138,8 +142,9 @@ class SaleSubscription(models.Model):
 
     def _compute_invoice_count(self):
         Invoice = self.env['account.invoice']
+        can_read = Invoice.check_access_rights('read', raise_exception=False)
         for subscription in self:
-            subscription.invoice_count = Invoice.sudo().search_count([('invoice_line_ids.subscription_id', '=', subscription.id)])
+            subscription.invoice_count = can_read and Invoice.search_count([('invoice_line_ids.subscription_id', '=', subscription.id)]) or 0
 
     @api.depends('recurring_invoice_line_ids', 'recurring_invoice_line_ids.quantity', 'recurring_invoice_line_ids.price_subtotal')
     def _compute_recurring_total(self):
