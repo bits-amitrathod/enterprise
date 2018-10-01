@@ -67,7 +67,7 @@ ActionManager.include({
             console.log('Printing to IoT device...');
             var self = this;
             self.action = action;
-            this._rpc({
+            return this._rpc({
                 model: 'ir.actions.report',
                 method: 'iot_render',
                 args: [action.id, action.context.active_ids, {'device_id': action.device_id}]
@@ -77,7 +77,7 @@ ActionManager.include({
                     type: result[1],
                     data: result[2]
                 };
-                $.ajax({ //code from hw_screen pos
+                return $.ajax({ //code from hw_screen pos
                     type: 'POST',
                     url: result[0],
                     dataType: 'json',
@@ -87,6 +87,7 @@ ActionManager.include({
                     data: JSON.stringify(data),
                     success: function (data) {
                         self.do_notify(_t('Successfully sent to printer!'));
+                        return options.on_close();
                         //console.log('Printed successfully!');
                     },
                     error: function (data) {
@@ -95,7 +96,6 @@ ActionManager.include({
 
                 });
             });
-            return $.when();
         }
         else {
             return this._super.apply(this, arguments);
