@@ -492,7 +492,7 @@
                                     <field name="change_type"/>
                                     <field name="product_id"/>
                                     <field name="upd_product_qty"/>
-                                    <field name="uom_change" groups="product.group_uom"/>
+                                    <field name="uom_change" groups="uom.group_uom"/>
                                     <field name="operation_change" groups="mrp.group_mrp_routings"/>
                                 </tree>
                             </field>
@@ -503,7 +503,7 @@
                                     <field name="change_type"/>
                                     <field name="product_id"/>
                                     <field name="upd_product_qty"/>
-                                    <field name="uom_change" groups="product.group_uom"/>
+                                    <field name="uom_change" groups="uom.group_uom"/>
                                     <field name="operation_change" groups="mrp.group_mrp_routings"/>
                                     <field name="conflict" invisible="1"/>
                                 </tree>
@@ -515,7 +515,7 @@
                                     <field name="change_type"/>
                                     <field name="product_id"/>
                                     <field name="upd_product_qty"/>
-                                    <field name="uom_change" groups="product.group_uom"/>
+                                    <field name="uom_change" groups="uom.group_uom"/>
                                     <field name="operation_change" groups="mrp.group_mrp_routings"/>
                                     <field name="conflict" invisible="1"/>
                                 </tree>
@@ -652,8 +652,8 @@
                         <label for="upd_product_qty"/>
                         <div class="o_row">
                             <field name="upd_product_qty"/>
-                            <field name="old_uom_id" attrs="{'invisible': [('change_type', '!=', 'remove')]}" options="{'no_open':True,'no_create':True}" groups="product.group_uom"/>
-                            <field name="new_uom_id" attrs="{'invisible': [('change_type', '=', 'remove')]}" options="{'no_open':True,'no_create':True}" groups="product.group_uom"/>
+                            <field name="old_uom_id" attrs="{'invisible': [('change_type', '!=', 'remove')]}" options="{'no_open':True,'no_create':True}" groups="uom.group_uom"/>
+                            <field name="new_uom_id" attrs="{'invisible': [('change_type', '=', 'remove')]}" options="{'no_open':True,'no_create':True}" groups="uom.group_uom"/>
                         </div>
                     </group>
                     <group string="ECO details">
