@@ -289,7 +289,7 @@ odoo.define('sign.Document', function (require) {
 
         initialize_iframe: function() {
             this.$iframe = this.$('iframe.o_sign_pdf_iframe').first();
-            if(this.$iframe.length > 0) {
+            if(this.$iframe.length > 0 && !this.iframeWidget) {
                 this.iframeWidget = new (this.get_pdfiframe_class())(this,
                                                                      this.attachmentLocation,
                                                                      !this.requestID,
