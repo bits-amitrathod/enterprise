@@ -294,6 +294,16 @@ var DashboardRenderer = FormRenderer.extend({
         var $group = this._renderOuterGroup(node);
         if (node.children.length && node.children[0].tag === 'widget') {
             $group.addClass('o_has_widget');
+            var nbr_pie_charts = node.children.reduce(
+                    function (acc, child) {
+                        return acc + (child.attrs.name === "pie_chart" ? 1 : 0);
+                    },
+                    0
+                );
+            $group.addClass('o_nbr_pie_charts_' + nbr_pie_charts);
+            if (this.state.compare) {
+                $group.addClass('o_active_comparison');
+            }
         }
         return $group;
     },
