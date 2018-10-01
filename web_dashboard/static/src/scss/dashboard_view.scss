@@ -139,23 +139,96 @@
             width: auto;
             flex: 1 1 50%;
 
+            // Groups with at least one widget (commonly graphs)
             &.o_has_widget {
                 flex: 1;
+                display: flex;
 
                 .o_graph_container {
                     display: flex;
+                    justify-content: space-between;
 
                     .o_graph_svg_container {
-                        min-width: 300px;
+                        min-width: 200px;
                         margin-bottom: ($spacer * 1.5);
 
-                        &:first-child {
-                            border-left: $border-width solid $border-color;
-                            padding-left: $padding;
+                        @include media-breakpoint-up(sm) {
+                            min-width: 300px;
+                            max-width: 400px;
                         }
                     }
                     label {
                         @extend %o-dashboard-label-design;
+                    }
+                }
+
+                // The following code handle inconsistencies in layout
+                // due to different JS engines used to render pie-charts.
+                // Ideally, we should render graphs using the same
+                // HTML structure and let ‘flex’ so its job.
+
+                // Layout for groups containing 1 pie-chart only
+                &.o_nbr_pie_charts_1 {
+                    .o_graph_svg_container:first-child  {
+                        border-left: $border-width solid $border-color;
+                        padding-left: $padding;
+                    }
+
+                    @include media-breakpoint-down(sm) {
+                        flex: 0 0 100%;
+
+                        .o_graph_svg_container {
+                            &, &:first-child {
+                                border-left: 0;
+                                padding-left: 0;
+                                border-top: $border-width solid $border-color;
+                                padding-top: $padding;
+                            }
+                        }
+
+                        // Comparison active, 2 pie-chart in tot.
+                        &.o_active_comparison {
+                            .o_graph_container {
+                                flex-flow: row wrap;
+                            }
+                        }
+                    }
+
+                }
+
+                // Layout for groups containing 2 pie-charts
+                &.o_nbr_pie_charts_2 {
+                    flex-flow: row wrap;
+                    flex: 0 0 auto;
+
+                    @include media-breakpoint-down(md) {
+                        margin-top: ($spacer * 2);
+                        flex: 0 0 100%;
+                    }
+
+                    // Comparison active, 4 pie-chart tot.
+                    &.o_active_comparison  {
+                        margin-top: ($spacer * 3);
+                        flex: 1 0 100%;
+                    }
+
+                    .o_widget {
+                        flex: 1 1 50%;
+                        border-left: $border-width solid $border-color;
+                        padding-left: $padding;
+                        margin-bottom: ($spacer * 1.5);
+
+                        @include media-breakpoint-down(md) {
+                            border-left: 0;
+                            padding-left: 0;
+                            border-top: $border-width solid $border-color;
+                            padding-top: $padding;
+                            flex: 0 0 100%;
+                        }
+
+                        .o_graph_container {
+                            flex-flow: row wrap;
+                        }
                     }
                 }
             }
