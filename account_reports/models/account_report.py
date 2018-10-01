@@ -6,6 +6,7 @@ import io
 import logging
 import lxml.html
 import datetime
+import ast
 
 from dateutil.relativedelta import relativedelta
 
@@ -304,7 +305,7 @@ class AccountReport(models.AbstractModel):
     def open_tax_report_line(self, options, params=None):
         active_id = int(str(params.get('id')).split('_')[0])
         line = self.env['account.financial.html.report.line'].browse(active_id)
-        domain = safe_eval(line.domain)
+        domain = ast.literal_eval(line.domain)
         action = self.open_action(options, domain)
         action['display_name'] = _('Journal Items (%s)') % line.name
         return action
@@ -366,7 +367,7 @@ class AccountReport(models.AbstractModel):
             })
             action['context'] = ctx
         if options:
-            domain = expression.normalize_domain(safe_eval(action.get('domain', '[]')))
+            domain = expression.normalize_domain(ast.literal_eval(action.get('domain', '[]')))
             if options.get('analytic_accounts'):
                 analytic_ids = [int(r) for r in options['analytic_accounts']]
                 domain = expression.AND([domain, [('analytic_account_id', 'in', analytic_ids)]])

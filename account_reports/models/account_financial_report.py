@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import copy
+import ast
+
 from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.misc import formatLang
@@ -292,7 +294,7 @@ class ReportAccountFinancialReport(models.Model):
         domain = [domain] if domain else [()]
         group_by = ', '.join(['"account_move_line".%s' % field for field in group_by])
         all_report_lines = self.env['account.financial.html.report.line'].search([('id', 'child_of', self.line_ids.ids)])
-        all_domains = expression.OR([safe_eval(dom) for dom in all_report_lines.mapped('domain') if dom])
+        all_domains = expression.OR([ast.literal_eval(dom) for dom in all_report_lines.mapped('domain') if dom])
         all_domains = expression.AND([all_domains] + domain)
         tables, where_clause, where_params = self.env['account.move.line']._query_get(domain=all_domains)
         sql = 'SELECT %s FROM %s WHERE %s GROUP BY %s ORDER BY %s' % (group_by, tables, where_clause, group_by, group_by)
@@ -309,8 +311,8 @@ class ReportAccountFinancialReport(models.Model):
         else:
             return False, False
 
-        domain = safe_eval(selected_ir_filter['domain'])
-        group_by = safe_eval(selected_ir_filter['context']).get('group_by', [])
+        domain = ast.literal_eval(selected_ir_filter['domain'])
+        group_by = ast.literal_eval(selected_ir_filter['context']).get('group_by', [])
         return domain, group_by
 
     @api.multi
@@ -566,7 +568,7 @@ class AccountFinancialReportLine(models.Model):
             # Fake domain to always get the join to the account_move_line__move_id table.
             fake_domain = [('move_id.id', '!=', None)]
             sub_tables, sub_where_clause, sub_where_params = self.env['account.move.line']._query_get(domain=fake_domain)
-            tables, where_clause, where_params = self.env['account.move.line']._query_get(domain=fake_domain + safe_eval(self.domain))
+            tables, where_clause, where_params = self.env['account.move.line']._query_get(domain=fake_domain + ast.literal_eval(self.domain))
 
             # Get moves having a line using a bank account.
             bank_journals = self.env['account.journal'].search([('type', 'in', ('bank', 'cash'))])
@@ -740,7 +742,7 @@ class AccountFinancialReportLine(models.Model):
 
             @returns : a dictionnary that has for each aml in the domain a dictionnary of the values of the fields
         """
-        domain = domain and safe_eval(ustr(domain))
+        domain = domain and ast.literal_eval(ustr(domain))
         for index, condition in enumerate(domain):
             if condition[0].startswith('tax_ids.'):
                 new_condition = (condition[0].partition('.')[2], condition[1], condition[2])
@@ -807,7 +809,7 @@ class AccountFinancialReportLine(models.Model):
 
     @api.multi
     def report_move_lines_action(self):
-        domain = safe_eval(self.domain)
+        domain = ast.literal_eval(self.domain)
         if 'date_from' in self.env.context.get('context', {}):
             if self.env.context['context'].get('date_from'):
                 domain = expression.AND([domain, [('date', '>=', self.env.context['context']['date_from'])]])
