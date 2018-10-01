@@ -502,7 +502,11 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
                         self._answerCall(inviteSession, incomingCallParams);
                     },
                     cancel_callback: function () {
-                        inviteSession.reject();
+                        try {
+                            inviteSession.reject();
+                        } catch (err) {
+                            console.error('Reject failed:', err);
+                        }
                         self.incomingtone.pause();
                     },
                 };
