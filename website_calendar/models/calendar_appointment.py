@@ -86,9 +86,9 @@ class CalendarAppointmentType(models.Model):
                       ... ]
         """
         def append_slot(day, slot):
-            local_start = appt_tz.localize(datetime.combine(day, time(hour=int(slot.hour), minute=int((slot.hour % 1) * 60))))
+            local_start = appt_tz.localize(datetime.combine(day, time(hour=int(slot.hour), minute=int(round((slot.hour % 1) * 60)))))
             local_end = appt_tz.localize(
-                datetime.combine(day, time(hour=int(slot.hour), minute=int((slot.hour % 1) * 60))) + relativedelta(hours=self.appointment_duration))
+                datetime.combine(day, time(hour=int(slot.hour), minute=int(round((slot.hour % 1) * 60)))) + relativedelta(hours=self.appointment_duration))
             slots.append({
                 self.appointment_tz: (
                     local_start,
@@ -303,7 +303,7 @@ class CalendarAppointmentSlot(models.Model):
 
     def name_get(self):
         weekdays = dict(self._fields['weekday'].selection)
-        return self.mapped(lambda slot: (slot.id, "%s, %02d:%02d" % (weekdays.get(slot.weekday), int(slot.hour), int((slot.hour % 1) * 60))))
+        return self.mapped(lambda slot: (slot.id, "%s, %02d:%02d" % (weekdays.get(slot.weekday), int(slot.hour), int(round((slot.hour % 1) * 60)))))
 
 
 class CalendarAppointmentQuestion(models.Model):
