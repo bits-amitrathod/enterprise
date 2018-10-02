@@ -527,5 +527,19 @@
             <field name="activity_date_deadline_range_type">days</field>
         </record>
 
+        <record id="documents_vendor_bill_extract_open_value" model="ir.attachment">
+            <field name="name">Invoice OpenValue</field>
+            <field name="datas_fname">invoice_openvalue.pdf</field>
+            <field name="datas" type="base64" file="documents/demo/files/invoice_openvalue.pdf"/>
+            <field name="folder_id" ref="documents_finance_folder"/>
+        </record>
+
+        <record id="documents_vendor_bill_extract_azure_interior" model="ir.attachment">
+            <field name="name">Invoice Azure Interior</field>
+            <field name="datas_fname">invoice_azure_interior.pdf</field>
+            <field name="datas" type="base64" file="documents/demo/files/invoice_azure_interior.pdf"/>
+            <field name="folder_id" ref="documents_finance_folder"/>
+        </record>
+
     </data>
 </odoo>
