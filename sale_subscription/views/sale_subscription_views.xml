@@ -78,7 +78,7 @@
         <field name="name">Subscriptions</field>
         <field name="res_model">sale.subscription</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form,pivot,graph,cohort</field>
+        <field name="view_mode">kanban,tree,form,pivot,graph,cohort,activity</field>
         <field name="context">{
             "group_by": "stage_id",
             "search_default_my_subscriptions":1
@@ -103,7 +103,7 @@
         <field name="name">Subscriptions</field>
         <field name="res_model">sale.subscription</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form,kanban,pivot,graph</field>
+        <field name="view_mode">tree,form,kanban,pivot,graph,activity</field>
         <field name="context">{
             'search_default_template_id': [active_id],
             'default_template_id': active_id,
@@ -124,7 +124,7 @@
         <field name="name">Subscriptions to Renew</field>
         <field name="res_model">sale.subscription</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form,pivot,graph,kanban,cohort</field>
+        <field name="view_mode">tree,form,pivot,graph,kanban,cohort,activity</field>
         <field name="context">{
             'group_by': 'stage_id',
             'search_default_user_id':uid,
