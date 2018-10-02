@@ -82,7 +82,7 @@ class IotDevice(models.Model):
 class IrActionReport(models.Model):
     _inherit = 'ir.actions.report'
 
-    device_id = fields.Many2one('iot.device', string='IoT Device', domain="[('device_type', '=', 'printer')]",
+    device_id = fields.Many2one('iot.device', string='IoT Device', domain="[('type', '=', 'printer')]",
                                 help='When setting a device here, the report will be printed through this device on the IoT Box')
 
     def iot_render(self, res_ids, data=None):
