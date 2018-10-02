@@ -82,7 +82,7 @@ class AccountInvoice(models.Model):
     extract_state = fields.Selection([('no_extract_requested', 'No extract requested'),
                             ('not_enough_credit', 'Not enough credit'),
                             ('error_status', 'An error occured'),
-                            ('waiting_extraction', 'Waiting extraction'), 
+                            ('waiting_extraction', 'Waiting extraction'),
                             ('extract_not_ready', 'waiting extraction, but it is not ready'),
                             ('waiting_validation', 'Waiting validation'),
                             ('done', 'Completed flow')],
@@ -338,7 +338,7 @@ class AccountInvoice(models.Model):
         if word.field == "currency":
             text = word.word_text.strip()
             currency = None
-            currencies = self.env["res.currency"].search()
+            currencies = self.env["res.currency"].search([])
             for curr in currencies:
                 if text == curr.currency_unit_label:
                     currency = curr
@@ -470,21 +470,11 @@ class AccountInvoice(models.Model):
                 self.partner_id = partner_id
                 self._onchange_partner_id()
 
-    def read(self, fields=None, load='_classic_read'):
-        # We only need in form view, doing two separate IF statements to avoid reading record is not needed
-        if (fields is None) or ('extract_state' in fields):
-            if (self.env.context.get('type')=='in_invoice') and (len(self)==1) and not self.env.context.get('checking_status'):
-                self2 = self.with_context(checking_status=True)
-                if (self2.extract_state in ('waiting_extraction','extract_not_ready')):
-                    self2.check_status()
-                    self = self2
-        return super(AccountInvoice, self).read(fields, load)
-
     @api.multi
     def check_status(self):
         """contact iap to get the actual status of the ocr request"""
         for record in self:
-            if record.extract_state in ["error_status"]:
+            if record.extract_state not in ["waiting_extraction", "extract_not_ready"]:
                 continue
             endpoint = self.env['ir.config_parameter'].sudo().get_param(
                 'account_invoice_extract_endpoint', 'https://iap-extract.odoo.com')  + '/iap/invoice_extract/get_result'
