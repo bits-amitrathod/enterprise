@@ -9,9 +9,9 @@
                 <attribute name="js_class">pedal_form</attribute>
             </xpath>
             <xpath expr="//field[@name='note']" position="after">
-                <label for="device_name" attrs="{'invisible': [('test_type', '!=', 'measure')]}"/>
+                <label for="device_name" attrs="{'invisible': ['|', ('test_type', 'not in', ['measure', 'picture', 'printer']), ('identifier', '=', False)]}"/>
                 <field name="device_name" readonly="1"
-                       attrs="{'invisible': [('test_type', '!=', 'measure')]}"/>
+                       attrs="{'invisible': ['|', ('test_type', 'not in', ['measure', 'picture', 'printer']), ('identifier', '=', False)]}"/>
             </xpath>
             <xpath expr="//button[@name='do_measure']" position="before">
                 <widget name="iot_take_measure_button"
