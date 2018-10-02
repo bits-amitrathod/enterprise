@@ -228,8 +228,16 @@
 </t>
 
 <t t-extend="UserMenu.shortcuts">
-    <t t-jquery="tr:last td:first" t-operation="inner">
-        Toggle home menu
+    <t t-jquery="tr:last" t-operation="after">
+        <tr>
+            <td align="left">Toggle home menu</td>
+            <td>
+                <span class="o_key">Alt</span> + <span class="o_key">h</span>
+            </td>
+            <td>
+                <span class="o_key">Control</span> + <span class="o_key">Alt</span> + <span class="o_key">h</span>
+            </td>
+        </tr>
     </t>
 </t>
 
