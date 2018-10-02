@@ -323,6 +323,7 @@ var IotTakeMeasureButton = Widget.extend({
     start: function () {
         this._super.apply(this, arguments);
         this.$el.text(_t('Take Measure'));
+        this.$el.attr('barcode_trigger', 'measure');
     },
 
     //--------------------------------------------------------------------------
