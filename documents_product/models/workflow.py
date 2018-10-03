@@ -20,7 +20,7 @@ class WorkflowActionRuleProduct(models.Model):
 
                 this_attachment.write({'res_model': self.create_model,
                                        'res_id': new_obj.id,
-                                       'folder_id': this_attachment.folder_id})
+                                       'folder_id': this_attachment.folder_id.id})
 
             view_id = new_obj.get_formview_id()
             return {

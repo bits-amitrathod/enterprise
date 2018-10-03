@@ -8,7 +8,7 @@ class WorkflowActionRuleTask(models.Model):
     has_business_option = fields.Boolean(default=True, compute='_get_business')
     create_model = fields.Selection(selection_add=[('project.task', "Task")])
 
-    def create_record(self, attachments):
+    def create_record(self, attachments=None):
         rv = super(WorkflowActionRuleTask, self).create_record(attachments=attachments)
         if self.create_model == 'project.task':
             new_obj = self.env[self.create_model].create({'name': "new task from document management"})

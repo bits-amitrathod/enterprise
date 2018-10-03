@@ -22,6 +22,9 @@ class WorkflowActionRuleSign(models.Model):
                     create_values['folder_id'] = self.folder_id.id
                 elif self.domain_folder_id:
                     create_values['folder_id'] = self.domain_folder_id.id
+                if attachment.tag_ids:
+                    create_values['documents_tag_ids'] = [(6, 0, attachment.tag_ids.ids)]
+
                 new_obj = self.env[self.create_model].create(create_values)
 
                 this_attachment = attachment

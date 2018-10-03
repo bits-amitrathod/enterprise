@@ -56,7 +56,7 @@ class WorkflowActionRule(models.Model):
         for record in self:
             record.has_business_option = len(self._fields['create_model'].selection)
 
-    def create_record(self, attachments):
+    def create_record(self, attachments=None):
         """
         implemented by each link module to define specific fields for the new business model (create_values)
 
@@ -101,7 +101,7 @@ class WorkflowActionRule(models.Model):
                 tag_action.execute_action(attachment)
 
         if self.create_model:
-            return self.create_record(attachments)
+            return self.create_record(attachments=attachments)
 
         return True
 
