@@ -198,12 +198,6 @@ var AppSwitcher = Widget.extend({
             var state = this.state;
             var app_nbr = state.apps.length;
             var new_index = data.focus + (state.focus || 0);
-            if (new_index < 0) {
-                new_index = state.apps.length + state.menu_items.length - 1;
-            }
-            if (new_index >= state.apps.length + state.menu_items.length) {
-                new_index = 0;
-            }
             if (new_index >= app_nbr && state.focus < app_nbr && data.focus > 0) {
                 if (state.focus + data.focus - (state.focus % data.focus) < app_nbr) {
                     new_index = app_nbr - 1;
@@ -216,6 +210,12 @@ var AppSwitcher = Widget.extend({
                 if (new_index === app_nbr) {
                     new_index = app_nbr - NBR_ICONS;
                 }
+            }
+            if (new_index < 0) {
+                new_index = state.apps.length + state.menu_items.length - 1;
+            }
+            if (new_index >= state.apps.length + state.menu_items.length) {
+                new_index = 0;
             }
             state.focus = new_index;
         }
