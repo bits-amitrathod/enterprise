@@ -276,7 +276,7 @@ class IrHttp(models.AbstractModel):
     _inherit = 'ir.http'
 
     @classmethod
-    def check_access_mode(cls, env, id, access_mode, model, access_token=None, related_id=None):
+    def _check_access_mode(cls, env, id, access_mode, model, access_token=None, related_id=None):
         """
         Implemented by each module to define an additional way to check access.
 
@@ -305,5 +305,5 @@ class IrHttp(models.AbstractModel):
                     attachments_check = http.request.env['ir.attachment'].sudo().search(domain)
                     if obj in attachments_check:
                         return obj
-        return super(IrHttp, cls).check_access_mode(env, id, access_mode, model,
+        return super(IrHttp, cls)._check_access_mode(env, id, access_mode, model,
                                                     access_token=access_token, related_id=related_id)
