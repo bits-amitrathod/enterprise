@@ -51,6 +51,8 @@ msgid ""
 "Click on the file to save it somewhere on your computer. Then upload that "
 "file on your bank's homebanking website to order the credit transfer."
 msgstr ""
+"Nhấp vào tệp để lưu tệp đó vào đâu đó trên máy tính của bạn. Sau đó tải lên "
+"tệp đó trên trang web của bạn để đặt hàng chuyển khoản tín dụng."
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_res_company
@@ -60,7 +62,7 @@ msgstr "Công ty"
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_sepa_credit_transfer
 msgid "Create SEPA credit transfer files"
-msgstr ""
+msgstr "Tạo tệp chuyển khoản tín dụng SEPA"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_create_uid
@@ -80,14 +82,14 @@ msgstr "Tên hiển thị"
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
 msgid "Download SEPA Credit Transfer File"
-msgstr ""
+msgstr "Tải xuống tệp chuyển khoản tín dụng SEPA"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company_sepa_orgid_issr
 msgid ""
 "Entity that assigns the identification (eg. KBE-BCO or Finanzamt Muenchen "
 "IV)."
-msgstr ""
+msgstr "Thực thể gán nhận dạng (ví dụ: KBE-BCO hoặc Finanzamt Muenchen IV)."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_filename
@@ -97,7 +99,7 @@ msgstr "Tên tập tin"
 #. module: account_sepa
 #: model:ir.actions.server,name:account_sepa.action_account_download_sepa_sct_file
 msgid "Generate SEPA Credit Transfer XML"
-msgstr ""
+msgstr "Tạo XML chuyển khoản tín dụng SEPA"
 
 #. module: account_sepa
 #: selection:res.company,sepa_pain_version:0
@@ -107,7 +109,7 @@ msgstr "Tổng quát"
 #. module: account_sepa
 #: selection:res.company,sepa_pain_version:0
 msgid "German Version"
-msgstr ""
+msgstr "Phiên bản tiếng Đức"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_id
@@ -118,13 +120,13 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_orgid_id
 msgid "Identification"
-msgstr ""
+msgstr "Nhận dạng"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company_sepa_orgid_id
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_orgid_id
 msgid "Identification assigned by an institution (eg. VAT number)."
-msgstr ""
+msgstr "Nhận dạng được chỉ định bởi một tổ chức (ví dụ: số VAT)."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:70
@@ -133,17 +135,19 @@ msgid ""
 "In order to export a SEPA Credit Transfer file, please only select payments "
 "belonging to the same bank journal."
 msgstr ""
+"Để xuất tệp chuyển khoản tín dụng SEPA, vui lòng chỉ chọn các khoản thanh "
+"toán thuộc cùng một nhật ký ngân hàng."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_is_generic
 msgid "Is Generic"
-msgstr ""
+msgstr "Chung"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_orgid_issr
 msgid "Issuer"
-msgstr ""
+msgstr "Nhà phát hành"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_journal
@@ -172,6 +176,7 @@ msgid ""
 "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
 "in length."
 msgstr ""
+"Tên của Bên tham chiếu chủ nợ. Quy tắc sử dụng: Giới hạn tối đa 70 ký tự."
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -181,7 +186,7 @@ msgstr "Đồng ý"
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
 msgid "Payment to send via SEPA"
-msgstr ""
+msgstr "Thanh toán để gửi qua SEPA"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_payment
@@ -195,17 +200,19 @@ msgid ""
 "Payments to export as SEPA Credit Transfer must have 'SEPA Credit Transfer' "
 "selected as payment method and be posted"
 msgstr ""
+"Thanh toán để xuất dưới dạng Chuyển khoản tín dụng SEPA phải được chọn "
+"'Chuyển khoản tín dụng SEPA' làm phương thức thanh toán và được đăng"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
 msgid "Payments to send via SEPA"
-msgstr ""
+msgstr "Thanh toán để gửi qua SEPA"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_payment_partner_bank_account_id
 #: model:ir.model.fields,field_description:account_sepa.field_account_register_payments_partner_bank_account_id
 msgid "Recipient Bank Account"
-msgstr ""
+msgstr "Tài khoản ngân hàng người nhận"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_register_payments
@@ -215,29 +222,29 @@ msgstr "Ghi nhận thanh toán cho nhiều hóa đơn"
 #. module: account_sepa
 #: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
 msgid "SEPA Credit Transfer"
-msgstr ""
+msgstr "Chuyển khoản tín dụng SEPA"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_search
 msgid "SEPA Credit Transfer Payments To Send"
-msgstr ""
+msgstr "Thanh toán bằng chuyển khoản tín dụng SEPA để gửi"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_journal_dashboard.py:23
 #, python-format
 msgid "SEPA Credit Transfers to Send"
-msgstr ""
+msgstr "Chuyển khoản tín dụng SEPA để gửi"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_pain_version
 msgid "SEPA Pain Version"
-msgstr ""
+msgstr "Phiên bản Pain SEPA"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_file
 msgid "SEPA XML File"
-msgstr ""
+msgstr "Tập tin SEPA XML"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company_sepa_pain_version
@@ -261,6 +268,11 @@ msgid ""
 "transfer. That is if the bank journal is not in €, a transaction is not in €"
 " or a payee is not identified by an IBAN account number and a bank BIC."
 msgstr ""
+"Tính năng kỹ thuật được sử dụng trong quá trình tạo tệp. Một thông điệp SEPA"
+" được cho là 'chung chung' nếu nó không thể được coi là một chuyển khoản tín"
+" dụng tiêu chuẩn châu Âu. Đó là nếu tạp chí ngân hàng không bằng €, giao "
+"dịch không phải là € hoặc người thụ hưởng không được xác định bằng số tài "
+"khoản IBAN và ngân hàng BIC."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:343
@@ -291,7 +303,7 @@ msgstr ""
 #, python-format
 msgid ""
 "The amount of the payment '%s' is too high. The maximum permitted is %s."
-msgstr ""
+msgstr "Số tiền thanh toán '%s' quá cao. Số lượng tối đa cho phép là %s."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:123
@@ -299,6 +311,8 @@ msgstr ""
 msgid ""
 "The creditor bank account %s used in payment %s is not identified by a BIC"
 msgstr ""
+"Tài khoản tín dụng ngân hàng %s được sử dụng trong thanh toán %s không được "
+"BIC xác định"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:125
@@ -306,6 +320,8 @@ msgstr ""
 msgid ""
 "The creditor bank account %s used in payment %s is not identified by an IBAN"
 msgstr ""
+"Tài khoản tín dụng ngân hàng %s được sử dụng trong thanh toán %s không được "
+"xác định bởi IBAN"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:48
@@ -316,6 +332,9 @@ msgid ""
 "In particular, the reason why this payment file is not generic is the following:\n"
 "   "
 msgstr ""
+"Tệp thanh toán được tạo không phải là chuyển khoản tín dụng chung SEPA. Lưu ý rằng một số ngân hàng có thể từ chối vì ngân hàng không được triển khai bên cạnh họ.\n"
+"\n"
+"Cụ thể, lý do tại sao tệp thanh toán này không phải là chung chung như sau:"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_payment.py:50
@@ -324,6 +343,8 @@ msgid ""
 "The journal '%s' requires a proper IBAN account to pay via SEPA. Please "
 "configure it first."
 msgstr ""
+"Nhật ký '%s' yêu cầu một tài khoản IBAN thích hợp để thanh toán qua SEPA. "
+"Vui lòng định cấu hình trước."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_payment.py:61
@@ -332,6 +353,8 @@ msgid ""
 "The partner account '%s' requires a Bank Identification Code (BIC) to pay "
 "via SEPA. Please configure it first."
 msgstr ""
+"Tài khoản đối tác '%s' yêu cầu Mã nhận dạng ngân hàng (BIC) để thanh toán "
+"qua SEPA. Vui lòng định cấu hình trước"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:17
@@ -349,13 +372,14 @@ msgstr ""
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:121
 #, python-format
 msgid "The transaction %s is instructed in another currency than EUR"
-msgstr ""
+msgstr "Giao dịch %s được hướng dẫn bằng đơn vị tiền tệ khác so với EUR"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:337
 #, python-format
 msgid "There is no Bank Identifier Code recorded for bank account '%s'"
 msgstr ""
+"Không có Mã nhận diện ngân hàng được ghi lại cho tài khoản ngân hàng '%s'"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:180
@@ -364,18 +388,20 @@ msgid ""
 "There is no Bank Identifier Code recorded for bank account '%s' of journal "
 "'%s'"
 msgstr ""
+"Không có Mã nhận diện ngân hàng được ghi lại cho tài khoản ngân hàng '%s' "
+"của nhật ký '%s'"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:78
 #, python-format
 msgid "There is no bank account selected for payment '%s'"
-msgstr ""
+msgstr "Không có tài khoản ngân hàng nào được chọn để thanh toán '%s'"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:178
 #, python-format
 msgid "Too many transactions for a single file."
-msgstr ""
+msgstr "Quá nhiều giao dịch cho một tệp."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_warning_message
@@ -389,18 +415,20 @@ msgid ""
 "Will appear in SEPA payments as the name of the party initiating the "
 "payment. Limited to 70 characters."
 msgstr ""
+"Sẽ xuất hiện trong thanh toán SEPA làm tên của bên bắt đầu thanh toán. Giới "
+"hạn trong 70 ký tự."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_initiating_party_name
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_initiating_party_name
 msgid "Your Company Name"
-msgstr ""
+msgstr "Tên công ty của bạn"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:117
 #, python-format
 msgid "Your bank account is not labelled in EUR"
-msgstr ""
+msgstr "Tài khoản ngân hàng của bạn không dùng EUR"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_res_config_settings
