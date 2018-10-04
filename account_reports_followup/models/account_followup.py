@@ -174,8 +174,8 @@ class res_partner(models.Model):
             delay = datetime.timedelta(days=result['delay'])
             fups[old] = (current_date - delay, result['id'])
             old = result['id']
-
-        fups[old] = (current_date - delay, old)
+        if old:
+            fups[old] = (current_date - delay, old)
         to_delete = self.env['res.partner']
 
         for partner in self:
