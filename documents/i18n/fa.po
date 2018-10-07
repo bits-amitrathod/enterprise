@@ -7,15 +7,15 @@
 # Martin Trigaux, 2018
 # Morovat Guivi <tarjomac@gmail.com>, 2018
 # Hamid Darabi, 2018
-# mohammad azarbara <mohammadazarbara98@gmail.com>, 2018
+# سید محمد آذربرا <mohammadazarbara98@gmail.com>, 2018
 # Hamed Mohammadi <hamed@dehongi.com>, 2018
 # Maziar Niaki <maziarmn@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 14:06+0000\n"
-"PO-Revision-Date: 2018-09-21 14:06+0000\n"
+"POT-Creation-Date: 2018-10-02 10:31+0000\n"
+"PO-Revision-Date: 2018-10-02 10:31+0000\n"
 "Last-Translator: Maziar Niaki <maziarmn@gmail.com>, 2018\n"
 "Language-Team: Persian (https://www.transifex.com/odoo/teams/41243/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -115,7 +115,8 @@ msgstr ""
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_kanban
-msgid "<span><b>File Request</b></span>"
+#: model_terms:ir.ui.view,arch_db:documents.inherit_mail_attachment_view_kanban
+msgid "<span><b>Requested Document</b></span>"
 msgstr ""
 
 #. module: documents
@@ -151,23 +152,17 @@ msgstr "عمل"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_needaction
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_needaction
 msgid "Action Needed"
 msgstr "اقدام مورد نیاز است"
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:96
+#: code:addons/documents/static/src/xml/documents_inspector.xml:103
 #: model:ir.ui.menu,name:documents.WorkflowRules_menu
 #: model_terms:ir.ui.view,arch_db:documents.workflow_rule_form_view
 #, python-format
 msgid "Actions"
 msgstr "کنش‌ها"
-
-#. module: documents
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__activity_ids
-msgid "Activities"
-msgstr "فعالیت‌ها"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_view_form
@@ -179,16 +174,6 @@ msgstr "فعالیت"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__activity_note
 msgid "Activity Note"
-msgstr ""
-
-#. module: documents
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__activity_state
-msgid "Activity State"
-msgstr "وضعیت فعالیت"
-
-#. module: documents
-#: model_terms:ir.ui.view,arch_db:documents.documents_request_form_view
-msgid "Activity settings"
 msgstr ""
 
 #. module: documents
@@ -258,7 +243,7 @@ msgstr ""
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:152
+#: code:addons/documents/static/src/xml/documents_inspector.xml:159
 #, python-format
 msgid "Archive"
 msgstr "بایگانی"
@@ -277,7 +262,6 @@ msgstr "پیوست به"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_attachment_count
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
 
@@ -298,6 +282,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__available_rule_ids
 msgid "Available Rules"
 msgstr ""
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.documents_request_form_view
+#: model_terms:ir.ui.view,arch_db:documents.documents_upload_url_view
+msgid "Cancel"
+msgstr "لغو"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_action__facet_id
@@ -340,7 +330,6 @@ msgid "Configuration"
 msgstr "پیکربندی"
 
 #. module: documents
-#: model:ir.model.fields,field_description:documents.field_documents_request_wizard__partner_id
 #: model:ir.model.fields,field_description:documents.field_documents_share__partner_id
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__criteria_partner_id
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__partner_id
@@ -428,7 +417,7 @@ msgstr ""
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:154
+#: code:addons/documents/static/src/xml/documents_inspector.xml:161
 #, python-format
 msgid "Delete"
 msgstr "حذف"
@@ -458,6 +447,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model,name:documents.model_ir_attachment
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_kanban
+#: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "Document"
 msgstr "سند"
 
@@ -473,12 +463,12 @@ msgstr ""
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_workflow_action
-msgid "Document Workflow Action"
+msgid "Document Workflow Tag Action"
 msgstr ""
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_workflow_tag_criteria
-msgid "Document Workflow Tag"
+msgid "Document Workflow Tag Criteria"
 msgstr ""
 
 #. module: documents
@@ -488,7 +478,7 @@ msgstr ""
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:57
+#: code:addons/documents/static/src/xml/documents_inspector.xml:64
 #: model:ir.actions.act_window,name:documents.document_action
 #: model:ir.model.fields,field_description:documents.field_documents_folder__attachment_ids
 #: model:ir.ui.menu,name:documents.dashboard
@@ -539,7 +529,7 @@ msgstr ""
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:142
+#: code:addons/documents/static/src/xml/documents_inspector.xml:149
 #: selection:documents.share,action:0
 #, python-format
 msgid "Download"
@@ -567,6 +557,11 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.folder_view_form
 msgid "E.g. Finance"
+msgstr ""
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.documents_request_form_view
+msgid "E.g. Missing Expense"
 msgstr ""
 
 #. module: documents
@@ -631,19 +626,16 @@ msgstr ""
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_follower_ids
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_follower_ids
 msgid "Followers"
 msgstr "دنبال‌کنندگان"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_channel_ids
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_channel_ids
 msgid "Followers (Channels)"
 msgstr "پیروان (کانال ها)"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_partner_ids
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_partner_ids
 msgid "Followers (Partners)"
 msgstr "پیروان (شرکاء)"
 
@@ -659,6 +651,11 @@ msgstr "فعالیتهای آینده"
 msgid ""
 "Go to the <b>images, videos & PDF viewer</b> by clicking on the preview "
 "area."
+msgstr ""
+
+#. module: documents
+#: model:ir.model,name:documents.model_ir_http
+msgid "HTTP Routing"
 msgstr ""
 
 #. module: documents
@@ -687,21 +684,18 @@ msgstr ""
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_unread
-#: model:ir.model.fields,help:documents.field_ir_attachment__message_unread
 msgid "If checked new messages require your attention."
 msgstr ""
 "اگر این گزینه را انتخاب کنید، پیام‌های جدید به توجه شما نیاز خواهند داشت."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_needaction
-#: model:ir.model.fields,help:documents.field_ir_attachment__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr ""
 "اگر این گزینه را انتخاب کنید، پیام‌های جدید به توجه شما نیاز خواهند داشت."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_has_error
-#: model:ir.model.fields,help:documents.field_ir_attachment__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -722,7 +716,6 @@ msgstr "محتوای ایندکس شده"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_is_follower
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_is_follower
 msgid "Is Follower"
 msgstr "دنبال می کند"
 
@@ -786,7 +779,7 @@ msgstr "بارگذاری"
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:147
+#: code:addons/documents/static/src/xml/documents_inspector.xml:154
 #, python-format
 msgid "Lock"
 msgstr "قفل"
@@ -815,14 +808,13 @@ msgstr "خروج"
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:62
+#: code:addons/documents/static/src/xml/documents_inspector.xml:69
 #, python-format
 msgid "MB"
 msgstr ""
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_main_attachment_id
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_main_attachment_id
 msgid "Main Attachment"
 msgstr ""
 
@@ -843,21 +835,19 @@ msgid "Manager"
 msgstr "مدیر"
 
 #. module: documents
+#: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__remove_activities
+msgid "Mark all Activities as done"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_has_error
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_has_error
 msgid "Message Delivery error"
 msgstr ""
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_ids
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_ids
 msgid "Messages"
 msgstr "پیام‌ها"
-
-#. module: documents
-#: model:mail.activity.type,name:documents.mail_documents_activity_data_md
-msgid "Missing document"
-msgstr ""
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
@@ -878,10 +868,15 @@ msgstr ""
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/js/documents_inspector.js:142
+#: code:addons/documents/static/src/js/documents_inspector.js:143
 #, python-format
 msgid "Multiple values"
 msgstr ""
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
+msgid "My Activities"
+msgstr "فعالیتهای من"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
@@ -914,72 +909,40 @@ msgid "Name of the share link"
 msgstr ""
 
 #. module: documents
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__activity_date_deadline
-msgid "Next Activity Deadline"
-msgstr ""
-
-#. module: documents
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__activity_summary
-msgid "Next Activity Summary"
-msgstr ""
-
-#. module: documents
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__activity_type_id
-msgid "Next Activity Type"
-msgstr ""
-
-#. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/js/documents_kanban_model.js:228
+#: code:addons/documents/static/src/js/documents_kanban_model.js:227
 #, python-format
 msgid "No Source"
 msgstr ""
 
 #. module: documents
-#. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:9
-#, python-format
-msgid "No document selected"
-msgstr ""
-
-#. module: documents
+#: model:ir.model.fields,field_description:documents.field_documents_request_wizard__activity_note
 #: model:ir.model.fields,field_description:documents.field_documents_share__activity_note
-#: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__note
 msgid "Note"
 msgstr "یادداشت"
 
 #. module: documents
-#: model_terms:ir.ui.view,arch_db:documents.workflow_rule_form_view
-msgid "Notes"
-msgstr "یادداشت‌ها"
-
-#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_needaction_counter
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_needaction_counter
 msgid "Number of Actions"
 msgstr "تعداد اقدامات"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_has_error_counter
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_has_error_counter
 msgid "Number of error"
 msgstr ""
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_needaction_counter
-#: model:ir.model.fields,help:documents.field_ir_attachment__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr "تعداد پیام ها که نیاز به عمل"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_has_error_counter
-#: model:ir.model.fields,help:documents.field_ir_attachment__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__message_unread_counter
-#: model:ir.model.fields,help:documents.field_ir_attachment__message_unread_counter
 msgid "Number of unread messages"
 msgstr "تعداد پیام‌های خوانده نشده"
 
@@ -1005,11 +968,6 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
-
-#. module: documents
-#: selection:ir.attachment,activity_state:0
-msgid "Overdue"
-msgstr "سررسید گذشته"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__owner_id
@@ -1054,11 +1012,6 @@ msgid ""
 msgstr ""
 
 #. module: documents
-#: selection:ir.attachment,activity_state:0
-msgid "Planned"
-msgstr "برنامه ریزی شده"
-
-#. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_contact
 msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
@@ -1069,7 +1022,7 @@ msgstr ""
 
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
-msgid "Product Product template"
+msgid "Product template"
 msgstr ""
 
 #. module: documents
@@ -1083,13 +1036,8 @@ msgid "Remove"
 msgstr "حذف"
 
 #. module: documents
-#: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__remove_activities
-msgid "Remove all Activities"
-msgstr ""
-
-#. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:146
+#: code:addons/documents/static/src/xml/documents_inspector.xml:153
 #, python-format
 msgid "Replace"
 msgstr ""
@@ -1112,8 +1060,20 @@ msgid "Request Document"
 msgstr ""
 
 #. module: documents
+#. openerp-web
+#: code:addons/documents/static/src/xml/systray.xml:7
+#, python-format
+msgid "Request a Document"
+msgstr ""
+
+#. module: documents
 #: model:ir.actions.act_window,name:documents.action_request_form
 msgid "Request a file"
+msgstr ""
+
+#. module: documents
+#: model:mail.activity.type,name:documents.mail_documents_activity_data_md
+msgid "Requested Document"
 msgstr ""
 
 #. module: documents
@@ -1128,13 +1088,8 @@ msgid "Responsible"
 msgstr "پاسخگو"
 
 #. module: documents
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__activity_user_id
-msgid "Responsible User"
-msgstr ""
-
-#. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:155
+#: code:addons/documents/static/src/xml/documents_inspector.xml:162
 #, python-format
 msgid "Restore"
 msgstr "بازگردانی"
@@ -1180,7 +1135,7 @@ msgstr "تنظیمات"
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:144
+#: code:addons/documents/static/src/xml/documents_inspector.xml:151
 #: code:addons/documents/static/src/xml/documents_kanban.xml:14
 #, python-format
 msgid "Share"
@@ -1228,7 +1183,7 @@ msgstr ""
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:61
+#: code:addons/documents/static/src/xml/documents_inspector.xml:68
 #, python-format
 msgid "Size"
 msgstr "اندازه"
@@ -1239,21 +1194,11 @@ msgid "Status"
 msgstr "وضعیت"
 
 #. module: documents
-#: model:ir.model.fields,help:documents.field_ir_attachment__activity_state
-msgid ""
-"Status based on activities\n"
-"Overdue: Due date is already passed\n"
-"Today: Activity date is today\n"
-"Planned: Future activities."
-msgstr ""
-
-#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__children_folder_ids
 msgid "Sub folders"
 msgstr ""
 
 #. module: documents
-#: model:ir.model.fields,field_description:documents.field_documents_request_wizard__activity_summary
 #: model:ir.model.fields,field_description:documents.field_documents_share__activity_summary
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__activity_summary
 msgid "Summary"
@@ -1285,7 +1230,7 @@ msgstr ""
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:86
+#: code:addons/documents/static/src/xml/documents_inspector.xml:93
 #: code:addons/documents/static/src/xml/documents_selector.xml:16
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__tag_ids
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__criteria_tag_ids
@@ -1373,17 +1318,13 @@ msgid "To validate"
 msgstr ""
 
 #. module: documents
-#: selection:ir.attachment,activity_state:0
-msgid "Today"
-msgstr "امروز"
-
-#. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "Today Activities"
 msgstr "فعالیتها امروز"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_facet__tooltip
+#: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__note
 msgid "Tooltip"
 msgstr ""
 
@@ -1410,20 +1351,18 @@ msgstr "URL"
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:155
+#: code:addons/documents/static/src/xml/documents_inspector.xml:162
 #, python-format
 msgid "Un-archive"
 msgstr ""
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_unread
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_unread
 msgid "Unread Messages"
 msgstr "پیام های ناخوانده"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_unread_counter
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__message_unread_counter
 msgid "Unread Messages Counter"
 msgstr "شمارنده پیام‌های خوانده‌نشده"
 
@@ -1437,7 +1376,9 @@ msgstr ""
 
 #. module: documents
 #: model_terms:ir.actions.act_window,help:documents.document_action
-msgid "Upload <small>a file or</small> drag <small>it here.</small>"
+msgid ""
+"Upload <span class=\"font-weight-normal\">a file or</span> drag <span class"
+"=\"font-weight-normal\">it here.</span>"
 msgstr ""
 
 #. module: documents
@@ -1488,13 +1429,11 @@ msgstr ""
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__website_message_ids
-#: model:ir.model.fields,field_description:documents.field_ir_attachment__website_message_ids
 msgid "Website Messages"
 msgstr "پیام‌های وب‌سایت"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__website_message_ids
-#: model:ir.model.fields,help:documents.field_ir_attachment__website_message_ids
 msgid "Website communication history"
 msgstr "تاریخچه ارتباط با وبسایت"
 
@@ -1539,7 +1478,7 @@ msgstr ""
 
 #. module: documents
 #. openerp-web
-#: code:addons/documents/static/src/xml/documents_inspector.xml:47
+#: code:addons/documents/static/src/xml/documents_inspector.xml:54
 #, python-format
 msgid "documents selected"
 msgstr ""

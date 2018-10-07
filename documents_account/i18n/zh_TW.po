@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 14:06+0000\n"
-"PO-Revision-Date: 2018-09-21 14:06+0000\n"
+"POT-Creation-Date: 2018-10-02 10:31+0000\n"
+"PO-Revision-Date: 2018-10-02 10:31+0000\n"
 "Last-Translator: sejun huang <sejun.huang@gmail.com>, 2018\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/odoo/teams/41243/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "一組條件和操作，可用於與條件匹配的所有附件"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_company__account_folder
-#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder
+#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__dms_account_settings
 msgid "Account Folder"
 msgstr ""
 
@@ -54,13 +54,18 @@ msgid "Create"
 msgstr "創建"
 
 #. module: documents_account
+#: code:addons/documents_account/models/account_invoice.py:13
+#, python-format
+msgid "Created by: "
+msgstr ""
+
+#. module: documents_account
 #: selection:documents.workflow.rule,create_model:0
 msgid "Credit note"
 msgstr ""
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_company__dms_account_settings
-#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__dms_account_settings
 msgid "Dms Account Settings"
 msgstr ""
 
@@ -71,7 +76,7 @@ msgstr "文件"
 
 #. module: documents_account
 #: model:mail.activity.type,name:documents_account.mail_documents_activity_data_fs
-msgid "Fiscal Statement"
+msgid "Financial Statement"
 msgstr ""
 
 #. module: documents_account
@@ -80,8 +85,13 @@ msgid "Has Business Option"
 msgstr ""
 
 #. module: documents_account
+#: model:ir.model,name:documents_account.model_account_invoice
+msgid "Invoice"
+msgstr "發票"
+
+#. module: documents_account
 #: selection:documents.workflow.rule,create_model:0
-msgid "Product Product template"
+msgid "Product template"
 msgstr ""
 
 #. module: documents_account
@@ -106,10 +116,15 @@ msgstr "任務"
 
 #. module: documents_account
 #: model:mail.activity.type,name:documents_account.mail_documents_activity_data_vat
-msgid "VAT return"
+msgid "Tax Statement"
 msgstr ""
 
 #. module: documents_account
 #: selection:documents.workflow.rule,create_model:0
 msgid "Vendor bill"
+msgstr ""
+
+#. module: documents_account
+#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder
+msgid "account default folder"
 msgstr ""

@@ -4,16 +4,18 @@
 # 
 # Translators:
 # Martin Trigaux, 2018
-# liAnGjiA <liangjia@qq.com>, 2018
+# 珠海-杜哥 <liangjia@qq.com>, 2018
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2018
 # waveyeung <waveyeung@qq.com>, 2018
+# xu xiaohu <xu.xiaohu@gmail.com>, 2018
+# keecome <7017511@qq.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-21 14:06+0000\n"
 "PO-Revision-Date: 2018-09-21 14:06+0000\n"
-"Last-Translator: waveyeung <waveyeung@qq.com>, 2018\n"
+"Last-Translator: keecome <7017511@qq.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,6 +42,9 @@ msgid ""
 "('state', '!=', 'draft')]}\" role=\"status\">Direct Debit collecting method "
 "available</span>"
 msgstr ""
+"<span class=\"alert alert-info\" attrs=\"{'invisible': ['|', '|', "
+"('sdd_mandate_usable', '!=', True), ('payment_type', '!=', 'inbound'), "
+"('state', '!=', 'draft')]}\" role=\"status\">直接借方收集方法</span>"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -88,7 +93,7 @@ msgstr "<strong>授权标识符：</strong>"
 msgid ""
 "<strong>Name of the reference party:</strong> "
 "......................................"
-msgstr ""
+msgstr "<strong>参考方名称:</strong> ......................................"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
@@ -113,12 +118,12 @@ msgstr "<strong>开始日期:</strong>"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
 msgid "<strong>Transaction type:</strong> recurrent"
-msgstr ""
+msgstr "<strong>事务类型:</strong> 周期性"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form_document
 msgid "<strong>Zip:</strong>"
-msgstr ""
+msgstr "<strong>Zip:</strong>"
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:80
@@ -208,7 +213,7 @@ msgstr "可以使用 SDD 授权吗？"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act
 msgid "Create a new direct debit customer mandate"
-msgstr ""
+msgstr "新增直接借记客户的授权。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__create_uid
@@ -223,7 +228,7 @@ msgstr "创建时间"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_config_settings__sdd_creditor_identifier
 msgid "Creditor Identifier"
-msgstr ""
+msgstr "债权人标识符"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_res_config_settings__sdd_creditor_identifier
@@ -255,12 +260,12 @@ msgstr "可以使用授权的日期（包括）。"
 msgid ""
 "Date until which the mandate can be used. It will automatically be closed "
 "after this date."
-msgstr ""
+msgstr "可以使用该授权的截止日期。该截止日期后授权将被自动关闭。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_batch_payment__sdd_required_collection_date
 msgid "Date when the company expects to receive the payments of this batch."
-msgstr ""
+msgstr "预计本批次收款的日期。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__partner_id
@@ -471,7 +476,7 @@ msgstr "授权范围的有效性"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.actions.act_window,help:account_sepa_direct_debit.action_sdd_payments_to_collect
 msgid "No direct debit payment to collect"
-msgstr ""
+msgstr "无需收取的直接借记付款"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__payments_to_collect_nber
@@ -480,7 +485,7 @@ msgid ""
 "the number of payments that have been generated and posted thanks to this "
 "mandate and still needs their XML file to be generated and sent to the bank "
 "to debit the customer's account."
-msgstr ""
+msgstr "该授权已收集的直接借记付款的数额，即，由于该授权已生成并过账，仍需生成 XML 文件并将其发送给银行以向客户的账户进行借记的付款数额。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__paid_invoices_nber
@@ -496,6 +501,11 @@ msgid ""
 "                    then only have to generate a SEPA Direct Debit (SDD) XML file containing this operation\n"
 "                    and send it to your bank to effectively get paid."
 msgstr ""
+"在 Odoo 中为\n"
+"                    具有开票日期当日有效授权的客户开具发票后，\n"
+"                    其验证将触发其自动付款，\n"
+"                  然后您只需生成包含此操作的 SEPA 直接借记 (SDD) XML 文件\n"
+"                    并将该文件发送给您的银行即可有效地获得报酬。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_invoice__sdd_paying_mandate_id
@@ -630,13 +640,13 @@ msgstr "已撤销"
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_sdd_mandate
 msgid "SDD Mandate"
-msgstr ""
+msgstr "SDD 授权"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_partner__sdd_count
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_users__sdd_count
 msgid "SDD count"
-msgstr ""
+msgstr "SDD 统计"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_company__sdd_creditor_identifier
@@ -728,7 +738,7 @@ msgstr "债权人标识符超过 35 个字符的做大长度。"
 msgid ""
 "The debtor account must have a bank with a bic number in order to validate a"
 " SEPA Direct Debit mandate."
-msgstr ""
+msgstr "为了验证SEPA直接借记授权，债务人须持有一个带银行投资合同金额的银行账户。"
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:153
@@ -838,7 +848,7 @@ msgid ""
 "Unable to post payment '%s' due to no usable mandate being available at date"
 " %s for partner '%s'. Please create one before encoding a SEPA Direct Debit "
 "payment."
-msgstr ""
+msgstr "由于合作伙伴'%s'的日期%s没有可用的授权，因此无法过帐付款'%s'。请在编码SEPA直接付款之前创建一个。"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
@@ -851,7 +861,7 @@ msgstr "审核"
 msgid ""
 "You cannot generate a SEPA Direct Debit file with a required collection date"
 " in the past."
-msgstr ""
+msgstr "不能生成需要归集历史日期的SEPA直接借贷文件。"
 
 #. module: account_sepa_direct_debit
 #: code:addons/account_sepa_direct_debit/models/account_invoice.py:35

@@ -5,14 +5,15 @@
 # Translators:
 # Martin Trigaux, 2018
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2018
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2018
 # Gunther Clauwaert <gclauwae@hotmail.com>, 2018
 # Thomas Pot <thomas@open2bizz.nl>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 14:06+0000\n"
-"PO-Revision-Date: 2018-09-21 14:06+0000\n"
+"POT-Creation-Date: 2018-10-02 10:31+0000\n"
+"PO-Revision-Date: 2018-10-02 10:31+0000\n"
 "Last-Translator: Thomas Pot <thomas@open2bizz.nl>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +33,7 @@ msgstr ""
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_company__account_folder
-#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder
+#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__dms_account_settings
 msgid "Account Folder"
 msgstr "Boekhouding Folder"
 
@@ -58,13 +59,18 @@ msgid "Create"
 msgstr "Aanmaken"
 
 #. module: documents_account
+#: code:addons/documents_account/models/account_invoice.py:13
+#, python-format
+msgid "Created by: "
+msgstr "Aangemaakt door:"
+
+#. module: documents_account
 #: selection:documents.workflow.rule,create_model:0
 msgid "Credit note"
-msgstr "Creditnota"
+msgstr "Creditfactuur"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_company__dms_account_settings
-#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__dms_account_settings
 msgid "Dms Account Settings"
 msgstr "DMS account instellingen"
 
@@ -75,8 +81,8 @@ msgstr "Document"
 
 #. module: documents_account
 #: model:mail.activity.type,name:documents_account.mail_documents_activity_data_fs
-msgid "Fiscal Statement"
-msgstr ""
+msgid "Financial Statement"
+msgstr "Financieel overzicht"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__has_business_option
@@ -84,19 +90,26 @@ msgid "Has Business Option"
 msgstr "Heeft business optie"
 
 #. module: documents_account
+#: model:ir.model,name:documents_account.model_account_invoice
+msgid "Invoice"
+msgstr "Factuur"
+
+#. module: documents_account
 #: selection:documents.workflow.rule,create_model:0
-msgid "Product Product template"
-msgstr "Product Product Sjabloon"
+msgid "Product template"
+msgstr "Productsjabloon"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
 msgid "Select the folder to be used for accounting's documents."
 msgstr ""
+"Selecteer de map die moet worden gebruikt voor documenten voor de "
+"boekhouding."
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
 msgid "Select the tags to be applied to the accounting's new documents"
-msgstr ""
+msgstr "Selecteer de labels voor nieuwe boekhoudingdocumenten"
 
 #. module: documents_account
 #: selection:documents.workflow.rule,create_model:0
@@ -110,10 +123,15 @@ msgstr "Taak"
 
 #. module: documents_account
 #: model:mail.activity.type,name:documents_account.mail_documents_activity_data_vat
-msgid "VAT return"
-msgstr ""
+msgid "Tax Statement"
+msgstr "BTW aangifte"
 
 #. module: documents_account
 #: selection:documents.workflow.rule,create_model:0
 msgid "Vendor bill"
 msgstr "Leveranciersfactuur"
+
+#. module: documents_account
+#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder
+msgid "account default folder"
+msgstr "Boekhouding standaard map"
