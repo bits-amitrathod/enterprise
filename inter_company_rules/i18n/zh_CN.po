@@ -46,6 +46,11 @@ msgid ""
 "                                    <span attrs=\"{'invisible':[('applicable_on','!=', 'sale_purchase')]}\" class=\"ml4\"> Sale and Purchase Order</span>\n"
 "                                </strong> using"
 msgstr ""
+"<strong>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml4\">销售订单</span>\n"
+"                                    <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml4\">采购订单</span>\n"
+"                                    <span attrs=\"{'invisible':[('applicable_on','!=', 'sale_purchase')]}\" class=\"ml4\"> 销售与采购订单</span>\n"
+"                                </strong> 使用中"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
@@ -57,6 +62,12 @@ msgid ""
 "                            </strong>\n"
 "                            using"
 msgstr ""
+"<strong>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'purchase')]}\" class=\"ml8\">销售订单 </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale')]}\" class=\"ml8\">采购订单 </span>\n"
+"                                <span attrs=\"{'invisible': [('applicable_on','!=', 'sale_purchase')]}\" class=\"ml8\"> 销售与采购订单 </span>\n"
+"                            </strong>\n"
+"                            使用中"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__applicable_on
@@ -188,7 +199,7 @@ msgstr "销售订单"
 #: selection:res.company,applicable_on:0
 #: selection:res.config.settings,applicable_on:0
 msgid "Sale and Purchase Order"
-msgstr ""
+msgstr "销售与采购订单"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings__rules_company_id
@@ -224,12 +235,12 @@ msgstr "源销售订单"
 #. module: inter_company_rules
 #: selection:res.company,rule_type:0 selection:res.config.settings,rule_type:0
 msgid "Synchronize Invoices & Bills"
-msgstr ""
+msgstr "同步发票与账单"
 
 #. module: inter_company_rules
 #: selection:res.company,rule_type:0 selection:res.config.settings,rule_type:0
 msgid "Synchronize Sales & Purchase Orders"
-msgstr ""
+msgstr "同步采购和销售订单"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company__warehouse_id
@@ -245,7 +256,7 @@ msgstr "采购订单仓库"
 #: model:ir.ui.view,arch_db:inter_company_rules.res_config_settings_view_form
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "When a company validates a"
-msgstr ""
+msgstr "当公司验证一个"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:47
@@ -276,7 +287,7 @@ msgstr "草稿"
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "generate a"
-msgstr ""
+msgstr "生成一个"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings
@@ -291,7 +302,7 @@ msgstr "到"
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "to this company,"
-msgstr ""
+msgstr "这个公司，"
 
 #. module: inter_company_rules
 #: selection:res.company,auto_validation:0
