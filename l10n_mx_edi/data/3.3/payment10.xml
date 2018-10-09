@@ -77,8 +77,7 @@
                             </t>
                             <t t-set="amount_paid" t-value="amount_paid - balance"/>
                             <t t-set="balance" t-value="record.currency_id.with_context(date=record.payment_date).compute(balance, invoice.currency_id)"/>
-                            <t t-set="inv_rate" t-value="('%.6f' % (invoice.currency_id.with_context(date=record.payment_date).compute(1, record.currency_id, round=False))) if record.currency_id != invoice.currency_id else False"/>
-                            <t t-set="inv_rate" t-value="1 if inv_rate and invoice.currency_id.name == 'MXN' else inv_rate"/>
+                            <t t-set="inv_rate" t-value="('%.6f' % (record.currency_id.with_context(date=record.payment_date).compute(1, invoice.currency_id, round=False))) if record.currency_id != invoice.currency_id else False"/>
                             <t t-set="rate_difference" t-value="[p for p in invoice._get_payments_vals() if p.get('journal_name', '') == record.company_id.currency_exchange_journal_id.name]"/>
                             <t t-set="rate_difference" t-value="rate_difference[0].get('amount', 0.0) if rate_difference else 0.0"/>
                             <pago10:DoctoRelacionado
