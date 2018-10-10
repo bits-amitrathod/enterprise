@@ -685,14 +685,34 @@ class AccountFinancialReportLine(models.Model):
               UNION ALL
               (
                WITH payment_table AS (
-                 SELECT aml.move_id, \"account_move_line\".date, CASE WHEN aml.balance = 0 THEN 0 ELSE part.amount / ABS(am.amount) END as matched_percentage
-                   FROM account_partial_reconcile part LEFT JOIN account_move_line aml ON aml.id = part.debit_move_id LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables + """
+                 SELECT aml.move_id, \"account_move_line\".date,
+                        CASE WHEN (aml.balance = 0 OR sub_aml.total_per_account = 0)
+                            THEN 0
+                            ELSE part.amount / ABS(sub_aml.total_per_account)
+                        END as matched_percentage
+                   FROM account_partial_reconcile part
+                   LEFT JOIN account_move_line aml ON aml.id = part.debit_move_id
+                   LEFT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account
+                                FROM account_move_line
+                                GROUP BY move_id, account_id) sub_aml
+                            ON (aml.account_id = sub_aml.account_id AND sub_aml.move_id=aml.move_id)
+                   LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables + """
                    WHERE part.credit_move_id = "account_move_line".id
                     AND "account_move_line".user_type_id IN %s
                     AND """ + where_clause + """
                  UNION ALL
-                 SELECT aml.move_id, \"account_move_line\".date, CASE WHEN aml.balance = 0 THEN 0 ELSE part.amount / ABS(am.amount) END as matched_percentage
-                   FROM account_partial_reconcile part LEFT JOIN account_move_line aml ON aml.id = part.credit_move_id LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables + """
+                 SELECT aml.move_id, \"account_move_line\".date,
+                        CASE WHEN (aml.balance = 0 OR sub_aml.total_per_account = 0)
+                            THEN 0
+                            ELSE part.amount / ABS(sub_aml.total_per_account)
+                        END as matched_percentage
+                   FROM account_partial_reconcile part
+                   LEFT JOIN account_move_line aml ON aml.id = part.credit_move_id
+                   LEFT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account
+                                FROM account_move_line
+                                GROUP BY move_id, account_id) sub_aml
+                            ON (aml.account_id = sub_aml.account_id AND sub_aml.move_id=aml.move_id)
+                   LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables + """
                    WHERE part.debit_move_id = "account_move_line".id
                     AND "account_move_line".user_type_id IN %s
                     AND """ + where_clause + """
