@@ -90,10 +90,26 @@ class TestAccountReports(common.TransactionCase):
             'default_credit_account_id': self.account_sale.id,
         })
 
+        mock_date = time.strftime('%Y') + '-06-26'
+        self.minimal_options = {
+            'date': {
+                'date_from': mock_date,
+                'date_to': mock_date,
+            },
+        }
+        self.minimal_options_general_ledger = dict(self.minimal_options)
+        self.minimal_options_general_ledger['date']['date'] = mock_date
+        self.minimal_options_general_ledger.update({
+            'unfolded_lines': [],
+            'journals': [],
+            'comparison': {
+                'periods': [],
+            }
+        })
+
     def test_00_financial_reports(self):
         for report in self.env['account.financial.html.report'].search([]):
-            context_data = self.env['account.report.context.common'].return_context('account.financial.html.report', {}, report.id)
-            self.env[context_data[0]].browse(context_data[1]).get_html_and_data()
+            report.get_html(self.minimal_options)
 
     def test_01_custom_reports(self):
         report_models = [
@@ -101,19 +117,26 @@ class TestAccountReports(common.TransactionCase):
             'account.general.ledger',
             'account.generic.tax.report',
         ]
+        minimal_context = {
+            'state': False,
+        }
+
         for report_model in report_models:
-            context_data = self.env['account.report.context.common'].return_context(report_model, {})
-            self.env[context_data[0]].browse(context_data[1]).get_html_and_data()
+            self.env[report_model].with_context(minimal_context).get_html(self.minimal_options_general_ledger)
 
     def test_02_followup_reports(self):
-        self.env['account.report.context.followup.all'].create({}).get_html({'page': 1})
-        self.env['account.report.context.followup'].create({'partner_id': self.env.ref('base.res_partner_2').id}).get_html()
+        self.minimal_options_general_ledger['partner_id'] = self.env.ref('base.res_partner_2').id
+        self.env['account.followup.report'].get_html(self.minimal_options_general_ledger)
 
     def test_03_general_ledger(self):
-        context = self.env['account.context.general.ledger'].create({})
-        self.env['account.general.ledger'].get_lines(context.id)
+        options = self.minimal_options_general_ledger
+        GeneralLedger = self.env['account.general.ledger'].with_context(state='draft')
+        GeneralLedger.with_context(GeneralLedger.set_context(options)).get_lines(options)
 
     def test_04_general_ledger_output_cashbasis0(self):
+        def columns_get_numbers(columns_list):
+            return [col.get('name') for col in columns_list]
+
         year = time.strftime('%Y')
         date_sale = year + '-06-26'
         date_payment = year + '-06-27'
@@ -199,35 +222,36 @@ class TestAccountReports(common.TransactionCase):
 
         # Build the report
         # With floats for numbers instead of currency formatted string
-        GeneralLedger = self.env['account.general.ledger'].with_context(no_format=True)
-        context_report = self.env['account.context.general.ledger'].create({
-            'company_ids': [(6, False, self.company.ids)],
-            'journal_ids': [(6, False, [self.payment_journal.id, self.sale_journal.id])],
-            'date_filter': 'custom',
-        })
-        update_report = {
-            'date_from': date_sale,
-            'date_to': date_sale,
+        GeneralLedger = self.env['account.general.ledger'].with_context(no_format=True, state='posted')
+        journals_to_check = self.sale_journal + self.payment_journal
+        options = {
+            'date': {
+                'date_from': date_sale,
+                'date_to': date_sale,
+            },
             'cash_basis': True,
+            'unfolded_lines': [],
+            'journals': [
+                {'id': j.id, 'name': j.name, 'code': j.code, 'type': j.type, 'selected': True}
+                for j in journals_to_check
+            ],
         }
 
         # CASH BASIS TEST
         # Before Payment Date
-        context_sale = context_report.return_context('account.general.ledger', update_report)[1]
-        gl_lines_sale_cb = GeneralLedger.get_lines(context_sale)
+        gl_lines_sale_cb = GeneralLedger.with_context(GeneralLedger.set_context(options)).get_lines(options)
         self.assertEqual(len(gl_lines_sale_cb), 0,
             'In cash basis, the general ledger before the payment date should be empty')
 
         # After Payment Date
-        update_report['date_to'] = date_payment
-        context_cashbasis = context_report.return_context('account.general.ledger', update_report)[1]
-        gl_lines_pay_cb = GeneralLedger.get_lines(context_cashbasis)
+        options['date']['date_to'] = date_payment
+        gl_lines_pay_cb = GeneralLedger.with_context(GeneralLedger.set_context(options)).get_lines(options)
         self.assertEqual(len(gl_lines_pay_cb), 5,
             'In cash basis, the general ledger should contain 5 lines after payment date')
 
         for line in gl_lines_pay_cb:
             name = line['name']
-            columns = line['columns'][1:]  # just keep debit, credit and balance
+            columns = columns_get_numbers(line['columns'][1:])  # just keep debit, credit and balance
             if name == '001 RCV':
                 self.assertEqual(columns, [30.0, 30.0, 0.0])
             elif name == '002 SALE':
@@ -241,17 +265,16 @@ class TestAccountReports(common.TransactionCase):
 
         # ACCRUAL TEST
         # Before Payment Date
-        update_report['date_to'] = date_sale
-        update_report['cash_basis'] = False
-        context_accrual = context_report.return_context('account.general.ledger', update_report)[1]
-        gl_lines_sale_acc = GeneralLedger.get_lines(context_accrual)
+        options['date']['date_to'] = date_sale
+        options['cash_basis'] = False
+        gl_lines_sale_acc = GeneralLedger.with_context(GeneralLedger.set_context(options)).get_lines(options)
 
         self.assertEqual(len(gl_lines_sale_acc), 4,
             'In accrual, the general ledger should contain 4 lines before payment date')
 
         for line in gl_lines_sale_acc:
             name = line['name']
-            columns = line['columns'][1:]
+            columns = columns_get_numbers(line['columns'][1:])
             if name == '001 RCV':
                 self.assertEqual(columns, [30.0, 0.0, 30.0])
             elif name == '002 SALE':
@@ -262,17 +285,16 @@ class TestAccountReports(common.TransactionCase):
                 self.assertEqual(columns, [0.0, 5.0, -5.0])
 
         # After payment Date
-        update_report['date_to'] = date_payment
-        update_report['cash_basis'] = False
-        context_accrual = context_report.return_context('account.general.ledger', update_report)[1]
-        gl_lines_pay_acc = GeneralLedger.get_lines(context_accrual)
+        options['date']['date_to'] = date_payment
+        options['cash_basis'] = False
+        gl_lines_pay_acc = GeneralLedger.with_context(GeneralLedger.set_context(options)).get_lines(options)
 
         self.assertEqual(len(gl_lines_pay_acc), 5,
             'In accrual, the general ledger should contain 5 lines after payment date')
 
         for line in gl_lines_pay_acc:
             name = line['name']
-            columns = line['columns'][1:]
+            columns = columns_get_numbers(line['columns'][1:])
             if name == '001 RCV':
                 self.assertEqual(columns, [30.0, 30.0, 0.0])
             elif name == '002 SALE':
