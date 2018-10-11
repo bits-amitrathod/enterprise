@@ -333,8 +333,8 @@ class report_account_general_ledger(models.AbstractModel):
                         line_debit = line.debit
                         line_credit = line.credit
                     date = amls.env.context.get('date') or fields.Date.today()
-                    line_debit = line.company_id.currency_id._convert(line_debit, used_currency, line.company_id, date)
-                    line_credit = line.company_id.currency_id._convert(line_credit, used_currency, line.company_id, date)
+                    line_debit = line.company_id.currency_id._convert(line_debit, used_currency, company_id, date)
+                    line_credit = line.company_id.currency_id._convert(line_credit, used_currency, company_id, date)
                     progress = progress + line_debit - line_credit
                     currency = "" if not line.currency_id else self.with_context(no_format=False).format_value(line.amount_currency, currency=line.currency_id)
 
