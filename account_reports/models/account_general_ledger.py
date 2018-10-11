@@ -276,6 +276,9 @@ class report_account_general_ledger(models.AbstractModel):
         unfold_all = context.get('print_mode') and len(options.get('unfolded_lines')) == 0
         sum_debit = sum_credit = sum_balance = 0
         for account in sorted_accounts:
+            display_name = account.code + " " + account.name
+            if options.get('filter_accounts') and options.get('filter_accounts') not in display_name:
+                continue
             debit = grouped_accounts[account]['debit']
             credit = grouped_accounts[account]['credit']
             balance = grouped_accounts[account]['balance']
@@ -287,7 +290,7 @@ class report_account_general_ledger(models.AbstractModel):
             if offset == 0:
                 lines.append({
                     'id': 'account_%s' % (account.id,),
-                    'name': account.code + " " + account.name,
+                    'name': display_name,
                     'columns': [{'name': v} for v in [amount_currency, self.format_value(debit), self.format_value(credit), self.format_value(balance)]],
                     'level': 2,
                     'unfoldable': True,
