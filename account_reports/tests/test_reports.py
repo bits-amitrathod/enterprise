@@ -96,6 +96,7 @@ class TestAccountReports(common.TransactionCase):
                 'date_from': mock_date,
                 'date_to': mock_date,
             },
+            'ir_filters': [],
         }
         self.minimal_options_general_ledger = dict(self.minimal_options)
         self.minimal_options_general_ledger['date']['date'] = mock_date
@@ -240,14 +241,19 @@ class TestAccountReports(common.TransactionCase):
         # CASH BASIS TEST
         # Before Payment Date
         gl_lines_sale_cb = GeneralLedger.with_context(GeneralLedger.set_context(options)).get_lines(options)
-        self.assertEqual(len(gl_lines_sale_cb), 0,
-            'In cash basis, the general ledger before the payment date should be empty')
+        self.assertEqual(len(gl_lines_sale_cb), 1,
+            'In cash basis, the general ledger before the payment date should only contain the total line')
+
+        self.assertEqual(gl_lines_sale_cb[0]['name'], 'Total')
+        # The level of the total line implies that the amount columns are offset
+        self.assertEqual(columns_get_numbers(gl_lines_sale_cb[0]['columns'][-3:]), [0.0, 0.0, 0.0],
+            'In cash basis, the total line should be 0 before the payment date')
 
         # After Payment Date
         options['date']['date_to'] = date_payment
         gl_lines_pay_cb = GeneralLedger.with_context(GeneralLedger.set_context(options)).get_lines(options)
-        self.assertEqual(len(gl_lines_pay_cb), 5,
-            'In cash basis, the general ledger should contain 5 lines after payment date')
+        self.assertEqual(len(gl_lines_pay_cb), 6,
+            'In cash basis, the general ledger should contain 6 lines after payment date')
 
         for line in gl_lines_pay_cb:
             name = line['name']
@@ -262,6 +268,9 @@ class TestAccountReports(common.TransactionCase):
                 self.assertEqual(columns, [30.0, 0.0, 30.0])
             elif name == '005 OTHER':
                 self.assertEqual(columns, [0.0, 5.0, -5.0])
+            elif name == 'Total':
+                columns = columns_get_numbers(line['columns'][-3:])
+                self.assertEqual(columns, [65.0, 65.0, 0.0])
 
         # ACCRUAL TEST
         # Before Payment Date
@@ -269,8 +278,8 @@ class TestAccountReports(common.TransactionCase):
         options['cash_basis'] = False
         gl_lines_sale_acc = GeneralLedger.with_context(GeneralLedger.set_context(options)).get_lines(options)
 
-        self.assertEqual(len(gl_lines_sale_acc), 4,
-            'In accrual, the general ledger should contain 4 lines before payment date')
+        self.assertEqual(len(gl_lines_sale_acc), 5,
+            'In accrual, the general ledger should contain 5 lines before payment date')
 
         for line in gl_lines_sale_acc:
             name = line['name']
@@ -283,14 +292,17 @@ class TestAccountReports(common.TransactionCase):
                 self.assertEqual(columns, [5.0, 0.0, 5.0])
             elif name == '005 OTHER':
                 self.assertEqual(columns, [0.0, 5.0, -5.0])
+            elif name == 'Total':
+                columns = columns_get_numbers(line['columns'][-3:])
+                self.assertEqual(columns, [35.0, 35.0, 0.0])
 
         # After payment Date
         options['date']['date_to'] = date_payment
         options['cash_basis'] = False
         gl_lines_pay_acc = GeneralLedger.with_context(GeneralLedger.set_context(options)).get_lines(options)
 
-        self.assertEqual(len(gl_lines_pay_acc), 5,
-            'In accrual, the general ledger should contain 5 lines after payment date')
+        self.assertEqual(len(gl_lines_pay_acc), 6,
+            'In accrual, the general ledger should contain 6 lines after payment date')
 
         for line in gl_lines_pay_acc:
             name = line['name']
@@ -305,3 +317,6 @@ class TestAccountReports(common.TransactionCase):
                 self.assertEqual(columns, [30.0, 0.0, 30.0])
             elif name == '005 OTHER':
                 self.assertEqual(columns, [0.0, 5.0, -5.0])
+            elif name == 'Total':
+                columns = columns_get_numbers(line['columns'][-3:])
+                self.assertEqual(columns, [65.0, 65.0, 0.0])
