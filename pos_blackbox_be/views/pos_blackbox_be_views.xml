@@ -250,7 +250,7 @@
             <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
             <field name="arch" type="xml">
                 <xpath position="inside"
-                    expr="//div[@id='posbox_reference']/div/div[@class='o_setting_right_pane']/div[@class='content-group']">
+                    expr="//div[@id='posbox_reference']/div/div[hasclass('o_setting_right_pane')]/div[hasclass('content-group')]">
                     <div class="row mt16">
                         <label string="Certified PosBox Ref."
                             for="blackbox_pos_production_id"
