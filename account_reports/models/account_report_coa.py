@@ -46,10 +46,8 @@ class report_account_coa(models.AbstractModel):
                 if account not in grouped_accounts.keys():
                     grouped_accounts[account] = [{'balance': 0, 'debit': 0, 'credit': 0} for p in context['periods']]
                 grouped_accounts[account][period_number]['balance'] = res[account]['balance'] - res[account]['initial_bal']['balance']
-                for line in res[account]['lines']:
-                    if line.date >= period[0] and line.date <= period[1]:
-                        grouped_accounts[account][period_number]['debit'] += line.debit
-                        grouped_accounts[account][period_number]['credit'] += line.credit
+                grouped_accounts[account][period_number]['debit'] = res[account]['debit'] - res[account]['initial_bal']['debit']
+                grouped_accounts[account][period_number]['credit'] = res[account]['credit'] - res[account]['initial_bal']['credit']
             period_number += 1
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
         title_index = ''
