@@ -62,6 +62,10 @@ var TabletImage = FieldBinaryImage.extend({
         'click .o_input_file': function (ev) {
             ev.stopImmediatePropagation();
         },
+        'click .o_clear_file_button': function (ev) {
+            ev.stopImmediatePropagation();
+            this.on_clear(ev);
+        },
     }),
 
     toggleControl: function () {
@@ -73,11 +77,6 @@ var TabletImage = FieldBinaryImage.extend({
         var def = this._super.apply(this, arguments);
         this.toggleControl();
         return def;
-    },
-
-    on_clear: function (ev){
-        ev.stopImmediatePropagation();
-        this._super.apply(this, arguments);
     },
 
     /**
