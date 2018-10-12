@@ -45,7 +45,6 @@ var Main = AbstractAction.extend({
         this.options = options;
         this.action = options.action;
         this.viewType = options.viewType;
-        this.chatter_allowed = options.chatter_allowed;
         // We set the x2mEditorPath since when we click on the studio breadcrumb
         // a new view_editor_manager is instantiated and then the previous
         // x2mEditorPath is needed to reload the previous view_editor_manager
@@ -59,7 +58,11 @@ var Main = AbstractAction.extend({
         if (!this.action) {
             return $.Deferred().reject();
         }
-        return this._super.apply(this, arguments);
+        var defs = [this._super.apply(this, arguments)]
+        if (this.viewType === 'form') {
+            defs.push(this._isChatterAllowed());
+        }
+        return $.when.apply($, defs);
     },
     /**
      * @override
@@ -264,6 +267,25 @@ var Main = AbstractAction.extend({
             },
         });
     },
+    /**
+     * @private
+     * Determines whether the model
+     * that will be edited supports mail_thread
+     * @returns {Deferred}
+     */
+    _isChatterAllowed: function () {
+        var self = this;
+        var res_model = this.action.res_model;
+        return this._rpc({
+            route: '/web_studio/chatter_allowed',
+            params: {
+                model: res_model,
+            }
+        }).then(function (isChatterAllowed) {
+            self.chatter_allowed = isChatterAllowed;
+        });
+    },
+
     /**
      * @private
      */

@@ -232,6 +232,11 @@ tour.register('web_studio_tests_tour', {
 }, {
     // verify that a default value has been set for the statusbar
     trigger: '.o_web_studio_sidebar select[name="default_value"]:contains(First Status)',
+    extra_trigger: '.o_web_studio_add_chatter',
+}, {
+    // Verify Chatter can be added after changing view to form
+    trigger: '.o_web_studio_views_icons a[data-name=form]',
+    extra_trigger: '.o_web_studio_add_chatter',
 }, {
     // switch in list view
     trigger: '.o_web_studio_menu .o_web_studio_views_icons a[data-name="list"]',
