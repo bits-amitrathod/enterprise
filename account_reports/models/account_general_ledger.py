@@ -255,12 +255,6 @@ class report_account_general_ledger(models.AbstractModel):
                 res[tax]['tax_amount'] = res[tax]['tax_amount'] * -1
         return res
 
-    def _get_journal_total(self):
-        tables, where_clause, where_params = self.env['account.move.line']._query_get()
-        self.env.cr.execute('SELECT COALESCE(SUM(debit), 0) as debit, COALESCE(SUM(credit), 0) as credit, COALESCE(SUM(debit-credit), 0) as balance FROM ' + tables + ' '
-                        'WHERE ' + where_clause + ' ', where_params)
-        return self.env.cr.dictfetchone()
-
     @api.model
     def _get_lines(self, options, line_id=None):
         offset = int(options.get('lines_offset', 0))
@@ -411,16 +405,6 @@ class report_account_general_ledger(models.AbstractModel):
 
         journals = [j for j in options.get('journals') if j.get('selected')]
         if len(journals) == 1 and journals[0].get('type') in ['sale', 'purchase'] and not line_id:
-            total = self._get_journal_total()
-            lines.append({
-                'id': 0,
-                'class': 'total',
-                'name': _('Total'),
-                'columns': [{'name': v} for v in ['', '', '', '', self.format_value(total['debit']), self.format_value(total['credit']), self.format_value(total['balance'])]],
-                'level': 1,
-                'unfoldable': False,
-                'unfolded': False,
-            })
             lines.append({
                 'id': 0,
                 'name': _('Tax Declaration'),
