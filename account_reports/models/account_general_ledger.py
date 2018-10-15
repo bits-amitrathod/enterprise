@@ -200,7 +200,8 @@ class report_account_general_ledger(models.AbstractModel):
 
         last_day_previous_fy = self.env.user.company_id.compute_fiscalyear_dates(datetime.strptime(self.env.context['date_from_aml'], "%Y-%m-%d"))['date_from'] + timedelta(days=-1)
         unaffected_earnings_per_company = {}
-        for company in context['context_id'].company_ids:
+        for cid in context.get('company_ids', []):
+            company = self.env['res.company'].browse(cid)
             unaffected_earnings_per_company[company] = self.with_context(date_to=last_day_previous_fy.strftime('%Y-%m-%d'), date_from=False).do_query_unaffected_earnings(options, line_id, company)
 
         unaff_earnings_treated_companies = set()
@@ -229,7 +230,8 @@ class report_account_general_ledger(models.AbstractModel):
 
         # For each commany, if the unaffected earnings account wasn't in the selection yet: add it manually
         user_currency = self.env.user.company_id.currency_id
-        for company in context['context_id'].company_ids:
+        for cid in context.get('company_ids', []):
+            company = self.env['res.company'].browse(cid)
             if company not in unaff_earnings_treated_companies and not float_is_zero(unaffected_earnings_per_company[company]['balance'], precision_digits=user_currency.decimal_places):
                 unaffected_earnings_account = self.env['account.account'].search([
                     ('user_type_id', '=', unaffected_earnings_type.id), ('company_id', '=', company.id)
