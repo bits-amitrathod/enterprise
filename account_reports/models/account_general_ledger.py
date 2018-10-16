@@ -204,7 +204,7 @@ class report_account_general_ledger(models.AbstractModel):
             accounts[account]['initial_bal'] = initial_bal_results.get(account.id, {'balance': 0, 'amount_currency': 0, 'debit': 0, 'credit': 0})
             if account.user_type_id == unaffected_earnings_type and account.company_id not in unaff_earnings_treated_companies:
                 #add the benefit/loss of previous fiscal year to unaffected earnings accounts
-                unaffected_earnings_results = unaffected_earnings_per_company[account.company]
+                unaffected_earnings_results = unaffected_earnings_per_company[account.company_id]
                 for field in ['balance', 'debit', 'credit']:
                     accounts[account]['initial_bal'][field] += unaffected_earnings_results[field]
                     accounts[account][field] += unaffected_earnings_results[field]
@@ -220,7 +220,7 @@ class report_account_general_ledger(models.AbstractModel):
             aml_ids = [x[0] for x in aml_ids]
             accounts[account]['lines'] = self.env['account.move.line'].browse(aml_ids)
 
-        # For each commany, if the unaffected earnings account wasn't in the selection yet: add it manually
+        # For each company, if the unaffected earnings account wasn't in the selection yet: add it manually
         user_currency = self.env.user.company_id.currency_id
         for company in context['context_id'].company_ids:
             if company not in unaff_earnings_treated_companies and not float_is_zero(unaffected_earnings_per_company[company]['balance'], precision_digits=user_currency.decimal_places):
