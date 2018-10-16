@@ -50,7 +50,8 @@ class AccountPayment(models.Model):
                                  encoding='UTF-8')}
 
     def action_draft(self):
-        for record in self.filtered('l10n_mx_edi_cfdi_uuid'):
-            record.l10n_mx_edi_expedition_date = False
-            record.l10n_mx_edi_time_payment = False
+        self.filtered(lambda r: r.l10n_mx_edi_is_required()).write({
+            'l10n_mx_edi_expedition_date': False,
+            'l10n_mx_edi_time_payment': False,
+        })
         return super(AccountPayment, self).action_draft()
