@@ -535,11 +535,11 @@ class AccountFinancialReportLine(models.Model):
             for name, field in self.env['account.move.line']._fields.items():
                 if not(field.store and field.type not in ('one2many', 'many2many')):
                     continue
-                columns.append('\"account_move_line\".%s' % name)
+                columns.append('\"account_move_line\".\"%s\"' % name)
                 if name in replace_columns:
                     columns_2.append(replace_columns.get(name))
                 else:
-                    columns_2.append('\"account_move_line\".%s' % name)
+                    columns_2.append('\"account_move_line\".\"%s\"' % name)
             select_clause_1 = ', '.join(columns)
             select_clause_2 = ', '.join(columns_2)
 
@@ -636,7 +636,7 @@ class AccountFinancialReportLine(models.Model):
                     -- Part for the unreconciled journal items.
                     -- Using amount_residual if the account is reconciliable is needed in case of partial reconciliation
 
-                    SELECT ''' + select_clause_1.replace('"account_move_line".balance_cash_basis', 'CASE WHEN acc.reconcile THEN  "account_move_line".amount_residual ELSE "account_move_line".balance END AS balance_cash_basis') + '''
+                    SELECT ''' + select_clause_1.replace('"account_move_line"."balance_cash_basis"', 'CASE WHEN acc.reconcile THEN  "account_move_line".amount_residual ELSE "account_move_line".balance END AS balance_cash_basis') + '''
                     FROM account_move_line "account_move_line"
                     LEFT JOIN account_account acc ON "account_move_line".account_id = acc.id
                     WHERE "account_move_line".move_id IN %s
