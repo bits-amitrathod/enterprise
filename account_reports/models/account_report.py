@@ -1086,6 +1086,8 @@ class AccountReport(models.AbstractModel):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet(self._get_report_name()[:31])
 
+        date_default_col1_style = workbook.add_format({'font_name': 'Arial', 'font_size': 12, 'font_color': '#666666', 'indent': 2, 'num_format': 'yyyy-mm-dd'})
+        date_default_style = workbook.add_format({'font_name': 'Arial', 'font_size': 12, 'font_color': '#666666', 'num_format': 'yyyy-mm-dd'})
         default_col1_style = workbook.add_format({'font_name': 'Arial', 'font_size': 12, 'font_color': '#666666', 'indent': 2})
         default_style = workbook.add_format({'font_name': 'Arial', 'font_size': 12, 'font_color': '#666666'})
         title_style = workbook.add_format({'font_name': 'Arial', 'bold': True, 'bottom': 2})
@@ -1159,12 +1161,22 @@ class AccountReport(models.AbstractModel):
                 style = default_style
                 col1_style = default_col1_style
 
-            #write the first column, with a specific style to manage the indentation
-            sheet.write(y + y_offset, 0, lines[y]['name'], col1_style)
+            if 'date' in lines[y].get('class', ''):
+                #write the dates with a specific format to avoid them being casted as floats in the XLSX
+                sheet.write_datetime(y + y_offset, 0, lines[y]['name'], date_default_col1_style)
+            else:
+                #write the first column, with a specific style to manage the indentation
+                sheet.write(y + y_offset, 0, lines[y]['name'], col1_style)
 
             #write all the remaining cells
             for x in range(1, len(lines[y]['columns']) + 1):
-                sheet.write(y + y_offset, x + lines[y].get('colspan', 1) - 1, lines[y]['columns'][x - 1].get('name', ''), style)
+                this_cell_style = style
+                if 'date' in lines[y]['columns'][x - 1].get('class', ''):
+                    #write the dates with a specific format to avoid them being casted as floats in the XLSX
+                    this_cell_style = date_default_style
+                    sheet.write_datetime(y + y_offset, x + lines[y].get('colspan', 1) - 1, lines[y]['columns'][x - 1].get('name', ''), this_cell_style)
+                else:
+                    sheet.write(y + y_offset, x + lines[y].get('colspan', 1) - 1, lines[y]['columns'][x - 1].get('name', ''), this_cell_style)
 
         workbook.close()
         output.seek(0)
