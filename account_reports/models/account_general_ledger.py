@@ -271,8 +271,10 @@ class report_account_general_ledger(models.AbstractModel):
         sum_debit = sum_credit = sum_balance = 0
         for account in sorted_accounts:
             display_name = account.code + " " + account.name
-            if options.get('filter_accounts') and options.get('filter_accounts') not in display_name:
-                continue
+            if options.get('filter_accounts'):
+                #skip all accounts where both the code and the name don't start with the given filtering string
+                if not any([display_name_part.startswith(options.get('filter_accounts')) for display_name_part in display_name.split(' ')]):
+                    continue
             debit = grouped_accounts[account]['debit']
             credit = grouped_accounts[account]['credit']
             balance = grouped_accounts[account]['balance']
