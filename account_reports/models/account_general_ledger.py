@@ -261,6 +261,7 @@ class report_account_general_ledger(models.AbstractModel):
         lines = []
         context = self.env.context
         company_id = self.env.user.company_id
+        used_currency = company_id.currency_id
         dt_from = options['date'].get('date_from')
         line_id = line_id and int(line_id.split('_')[1]) or None
         aml_lines = []
@@ -281,7 +282,7 @@ class report_account_general_ledger(models.AbstractModel):
             sum_debit += debit
             sum_credit += credit
             sum_balance += balance
-            amount_currency = '' if not account.currency_id else self.format_value(grouped_accounts[account]['amount_currency'], currency=account.currency_id)
+            amount_currency = '' if not account.currency_id else self.with_context(no_format=False).format_value(grouped_accounts[account]['amount_currency'], currency=account.currency_id)
             # don't add header for `load more`
             if offset == 0:
                 lines.append({
@@ -297,7 +298,7 @@ class report_account_general_ledger(models.AbstractModel):
                 initial_debit = grouped_accounts[account]['initial_bal']['debit']
                 initial_credit = grouped_accounts[account]['initial_bal']['credit']
                 initial_balance = grouped_accounts[account]['initial_bal']['balance']
-                initial_currency = '' if not account.currency_id else self.format_value(grouped_accounts[account]['initial_bal']['amount_currency'], currency=account.currency_id)
+                initial_currency = '' if not account.currency_id else self.with_context(no_format=False).format_value(grouped_accounts[account]['initial_bal']['amount_currency'], currency=account.currency_id)
 
                 domain_lines = []
                 if offset == 0:
@@ -319,7 +320,6 @@ class report_account_general_ledger(models.AbstractModel):
                 if not context.get('print_mode'):
                     remaining_lines = grouped_accounts[account]['total_lines'] - offset - len(amls)
 
-                used_currency = self.env.user.company_id.currency_id
 
                 for line in amls:
                     if options.get('cash_basis'):
@@ -397,6 +397,7 @@ class report_account_general_ledger(models.AbstractModel):
                 lines += domain_lines
 
         if not line_id:
+
             lines.append({
                 'id': 'general_ledger_total_%s' % company_id.id,
                 'name': _('Total'),
