@@ -35,15 +35,6 @@ class report_account_consolidated_journal(models.AbstractModel):
         sum_balance = self.format_value(sum([r['balance'] for r in results if lambda_filter(r)]))
         return [sum_debit, sum_credit, sum_balance]
 
-    def _get_total(self, current_journal, current_account, results):
-        return {
-                'id': 'total_%s_%s' % (current_journal, current_account),
-                'name': _('Total'),
-                'class': 'o_account_reports_domain_total',
-                'columns': [{'name': v} for v in self._get_sum(results, lambda x: x['journal_id'] == current_journal and x['account_id'] == current_account)],
-                'parent_id': 'account_%s_%s' % (current_account, current_journal),
-            }
-
     def _get_journal_line(self, options, current_journal, results, record):
         return {
                 'id': 'journal_%s' % current_journal,
@@ -51,7 +42,7 @@ class report_account_consolidated_journal(models.AbstractModel):
                 'level': 2,
                 'columns': [{'name': n} for n in self._get_sum(results, lambda x: x['journal_id'] == current_journal)],
                 'unfoldable': True,
-                'unfolded': self._need_to_unfold('journal_%s'%(current_journal,), options),
+                'unfolded': self._need_to_unfold('journal_%s' % (current_journal,), options),
             }
 
     def _get_account_line(self, options, current_journal, current_account, results, record):
@@ -74,6 +65,11 @@ class report_account_consolidated_journal(models.AbstractModel):
                     'class': 'total',
                     'level': 1,
                     'columns': [{'name': n} for n in self._get_sum(results, lambda x: x['company_id'] == current_company)]
+        })
+        lines.append({
+                    'id': 'blank_line_after_total_%s' % (current_company),
+                    'name': '',
+                    'columns': [{'name': ''} for n in ['debit', 'credit', 'balance']]
         })
         # get range of date for company_id
         dates = []
@@ -142,16 +138,10 @@ class report_account_consolidated_journal(models.AbstractModel):
         current_journal = line_model == 'account' and results[0]['journal_id'] or None # If line_id points toward an account line, we don't want to regenerate the parent journal line
         for values in results:
             if values['journal_id'] != current_journal:
-                # First, we add the total of the previous account line, if there was one
-                if lines and lines[-1]['id'].startswith('month'):
-                    lines.append(self._get_total(current_journal, current_account, results))
                 current_journal = values['journal_id']
                 lines.append(self._get_journal_line(options, current_journal, results, values))
 
             if self._need_to_unfold('journal_%s' % (current_journal,), options) and values['account_id'] != current_account:
-                # First, we add the total of the previous account line, if there was one
-                if lines and lines[-1]['id'].startswith('month'):
-                    lines.append(self._get_total(current_journal, current_account, results))
                 current_account = values['account_id']
                 lines.append(self._get_account_line(options, current_journal, current_account, results, values))
 
@@ -166,10 +156,6 @@ class report_account_consolidated_journal(models.AbstractModel):
                     'columns': [{'name': n} for n in [self.format_value(values['debit']), self.format_value(values['credit']), self.format_value(values['balance'])]],
                 }
                 lines.append(vals)
-
-        # Append the total value for the last generated account line, if it was unfolded
-        if self._need_to_unfold('account_%s_%s' % (current_account, current_journal), options):
-            lines.append(self._get_total(current_journal, current_account, results))
 
         # Append detail per month section
         if not line_id:

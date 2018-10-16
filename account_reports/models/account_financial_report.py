@@ -943,11 +943,12 @@ class AccountFinancialReportLine(models.Model):
         groups = groups or {'fields': [], 'ids': [()]}
         debit_credit = debit_credit and financial_report.debit_credit
         formulas = self._split_formulas()
+        currency = self.env.user.company_id.currency_id
 
         line_res_per_group = []
 
         if not groups['ids']:
-            return [{'line': {'balance': False}}]
+            return [{'line': {'balance': 0.0}}]
 
         # this computes the results of the line itself
         for group_index, group in enumerate(groups['ids']):
@@ -967,9 +968,10 @@ class AccountFinancialReportLine(models.Model):
             if line:
                 res = {}
                 res['balance'] = line.balance
+                res['balance'] = currency.round(line.balance)
                 if debit_credit:
-                    res['credit'] = line.credit
-                    res['debit'] = line.debit
+                    res['credit'] = currency.round(line.credit)
+                    res['debit'] = currency.round(line.debit)
                 line_res_per_group.append(res)
 
         # don't need any groupby lines for count_rows and from_context formulas
@@ -1027,7 +1029,7 @@ class AccountFinancialReportLine(models.Model):
                     results_for_group.update({'line': line_res_per_group[group_index]})
                     columns.append(results_for_group)
                 else:
-                    columns.append({'line': {'balance': False}})
+                    columns.append({'line': {'balance': 0.0}})
 
         return columns or [{'line': res} for res in line_res_per_group]
 
