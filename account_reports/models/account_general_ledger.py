@@ -255,12 +255,6 @@ class report_account_general_ledger(models.AbstractModel):
                 res[tax]['tax_amount'] = res[tax]['tax_amount'] * -1
         return res
 
-    def _get_journal_total(self):
-        tables, where_clause, where_params = self.env['account.move.line']._query_get()
-        self.env.cr.execute('SELECT COALESCE(SUM(debit), 0) as debit, COALESCE(SUM(credit), 0) as credit, COALESCE(SUM(debit-credit), 0) as balance FROM ' + tables + ' '
-                        'WHERE ' + where_clause + ' ', where_params)
-        return self.env.cr.dictfetchone()
-
     @api.model
     def _get_lines(self, options, line_id=None):
         offset = int(options.get('lines_offset', 0))
@@ -333,8 +327,8 @@ class report_account_general_ledger(models.AbstractModel):
                         line_debit = line.debit
                         line_credit = line.credit
                     date = amls.env.context.get('date') or fields.Date.today()
-                    line_debit = line.company_id.currency_id._convert(line_debit, used_currency, line.company_id, date)
-                    line_credit = line.company_id.currency_id._convert(line_credit, used_currency, line.company_id, date)
+                    line_debit = line.company_id.currency_id._convert(line_debit, used_currency, company_id, date)
+                    line_credit = line.company_id.currency_id._convert(line_credit, used_currency, company_id, date)
                     progress = progress + line_debit - line_credit
                     currency = "" if not line.currency_id else self.with_context(no_format=False).format_value(line.amount_currency, currency=line.currency_id)
 
@@ -411,16 +405,6 @@ class report_account_general_ledger(models.AbstractModel):
 
         journals = [j for j in options.get('journals') if j.get('selected')]
         if len(journals) == 1 and journals[0].get('type') in ['sale', 'purchase'] and not line_id:
-            total = self._get_journal_total()
-            lines.append({
-                'id': 0,
-                'class': 'total',
-                'name': _('Total'),
-                'columns': [{'name': v} for v in ['', '', '', '', self.format_value(total['debit']), self.format_value(total['credit']), self.format_value(total['balance'])]],
-                'level': 1,
-                'unfoldable': False,
-                'unfolded': False,
-            })
             lines.append({
                 'id': 0,
                 'name': _('Tax Declaration'),
