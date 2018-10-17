@@ -59,6 +59,7 @@ class report_account_generic_tax_report(models.AbstractModel):
                    LEFT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account
                                 FROM account_move_line
                                 GROUP BY move_id, account_id) sub_aml
+                            ON (aml.account_id = sub_aml.account_id AND sub_aml.move_id=aml.move_id)
                    LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables + """
                    WHERE part.credit_move_id = "account_move_line".id
                     AND "account_move_line".user_type_id IN %s
@@ -74,6 +75,7 @@ class report_account_generic_tax_report(models.AbstractModel):
                    LEFT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account
                                 FROM account_move_line
                                 GROUP BY move_id, account_id) sub_aml
+                            ON (aml.account_id = sub_aml.account_id AND sub_aml.move_id=aml.move_id)
                    LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables + """
                    WHERE part.debit_move_id = "account_move_line".id
                     AND "account_move_line".user_type_id IN %s
