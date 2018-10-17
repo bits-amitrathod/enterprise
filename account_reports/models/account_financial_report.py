@@ -530,9 +530,9 @@ class AccountFinancialReportLine(models.Model):
             # Get all available fields from account_move_line, to build the 'select' part of the query
             replace_columns = {
                 'date': 'ref.date',
-                'debit_cash_basis': 'CASE WHEN \"account_move_line\".debit > 0 THEN ref.matched_percentage * \"account_move_line\".debit ELSE 0 END AS debit_cash_basis',
-                'credit_cash_basis': 'CASE WHEN \"account_move_line\".credit > 0 THEN ref.matched_percentage * \"account_move_line\".credit ELSE 0 END AS credit_cash_basis',
-                'balance_cash_basis': 'ref.matched_percentage * \"account_move_line\".balance AS balance_cash_basis'
+                'debit': 'CASE WHEN \"account_move_line\".debit > 0 THEN ref.matched_percentage * \"account_move_line\".debit ELSE 0 END AS debit',
+                'credit': 'CASE WHEN \"account_move_line\".credit > 0 THEN ref.matched_percentage * \"account_move_line\".credit ELSE 0 END AS credit',
+                'balance': 'ref.matched_percentage * \"account_move_line\".balance AS balance'
             }
             columns = []
             columns_2 = []
