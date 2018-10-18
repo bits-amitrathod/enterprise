@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api
+from odoo.tools.mail import html2plaintext
 from odoo.tools.translate import _
 import time
 import math
@@ -75,7 +76,7 @@ class account_report_context_followup(models.TransientModel):
             try:
                 formatted_summary = summary % {'partner_name': partner.name,
                                                'date': time.strftime('%Y-%m-%d'),
-                                               'user_signature': self.env.user.signature or '',
+                                               'user_signature': html2plaintext(self.env.user.signature or ''),
                                                'company_name': self.env.user.company_id.name}
             except ValueError as e:
                 message = "An error has occurred while formatting your followup letter/email. (Lang: %s, Followup Level: #%s) \n\nFull error description: %s" \
