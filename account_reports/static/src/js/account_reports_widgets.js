@@ -52,6 +52,7 @@ var ReportWidget = Widget.extend({
         var res_model = $(e.target).data('res-model');
         var view_id = $(e.target).data('view-id') || false;
         var action_domain = $(e.target).data('action-domain');
+        var action_context = $(e.target).data('action-context');
         var force_context = $(e.target).data('force-context');
         var additional_context = {};
         if (active_id || id) {
@@ -65,7 +66,8 @@ var ReportWidget = Widget.extend({
                 res_model: res_model,
                 res_id: active_id,
                 views: [[view_id, 'form']],
-                target: 'current'
+                target: 'current',
+                context: action_context,
             });
         }
         if (res_model && action_domain) {
@@ -75,6 +77,7 @@ var ReportWidget = Widget.extend({
                 res_model: res_model,
                 domain: action_domain,
                 views: [[false, 'list']],
+                context: action_context,
             });
         }
         if (!_.isUndefined(force_context)) {

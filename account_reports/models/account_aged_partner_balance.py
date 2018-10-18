@@ -51,6 +51,7 @@ class report_account_aged_partner(models.AbstractModel):
                         'type': 'move_line_id',
                         'footnotes': context._get_footnotes('move_line_id', aml.id),
                         'columns': [line['period'] == 6-i and self._format(sign * line['amount']) or '' for i in range(7)],
+                        'action_context': aml.get_action_context(),
                     }
                     lines.append(vals)
                 vals = {
