@@ -84,8 +84,10 @@ var HelpdeskTeamDashboardView = KanbanView.extend({
         if(isNaN(target_value)) {
             this.do_warn(_t("Wrong value entered!"), _t("Only Integer Value should be valid."));
         } else {
-            this._updated = new Model('helpdesk.team')
-                            .call('modify_target_helpdesk_team_dashboard', [target_name, parseInt(target_value)])
+            var values = {};
+            values[target_name] = parseInt(target_value);
+            this._updated = new Model('res.users')
+                            .call('write', [[session.uid], values])
                             .then(function() {
                                 return self.render();
                             });
