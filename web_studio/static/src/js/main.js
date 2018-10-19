@@ -149,7 +149,11 @@ var Main = AbstractAction.extend({
                     params.mandatory_stop_date = true;
                     new NewViewDialog(self, params).open();
                 } else {
-                    Dialog.alert(self, result);
+                    var message = result;
+                    if (!message) {
+                        message = _lt("Creating this type of view is not currently supported in Studio.");
+                    }
+                    Dialog.alert(self, message);
                     def.reject();
                 }
             } else {

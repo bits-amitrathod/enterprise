@@ -65,14 +65,34 @@ class report_account_general_ledger(models.AbstractModel):
               UNION ALL
               (
                WITH payment_table AS (
-                 SELECT aml.move_id, \"account_move_line\".date, CASE WHEN aml.balance = 0 THEN 0 ELSE part.amount / ABS(am.amount) END as matched_percentage
-                   FROM account_partial_reconcile part LEFT JOIN account_move_line aml ON aml.id = part.debit_move_id LEFT JOIN account_move am ON aml.move_id = am.id,""" + tables + """
+                 SELECT aml.move_id, \"account_move_line\".date,
+                        CASE WHEN (aml.balance = 0 OR sub_aml.total_per_account = 0)
+                            THEN 0
+                            ELSE part.amount / ABS(sub_aml.total_per_account)
+                        END as matched_percentage
+                   FROM account_partial_reconcile part
+                   LEFT JOIN account_move_line aml ON aml.id = part.debit_move_id
+                   LEFT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account
+                                FROM account_move_line
+                                GROUP BY move_id, account_id) sub_aml
+                            ON (aml.account_id = sub_aml.account_id AND sub_aml.move_id=aml.move_id)
+                   LEFT JOIN account_move am ON aml.move_id = am.id,""" + tables + """
                    WHERE part.credit_move_id = "account_move_line".id
                     AND "account_move_line".user_type_id IN %s
                     AND """ + where_clause + """
                  UNION ALL
-                 SELECT aml.move_id, \"account_move_line\".date, CASE WHEN aml.balance = 0 THEN 0 ELSE part.amount / ABS(am.amount) END as matched_percentage
-                   FROM account_partial_reconcile part LEFT JOIN account_move_line aml ON aml.id = part.credit_move_id LEFT JOIN account_move am ON aml.move_id = am.id,""" + tables + """
+                 SELECT aml.move_id, \"account_move_line\".date,
+                        CASE WHEN (aml.balance = 0 OR sub_aml.total_per_account = 0)
+                            THEN 0
+                            ELSE part.amount / ABS(sub_aml.total_per_account)
+                        END as matched_percentage
+                   FROM account_partial_reconcile part
+                   LEFT JOIN account_move_line aml ON aml.id = part.credit_move_id
+                   LEFT JOIN (SELECT move_id, account_id, ABS(SUM(balance)) AS total_per_account
+                                FROM account_move_line
+                                GROUP BY move_id, account_id) sub_aml
+                            ON (aml.account_id = sub_aml.account_id AND sub_aml.move_id=aml.move_id)
+                   LEFT JOIN account_move am ON aml.move_id = am.id,""" + tables + """
                    WHERE part.debit_move_id = "account_move_line".id
                     AND "account_move_line".user_type_id IN %s
                     AND """ + where_clause + """
@@ -92,7 +112,7 @@ class report_account_general_ledger(models.AbstractModel):
             params = [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)]
         return sql, params
 
-    def do_query_unaffected_earnings(self, options, line_id):
+    def do_query_unaffected_earnings(self, options, line_id, company=None):
         ''' Compute the sum of ending balances for all accounts that are of a type that does not bring forward the balance in new fiscal years.
             This is needed to balance the trial balance and the general ledger reports (to have total credit = total debit)
         '''
@@ -107,11 +127,16 @@ class report_account_general_ledger(models.AbstractModel):
         select += " FROM %s WHERE %s"
         user_types = self.env['account.account.type'].search([('type', 'in', ('receivable', 'payable'))])
         with_sql, with_params = self._get_with_statement(user_types, domain=[('user_type_id.include_initial_balance', '=', False)])
-        tables, where_clause, where_params = self.env['account.move.line']._query_get(domain=[('user_type_id.include_initial_balance', '=', False)])
+        aml_domain = [('user_type_id.include_initial_balance', '=', False)]
+        if company:
+            aml_domain += [('company_id', '=', company.id)]
+        tables, where_clause, where_params = self.env['account.move.line']._query_get(domain=aml_domain)
         query = select % (tables, where_clause)
         self.env.cr.execute(with_sql + query, with_params + where_params)
         res = self.env.cr.fetchone()
-        return {'balance': res[0], 'amount_currency': res[1], 'debit': res[2], 'credit': res[3]}
+        date = date = self._context.get('date') or fields.Date.today()  # FIXME is date correct?
+        currency_convert = lambda x: company and company.currency_id._convert(x, self.env.user.company_id.currency_id, company, date) or x
+        return {'balance': currency_convert(res[0]), 'amount_currency': res[1], 'debit': currency_convert(res[2]), 'credit': currency_convert(res[3])}
 
     def _do_query(self, options, line_id, group_by_account=True, limit=False):
         if group_by_account:
@@ -160,39 +185,28 @@ class report_account_general_ledger(models.AbstractModel):
         results = self.do_query(options, line_id)
         initial_bal_date_to = datetime.strptime(self.env.context['date_from_aml'], "%Y-%m-%d") + timedelta(days=-1)
         initial_bal_results = self.with_context(date_to=initial_bal_date_to.strftime('%Y-%m-%d')).do_query(options, line_id)
-        unaffected_earnings_xml_ref = self.env.ref('account.data_unaffected_earnings')
-        unaffected_earnings_line = True  # used to make sure that we add the unaffected earning initial balance only once
-        if unaffected_earnings_xml_ref:
-            #compute the benefit/loss of last year to add in the initial balance of the current year earnings account
-            last_day_previous_fy = self.env.user.company_id.compute_fiscalyear_dates(datetime.strptime(self.env.context['date_from_aml'], "%Y-%m-%d"))['date_from'] + timedelta(days=-1)
-            unaffected_earnings_results = self.with_context(date_to=last_day_previous_fy.strftime('%Y-%m-%d'), date_from=False).do_query_unaffected_earnings(options, line_id)
-            unaffected_earnings_line = False
+
         context = self.env.context
-        base_domain = [('date', '<=', context['date_to']), ('company_id', 'in', context['company_ids'])]
-        if context.get('journal_ids'):
-            base_domain.append(('journal_id', 'in', context['journal_ids']))
-        if context['date_from_aml']:
-            base_domain.append(('date', '>=', context['date_from_aml']))
-        if context['state'] == 'posted':
-            base_domain.append(('move_id.state', '=', 'posted'))
-        if context.get('account_tag_ids'):
-            base_domain += [('account_id.tag_ids', 'in', context['account_tag_ids'].ids)]
-        if context.get('analytic_tag_ids'):
-            base_domain += ['|', ('analytic_account_id.tag_ids', 'in', context['analytic_tag_ids'].ids), ('analytic_tag_ids', 'in', context['analytic_tag_ids'].ids)]
-        if context.get('analytic_account_ids'):
-            base_domain += [('analytic_account_id', 'in', context['analytic_account_ids'].ids)]
+
+        last_day_previous_fy = self.env.user.company_id.compute_fiscalyear_dates(datetime.strptime(self.env.context['date_from_aml'], "%Y-%m-%d"))['date_from'] + timedelta(days=-1)
+        unaffected_earnings_per_company = {}
+        for cid in context.get('company_ids', []):
+            company = self.env['res.company'].browse(cid)
+            unaffected_earnings_per_company[company] = self.with_context(date_to=last_day_previous_fy.strftime('%Y-%m-%d'), date_from=False).do_query_unaffected_earnings(options, line_id, company)
+
+        unaff_earnings_treated_companies = set()
+        unaffected_earnings_type = self.env.ref('account.data_unaffected_earnings')
         for account_id, result in results.items():
-            domain = list(base_domain)  # copying the base domain
-            domain.append(('account_id', '=', account_id))
             account = self.env['account.account'].browse(account_id)
             accounts[account] = result
             accounts[account]['initial_bal'] = initial_bal_results.get(account.id, {'balance': 0, 'amount_currency': 0, 'debit': 0, 'credit': 0})
-            if account.user_type_id.id == self.env.ref('account.data_unaffected_earnings').id and not unaffected_earnings_line:
-                #add the benefit/loss of previous fiscal year to the first unaffected earnings account found.
-                unaffected_earnings_line = True
+            if account.user_type_id == unaffected_earnings_type and account.company_id not in unaff_earnings_treated_companies:
+                #add the benefit/loss of previous fiscal year to unaffected earnings accounts
+                unaffected_earnings_results = unaffected_earnings_per_company[account.company_id]
                 for field in ['balance', 'debit', 'credit']:
                     accounts[account]['initial_bal'][field] += unaffected_earnings_results[field]
                     accounts[account][field] += unaffected_earnings_results[field]
+                unaff_earnings_treated_companies.add(account.company_id)
             #use query_get + with statement instead of a search in order to work in cash basis too
             aml_ctx = {}
             if context.get('date_from_aml'):
@@ -203,17 +217,19 @@ class report_account_general_ledger(models.AbstractModel):
             aml_ids = self.with_context(**aml_ctx)._do_query(options, account_id, group_by_account=False)
             aml_ids = [x[0] for x in aml_ids]
             accounts[account]['lines'] = self.env['account.move.line'].browse(aml_ids)
-        #if the unaffected earnings account wasn't in the selection yet: add it manually
+
+        # For each company, if the unaffected earnings account wasn't in the selection yet: add it manually
         user_currency = self.env.user.company_id.currency_id
-        if not unaffected_earnings_line and not float_is_zero(unaffected_earnings_results['balance'], precision_digits=user_currency.decimal_places):
-            #search an unaffected earnings account
-            unaffected_earnings_account = self.env['account.account'].search([
-                ('user_type_id', '=', self.env.ref('account.data_unaffected_earnings').id), ('company_id', 'in', self.env.context.get('company_ids', []))
-            ], limit=1)
-            if unaffected_earnings_account and (not line_id or unaffected_earnings_account.id == line_id):
-                accounts[unaffected_earnings_account[0]] = unaffected_earnings_results
-                accounts[unaffected_earnings_account[0]]['initial_bal'] = unaffected_earnings_results
-                accounts[unaffected_earnings_account[0]]['lines'] = []
+        for cid in context.get('company_ids', []):
+            company = self.env['res.company'].browse(cid)
+            if company not in unaff_earnings_treated_companies and not float_is_zero(unaffected_earnings_per_company[company]['balance'], precision_digits=user_currency.decimal_places):
+                unaffected_earnings_account = self.env['account.account'].search([
+                    ('user_type_id', '=', unaffected_earnings_type.id), ('company_id', '=', company.id)
+                ], limit=1)
+                if unaffected_earnings_account and (not line_id or unaffected_earnings_account.id == line_id):
+                    accounts[unaffected_earnings_account[0]] = unaffected_earnings_per_company[company]
+                    accounts[unaffected_earnings_account[0]]['initial_bal'] = unaffected_earnings_per_company[company]
+                    accounts[unaffected_earnings_account[0]]['lines'] = []
         return accounts
 
     def _get_taxes(self, journal):
