@@ -42,7 +42,7 @@
                                t-att-Colonia="record._get_string_cfdi(customer.l10n_mx_edi_colony or '') or None"
                                t-att-Localidad="customer.l10n_mx_edi_locality"
                                t-att-Municipio="customer.city"
-                               t-att-Estado="customer.state_id.code"
+                               t-att-Estado="customer.state_id.code if customer.country_id.l10n_mx_edi_code in ('MEX', 'USA', 'CAN') or customer.state_id.code else 'NA'"
                                t-att-Pais="customer.country_id.l10n_mx_edi_code"
                                t-att-CodigoPostal="customer.zip"/>
                        </cce11:Receptor>
