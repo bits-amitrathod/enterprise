@@ -134,7 +134,7 @@ class report_account_general_ledger(models.AbstractModel):
         query = select % (tables, where_clause)
         self.env.cr.execute(with_sql + query, with_params + where_params)
         res = self.env.cr.fetchone()
-        date = date = self._context.get('date') or fields.Date.today()  # FIXME is date correct?
+        date = self._context.get('date_to') or fields.Date.today()
         currency_convert = lambda x: company and company.currency_id._convert(x, self.env.user.company_id.currency_id, company, date) or x
         return {'balance': currency_convert(res[0]), 'amount_currency': res[1], 'debit': currency_convert(res[2]), 'credit': currency_convert(res[3])}
 
@@ -166,16 +166,23 @@ class report_account_general_ledger(models.AbstractModel):
     def do_query(self, options, line_id):
         results = self._do_query(options, line_id, group_by_account=True, limit=False)
         used_currency = self.env.user.company_id.currency_id
+        date = self._context.get('date_to') or fields.Date.today()
+
+        def build_converter(company):
+            def convert(amount):
+                return company.currency_id._convert(amount, used_currency, company, date)
+            return convert
+
         compute_table = {
-            a.id: a.company_id.currency_id.compute
+            a.id: build_converter(a.company_id)
             for a in self.env['account.account'].browse([k[0] for k in results])
         }
         results = dict([(
             k[0], {
-                'balance': compute_table[k[0]](k[1], used_currency) if k[0] in compute_table else k[1],
+                'balance': compute_table[k[0]](k[1]) if k[0] in compute_table else k[1],
                 'amount_currency': k[2],
-                'debit': compute_table[k[0]](k[3], used_currency) if k[0] in compute_table else k[3],
-                'credit': compute_table[k[0]](k[4], used_currency) if k[0] in compute_table else k[4],
+                'debit': compute_table[k[0]](k[3]) if k[0] in compute_table else k[3],
+                'credit': compute_table[k[0]](k[4]) if k[0] in compute_table else k[4],
             }
         ) for k in results])
         return results
