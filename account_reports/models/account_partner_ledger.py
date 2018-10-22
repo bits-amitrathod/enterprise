@@ -109,6 +109,7 @@ class ReportPartnerLedger(models.AbstractModel):
                 partners[partner]['initial_bal'] = initial_bal_results[partner_id]
                 partners[partner]['balance'] += partners[partner]['initial_bal']['balance']
                 partners[partner]['lines'] = self.env['account.move.line']
+                partners[partner]['total_lines'] = 0
 
         return partners
 
