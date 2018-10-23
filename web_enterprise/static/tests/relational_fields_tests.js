@@ -129,7 +129,7 @@ QUnit.module('relational_fields', {
             res_id: 1,
             config: {
                 device: {
-                    size_class: config.device.SIZES.XS
+                    size_class: config.device.SIZES.VSM,
                 }
             },
         });
@@ -137,9 +137,9 @@ QUnit.module('relational_fields', {
         var $selectedStatus = form.$('.o_statusbar_status button[data-value="4"]');
         assert.ok($selectedStatus.hasClass('btn-primary') && $selectedStatus.hasClass('disabled'),
             "selected status should be btn-primary and disabled");
-        var $clickable = form.$('.o_statusbar_status button.btn-default:not(.dropdown-toggle):not(:disabled)');
+        var $clickable = form.$('.o_statusbar_status button.btn-secondary:not(.dropdown-toggle):not(:disabled)');
         assert.strictEqual($clickable.length, 2,
-            "other status should be btn-default and not disabled");
+            "other status should be btn-secondary and not disabled");
         $clickable.first().click(); // first status clicked
         var $status = form.$('.o_statusbar_status button[data-value="1"]');
         assert.ok($status.hasClass("btn-primary") && $status.hasClass("disabled"),
