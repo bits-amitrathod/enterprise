@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, api, _
+from odoo import models, api, _, fields
 
 
 class report_account_consolidated_journal(models.AbstractModel):
@@ -14,12 +14,33 @@ class report_account_consolidated_journal(models.AbstractModel):
     filter_journals = True
     filter_unfold_all = False
 
+    # Override: disable multicompany
+    def _get_filter_journals(self):
+        return self.env['account.journal'].search([('company_id', 'in', [self.env.user.company_id.id, False])], order="company_id, name")
+
     @api.model
     def _get_options(self, previous_options=None):
         options = super(report_account_consolidated_journal, self)._get_options(previous_options=previous_options)
         # We do not want multi company for this report
         if options.get('multi_company'):
             options.pop('multi_company')
+        options.setdefault('date', {})
+        options['date'].setdefault('date_to', fields.Date.context_today(self))
+
+        # Overwrite journals, otherwise changing companies won't work
+        options['journals'] = self.get_journals()
+
+        # Keep the selection, though
+        selected_journals = {}
+        if previous_options:
+            selected_journals = {
+                j.get('id'): j.get('selected', False)
+                for j in previous_options.get('journals', [])
+            }
+
+        for j in options['journals']:
+            j['selected'] = selected_journals.get(j.get('id'), False)
+
         return options
 
     def _get_report_name(self):
@@ -106,14 +127,22 @@ class report_account_consolidated_journal(models.AbstractModel):
         # 1.Build SQL query
         lines = []
         convert_date = self.env['ir.qweb.field.date'].value_to_html
-        select = """SELECT to_char("account_move_line".date, 'MM') as month, to_char("account_move_line".date, 'YYYY') as yyyy,
-                COALESCE(SUM("account_move_line".balance), 0) as balance,
-               COALESCE(SUM("account_move_line".debit), 0) as debit,
-               COALESCE(SUM("account_move_line".credit), 0) as credit,
-               j.id as journal_id, j.name as journal_name, j.code as journal_code, account.name as account_name, account.code as account_code, j.company_id, account_id
-               FROM %s, account_journal j, res_company c, account_account account
-               WHERE %s AND "account_move_line".journal_id = j.id AND "account_move_line".account_id = account.id
-               GROUP BY month, account_id, yyyy, j.id, account.id, j.company_id order by j.id, account_code, yyyy, month, j.company_id
+        select = """
+            SELECT to_char("account_move_line".date, 'MM') as month,
+                   to_char("account_move_line".date, 'YYYY') as yyyy,
+                   COALESCE(SUM("account_move_line".balance), 0) as balance,
+                   COALESCE(SUM("account_move_line".debit), 0) as debit,
+                   COALESCE(SUM("account_move_line".credit), 0) as credit,
+                   j.id as journal_id,
+                   j.name as journal_name, j.code as journal_code,
+                   account.name as account_name, account.code as account_code,
+                   j.company_id, account_id
+            FROM %s, account_journal j
+            LEFT JOIN res_company c ON j.company_id = c.id
+            JOIN account_account account ON "account_move_line".account_id = account.id
+            WHERE %s AND "account_move_line".journal_id = j.id
+            GROUP BY month, account_id, yyyy, j.id, account.id, j.company_id
+            ORDER BY j.id, account_code, yyyy, month, j.company_id
         """
         tables, where_clause, where_params = self.env['account.move.line'].with_context(strict_range=True)._query_get()
         line_model = None
