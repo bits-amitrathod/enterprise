@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-        <!-- Rename root menu "Accounting" -->
+        <!-- Switch root menu "Invoicing" to "Accounting" -->
         <!-- Top menu item -->
         <menuitem name="Accounting"
+            id="menu_accounting"
+            groups="account.group_account_user,account.group_account_manager,account.group_account_invoice"
             web_icon="account_accountant,static/description/icon.png"
-            id="account.menu_finance"
             sequence="40"/>
+        <!-- move existing submenus to point to the new parent -->
+        <menuitem id="account.menu_finance_receivables" parent="menu_accounting"/>
+        <menuitem id="account.menu_finance_payables" parent="menu_accounting"/>
+        <menuitem id="account.menu_finance_entries" parent="menu_accounting"/>
+        <menuitem id="account.menu_finance_reports" parent="menu_accounting"/>
+        <menuitem id="account.menu_finance_configuration" parent="menu_accounting"/>
+        <menuitem id="account.menu_board_journal_1" parent="menu_accounting"/>
+
         <menuitem id="account.menu_account_config" name="Settings" parent="account.menu_finance_configuration" sequence="0" groups="base.group_system"/>
 
 </odoo>
