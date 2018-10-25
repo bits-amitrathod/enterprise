@@ -16,7 +16,6 @@ class TestOfxFile(TransactionCase):
 
         # Create a bank account and journal corresponding to the OFX file (same currency and account number)
         bank_journal_id = self.env['account.journal'].create({'name': 'Bank 123456', 'code': 'BNK67', 'type': 'bank',
-            'currency_id': self.env.ref("base.USD").id,
             'bank_acc_number': '123456'}).id
 
         # Use an import wizard to process the file

@@ -496,7 +496,6 @@ class AccountInvoice(models.Model):
         self.ensure_one()
         if xml_signed:
             # Post append addenda
-            xml_signed = self.l10n_mx_edi_append_addenda(xml_signed)
             body_msg = _('The sign service has been called with success')
             # Update the pac status
             self.l10n_mx_edi_pac_status = 'signed'
@@ -507,6 +506,7 @@ class AccountInvoice(models.Model):
                 'datas': xml_signed,
                 'mimetype': 'application/xml'
             })
+            xml_signed = self.l10n_mx_edi_append_addenda(xml_signed)
             post_msg = [_('The content of the attachment has been updated')]
         else:
             body_msg = _('The sign service requested failed')
@@ -823,8 +823,14 @@ class AccountInvoice(models.Model):
         self.message_post(
             body=_('Addenda has been added in the CFDI with success'),
             subtype='account.mt_invoice_validated')
-        return base64.encodestring(etree.tostring(
+        xml_signed = base64.encodestring(etree.tostring(
             tree, pretty_print=True, xml_declaration=True, encoding='UTF-8'))
+        attachment_id = self.l10n_mx_edi_retrieve_last_attachment()
+        attachment_id.write({
+            'datas': xml_signed,
+            'mimetype': 'application/xml'
+        })
+        return xml_signed
 
     @api.multi
     def _l10n_mx_edi_create_cfdi(self):
