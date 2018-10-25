@@ -64,6 +64,7 @@
                         </div>
                         <div class="digital-stamp-content">
                             <span>Emitter certificate:</span> <span t-esc="xml.get('NoCertificado')"/>
+                            <span> | SAT Certificate:</span> <span t-esc="tfd.get('NoCertificadoSAT')"/>
                             <span> | Expedition place:</span> <span t-esc="xml.get('LugarExpedicion')"/>
                             <span> | Fiscal Regime:</span>
                                 <t t-if="xml.get('version', '') == '3.2'"> <span t-esc="xml.Emisor.RegimenFiscal.get('Regimen')"/></t>
