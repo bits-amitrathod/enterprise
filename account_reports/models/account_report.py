@@ -18,7 +18,7 @@ from datetime import timedelta, datetime, date
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from babel.dates import get_quarter_names
 from odoo.tools.misc import formatLang, format_date
-from odoo.tools import config
+from odoo.tools import config, ustr
 from odoo.addons.web.controllers.main import clean_action
 _logger = logging.getLogger(__name__)
 
@@ -338,6 +338,9 @@ class AccountReport(models.AbstractModel):
     @api.multi
     def get_html_footnotes(self, footnotes):
         template = self.get_templates().get('footnotes_template', 'account_reports.footnotes_template')
+        for footnote in footnotes:
+            if 'text' in footnote:
+                footnote['text'] = ustr(footnote['text']).encode('UTF-8')
         rcontext = {'footnotes': footnotes, 'context': self.env.context}
         html = self.env['ir.ui.view'].render_template(template, values=dict(rcontext))
         return html
