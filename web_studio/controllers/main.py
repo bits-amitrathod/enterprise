@@ -1137,7 +1137,7 @@ class WebStudioController(http.Controller):
 
         # add the dropdown before the rest
         dropdown_node = etree.fromstring("""
-            <div class="o_dropdown_kanban dropdown">
+            <div class="o_dropdown_kanban dropdown" name="kanban_dropdown">
                 <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
                     <span class="fa fa-bars fa-lg"/>
                 </a>
