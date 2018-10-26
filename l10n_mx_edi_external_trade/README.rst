@@ -92,7 +92,7 @@ defined by the SAT.
 - In the partner:
 
   - **Need external trade?**: Field used to indicate if the customer needs
-    their invoices with external complement. If the field is equal to True,
+    his/her invoices with external complement. If the field is equal to True,
     then the add-on is added to the CFDIs for this client.
 
 
