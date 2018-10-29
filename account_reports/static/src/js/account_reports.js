@@ -2,6 +2,7 @@ odoo.define('account_reports.account_report', function (require) {
 'use strict';
 
 var core = require('web.core');
+var data = require('web.data');
 var AbstractAction = require('web.AbstractAction');
 var ControlPanelMixin = require('web.ControlPanelMixin');
 var Dialog = require('web.Dialog');
@@ -498,12 +499,14 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
         var action = $(e.target).attr('action');
         var id = $(e.target).parents('td').data('id');
         var params = $(e.target).data();
+        var context = new data.CompoundContext(this.odoo_context, params.actionContext || {});
+        params = _.omit(params, 'actionContext');
         if (action) {
             return this._rpc({
                     model: this.report_model,
                     method: action,
                     args: [this.financial_id, this.report_options, params],
-                    context: this.odoo_context,
+                    context: context,
                 })
                 .then(function(result){
                     return self.do_action(result);

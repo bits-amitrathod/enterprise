@@ -66,6 +66,7 @@ class report_account_aged_partner(models.AbstractModel):
                         'level': 4,
                         'parent_id': 'partner_%s' % (values['partner_id'],),
                         'columns': [{'name': v} for v in [line['period'] == 6-i and self.format_value(sign * line['amount']) or '' for i in range(7)]],
+                        'action_context': aml.get_action_context(),
                     }
                     lines.append(vals)
                 vals = {

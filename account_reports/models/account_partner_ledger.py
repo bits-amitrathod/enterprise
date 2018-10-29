@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, api, _, fields
-from odoo.tools.misc import formatLang
+from odoo.tools.misc import formatLang, format_date
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, float_is_zero
 from datetime import datetime, timedelta
 
@@ -170,7 +170,7 @@ class ReportPartnerLedger(models.AbstractModel):
                     domain_lines.append({
                         'id': line.id,
                         'parent_id': 'partner_' + str(partner.id),
-                        'name': line.date,
+                        'name': format_date(self.env, line.date),
                         'columns': [{'name': v} for v in [line.journal_id.code, line.account_id.code, name, line.full_reconcile_id.name, self.format_value(progress_before),
                                     line_debit != 0 and self.format_value(line_debit) or '',
                                     line_credit != 0 and self.format_value(line_credit) or '',
