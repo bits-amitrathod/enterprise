@@ -111,7 +111,7 @@ class ReportPartnerLedger(models.AbstractModel):
                 'colspan': 5,
             })
             if 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all:
-                progress = 0
+                progress = grouped_partners[partner]['initial_bal']['balance']
                 domain_lines = []
                 amls = grouped_partners[partner]['lines']
                 too_many = False
