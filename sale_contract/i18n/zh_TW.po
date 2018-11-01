@@ -31,7 +31,7 @@ msgstr "科目管理"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_journal_id
 msgid "Accounting Journal"
-msgstr ""
+msgstr "會計日記帳"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_active
@@ -119,7 +119,7 @@ msgstr "點擊以定義一個新產品。"
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_wizard_close_reason_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_close_reason_id
 msgid "Close Reason"
-msgstr ""
+msgstr "關閉原因"
 
 #. module: sale_contract
 #: model:ir.actions.act_window,name:sale_contract.sale_subscription_close_reason_action
@@ -127,7 +127,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_close_reason_view_form
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_close_reason_view_tree
 msgid "Close Reasons"
-msgstr ""
+msgstr "關閉原因"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
@@ -241,6 +241,11 @@ msgid ""
 "Upselling: The Sales Order added lines to the subscription\n"
 "Renewal: The Sales Order replaced the subscription's content with its own"
 msgstr ""
+"創建：銷售訂單創建訂閱\n"
+"\n"
+"銷售：銷售訂單添加的行的訂閱\n"
+"\n"
+"更新：銷售訂單用自己的訂閱內容替換訂閱內容。"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_credit
@@ -272,7 +277,7 @@ msgstr "開始日期"
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_recurring_next_date
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
 msgid "Date of Next Invoice"
-msgstr ""
+msgstr "下一次開立發票的日期"
 
 #. module: sale_contract
 #: selection:sale.subscription.template,recurring_rule_type:0
@@ -348,7 +353,7 @@ msgstr "分組方式"
 #. module: sale_contract
 #: model:ir.module.category,description:sale_contract.module_category_contract_management
 msgid "Helps you handle subscriptions and recurring invoicing."
-msgstr ""
+msgstr "幫您處理訂閱和定期開立發票"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9158
@@ -366,20 +371,20 @@ msgstr "編號"
 msgid ""
 "If set in advance, the subscription will be set to pending 1 month before "
 "the date and will be closed on the date set in this field."
-msgstr ""
+msgstr "如果預先設定，訂閱將被設定為在日期之前的1個月，並將在該字段中設定的日期關閉。"
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_product_template_recurring_invoice
 msgid ""
 "If set, confirming a sale order with this product will create a subscription"
-msgstr ""
+msgstr "如果設定了，在確認帶有這個產品的訂單的時候會創建一個訂閱"
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_template_journal_id
 msgid ""
 "If set, subscriptions with this template will invoice in this journal; "
 "otherwise the sales journal with the lowest sequence is used."
-msgstr ""
+msgstr "如果訂閱這模板集，將發票做在這個分類帳；否則銷售分類帳最低的序列被使用。"
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_active
@@ -404,7 +409,7 @@ msgstr "發票明細"
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_recurring_rule_type
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_template_recurring_rule_type
 msgid "Invoice automatically repeat at specified interval"
-msgstr ""
+msgstr "發票按特定的間隔自動重複"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_invoice_count
@@ -450,7 +455,7 @@ msgstr "最後更新於"
 #. module: sale_contract
 #: model:res.groups,name:sale_contract.group_sale_contract_manager
 msgid "Manage Subscriptions"
-msgstr ""
+msgstr "管理訂閱"
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_line_quantity
@@ -508,7 +513,7 @@ msgstr ""
 #: code:addons/sale_contract/models/sale_subscription.py:172
 #, python-format
 msgid "Please define a sale journal for the company \"%s\"."
-msgstr ""
+msgstr "請給公司\"%s\"定義一個銷售日記帳"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_line_price
@@ -586,7 +591,7 @@ msgstr "定期重覆"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_recurring_total
 msgid "Recurring Price"
-msgstr ""
+msgstr "經常性價格"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_recurring_price
@@ -601,7 +606,7 @@ msgstr "參考"
 #. module: sale_contract
 #: selection:sale.order,subscription_management:0
 msgid "Renewal"
-msgstr ""
+msgstr "續約"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_recurring_interval
@@ -633,7 +638,7 @@ msgstr ""
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_list
 msgid "Sale Subscriptions"
-msgstr ""
+msgstr "銷售訂閱"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_order
@@ -649,7 +654,7 @@ msgstr ""
 #. module: sale_contract
 #: model:res.groups,name:sale_contract.group_sale_contract_view
 msgid "See Subscriptions"
-msgstr ""
+msgstr "查看訂閱"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_sequence
@@ -700,7 +705,7 @@ msgstr "狀態"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_line_price_subtotal
 msgid "Sub Total"
-msgstr ""
+msgstr "小計 "
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_close_reason_view_form
@@ -720,7 +725,7 @@ msgstr "訂閱"
 #: model:ir.ui.view,arch_db:sale_contract.view_subcription_report_graph
 #: model:ir.ui.view,arch_db:sale_contract.view_subcription_report_pivot
 msgid "Subscription Analysis"
-msgstr ""
+msgstr "訂閱分析"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_template_view_form
@@ -736,13 +741,13 @@ msgstr "訂閱管理"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_product_template_recurring_invoice
 msgid "Subscription Product"
-msgstr ""
+msgstr "訂閱產品"
 
 #. module: sale_contract
 #: model:ir.actions.act_window,name:sale_contract.product_action_subscription
 #: model:ir.ui.menu,name:sale_contract.menu_sale_subscription_product
 msgid "Subscription Products"
-msgstr ""
+msgstr "訂閱產品"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_report
@@ -753,7 +758,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_template_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id
 msgid "Subscription Template"
-msgstr ""
+msgstr "訂閱模板"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_template_line
@@ -771,7 +776,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_template_view_list
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_template_view_search
 msgid "Subscription Templates"
-msgstr ""
+msgstr "訂閱模板"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.product_template_search_view_inherit_sale_contract
@@ -806,7 +811,7 @@ msgstr "訂閱"
 #: model:ir.actions.act_window,name:sale_contract.sale_subscription_action_pending
 #: model:ir.ui.menu,name:sale_contract.menu_sale_subscription_pending
 msgid "Subscriptions to Renew"
-msgstr ""
+msgstr "待續簽的訂閱"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_close_reason
@@ -849,13 +854,16 @@ msgid ""
 "                can be selected by the salespeople to quickly configure the\n"
 "                terms and conditions of the subscription."
 msgstr ""
+"可使用模版來預示訂閱\n"
+" 銷售人員可選擇此模版來快速配置\n"
+" 訂閱的條款"
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_recurring_next_date
 msgid ""
 "The next invoice will be created on this date then the period will be "
 "extended."
-msgstr ""
+msgstr "將在此日期上創建下一張發票，那麼期間將會延長。"
 
 #. module: sale_contract
 #: model:ir.actions.act_window,help:sale_contract.product_action_subscription
@@ -873,14 +881,14 @@ msgstr ""
 #. module: sale_contract
 #: model:res.groups,comment:sale_contract.group_sale_contract_manager
 msgid "The user will have write access to Subscriptions."
-msgstr ""
+msgstr "使用者將擁有書寫訂閱的權限。"
 
 #. module: sale_contract
 #: code:addons/sale_contract/models/sale_order.py:83
 #: code:addons/sale_contract/models/sale_subscription.py:189
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
-msgstr ""
+msgstr "這張發票覆蓋了以下區間： %s - %s"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_order_view_form_subscription
@@ -965,7 +973,7 @@ msgstr ""
 #: code:addons/sale_contract/models/sale_subscription.py:167
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
-msgstr ""
+msgstr "您必須首先選擇一個訂閱的客戶 %s!"
 
 #. module: sale_contract
 #: model:ir.actions.act_window,help:sale_contract.sale_subscription_action_pending
@@ -983,7 +991,7 @@ msgstr ""
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
 msgid "⇒ Generate Invoice"
-msgstr ""
+msgstr "⇒生成發票"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
