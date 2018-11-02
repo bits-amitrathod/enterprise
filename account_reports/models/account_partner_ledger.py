@@ -3,6 +3,7 @@
 
 from odoo import models, api, _, fields
 from odoo.tools import float_is_zero
+from odoo.tools.misc import format_date
 from datetime import timedelta
 
 
@@ -195,7 +196,7 @@ class ReportPartnerLedger(models.AbstractModel):
                     domain_lines.append({
                         'id': line.id,
                         'parent_id': 'partner_' + str(partner.id),
-                        'name': line.date,
+                        'name': format_date(self.env, line.date),
                         'class': 'date',
                         'columns': columns,
                         'caret_options': caret_type,
