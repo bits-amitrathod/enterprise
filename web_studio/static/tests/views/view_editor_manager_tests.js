@@ -1478,7 +1478,7 @@ QUnit.module('ViewEditorManager', {
                 '</templates>' +
             '</kanban>';
         var fieldsView;
-        var vem = createViewEditorManager({
+        var vem = studioTestUtils.createViewEditorManager({
             data: this.data,
             model: 'coucou',
             arch: arch,
