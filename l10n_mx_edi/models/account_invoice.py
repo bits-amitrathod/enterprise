@@ -5,6 +5,7 @@ from itertools import groupby
 import re
 import logging
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from io import BytesIO
 import requests
 from pytz import timezone
@@ -762,10 +763,14 @@ class AccountInvoice(models.Model):
             else:
                 values['payment_policy'] = 'Pago en una sola exhibición'
         elif version == '3.3':
-            # In CFDI 3.3, the payment policy is PUE when the invoice is to be
-            # paid directly, PPD otherwise
+            # In CFDI 3.3 - SAT 2018 rule 2.7.1.44, the payment policy is PUE
+            # if the invoice will be paid before 17th of the following month,
+            # PPD otherwise
+            date_pue = (fields.Date.from_string(self.date_invoice) +
+                        relativedelta(day=17, months=1))
+            date_due = fields.Date.from_string(self.date_due)
             values['payment_policy'] = 'PPD' if (
-                self.date_due != self.date_invoice) else 'PUE'
+                date_due > date_pue or len(term_ids) > 1) else 'PUE'
         domicile = self.journal_id.l10n_mx_address_issued_id or self.company_id
         values['domicile'] = '%s %s, %s' % (
                 domicile.city,
