@@ -357,7 +357,8 @@ class AccountInvoice(models.Model):
             key_password = certificate_id.password
             try:
                 client = Client(url, timeout=20)
-                response = client.service.cancelar(username, password, uuids, cer_pem, key_pem, key_password)
+                response = client.service.cancelar(username, password, uuids, cer_pem.replace(
+                    '\n', ''), key_pem, key_password)
             except Exception as e:
                 inv.l10n_mx_edi_log_error(str(e))
                 continue
@@ -433,7 +434,8 @@ class AccountInvoice(models.Model):
                 client = Client(url, timeout=20)
                 invoices_list = client.factory.create("UUIDS")
                 invoices_list.uuids.string = [uuid]
-                response = client.service.cancel(invoices_list, username, password, company_id.vat, cer_pem, key_pem)
+                response = client.service.cancel(invoices_list, username, password, company_id.vat, cer_pem.replace(
+                    '\n', ''), key_pem)
             except Exception as e:
                 inv.l10n_mx_edi_log_error(str(e))
                 continue
