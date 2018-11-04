@@ -3,19 +3,21 @@
 # * account_accountant
 # 
 # Translators:
+# Kristoffer Grundström <hamnisdude@gmail.com>, 2018
 # Martin Trigaux, 2018
-# Kristoffer Grundström <kristoffer.grundstrom1983@gmail.com>, 2018
 # Haojun Zou <apollo_zhj@msn.com>, 2018
 # Frida E, 2018
 # Egils Verkstad <egils@riseup.net>, 2018
 # Chrille Hedberg <hedberg.chrille@gmail.com>, 2018
+# Anders Wallenquist <anders.wallenquist@vertel.se>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-02 11:20+0000\n"
-"PO-Revision-Date: 2018-08-02 11:20+0000\n"
-"Last-Translator: Chrille Hedberg <hedberg.chrille@gmail.com>, 2018\n"
+"PO-Revision-Date: 2016-08-05 12:55+0000\n"
+"Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>, 2018\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -153,7 +155,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__period_lock_date
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__period_lock_date
 msgid "Lock Date for Non-Advisers"
-msgstr ""
+msgstr "Lås-datum för andra än ekonomi"
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_action_change_lock_date
@@ -172,6 +174,8 @@ msgid ""
 "No users, including Advisers, can edit accounts prior to and inclusive of "
 "this date. Use it for fiscal year locking for example."
 msgstr ""
+"Inga användare, inklusive ekonomi-personal, kan ändra bokföringen före och "
+"inklusive detta datum. Använd detta för att exempelvis låsa bokföringsåret."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings__period_lock_date
@@ -180,6 +184,9 @@ msgid ""
 "of this date. Use it for period locking inside an open fiscal year, for "
 "example."
 msgstr ""
+"Endast användare med rättighetern 'Controller' kan korrigera bokföringen "
+"till och med detta datum. Använd för periodlåstning inuti ett öppet "
+"bokföringsår."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__period_lock_date
