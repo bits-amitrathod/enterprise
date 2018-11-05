@@ -245,6 +245,7 @@ class report_account_general_ledger(models.AbstractModel):
                     accounts[unaffected_earnings_account[0]] = unaffected_earnings_per_company[company]
                     accounts[unaffected_earnings_account[0]]['initial_bal'] = unaffected_earnings_per_company[company]
                     accounts[unaffected_earnings_account[0]]['lines'] = []
+                    accounts[unaffected_earnings_account[0]]['total_lines'] = 0
         return accounts
 
     def _get_taxes(self, journal):
