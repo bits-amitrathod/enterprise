@@ -252,15 +252,24 @@ tour.register('web_studio_tests_tour', {
 }, {
     // verify that a default value has been set for the statusbar
     trigger: '.o_web_studio_sidebar select[name="default_value"]:contains(First Status)',
-    extra_trigger: '.o_web_studio_add_chatter',
 }, {
-    // Verify Chatter can be added after changing view to form
     trigger: '.o_web_studio_views_icons a[data-name=form]',
-    extra_trigger: '.o_web_studio_add_chatter',
 }, {
+    // verify Chatter can be added after changing view to form
+    extra_trigger: '.o_web_studio_add_chatter',
+    // edit action
+    trigger: '.o_web_studio_menu .o_menu_sections a[data-name="views"]',
+}, {
+    // edit form view
+    trigger: '.o_web_studio_view_category .o_web_studio_view_type[data-type="form"] .o_web_studio_thumbnail',
+}, {
+    // verify Chatter can be added after changing view to form
+    extra_trigger: '.o_web_studio_add_chatter',
     // switch in list view
     trigger: '.o_web_studio_menu .o_web_studio_views_icons a[data-name="list"]',
 }, {
+    // wait for the list editor to be rendered because the sidebar is the same
+    extra_trigger: '.o_web_studio_list_view_editor',
     // add an existing field (display_name)
     trigger: '.o_web_studio_sidebar .o_web_studio_field_type_container:eq(1) .o_web_studio_field_char',
     run: 'drag_and_drop .o_web_studio_list_view_editor th.o_web_studio_hook:first',
