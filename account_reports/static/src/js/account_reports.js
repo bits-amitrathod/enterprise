@@ -697,7 +697,7 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
                     model: this.report_model,
                     method: action,
                     args: [this.financial_id, this.report_options, params],
-                    context: context,
+                    context: context.eval(),
                 })
                 .then(function(result){
                     return self.do_action(result);
