@@ -10,6 +10,7 @@ class generic_tax_report(models.AbstractModel):
     _inherit = 'account.report'
     _name = 'account.generic.tax.report'
 
+    filter_multi_company = None
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
     filter_cash_basis = False
     filter_all_entries = False
