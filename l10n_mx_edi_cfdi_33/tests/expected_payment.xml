@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cfdi:Comprobante
     xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
-    xmlns:Pago10="http://www.sat.gob.mx/Pagos"
+    xmlns:pago10="http://www.sat.gob.mx/Pagos"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/Pagos http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos10.xsd"
     Version="3.3"
@@ -34,15 +34,15 @@
             ValorUnitario="0"/>
     </cfdi:Conceptos>
     <cfdi:Complemento>
-        <Pago10:Pagos Version="1.0">
-            <Pago10:Pago
+        <pago10:Pagos Version="1.0">
+            <pago10:Pago
                 FechaPago="2017-10-09T12:00:00"
                 FormaDePagoP="01"
                 MonedaP="USD"
                 TipoCambioP="21.000000"
                 Monto="238.50"
                 NumOperacion="INV/2017/999">
-                <Pago10:DoctoRelacionado
+                <pago10:DoctoRelacionado
                     MetodoDePagoDR="PPD"
                     IdDocumento="AD0ADDEC-9B96-4FFC-8E01-5A5214D99C85"
                     Serie="INV/2017/"
@@ -52,8 +52,8 @@
                     ImpSaldoAnt="238.50"
                     ImpPagado="238.50"
                     ImpSaldoInsoluto="0.00"/>
-            </Pago10:Pago>
-        </Pago10:Pagos>
+            </pago10:Pago>
+        </pago10:Pagos>
         <tfd:TimbreFiscalDigital
             xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital"
             xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd"

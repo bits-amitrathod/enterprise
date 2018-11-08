@@ -5,7 +5,7 @@
             xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/Pagos http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos10.xsd"
             xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:Pago10="http://www.sat.gob.mx/Pagos"
+            xmlns:pago10="http://www.sat.gob.mx/Pagos"
             Version="3.3"
             t-att-Fecha="date"
             t-att-Folio="invoice._get_string_cfdi(folio or '', 25) or False"
@@ -48,9 +48,9 @@
                     Importe="0"/>
             </cfdi:Conceptos>
             <cfdi:Complemento>
-                <Pago10:Pagos
+                <pago10:Pagos
                     Version="1.0">
-                    <Pago10:Pago
+                    <pago10:Pago
                         t-att-FechaPago="payment_date"
                         t-att-FormaDePagoP="record.l10n_mx_edi_payment_method_id.code"
                         t-att-MonedaP="record.currency_id.name"
@@ -75,7 +75,7 @@
                             <t t-set="amount" t-value="amount - write_off"/>
                             <t t-set="residual" t-value="balance - amount if balance - amount &gt; 0 else 0"/>
                             <t t-set="inv_rate" t-value="('%.6f' % (record.currency_id.with_context(date=record.payment_date).compute(1, invoice.currency_id, round=False))) if record.currency_id != invoice.currency_id else False"/>
-                            <Pago10:DoctoRelacionado
+                            <pago10:DoctoRelacionado
                                 t-att-IdDocumento="invoice.l10n_mx_edi_cfdi_uuid"
                                 t-att-Serie="invoice._l10n_mx_get_serie_and_folio(invoice.number).get('serie', False)"
                                 t-att-Folio="invoice._l10n_mx_get_serie_and_folio(invoice.number).get('folio', False)"
@@ -88,33 +88,33 @@
                                 t-att-ImpSaldoInsoluto="'%0.*f' % (decimal_precision, residual)"/>
                         </t>
                         <t t-if="total_transferred or total_withhold">
-                            <Pago10:Impuestos
+                            <pago10:Impuestos
                                 t-att-TotalImpuestosRetenidos="total_withhold"
                                 t-att-TotalImpuestosTrasladados="total_transferred">
                                 <t t-if="withhold">
-                                    <Pago10:Retenciones>
+                                    <pago10:Retenciones>
                                         <t t-foreach="withhold" t-as="tax">
-                                            <Pago10:Retencion
+                                            <pago10:Retencion
                                                 t-att-Impuesto="tax.tax"
                                                 t-att-Importe="tax.amount"/>
                                         </t>
-                                    </Pago10:Retenciones>
+                                    </pago10:Retenciones>
                                 </t>
                                 <t t-if="transferred">
-                                    <Pago10:Traslados>
+                                    <pago10:Traslados>
                                         <t t-foreach="transferred" t-as="tax">
-                                            <Pago10:Traslado
+                                            <pago10:Traslado
                                                 t-att-Impuesto="tax.tax"
                                                 t-att-TipoFactor="tax.type"
                                                 t-att-TasaOCuota="tax.rate"
                                                 t-att-Importe="tax.amount"/>
                                         </t>
-                                    </Pago10:Traslados>
+                                    </pago10:Traslados>
                                 </t>
-                            </Pago10:Impuestos>
+                            </pago10:Impuestos>
                         </t>
-                    </Pago10:Pago>
-                </Pago10:Pagos>
+                    </pago10:Pago>
+                </pago10:Pagos>
             </cfdi:Complemento>
         </cfdi:Comprobante>
     </template>
