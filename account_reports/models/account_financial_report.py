@@ -67,7 +67,25 @@ class ReportAccountFinancialReport(models.Model):
         self.filter_all_entries = False
         self.filter_analytic = True if self.analytic else None
         self.filter_hierarchy = True if self.hierarchy_option else None
-        return super(ReportAccountFinancialReport, self).get_options(previous_options)
+
+        rslt = super(ReportAccountFinancialReport, self).get_options(previous_options)
+
+        # If manual values were stored in the context, we store them as options.
+        # This is useful for report printing, were relying only on the context is
+        # not enough, because of the use of a route to download the report (causing
+        # a context loss, but keeping the options).
+        if self.env.context.get('financial_report_line_values'):
+            rslt['financial_report_line_values'] = self.env.context['financial_report_line_values']
+
+        return rslt
+
+    def set_context(self, options):
+        ctx = super(ReportAccountFinancialReport, self).set_context(options)
+        # We first restore the context for from_context lines from the options
+        if options.get('financial_report_line_values'):
+            ctx.update({'financial_report_line_values': options['financial_report_line_values']})
+
+        return ctx
 
     def create_action_and_menu(self, parent_id):
         # create action and menu with corresponding external ids, in order to
