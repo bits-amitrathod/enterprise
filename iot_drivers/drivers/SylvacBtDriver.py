@@ -1,18 +1,43 @@
-import gatt
-from odoo.addons.hw_drivers.controllers.driver import BtDriver
+# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-class SylvacBtDriver(BtDriver):
+from gatt import Device
+import logging
 
-    def supported(self):
-        return self.dev.alias() == "SY295" or self.dev.alias() == "SY304" or self.dev.alias() == "SY276"
+from odoo.addons.hw_drivers.controllers.driver import event_manager, Driver,iot_devices, bt_devices
 
-    def connect(self):
-        self.gatt_device = GattSylvacBtDriver(mac_address=self.dev.mac_address, manager=self.manager)
+_logger = logging.getLogger(__name__)
+
+
+class SylvacBtDriver(Driver):
+    connection_type = 'bluetooth'
+
+    def __init__(self, device):
+        super(SylvacBtDriver, self).__init__(device)
+        self.gatt_device = GattSylvacBtDriver(mac_address=device.mac_address, manager=device.manager)
         self.gatt_device.btdriver = self
         self.gatt_device.connect()
+        self._device_type = 'device'
+        self._device_connection = 'bluetooth'
+        self._device_identifier = "bt_%s" % (self.dev.mac_address,)
+        self._device_name = self.dev.alias()
+
+    @classmethod
+    def supported(cls, device):
+        try:
+            if device.alias() in ["SY295", "SY304", "SY276"]:
+                return True
+        except dbus.exceptions.DBusException as e:
+            _logger.warning(e.get_dbus_name())
+            _logger.warning(e.get_dbus_message())
+        return False
+
+    def disconnect(self):
+        del bt_devices[self.device_identifier()]
+        del iot_devices[self.device_identifier()]
 
 
-class GattSylvacBtDriver(gatt.Device):
+class GattSylvacBtDriver(Device):
     btdriver = False
 
     def services_resolved(self):
@@ -30,7 +55,8 @@ class GattSylvacBtDriver(gatt.Device):
         total = value[0] + value[1] * 256 + value[2] * 256 * 256 + value[3] * 256 * 256 * 256
         if total > 256 ** 4 / 2:
             total = total - 256 ** 4
-        self.btdriver.value = total / 1000000.0
+        self.btdriver.data['value'] = total / 1000000.0
+        event_manager.device_changed(self.btdriver)
 
     def characteristic_enable_notification_succeeded(self):
         print("Success pied à coulisse Bluetooth!")

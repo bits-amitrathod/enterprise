@@ -42,10 +42,9 @@ class IoTController(http.Controller):
             return 'http://localhost:8069/point_of_sale/display'
 
     @http.route('/iot/setup', type='json', auth='public')
-    def update_box(self):
-        data = request.jsonrequest
+    def update_box(self, data, devices):
         # Update or create box
-        box = request.env['iot.box'].sudo().search([('identifier', '=', data['identifier'])])
+        box = request.env['iot.box'].sudo().search([('identifier', '=', data['identifier'])], limit=1)
         if box:
             box = box[0]
             box.ip = data['ip']
@@ -57,13 +56,16 @@ class IoTController(http.Controller):
 
         # Update or create devices
         if box:
-            for device_identifier in data['devices']:
-                data_device = data['devices'][device_identifier]
-                if data_device['type'] == 'printer':
+            for device_identifier in devices:
+                data_device = devices[device_identifier]
+                if data_device['connection'] == 'network':
                     device = request.env['iot.device'].sudo().search([('identifier', '=', device_identifier)])
                 else:
                     device = request.env['iot.device'].sudo().search([('iot_id', '=', box.id), ('identifier', '=', device_identifier)])
-                if not device:
+
+                if device:
+                    device.name = data_device['name']
+                else:
                     device = request.env['iot.device'].sudo().create({
                         'iot_id': box.id,
                         'name': data_device['name'],
