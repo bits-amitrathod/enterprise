@@ -47,10 +47,10 @@ class SaleSubscription(models.Model):
     payment_mandatory = fields.Boolean(related='template_id.payment_mandatory')
     description = fields.Text()
     user_id = fields.Many2one('res.users', string='Salesperson', track_visibility='onchange')
-    invoice_count = fields.Integer(compute='_compute_invoice_count', groups="account.group_account_invoice")
+    invoice_count = fields.Integer(compute='_compute_invoice_count')
     country_id = fields.Many2one('res.country', related='partner_id.country_id', store=True)
     industry_id = fields.Many2one('res.partner.industry', related='partner_id.industry_id', store=True)
-    sale_order_count = fields.Integer(compute='_compute_sale_order_count', groups="sales_team.group_sale_salesman")
+    sale_order_count = fields.Integer(compute='_compute_sale_order_count')
     # customer portal
     uuid = fields.Char('Account UUID', default=lambda self: str(uuid4()), copy=False, required=True)
     website_url = fields.Char('Website URL', compute='_website_url', help='The full URL to access the document through the website.')
