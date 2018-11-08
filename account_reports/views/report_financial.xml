@@ -160,12 +160,14 @@
                         </div>
                     </t>
             </td>
+            <t t-set="column_index" t-value="0"/>
             <t t-foreach="line.get('columns')" t-as="column">
                 <td t-att-class="'o_account_report_line ' + (column.get('class', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('class', '')))" t-att-style="column.get('style', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('style', ''))">
                     <span class="o_account_report_column_value" t-att-title="column.get('title')">
                         <t t-esc="column.get('name')"/>
                     </span>
                 </td>
+                <t t-set="column_index" t-value="column_index + 1"/>
             </t>
         </tr>
     </t>
