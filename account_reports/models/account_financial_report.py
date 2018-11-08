@@ -1024,7 +1024,10 @@ class AccountFinancialReportLine(models.Model):
                     results_for_group.update({'line': line_res_per_group[group_index]})
                     columns.append(results_for_group)
                 else:
-                    columns.append({'line': {'balance': False}})
+                    res_vals = {'balance': False}
+                    if debit_credit:
+                        res_vals.update({'debit': False, 'credit': False})
+                    columns.append({'line': res_vals})
 
         return columns or [{'line': res} for res in line_res_per_group]
 
