@@ -86,6 +86,11 @@ class ReportAccountFinancialReport(models.Model):
         # generate specific groups for each period
         groups = []
         for period in periods:
+            if len(periods) == 1 and self.debit_credit:
+                for group in options['groups'].get('ids'):
+                    groups.append(({'string': _('Debit'), 'class': 'number'},) + tuple(group))
+                for group in options['groups'].get('ids'):
+                    groups.append(({'string': _('Crebit'), 'class': 'number'},) + tuple(group))
             for group in options['groups'].get('ids'):
                 groups.append((period,) + tuple(group))
 
