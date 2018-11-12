@@ -421,7 +421,7 @@ class AEATAccountFinancialReport(models.Model):
         boe_wizard = self._retrieve_boe_manual_wizard(options)
 
         # Content of the report
-        rslt += self._boe_format_number(casilla_lines_map['01'], length=8, signed=True, in_currency=True)
+        rslt += self._boe_format_number(casilla_lines_map['01'], length=8, signed=True)
         rslt += self._boe_format_number(casilla_lines_map['02'], length=17, decimal_places=2, signed=True, in_currency=True)
         rslt += self._boe_format_number(casilla_lines_map['03'], length=17, decimal_places=2, signed=True, in_currency=True)
         rslt += self._boe_format_number(casilla_lines_map['04'], length=8, signed=True)
