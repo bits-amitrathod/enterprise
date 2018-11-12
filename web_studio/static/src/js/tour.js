@@ -156,7 +156,7 @@ tour.register('web_studio_tests_tour', {
     trigger: '.o_web_studio_app_creator_next.is_ready',
 }, {
     // toggle the home menu
-    trigger: '.o_menu_toggle',
+    trigger: '.o_menu_toggle.fa-th',
 }, {
     // a invisible element cannot be used as a trigger so this small hack is
     // mandatory for the next step
@@ -194,8 +194,7 @@ tour.register('web_studio_tests_tour', {
 }, {
     trigger: 'button:contains(Confirm):not(".disabled")',
 },{
-    // wait for modal reloading after adding menu
-    trigger: '.modal-content:has([data-menu-id]:eq(2)) button:contains(Confirm):not(".disabled")',
+    trigger: 'button:contains(Confirm):not(".disabled")',
 }, {
     // check that the Studio menu is still there
     extra_trigger: '.o_web_studio_menu',

@@ -358,8 +358,9 @@ WebClient.include({
                         viewType: 'form',
                     }
                 }
+            }).then(function () {
+                self.menu.toggle_mode(false);  // display home menu button
             });
-            self.menu.toggle_mode(false);  // display home menu button
         });
     },
     /**
