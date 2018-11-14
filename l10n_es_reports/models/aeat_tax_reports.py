@@ -147,7 +147,7 @@ class AEATAccountFinancialReport(models.Model):
         return {
             'type': 'ir_actions_account_report_download',
             'data': {'model': self.env.context.get('model'),
-                     'options': json.dumps({**options, 'l10n_es_reports_boe_wizard_id': self.id}),
+                     'options': json.dumps(options),
                      'output_format': 'txt',
                      'financial_id': self.env.context.get('id'),
             },
