@@ -91,7 +91,8 @@
         </div>
     </xpath>
     <xpath expr='//th[@id="ref_number"]' position='replace'>
-        <th class="text-left">Reference number</th>
+        <!-- DO NOT FORWARD-PORT, ONLY FOR v10 -->
+        <th class="text-left"><t t-esc='context._get_columns_names_reference()' /></th>
     </xpath>
     <xpath expr="//thead/tr/th" position="attributes">
         <attribute name="width"></attribute>

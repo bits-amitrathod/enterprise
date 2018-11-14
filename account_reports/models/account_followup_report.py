@@ -402,3 +402,7 @@ class account_report_context_followup(models.TransientModel):
         date_format = lang_ids.date_format or DEFAULT_SERVER_DATE_FORMAT
 
         return date.strftime(date_format.encode('utf-8')).decode('utf-8')
+
+    # DO NOT FORWARD-PORT, ONLY FOR v10
+    def _get_columns_names_reference(self):
+        return _('Reference number')
