@@ -196,7 +196,7 @@
                     <t t-if="line.get('caret_options')">
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href='#'>
-                                <span t-att-data-id="line['id']" t-att-class="domainClass">
+                                <span t-att-data-id="line['id']" t-att-class="domainClass" t-att-title="line.get('title_hover')">
                                     <t t-esc="line.get('name')"/>
                                 </span>
                             </a>
@@ -253,7 +253,7 @@
 
 <template id="main_template">
     <div class='o_account_reports_body'>
-        <div class="container-fluid o_account_reports_page o_account_reports_no_print">
+        <div class="container o_account_reports_page o_account_reports_no_print">
             <div class="alert alert-info text-center no_print" t-if="not options.get('all_entries') and options.get('unposted_in_period')">
                 <span>There are <a action="open_unposted_moves">unposted Journal Entries</a> prior or included in this period.</span>
                 <br/>
@@ -298,7 +298,7 @@
                 <textarea name="summary"><t t-if="report.get('summary')" t-esc="report['summary']" /></textarea>
                 <button class="btn btn-primary js_account_report_save_summary">Save</button>
             </div>
-            <div>
+            <div class="table-responsive">
                 <table class="o_account_reports_table">
                     <t t-call="{{model._get_templates()['main_table_header_template']}}"/>
                     <tbody>
