@@ -697,10 +697,16 @@ msgid "Is an addenda?"
 msgstr "Es una addenda?"
 
 #. module: l10n_mx_edi
-#: code:addons/l10n_mx_edi/models/account_payment.py:210
+#: code:addons/l10n_mx_edi/models/account_payment.py:216
 #, python-format
-msgid "Is necessary assign the invoices that are paid with this payment to allow relate in the CFDI the fiscal documents that are affected with this record."
+msgid "It is necessary to assign the invoices that are paid with this payment to allow relate in the CFDI the fiscal documents that are affected by this record."
 msgstr "Es necesario asignar las facturas que serán pagadas en este pago, para poder relacionar los documentos fiscales afectados por este registro en el CFDI."
+
+#. module: l10n_mx_edi
+#: code:addons/l10n_mx_edi/models/account_payment.py:235
+#, python-format
+msgid "It is not necessary generate the payment receipt complement for this record because all the invoices have the payment method as PUE."
+msgstr "No es necesario generar el complemento de recepción de pago para este registro porque todas las facturas tienen el método de pago PUE."
 
 #. module: l10n_mx_edi
 #: model:ir.model,name:l10n_mx_edi.model_account_journal
@@ -1267,6 +1273,14 @@ msgstr "Los parámetros para configurar el certificado MX."
 #: model:ir.model.fields,help:l10n_mx_edi.field_res_config_settings_l10n_mx_edi_pac_password
 msgid "The password used to request the seal from the PAC"
 msgstr "La contraseña utilizada para solicitar el sello del PAC"
+
+#. module: l10n_mx_edi
+#: code:addons/l10n_mx_edi/models/account_payment.py:222
+#, python-format
+msgid "The payment is not full reconciled.\n"
+"Please, you need reconcile the payment (completely) with the customer invoices to pay. Or if it is necessary you can create an advance invoice with this payment."
+msgstr "El pago no está completamente reconciliado.\n"
+"Por favor, necesita reconciliar el pago (completamente) con las facturas del cliente por pagar. O si es necesario puede crear un anticipo con este pago."
 
 #. module: l10n_mx_edi
 #: model:ir.model.fields,help:l10n_mx_edi.field_l10n_mx_edi_certificate_serial_number
