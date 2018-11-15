@@ -78,39 +78,99 @@ class account_bank_reconciliation_report(models.AbstractModel):
 
     @api.model
     def _lines(self):
+        self.env['account.move.line'].check_access_rights('read')
+
         lines = []
+
+        if not self.env.context['journal_id']:
+            return lines
+
         #Start amount
         use_foreign_currency = bool(self.env.context['journal_id'].currency_id)
-        account_ids = list(set([self.env.context['journal_id'].default_debit_account_id.id, self.env.context['journal_id'].default_credit_account_id.id]))
-        lines_already_accounted = self.env['account.move.line'].search([('account_id', 'in', account_ids),
-                                                                        ('date', '<=', self.env.context['date_to']),
-                                                                        ('company_id', 'in', self.env.context['company_ids'])])
-        start_amount = sum([line.amount_currency if use_foreign_currency else line.balance for line in lines_already_accounted])
+        account_ids = (self.env.context['journal_id'].default_debit_account_id + self.env.context['journal_id'].default_credit_account_id).ids
+
+        if account_ids:
+            self._cr.execute('''
+                SELECT SUM(line.''' + ('amount_currency' if use_foreign_currency else 'balance') + ''') FROM account_move_line line
+                WHERE line.account_id IN %s AND line.date <= %s AND line.company_id IN %s 
+            ''', [
+                tuple(account_ids),
+                self.env.context['date_to'],
+                tuple(self.env.context['company_ids']),
+            ])
+            start_amount = self._cr.fetchone()[0]
+        else:
+            start_amount = 0
         lines.append(self.add_title_line(_("Current Balance in GL"), start_amount))
 
         # Un-reconcilied bank statement lines
-        move_lines = self.env['account.move.line'].search([('move_id.journal_id', '=', self.env.context['journal_id'].id),
-                                                           '|', ('move_id.statement_line_id', '=', False), ('move_id.statement_line_id.date', '>', self.env.context['date_to']),
-                                                           ('user_type_id.type', '=', 'liquidity'),
-                                                           ('full_reconcile_id', '=', False),
-                                                           ('date', '<=', self.env.context['date_to']),
-                                                           ('company_id', 'in', self.env.context['company_ids'])])
+        aml_query = '''
+            SELECT
+                line.id                 AS id,
+                line.name               AS name,
+                line.date               AS date,
+                line.ref                AS ref,
+                line.amount_currency    AS amount_currency,
+                line.balance            AS balance,
+                line.payment_id         AS payment_id,
+                line.statement_id       AS statement_id,
+                move.id                 AS move_id,
+                invoice.id              AS invoice_id,
+                invoice.type            AS invoice_type
+            FROM account_move_line line
+            LEFT JOIN account_account_type account_type ON account_type.id = line.user_type_id
+            LEFT JOIN account_invoice invoice ON invoice.id = line.invoice_id
+            LEFT JOIN account_move move ON move.id = line.move_id
+            LEFT JOIN account_bank_statement_line statement_line ON statement_line.id = move.statement_line_id
+            WHERE line.journal_id = %s
+            AND account_type.type = %s
+            AND line.full_reconcile_id  IS NULL
+            AND line.date <= %s
+            AND line.company_id IN %s
+            AND (move.statement_line_id IS NULL OR statement_line.date > %s)
+            ORDER BY line.date DESC, line.id DESC
+        '''
+        aml_params = [
+            self.env.context['journal_id'].id,
+            'liquidity',
+            self.env.context['date_to'],
+            tuple(self.env.context['company_ids']),
+            self.env.context['date_to'],
+        ]
+        self._cr.execute(aml_query, aml_params)
+
+        move_lines = self._cr.dictfetchall()
         unrec_tot = 0
+
         if move_lines:
             tmp_lines = []
+            invoice_supplier_form_id = self.env.ref('account.invoice_supplier_form').id
+            invoice_form_id = self.env.ref('account.invoice_form').id
             for line in move_lines:
                 self.line_number += 1
+
+                if line['statement_id']:
+                     action = ['account.bank.statement', line['statement_id'], _('View Bank Statement'), False]
+                elif line['payment_id']:
+                    action = ['account.payment', line['payment_id'], _('View Payment'), False]
+                elif line['invoice_id'] and line['invoice_type'] in ('in_invoice', 'in_refund'):
+                    action = ['account.invoice', line['invoice_id'], _('View Invoice'), invoice_supplier_form_id]
+                elif line['invoice_id'] and line['invoice_type'] not in ('in_invoice', 'in_refund'):
+                    action = ['account.invoice', line['invoice_id'], _('View Invoice'), invoice_form_id]
+                else:
+                    action = ['account.move', line['move_id'], _('View Move'), False]
+
                 tmp_lines.append({
                     'id': self.line_number,
-                    'move_id': line.move_id.id,
+                    'move_id': line['move_id'],
                     'type': 'move_line_id',
-                    'action': line.get_model_id_and_name(),
-                    'name': line.name,
+                    'action': action,
+                    'name': line['name'],
                     'footnotes': self.env.context['context_id']._get_footnotes('move_line_id', self.line_number),
-                    'columns': [line.date, line.ref, self._format(-(line.amount_currency if use_foreign_currency else line.balance))],
+                    'columns': [line['date'], line['ref'], self._format(-(line['amount_currency'] if use_foreign_currency else line['balance']))],
                     'level': 1,
                 })
-                unrec_tot -= line.amount_currency if use_foreign_currency else line.balance
+                unrec_tot -= line['amount_currency'] if use_foreign_currency else line['balance']
             if unrec_tot > 0:
                 title = _("Plus Unreconciled Payments")
             else:
