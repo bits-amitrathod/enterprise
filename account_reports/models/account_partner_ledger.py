@@ -165,7 +165,7 @@ class ReportPartnerLedger(models.AbstractModel):
                 'unfolded': 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all,
                 'colspan': 5,
             })
-            used_currency = company_id.currency_id
+            used_currency = self.env.user.company_id.currency_id
             if 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all:
                 progress = initial_balance
                 domain_lines = []
