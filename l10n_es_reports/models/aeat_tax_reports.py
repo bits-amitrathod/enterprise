@@ -10,14 +10,13 @@ class AEATAccountFinancialReport(models.Model):
 
     CASILLA_FIELD_PREFIX = 'casilla_'
 
-    def get_lines(self, options, line_id=None):
+    @api.model
+    def get_options(self, previous_options=None):
         """ Overridden in order to add the 'financial_report_line_values' attribute
         to the context before calling super() in case some AEAT wizard was used
         to generate this report. This allows transmitting the values manually
-        entered in the wizard to the report lines.
+        entered in the wizard to the report options.
         """
-        context_line_values = {}
-
         aeat_wizard_id = self.env.context.get('aeat_wizard_id')
         aeat_modelo = self.env.context.get('aeat_modelo')
         if aeat_wizard_id and aeat_modelo: # If we do have these, it means an AEAT wizard was used to generate this report
@@ -26,8 +25,11 @@ class AEATAccountFinancialReport(models.Model):
 
             # We consider all the casilla fields from the wizard, as they each correspond to a report line.
             casilla_fields = [x for x in dir(aeat_wizard) if x.startswith(casilla_prefix)]
+            context_line_values = {}
             for attr in casilla_fields:
                 line_code = 'aeat_mod_' + aeat_wizard._modelo + '_' + attr.replace(self.CASILLA_FIELD_PREFIX, '')
                 context_line_values[line_code] = getattr(aeat_wizard, attr)
 
-        return super(AEATAccountFinancialReport, self.with_context(self.env.context, financial_report_line_values=context_line_values)).get_lines(options, line_id)
+            self = self.with_context(self.env.context, financial_report_line_values=context_line_values)
+
+        return super(AEATAccountFinancialReport, self).get_options(previous_options)
