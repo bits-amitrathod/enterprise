@@ -118,6 +118,7 @@ class ReportPartnerLedger(models.AbstractModel):
         if line_id:
             line_id = line_id.replace('partner_', '')
         context = self.env.context
+        company_id = context.get('company_id') or self.env.user.company_id
 
         grouped_partners = self.group_by_partner_id(options, line_id)
         sorted_partners = sorted(grouped_partners, key=lambda p: p.name)
