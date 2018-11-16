@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo import models, api, _
+from odoo.exceptions import UserError
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from datetime import datetime, timedelta
 
 
 class IntrastatReport(models.AbstractModel):
@@ -22,8 +24,16 @@ class IntrastatReport(models.AbstractModel):
         :return: The xml export file content.
         '''
         date_from, date_to, journal_ids, incl_arrivals, incl_dispatches, extended = self._decode_options(options)
+        date_1 = datetime.strptime(date_from, DEFAULT_SERVER_DATE_FORMAT)
+        date_2 = datetime.strptime(date_to, DEFAULT_SERVER_DATE_FORMAT)
+        a_day = timedelta(days=1)
+        if date_1.day != 1 or (date_2 - date_1) > timedelta(days=30) or date_1.month == (date_2 + a_day).month:
+            raise UserError(_('Wrong date range selected. The intrastat declaration export has to be done monthly.'))
+        date = date_1.strftime('%Y-%m')
 
         company = self.env.user.company_id
+        if not company.company_registry:
+            raise UserError(_('Missing company registry information on the company'))
 
         cache = {}
 
@@ -50,4 +60,5 @@ class IntrastatReport(models.AbstractModel):
             'in_vals': in_vals,
             'out_vals': out_vals,
             'extended': extended,
+            'date': date,
         })
