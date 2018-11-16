@@ -39,19 +39,19 @@
                     <To>NBB</To>
                     <Domain>SXX</Domain>
                 </Administration>
-                <Report t-att-action="'nihil' if len(in_vals) == 0 else 'replace'" t-att-code="'EX19E' if extended else 'EX19S'" t-att-date="date">
-                    <Data close="true" t-att-form="'EXF19E' if extended else 'EXF19S'">
+                <Report t-att-action="'nihil' if len(in_vals) == 0 else 'replace'" t-att-code="_get_reception_code(extended)" t-att-date="date">
+                    <Data close="true" t-att-form="_get_reception_form(extended)">
                         <t t-call="l10n_be_intrastat.intrastat_report_export_xml_items">
                             <t t-set="reception" t-value="true"/>
                             <t t-set="items" t-value="in_vals"/>
                         </t>
                     </Data>
                 </Report>
-                <Report t-att-action="'nihil' if len(out_vals) == 0 else 'replace'" t-att-code="'EX29E' if extended else 'EX29S'" t-att-date="date">
-                    <Data close="true" t-att-form="'EXF29E' if extended else 'EXF29S'">
+                <Report t-att-action="'nihil' if len(out_vals) == 0 else 'replace'" t-att-code="_get_expedition_code(extended)" t-att-date="date">
+                    <Data close="true" t-att-form="_get_expedition_form(extended)">
                         <t t-call="l10n_be_intrastat.intrastat_report_export_xml_items">
-                            <t t-set="items" t-value="out_vals"/>
                             <t t-set="expedition" t-value="true"/>
+                            <t t-set="items" t-value="out_vals"/>
                         </t>
                     </Data>
                 </Report>

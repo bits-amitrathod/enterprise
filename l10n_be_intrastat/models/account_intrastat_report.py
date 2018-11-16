@@ -61,4 +61,20 @@ class IntrastatReport(models.AbstractModel):
             'out_vals': out_vals,
             'extended': extended,
             'date': date,
+            '_get_reception_code': self._get_reception_code,
+            '_get_reception_form': self._get_reception_form,
+            '_get_expedition_code': self._get_expedition_code,
+            '_get_expedition_form': self._get_expedition_form,
         })
+
+    def _get_reception_code(self, extended):
+        return 'EX19E' if extended else 'EX19S'
+
+    def _get_reception_form(self, extended):
+        return 'EXF19E' if extended else 'EXF19S'
+
+    def _get_expedition_code(self, extended):
+        return 'EX29E' if extended else 'EX29S'
+
+    def _get_expedition_form(self, extended):
+        return 'EXF29E' if extended else 'EXF29S'
