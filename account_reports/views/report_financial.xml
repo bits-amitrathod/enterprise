@@ -208,6 +208,7 @@
                         </div>
                     </t>
             </td>
+            <t t-set="column_index" t-value="0"/>
             <t t-foreach="line.get('columns')" t-as="column">
                 <t t-set="hierarchies_enabled" t-value="len(lines.get('columns_header', [])) > 1"/>
                 <td t-att-class="'o_account_report_line ' + (column.get('class', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('class', '')) + (line.get('unfoldable') and ' o_foldable_total' or '')) + ('' if hierarchies_enabled else ' o_account_report_line_indent')" t-att-style="column.get('style', lines.get('columns_header')[-1][column_index+line.get('colspan', 1)].get('style', ''))">
@@ -215,6 +216,7 @@
                         <t t-esc="column.get('name')"/>
                     </span>
                 </td>
+                <t t-set="column_index" t-value="column_index + 1"/>
             </t>
         </tr>
     </t>
