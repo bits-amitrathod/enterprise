@@ -289,6 +289,9 @@ var AccountInvoiceExtractFormRenderer = FormRenderer.extend({
                         $(this)[0].style.height = $(textLayer)[index].style.height;
                     })
                 }
+                if (!self.selected_feature) {
+                    self.trigger_up('display_boxes', {feature: self.selected_feature}); 
+                }
             });
         });
         var $document_img = self.$attachmentPreview.find('.img-fluid')[0];
@@ -348,14 +351,16 @@ var AccountInvoiceExtractFormRenderer = FormRenderer.extend({
                     if (box["user_selected"] == true || box["selected_status"] == 1) {
                         classDiv = "simpleBox userChosenBox";
                     }
-                    $($(boxLayer)[box["page"]]).append("<div class='" + classDiv + 
-                        "' style='left:" + (box["box_midX"] * parseInt($(boxLayer)[box["page"]].style.width)) + "px;" + 
-                        "top:" + (box["box_midY"] * parseInt($(boxLayer)[box["page"]].style.height))  + "px;" + 
-                        "width:" + ((box["box_width"]) * parseInt($(boxLayer)[box["page"]].style.width)) + "px;" + 
-                        "height:" + ((box["box_height"]) * parseInt($(boxLayer)[box["page"]].style.height))  + "px;" + 
-                        "transform: translate(-50%, -50%) rotate(" + box["box_angle"] + "deg);" + 
-                        "-ms-transform: translate(-50%, -50%) rotate(" + box["box_angle"] + "deg);" + 
-                        "-webkit-transform: translate(-50%, -50%) rotate(" + box["box_angle"] + "deg);" + "' data_id='" + box["id"] + "' data_feature='" + box['feature'] +"' data_text='" + box['text'] +"'/>");
+                    if ($(boxLayer).length > box["page"]) {
+                        $($(boxLayer)[box["page"]]).append("<div class='" + classDiv + 
+                            "' style='left:" + (box["box_midX"] * parseInt($(boxLayer)[box["page"]].style.width)) + "px;" + 
+                            "top:" + (box["box_midY"] * parseInt($(boxLayer)[box["page"]].style.height))  + "px;" + 
+                            "width:" + ((box["box_width"]) * parseInt($(boxLayer)[box["page"]].style.width)) + "px;" + 
+                            "height:" + ((box["box_height"]) * parseInt($(boxLayer)[box["page"]].style.height))  + "px;" + 
+                            "transform: translate(-50%, -50%) rotate(" + box["box_angle"] + "deg);" + 
+                            "-ms-transform: translate(-50%, -50%) rotate(" + box["box_angle"] + "deg);" + 
+                            "-webkit-transform: translate(-50%, -50%) rotate(" + box["box_angle"] + "deg);" + "' data_id='" + box["id"] + "' data_feature='" + box['feature'] +"' data_text='" + box['text'] +"'/>");
+                    }
                 }
             }
             $(boxLayer).find(".simpleBox").click(function (event) {
