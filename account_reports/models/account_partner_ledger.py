@@ -215,7 +215,8 @@ class ReportPartnerLedger(models.AbstractModel):
                         caret_type = 'account.invoice.in' if line.invoice_id.type in ('in_refund', 'in_invoice') else 'account.invoice.out'
                     elif line.payment_id:
                         caret_type = 'account.payment'
-                    domain_columns = [line.journal_id.code, line.account_id.code, self._format_aml_name(line), line.date_maturity,
+                    domain_columns = [line.journal_id.code, line.account_id.code, self._format_aml_name(line),
+                                      line.date_maturity and format_date(self.env, line.date_maturity) or '',
                                       line.full_reconcile_id.name or '', self.format_value(progress_before),
                                       line_debit != 0 and self.format_value(line_debit) or '',
                                       line_credit != 0 and self.format_value(line_credit) or '']
