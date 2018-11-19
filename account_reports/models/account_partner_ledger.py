@@ -184,7 +184,8 @@ class ReportPartnerLedger(models.AbstractModel):
                     'unfolded': 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all,
                     'colspan': 6,
                 })
-            used_currency = self.env.user.company_id.currency_id
+            user_company = self.env.user.company_id
+            used_currency = user_company.currency_id
             if 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all:
                 if offset == 0:
                     progress = initial_balance
@@ -206,8 +207,8 @@ class ReportPartnerLedger(models.AbstractModel):
                         line_credit = line.credit
                     date = amls.env.context.get('date') or fields.Date.today()
                     line_currency = line.company_id.currency_id
-                    line_debit = line_currency._convert(line_debit, used_currency, line.company_id, date)
-                    line_credit = line_currency._convert(line_credit, used_currency, line.company_id, date)
+                    line_debit = line_currency._convert(line_debit, used_currency, user_company, date)
+                    line_credit = line_currency._convert(line_credit, used_currency, user_company, date)
                     progress_before = progress
                     progress = progress + line_debit - line_credit
                     caret_type = 'account.move'
