@@ -4,7 +4,7 @@
 from odoo import models, api, _, fields
 from odoo.tools import float_is_zero
 from odoo.tools.misc import format_date
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 
 class ReportPartnerLedger(models.AbstractModel):
@@ -61,7 +61,8 @@ class ReportPartnerLedger(models.AbstractModel):
             if company.currency_id == user_company.currency_id:
                 rate = 1.0
             else:
-                rate = user_company.currency_id.rate / company.currency_id.rate
+                rate = self.env['res.currency']._get_conversion_rate(
+                    company.currency_id, user_company.currency_id, user_company, datetime.today())
             rates_table_entries.append((company.id, rate, user_company.currency_id.decimal_places))
         currency_table = ','.join('(%s, %s, %s)' % r for r in rates_table_entries)
         with_currency_table = 'WITH currency_table(company_id, rate, precision) AS (VALUES %s)' % currency_table
