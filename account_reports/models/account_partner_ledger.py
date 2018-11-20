@@ -4,7 +4,7 @@
 from odoo import models, api, _, fields
 from odoo.tools import float_is_zero
 from odoo.tools.misc import format_date
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 
 class ReportPartnerLedger(models.AbstractModel):
@@ -61,7 +61,8 @@ class ReportPartnerLedger(models.AbstractModel):
             if company.currency_id == user_company.currency_id:
                 rate = 1.0
             else:
-                rate = user_company.currency_id.rate / company.currency_id.rate
+                rate = self.env['res.currency']._get_conversion_rate(
+                    company.currency_id, user_company.currency_id, user_company, datetime.today())
             rates_table_entries.append((company.id, rate, user_company.currency_id.decimal_places))
         currency_table = ','.join('(%s, %s, %s)' % r for r in rates_table_entries)
         with_currency_table = 'WITH currency_table(company_id, rate, precision) AS (VALUES %s)' % currency_table
@@ -184,7 +185,8 @@ class ReportPartnerLedger(models.AbstractModel):
                     'unfolded': 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all,
                     'colspan': 6,
                 })
-            used_currency = self.env.user.company_id.currency_id
+            user_company = self.env.user.company_id
+            used_currency = user_company.currency_id
             if 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all:
                 if offset == 0:
                     progress = initial_balance
@@ -206,8 +208,8 @@ class ReportPartnerLedger(models.AbstractModel):
                         line_credit = line.credit
                     date = amls.env.context.get('date') or fields.Date.today()
                     line_currency = line.company_id.currency_id
-                    line_debit = line_currency._convert(line_debit, used_currency, line.company_id, date)
-                    line_credit = line_currency._convert(line_credit, used_currency, line.company_id, date)
+                    line_debit = line_currency._convert(line_debit, used_currency, user_company, date)
+                    line_credit = line_currency._convert(line_credit, used_currency, user_company, date)
                     progress_before = progress
                     progress = progress + line_debit - line_credit
                     caret_type = 'account.move'
