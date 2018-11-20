@@ -723,7 +723,7 @@ class AccountPayment(models.Model):
     @api.multi
     def action_draft(self):
         for record in self.filtered('l10n_mx_edi_cfdi_uuid'):
-            record.l10n_mx_edi_origin = self._set_cfdi_origin(record.l10n_mx_edi_cfdi_uuid)
+            record.l10n_mx_edi_origin = record._set_cfdi_origin(record.l10n_mx_edi_cfdi_uuid)
         return super(AccountPayment, self).action_draft()
 
 

@@ -610,7 +610,7 @@ class AccountInvoice(models.Model):
         allow.write({'l10n_mx_edi_time_invoice': False})
         if self.l10n_mx_edi_get_pac_version() == '3.3':
             for record in allow.filtered('l10n_mx_edi_cfdi_uuid'):
-                record.l10n_mx_edi_origin = self._set_cfdi_origin('04', [record.l10n_mx_edi_cfdi_uuid])
+                record.l10n_mx_edi_origin = record._set_cfdi_origin('04', [record.l10n_mx_edi_cfdi_uuid])
         return super(AccountInvoice, self - not_allow).action_invoice_draft()
 
     @api.model
@@ -622,7 +622,7 @@ class AccountInvoice(models.Model):
             invoice, date_invoice=date_invoice, date=date,
             description=description, journal_id=journal_id)
         if invoice.l10n_mx_edi_cfdi_uuid:
-            values['l10n_mx_edi_origin'] = self._set_cfdi_origin('01', [invoice.l10n_mx_edi_cfdi_uuid])
+            values['l10n_mx_edi_origin'] = '%s|%s' % ('01', invoice.l10n_mx_edi_cfdi_uuid)
         return values
 
     @api.multi
