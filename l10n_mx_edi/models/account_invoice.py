@@ -4,6 +4,7 @@ import base64
 from itertools import groupby
 import logging
 import re
+import requests
 
 from lxml import etree
 from lxml.objectify import fromstring
@@ -883,6 +884,18 @@ class AccountInvoice(models.Model):
         '''Synchronize both systems: Odoo & SAT to make sure the invoice is valid.
         '''
         url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
+        headers = {'SOAPAction': 'http://tempuri.org/IConsultaCFDIService/Consulta', 'Content-Type': 'text/xml; charset=utf-8'}
+        template = """<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:ns0="http://tempuri.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header/>
+   <ns1:Body>
+      <ns0:Consulta>
+         <ns0:expresionImpresa>${data}</ns0:expresionImpresa>
+      </ns0:Consulta>
+   </ns1:Body>
+</SOAP-ENV:Envelope>"""
+        namespace = {'a': 'http://schemas.datacontract.org/2004/07/Sat.Cfdi.Negocio.ConsultaCfdi.Servicio'}
         for inv in self.filtered(lambda r: r.l10n_mx_edi_is_required()):
             if inv.l10n_mx_edi_pac_status not in ['signed', 'cancelled']:
                 continue
@@ -890,13 +903,18 @@ class AccountInvoice(models.Model):
             customer_rfc = inv.l10n_mx_edi_cfdi_customer_rfc
             total = inv.l10n_mx_edi_cfdi_amount
             uuid = inv.l10n_mx_edi_cfdi_uuid
-            params = '"?re=%s&rr=%s&tt=%s&id=%s' % (
+            params = '?re=%s&amp;rr=%s&amp;tt=%s&amp;id=%s' % (
                 html_escape(html_escape(supplier_rfc or '')),
                 html_escape(html_escape(customer_rfc or '')),
                 total or 0.0, uuid or '')
+            soap_env = template.format(data=params)
             try:
-                response = Client(url).service.Consulta(params).Estado
+                soap_xml = requests.post(url, data=soap_env, headers=headers)
+                response = fromstring(soap_xml.text)
+                status = response.xpath(
+                    '//a:Estado', namespaces=namespace)
             except Exception as e:
-                inv.l10n_mx_edi_log_error(e.message or e.reason.__repr__())
+                inv.l10n_mx_edi_log_error(str(e))
                 continue
-            inv.l10n_mx_edi_sat_status = CFDI_SAT_QR_STATE.get(response.__repr__(), 'none')
+            inv.l10n_mx_edi_sat_status = CFDI_SAT_QR_STATE.get(
+                status[0] if status else '', 'none')
