@@ -146,6 +146,7 @@ class ReportPartnerLedger(models.AbstractModel):
         offset = int(options.get('lines_offset', 0))
         lines = []
         context = self.env.context
+        company_id = context.get('company_id') or self.env.user.company_id
         if line_id:
             line_id = int(line_id.split('_')[1]) or None
         elif options.get('partner_ids') and len(options.get('partner_ids')) == 1:
