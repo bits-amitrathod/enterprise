@@ -808,6 +808,7 @@ class View(models.Model):
             'name': '%s copy(%s)' % (new.name, copy_no),
             'key': new_key,
             'arch_base': etree.tostring(arch_tree, encoding='unicode'),
+            'inherit_id': False,
         })
 
         return new
