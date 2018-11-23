@@ -182,6 +182,8 @@ class FedexRequest():
     def rate(self):
         formatted_response = {'price': {}}
         del self.ClientDetail.Region
+        if self.hasCommodities:
+            self.RequestedShipment.CustomsClearanceDetail.Commodities = self.listCommodities
 
         try:
             self.response = self.client.service.getRates(WebAuthenticationDetail=self.WebAuthenticationDetail,

@@ -133,12 +133,6 @@ class ProviderFedex(models.Model):
         srm.set_currency(_convert_curr_iso_fdx(order_currency.name))
         srm.set_shipper(order.company_id.partner_id, order.warehouse_id.partner_id)
         srm.set_recipient(order.partner_shipping_id)
-        if is_india:
-            total_custom_amount = sum([
-                (line.product_id.list_price * line.product_uom_qty)
-                for line in order.order_line.filtered(lambda l: l.product_id.type in ['product', 'consu'])
-            ])
-            srm.customs_value(_convert_curr_iso_fdx(order_currency.name), total_custom_amount, "NON_DOCUMENTS")
 
         if max_weight and weight_value > max_weight:
             total_package = int(weight_value / max_weight)
@@ -153,6 +147,24 @@ class ProviderFedex(models.Model):
         else:
             srm.add_package(weight_value, mode='rating')
             srm.set_master_package(weight_value, 1)
+
+        # Commodities for customs declaration (international shipping)
+        if self.fedex_service_type in ['INTERNATIONAL_ECONOMY', 'INTERNATIONAL_PRIORITY'] or is_india:
+            total_commodities_amount = 0.0
+            commodity_country_of_manufacture = order.warehouse_id.partner_id.country_id.code
+
+            for line in order.order_line.filtered(lambda l: l.product_id.type in ['product', 'consu']):
+                commodity_amount = line.price_total / line.product_uom_qty
+                total_commodities_amount += (commodity_amount * line.product_uom_qty)
+                commodity_description = line.product_id.name
+                commodity_number_of_piece = '1'
+                commodity_weight_units = self.fedex_weight_unit
+                commodity_weight_value = _convert_weight(line.product_id.weight * line.product_uom_qty, self.fedex_weight_unit)
+                commodity_quantity = line.product_uom_qty
+                commodity_quantity_units = 'EA'
+                srm.commodities(_convert_curr_iso_fdx(order_currency.name), commodity_amount, commodity_number_of_piece, commodity_weight_units, commodity_weight_value, commodity_description, commodity_country_of_manufacture, commodity_quantity, commodity_quantity_units)
+            srm.customs_value(_convert_curr_iso_fdx(order_currency.name), total_commodities_amount, "NON_DOCUMENTS")
+            srm.duties_payment(order.warehouse_id.partner_id.country_id.code, superself.fedex_account_number)
 
         request = srm.rate()
 
