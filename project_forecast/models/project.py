@@ -53,6 +53,9 @@ class Project(models.Model):
                 'context': context,
             }
 
+        # the context might contain a group_by on project.project
+        # that does not exist on the forecast (e.g. a studio added field)
+        context.pop('group_by', False)
         return {
             'name': _("Forecast"),
             'type': 'ir.actions.act_window',
