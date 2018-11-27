@@ -697,7 +697,8 @@ class AccountInvoice(models.Model):
     @staticmethod
     def _l10n_mx_get_serie_and_folio(number):
         values = {'serie': None, 'folio': None}
-        number_matchs = [rn for rn in re.finditer('\d+', number or '')]
+        number = (number or '').strip()
+        number_matchs = [rn for rn in re.finditer('\d+', number)]
         if number_matchs:
             last_number_match = number_matchs[-1]
             values['serie'] = number[:last_number_match.start()] or None
