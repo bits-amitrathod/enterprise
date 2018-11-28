@@ -951,7 +951,7 @@ odoo.define('website_sign.document_signing', function(require) {
 
         init: function(parent, options) {
             options = (options || {});
-            options.title = options.title || _t("Thank You !") + "<br/>";
+            options.title = options.title || _t("Thank You !");
             options.subtitle = options.subtitle || _t("Your signature has been saved.");
             options.size = options.size || "medium";
 
@@ -965,6 +965,14 @@ odoo.define('website_sign.document_signing', function(require) {
             this._super(parent, options);
 
             this.on('closed', this, this.on_closed);
+        },
+
+        /**
+         * @override
+         */
+        renderElement: function () {
+            this._super.apply(this, arguments);
+            this.$modal.find('.modal-header .o_subtitle').before('<br/>');
         },
 
         on_closed: function () {
