@@ -277,6 +277,7 @@ class report_account_general_ledger(models.AbstractModel):
         lines = []
         context = self.env.context
         company_id = context.get('company_id') or self.env.user.company_id
+        used_currency = self.env.user.company_id.currency_id
         grouped_accounts = self.with_context(date_from_aml=context['date_from'], date_from=context['date_from'] and company_id.compute_fiscalyear_dates(datetime.strptime(context['date_from'], "%Y-%m-%d"))['date_from'] or None).group_by_account_id(line_id)  # Aml go back to the beginning of the user chosen range but the amount on the account line should go back to either the beginning of the fy or the beginning of times depending on the account
         sorted_accounts = sorted(grouped_accounts, key=lambda a: a.code)
         unfold_all = context.get('print_mode') and not context['context_id']['unfolded_accounts']
@@ -315,7 +316,6 @@ class report_account_general_ledger(models.AbstractModel):
                 if len(amls) > 80 and not context.get('print_mode'):
                     amls = amls[:80]
                     too_many = True
-                used_currency = self.env.user.company_id.currency_id
                 for line in amls:
                     if self.env.context['cash_basis']:
                         line_debit = line.debit_cash_basis
@@ -371,6 +371,7 @@ class report_account_general_ledger(models.AbstractModel):
                 lines += domain_lines
 
         if len(context['context_id'].journal_ids) == 1 and context['context_id'].journal_ids.type in ['sale', 'purchase'] and not line_id:
+            journal = context['context_id'].journal_ids
             total = self._get_journal_total()
             lines.append({
                 'id': 0,
@@ -403,13 +404,19 @@ class report_account_general_ledger(models.AbstractModel):
                 'unfolded': False,
             })
             for tax, values in self._get_taxes().items():
+                base_amount = journal.company_id.currency_id.compute(values['base_amount'], used_currency)
+                tax_amount = journal.company_id.currency_id.compute(values['tax_amount'], used_currency)
                 lines.append({
                     'id': tax.id,
                     'name': tax.name + ' (' + str(tax.amount) + ')',
                     'type': 'tax_id',
                     'footnotes': self.env.context['context_id']._get_footnotes('tax_id', tax.id),
                     'unfoldable': False,
-                    'columns': ['', '', '', '', values['base_amount'], values['tax_amount'], ''],
+                    'columns': [
+                        self._format(base_amount),
+                        self._format(tax_amount),
+                    ''],
+                    'colspan': 5,
                     'level': 1,
                 })
 
