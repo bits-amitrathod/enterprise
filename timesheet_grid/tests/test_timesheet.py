@@ -50,7 +50,7 @@ class TestTimesheetValidation(TestCommonTimesheet):
         with self.assertRaises(AccessError):
             self.timesheet2.sudo(self.user_employee.id).unlink()
         # Employee can not create new timesheet in the validated period
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(AccessError):
             last_month = fields.Date.to_string(datetime.now() - relativedelta(months=1))
             self.env['account.analytic.line'].sudo(self.user_employee.id).create({
                 'name': "my timesheet 3",
