@@ -234,7 +234,7 @@ class AccountPayment(models.Model):
                 'is not signed, and the UUID is required to indicate '
                 'the invoices that are paid with this CFDI'))
         if not self.invoice_ids.filtered(
-                lambda i: i.date_due != i.date_invoice):
+                lambda i: i._l10n_mx_edi_get_payment_policy() == 'PPD'):
             self.message_post(body=_(
                 'It is not necessary generate the payment receipt complement '
                 'for this record because all the invoices have the payment '
