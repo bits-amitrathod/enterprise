@@ -80,7 +80,7 @@ class AEATAccountFinancialReport(models.Model):
 
 
     @api.model
-    def get_options(self, previous_options=None):
+    def _get_options(self, previous_options=None):
         """ Overridden in order to add the 'financial_report_line_values' attribute
         to the context before calling super() in case some AEAT wizard was used
         to generate this report. This allows transmitting the values manually
@@ -105,7 +105,7 @@ class AEATAccountFinancialReport(models.Model):
 
             self = self.with_context(self.env.context, financial_report_line_values=context_line_values)
 
-        return super(AEATAccountFinancialReport, self).get_options(previous_options)
+        return super(AEATAccountFinancialReport, self)._get_options(previous_options)
 
     def _get_reports_buttons(self):
         """ Overridden to add the BOE export button to mod reports.
