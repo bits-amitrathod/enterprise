@@ -122,10 +122,10 @@ class report_account_general_ledger(models.AbstractModel):
                COALESCE(SUM("account_move_line".debit), 0),
                COALESCE(SUM("account_move_line".credit), 0)'''
         if options.get('cash_basis'):
-            select = select.replace('debit', 'debit_cash_basis').replace('credit', 'credit_cash_basis')
+            select = select.replace('debit', 'debit_cash_basis').replace('credit', 'credit_cash_basis').replace('balance', 'balance_cash_basis')
         select += " FROM %s WHERE %s"
         user_types = self.env['account.account.type'].search([('type', 'in', ('receivable', 'payable'))])
-        with_sql, with_params = self._get_with_statement(user_types, domain=[('user_type_id.include_initial_balance', '=', False)])
+        with_sql, with_params = self._get_with_statement(user_types)
         aml_domain = [('user_type_id.include_initial_balance', '=', False)]
         if company:
             aml_domain += [('company_id', '=', company.id)]
@@ -142,7 +142,7 @@ class report_account_general_ledger(models.AbstractModel):
             select = "SELECT \"account_move_line\".account_id"
             select += ',COALESCE(SUM(\"account_move_line\".debit-\"account_move_line\".credit), 0),SUM(\"account_move_line\".amount_currency),SUM(\"account_move_line\".debit),SUM(\"account_move_line\".credit)'
             if options.get('cash_basis'):
-                select = select.replace('debit', 'debit_cash_basis').replace('credit', 'credit_cash_basis')
+                select = select.replace('debit', 'debit_cash_basis').replace('credit', 'credit_cash_basis').replace('balance', 'balance_cash_basis')
         else:
             select = "SELECT \"account_move_line\".id"
         sql = "%s FROM %s WHERE %s%s"
@@ -447,13 +447,17 @@ class report_account_general_ledger(models.AbstractModel):
                 'unfoldable': False,
                 'unfolded': False,
             })
+            journal_currency = self.env['account.journal'].browse(journals[0]['id']).company_id.currency_id
             for tax, values in self._get_taxes(journals[0]).items():
+                base_amount = journal_currency._convert(values['base_amount'], used_currency, company_id, options['date_to'])
+                tax_amount = journal_currency._convert(values['tax_amount'], used_currency, company_id, options['date_to'])
                 lines.append({
                     'id': '%s_tax' % (tax.id,),
                     'name': tax.name + ' (' + str(tax.amount) + ')',
                     'caret_options': 'account.tax',
                     'unfoldable': False,
-                    'columns': [{'name': v} for v in ['', '', '', '', values['base_amount'], values['tax_amount'], '']],
+                    'columns': [{'name': v} for v in ['', '', '', '', self.format_value(base_amount), self.format_value(tax_amount), '']],
+                    'colspan': 5,
                     'level': 4,
                 })
 
