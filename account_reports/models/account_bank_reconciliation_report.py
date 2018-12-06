@@ -137,6 +137,12 @@ class account_bank_reconciliation_report(models.AbstractModel):
             tuple(self.env.context['company_ids']),
             self.env.context['date_to'],
         ]
+        # /!\ To forward-port until 12.0 (not included).
+        account_bank_reconciliation_start = self._context.get('account_bank_reconciliation_start')
+        if account_bank_reconciliation_start:
+            aml_query = aml_query.replace('ORDER BY', 'AND line.date > %s ORDER BY')
+            aml_params.append(account_bank_reconciliation_start)
+
         self._cr.execute(aml_query, aml_params)
 
         move_lines = self._cr.dictfetchall()

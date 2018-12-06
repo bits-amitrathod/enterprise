@@ -76,6 +76,8 @@ var account_report_generic = Widget.extend(ControlPanelMixin, {
             self.context_model = new Model(result[0]);
             self.context_id = result[1];
             // Finally, actually get the html and various data
+            if(self.odoo_context.account_bank_reconciliation_start)
+                self.given_context.account_bank_reconciliation_start = self.odoo_context.account_bank_reconciliation_start;
             return self.context_model.call('get_html_and_data', [self.context_id, self.given_context], {context: session.user_context}).then(function (result) {
                 self.report_type = result.report_type;
                 self.html = result.html;
