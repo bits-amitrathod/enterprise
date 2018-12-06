@@ -289,6 +289,8 @@ class SaleSubscription(models.Model):
     @api.multi
     def unlink(self):
         self.recurring_invoice_line_ids.unlink()
+        self.env['sale.subscription.snapshot'].sudo().search([
+            ('subscription_id', 'in', self.ids)]).unlink()
         return super(SaleSubscription, self).unlink()
 
     @api.model_cr_context
