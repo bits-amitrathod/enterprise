@@ -29,6 +29,9 @@ class LogPlugin(MessagePlugin):
     def received(self, context):
         self.debug_logger(context.reply, 'fedex_response')
 
+    def marshalled(self, context):
+        context.envelope = context.envelope.prune()
+
 
 class FedexRequest():
     """ Low-level object intended to interface Odoo recordsets with FedEx,
