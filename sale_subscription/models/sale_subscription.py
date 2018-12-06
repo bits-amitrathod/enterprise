@@ -286,6 +286,11 @@ class SaleSubscription(models.Model):
             self._send_subscription_rating_mail(force_send=True)
         return result
 
+    @api.multi
+    def unlink(self):
+        self.recurring_invoice_line_ids.unlink()
+        return super(SaleSubscription, self).unlink()
+
     @api.model_cr_context
     def _init_column(self, column_name):
         # to avoid generating a single default uuid when installing the module,
