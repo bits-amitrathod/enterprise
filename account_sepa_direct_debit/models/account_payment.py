@@ -255,17 +255,17 @@ class AccountPayment(models.Model):
             if mandate.one_off:
                 mandate.action_close_mandate()
 
-    def action_validate_invoice_payment(self):
+    def post(self):
         """ Overridden to register the payment on mandate after posting it if
         it was made via SDD.
         """
-        super(AccountPayment, self).action_validate_invoice_payment()
-
         for record in self:
             if record.payment_method_code == 'sdd':
-                mandate = record.invoice_ids._get_usable_mandate() # Call to super() ensures there is only one invoice in the set
+                mandate = self.env['sdd.mandate']._get_usable_mandate(record.company_id.id, record.partner_id.commercial_partner_id.id, record.payment_date)
                 if not mandate:
-                    raise UserError(_("This invoice cannot be paid via SEPA Direct Debit, as there is no valid mandate available for its customer at its creation date."))
+                    raise UserError(_("This payment cannot be made via SEPA Direct Debit, as there is no valid mandate available for its customer at its creation date."))
+
+        return super(AccountPayment, self).post()
 
 
 class AccountRegisterPaymentsWizard(models.TransientModel):
