@@ -168,6 +168,12 @@ var AppSwitcher = Widget.extend({
             case 17: // CTRL
             case 18: // Alt
                 break;
+            case 67: // c
+            case 88: // x
+                // keep focus and selection on keyboard copy and cut
+                if (event.ctrlKey || event.metaKey) {
+                    break;
+                }
             default:
                 if (!this.$input.is(':focus')) {
                     this.$input.focus();
