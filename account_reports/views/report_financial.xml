@@ -121,7 +121,9 @@
             </td>
             <t t-foreach="line.get('columns')" t-as="column">
                 <td t-att-class="'o_account_report_line ' + (column.get('class', lines.get('columns_header')[column_index+line.get('colspan', 1)].get('class', '')))" t-att-style="column.get('style', lines.get('columns_header')[column_index+line.get('colspan', 1)].get('style', ''))">
-                    <span class="o_account_report_column_value" t-att-title="column.get('title', column.get('name'))">
+                    <span class="o_account_report_column_value"
+                        t-att-title="column.get('title', column.get('name'))"
+                        t-att-style="'display: block;' if 'whitespace_print' in column.get('class', '') else ''">
                         <t t-raw="column.get('name')"/>
                     </span>
                 </td>
