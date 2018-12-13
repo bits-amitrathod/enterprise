@@ -410,8 +410,8 @@ class AccountPayment(models.Model):
             amount_payment = sum([data.get('amount', 0.0) for data in amount])
             total_paid += amount_payment
         ctx = dict(company_id=self.company_id.id, date=self.payment_date)
-        rate = ('%.6f' % (self.currency_id.with_context(**ctx).compute(
-            1, mxn))) if self.currency_id.name != 'MXN' else False
+        rate = ('%.6f' % (self.currency_id.with_context(**ctx)._convert(
+            1, mxn, self.company_id, self.payment_date))) if self.currency_id.name != 'MXN' else False
         return {
             'mxn': mxn,
             'payment_date': date,
