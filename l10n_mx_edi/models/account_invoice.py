@@ -673,12 +673,13 @@ class AccountInvoice(models.Model):
                 tax_dict = tax_line.get(tax.id, {})
                 amount = round(abs(tax_dict.get(
                     'amount', tax.amount / 100 * float("%.2f" % line.price_subtotal))), 2)
+                rate = round(abs(tax.amount), 2)
                 if tax.amount not in taxes:
                     taxes.update({tax.amount: {
                         'name': (tax.tag_ids[0].name
                                  if tax.tag_ids else tax.name).upper(),
                         'amount': amount,
-                        'rate': round(abs(tax.amount), 2),
+                        'rate': rate if tax.amount_type == 'fixed' else rate / 100.0,
                         'type': tax.l10n_mx_cfdi_tax_type,
                         'tax_amount': tax_dict.get('amount', tax.amount),
                     }})
