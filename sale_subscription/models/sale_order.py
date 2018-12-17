@@ -81,8 +81,7 @@ class SaleOrder(models.Model):
             if order.subscription_management == 'renew':
                 subscriptions.wipe()
                 subscriptions.increment_period()
-                subscriptions.unset_to_renew()
-                subscriptions.clear_date()
+                subscriptions.set_open()
             for subscription in subscriptions:
                 subscription_lines = order.order_line.filtered(lambda l: l.subscription_id == subscription and l.product_id.recurring_invoice)
                 line_values = subscription_lines._update_subscription_line_data(subscription)
