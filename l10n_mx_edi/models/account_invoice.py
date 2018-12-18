@@ -705,8 +705,6 @@ class AccountInvoice(models.Model):
             values['folio'] = last_number_match.group().lstrip('0') or None
         return values
 
-    __check_cfdi_re = re.compile(u'''([A-Z]|[a-z]|[0-9]| |Ñ|ñ|!|"|%|&|'|´|-|:|;|>|=|<|@|_|,|\{|\}|`|~|á|é|í|ó|ú|Á|É|Í|Ó|Ú|ü|Ü)''')
-
     @staticmethod
     def _get_string_cfdi(text, size=100):
         """Replace from text received the characters that are not found in the
@@ -717,8 +715,7 @@ class AccountInvoice(models.Model):
         Ex. 'Product ABC (small size)' - 'Product ABC small size'"""
         if not text:
             return None
-        for char in AccountInvoice.__check_cfdi_re.sub('', text):
-            text = text.replace(char, ' ')
+        text = text.replace('|', ' ')
         return text.strip()[:size]
 
     @api.multi
