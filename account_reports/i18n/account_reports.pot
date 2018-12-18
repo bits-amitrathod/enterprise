@@ -64,8 +64,14 @@ msgid "&times;"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_financial_report.py:156
-#: code:addons/account_reports/models/account_financial_report.py:158
+#: code:addons/account_reports/models/account_report.py:454
+#, python-format
+msgid "(No Group)"
+msgstr ""
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_financial_report.py:178
+#: code:addons/account_reports/models/account_financial_report.py:180
 #, python-format
 msgid "(copy)"
 msgstr ""
@@ -102,6 +108,12 @@ msgstr ""
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.search_template_analytic
 msgid "<b>Tags</b><br/>"
+msgstr ""
+
+#. module: account_reports
+#: model:ir.ui.view,arch_db:account_reports.filter_info_template
+msgid "<br/>\n"
+"                Analytic Accounts:"
 msgstr ""
 
 #. module: account_reports
@@ -467,7 +479,7 @@ msgstr ""
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_cash_spent0
-msgid "Cash paid for"
+msgid "Cash paid for operating activities"
 msgstr ""
 
 #. module: account_reports
@@ -477,7 +489,7 @@ msgstr ""
 
 #. module: account_reports
 #: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_cash_received0
-msgid "Cash received from customers"
+msgid "Cash received from operating activities"
 msgstr ""
 
 #. module: account_reports
@@ -542,6 +554,7 @@ msgstr ""
 
 #. module: account_reports
 #: model:ir.ui.view,arch_db:account_reports.filter_info_template
+#: model:ir.ui.view,arch_db:account_reports.main_template
 msgid "Companies:"
 msgstr ""
 
@@ -557,7 +570,12 @@ msgid "Computation"
 msgstr ""
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_consolidated_journals.py:26
+#: model:account.financial.html.report.line,name:account_reports.account_financial_report_cashsummary_regulator0
+msgid "Computation Error: unexplained difference"
+msgstr ""
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_consolidated_journals.py:47
 #: model:ir.actions.client,name:account_reports.action_account_report_cj
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_cj
 #, python-format
@@ -1570,6 +1588,18 @@ msgstr ""
 #. module: account_reports
 #: selection:account.financial.html.report.line,figure_type:0
 msgid "Percents"
+msgstr ""
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_report.py:611
+#, python-format
+msgid "Please specify a start and end date."
+msgstr ""
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_report.py:608
+#, python-format
+msgid "Please specify an end date."
 msgstr ""
 
 #. module: account_reports

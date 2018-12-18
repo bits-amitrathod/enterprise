@@ -22,6 +22,7 @@ from odoo.tools.misc import formatLang, format_date
 from odoo.tools import config
 from odoo.addons.web.controllers.main import clean_action
 from odoo.tools.safe_eval import safe_eval
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -603,7 +604,11 @@ class AccountReport(models.AbstractModel):
             else:
                 return '%s - %s' % ((dt_to.year - 1), dt_to.year)
         if not dt_from:
+            if not dt_to:
+                raise UserError(_('Please specify an end date.'))
             return _('As of %s') % (format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)),)
+        if not dt_from or not dt_to:
+            raise UserError(_('Please specify a start and end date.'))
         return _('From %s <br/> to  %s').replace('<br/>', '\n') % (format_date(self.env, dt_from.strftime(DEFAULT_SERVER_DATE_FORMAT)), format_date(self.env, dt_to.strftime(DEFAULT_SERVER_DATE_FORMAT)))
 
     def apply_date_filter(self, options):
