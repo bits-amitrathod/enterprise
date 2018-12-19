@@ -241,6 +241,12 @@ class ProviderFedex(models.Model):
 
             package_count = len(picking.package_ids) or 1
 
+            # For india picking courier is not accepted without this details in label.
+            po_number = dept_number = False
+            if picking.partner_id.country_id.code == 'IN' and picking.picking_type_id.warehouse_id.partner_id.country_id.code == 'IN':
+                po_number = 'B2B' if picking.partner_id.commercial_partner_id.is_company else 'B2C'
+                dept_number = 'BILL D/T: SENDER'
+
             # TODO RIM master: factorize the following crap
 
             ################
@@ -264,7 +270,7 @@ class ProviderFedex(models.Model):
                 for sequence, package in enumerate(picking.package_ids, start=1):
 
                     package_weight = _convert_weight(package.shipping_weight, self.fedex_weight_unit)
-                    srm.add_package(package_weight, sequence_number=sequence)
+                    srm._add_package(package_weight, sequence_number=sequence, po_number=po_number, dept_number=dept_number)
                     srm.set_master_package(net_weight, package_count, master_tracking_id=master_tracking_id)
                     request = srm.process_shipment()
                     package_name = package.name or sequence
@@ -328,7 +334,7 @@ class ProviderFedex(models.Model):
             # One package #
             ###############
             elif package_count == 1:
-                srm.add_package(net_weight)
+                srm._add_package(net_weight, po_number=po_number, dept_number=dept_number)
                 srm.set_master_package(net_weight, 1)
 
                 # Ask the shipping to fedex
