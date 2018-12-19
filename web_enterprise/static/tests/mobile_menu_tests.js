@@ -113,7 +113,7 @@ QUnit.module('web_enterprise mobile_menu_tests', {
     });
 
     QUnit.test('Burger Menu on an App', function (assert) {
-        assert.expect(3);
+        assert.expect(4);
 
         var mobileMenu = createMenu({ menuData: this.data });
 
@@ -123,6 +123,8 @@ QUnit.module('web_enterprise mobile_menu_tests', {
         mobileMenu.$('.o_mobile_menu_toggle').click();
         assert.ok(!$(".o_burger_menu").hasClass('o_hidden'),
             "Burger menu should be opened on button click");
+        assert.strictEqual($('.o_burger_menu .o_burger_menu_app .o_menu_sections > *').length, 2,
+            "Burger menu should contains top levels menu entries");
         $('.o_burger_menu_topbar').click();
         assert.ok(!$(".o_burger_menu_content").hasClass('o_burger_menu_dark'),
             "Toggle to usermenu on header click");
