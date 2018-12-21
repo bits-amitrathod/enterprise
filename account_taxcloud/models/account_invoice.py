@@ -52,7 +52,7 @@ class AccountInvoice(models.Model):
                     tax_rate = 0.0
                 else:
                     tax_rate = tax_values[index] / price * 100
-                if len(line.invoice_line_tax_ids.ids) > 1 or float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_digits=3):
+                if len(line.invoice_line_tax_ids) != 1 or float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_digits=3):
                     raise_warning = True
                     tax_rate = float_round(tax_rate, precision_digits=3)
                     tax = self.env['account.tax'].sudo().search([

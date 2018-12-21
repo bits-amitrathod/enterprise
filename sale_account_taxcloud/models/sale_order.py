@@ -42,7 +42,7 @@ class SaleOrder(models.Model):
                     tax_rate = 0.0
                 else:
                     tax_rate = tax_values[index] / price * 100
-                if len(line.tax_id.ids) > 1 or float_compare(line.tax_id.amount, tax_rate, precision_digits=3):
+                if len(line.tax_id) != 1 or float_compare(line.tax_id.amount, tax_rate, precision_digits=3):
                     tax_rate = float_round(tax_rate, precision_digits=3)
                     tax = self.env['account.tax'].sudo().search([
                         ('amount', '=', tax_rate),
