@@ -116,7 +116,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             for line in move_lines:
                 self.line_number += 1
                 line_description = line_title = line.ref
-                if len(line_description) > 83 and not self.env.context.get('print_mode'):
+                if line_description and len(line_description) > 83 and not self.env.context.get('print_mode'):
                     line_description = line.ref[:80] + '...'
                 tmp_lines.append({
                     'id': str(line.id),
