@@ -5,12 +5,13 @@
 # Translators:
 # Martin Trigaux, 2018
 # 敬雲 林 <chingyun@yuanchih-consult.com>, 2018
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.5+e\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 10:31+0000\n"
-"PO-Revision-Date: 2018-10-02 10:31+0000\n"
+"POT-Creation-Date: 2018-12-19 09:12+0000\n"
+"PO-Revision-Date: 2018-08-24 11:36+0000\n"
 "Last-Translator: 敬雲 林 <chingyun@yuanchih-consult.com>, 2018\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/odoo/teams/41243/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -85,13 +86,7 @@ msgid "<b>Next Reminder Date:</b>"
 msgstr "<b>下個提醒日:</b>"
 
 #. module: account_reports
-#: model_terms:ir.ui.view,arch_db:account_reports.search_template_partner
-msgid "<b>Partners</b><br/>"
-msgstr "<b>合作夥伴</b><br/>"
-
-#. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.search_template_analytic
-#: model_terms:ir.ui.view,arch_db:account_reports.search_template_partner
 msgid "<b>Tags</b><br/>"
 msgstr "<b>標籤</b><br/>"
 
@@ -732,10 +727,16 @@ msgid "Created on"
 msgstr "創建時間"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_consolidated_journals.py:29
-#: code:addons/account_reports/models/account_financial_report.py:134
+#: code:addons/account_reports/models/account_financial_report.py:93
+#, python-format
+msgid "Crebit"
+msgstr ""
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_consolidated_journals.py:50
+#: code:addons/account_reports/models/account_financial_report.py:142
 #: code:addons/account_reports/models/account_general_ledger.py:34
-#: code:addons/account_reports/models/account_partner_ledger.py:37
+#: code:addons/account_reports/models/account_partner_ledger.py:38
 #: code:addons/account_reports/models/account_report_coa.py:32
 #: code:addons/account_reports/models/account_report_coa.py:37
 #: code:addons/account_reports/models/account_report_coa.py:41
@@ -1719,12 +1720,19 @@ msgid "Partner Reports"
 msgstr "合作夥伴的報告"
 
 #. module: account_reports
+#. openerp-web
+#: code:addons/account_reports/static/src/js/account_reports.js:410
+#, python-format
+msgid "Partners"
+msgstr "合作夥伴"
+
+#. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.filter_info_template
 msgid "Partners:"
 msgstr "業務夥伴"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_partner_ledger.py:18
+#: code:addons/account_reports/models/account_partner_ledger.py:19
 #, python-format
 msgid "Payable"
 msgstr "應付"
@@ -1998,26 +2006,33 @@ msgid "Summary"
 msgstr "摘要"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_generic_tax_report.py:19
-#: code:addons/account_reports/models/account_generic_tax_report.py:22
+#: code:addons/account_reports/models/account_generic_tax_report.py:20
+#: code:addons/account_reports/models/account_generic_tax_report.py:23
 #, python-format
 msgid "TAX"
 msgstr "稅"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:432
+#. openerp-web
+#: code:addons/account_reports/static/src/js/account_reports.js:417
+#, python-format
+msgid "Tags"
+msgstr "標籤"
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_general_ledger.py:445
 #, python-format
 msgid "Tax Amount"
 msgstr "稅金總額"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:423
+#: code:addons/account_reports/models/account_general_ledger.py:436
 #, python-format
 msgid "Tax Declaration"
 msgstr "稅金聲明"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_generic_tax_report.py:152
+#: code:addons/account_reports/models/account_generic_tax_report.py:153
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report__tax_report
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_gt
 #, python-format

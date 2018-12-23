@@ -17,9 +17,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.5+e\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-27 08:43+0000\n"
+"POT-Creation-Date: 2018-12-19 09:12+0000\n"
 "PO-Revision-Date: 2018-08-24 11:48+0000\n"
 "Last-Translator: Sanne Kristensen <sanne@vkdata.dk>, 2018\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
@@ -31,7 +31,6 @@ msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
-#: model:ir.model.fields,field_description:sign.field_res_users__signature_count
 msgid "# Signatures"
 msgstr ""
 
@@ -42,7 +41,7 @@ msgid "%s : Signature request"
 msgstr ""
 
 #. module: sign
-#: code:addons/sign/controllers/main.py:183
+#: code:addons/sign/controllers/main.py:200
 #, python-format
 msgid "%s couldn't sign the document due to an insufficient credit error."
 msgstr ""
@@ -137,7 +136,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_needaction
 msgid "Action Needed"
-msgstr "Aktion påkrævet"
+msgstr "Handling påkrævet"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__active
@@ -429,7 +428,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_send_copy_view_form
 msgid "Discard"
-msgstr "Kasser"
+msgstr "Kassér"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_view_form
@@ -474,7 +473,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item__template_id
 msgid "Document Template"
-msgstr "Dokument Skabelon"
+msgstr "Dokument skabelon"
 
 #. module: sign
 #. openerp-web
@@ -622,7 +621,7 @@ msgstr "Filnavn"
 #: code:addons/sign/static/src/js/sign_common.js:842
 #, python-format
 msgid "Final Validation"
-msgstr "Endelig Bekræftelse"
+msgstr "Endelig bekræftelse"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_follower_ids
@@ -695,12 +694,12 @@ msgstr "ID"
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__message_unread
 msgid "If checked new messages require your attention."
-msgstr "Hvis afmærket, kræver nye beskeder din attention"
+msgstr "Hvis afkrydset, kræver nye beskeder din opmærksomhed"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Hvis afmærket, kræver nye beskeder din opmærksomhed "
+msgstr "Hvis afkrydset, kræver nye beskeder din opmærksomhed "
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__message_has_error
@@ -731,7 +730,7 @@ msgstr "Initialer"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_is_follower
 msgid "Is Follower"
-msgstr "Følger"
+msgstr "Er følger"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template_share__is_one_responsible
@@ -809,7 +808,7 @@ msgstr "Breddegrad"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template_share__url
 msgid "Link to Share"
-msgstr "Link til Deling"
+msgstr "Link til deling"
 
 #. module: sign
 #. openerp-web
@@ -880,7 +879,7 @@ msgstr "Mobil"
 #. module: sign
 #: selection:sign.item.type,type:0
 msgid "Multiline Text"
-msgstr "Multilinje Tekst"
+msgstr "Multilinje tekst"
 
 #. module: sign
 #: model:sign.item.type,name:sign.sign_item_type_multiline_text
@@ -902,7 +901,7 @@ msgstr "Mine dokumenter"
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_search
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_search
 msgid "My Favorites"
-msgstr "Mine Favoritter"
+msgstr "Mine favoritter"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_search
@@ -944,7 +943,7 @@ msgstr ""
 #: code:addons/sign/static/src/js/sign_backend.js:122
 #, python-format
 msgid "New Template"
-msgstr "Ny Skabelon"
+msgstr "Ny skabelon"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_date_deadline
@@ -980,7 +979,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Antal aktioner"
+msgstr "Antal handlinger"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_has_error_counter
@@ -1145,7 +1144,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__nb_total
 msgid "Requested Signatures"
-msgstr "Anmodede Underskrifter"
+msgstr "Anmodede underskrifter"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item__required
@@ -1250,7 +1249,7 @@ msgstr "Sikkerheds Token"
 #: code:addons/sign/static/src/xml/sign_common.xml:35
 #, python-format
 msgid "Select Signature Style"
-msgstr "Vælg Underskriftstil"
+msgstr "Vælg underskriftstil"
 
 #. module: sign
 #. openerp-web
@@ -1281,7 +1280,7 @@ msgstr "Send SMS"
 #: model:ir.actions.act_window,name:sign.action_sign_send_request
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Send Signature Request"
-msgstr "Send Anmodning om Underskrift"
+msgstr "Send anmodning om underskrift"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__signer_id
@@ -1314,7 +1313,7 @@ msgstr "Send en kopi til tredjeparter"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__nb_wait
 msgid "Sent Requests"
-msgstr "Send Anmodninger"
+msgstr "Send anmodninger"
 
 #. module: sign
 #. openerp-web
@@ -1328,7 +1327,7 @@ msgstr "Del"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__share_link
 msgid "Share Link"
-msgstr "Del Link"
+msgstr "Del link"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_search
@@ -1356,7 +1355,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign._doc_sign
 #, python-format
 msgid "Sign Document"
-msgstr "Underskriv Dokument"
+msgstr "Underskriv dokument"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request_signer__sign_send_request_id
@@ -1442,7 +1441,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_request_item__sign_request_id
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Signature Request"
-msgstr "Anmodning om Underskrift"
+msgstr "Anmodning om underskrift"
 
 #. module: sign
 #: code:addons/sign/models/sign_request.py:160
@@ -1465,7 +1464,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__sign_request_ids
 msgid "Signature Requests"
-msgstr "Anmodninger om Underskrifter"
+msgstr "Anmodninger om underskrifter"
 
 #. module: sign
 #: model:ir.ui.menu,name:sign.sign_request_item_menu
@@ -1733,7 +1732,7 @@ msgstr "Validér"
 #: code:addons/sign/static/src/js/sign_common.js:747
 #, python-format
 msgid "Validate & Send"
-msgstr "Bekræft & Send"
+msgstr "Bekræft & send"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign._doc_sign
@@ -1842,7 +1841,15 @@ msgid ""
 msgstr ""
 
 #. module: sign
-#: code:addons/sign/models/sign_request.py:574
+#: code:addons/sign/models/sign_template.py:78
+#, python-format
+msgid ""
+"Your PDF file shouldn't be encrypted with a password in order to be used as "
+"a signature template"
+msgstr ""
+
+#. module: sign
+#: code:addons/sign/models/sign_request.py:557
 #, python-format
 msgid "Your confirmation code is %s"
 msgstr ""
@@ -1853,7 +1860,7 @@ msgstr ""
 #: code:addons/sign/static/src/xml/sign_common.xml:78
 #, python-format
 msgid "Your email"
-msgstr "Din email"
+msgstr "Din e-mail"
 
 #. module: sign
 #. openerp-web

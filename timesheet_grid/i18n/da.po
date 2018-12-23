@@ -13,9 +13,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.5+e\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 14:06+0000\n"
+"POT-Creation-Date: 2018-12-19 09:13+0000\n"
 "PO-Revision-Date: 2018-08-24 11:48+0000\n"
 "Last-Translator: Sanne Kristensen <sanne@vkdata.dk>, 2018\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
@@ -200,12 +200,12 @@ msgstr ""
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet managers"
-msgstr "Aktiver en periodisk emailpåmindelse for timeseddelsledere"
+msgstr "Aktiver en periodisk e-mailpåmindelse for timeseddelsledere"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Activate a periodical email reminder for timesheet users"
-msgstr "Aktiver en periodisk emailpåmindelse for timeseddelbrugere"
+msgstr "Aktiver en periodisk e-mailpåmindelse for timeseddelbrugere"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_form
@@ -226,7 +226,7 @@ msgstr "Beløb"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
 msgid "Analytic Line"
-msgstr "Analytisk linie"
+msgstr "Analytisk linje"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
@@ -298,7 +298,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_allow
 msgid "Employee Reminder"
-msgstr "Medarbejder Påmindelse"
+msgstr "Medarbejder påmindelse"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_delay
@@ -319,7 +319,7 @@ msgstr "ID"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings__reminder_manager_allow
 msgid "If checked, send an email to all manager"
-msgstr "Hvis afkrydset, send en email til alle ledere"
+msgstr "Hvis afkrydset, send en e-mail til alle ledere"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_company__timesheet_mail_manager_allow
@@ -327,7 +327,7 @@ msgid ""
 "If checked, send an email to all managers who have not validated their "
 "timesheet"
 msgstr ""
-"Hvis afkrydset så send en email til alle ledere, der ikke har bekræftet "
+"Hvis afkrydset så send en e-mail til alle ledere, der ikke har bekræftet "
 "deres timeseddel"
 
 #. module: timesheet_grid
@@ -336,7 +336,7 @@ msgstr ""
 msgid ""
 "If checked, send an email to all users who have not recorded their timesheet"
 msgstr ""
-"Hvis afkrydset så send en email til alle brugere, der ikke har registreret "
+"Hvis afkrydset så send en e-mail til alle brugere, der ikke har registreret "
 "deres timeseddel"
 
 #. module: timesheet_grid
@@ -365,7 +365,7 @@ msgstr "Sidst opdateret den"
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
 msgid "Last Week"
-msgstr "Sidste Uge"
+msgstr "Sidste uge"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_manager_allow
@@ -409,7 +409,7 @@ msgstr "Dato for næste planlagte lederpåmindelse"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Non Validated"
-msgstr "Ikke Bekræftet"
+msgstr "Ikke bekræftet"
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/analytic.py:106
@@ -417,6 +417,18 @@ msgstr "Ikke Bekræftet"
 msgid ""
 "Only a Timesheets Manager is allowed to create an entry older than the "
 "validation limit."
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/analytic.py:121
+#, python-format
+msgid "Only a Timesheets Manager is allowed to delete a validated entry."
+msgstr ""
+
+#. module: timesheet_grid
+#: code:addons/timesheet_grid/models/analytic.py:115
+#, python-format
+msgid "Only a Timesheets Manager is allowed to modify a validated entry."
 msgstr ""
 
 #. module: timesheet_grid
@@ -474,7 +486,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__is_timesheet
 msgid "Timesheet Line"
-msgstr "Tidsskema linie"
+msgstr "Timeseddel linje"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee__timesheet_manager_id
@@ -515,7 +527,7 @@ msgstr "Tidsskemaer"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee__timesheet_validated
 msgid "Timesheets Validation Date"
-msgstr "Dato for Godkendelse af Timesedler"
+msgstr "Dato for godkendelse af timesedler"
 
 #. module: timesheet_grid
 #. openerp-web
@@ -568,7 +580,7 @@ msgstr "Validér"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
 msgid "Validate Timesheets"
-msgstr "Bekræft Timesedler"
+msgstr "Bekræft timesedler"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_validation_view_form
@@ -594,7 +606,7 @@ msgstr "Valideret"
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_month
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_week
 msgid "Validated Timesheets"
-msgstr "Bekræftede Timesedler"
+msgstr "Bekræftede timesedler"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__validated

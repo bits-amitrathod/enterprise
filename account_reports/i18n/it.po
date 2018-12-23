@@ -3,30 +3,31 @@
 # * account_reports
 # 
 # Translators:
-# Sergio Zanchetta <primes2h@gmail.com>, 2018
-# Francesco Garganese <francesco.garganese@aeromnia.aero>, 2018
-# Martin Trigaux, 2018
 # Davide Corio <enlightx@gmail.com>, 2018
 # Cesare Cugnasco <cesare.cugnasco@gmail.com>, 2018
 # Leonardo Donelli <learts92@gmail.com>, 2018
 # Luigi Di Naro <gigidn@gmail.com>, 2018
+# Francesco Garganese <francesco.garganese@aeromnia.aero>, 2018
+# Martin Trigaux, 2018
+# Alex Comba <alex.comba@agilebg.com>, 2018
 # Simone Bernini <simone@aperturelabs.it>, 2018
 # Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2018
 # Paolo Valier, 2018
 # Rosario Savarese <rosario.savarese@gmail.com>, 2018
-# Alessandro Camilli <alessandrocamilli@openforce.it>, 2018
-# David Minneci <david@numeko.it>, 2018
-# Alex Comba <alex.comba@agilebg.com>, 2018
 # gabriele_baldessari <gabriele.baldessari@gmail.com>, 2018
+# Alessandro Camilli <alessandrocamilli@openforce.it>, 2018
 # Manuela Feliciani <mfeliciani@alice.it>, 2018
+# David Minneci <david@numeko.it>, 2018
 # Léonie Bouchat <lbo@odoo.com>, 2018
+# Sergio Zanchetta <primes2h@gmail.com>, 2018
 # efraimbiffi <eab@odoo.com>, 2018
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.5+e\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 10:31+0000\n"
-"PO-Revision-Date: 2018-10-02 10:31+0000\n"
+"POT-Creation-Date: 2018-12-19 09:12+0000\n"
+"PO-Revision-Date: 2018-08-24 11:36+0000\n"
 "Last-Translator: efraimbiffi <eab@odoo.com>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
@@ -101,13 +102,7 @@ msgid "<b>Next Reminder Date:</b>"
 msgstr "<b>Data di prossimo promemoria:</b>"
 
 #. module: account_reports
-#: model_terms:ir.ui.view,arch_db:account_reports.search_template_partner
-msgid "<b>Partners</b><br/>"
-msgstr "<b>Partner</b><br/>"
-
-#. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.search_template_analytic
-#: model_terms:ir.ui.view,arch_db:account_reports.search_template_partner
 msgid "<b>Tags</b><br/>"
 msgstr "<b>Tag</b><br/>"
 
@@ -746,10 +741,16 @@ msgid "Created on"
 msgstr "Creato il"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_consolidated_journals.py:29
-#: code:addons/account_reports/models/account_financial_report.py:134
+#: code:addons/account_reports/models/account_financial_report.py:93
+#, python-format
+msgid "Crebit"
+msgstr ""
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_consolidated_journals.py:50
+#: code:addons/account_reports/models/account_financial_report.py:142
 #: code:addons/account_reports/models/account_general_ledger.py:34
-#: code:addons/account_reports/models/account_partner_ledger.py:37
+#: code:addons/account_reports/models/account_partner_ledger.py:38
 #: code:addons/account_reports/models/account_report_coa.py:32
 #: code:addons/account_reports/models/account_report_coa.py:37
 #: code:addons/account_reports/models/account_report_coa.py:41
@@ -1734,12 +1735,19 @@ msgid "Partner Reports"
 msgstr "Report di Partner"
 
 #. module: account_reports
+#. openerp-web
+#: code:addons/account_reports/static/src/js/account_reports.js:410
+#, python-format
+msgid "Partners"
+msgstr "Partner"
+
+#. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.filter_info_template
 msgid "Partners:"
 msgstr "Partner:"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_partner_ledger.py:18
+#: code:addons/account_reports/models/account_partner_ledger.py:19
 #, python-format
 msgid "Payable"
 msgstr "Debiti"
@@ -2015,26 +2023,33 @@ msgid "Summary"
 msgstr "Riepilogo"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_generic_tax_report.py:19
-#: code:addons/account_reports/models/account_generic_tax_report.py:22
+#: code:addons/account_reports/models/account_generic_tax_report.py:20
+#: code:addons/account_reports/models/account_generic_tax_report.py:23
 #, python-format
 msgid "TAX"
 msgstr "TASSA"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:432
+#. openerp-web
+#: code:addons/account_reports/static/src/js/account_reports.js:417
+#, python-format
+msgid "Tags"
+msgstr "Tag"
+
+#. module: account_reports
+#: code:addons/account_reports/models/account_general_ledger.py:445
 #, python-format
 msgid "Tax Amount"
 msgstr "Importo imposta"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_general_ledger.py:423
+#: code:addons/account_reports/models/account_general_ledger.py:436
 #, python-format
 msgid "Tax Declaration"
 msgstr "Dichiarazione Imposta"
 
 #. module: account_reports
-#: code:addons/account_reports/models/account_generic_tax_report.py:152
+#: code:addons/account_reports/models/account_generic_tax_report.py:153
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_html_report__tax_report
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_gt
 #, python-format

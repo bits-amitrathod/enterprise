@@ -6,16 +6,16 @@
 # Zahed Alfak <tamass4116@gmail.com>, 2018
 # Morovat Guivi <tarjomac@gmail.com>, 2018
 # سید محمد آذربرا <mohammadazarbara98@gmail.com>, 2018
-# Hamid Darabi, 2018
 # Maziar Niaki <maziarmn@gmail.com>, 2018
 # Martin Trigaux, 2018
+# Hamid Darabi, 2018
 # Hamed Mohammadi <hamed@dehongi.com>, 2018
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 14:54+0000\n"
+"POT-Creation-Date: 2018-12-19 09:12+0000\n"
 "PO-Revision-Date: 2018-08-24 11:37+0000\n"
 "Last-Translator: Hamed Mohammadi <hamed@dehongi.com>, 2018\n"
 "Language-Team: Persian (https://www.transifex.com/odoo/teams/41243/fa/)\n"
@@ -35,6 +35,21 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid ", expired on"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_fiscal_year_2017
+msgid "2017"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_fiscal_year_2018
+msgid "2018"
+msgstr ""
+
+#. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Finance_validate_inbox_contracts
+msgid "2018 contracts"
 msgstr ""
 
 #. module: documents
@@ -144,6 +159,11 @@ msgid ""
 msgstr ""
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_hr_documents_absences
+msgid "Absences"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__group_ids
 msgid "Access Groups"
 msgstr "گروه‌های حق دسترسی"
@@ -207,6 +227,11 @@ msgstr ""
 #. module: documents
 #: model:ir.actions.act_window,name:documents.action_url_form
 msgid "Add Url"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_ads
+msgid "Ads"
 msgstr ""
 
 #. module: documents
@@ -292,6 +317,21 @@ msgid "Available Rules"
 msgstr ""
 
 #. module: documents
+#: model:documents.folder,name:documents.documents_marketing_brand1_folder
+msgid "Brand 1"
+msgstr ""
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_marketing_brand2_folder
+msgid "Brand 2"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_brochures
+msgid "Brochures"
+msgstr ""
+
+#. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_request_form_view
 #: model_terms:ir.ui.view,arch_db:documents.documents_upload_url_view
 msgid "Cancel"
@@ -349,6 +389,13 @@ msgstr "مخاطب"
 #: selection:documents.workflow.tag.criteria,operator:0
 msgid "Contains"
 msgstr "محتوی"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_documents_Contracts
+#: model:documents.tag,name:documents.documents_hr_documents_contracts
+#: model:documents.tag,name:documents.documents_internal_template_contracts
+msgid "Contracts"
+msgstr "قراردادها"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__create_model
@@ -429,6 +476,16 @@ msgstr ""
 #, python-format
 msgid "Delete"
 msgstr "حذف"
+
+#. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Internal_deprecate_doc
+msgid "Deprecate Document(s)"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_status_deprecated
+msgid "Deprecated"
+msgstr "مستهلک شده"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__description
@@ -549,6 +606,11 @@ msgid "Download and Upload"
 msgstr ""
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_internal_status_draft
+msgid "Draft"
+msgstr "پیشنویس"
+
+#. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/js/documents_kanban_controller.js:718
 #, python-format
@@ -621,6 +683,11 @@ msgid "File"
 msgstr "پرونده"
 
 #. module: documents
+#: model:documents.folder,name:documents.documents_finance_folder
+msgid "Finance"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_facet__folder_id
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__folder_id
 #: model:ir.model.fields,field_description:documents.field_documents_share__folder_id
@@ -666,6 +733,16 @@ msgstr "فعالیتهای آینده"
 msgid ""
 "Go to the <b>images, videos & PDF viewer</b> by clicking on the preview "
 "area."
+msgstr ""
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_hr_folder
+msgid "HR"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_knowledge_hr_policies
+msgid "HR policies"
 msgstr ""
 
 #. module: documents
@@ -720,9 +797,21 @@ msgid "Image"
 msgstr "تصویر"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_images
+msgid "Images"
+msgstr "تصاویر"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_status_inbox
+#: model:documents.tag,name:documents.documents_hr_status_inbox
 #: model:mail.activity.type,name:documents.mail_documents_activity_data_Inbox
 msgid "Inbox"
 msgstr "صندوق پستی"
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_internal_folder
+msgid "Internal"
+msgstr "داخلی"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_is_follower
@@ -778,6 +867,11 @@ msgid "Late Activities"
 msgstr "فعالیتهای اخیر"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_finance_documents_legal
+msgid "Legal statements"
+msgstr ""
+
+#. module: documents
 #: selection:documents.share,state:0
 msgid "Live"
 msgstr ""
@@ -810,6 +904,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid "Login"
 msgstr "ورود"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_logos
+msgid "Logos"
+msgstr ""
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
@@ -848,6 +947,11 @@ msgstr "مدیر"
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__remove_activities
 msgid "Mark all Activities as done"
 msgstr ""
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_marketing_folder
+msgid "Marketing"
+msgstr "بازاریابی"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_has_error
@@ -901,11 +1005,6 @@ msgstr "محبوبهای من"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "My locked files"
-msgstr ""
-
-#. module: documents
-#: model_terms:ir.ui.view,arch_db:documents.documents_view_form
-msgid "NName"
 msgstr ""
 
 #. module: documents
@@ -985,6 +1084,11 @@ msgid ""
 msgstr ""
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_internal_knowledge_other
+msgid "Other"
+msgstr "سایر"
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__owner_id
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_user_id
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__criteria_owner_id
@@ -1027,6 +1131,11 @@ msgid ""
 msgstr ""
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_hr_documents_payslips
+msgid "Payslips"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_contact
 msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
@@ -1034,6 +1143,11 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_template_Presentations
+msgid "Presentations"
+msgstr "ارائه‌ها"
 
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
@@ -1097,6 +1211,11 @@ msgid "Requested files"
 msgstr ""
 
 #. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Internal_to_draft
+msgid "Reset to Draft"
+msgstr "بازنشانی به پیشنویس"
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__activity_user_id
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__activity_user_id
 msgid "Responsible"
@@ -1110,9 +1229,20 @@ msgid "Restore"
 msgstr "بازگردانی"
 
 #. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Finance_validate_tr
+#: model:documents.workflow.rule,name:documents.documents_Internal_to_review
+msgid "Review Document(s)"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__name
 msgid "Rule name"
 msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_knowledge_Sales
+msgid "Sales"
+msgstr "فروش"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_folder__facet_ids
@@ -1191,6 +1321,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "Show all records which has next action date is before today"
 msgstr "تمام رکوردهایی که تاریخ اعمال بعدی قبل از امروز است را نشان بده"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_template_sign
+msgid "Sign"
+msgstr "امضا"
 
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
@@ -1315,6 +1450,13 @@ msgid "This link has expired"
 msgstr ""
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_finance_status_tc
+#: model:documents.tag,name:documents.documents_hr_status_tc
+#: model:documents.tag,name:documents.documents_internal_status_tc
+msgid "To Review"
+msgstr "برای بازبینی"
+
+#. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/js/tour.js:69
 #, python-format
@@ -1422,6 +1564,24 @@ msgid "Valid Until"
 msgstr "معتبر تا"
 
 #. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Finance_validate_review
+#: model:documents.workflow.rule,name:documents.documents_Internal_validate_review
+msgid "Validate Document(s)"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_status_validated
+#: model:documents.tag,name:documents.documents_hr_status_validated
+#: model:documents.tag,name:documents.documents_internal_status_validated
+msgid "Validated"
+msgstr "معتبر"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_documents_vendor_bill
+msgid "Vendor Bills"
+msgstr "صورتهای فروشنده"
+
+#. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Vendor bill"
 msgstr ""
@@ -1430,6 +1590,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "Video"
 msgstr "ویدئو"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_Videos
+msgid "Videos"
+msgstr "ویدئوها"
 
 #. module: documents
 #. openerp-web

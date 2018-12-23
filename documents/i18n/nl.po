@@ -4,16 +4,17 @@
 # 
 # Translators:
 # Gunther Clauwaert <gclauwae@hotmail.com>, 2018
+# Thomas Pot <thomas@open2bizz.nl>, 2018
 # Martin Trigaux, 2018
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2018
-# Thomas Pot <thomas@open2bizz.nl>, 2018
+# Eric Geens <ericgeens@yahoo.com>, 2018
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2018
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 14:54+0000\n"
+"POT-Creation-Date: 2018-12-19 09:12+0000\n"
 "PO-Revision-Date: 2018-08-24 11:37+0000\n"
 "Last-Translator: Yenthe Van Ginneken <yenthespam@gmail.com>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
@@ -34,6 +35,21 @@ msgstr "+ Voeg een label toe"
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid ", expired on"
 msgstr ", verlopen op"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_fiscal_year_2017
+msgid "2017"
+msgstr "2017"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_fiscal_year_2018
+msgid "2018"
+msgstr "2018"
+
+#. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Finance_validate_inbox_contracts
+msgid "2018 contracts"
+msgstr "2018 contracten"
 
 #. module: documents
 #. openerp-web
@@ -151,6 +167,11 @@ msgstr ""
 "aan deze condities voldoen"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_hr_documents_absences
+msgid "Absences"
+msgstr "Afwezigheden"
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__group_ids
 msgid "Access Groups"
 msgstr "Toegangsgroepen"
@@ -215,6 +236,11 @@ msgstr "URL Toevoegen"
 #: model:ir.actions.act_window,name:documents.action_url_form
 msgid "Add Url"
 msgstr "URL Toevoegen"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_ads
+msgid "Ads"
+msgstr "Advertenties"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_id
@@ -299,6 +325,21 @@ msgid "Available Rules"
 msgstr "Beschikbare regels"
 
 #. module: documents
+#: model:documents.folder,name:documents.documents_marketing_brand1_folder
+msgid "Brand 1"
+msgstr "Merk 1"
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_marketing_brand2_folder
+msgid "Brand 2"
+msgstr "Merk 2"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_brochures
+msgid "Brochures"
+msgstr "Brochures"
+
+#. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_request_form_view
 #: model_terms:ir.ui.view,arch_db:documents.documents_upload_url_view
 msgid "Cancel"
@@ -356,6 +397,13 @@ msgstr "Contact"
 #: selection:documents.workflow.tag.criteria,operator:0
 msgid "Contains"
 msgstr "Bevat"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_documents_Contracts
+#: model:documents.tag,name:documents.documents_hr_documents_contracts
+#: model:documents.tag,name:documents.documents_internal_template_contracts
+msgid "Contracts"
+msgstr "Contracten"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__create_model
@@ -436,6 +484,16 @@ msgstr "Standaardwaarden voor geüploade documenten"
 #, python-format
 msgid "Delete"
 msgstr "Verwijder"
+
+#. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Internal_deprecate_doc
+msgid "Deprecate Document(s)"
+msgstr "Document afkeuren"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_status_deprecated
+msgid "Deprecated"
+msgstr "Vervallen"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__description
@@ -556,6 +614,11 @@ msgid "Download and Upload"
 msgstr "Download en upload"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_internal_status_draft
+msgid "Draft"
+msgstr "Concept"
+
+#. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/js/documents_kanban_controller.js:718
 #, python-format
@@ -628,6 +691,11 @@ msgid "File"
 msgstr "Bestand"
 
 #. module: documents
+#: model:documents.folder,name:documents.documents_finance_folder
+msgid "Finance"
+msgstr "Boekhouding"
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_facet__folder_id
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__folder_id
 #: model:ir.model.fields,field_description:documents.field_documents_share__folder_id
@@ -676,6 +744,16 @@ msgid ""
 msgstr ""
 "Bekijk <b>afbeeldingen, videos & PDF's </b> door op de voorbeeld weergave te"
 " klikken."
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_hr_folder
+msgid "HR"
+msgstr "HR"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_knowledge_hr_policies
+msgid "HR policies"
+msgstr ""
 
 #. module: documents
 #: model:ir.model,name:documents.model_ir_http
@@ -729,9 +807,21 @@ msgid "Image"
 msgstr "Afbeelding"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_images
+msgid "Images"
+msgstr "Afbeeldingen"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_status_inbox
+#: model:documents.tag,name:documents.documents_hr_status_inbox
 #: model:mail.activity.type,name:documents.mail_documents_activity_data_Inbox
 msgid "Inbox"
 msgstr "Postvak in"
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_internal_folder
+msgid "Internal"
+msgstr "Intern"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_is_follower
@@ -787,6 +877,11 @@ msgid "Late Activities"
 msgstr "Te late activiteiten"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_finance_documents_legal
+msgid "Legal statements"
+msgstr "Legale afschriften"
+
+#. module: documents
 #: selection:documents.share,state:0
 msgid "Live"
 msgstr "Live"
@@ -819,6 +914,11 @@ msgstr "Opmerking ingeven..."
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid "Login"
 msgstr "Login"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_logos
+msgid "Logos"
+msgstr "Logo's"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
@@ -857,6 +957,11 @@ msgstr "Manager"
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__remove_activities
 msgid "Mark all Activities as done"
 msgstr "Markeer alle activiteiten als gereed"
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_marketing_folder
+msgid "Marketing"
+msgstr "Marketing"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_has_error
@@ -911,11 +1016,6 @@ msgstr "Mijn favorieten"
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "My locked files"
 msgstr "Mijn vergrendelde bestanden"
-
-#. module: documents
-#: model_terms:ir.ui.view,arch_db:documents.documents_view_form
-msgid "NName"
-msgstr "Naam"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_facet__name
@@ -997,6 +1097,11 @@ msgstr ""
 "dit het aanmaken van nieuwe records uitzetten."
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_internal_knowledge_other
+msgid "Other"
+msgstr "Overige"
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__owner_id
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_user_id
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__criteria_owner_id
@@ -1041,6 +1146,11 @@ msgstr ""
 "is niet noodzakelijk het model wat wordt gegeven door alias_model_id (bijvoorbeeld: project (parent_model) en taak (model))"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_hr_documents_payslips
+msgid "Payslips"
+msgstr "Loonstroken"
+
+#. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_contact
 msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
@@ -1052,6 +1162,11 @@ msgstr ""
 "-iedereen: iedereen mag versturen\n"
 "-relaties: alleen geautoriseerde relaties\n"
 "-volgers: allen volgers van een bijbehorend document of volgers van gevolgde kanalen\n"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_template_Presentations
+msgid "Presentations"
+msgstr "Presentaties"
 
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
@@ -1115,6 +1230,11 @@ msgid "Requested files"
 msgstr "Aangevraagde bestanden"
 
 #. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Internal_to_draft
+msgid "Reset to Draft"
+msgstr "Terugzetten naar concept"
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__activity_user_id
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__activity_user_id
 msgid "Responsible"
@@ -1128,9 +1248,20 @@ msgid "Restore"
 msgstr "Terugzetten"
 
 #. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Finance_validate_tr
+#: model:documents.workflow.rule,name:documents.documents_Internal_to_review
+msgid "Review Document(s)"
+msgstr "Controleer document(en)"
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__name
 msgid "Rule name"
 msgstr "Regel naam"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_knowledge_Sales
+msgid "Sales"
+msgstr "Verkoop"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_folder__facet_ids
@@ -1209,6 +1340,11 @@ msgstr "Gedeelde bijlagen"
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "Show all records which has next action date is before today"
 msgstr "Toon alle records welke een actiedatum voor vandaag hebben"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_template_sign
+msgid "Sign"
+msgstr "E-sign"
 
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
@@ -1347,6 +1483,13 @@ msgid "This link has expired"
 msgstr "Deze link is vervallen"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_finance_status_tc
+#: model:documents.tag,name:documents.documents_hr_status_tc
+#: model:documents.tag,name:documents.documents_internal_status_tc
+msgid "To Review"
+msgstr "Na te kijken"
+
+#. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/js/tour.js:69
 #, python-format
@@ -1461,6 +1604,24 @@ msgid "Valid Until"
 msgstr "Geldig t/m"
 
 #. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Finance_validate_review
+#: model:documents.workflow.rule,name:documents.documents_Internal_validate_review
+msgid "Validate Document(s)"
+msgstr "Valideer document(en)"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_status_validated
+#: model:documents.tag,name:documents.documents_hr_status_validated
+#: model:documents.tag,name:documents.documents_internal_status_validated
+msgid "Validated"
+msgstr "Goedgekeurd"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_documents_vendor_bill
+msgid "Vendor Bills"
+msgstr "Leveranciersfacturen"
+
+#. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Vendor bill"
 msgstr "Leveranciersfactuur"
@@ -1469,6 +1630,11 @@ msgstr "Leveranciersfactuur"
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "Video"
 msgstr "Video"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_Videos
+msgid "Videos"
+msgstr "Video's"
 
 #. module: documents
 #. openerp-web

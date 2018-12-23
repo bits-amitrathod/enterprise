@@ -3,27 +3,31 @@
 # * delivery_dhl
 # 
 # Translators:
-# Audrius Palenskis <audrius.palenskis@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Anatolij <an@cq.lt>, 2017
+# Naglis Jonaitis, 2018
+# Anatolij, 2018
+# Silvija Butko <silvija.butko@gmail.com>, 2018
+# Audrius Palenskis <audrius.palenskis@gmail.com>, 2018
+# digitouch UAB <digitouchagencyeur@gmail.com>, 2018
+# Linas Versada <linaskrisiukenas@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Anatolij <an@cq.lt>, 2017\n"
+"POT-Creation-Date: 2018-09-21 14:06+0000\n"
+"PO-Revision-Date: 2018-08-24 11:37+0000\n"
+"Last-Translator: Linas Versada <linaskrisiukenas@gmail.com>, 2018\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: lt\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "0 - Logistics Services"
-msgstr ""
+msgstr "0 - Logistikos paslaugos"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -33,12 +37,12 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "2 - B2C"
-msgstr ""
+msgstr "2 - B2C"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "3 - B2C"
-msgstr ""
+msgstr "3 - B2C"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -58,17 +62,17 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "6X4_A4_PDF"
-msgstr ""
+msgstr "6X4_A4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "6X4_PDF"
-msgstr ""
+msgstr "6X4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "6X4_thermal"
-msgstr ""
+msgstr "6X4_thermal"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -83,37 +87,37 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_A4_PDF"
-msgstr ""
+msgstr "8X4_A4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_A4_TC_PDF"
-msgstr ""
+msgstr "8X4_A4_TC_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_CI_PDF"
-msgstr ""
+msgstr "8X4_CI_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_CI_thermal"
-msgstr ""
+msgstr "8X4_CI_thermal"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_PDF"
-msgstr ""
+msgstr "8X4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_RU_A4_PDF"
-msgstr ""
+msgstr "8X4_RU_A4_PDF"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_template:0
 msgid "8X4_thermal"
-msgstr ""
+msgstr "8X4_thermal"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -141,14 +145,19 @@ msgid "B - Break Bulk Express"
 msgstr ""
 
 #. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+msgid "Based on Rules"
+msgstr "Pagal taisykles"
+
+#. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "C - Medical Express"
 msgstr ""
 
 #. module: delivery_dhl
-#: model:ir.model,name:delivery_dhl.model_delivery_carrier
+#: model:ir.model.fields,field_description:delivery_dhl.field_product_packaging__package_carrier_type
 msgid "Carrier"
-msgstr "Vežėjas"
+msgstr "Kurjeris"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_package_dimension_unit:0
@@ -156,7 +165,7 @@ msgid "Centimeters"
 msgstr "Centimetrai"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier_dhl_dutiable
+#: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier__dhl_dutiable
 msgid "Check this if your package is dutiable."
 msgstr "Pažymėkite, jeigu pakuotė yra apmuitinama."
 
@@ -166,56 +175,69 @@ msgid "D - Express Worldwide"
 msgstr "D - Pasaulinis ekpresas"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_account_number
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "DHL"
+msgstr "DHL"
+
+#. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_account_number
 msgid "DHL Account Number"
 msgstr "DHL paskyros numeris"
 
 #. module: delivery_dhl
-#: model:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
+#: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
 msgid "DHL Configuration"
 msgstr "DHL nustatymai"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_default_packaging_id
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_default_packaging_id
 msgid "DHL Default Packaging Type"
-msgstr ""
+msgstr "DHL numatytasis pakuotės tipas"
 
 #. module: delivery_dhl
-#: model:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_sale
-#: model:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_stock
+#: model_terms:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_sale
+#: model_terms:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_stock
 msgid "DHL Delivery Methods"
-msgstr ""
+msgstr "DHL pristatymo būdai"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_password
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_password
 msgid "DHL Password"
 msgstr "DHL slaptažodis"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:382
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_product_code
+msgid "DHL Product"
+msgstr ""
+
+#. module: delivery_dhl
+#: code:addons/delivery_dhl/models/dhl_request.py:375
 #, python-format
 msgid "DHL Site ID is missing, please modify your delivery method settings."
 msgstr "Trūksta DHL Site ID, pakeiskite pristatymo metodo nustatymus."
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_SiteID
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_SiteID
 msgid "DHL SiteID"
 msgstr "DHL SiteID"
 
 #. module: delivery_dhl
+#: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_dom
 #: model:product.product,name:delivery_dhl.product_product_delivery_dhl_usa
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_usa_product_template
 msgid "DHL USA"
 msgstr ""
 
 #. module: delivery_dhl
+#: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_intl
 #: model:product.product,name:delivery_dhl.product_product_delivery_dhl_intl
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_intl_product_template
 msgid "DHL USA -> International"
 msgstr ""
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:386
+#: code:addons/delivery_dhl/models/dhl_request.py:379
 #, python-format
 msgid ""
 "DHL account number is missing, please modify your delivery method settings."
@@ -223,13 +245,18 @@ msgstr ""
 "Trūksta DHL paskyros numerio, pakeiskite pristatymo metodo nustatymus."
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:384
+#: code:addons/delivery_dhl/models/dhl_request.py:377
 #, python-format
 msgid "DHL password is missing, please modify your delivery method settings."
 msgstr "Trūksta DHL slaptažodžio, pakeiskite pristatymo metodo nustatymus."
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_dutiable
+#: model:ir.model,name:delivery_dhl.model_delivery_carrier
+msgid "Delivery Methods"
+msgstr "Pristatymo būdai"
+
+#. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_dutiable
 msgid "Dutiable Material"
 msgstr "Apmuitinamos medžiagos"
 
@@ -241,6 +268,12 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_image_format:0
 msgid "EPL2"
+msgstr "EPL2"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "Easypost"
 msgstr ""
 
 #. module: delivery_dhl
@@ -252,6 +285,17 @@ msgstr "Europa"
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "F - Freight Worldwide"
 msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "FedEx"
+msgstr "FedEx"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+msgid "Fixed Price"
+msgstr "Fiksuota kaina"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -294,14 +338,14 @@ msgid "L - Express 10:30"
 msgstr ""
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_label_image_format
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_label_image_format
 msgid "Label Image Format"
-msgstr ""
+msgstr "Etiketės ikonėlės formatas"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_label_template
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_label_template
 msgid "Label Template"
-msgstr ""
+msgstr "Etiketės šablonas"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -314,13 +358,18 @@ msgid "N - Domestic Express"
 msgstr "N - Vietinis ekspresas"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:185
+#: selection:product.packaging,package_carrier_type:0
+msgid "No carrier integration"
+msgstr "Kurjerio integracijos nėra"
+
+#. module: delivery_dhl
+#: code:addons/delivery_dhl/models/dhl_request.py:179
 #, python-format
 msgid "No service available for the selected product"
 msgstr "Nerasta paslaugų pažymėtam produktui"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:88
+#: code:addons/delivery_dhl/models/dhl_request.py:82
 #, python-format
 msgid "No shipping available for the selected DHL product"
 msgstr "Nerasti siuntimo variantai pažymėtam DHL produktui"
@@ -341,22 +390,17 @@ msgid "PDF"
 msgstr "PDF"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_package_dimension_unit
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_package_dimension_unit
 msgid "Package Dimension Unit"
 msgstr "Pakuotės tūrio vienetas"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_package_weight_unit
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_package_weight_unit
 msgid "Package Weight Unit"
 msgstr "Pakuotės svorio vienetas"
 
 #. module: delivery_dhl
-#: model:ir.model,name:delivery_dhl.model_product_packaging
-msgid "Packaging"
-msgstr "Pakuotės tipas"
-
-#. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:404
+#: code:addons/delivery_dhl/models/dhl_request.py:397
 #, python-format
 msgid "Please provide at least one item to ship."
 msgstr "Pateikite siuntimui bent vieną daiktą."
@@ -367,9 +411,14 @@ msgid "Pounds"
 msgstr "Svarai"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_product_code
-msgid "Product"
-msgstr "Produktas"
+#: model:ir.model,name:delivery_dhl.model_product_packaging
+msgid "Product Packaging"
+msgstr "Produkto pakavimas"
+
+#. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr "Tiekėjas"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -382,7 +431,7 @@ msgid "R - GlobalMail Business"
 msgstr ""
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier_dhl_region_code
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_region_code
 msgid "Region"
 msgstr "Regionas"
 
@@ -392,7 +441,7 @@ msgid "S - Same Day"
 msgstr ""
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/delivery_dhl.py:129
+#: code:addons/delivery_dhl/models/delivery_dhl.py:131
 #, python-format
 msgid "Shipment created into DHL <br/> <b>Tracking Number : </b>%s"
 msgstr "Siunta sukurta DHL <br/> <b>Sekimo numeris : </b>%s"
@@ -403,15 +452,17 @@ msgid "T - Express 12:00"
 msgstr "T - Ekspresas 12:00"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:392
+#: code:addons/delivery_dhl/models/dhl_request.py:385
 #, python-format
 msgid ""
 "The address of the customer is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
+"Kliento adreso nėra arba jis neteisingas (neužpildytas laukas(-ai) :\n"
+" %s)"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:400
+#: code:addons/delivery_dhl/models/dhl_request.py:393
 #, python-format
 msgid ""
 "The address of your company warehouse is missing or wrong (Missing field(s) :\n"
@@ -421,7 +472,7 @@ msgstr ""
 "%s)"
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/dhl_request.py:406
+#: code:addons/delivery_dhl/models/dhl_request.py:399
 #, python-format
 msgid ""
 "The estimated price cannot be computed because the weight of your product is"
@@ -433,6 +484,25 @@ msgstr ""
 #: selection:delivery.carrier,dhl_product_code:0
 msgid "U - Express Worldwide"
 msgstr ""
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "UPS"
+msgstr "UPS"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+msgid "USPS"
+msgstr "USPS"
+
+#. module: delivery_dhl
+#: model:product.product,uom_name:delivery_dhl.product_product_delivery_dhl_intl
+#: model:product.product,uom_name:delivery_dhl.product_product_delivery_dhl_usa
+#: model:product.template,uom_name:delivery_dhl.product_product_delivery_dhl_intl_product_template
+#: model:product.template,uom_name:delivery_dhl.product_product_delivery_dhl_usa_product_template
+msgid "Unit(s)"
+msgstr "Vienetas(ai)"
 
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_product_code:0
@@ -455,7 +525,7 @@ msgid "Y - Express 12:00"
 msgstr ""
 
 #. module: delivery_dhl
-#: code:addons/delivery_dhl/models/delivery_dhl.py:144
+#: code:addons/delivery_dhl/models/delivery_dhl.py:146
 #, python-format
 msgid "You can't cancel DHL shipping without pickup date."
 msgstr "Negalite nutraukti DHL siuntimo be paėmimo datos."
@@ -468,4 +538,18 @@ msgstr ""
 #. module: delivery_dhl
 #: selection:delivery.carrier,dhl_label_image_format:0
 msgid "ZPL2"
-msgstr ""
+msgstr "ZPL2"
+
+#. module: delivery_dhl
+#: selection:delivery.carrier,delivery_type:0
+#: selection:product.packaging,package_carrier_type:0
+msgid "bpost"
+msgstr "bpost"
+
+#. module: delivery_dhl
+#: model:product.product,weight_uom_name:delivery_dhl.product_product_delivery_dhl_intl
+#: model:product.product,weight_uom_name:delivery_dhl.product_product_delivery_dhl_usa
+#: model:product.template,weight_uom_name:delivery_dhl.product_product_delivery_dhl_intl_product_template
+#: model:product.template,weight_uom_name:delivery_dhl.product_product_delivery_dhl_usa_product_template
+msgid "kg"
+msgstr "kg"

@@ -3,25 +3,29 @@
 # * delivery_usps
 # 
 # Translators:
-# Aleksandr Jadov <a.jadov@tata.lt>, 2017
-# Audrius Palenskis <audrius.palenskis@gmail.com>, 2017
-# Anatolij <an@cq.lt>, 2017
-# digitouch UAB <digitouchagencyeur@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Antanas Muliuolis <an.muliuolis@gmail.com>, 2017
+# Naglis Jonaitis, 2018
+# Aleksandr Jadov <a.jadov@tata.lt>, 2018
+# Martin Trigaux, 2018
+# Anatolij, 2018
+# Silvija Butko <silvija.butko@gmail.com>, 2018
+# Audrius Palenskis <audrius.palenskis@gmail.com>, 2018
+# Antanas Muliuolis <an.muliuolis@gmail.com>, 2018
+# digitouch UAB <digitouchagencyeur@gmail.com>, 2018
+# Linas Versada <linaskrisiukenas@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Antanas Muliuolis <an.muliuolis@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-09-21 14:06+0000\n"
+"PO-Revision-Date: 2018-08-24 11:37+0000\n"
+"Last-Translator: Linas Versada <linaskrisiukenas@gmail.com>, 2018\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: lt\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_intl_non_delivery_option:0
@@ -29,17 +33,17 @@ msgid "Abandon"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_account_validated
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_account_validated
 msgid "Account Validated"
-msgstr ""
+msgstr "Paskyra patvirtinta"
 
 #. module: delivery_usps
-#: model:ir.model,name:delivery_usps.model_delivery_carrier
-msgid "Carrier"
-msgstr "Vežėjas"
+#: selection:delivery.carrier,delivery_type:0
+msgid "Based on Rules"
+msgstr "Pagal taisykles"
 
 #. module: delivery_usps
-#: model:ir.model.fields,help:delivery_usps.field_delivery_carrier_usps_account_validated
+#: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_account_validated
 msgid "Check this box if your account is validated by USPS"
 msgstr ""
 
@@ -50,12 +54,22 @@ msgid "Company phone number is invalid. Please insert a US phone number."
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_content_type
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_content_type
 msgid "Content Type"
 msgstr "Turinio tipas"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_delivery_nature
+#: selection:delivery.carrier,delivery_type:0
+msgid "DHL"
+msgstr "DHL"
+
+#. module: delivery_usps
+#: model:ir.model,name:delivery_usps.model_delivery_carrier
+msgid "Delivery Methods"
+msgstr "Pristatymo būdai"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
 msgid "Delivery Nature"
 msgstr ""
 
@@ -70,7 +84,12 @@ msgid "Domestic"
 msgstr "Vietinis"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:102
+#: selection:delivery.carrier,delivery_type:0
+msgid "Easypost"
+msgstr ""
+
+#. module: delivery_usps
+#: code:addons/delivery_usps/models/delivery_usps.py:104
 #, python-format
 msgid ""
 "Error:\n"
@@ -83,9 +102,19 @@ msgid "Express"
 msgstr "Ekspresas"
 
 #. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "FedEx"
+msgstr "FedEx"
+
+#. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
 msgid "First Class"
 msgstr "Pirma klasė"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "Fixed Price"
+msgstr "Fiksuota kaina"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
@@ -111,7 +140,7 @@ msgid "Flat Rate Envelope"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
+#: model_terms:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
 msgid "From Company"
 msgstr ""
 
@@ -153,7 +182,7 @@ msgid "Letter"
 msgstr "Laiškas"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_machinable
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_machinable
 msgid "Machinable"
 msgstr ""
 
@@ -168,7 +197,7 @@ msgid "Merchandise"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_intl_non_delivery_option
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_intl_non_delivery_option
 msgid "Non delivery option"
 msgstr ""
 
@@ -193,22 +222,22 @@ msgid "Package Service"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_girth
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_girth
 msgid "Package girth (in inches)"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_height
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_height
 msgid "Package height (in inches)"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_length
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_length
 msgid "Package length (in inches)"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_width
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_width
 msgid "Package width (in inches)"
 msgstr ""
 
@@ -224,13 +253,13 @@ msgid "Parcel"
 msgstr "Siuntinis"
 
 #. module: delivery_usps
-#: model:ir.model.fields,help:delivery_usps.field_delivery_carrier_usps_machinable
+#: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_machinable
 msgid ""
 "Please check on USPS website to ensure that your package is machinable."
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:81
+#: code:addons/delivery_usps/models/usps_request.py:83
 #, python-format
 msgid ""
 "Please choose another service (maximum weight of this service is 4 pounds)"
@@ -270,10 +299,15 @@ msgstr "Atvirlaiškis"
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
 msgid "Priority"
-msgstr "Svarbumas"
+msgstr "Svarba"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:371
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr "Tiekėjas"
+
+#. module: delivery_usps
+#: code:addons/delivery_usps/models/usps_request.py:372
 #, python-format
 msgid "Recipient address cannot be found. Please check the address exists."
 msgstr ""
@@ -289,7 +323,7 @@ msgid "Redirect"
 msgstr "Nukreipti"
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_redirect_partner_id
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_redirect_partner_id
 msgid "Redirect Partner"
 msgstr ""
 
@@ -315,13 +349,13 @@ msgid "Sample"
 msgstr "Pavyzdis"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:163
+#: code:addons/delivery_usps/models/delivery_usps.py:169
 #, python-format
 msgid "Shipment N° %s has been cancelled"
 msgstr "Siunta  N° %s nutraukta"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/delivery_usps.py:143
+#: code:addons/delivery_usps/models/delivery_usps.py:149
 #, python-format
 msgid "Shipment created into USPS <br/> <b>Tracking Number : </b>%s"
 msgstr ""
@@ -350,7 +384,7 @@ msgid ""
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:79
+#: code:addons/delivery_usps/models/usps_request.py:78
 #, python-format
 msgid ""
 "The estimated price cannot be computed because the weight of your product is"
@@ -367,43 +401,54 @@ msgid ""
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:164
+#: code:addons/delivery_usps/models/usps_request.py:167
 #, python-format
 msgid "The selected USPS service (%s) cannot be used to deliver this package."
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
+#: model_terms:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
 msgid "To Company"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_international_regular_container
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_international_regular_container
 msgid "Type of USPS International regular container"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_domestic_regular_container
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_domestic_regular_container
 msgid "Type of USPS domestic regular container"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_container
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_container
 msgid "Type of container"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "UPS"
+msgstr "UPS"
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "USPS"
+msgstr "USPS"
+
+#. module: delivery_usps
+#: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "USPS Configuration"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
-#: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
+#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
+#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
 msgid "USPS Delivery Methods"
-msgstr ""
+msgstr "USPS pristatymo būdai"
 
 #. module: delivery_usps
+#: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_domestic
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_domestic
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_domestic_product_template
 msgid "USPS Domestic Flat Rate Envelope"
@@ -418,11 +463,12 @@ msgid ""
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_first_class_mail_type
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_first_class_mail_type
 msgid "USPS First Class Mail Type"
 msgstr ""
 
 #. module: delivery_usps
+#: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_international
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_international
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_international_product_template
 msgid "USPS International Flat Rate Box"
@@ -437,32 +483,53 @@ msgid ""
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_label_file_type
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
 msgid "USPS Label File Type"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_mail_type
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_mail_type
 msgid "USPS Mail Type"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_service
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_service
 msgid "USPS Service"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_username
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_username
 msgid "USPS User ID"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_size_container
+#: model:product.product,uom_name:delivery_usps.product_product_delivery_usps_domestic
+#: model:product.product,uom_name:delivery_usps.product_product_delivery_usps_international
+#: model:product.template,uom_name:delivery_usps.product_product_delivery_usps_domestic_product_template
+#: model:product.template,uom_name:delivery_usps.product_product_delivery_usps_international_product_template
+msgid "Unit(s)"
+msgstr "Vienetas(ai)"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_size_container
 msgid "Usps Size Container"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:373
+#: code:addons/delivery_usps/models/usps_request.py:374
 #, python-format
 msgid "Your company or recipient ZIP code is incorrect."
 msgstr ""
+
+#. module: delivery_usps
+#: selection:delivery.carrier,delivery_type:0
+msgid "bpost"
+msgstr "bpost"
+
+#. module: delivery_usps
+#: model:product.product,weight_uom_name:delivery_usps.product_product_delivery_usps_domestic
+#: model:product.product,weight_uom_name:delivery_usps.product_product_delivery_usps_international
+#: model:product.template,weight_uom_name:delivery_usps.product_product_delivery_usps_domestic_product_template
+#: model:product.template,weight_uom_name:delivery_usps.product_product_delivery_usps_international_product_template
+msgid "kg"
+msgstr "kg"

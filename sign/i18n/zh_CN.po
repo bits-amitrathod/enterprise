@@ -7,14 +7,14 @@
 # 苏州远鼎 <tiexinliu@126.com>, 2018
 # ChinaMaker <liuct@chinamaker.net>, 2018
 # 老窦 北京 <2662059195@qq.com>, 2018
-# SUMMER XIA <sxi@odoo.com>, 2018
-# Jackie Zhang <jzh@odoo.com>, 2018
-# Martin Trigaux, 2018
+# Summer Xia <sxi@odoo.com>, 2018
+# JZH-Odoo <jzh@odoo.com>, 2018
 # e2f_cn c7 <e2f_cn_c7@outlook.com>, 2018
 # bower Guo <124358678@qq.com>, 2018
 # roye w <159820@qq.com>, 2018
 # inspur qiuguodong <qiuguodong@inspur.com>, 2018
 # liAnGjiA <liangjia@qq.com>, 2018
+# Martin Trigaux, 2018
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2018
 # snow wang <147156565@qq.com>, 2018
 # 广州救火 <7017511@qq.com>, 2018
@@ -22,9 +22,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.5+e\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-27 08:43+0000\n"
+"POT-Creation-Date: 2018-12-19 09:12+0000\n"
 "PO-Revision-Date: 2018-08-24 11:48+0000\n"
 "Last-Translator: niulin lnc. <admin@niulin.net>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
@@ -36,7 +36,6 @@ msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
-#: model:ir.model.fields,field_description:sign.field_res_users__signature_count
 msgid "# Signatures"
 msgstr "签名"
 
@@ -47,7 +46,7 @@ msgid "%s : Signature request"
 msgstr "%s : 签名请求"
 
 #. module: sign
-#: code:addons/sign/controllers/main.py:183
+#: code:addons/sign/controllers/main.py:200
 #, python-format
 msgid "%s couldn't sign the document due to an insufficient credit error."
 msgstr "由于信用错误，%s无法在文件上签署。"
@@ -1462,7 +1461,7 @@ msgstr "签字需求"
 #: code:addons/sign/wizard/sign_send_request.py:17
 #, python-format
 msgid "Signature Request - %s"
-msgstr "签名请求"
+msgstr "签名请求 - %s"
 
 #. module: sign
 #: model:ir.model,name:sign.model_sign_request_item
@@ -1854,7 +1853,15 @@ msgid ""
 msgstr "一旦文档被所有人签字，你将收到通知。"
 
 #. module: sign
-#: code:addons/sign/models/sign_request.py:574
+#: code:addons/sign/models/sign_template.py:78
+#, python-format
+msgid ""
+"Your PDF file shouldn't be encrypted with a password in order to be used as "
+"a signature template"
+msgstr ""
+
+#. module: sign
+#: code:addons/sign/models/sign_request.py:557
 #, python-format
 msgid "Your confirmation code is %s"
 msgstr "您确认代码是%s"

@@ -9,9 +9,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.5+e\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 10:31+0000\n"
+"POT-Creation-Date: 2018-12-19 09:12+0000\n"
 "PO-Revision-Date: 2018-08-24 11:37+0000\n"
 "Last-Translator: hed shefetr <hed@laylinetech.com>, 2018\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
@@ -56,9 +56,13 @@ msgid "Create"
 msgstr "צור"
 
 #. module: documents_account
-#: code:addons/documents_account/models/account_invoice.py:13
-#, python-format
-msgid "Created by: "
+#: model:documents.workflow.rule,name:documents_account.vendor_bill_rule
+msgid "Create vendor bill"
+msgstr ""
+
+#. module: documents_account
+#: model:documents.workflow.rule,name:documents_account.credit_note_rule
+msgid "Create vendor refund"
 msgstr ""
 
 #. module: documents_account
@@ -85,11 +89,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__has_business_option
 msgid "Has Business Option"
 msgstr ""
-
-#. module: documents_account
-#: model:ir.model,name:documents_account.model_account_invoice
-msgid "Invoice"
-msgstr "חשבונית"
 
 #. module: documents_account
 #: selection:documents.workflow.rule,create_model:0

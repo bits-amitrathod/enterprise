@@ -3,17 +3,17 @@
 # * documents
 # 
 # Translators:
-# George Tarasidis <george_tarasidis@yahoo.com>, 2018
 # Martin Trigaux, 2018
 # Kostas Goutoudis <goutoudis@gmail.com>, 2018
+# George Tarasidis <george_tarasidis@yahoo.com>, 2018
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 14:54+0000\n"
+"POT-Creation-Date: 2018-12-19 09:12+0000\n"
 "PO-Revision-Date: 2018-08-24 11:37+0000\n"
-"Last-Translator: Kostas Goutoudis <goutoudis@gmail.com>, 2018\n"
+"Last-Translator: George Tarasidis <george_tarasidis@yahoo.com>, 2018\n"
 "Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,6 +31,21 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid ", expired on"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_fiscal_year_2017
+msgid "2017"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_fiscal_year_2018
+msgid "2018"
+msgstr ""
+
+#. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Finance_validate_inbox_contracts
+msgid "2018 contracts"
 msgstr ""
 
 #. module: documents
@@ -139,6 +154,11 @@ msgid ""
 msgstr ""
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_hr_documents_absences
+msgid "Absences"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__group_ids
 msgid "Access Groups"
 msgstr "Ομάδες Πρόσβασης"
@@ -202,6 +222,11 @@ msgstr ""
 #. module: documents
 #: model:ir.actions.act_window,name:documents.action_url_form
 msgid "Add Url"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_ads
+msgid "Ads"
 msgstr ""
 
 #. module: documents
@@ -287,6 +312,21 @@ msgid "Available Rules"
 msgstr ""
 
 #. module: documents
+#: model:documents.folder,name:documents.documents_marketing_brand1_folder
+msgid "Brand 1"
+msgstr ""
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_marketing_brand2_folder
+msgid "Brand 2"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_brochures
+msgid "Brochures"
+msgstr ""
+
+#. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_request_form_view
 #: model_terms:ir.ui.view,arch_db:documents.documents_upload_url_view
 msgid "Cancel"
@@ -344,6 +384,13 @@ msgstr "Επαφή"
 #: selection:documents.workflow.tag.criteria,operator:0
 msgid "Contains"
 msgstr "Περιέχει"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_documents_Contracts
+#: model:documents.tag,name:documents.documents_hr_documents_contracts
+#: model:documents.tag,name:documents.documents_internal_template_contracts
+msgid "Contracts"
+msgstr "Συμβάσεις"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__create_model
@@ -424,6 +471,16 @@ msgstr ""
 #, python-format
 msgid "Delete"
 msgstr "Διαγραφή"
+
+#. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Internal_deprecate_doc
+msgid "Deprecate Document(s)"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_status_deprecated
+msgid "Deprecated"
+msgstr "Ακυρωμένος"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__description
@@ -544,6 +601,11 @@ msgid "Download and Upload"
 msgstr ""
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_internal_status_draft
+msgid "Draft"
+msgstr "Προσχέδιο"
+
+#. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/js/documents_kanban_controller.js:718
 #, python-format
@@ -616,6 +678,11 @@ msgid "File"
 msgstr "Αρχείο"
 
 #. module: documents
+#: model:documents.folder,name:documents.documents_finance_folder
+msgid "Finance"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_facet__folder_id
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__folder_id
 #: model:ir.model.fields,field_description:documents.field_documents_share__folder_id
@@ -661,6 +728,16 @@ msgstr "Μελλοντικές Δραστηριότητες"
 msgid ""
 "Go to the <b>images, videos & PDF viewer</b> by clicking on the preview "
 "area."
+msgstr ""
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_hr_folder
+msgid "HR"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_knowledge_hr_policies
+msgid "HR policies"
 msgstr ""
 
 #. module: documents
@@ -715,9 +792,21 @@ msgid "Image"
 msgstr "Εικόνα"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_images
+msgid "Images"
+msgstr "Εικόνες"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_status_inbox
+#: model:documents.tag,name:documents.documents_hr_status_inbox
 #: model:mail.activity.type,name:documents.mail_documents_activity_data_Inbox
 msgid "Inbox"
 msgstr "Εισερχόμενα"
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_internal_folder
+msgid "Internal"
+msgstr "Εσωτερικές"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_is_follower
@@ -773,6 +862,11 @@ msgid "Late Activities"
 msgstr "Καθυστερημένες Δραστηριότητες"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_finance_documents_legal
+msgid "Legal statements"
+msgstr ""
+
+#. module: documents
 #: selection:documents.share,state:0
 msgid "Live"
 msgstr ""
@@ -805,6 +899,11 @@ msgstr "Καταγραφή ενός Σημειώματος..."
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid "Login"
 msgstr "Σύνδεση"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_logos
+msgid "Logos"
+msgstr ""
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
@@ -843,6 +942,11 @@ msgstr "Διευθυντής"
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__remove_activities
 msgid "Mark all Activities as done"
 msgstr ""
+
+#. module: documents
+#: model:documents.folder,name:documents.documents_marketing_folder
+msgid "Marketing"
+msgstr "Marketing"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_has_error
@@ -896,11 +1000,6 @@ msgstr "Τα Αγαπημένα μου"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "My locked files"
-msgstr ""
-
-#. module: documents
-#: model_terms:ir.ui.view,arch_db:documents.documents_view_form
-msgid "NName"
 msgstr ""
 
 #. module: documents
@@ -983,6 +1082,11 @@ msgstr ""
 "Εάν οριστεί, αυτό θα απενεργοποιήσει εντελώς τη δημιουργία νέων αρχείων."
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_internal_knowledge_other
+msgid "Other"
+msgstr "Άλλο"
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__owner_id
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_user_id
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__criteria_owner_id
@@ -1028,6 +1132,11 @@ msgstr ""
 "(παράδειγμα: Έργο (parent_model) και Εργασία (μοντέλο))"
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_hr_documents_payslips
+msgid "Payslips"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_contact
 msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
@@ -1039,6 +1148,11 @@ msgstr ""
 "- όλοι: ο καθένας μπορεί να αποστείλει\n"
 "- συνεργάτες: μόνο οι επικυρωμένοι συνεργάτες \n"
 "- ακόλουθοι: μόνο οι ακόλουθοι του σχετικού εγγράφου ή μέλη των παρακάτω καναλιών\n"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_template_Presentations
+msgid "Presentations"
+msgstr "Παρουσιάσεις"
 
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
@@ -1102,6 +1216,11 @@ msgid "Requested files"
 msgstr ""
 
 #. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Internal_to_draft
+msgid "Reset to Draft"
+msgstr "Επαναφορά σε Προσχέδιο"
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__activity_user_id
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__activity_user_id
 msgid "Responsible"
@@ -1115,9 +1234,20 @@ msgid "Restore"
 msgstr "Επαναφορά"
 
 #. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Finance_validate_tr
+#: model:documents.workflow.rule,name:documents.documents_Internal_to_review
+msgid "Review Document(s)"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__name
 msgid "Rule name"
 msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_knowledge_Sales
+msgid "Sales"
+msgstr "Πωλήσεις"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_folder__facet_ids
@@ -1198,6 +1328,11 @@ msgid "Show all records which has next action date is before today"
 msgstr ""
 "Εμφάνιση όλων των εγγραφών όπου η ημερομηνία επόμενης δράσης είναι πριν από "
 "σήμερα"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_internal_template_sign
+msgid "Sign"
+msgstr ""
 
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
@@ -1330,6 +1465,13 @@ msgid "This link has expired"
 msgstr ""
 
 #. module: documents
+#: model:documents.tag,name:documents.documents_finance_status_tc
+#: model:documents.tag,name:documents.documents_hr_status_tc
+#: model:documents.tag,name:documents.documents_internal_status_tc
+msgid "To Review"
+msgstr "Για Επισκόπηση"
+
+#. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/js/tour.js:69
 #, python-format
@@ -1437,6 +1579,24 @@ msgid "Valid Until"
 msgstr "Ισχύει Ως"
 
 #. module: documents
+#: model:documents.workflow.rule,name:documents.documents_Finance_validate_review
+#: model:documents.workflow.rule,name:documents.documents_Internal_validate_review
+msgid "Validate Document(s)"
+msgstr ""
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_status_validated
+#: model:documents.tag,name:documents.documents_hr_status_validated
+#: model:documents.tag,name:documents.documents_internal_status_validated
+msgid "Validated"
+msgstr "Επικυρωμένο"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_documents_vendor_bill
+msgid "Vendor Bills"
+msgstr "Τιμολόγια Προμηθευτών"
+
+#. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Vendor bill"
 msgstr ""
@@ -1445,6 +1605,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "Video"
 msgstr "Βίντεο"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_marketing_assets_Videos
+msgid "Videos"
+msgstr "Βίντεος"
 
 #. module: documents
 #. openerp-web
