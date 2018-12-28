@@ -16,6 +16,28 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_mx_edi
+#: code:addons/l10n_mx_edi/models/account_payment.py:446
+#, python-format
+msgid "<b>The amount paid is bigger than the sum of the invoices.</b><br/><br/>Which actions can you take?\n"
+"<ul><ol>If the customer has more invoices, go to those invoices and reconcile them with this payment.</ol><ol>If the customer <b>has not</b> more invoices to be paid You need to create a new invoice with a product that will represent the payment in advance and reconcile such invoice with this payment.</ol></ul><p>If you follow this steps once you finish them and the paid amount is bellow the sum of invoices the payment will be automatically signed</p><blockquote>For more information please read <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Guia_comple_pagos.pdf\"> this SAT reference </a>, Pag. 22</blockquote>"
+msgstr "<b>El monto pagado es mayor que la suma de las facturas.</b><br/><br/>Que acciones se pueden tomar?\n"
+"<ul><ol>Si el cliente tiene más facturas, entre en esas facturas y concilie con este pago.</ol><ol>Si el cliente <b>no tiene</b> más facturas por pagar, es necesario crear una nueva factura con un producto que represente un anticipo y concilie esa factura con este pago.</ol></ul><p>Si se siguen estos pasos, una vez que se finalicen y el monto pagado sea igual a la suma de las facturas el pago se timbrará automáticamente</p><blockquote>Para más información por favor lea <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Guia_comple_pagos.pdf\"> esta referencia del SAT </a>, Pag. 22</blockquote>"
+
+#. module: l10n_mx_edi
+#: code:addons/l10n_mx_edi/models/account_payment.py:247
+#, python-format
+msgid "<b>The invoices related with this payment have the payment method as <b>PUE</b>.</b><br/><br/>When an invoice has the payment method <b>PUE</b> do not requires generate a payment complement. For more information please read <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Guia_comple_pagos.pdf\">this SAT reference.</a>, Pag. 3. Or read the <a href=\"https://www.odoo.com/documentation/user/11.0/es/accounting/localizations/mexico.html#payments-just-available-for-cfdi-3-3\">Odoo documentation</a> to know how to indicate the payment method in the invoice CFDI."
+msgstr "<b>Las facturas relacionadas con este pago tienen método de pago <b>PUE</b>.</b><br/><br/>Cuando una factura tiene el método de pago <b>PUE</b> no necesita generar un complemento de pago. Para más información por favor revise <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Guia_comple_pagos.pdf\">esta referencia del SAT.</a>, Pag. 3. O revise la <a href=\"https://www.odoo.com/documentation/user/11.0/es/accounting/localizations/mexico.html#payments-just-available-for-cfdi-3-3\">documentación de Odoo</a> para sabe como indicar el método de pago en el CFDI de la factura."
+
+#. module: l10n_mx_edi
+#: code:addons/l10n_mx_edi/models/account_payment.py:227
+#, python-format
+msgid "<b>This payment <b>has not</b> invoices related.</b><br/><br/>Which actions can you take?\n"
+"<ul><ol>If this is an payment advance, you need to create a new invoice with a product that will represent the payment in advance and reconcile such invoice with this payment. For more information please read <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Caso_uso_Anticipo.pdf\">this SAT reference.</a></ol><ol>If you already have the invoices that are paid make the payment matching of them.</ol></ul><p>If you follow this steps once you finish them and the paid amount is bellow the sum of invoices the payment will be automatically signed</p>"
+msgstr "<b>Este pago <b>no tiene</b> facturas relacionadas.</b><br/><br/>Que acciones se pueden tomar?\n"
+"<ul><ol>Si este pago es un anticipo, es necesario crear una nueva factura con un producto que represente un anticipo y conciliar con este pago. Para más información por favor revise <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Caso_uso_Anticipo.pdf\">esta referencia del SAT.</a></ol><ol>Si ya tiene las facturas que serán pagadas haga la asignación de pagos.</ol></ul><p>Si se siguen estos pasos, una vez se finalicen y el monto pagado sea igual a la suma de las facturas el pago se timbrará automáticamente</p>"
+
+#. module: l10n_mx_edi
 #: code:addons/l10n_mx_edi/models/account_payment.py:427
 #, python-format
 msgid "<h3 style=\"color:red\">Legal warning</h3>\n"
@@ -1101,7 +1123,7 @@ msgstr "Solución Factible"
 #. module: l10n_mx_edi
 #: code:addons/l10n_mx_edi/models/account_payment.py:215
 #, python-format
-msgid "Some of the invoices that will be paid with this record is not signed, and the UUID is required to indicate the invoices that are paid with this CFDI"
+msgid "Some of the invoices that will be paid with this record are not signed, and the UUID is required to indicate the invoices that are paid with this CFDI"
 msgstr "Alguna de las facturas que se pagarán con este registro no están firmadas, y se requiere el UUID para indicar las facturas que se pagarán con este CFDI"
 
 #. module: l10n_mx_edi
