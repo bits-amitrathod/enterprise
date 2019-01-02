@@ -115,6 +115,9 @@ class account_bank_reconciliation_report(models.AbstractModel):
             tmp_lines = []
             for line in move_lines:
                 self.line_number += 1
+                line_description = line_title = line.ref
+                if line_description and len(line_description) > 83 and not self.env.context.get('print_mode'):
+                    line_description = line.ref[:80] + '...'
                 tmp_lines.append({
                     'id': str(line.id),
                     #'move_id': line.move_id.id,
@@ -122,14 +125,13 @@ class account_bank_reconciliation_report(models.AbstractModel):
                     #'action': line.get_model_id_and_name(),
                     'name': line.name,
                     'columns': [
-                        {'name': v} for v in [
-                            line.date, 
-                            line.ref, 
-                            self.format_value(
-                                 -line.amount_currency
-                                 if use_foreign_currency else -line.balance,
-                                 line_currency)
-                            ]],
+                        {'name': line.date},
+                        {'name': line_description, 'title': line_title, 'class': 'whitespace_print'},
+                        {'name': self.format_value(
+                            -line.amount_currency if use_foreign_currency else -line.balance,
+                            line_currency)
+                        },
+                    ],
                     'level': 1,
                 })
                 unrec_tot -= line.amount_currency if use_foreign_currency else line.balance

@@ -153,12 +153,27 @@ class FedexRequest():
             self.RequestedShipment.MasterTrackingId.TrackingNumber = master_tracking_id
 
     def add_package(self, weight_value, sequence_number=False, mode='shipping'):
+        # TODO remove in master and change the signature of a public method
+        return self._add_package(weight_value=weight_value, sequence_number=sequence_number, mode=mode, po_number=False, dept_number=False)
+
+    def _add_package(self, weight_value, sequence_number=False, mode='shipping', po_number=False, dept_number=False):
         package = self.client.factory.create('RequestedPackageLineItem')
         package_weight = self.client.factory.create('Weight')
         package_weight.Value = weight_value
         package_weight.Units = self.RequestedShipment.TotalWeight.Units
 
         package.PhysicalPackaging = 'BOX'
+        if po_number:
+            po_reference = self.client.factory.create('CustomerReference')
+            po_reference.CustomerReferenceType = 'P_O_NUMBER'
+            po_reference.Value = po_number
+            package.CustomerReferences.append(po_reference)
+        if dept_number:
+            dept_reference = self.client.factory.create('CustomerReference')
+            dept_reference.CustomerReferenceType = 'DEPARTMENT_NUMBER'
+            dept_reference.Value = dept_number
+            package.CustomerReferences.append(dept_reference)
+
         package.Weight = package_weight
         if mode == 'rating':
             package.GroupPackageCount = 1
