@@ -174,10 +174,17 @@ class account_bank_reconciliation_report(models.AbstractModel):
             lines.append(self._add_title_line(options, _("Validated Payments not Linked with a Bank Statement Line"), level=2))
             for line in report_data['not_reconciled_pmts']:
                     self.line_number += 1
+                    line_description = line_title = line.ref
+                    if line_description and len(line_description) > 83 and not self.env.context.get('print_mode'):
+                        line_description = line.ref[:80] + '...'
                     lines.append({
                         'id': str(line.id),
                         'name': line.name,
-                        'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(-line.balance, report_data['line_currency'])]],
+                        'columns': [
+                            {'name': line.date},
+                            {'name': line_description, 'title': line_title, 'style': 'display:block;'},
+                            {'name': self.format_value(-line.balance, report_data['line_currency'])},
+                        ],
                         'class': 'o_account_reports_level3',
                         'caret_options': 'account.payment',
                     })
