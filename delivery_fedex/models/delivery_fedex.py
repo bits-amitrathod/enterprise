@@ -381,7 +381,7 @@ class ProviderFedex(models.Model):
                     net_weight,
                     package_code=packaging.shipper_package_code,
                     package_height=packaging.height,
-                    package_width=-packaging.width,
+                    package_width=packaging.width,
                     package_length=packaging.length,
                     po_number=po_number,
                     dept_number=dept_number,
