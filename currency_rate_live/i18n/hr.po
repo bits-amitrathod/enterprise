@@ -3,16 +3,17 @@
 # * currency_rate_live
 # 
 # Translators:
-# Bole <bole@dajmi5.com>, 2017
-# Martin Trigaux, 2017
-# Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
+# Martin Trigaux, 2019
+# Bole <bole@dajmi5.com>, 2019
+# Tina Milas, 2019
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.3+e\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 08:34+0000\n"
-"PO-Revision-Date: 2018-06-25 08:34+0000\n"
-"Last-Translator: Karolina Tonković <karolina.tonkovic@storm.hr>, 2017\n"
+"POT-Creation-Date: 2018-10-08 07:14+0000\n"
+"PO-Revision-Date: 2018-08-24 11:37+0000\n"
+"Last-Translator: Tina Milas, 2019\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,6 +32,11 @@ msgid "Companies"
 msgstr "Tvrtke"
 
 #. module: currency_rate_live
+#: model:ir.model,name:currency_rate_live.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: currency_rate_live
 #: model:ir.actions.server,name:currency_rate_live.ir_cron_currency_update_ir_actions_server
 #: model:ir.cron,cron_name:currency_rate_live.ir_cron_currency_update
 #: model:ir.cron,name:currency_rate_live.ir_cron_currency_update
@@ -43,6 +49,28 @@ msgid "Daily"
 msgstr "Dnevno"
 
 #. module: currency_rate_live
+#: model:res.company,overdue_msg:currency_rate_live.res_company_company_1
+#: model:res.company,overdue_msg:currency_rate_live.res_company_company_2
+msgid ""
+"Dear Sir/Madam,\n"
+"\n"
+"Our records indicate that some payments on your account are still due. Please find details below.\n"
+"If the amount has already been paid, please disregard this notice. Otherwise, please forward us the total amount stated below.\n"
+"If you have any queries regarding your account, Please contact us.\n"
+"\n"
+"Thank you in advance for your cooperation.\n"
+"Best Regards,"
+msgstr ""
+"Poštovani Gospodine/Gospođo,\n"
+"\n"
+"Naša evidencija pokazuje da ima nepodmiranih dugovanja. Molimo ispunite sljedeće podatke.\n"
+"Ukoliko je iznos već plaćen, molimo zanemarite ovu obavijest, u protivnom, molimo da uplatite ukupan navedeni iznos.\n"
+"Ukoliko imate pitanja vezanih za Vaš račun, molimo da nas kontaktirate.\n"
+"\n"
+"Unaprijed zahvaljujemo na suradnji.\n"
+"Srdačan pozdrav,"
+
+#. module: currency_rate_live
 #: selection:res.company,currency_provider:0
 msgid "European Central Bank"
 msgstr "Centralna Europska Banka"
@@ -53,7 +81,7 @@ msgid "Federal Tax Administration (Switzerland)"
 msgstr ""
 
 #. module: currency_rate_live
-#: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
 msgid "Interval"
 msgstr "Razdoblje"
 
@@ -66,7 +94,7 @@ msgstr "Jedinica intervala"
 #. module: currency_rate_live
 #: model:ir.model.fields,field_description:currency_rate_live.field_res_company__last_currency_sync_date
 #: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings__last_currency_sync_date
-#: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
 msgid "Last Sync Date"
 msgstr ""
 
@@ -89,15 +117,15 @@ msgstr "Mjesečno"
 #: model:ir.model.fields,field_description:currency_rate_live.field_res_company__currency_next_execution_date
 #: model:ir.model.fields,field_description:currency_rate_live.field_res_config_settings__currency_next_execution_date
 msgid "Next Execution Date"
-msgstr "Datum slijedećeg izvršenja"
+msgstr "Datum sljedećeg izvršenja"
 
 #. module: currency_rate_live
-#: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
 msgid "Next Run"
 msgstr ""
 
 #. module: currency_rate_live
-#: model:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
 msgid "Service"
 msgstr "Usluga"
 
@@ -108,7 +136,7 @@ msgid "Service Provider"
 msgstr "Pružatelj usluge"
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:356
+#: code:addons/currency_rate_live/models/res_config_settings.py:387
 #, python-format
 msgid ""
 "The Yahoo currency rate web service has been discontinued. Please select "
@@ -116,7 +144,7 @@ msgid ""
 msgstr ""
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:86
+#: code:addons/currency_rate_live/models/res_config_settings.py:103
 #, python-format
 msgid ""
 "Unable to connect to the online exchange rate platform %s. The web service "
@@ -124,7 +152,7 @@ msgid ""
 msgstr ""
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:359
+#: code:addons/currency_rate_live/models/res_config_settings.py:390
 #, python-format
 msgid ""
 "Unable to connect to the online exchange rate platform. The web service may "
@@ -144,14 +172,14 @@ msgid "Yahoo (DISCONTINUED)"
 msgstr ""
 
 #. module: currency_rate_live
-#: code:addons/currency_rate_live/models/res_config_settings.py:122
+#: code:addons/currency_rate_live/models/res_config_settings.py:143
 #, python-format
 msgid ""
-"Your main currency %s is unsupported by this exchange rate provider. Please "
-"choose another one."
+"Your main currency (%s) is not supported by this exchange rate provider. "
+"Please choose another one."
 msgstr ""
 
 #. module: currency_rate_live
-#: model:ir.model,name:currency_rate_live.model_res_config_settings
-msgid "res.config.settings"
-msgstr "res.config.settings"
+#: selection:res.company,currency_provider:0
+msgid "xe.com"
+msgstr ""

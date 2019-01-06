@@ -3,18 +3,19 @@
 # * delivery_usps
 # 
 # Translators:
-# Bole <bole@dajmi5.com>, 2017
-# Karolina Tonković <karolina.tonkovic@storm.hr>, 2017
-# Martin Trigaux, 2017
-# Vladimir Olujić <olujic.vladimir@storm.hr>, 2017
-# Tina Milas, 2018
+# Martin Trigaux, 2019
+# Bole <bole@dajmi5.com>, 2019
+# Vladimir Olujić <olujic.vladimir@storm.hr>, 2019
+# Karolina Tonković <karolina.tonkovic@storm.hr>, 2019
+# Tina Milas, 2019
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.4+e\n"
+"Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-02 11:20+0000\n"
-"PO-Revision-Date: 2018-08-02 11:20+0000\n"
-"Last-Translator: Tina Milas, 2018\n"
+"POT-Creation-Date: 2018-09-21 14:06+0000\n"
+"PO-Revision-Date: 2018-08-24 11:37+0000\n"
+"Last-Translator: Tina Milas, 2019\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,14 +39,9 @@ msgid "Based on Rules"
 msgstr "Na temelju pravilnika"
 
 #. module: delivery_usps
-#: model:ir.model,name:delivery_usps.model_delivery_carrier
-msgid "Carrier"
-msgstr "Prijevoznik"
-
-#. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_account_validated
 msgid "Check this box if your account is validated by USPS"
-msgstr "Označite polje ako je vaš račun ovjeren od strane USPS"
+msgstr "Označite polje ako je Vaš račun ovjeren od strane USPS"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:64
@@ -62,6 +58,11 @@ msgstr "Vrsta datoteke"
 #: selection:delivery.carrier,delivery_type:0
 msgid "DHL"
 msgstr ""
+
+#. module: delivery_usps
+#: model:ir.model,name:delivery_usps.model_delivery_carrier
+msgid "Delivery Methods"
+msgstr "Načini dostave"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
@@ -135,7 +136,7 @@ msgid "Flat Rate Envelope"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
+#: model_terms:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
 msgid "From Company"
 msgstr "Iz tvrtke"
 
@@ -336,7 +337,7 @@ msgstr ""
 #: selection:delivery.carrier,usps_content_type:0
 #: selection:delivery.carrier,usps_intl_non_delivery_option:0
 msgid "Return"
-msgstr "Potvrdi"
+msgstr "Storno"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_content_type:0
@@ -377,7 +378,7 @@ msgid ""
 "The address of your company is missing or wrong (Missing field(s) :  \n"
 " %s)"
 msgstr ""
-"Neodstaje adresa vaše tvrtke ili je kriva.\n"
+"Nedostaje adresa Vaše tvrtke ili je kriva.\n"
 "(Polja(e) koje nedostaje : %s)"
 
 #. module: delivery_usps
@@ -387,7 +388,7 @@ msgid ""
 "The estimated price cannot be computed because the weight of your product is"
 " missing."
 msgstr ""
-"Izražena cijena se ne može izračunati, jer nedostaje težina vašeg proizvoda."
+"Izražena cijena se ne može izračunati, jer nedostaje težina Vašeg proizvoda."
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:67
@@ -406,7 +407,7 @@ msgid "The selected USPS service (%s) cannot be used to deliver this package."
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
+#: model_terms:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
 msgid "To Company"
 msgstr "Za tvrtke"
 
@@ -436,13 +437,13 @@ msgid "USPS"
 msgstr ""
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
+#: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "USPS Configuration"
 msgstr "USPS konfiguracija"
 
 #. module: delivery_usps
-#: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
-#: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
+#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
+#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
 msgid "USPS Delivery Methods"
 msgstr ""
 
@@ -500,6 +501,14 @@ msgstr "USPS usluga"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_username
 msgid "USPS User ID"
 msgstr "ID USPS korisnika"
+
+#. module: delivery_usps
+#: model:product.product,uom_name:delivery_usps.product_product_delivery_usps_domestic
+#: model:product.product,uom_name:delivery_usps.product_product_delivery_usps_international
+#: model:product.template,uom_name:delivery_usps.product_product_delivery_usps_domestic_product_template
+#: model:product.template,uom_name:delivery_usps.product_product_delivery_usps_international_product_template
+msgid "Unit(s)"
+msgstr "kom"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_size_container

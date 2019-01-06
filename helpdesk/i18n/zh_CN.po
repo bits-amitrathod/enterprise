@@ -5,16 +5,15 @@
 # Translators:
 # ChinaMaker <liuct@chinamaker.net>, 2018
 # 老窦 北京 <2662059195@qq.com>, 2018
-# Jackie Zhang <jzh@odoo.com>, 2018
+# JZH-Odoo <jzh@odoo.com>, 2018
 # Martin Trigaux, 2018
 # bower Guo <124358678@qq.com>, 2018
 # roye w <159820@qq.com>, 2018
-# neter ji <jifuyi@qq.com>, 2018
 # 李赋 <fu792659@163.com>, 2018
 # 开阖软件 Jeff Wang <jeff@osbzr.com>, 2018
+# inspur qiuguodong <qiuguodong@inspur.com>, 2018
 # liAnGjiA <liangjia@qq.com>, 2018
 # snow wang <147156565@qq.com>, 2018
-# inspur qiuguodong <qiuguodong@inspur.com>, 2018
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2018
 # niulin lnc. <admin@niulin.net>, 2018
 # 
@@ -203,7 +202,7 @@ msgstr ""
 " 亲爱的 ${object.sudo().partner_id.name or '女士/先生'},<br/><br/>\n"
 " 这是一条系统自动的通知，我们已经关闭了您的服务单(reference ${object.id}).\n"
 "  我们希望所提供的服务已满足了您的要求。\n"
-"  如果您有其他任何问题或意见，可以立即回复此电子邮件，我们将重新开启此条服务单。<br/><br/>\n"
+"  如果您有其他任何问题或意见，可以立即回复此EMail，我们将重新开启此条服务单。<br/><br/>\n"
 " 谢谢您的合作<br/>\n"
 " 谨致问候,<br/><br/>\n"
 " ${object.team_id.name or 'Helpdesk'} 团队.\n"
@@ -236,7 +235,7 @@ msgstr ""
 " % endif\n"
 " 我们的 ${object.team_id.name or ''} 团队已收到并正在审核。\n"
 " 您的服务单编号为 ${object.id}.<br/><br/>\n"
-" 如需留言，请回复此电子邮件。<br/>\n"
+" 如需留言，请回复此EMail。<br/>\n"
 " 谢谢,<br/><br/>\n"
 " ${object.team_id.name or '帮助台'} 团队.\n"
 "</div>"
@@ -455,7 +454,7 @@ msgstr "所有门票"
 msgid ""
 "Allow your customers to easily rate your services. Activate this option will"
 " add a default email template on non folded closing stages"
-msgstr "便于用户评价您的服务。激活此选项将在非折叠关闭阶段添加默认电子邮件模板。"
+msgstr "便于用户评价您的服务。激活此选项将在非折叠关闭阶段添加默认EMail模板。"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -905,7 +904,7 @@ msgstr "在客户门户上显示评分"
 #: code:addons/helpdesk/models/digest.py:16
 #, python-format
 msgid "Do not have access, skip this data for user's digest email"
-msgstr "没有权限，用户电子邮件中忽略此数据"
+msgstr "没有权限，用户EMail中忽略此数据"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
@@ -930,14 +929,14 @@ msgstr "邮箱别名"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__email
 msgid "Email on Customer"
-msgstr "客户电子邮箱"
+msgstr "客户EMail"
 
 #. module: helpdesk
 #: model_terms:digest.tip,tip_description:helpdesk.digest_tip_helpdesk_0
 msgid ""
 "Emails sent to <strong>${email_alias}</strong> generate new tickets in your "
 "Helpdesk funnel.<br>"
-msgstr "发送电子邮件至 <strong>${email_alias}</strong> 会在您的帮助中心中生成新的服务单<br>"
+msgstr "发送EMail至 <strong>${email_alias}</strong> 会在您的帮助中心中生成新的服务单<br>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_slides
@@ -1221,7 +1220,7 @@ msgstr "进行中"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Incoming emails create tickets"
-msgstr "接收的电子邮件创建服务单"
+msgstr "接收的EMail创建服务单"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_is_follower
@@ -1545,7 +1544,7 @@ msgstr "概览"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_user_id
 msgid "Owner"
-msgstr "所有者"
+msgstr "货主"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_parent_model_id
@@ -1860,7 +1859,7 @@ msgstr "销售及跟踪时间"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:173
 #, python-format
 msgid "Send an email to"
-msgstr "将电子邮件发送至"
+msgstr "将EMail发送至"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -2104,14 +2103,14 @@ msgid ""
 "The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
-msgstr "相应于这个别名对应的模型(Odoo单据种类)。任何未回复现有记录的传入电子邮件都将导致创建此模型的新记录（例如，项目任务）"
+msgstr "相应于这个别名对应的模型(Odoo单据种类)。任何未回复现有记录的传入EMail都将导致创建此模型的新记录（例如，项目任务）"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_name
 msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
-msgstr "邮件别名的名称，例如，如果你要收取 <jobs@example.odoo.com> 的电子邮件,别名就要被设为：\"jobs\""
+msgstr "邮件别名的名称，例如，如果你要收取 <jobs@example.odoo.com> 的EMail,别名就要被设为：\"jobs\""
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_user_id
@@ -2121,7 +2120,7 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
-"在这个别名上接收电子邮件时创建的记录的所有者。如果未设置此字段，则系统将尝试基于发送方(.)地址找到正确的所有者，或者如果未找到用于该地址的系统用户，则将使用管理员帐户。"
+"在这个别名上接收EMail时创建的记录的货主。如果未设置此字段，则系统将尝试基于发送方(.)地址找到正确的货主，或者如果未找到用于该地址的系统用户，则将使用管理员帐户。"
 
 #. module: helpdesk
 #. openerp-web
@@ -2154,14 +2153,14 @@ msgstr "名称会帮助您追踪不同营销活动，例如，节能减排、圣
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__medium_id
 msgid "This is the method of delivery, e.g. Postcard, Email, or Banner Ad"
-msgstr "这是传达方法，例如，明信片、电子邮件或横幅广告"
+msgstr "这是传达方法，例如，明信片、EMail或横幅广告"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__source_id
 msgid ""
 "This is the source of the link, e.g. Search Engine, another domain, or name "
 "of email list"
-msgstr "这是链接源，例如，搜索引擎、其他域名或电子邮件列表名称"
+msgstr "这是链接源，例如，搜索引擎、其他域名或EMail列表名称"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__use_helpdesk_timesheet
