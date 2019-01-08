@@ -402,8 +402,6 @@ class website_hr_contract_salary(http.Controller):
             'REP.FEES': round(payslip.get_salary_line_total('REP.FEES'), 2),
             'P.P': round(payslip.get_salary_line_total('P.P'), 2),
             'PP.RED': round(
-                payslip.get_salary_line_total('PPRed.0') +
-                payslip.get_salary_line_total('PPRed.1') +
                 payslip.get_salary_line_total('Ch.A') +
                 payslip.get_salary_line_total('Red.Iso') +
                 payslip.get_salary_line_total('Red.Iso.Par') +
