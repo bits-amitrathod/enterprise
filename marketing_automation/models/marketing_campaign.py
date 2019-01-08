@@ -187,7 +187,7 @@ class MarketingCampaign(models.Model):
                 for rec_id in to_create:
                     field_val = RecordModel.browse(rec_id)[campaign.unique_field_id.name]
                     # we exclude the empty recordset with the first condition
-                    if (campaign.unique_field_id.ttype != 'many2one' or field_val) and field_val not in unique_field_vals:
+                    if (not campaign.unique_field_id.relation or field_val) and field_val not in unique_field_vals:
                         without_duplicates.append(rec_id)
                         unique_field_vals.add(field_val)
                 to_create = without_duplicates
