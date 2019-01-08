@@ -465,5 +465,24 @@ QUnit.module('Views', {
         actionManager.destroy();
     });
 
+    QUnit.test('verify context', function (assert) {
+        assert.expect(1);
+
+        var cohort = createView({
+            View: CohortView,
+            model: 'subscription',
+            data: this.data,
+            arch: '<cohort string="Subscription" date_start="start" date_stop="stop" />',
+            mockRPC: function (route, args) {
+                if (args.method === 'get_cohort_data') {
+                    assert.step(args.kwargs.context);
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        cohort.destroy();
+    });
+
 });
 });
