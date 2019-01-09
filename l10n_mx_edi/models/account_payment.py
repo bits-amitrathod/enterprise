@@ -257,7 +257,7 @@ class AccountPayment(models.Model):
                 'method in the invoice CFDI.'
                 ))
         if messages:
-            self.message_post(account_invoice.create_list_html(messages))
+            self.message_post(body=account_invoice.create_list_html(messages))
             return False
         return required
 
