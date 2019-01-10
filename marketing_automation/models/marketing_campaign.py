@@ -361,7 +361,7 @@ class MarketingActivity(models.Model):
                 COUNT(CASE WHEN trace.state = 'rejected' THEN 1 ELSE null END) AS rejected
             FROM
                 marketing_trace AS trace
-            JOIN
+            LEFT JOIN
                 mail_mail_statistics AS stat
                 ON (stat.marketing_trace_id = trace.id)
             JOIN
@@ -399,7 +399,6 @@ class MarketingActivity(models.Model):
 
         for stat in self.env.cr.dictfetchall():
             stat_map[(stat['activity_id'], stat['dt'], stat['state'])] = stat['total']
-
         graph_data = {}
         for activity in self:
             success = []
