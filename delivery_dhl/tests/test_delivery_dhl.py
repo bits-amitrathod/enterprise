@@ -67,7 +67,6 @@ class TestDeliveryDHL(TransactionCase):
         self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
         picking.action_done()
-        picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "DHL did not return any tracking number")
         # self.assertGreater(picking.carrier_price, 0.0, "DHL carrying price is probably incorrect")
 
@@ -105,7 +104,6 @@ class TestDeliveryDHL(TransactionCase):
         self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
         picking.action_done()
-        picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "DHL did not return any tracking number")
         # self.assertGreater(picking.carrier_price, 0.0, "DHL carrying price is probably incorrect")
 
@@ -156,7 +154,6 @@ class TestDeliveryDHL(TransactionCase):
         self.assertGreater(picking.shipping_weight, 0.0, "Picking weight should be positive.")
 
         picking.action_done()
-        picking.send_to_shipper()
         self.assertIsNot(picking.carrier_tracking_ref, False, "DHL did not return any tracking number")
         # self.assertGreater(picking.carrier_price, 0.0, "DHL carrying price is probably incorrect")
 
