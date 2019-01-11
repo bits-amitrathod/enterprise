@@ -168,7 +168,8 @@ class FedexRequest():
             package.Dimensions.Height = package_height
             package.Dimensions.Width = package_width
             package.Dimensions.Length = package_length
-            package.Dimensions.Units = "IN"
+            # TODO in master, add unit in product packaging and perform unit conversion
+            package.Dimensions.Units = "IN" if self.RequestedShipment.TotalWeight.Units == 'LB' else 'CM'
         if po_number:
             po_reference = self.client.factory.create('CustomerReference')
             po_reference.CustomerReferenceType = 'P_O_NUMBER'
