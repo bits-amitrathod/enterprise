@@ -154,6 +154,7 @@ class AccountInvoice(models.Model):
                     self.extract_state = 'not_enough_credit'
                 elif result[0] == -1:
                     self.extract_state = 'error_status'
+                    _logger.warning('There was an issue while doing the OCR operation on this file. Error: -1')
                 else:
                     self.extract_state = 'waiting_extraction'
                     self.extract_remoteid = result[0]
