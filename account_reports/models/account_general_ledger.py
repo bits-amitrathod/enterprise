@@ -414,7 +414,7 @@ class report_account_general_ledger(models.AbstractModel):
                     'name': tax.name + ' (' + str(tax.amount) + ')',
                     'caret_options': 'account.tax',
                     'unfoldable': False,
-                    'columns': [{'name': v} for v in ['', '', '', '', self.format_value(base_amount), self.format_value(tax_amount), '']],
+                    'columns': [{'name': v} for v in [self.format_value(base_amount), self.format_value(tax_amount), '']],
                     'colspan': 5,
                     'level': 4,
                 })
