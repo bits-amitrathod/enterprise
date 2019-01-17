@@ -236,7 +236,7 @@ class AccountPayment(models.Model):
                 'will be automatically signed'
                 '</p>'))
         if self.invoice_ids and not self.invoice_ids.filtered(
-                lambda i: i._l10n_mx_edi_get_payment_policy() == 'PPD'):
+                lambda i: i.l10n_mx_edi_get_payment_method_cfdi() == 'PPD'):
             messages.append(_(
                 '<b>The invoices related with this payment have the payment '
                 'method as <b>PUE</b>.'

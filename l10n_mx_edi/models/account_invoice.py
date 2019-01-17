@@ -205,6 +205,12 @@ class AccountInvoice(models.Model):
         return fromstring(cfdi) if cfdi else None
 
     @api.model
+    def l10n_mx_edi_get_payment_method_cfdi(self):
+        self.ensure_one()
+        cfdi = self.l10n_mx_edi_get_xml_etree()
+        return cfdi.get('MetodoPago') if cfdi is not None else None
+
+    @api.model
     def l10n_mx_edi_get_tfd_etree(self, cfdi):
         '''Get the TimbreFiscalDigital node from the cfdi.
 
