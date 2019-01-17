@@ -432,7 +432,9 @@ class AccountPayment(models.Model):
             amount_payment = sum([data.get('amount', 0.0) for data in amount])
             total_paid += amount_payment
             total_curr += invoice.currency_id.with_context(
-                date=self.payment_date).compute(amount_payment, self.currency_id)
+                date=self.payment_date)._convert(
+                    amount_payment, self.currency_id, self.company_id,
+                    self.payment_date)
         precision = self.env['decimal.precision'].precision_get('Account')
         if not self.move_reconciled and float_compare(
                 self.amount, total_curr, precision_digits=precision) > 0:
