@@ -6,12 +6,13 @@
 # Martin Trigaux, 2018
 # Matus Krnac <matus.krnac@gmail.com>, 2018
 # Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2018
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.5+e\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 14:06+0000\n"
-"PO-Revision-Date: 2018-09-21 14:06+0000\n"
+"POT-Creation-Date: 2019-01-15 15:18+0000\n"
+"PO-Revision-Date: 2018-08-24 11:37+0000\n"
 "Last-Translator: Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2018\n"
 "Language-Team: Slovak (https://www.transifex.com/odoo/teams/41243/sk/)\n"
 "MIME-Version: 1.0\n"
@@ -133,11 +134,6 @@ msgstr "Box jednotnej sadzby"
 #: selection:delivery.carrier,usps_international_regular_container:0
 msgid "Flat Rate Envelope"
 msgstr "Obálka jednotnej sadzby"
-
-#. module: delivery_usps
-#: model_terms:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
-msgid "From Company"
-msgstr "Od spoločnosti"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_content_type:0
@@ -375,7 +371,7 @@ msgid "TIF"
 msgstr ""
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:58
+#: code:addons/delivery_usps/models/usps_request.py:46
 #, python-format
 msgid ""
 "The address of your company is missing or wrong (Missing field(s) :  \n"
@@ -385,7 +381,7 @@ msgstr ""
 "%s)"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:78
+#: code:addons/delivery_usps/models/usps_request.py:66
 #, python-format
 msgid ""
 "The estimated price cannot be computed because the weight of your product is"
@@ -394,7 +390,7 @@ msgstr ""
 "Odhadovaná cena nemôže by vypočítaná, pretože chýba váha vášho produktu."
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:67
+#: code:addons/delivery_usps/models/usps_request.py:55
 #, python-format
 msgid ""
 "The recipient address is missing or wrong (Missing field(s) :  \n"
@@ -404,15 +400,10 @@ msgstr ""
 "%s)"
 
 #. module: delivery_usps
-#: code:addons/delivery_usps/models/usps_request.py:167
+#: code:addons/delivery_usps/models/usps_request.py:155
 #, python-format
 msgid "The selected USPS service (%s) cannot be used to deliver this package."
 msgstr ""
-
-#. module: delivery_usps
-#: model_terms:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
-msgid "To Company"
-msgstr "Spoločnosti"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_international_regular_container

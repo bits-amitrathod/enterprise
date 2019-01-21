@@ -3,18 +3,17 @@
 # * project_timesheet_forecast_sale
 # 
 # Translators:
-# Bonny Useful <bonny.useful@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2017
-# William Surya Permana <zarambie_game@yahoo.com>, 2017
-# Andi Fadhel <cliffryu@gmail.com>, 2017
+# William Surya Permana <zarambie_game@yahoo.com>, 2019
+# Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2019
+# Ryanto The <ry.the77@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18+e\n"
+"Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Andi Fadhel <cliffryu@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-09-21 14:06+0000\n"
+"PO-Revision-Date: 2018-08-24 11:47+0000\n"
+"Last-Translator: Ryanto The <ry.the77@gmail.com>, 2019\n"
 "Language-Team: Indonesian (https://www.transifex.com/odoo/teams/41243/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,45 +28,23 @@ msgid "%s (%s remaining hours)"
 msgstr ""
 
 #. module: project_timesheet_forecast_sale
-#: code:addons/project_timesheet_forecast_sale/controllers/project.py:67
+#: code:addons/project_timesheet_forecast_sale/controllers/project.py:47
 #, python-format
-msgid "Done"
-msgstr "selesai"
+msgid "After"
+msgstr "Sesudah"
 
 #. module: project_timesheet_forecast_sale
-#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_forecast_effective_hours
-msgid "Effective hours"
-msgstr ""
-
-#. module: project_timesheet_forecast_sale
-#: code:addons/project_timesheet_forecast_sale/controllers/project.py:216
-#: code:addons/project_timesheet_forecast_sale/controllers/project.py:230
-#, python-format
-msgid "Forecast"
-msgstr "Prakiraan"
-
-#. module: project_timesheet_forecast_sale
-#: code:addons/project_timesheet_forecast_sale/controllers/project.py:67
+#: code:addons/project_timesheet_forecast_sale/controllers/project.py:47
 #, python-format
 msgid "Forecasted"
 msgstr ""
 
 #. module: project_timesheet_forecast_sale
-#: code:addons/project_timesheet_forecast_sale/controllers/project.py:67
+#: code:addons/project_timesheet_forecast_sale/controllers/project.py:163
+#: code:addons/project_timesheet_forecast_sale/controllers/project.py:182
 #, python-format
-msgid "Name"
-msgstr "Nama"
-
-#. module: project_timesheet_forecast_sale
-#: code:addons/project_timesheet_forecast_sale/controllers/project.py:67
-#, python-format
-msgid "Planned"
-msgstr ""
-
-#. module: project_timesheet_forecast_sale
-#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_forecast_percentage_hours
-msgid "Progress"
-msgstr "Kemajuan"
+msgid "Forecasts"
+msgstr "Prakiraan"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_project_project
@@ -75,16 +52,23 @@ msgid "Project"
 msgstr "Proyek"
 
 #. module: project_timesheet_forecast_sale
-#: code:addons/project_timesheet_forecast_sale/controllers/project.py:67
+#: model:ir.model,name:project_timesheet_forecast_sale.model_project_forecast
+msgid "Project Forecast"
+msgstr "Telaah Proyek"
+
+#. module: project_timesheet_forecast_sale
+#: code:addons/project_timesheet_forecast_sale/controllers/project.py:25
 #, python-format
-msgid "Remaining"
-msgstr "Sisa"
+msgid ""
+"Remaining \n"
+" (Forecasts incl.)"
+msgstr ""
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_sale_order_line
-#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_forecast_order_line_id
+#: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_forecast__order_line_id
 msgid "Sales Order Line"
-msgstr "Daftr Order Penjualan"
+msgstr "Detail Order Penjualan"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_project_task
@@ -92,11 +76,14 @@ msgid "Task"
 msgstr "Kegiatan"
 
 #. module: project_timesheet_forecast_sale
-#: model:ir.ui.view,arch_db:project_timesheet_forecast_sale.timesheet_plan
-msgid "Timesheet/Forecast"
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast_sale.timesheet_plan
+msgid "Timesheets/Forecasts"
 msgstr ""
 
 #. module: project_timesheet_forecast_sale
-#: model:ir.model,name:project_timesheet_forecast_sale.model_project_forecast
-msgid "project.forecast"
+#: code:addons/project_timesheet_forecast_sale/controllers/project.py:26
+#, python-format
+msgid ""
+"What is still to deliver based on sold hours, hours already done and "
+"forecasted hours. Equals to sold hours - done hours - forecasted hours."
 msgstr ""

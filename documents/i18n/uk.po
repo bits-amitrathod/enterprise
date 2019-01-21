@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-19 09:12+0000\n"
+"POT-Creation-Date: 2019-01-15 15:18+0000\n"
 "PO-Revision-Date: 2018-08-24 11:37+0000\n"
 "Last-Translator: Alina Lisnenko <alinasemeniuk1@gmail.com>, 2019\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
@@ -27,26 +27,26 @@ msgstr ""
 #: code:addons/documents/static/src/js/documents_inspector.js:271
 #, python-format
 msgid "+ Add a tag "
-msgstr ""
+msgstr "+ Додати мітку"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid ", expired on"
-msgstr ""
+msgstr ", протерміновано на"
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_finance_fiscal_year_2017
-msgid "2017"
-msgstr ""
-
-#. module: documents
-#: model:documents.tag,name:documents.documents_finance_fiscal_year_2018
 msgid "2018"
-msgstr ""
+msgstr "2018"
 
 #. module: documents
 #: model:documents.workflow.rule,name:documents.documents_Finance_validate_inbox_contracts
 msgid "2018 contracts"
+msgstr "контракти 2018"
+
+#. module: documents
+#: model:documents.tag,name:documents.documents_finance_fiscal_year_2018
+msgid "2019"
 msgstr ""
 
 #. module: documents
@@ -62,7 +62,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.format_file_size
 msgid "<b>Bytes</b>"
-msgstr ""
+msgstr "<b>Байти</b>"
 
 #. module: documents
 #. openerp-web
@@ -74,17 +74,17 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.format_file_size
 msgid "<b>Gb</b>"
-msgstr ""
+msgstr "<b>Gb</b>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.format_file_size
 msgid "<b>Kb</b>"
-msgstr ""
+msgstr "<b>Kb</b>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.format_file_size
 msgid "<b>Mb</b>"
-msgstr ""
+msgstr "<b>Mb</b>"
 
 #. module: documents
 #. openerp-web
@@ -98,17 +98,24 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid "<br/>Powered by"
+msgstr "<br/>Зроблено"
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.share_single
+msgid ""
+"<i class=\"fa fa-circle-o-notch fa-spin text-white fa-3x mb8\" role=\"img\" "
+"aria-label=\"Loading\" title=\"Loading\"/>"
 msgstr ""
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_page
 msgid "<i class=\"fa fa-download fa-fw\"/>  Download All"
-msgstr ""
+msgstr "<i class=\"fa fa-download fa-fw\"/>  Завантажити все"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_single
 msgid "<i class=\"fa fa-download fa-fw\"/> Download"
-msgstr ""
+msgstr "<i class=\"fa fa-download fa-fw\"/> Завантажити"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_view_form
@@ -122,23 +129,23 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_single
 msgid "<i class=\"fa fa-link\"/> Go to URL"
-msgstr ""
+msgstr "<i class=\"fa fa-link\"/> Перейти на URL"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_page
 msgid "<i class=\"fa fa-upload\"/>  Upload"
-msgstr ""
+msgstr "<i class=\"fa fa-upload\"/>  Завантажити"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid "<span style=\"color:white;\">&amp;nbsp;Documents.</span>"
-msgstr ""
+msgstr "<span style=\"color:white;\">&amp;nbsp;Документи.</span>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_kanban
 #: model_terms:ir.ui.view,arch_db:documents.inherit_mail_attachment_view_kanban
 msgid "<span><b>Requested Document</b></span>"
-msgstr ""
+msgstr "<span><b>Запитуваний документ</b></span>"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_defaults
@@ -155,11 +162,13 @@ msgid ""
 "A set of condition and actions which will be available to all attachments "
 "matching the conditions"
 msgstr ""
+"Набір дій та умов, які будуть доступні всім вкладенням, що відповідають "
+"умовам"
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_hr_documents_absences
 msgid "Absences"
-msgstr ""
+msgstr "Відсутності"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__group_ids
@@ -200,7 +209,7 @@ msgstr "Дія"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__activity_note
 msgid "Activity Note"
-msgstr ""
+msgstr "Примітка дії"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__activity_type_id
@@ -220,12 +229,12 @@ msgstr "Додати"
 #: code:addons/documents/static/src/xml/documents_kanban.xml:8
 #, python-format
 msgid "Add URL"
-msgstr ""
+msgstr "Додати URL"
 
 #. module: documents
 #: model:ir.actions.act_window,name:documents.action_url_form
 msgid "Add Url"
-msgstr ""
+msgstr "Додати Url"
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_marketing_assets_ads
@@ -438,7 +447,7 @@ msgstr "Створено"
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Credit note"
-msgstr ""
+msgstr "Сторно"
 
 #. module: documents
 #: selection:documents.workflow.rule,condition_type:0
@@ -751,7 +760,7 @@ msgstr "Маршрутизація HTTP"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__has_business_option
 msgid "Has Business Option"
-msgstr ""
+msgstr "Має бізнес-функцію"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_facet__id
@@ -1160,7 +1169,7 @@ msgstr "Презентації"
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Product template"
-msgstr ""
+msgstr "Шаблон товару"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__alias_force_thread_id
@@ -1338,7 +1347,7 @@ msgstr "Підписати"
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Signature template"
-msgstr ""
+msgstr "Шаблон підпису"
 
 #. module: documents
 #. openerp-web
@@ -1602,7 +1611,7 @@ msgstr "Рахунки постачальників"
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Vendor bill"
-msgstr ""
+msgstr "Рахунок постачальника"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
