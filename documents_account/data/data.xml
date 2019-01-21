@@ -25,7 +25,7 @@
 
         <record id="credit_note_rule" model="documents.workflow.rule" forcecreate="0">
             <field name="name">Create vendor refund</field>
-            <field name="create_model">account.invoice.out_refund</field>
+            <field name="create_model">account.invoice.in_refund</field>
             <field name="domain_folder_id" ref="documents.documents_finance_folder"/>
         </record>
 
