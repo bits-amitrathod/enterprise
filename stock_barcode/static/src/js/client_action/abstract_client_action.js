@@ -98,7 +98,7 @@ var ClientAction = AbstractAction.extend({
         core.bus.on('barcode_scanned', this, this._onBarcodeScannedHandler);
 
         this.headerWidget = new HeaderWidget(this);
-        this.settingsWidget = new SettingsWidget(this, this.actionParams.model, this.mode);
+        this.settingsWidget = new SettingsWidget(this, this.actionParams.model, this.mode, this.allow_scrap);
         return this._super.apply(this, arguments).then(function () {
             self.headerWidget.prependTo(self.$el);
             self.settingsWidget.appendTo(self.$el);
