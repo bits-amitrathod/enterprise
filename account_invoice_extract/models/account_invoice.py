@@ -103,7 +103,7 @@ class AccountInvoice(models.Model):
             account_token = self.env['iap.account'].get('invoice_ocr')
             for record in self:
                 if record.type in ["out_invoice", "out_refund"]:
-                    return super(AccountInvoice, self).message_post(**kwargs)
+                    return res
                 if record.extract_state == "no_extract_requested":
                     if "attachment_ids" in kwargs:
                         attachments = self.env["ir.attachment"].search([("id", "in", kwargs["attachment_ids"])])
