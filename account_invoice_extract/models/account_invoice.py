@@ -455,7 +455,7 @@ class AccountInvoice(models.Model):
                     currency = curr
                 if text.replace(" ", "") == curr.name or text.replace(" ", "") == curr.symbol:
                     currency = curr
-            if currency.exists():
+            if currency:
                 self.currency_id = currency.id
         #partner
         partner_found = False
