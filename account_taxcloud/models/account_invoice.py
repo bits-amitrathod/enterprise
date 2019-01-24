@@ -78,7 +78,7 @@ class AccountInvoice(models.Model):
                 request.customer_id,
                 request.cart_id,
                 self.id,
-                datetime.datetime.now()
+                fields.Datetime.context_timestamp(self, datetime.datetime.now()),
             )
 
         if raise_warning:
