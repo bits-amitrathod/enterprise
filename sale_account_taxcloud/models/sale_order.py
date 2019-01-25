@@ -17,9 +17,10 @@ class SaleOrder(models.Model):
 
     @api.multi
     def validate_taxes_on_sales_order(self):
+        company = self.company_id
         Param = self.env['ir.config_parameter']
-        api_id = Param.sudo().get_param('account_taxcloud.taxcloud_api_id')
-        api_key = Param.sudo().get_param('account_taxcloud.taxcloud_api_key')
+        api_id = Param.sudo().get_param('account_taxcloud.taxcloud_api_id_{}'.format(company.id)) or Param.sudo().get_param('account_taxcloud.taxcloud_api_id')
+        api_key = Param.sudo().get_param('account_taxcloud.taxcloud_api_key_{}'.format(company.id)) or Param.sudo().get_param('account_taxcloud.taxcloud_api_key')
         request = TaxCloudRequest(api_id, api_key)
 
         shipper = self.company_id or self.env.user.company_id
