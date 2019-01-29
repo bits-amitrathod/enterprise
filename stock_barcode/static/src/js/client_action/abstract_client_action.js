@@ -1154,7 +1154,7 @@ var ClientAction = AbstractAction.extend({
             // Do not create lot if product is not set. It could happens by a
             // direct lot scan from product or source location step.
             var product = getProductFromLastScannedLine();
-            if (! product) {
+            if (! product  || product.tracking === "none") {
                 return $.Deferred().reject();
             }
             def = $.when({lot_name: barcode, product: product});
@@ -1166,7 +1166,7 @@ var ClientAction = AbstractAction.extend({
                 return $.when(res);
             }, function (errorMessage) {
                 var product = getProductFromLastScannedLine();
-                if (product) {
+                if (product && product.tracking !== "none") {
                     return create(barcode, product).then(function (lot_id) {
                         return $.when({lot_id: lot_id, lot_name: barcode, product: product});
                     });
