@@ -45,6 +45,7 @@
             <field name="name">Income</field>
             <field name="code">INC</field>
             <field name="formulas">balance = OPINC.balance + OIN.balance - COS.balance</field>
+            <field name="parent_id" eval="False"/>
             <field name="financial_report_id" ref="account_financial_report_profitandloss0"/>
             <field name="sequence" eval="1"/>
             <field name="level" eval="0" />
@@ -97,6 +98,7 @@
             <field name="name">Expenses</field>
             <field name="code">LEX</field>
             <field name="formulas">balance = EXP.balance + DEP.balance</field>
+            <field name="parent_id" eval="False"/>
             <field name="sequence" eval="2"/>
             <field name="financial_report_id" ref="account_financial_report_profitandloss0"/>
             <field name="green_on_positive" eval="False"/>
