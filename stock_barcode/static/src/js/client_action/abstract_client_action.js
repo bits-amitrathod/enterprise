@@ -687,6 +687,9 @@ var ClientAction = AbstractAction.extend({
                     ) {
                     continue;
                 }
+                if(lineInCurrentPage.product_uom_qty && lineInCurrentPage.qty_done >= lineInCurrentPage.product_uom_qty) {
+                    continue;
+                }
                 res = lineInCurrentPage;
                 break;
             }
