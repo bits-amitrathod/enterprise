@@ -125,9 +125,10 @@ def generate_module(module, data):
         record_deps = OrderedDict.fromkeys(records, records.browse())
         for record in records:
             xmlid = get_xmlid(record)
-            if xmlid.split('.')[0] != module.name:
+            module_name = xmlid.split('.', 1)[0]
+            if module_name != module.name and module_name != '__export__':
                 # data depends on a record from another module
-                depends.add(xmlid.split('.')[0])
+                depends.add(module_name)
             for field in fields:
                 rel_records = get_relations(record, field)
                 if not rel_records:
