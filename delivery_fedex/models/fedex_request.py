@@ -4,6 +4,7 @@ import binascii
 import logging
 import os
 import suds  # should work with suds or its fork suds-jurko
+import re
 
 from datetime import datetime
 from suds.client import Client
@@ -302,7 +303,7 @@ class FedexRequest():
         commodity_weight.Units = commodity_weight_units
 
         commodity.Weight = commodity_weight
-        commodity.Description = commodity_description
+        commodity.Description = re.sub(r'[\[\]<>;={}"|]', '', commodity_description)
         commodity.Quantity = commodity_quantity
         commodity.QuantityUnits = commodity_quantity_units
         commodity.CustomsValue.Currency = commodity_currency

@@ -54,7 +54,11 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
         }
         if (this.callState !== CALL_STATE.NO_CALL) {
             if (this.callState === CALL_STATE.RINGING_CALL) {
-                this.sipSession.cancel();
+                try {
+                    this.sipSession.cancel();
+                } catch (err) {
+                    console.error('Cancel failed:', err);
+                }
             } else {
                 this.sipSession.bye();
             }
@@ -513,7 +517,11 @@ var UserAgent = Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
                 self.dialog = Dialog.confirm(self, content, options);
                 self.dialog.on('closed', self, function () {
                     if (inviteSession && self.callState !== CALL_STATE.ONGOING_CALL) {
-                        inviteSession.reject();
+                        try {
+                            inviteSession.reject();
+                        } catch (err) {
+                            console.error('Reject failed:', err);
+                        }
                     }
                     self.incomingtone.pause();
                 });

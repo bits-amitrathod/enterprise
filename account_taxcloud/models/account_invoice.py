@@ -52,7 +52,7 @@ class AccountInvoice(models.Model):
                     tax_rate = 0.0
                 else:
                     tax_rate = tax_values[index] / price * 100
-                if len(line.invoice_line_tax_ids.ids) > 1 or float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_digits=3):
+                if len(line.invoice_line_tax_ids) != 1 or float_compare(line.invoice_line_tax_ids.amount, tax_rate, precision_digits=3):
                     raise_warning = True
                     tax_rate = float_round(tax_rate, precision_digits=3)
                     tax = self.env['account.tax'].sudo().search([
@@ -71,15 +71,32 @@ class AccountInvoice(models.Model):
 
         self._onchange_invoice_line_ids()
 
-        if self.type == "out_invoice" and self.env.context.get('taxcloud_authorize_transaction', False):
-            request.client.service.Authorized(
-                request.api_login_id,
-                request.api_key,
-                request.customer_id,
-                request.cart_id,
-                self.id,
-                datetime.datetime.now()
-            )
+        if self.env.context.get('taxcloud_authorize_transaction'):
+            current_date = fields.Datetime.context_timestamp(self, datetime.datetime.now())
+
+            if self.type == 'out_invoice':
+                request.client.service.AuthorizedWithCapture(
+                    request.api_login_id,
+                    request.api_key,
+                    request.customer_id,
+                    request.cart_id,
+                    self.id,
+                    current_date,  # DateAuthorized
+                    current_date,  # DateCaptured
+                )
+            elif self.type == 'out_refund':
+                request.set_invoice_items_detail(self)
+                origin_invoice = self.env['account.invoice'].search([('number', '=', self.origin)], limit=1)
+                if origin_invoice:
+                    request.client.service.Returned(
+                        request.api_login_id,
+                        request.api_key,
+                        origin_invoice.id,
+                        request.cart_items,
+                        fields.Datetime.from_string(self.date_invoice)
+                    )
+                else:
+                    _logger.warning(_("The source document on the refund is not valid and thus the refunded cart won't be logged on your taxcloud account"))
 
         if raise_warning:
             return {'warning': _('The tax rates have been updated, you may want to check it before validation')}
