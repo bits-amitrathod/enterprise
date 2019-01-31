@@ -21,7 +21,7 @@ class AccountFollowupReport(models.AbstractModel):
     filter_partner_id = False
 
     def get_options(self, previous_options=None):
-        options = super(report_account_followup_report, self).get_options(previous_options)
+        options = super().get_options(previous_options)
         # It doesn't make sense to allow multicompany for these kind of reports
         # 1. Followup mails need to have the right headers from the right company
         # 2. Separation of business seems natural: a customer wouldn't know or care that the two companies are related
