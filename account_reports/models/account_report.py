@@ -927,7 +927,8 @@ class AccountReport(models.AbstractModel):
                 x += colspan
             y_offset += 1
         ctx = self.set_context(options)
-        ctx.update({'no_format':True, 'print_mode':True})
+        ctx.update({'no_format':True, 'print_mode':True, 'prefetch_fields': False})
+        # deactivating the prefetching saves ~35% on get_lines running time
         lines = self.with_context(ctx).get_lines(options)
 
         if options.get('hierarchy'):
