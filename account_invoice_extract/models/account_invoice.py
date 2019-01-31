@@ -426,19 +426,37 @@ class AccountInvoice(models.Model):
                     'price_unit': to_float(text),
                     'price_total': to_float(text),
                     'quantity': 1,
-                    'account_id': self.env["account.account"].search([(1, '=', 1)], limit=1).id,
+                    'account_id': self.env["account.invoice.line"].with_context(set_default_account=True, journal_id=self.journal_id.id)._default_account(),
                     })
+                if getattr(self.invoice_line_ids[0],'_predict_account', False):
+                    predicted_account_id = self.invoice_line_ids[0]._predict_account(text, self.invoice_line_ids[0].partner_id)
+                    # We only change the account if we manage to predict its value
+                    if predicted_account_id:
+                        self.invoice_line_ids[0].account_id = predicted_account_id
+
         if field == "description":
             if len(self.invoice_line_ids) == 1:
                 self.invoice_line_ids[0].name = text
+                if getattr(self.invoice_line_ids[0],'_predict_account', False):
+                    predicted_account_id = self.invoice_line_ids[0]._predict_account(text, self.invoice_line_ids[0].partner_id)
+                    # We only change the account if we manage to predict its value
+                    if predicted_account_id:
+                        self.invoice_line_ids[0].account_id = predicted_account_id
+
             elif len(self.invoice_line_ids) == 0:
                 self.invoice_line_ids.create({'name': text,
                     'invoice_id': self.id,
                     'price_unit': 0,
                     'price_total': 0,
                     'quantity': 1,
-                    'account_id': self.env["account.account"].search([(1, '=', 1)], limit=1).id,
+                    'account_id': self.env["account.invoice.line"].with_context(set_default_account=True, journal_id=self.journal_id.id)._default_account(),
                     })
+                if getattr(self.invoice_line_ids[0],'_predict_account', False):
+                    predicted_account_id = self.invoice_line_ids[0]._predict_account(text, self.invoice_line_ids[0].partner_id)
+                    # We only change the account if we manage to predict its value
+                    if predicted_account_id:
+                        self.invoice_line_ids[0].account_id = predicted_account_id
+
         if field == "date":
             self.date_invoice = text
         if field == "due_date":
