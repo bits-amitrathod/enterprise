@@ -105,29 +105,28 @@ class AccountInvoice(models.Model):
                 if record.type in ["out_invoice", "out_refund"]:
                     return res
                 if record.extract_state == "no_extract_requested":
-                    if "attachment_ids" in kwargs:
-                        attachments = self.env["ir.attachment"].search([("id", "in", kwargs["attachment_ids"])])
-                        if attachments.exists():
-                            endpoint = self.env['ir.config_parameter'].sudo().get_param(
-                                'account_invoice_extract_endpoint', 'https://iap-extract.odoo.com') + '/iap/invoice_extract/parse'
-                            params = {
-                                'account_token': account_token.account_token,
-                                'version': CLIENT_OCR_VERSION,
-                                'dbuuid': self.env['ir.config_parameter'].sudo().get_param('database.uuid'),
-                                'documents': [x.datas.decode('utf-8') for x in attachments], 
-                                'file_names': [x.datas_fname for x in attachments],
-                            }
-                            try:
-                                result = jsonrpc(endpoint, params=params)
-                                if result[1] == "Not enough credits":
-                                    record.extract_state = 'not_enough_credit'
-                                elif result[0] == -1:
-                                    record.extract_state = 'error_status'
-                                else:
-                                    record.extract_remoteid = result[0]
-                                    record.extract_state = 'waiting_extraction'
-                            except AccessError:
+                    attachments = res.attachment_ids
+                    if attachments:
+                        endpoint = self.env['ir.config_parameter'].sudo().get_param(
+                            'account_invoice_extract_endpoint', 'https://iap-extract.odoo.com') + '/iap/invoice_extract/parse'
+                        params = {
+                            'account_token': account_token.account_token,
+                            'version': CLIENT_OCR_VERSION,
+                            'dbuuid': self.env['ir.config_parameter'].sudo().get_param('database.uuid'),
+                            'documents': [x.datas.decode('utf-8') for x in attachments],
+                            'file_names': [x.datas_fname for x in attachments],
+                        }
+                        try:
+                            result = jsonrpc(endpoint, params=params)
+                            if result[1] == "Not enough credits":
+                                record.extract_state = 'not_enough_credit'
+                            elif result[0] == -1:
                                 record.extract_state = 'error_status'
+                            else:
+                                record.extract_remoteid = result[0]
+                                record.extract_state = 'waiting_extraction'
+                        except AccessError:
+                            record.extract_state = 'error_status'
         for record in self:
             record._compute_show_resend_button()
         return res
