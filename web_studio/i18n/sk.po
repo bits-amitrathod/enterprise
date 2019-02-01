@@ -3,26 +3,28 @@
 # * web_studio
 # 
 # Translators:
-# Stefan Stieranka <stieranka@itec.sk>, 2017
+# Robert Kirschner <robertkirschner@yahoo.com>, 2017
+# Martin Trigaux, 2017
+# Pavol Krnáč <pavol.krnac@ekoenergo.sk>, 2017
+# gebri <gebri@inmail.sk>, 2017
 # Matus Krnac <matus.krnac@gmail.com>, 2017
 # Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# Pavol Krnáč <pavol.krnac@ekoenergo.sk>, 2017
-# Robert Kirschner <robertkirschner@yahoo.com>, 2017
-# gebri <gebri@inmail.sk>, 2017
+# Stefan Stieranka <stieranka@itec.sk>, 2017
+# Jan Prokop, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-22 14:26+0000\n"
-"PO-Revision-Date: 2016-11-22 14:26+0000\n"
-"Last-Translator: gebri <gebri@inmail.sk>, 2017\n"
+"PO-Revision-Date: 2016-11-22 14:24+0000\n"
+"Last-Translator: Jan Prokop, 2019\n"
 "Language-Team: Slovak (https://www.transifex.com/odoo/teams/41243/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: sk\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: web_studio
 #. openerp-web
@@ -679,7 +681,7 @@ msgstr "Pole"
 #: code:addons/web_studio/models/ir_model.py:86
 #, python-format
 msgid "Field \"Mail Thread\" cannot be changed to \"False\"."
-msgstr ""
+msgstr "Pole \"mailové vlákno\" nemožno zmeniť na \"False\" "
 
 #. module: web_studio
 #. openerp-web
@@ -866,7 +868,7 @@ msgstr "Protokol"
 #. module: web_studio
 #: model:ir.ui.view,arch_db:web_studio.model_search_view
 msgid "Mail Thread"
-msgstr ""
+msgstr "Vlákno mailu"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_mail_tracking_value
@@ -886,7 +888,7 @@ msgstr "Správa"
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_mail_notification
 msgid "Message Notifications"
-msgstr ""
+msgstr "Upozornenie na správu"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_mail_message_subtype
@@ -1073,7 +1075,7 @@ msgstr "Zapnúť"
 #. module: web_studio
 #: selection:ir.model.fields,track_visibility:0
 msgid "On Change"
-msgstr ""
+msgstr "O zmene"
 
 #. module: web_studio
 #. openerp-web
@@ -1100,7 +1102,7 @@ msgstr "Jeden sledujúci"
 #: code:addons/web_studio/models/ir_model.py:109
 #, python-format
 msgid "Only custom models can be modified."
-msgstr ""
+msgstr "Upraviť možno iba zákaznícky model"
 
 #. module: web_studio
 #. openerp-web
@@ -1548,7 +1550,7 @@ msgstr "Tento pad bude inicializovaný pri prvom editovaní"
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_web_tour_tour
 msgid "Tours"
-msgstr ""
+msgstr "Prehliadky"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_ir_model_fields_track_visibility
@@ -1684,13 +1686,13 @@ msgstr ""
 #: code:addons/web_studio/static/src/xml/app_creator.xml:23
 #, python-format
 msgid "Welcome to"
-msgstr ""
+msgstr "Vitajte v"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_ir_model_fields_track_visibility
 msgid ""
 "When set, every modification to this field will be tracked in the chatter."
-msgstr ""
+msgstr "Ak nastavené, všetky modifikácie tohto poľa budú sledované chatterom."
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_ir_model_abstract
@@ -1700,7 +1702,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_ir_model_mail_thread
 msgid "Whether this model supports messages and notifications."
-msgstr ""
+msgstr "Či tento model podporuje správy a notifikácie."
 
 #. module: web_studio
 #. openerp-web
