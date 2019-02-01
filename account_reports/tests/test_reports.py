@@ -428,7 +428,7 @@ class TestAccountReports(common.TransactionCase):
         options = dict(self.minimal_options)
         options['partner_id'] = self.partner_timmy_thomas.id
 
-        lines = self.env['account.followup.report'].get_lines(options)
+        lines = self.env['account.followup.report']._get_lines(options)
 
         # Title line + actual business line
         self.assertEqual(len(lines), 3)
@@ -444,7 +444,7 @@ class TestAccountReports(common.TransactionCase):
         self.env.cache.invalidate()
         self.assertEqual(self.partner_timmy_thomas.credit, 60.0)
 
-        lines = self.env['account.followup.report'].get_lines(options)
+        lines = self.env['account.followup.report']._get_lines(options)
 
         # Title line + actual business line
         self.assertEqual(len(lines), 3)
