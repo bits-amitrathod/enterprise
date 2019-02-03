@@ -28,7 +28,7 @@ class AccountBankStatementLine(models.Model):
         payment_method = self.l10n_mx_edi_payment_method_id.id or self.journal_id.l10n_mx_edi_payment_method_id.id
         payments.write({
             'l10n_mx_edi_payment_method_id': payment_method,
-            'invoice_ids': [(6, 0, invoice_ids)]
+            'invoice_ids': [(4, inv) for inv in invoice_ids]
         })
         payments._l10n_mx_edi_retry()
         return res
