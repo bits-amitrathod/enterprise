@@ -59,6 +59,10 @@
 // Common style for list views (also inside form views)
 .o_list_view {
     border-collapse: initial;
+
+    .o_column_sortable:not(:empty)::after {
+        position: absolute;
+    }
     .o-list-view-sortable-caret-padding();
 
     // ------- Force empty cells' padding -------
