@@ -100,7 +100,7 @@ class ResCompany(models.Model):
                 chf_currency = self.env['res.currency'].create({'name': 'CHF'})
             available_currencies['CHF'] = chf_currency
 
-        request_url = 'http://www.afd.admin.ch/publicdb/newdb/mwst_kurse/wechselkurse.php'
+        request_url = 'http://www.pwebapps.ezv.admin.ch/apps/rates/rate/getxml?activeSearchType=today'
         try:
             parse_url = requests.request('GET', request_url)
         except:
