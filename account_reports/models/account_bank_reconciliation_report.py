@@ -145,7 +145,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             for line in move_lines:
                 self.line_number += 1
                 tmp_lines.append({
-                    'id': str(line.id),
+                    'id': str(line['id']),
                     'name': line['name'],
                     'columns': [{'name': v} for v in [line['date'], line['ref'], self.format_value(-line['balance'])]],
                     'level': 1,
