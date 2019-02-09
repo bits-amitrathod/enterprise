@@ -999,7 +999,7 @@ class AccountInvoice(models.Model):
             if not record.l10n_mx_edi_time_invoice:
                 record.l10n_mx_edi_time_invoice = date_mx.strftime(
                     DEFAULT_SERVER_TIME_FORMAT)
-        self._l10n_mx_edi_update_hour_timezone()
+                record._l10n_mx_edi_update_hour_timezone()
         return super(AccountInvoice, self).action_date_assign()
 
     @api.multi
