@@ -211,7 +211,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
             DbtrAgt = etree.SubElement(PmtInf, "DbtrAgt")
             FinInstnId = etree.SubElement(DbtrAgt, "FinInstnId")
             BIC = etree.SubElement(FinInstnId, "BIC")
-            BIC.text = self.bank_account_id.bank_bic
+            BIC.text = self.bank_account_id.bank_bic.replace(' ', '')
 
             # One CdtTrfTxInf per transaction
             for payment in payments_list:
@@ -332,7 +332,7 @@ class AccountSepaCreditTransfer(models.TransientModel):
         val_BIC = bank_account.bank_bic
         if val_BIC:
             BIC = etree.SubElement(FinInstnId, "BIC")
-            BIC.text = val_BIC
+            BIC.text = val_BIC.replace(' ', '')
         elif not self.is_generic:
             raise UserError(_("There is no Bank Identifier Code recorded for bank account '%s'") % bank_account.acc_number)
 
