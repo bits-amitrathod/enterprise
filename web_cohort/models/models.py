@@ -118,13 +118,22 @@ class Base(models.AbstractModel):
                     period = "%s - %s" % (col_start_date.strftime('%d %b'), (col_end_date - relativedelta(days=1)).strftime('%d %b'))
                 else:
                     period = col_start_date.strftime(DISPLAY_FORMATS[interval])
+
+                if mode == 'churn':
+                    domain = [
+                        (date_stop, '<', col_end_date.strftime(DEFAULT_SERVER_DATE_FORMAT)),
+                    ]
+                else:
+                    domain = ['|',
+                        (date_stop, '>=', col_end_date.strftime(DEFAULT_SERVER_DATE_FORMAT)),
+                        (date_stop, '=', False),
+                    ]
+
                 columns.append({
                     'value': col_remaining_value,
                     'churn_value': col_value + (columns[-1]['churn_value'] if col_index > 0 else initial_churn_value),
                     'percentage': percentage,
-                    'domain': [
-                        (date_stop, ">=", col_start_date.strftime(DEFAULT_SERVER_DATE_FORMAT)),
-                        (date_stop, "<", col_end_date.strftime(DEFAULT_SERVER_DATE_FORMAT))],
+                    'domain': domain,
                     'period': period,
                 })
 
