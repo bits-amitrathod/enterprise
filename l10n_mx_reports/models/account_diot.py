@@ -367,7 +367,7 @@ class MxReportPartnerLedger(models.AbstractModel):
             locale.setlocale(locale.LC_TIME, old_locale)
 
     def _l10n_mx_dpiva_txt_export(self, options):
-        txt_data = self.get_lines(options)
+        txt_data = self._get_lines(options)
         lines = ''
         date = fields.datetime.strptime(
             self.env.context['date_from'], DEFAULT_SERVER_DATE_FORMAT)
