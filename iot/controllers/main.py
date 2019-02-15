@@ -42,17 +42,27 @@ class IoTController(http.Controller):
             return 'http://localhost:8069/point_of_sale/display'
 
     @http.route('/iot/setup', type='json', auth='public')
-    def update_box(self, data, devices):
-        # Update or create box
-        box = request.env['iot.box'].sudo().search([('identifier', '=', data['identifier'])], limit=1)
+    def update_box(self, **kwargs):
+        if kwargs:
+            # Box > V19
+            iot_box = kwargs['iot_box']
+            devices = kwargs['devices']
+        else:
+            # Box < V19
+            data = request.jsonrequest
+            iot_box = data
+            devices = data['devices']
+
+         # Update or create box
+        box = request.env['iot.box'].sudo().search([('identifier', '=', iot_box['identifier'])], limit=1)
         if box:
             box = box[0]
-            box.ip = data['ip']
-            box.name = data['name']
+            box.ip = iot_box['ip']
+            box.name = iot_box['name']
         else:
             iot_token = request.env['ir.config_parameter'].sudo().search([('key', '=', 'iot_token')], limit=1)
-            if iot_token.value.strip('\n') == data['token']:
-                box = request.env['iot.box'].sudo().create({'name': data['name'], 'identifier': data['identifier'], 'ip': data['ip'], })
+            if iot_token.value.strip('\n') == iot_box['token']:
+                box = request.env['iot.box'].sudo().create({'name': iot_box['name'], 'identifier': iot_box['identifier'], 'ip': iot_box['ip'], })
 
         # Update or create devices
         if box:
