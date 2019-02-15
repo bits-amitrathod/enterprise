@@ -50,6 +50,7 @@ class PrinterDriver(Driver):
         try:
             with tempfile.NamedTemporaryFile() as tmp:
                 tmp.write(b64decode(data['document']))
-                subprocess.check_call("cat %s | lp -d %s" % (tmp.name, self.dev['identifier']), shell=True)
+                tmp.flush()
+                subprocess.check_call("lp -d %s %s" % (self.dev['identifier'], tmp.name), shell=True)
         except subprocess.CalledProcessError as e:
             _logger.warning(e.output)

@@ -18,12 +18,12 @@ class IoTController(http.Controller):
         zip_list = []
         for addons_path in odoo.modules.module.ad_paths:
             for module in sorted(os.listdir(str(addons_path))):
-                if os.path.isdir(addons_path + '/' + module) and os.path.isdir(str(addons_path + '/' + module + '/drivers')):
-                    for file in os.listdir(str(addons_path + '/' + module + '/drivers')):
+                if os.path.isdir(os.path.join(addons_path, module)) and os.path.isdir(os.path.join(addons_path, module, 'drivers')):
+                    for file in os.listdir(os.path.join(addons_path, module, 'drivers')):
                         if file.startswith('.') or file.startswith('_'):
                             continue
                         # zip it
-                        full_path_file = str(addons_path + '/' + module + '/drivers/' + file)
+                        full_path_file = os.path.join(addons_path, module, 'drivers', file)
                         zip_list.append((full_path_file, file))
         file_like_object = io.BytesIO()
         zipfile_ob = zipfile.ZipFile(file_like_object, 'w')

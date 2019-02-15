@@ -68,6 +68,7 @@ var IotScanButton = Widget.extend({
         this.token = record.data.token;
         this.parseURL = new URL(window.location.href);
         this.controlImage = '/iot.jpg';
+        this.box_connect = '/hw_drivers/box/connect?token=' + btoa(this.token);
     },
 
     start: function () {
@@ -136,7 +137,8 @@ var IotScanButton = Widget.extend({
                     var imgSrc = url + self.controlImage;
                     img.src = imgSrc.replace('https://', 'http://');
                     img.onload = function(XHR) {
-                        self._addIOTWithCertificateError(url);
+                        self._addIOT(url);
+                        self._connectToIOT(url);
                     };
                 }
             }).always(function () {
@@ -235,20 +237,6 @@ var IotScanButton = Widget.extend({
         this.$progressFound.append($iot);
     },
 
-    _addIOTWithCertificateError: function (url){
-        this._addIOT(url);
-        var content = '<p>' + _t("Connection refused, please accept the certificate and restart the scan:")
-                + '<ol class="pl-3 small">'
-                    + '<li>' + _t('Click on the link above to open your IoT Homepage') + '</li>'
-                    + '<li>' + _t('Click on Advanced/Show Details/Details/More information') + '</li>'
-                    + '<li>' + _t('Click on Proceed to .../Add Exception/Visit this website/Go on to the webpage') + '</li>'
-                    + '<li>' + _t('Firefox only: Click on Confirm Security Exception') + '</li>'
-                    + '<li>' + _t('Restart SCAN') + '</li>'
-                + '</ol>'
-            + '</p>';
-        this._updateIOT(url, 'error', content);
-    },
-
     _updateIOT: function (url, status, message){
         if (this.iots[url]) {
             var $iot = this.iots[url];
@@ -272,27 +260,19 @@ var IotScanButton = Widget.extend({
     },
 
     _connectToIOT: function (url){
+        var img = new Image();
         var self = this;
-        var full_url = url + '/hw_drivers/box/connect';
-        var json_data = {params: {token: self.token}};
-
-        this._updateIOT(url, 'loading', _t('Pairing with IoT...'));
-
-        $.ajax({
-            headers: {'Content-Type': 'application/json'},
-            url: full_url,
-            dataType: 'json',
-            data: JSON.stringify(json_data),
-            type: 'POST',
-        }).done(function (response) {
-            if (response.result === 'IoTBox connected') {
-                self._updateIOT(url, 'success', response.result);
+        img.src = url.replace('https://', 'http://') + self.box_connect;
+        img.onload = function(jqXHR) {
+            if (img.height === 10){
+                self._updateIOT(url, 'success', _t('IoTBox connected'));
             } else {
-                self._updateIOT(url, 'error', response.result);
+                self._updateIOT(url, 'error', _t('This IoTBox has already connected'));
             }
-        }).fail(function (){
+        };
+        img.onerror = function(jqXHR) {
             self._updateIOT(url, 'error', _t('Connection failed'));
-        });
+        };
     },
 
     _onButtonClick: function (e) {
@@ -645,8 +625,6 @@ var IotDeviceValueDisplay = Widget.extend(IotValueFieldMixin, {
 var IotTakeMeasureButton = Widget.extend({
 
     start: function () {
-        // this._super.apply(this, arguments);
-        console.log(this);
         var $content = $('<div/>')
             .append($('<p/>').text(_t('Some improvements have been made on the IoT App that require some manual actions from your side:')))
             .append($('<p/>').text(_t('1. To upgrade the IoT and Manufacturing modules, go in Apps, search for the App and click on Upgrade')))
@@ -671,10 +649,12 @@ var IotTakeMeasureButton = Widget.extend({
 
 field_registry.add('iot_realtime_value', IotRealTimeValue);
 widget_registry.add('iot_device_value_display', IotDeviceValueDisplay);
+widget_registry.add('iot_take_measure_button', IotTakeMeasureButton);
 
 return {
     IotValueFieldMixin: IotValueFieldMixin,
     IotRealTimeValue: IotRealTimeValue,
+    IotTakeMeasureButton: IotTakeMeasureButton,
     IotDeviceValueDisplay: IotDeviceValueDisplay,
     IoTLongpolling: IoTLongpolling,
 };
