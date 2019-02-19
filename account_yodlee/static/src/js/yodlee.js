@@ -154,7 +154,10 @@ var YodleeAccountConfigurationWidget = Widget.extend({
     renderElement: function() {
         var self = this;
         var fields = {};
-        if (this.refresh_info && this.refresh_info.providerAccount.refreshInfo.status === 'SUCCESS') {
+        if (this.refresh_info && (
+                this.refresh_info.providerAccount.refreshInfo.status === 'SUCCESS' ||
+                this.refresh_info.providerAccount.refreshInfo.status === 'PARTIAL_SUCCESS')
+           ) {
             if (this.action_end) {
                 return new Model('account.online.provider').call('open_action', [[self.id], this.action_end, this.refresh_info.numberAccountAdded, this.context]).then(function(result) {
                     self.do_action(result);
