@@ -6,6 +6,7 @@ var mailTestUtils = require('mail.testUtils');
 var ace = require('web_editor.ace');
 var concurrency = require('web.concurrency');
 var config = require('web.config');
+var fieldRegistry = require('web.field_registry');
 var framework = require('web.framework');
 var ListRenderer = require('web.ListRenderer');
 var testUtils = require('web.test_utils');
@@ -1154,6 +1155,48 @@ QUnit.module('ViewEditorManager', {
             "the display attribute should be Default");
         assert.strictEqual(vem.$('.o_web_studio_sidebar').find('input[name="string"]').val(), "Display Name",
             "the field should have the label Display Name in the sidebar");
+
+        vem.destroy();
+    });
+
+    QUnit.test('kanban editor with async widget', function (assert) {
+        assert.expect(7);
+
+        var fieldDef = $.Deferred();
+        var FieldChar = fieldRegistry.get('char');
+        fieldRegistry.add('asyncwidget', FieldChar.extend({
+            willStart: function () {
+                return fieldDef;
+            },
+        }));
+
+        var vem = studioTestUtils.createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: "<kanban>" +
+                    "<templates>" +
+                        "<t t-name='kanban-box'>" +
+                            "<div><field name='display_name' widget='asyncwidget'/></div>" +
+                        "</t>" +
+                    "</templates>" +
+                "</kanban>",
+        });
+
+        assert.containsNone(document.body, '.o_web_studio_kanban_view_editor');
+
+        fieldDef.resolve();
+
+        assert.containsOnce(document.body, '.o_web_studio_kanban_view_editor');
+
+        assert.containsOnce(vem, '.o_web_studio_kanban_view_editor [data-node-id]');
+        assert.containsOnce(vem, '.o_web_studio_kanban_view_editor .o_web_studio_hook');
+
+        vem.$('.o_web_studio_kanban_view_editor [data-node-id]').click();
+
+        assert.hasClass(vem.$('.o_web_studio_sidebar .o_web_studio_properties'), 'active');
+        assert.containsOnce(vem, '.o_web_studio_sidebar_content.o_display_field',
+            "the sidebar should now display the field properties");
+        assert.hasClass(vem.$('.o_web_studio_kanban_view_editor [data-node-id]'), 'o_web_studio_clicked');
 
         vem.destroy();
     });
