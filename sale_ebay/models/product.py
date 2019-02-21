@@ -731,7 +731,9 @@ class ProductTemplate(models.Model):
             if 'ShippingServiceSelected' in transaction:
                 sale_order.picking_ids.message_post(
                     _('The Buyer Chose The Following Delivery Method :\n') + shipping_name)
-            sale_order.action_invoice_create(final=True)
+            if 'order' in sale_order.order_line.filtered(
+                    lambda line: not line._is_delivery()).mapped('product_id.invoice_policy'):
+                sale_order.action_invoice_create(final=True)
 
     @api.one
     def sync_available_qty(self):
