@@ -589,28 +589,41 @@ class ProductTemplate(models.Model):
                 'email': email,
                 'ref': 'eBay',
             }
+            # if we reuse an existing partner, addresses might already been set on it
+            # so we hold the address data in a temporary dictionary to see if we need to create it or not
+            shipping_data = {}
             if 'BuyerInfo' in transaction['Buyer'] and\
                'ShippingAddress' in transaction['Buyer']['BuyerInfo']:
                 infos = transaction['Buyer']['BuyerInfo']['ShippingAddress']
-                partner_data['name'] = infos.get('Name')
-                partner_data['street'] = infos.get('Street1')
-                partner_data['street2'] = infos.get('Street2')
-                partner_data['city'] = infos.get('CityName')
-                partner_data['zip'] = infos.get('PostalCode')
-                partner_data['phone'] = infos.get('Phone')
-                partner_data['country_id'] = self.env['res.country'].search([
+                shipping_data['name'] = infos.get('Name')
+                shipping_data['street'] = infos.get('Street1')
+                shipping_data['street2'] = infos.get('Street2')
+                shipping_data['city'] = infos.get('CityName')
+                shipping_data['zip'] = infos.get('PostalCode')
+                shipping_data['phone'] = infos.get('Phone')
+                shipping_data['country_id'] = self.env['res.country'].search([
                     ('code', '=', infos['Country'])
                 ]).id
                 state = self.env['res.country.state'].search([
                     ('code', '=', infos.get('StateOrProvince')),
-                    ('country_id', '=', partner_data['country_id'])
+                    ('country_id', '=', shipping_data['country_id'])
                 ])
                 if not state:
                     state = self.env['res.country.state'].search([
                         ('name', '=', infos.get('StateOrProvince')),
-                        ('country_id', '=', partner_data['country_id'])
+                        ('country_id', '=', shipping_data['country_id'])
                     ])
-                partner_data['state_id'] = state.id
+                shipping_data['state_id'] = state.id
+            shipping_partner = partner._find_existing_address(shipping_data)
+            if not shipping_partner:
+                # if the partner already has an address we create a new child contact to hold it
+                # otherwise we can directly set the new address on the partner
+                if partner.street:
+                    contact_data = {'parent_id': partner.id, 'type': 'delivery'}
+                    shipping_partner = self.env['res.partner'].create({**shipping_data, **contact_data})
+                else:
+                    partner.write(shipping_data)
+                    shipping_partner = partner
 
             partner.write(partner_data)
             fp_id = self.env['account.fiscal.position'].get_fiscal_position(partner.id)
@@ -657,6 +670,7 @@ class ProductTemplate(models.Model):
                         self.ebay_listing_status = 'Ended'
             sale_order = self.env['sale.order'].create({
                 'partner_id': partner.id,
+                'partner_shipping_id': shipping_partner.id,
                 'state': 'draft',
                 'client_order_ref': transaction['OrderLineItemID'],
                 'origin': 'eBay' + transaction['TransactionID'],
