@@ -195,7 +195,7 @@ var IotScanButton = Widget.extend({
             self._initProgress();
 
             if (ip) {
-                range = ip.replace(ip.split('.')[3], '');
+                range = ip.substring(0, ip.lastIndexOf('.') + 1);
                 self._addIPRange(range);
             }
             else {
