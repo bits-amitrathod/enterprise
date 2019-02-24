@@ -3,15 +3,16 @@
 # * helpdesk
 # 
 # Translators:
-# Murat Kaplan <muratk@projetgrup.com>, 2017
-# Umur Akın <umura@projetgrup.com>, 2018
+# Murat Kaplan <muratk@projetgrup.com>, 2018
+# Umur Akın <umura@projetgrup.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-15 14:46+0000\n"
-"PO-Revision-Date: 2018-01-15 14:46+0000\n"
-"Last-Translator: Umur Akın <umura@projetgrup.com>, 2018\n"
+"PO-Revision-Date: 2017-09-20 11:40+0000\n"
+"Last-Translator: Umur Akın <umura@projetgrup.com>, 2019\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -111,6 +112,74 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
+"% set access_token = object.rating_get_access_token()\n"
+"    <table style=\"width:600px;margin:5px auto;\">\n"
+"        <tbody>\n"
+"            <tr><td>\n"
+"                <a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a>\n"
+"            </td><td style=\"text-align:right;vertical-align:middle;\">\n"
+"                    Memnuniyet Anketi\n"
+"            </td></tr>\n"
+"        </tbody>\n"
+"    </table>\n"
+"    <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
+"        <tbody>\n"
+"            <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
+"                <p>Merhaba,</p>\n"
+"                <p>Lütfen taleple ilgili hizmetimizi değerlendirmek için birkaç dakikanızı ayırın \"<strong>${object.name}</strong>\"\n"
+"                   assigned to <strong>${object.rating_get_rated_partner_id().name}</strong>.</p>\n"
+"                <p>Geri bildirimlerimiz bizim için çok değerli. Hizmetlerimizi sürekli iyileştirmemiz için önem arz etmektedir.</p>\n"
+"            </td></tr>\n"
+"            <tr><td style=\"padding:10px 20px\">\n"
+"                <table summary=\"o_mail_notification\" style=\"width:100%;border-top:1px solid #e1e1e1;\">\n"
+"                    <tr>\n"
+"                        <td style=\"text-align:center;\">\n"
+"                            <h2 style=\"font-weight:300;font-size:18px;\">\n"
+"                                Aldığınız hizmet hakkında ne düşündüğünüzü bize bildirin:\n"
+"                            </h2>\n"
+"                            <div style=\"text-color: #888888\">(bu ifadelerden birine tıklayabilirsiniz)</div>\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                    <tr>\n"
+"                        <td style=\"padding:10px 10px;\">\n"
+"                            <table style=\"width:100%;text-align:center;\">\n"
+"                                <tr>\n"
+"                                    <td>\n"
+"                                        <a href=\"/rating/${access_token}/10\">\n"
+"                                            <img alt=\"Satisfied\" src=\"/rating/static/src/img/rating_10.png\" title=\"Satisfied\"/>\n"
+"                                        </a>\n"
+"                                    </td>\n"
+"                                    <td>\n"
+"                                        <a href=\"/rating/${access_token}/5\">\n"
+"                                            <img alt=\"Not satisfied\" src=\"/rating/static/src/img/rating_5.png\" title=\"Not satisfied\"/>\n"
+"                                        </a>\n"
+"                                    </td>\n"
+"                                    <td>\n"
+"                                        <a href=\"/rating/${access_token}/1\">\n"
+"                                            <img alt=\"Highly Dissatisfied\" src=\"/rating/static/src/img/rating_1.png\" title=\"Highly Dissatisfied\"/>\n"
+"                                        </a>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </table>\n"
+"            </td></tr>\n"
+"            <tr><td style=\"padding:15px 20px 10px 20px;\">${(object.user_id.signature or '') | safe}</td></tr>\n"
+"        </tbody>\n"
+"    </table>\n"
+"    <table style=\"width:600px;margin:auto;text-align:center;font-size:12px;\">\n"
+"        <tbody>\n"
+"            <tr><td style=\"padding-top:10px;color:#afafaf;\">\n"
+"                <p>Bu müşteri anketi destek talebiniz aşamasına geldiği için gönderildi.<b>${object.stage_id.name}</b></p>\n"
+"                <p>Email otomatik olarak <a target=\"_blank\" href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">Odoo Helpdesk</a> tarfından, için gönderildi. <a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a></p>\n"
+"            </td></tr>\n"
+"        </tbody>\n"
+"    </table>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
@@ -133,6 +202,22 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
+"    <div style=\"margin-left:30px;align=center;\">\n"
+"        Sayın ${object.sudo().partner_id.name or 'Madam, Sir'},\n"
+"    </div>\n"
+"    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
+"        Bu otomatik mesaj, destek talebinizin kapandığının bilgisini  size vermek için gönderildi (reference ${object.id}).\n"
+"\n"
+"       Umarız bizden aldığınız hizmet sizleri memnun etmiştir\n"
+"       Konuyla ilgili daha fazla sorunuz veya eklemek istediğiniz birşey varsa, bu epostaya cevap vererek talebin tekrar açılmasını sağlayabilirsiniz.\n"
+"       Desteğiniz ve iş birliğiniz için teşekkürler.\n"
+"    </div><br/>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">Saygılarımızla, </span>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">${object.team_id.name or 'Helpdesk'} Team.</span>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
@@ -157,6 +242,25 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div style=\"max-width:600px; height:auto; margin-left:30px;\">\n"
+"    <div style=\"margin-left:30px;align=center;\">\n"
+"        Bu bir otomatik mesajdır:<br/>\n"
+"        Sayın ${object.sudo().partner_id.name or 'Hanımefendi, Beyefendi'},\n"
+"    </div>\n"
+"    <div style=\"margin-left:30px;align=center;\" width=\"60%\">\n"
+"        Talebiniz\n"
+"        % if object.access_token:\n"
+"        <a href=\"/helpdesk/ticket/${object.id}/${object.access_token}\">${object.name}</a>\n"
+"        % endif\n"
+"       alınmıştır ve incelemek üzere  ${object.team_id.name or ''} ekibimize aktarılmıştır.\n"
+"        Talebinizin referansı ${object.id}.\n"
+"        <br/>Ek yorum eklemek için bu epostayı cevaplamanız yeterlidir.\n"
+"    </div><br/>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">Teşekkür ederiz</span>\n"
+"    <span style=\"margin-left:30px;font-weight:normal;\">${object.team_id.name or 'Helpdesk'} Ekibi.</span>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #. openerp-web
@@ -166,6 +270,8 @@ msgid ""
 "<b>Stars</b> mark the <b>ticket priority</b>. You can change it directly "
 "from here!"
 msgstr ""
+"<b>Yıldızlar</b> talep önceliğini<b>belirtir. Direkt buradan "
+"değiştirebilirsiniz!"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
@@ -175,7 +281,7 @@ msgstr "<i class=\"fa fa-arrow-circle-right \"/> Geri bildirimleri gör"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> Configure domain name"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-right\"/> Domain adını yapılandır"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -213,6 +319,8 @@ msgid ""
 "<span class=\"text-muted\">NB: This will archive the selected tickets "
 "(Except the destination ticket)</span>"
 msgstr ""
+"<span class=\"text-muted\">NB: Bu seçilen talepleri arşivleyecek (Hedeflenen"
+" talep hariç)</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -232,12 +340,12 @@ msgstr "<strong class=\"col-md-2\">Açıklama</strong>"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-md-2\">Reported by</strong>"
-msgstr ""
+msgstr "<strong class=\"col-md-2\">Raporlayan</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-md-2\">Reported on</strong>"
-msgstr ""
+msgstr "<strong class=\"col-md-2\">Raporlanan</strong>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -302,6 +410,8 @@ msgid ""
 "Add columns to configure <b>stages for your tickets</b>.<br/><i>e.g. "
 "Awaiting Customer Feedback, Customer Followup, ...</i>"
 msgstr ""
+"Taleplerinizin aşamalarını <b>yapılandırmak için kolonlar ekleyin "
+"</b>.<br/><i>Örn: Müşteri geri Bildirimi, Müşteri Takibi gibi..</i>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_alias_contact
@@ -516,6 +626,8 @@ msgid ""
 "Click these cards to open their form view, or <b>drag &amp; drop</b> them "
 "through the different stages of this team."
 msgstr ""
+"Form görünümlerini açmak için bu kartlara tıklayın yada<b>sürükle &amp; "
+"bırak ile</b> ekibinizin farklı aşamalarına taşıyın."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -760,7 +872,7 @@ msgstr "Müşteri portalı için açıklama"
 #: code:addons/helpdesk/wizard/helpdesk_ticket_merge.py:59
 #, python-format
 msgid "Description from ticket %s: %s"
-msgstr ""
+msgstr "Talepten açıklama %s: %s"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -811,6 +923,8 @@ msgid ""
 "Enter a subject or title for this ticket.<br/><i>(e.g. Problem with "
 "installation, Wrong order, Can't understand bill, etc.)</i>"
 msgstr ""
+"Bu talep için bir konu yada başlık girin.<br/><i>(örn: Kurulum Problemi, "
+"Hatalı Sipariş, Anlaşılamayan Fatura,gibi..)</i>"
 
 #. module: helpdesk
 #. openerp-web
@@ -1500,7 +1614,7 @@ msgstr "Yaptığınız değişiklikleri ve bu talebi kaydet."
 #: code:addons/helpdesk/controllers/portal.py:31
 #, python-format
 msgid "Search <span class=\"nolabel\"> (in Content)</span>"
-msgstr ""
+msgstr "Ara <span class=\"nolabel\"> (İçerik içinde)</span>"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_search
@@ -2079,7 +2193,7 @@ msgstr "Yüksek öncelikli başarısız talepleri görüntüle"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "View this teams ratings this page:<br/>"
-msgstr ""
+msgstr "Ekip değerlendirme sayfasını görüntüleyin:<br/>"
 
 #. module: helpdesk
 #. openerp-web
@@ -2096,6 +2210,8 @@ msgid ""
 "Want to <b>boost your customer satisfaction</b>?<br/><i>Click Helpdesk to "
 "start.</i>"
 msgstr ""
+"Müşteri memnuniyetinizi <b>arttırmak mı istiyorsunuz?<br/><i>Başlamak için "
+"Helpdesk'e tıklayın.</i>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_website_helpdesk_form
