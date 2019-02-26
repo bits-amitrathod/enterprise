@@ -595,6 +595,7 @@ class ProductTemplate(models.Model):
             if 'BuyerInfo' in transaction['Buyer'] and\
                'ShippingAddress' in transaction['Buyer']['BuyerInfo']:
                 infos = transaction['Buyer']['BuyerInfo']['ShippingAddress']
+                partner_data['name'] = infos.get('Name')
                 shipping_data['name'] = infos.get('Name')
                 shipping_data['street'] = infos.get('Street1')
                 shipping_data['street2'] = infos.get('Street2')
