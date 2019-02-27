@@ -319,7 +319,7 @@ class EasypostRequest():
         elif rates and carrier.easypost_default_service_id:
             rate = [rate for rate in rates if rate['service'] == carrier.easypost_default_service_id.name]
             if not rate:
-                error_message = _("There is no rate available for the selected service level for one of your package. Please choose another service level.") + warning_message
+                error_message = _("There is no rate available for the selected service level for one of your package. Please choose another service level.")
             else:
                 rate = rate[0]
 
