@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+import datetime
 import requests
 from werkzeug.urls import url_join
 
@@ -195,11 +197,10 @@ class EasypostRequest():
         return dict: a dict with necessary keys in order to create
         a easypost parcel for the easypost shipement with shipment_id
         """
-        # TODO maybe we should add 1 lb to weight since it could sucks with
-        # customs info
         shipment = {
             'order[shipments][%d][parcel][weight]' % shipment_id: weight,
-            'order[shipments][%d][options][label_format]' % shipment_id: label_format
+            'order[shipments][%d][options][label_format]' % shipment_id: label_format,
+            'order[shipments][%d][options][label_date]' % shipment_id: datetime.datetime.now().isoformat()
         }
         if package.package_carrier_type == 'easypost' and package.shipper_package_code:
             shipment.update({
