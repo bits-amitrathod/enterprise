@@ -71,6 +71,18 @@ class ProductTemplate(models.Model):
         ondelete='set null',
         help='This field contains the template that will be used.')
 
+    @api.model
+    def create(self, values):
+        result = super(ProductTemplate, self).create(values)
+        related_values = {}
+        related_fields = ['ebay_fixed_price', 'ebay_quantity']
+        for field in related_fields:
+            if values.get(field):
+                related_values[field] = values[field]
+        if related_values:
+            result.write(related_values)
+        return result
+
     @api.multi
     def _prepare_item_dict(self):
         if self.ebay_sync_stock:
