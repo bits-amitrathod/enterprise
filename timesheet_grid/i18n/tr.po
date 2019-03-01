@@ -3,22 +3,24 @@
 # * timesheet_grid
 # 
 # Translators:
-# Murat Kaplan <muratk@projetgrup.com>, 2016
-# Ramiz Deniz Öner <deniz@denizoner.com>, 2016
-# Ediz Duman <neps1192@gmail.com>, 2016
 # Azar Huseynli <azerbay1984@gmail.com>, 2016
-# gezgin biri <gezginbiri@hotmail.com>, 2016
-# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Ramiz Deniz Öner <deniz@denizoner.com>, 2016
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
+# Ediz Duman <neps1192@gmail.com>, 2016
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2016
+# Martin Trigaux, 2016
+# gezgin biri <gezginbiri@hotmail.com>, 2016
 # Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2016
+# Murat Kaplan <muratk@projetgrup.com>, 2017
+# Umur Akın <umura@projetgrup.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2016\n"
+"PO-Revision-Date: 2016-09-07 13:42+0000\n"
+"Last-Translator: Umur Akın <umura@projetgrup.com>, 2019\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,7 +38,7 @@ msgstr "Tüm Zaman Çizelgeleri"
 #: code:addons/timesheet_grid/models/models.py:46
 #, python-format
 msgid "All selected timesheets are already validated"
-msgstr ""
+msgstr "Tüm seçili timesheetler çoktan doğrulandı"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_project_allow_timesheets
@@ -57,7 +59,7 @@ msgstr "İptal"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid
 msgid "Click to add projects and tasks"
-msgstr ""
+msgstr "Projeler ve görevler eklemek için tıklayın"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_create_uid
@@ -74,12 +76,12 @@ msgstr "Oluşturulma"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_timesheet_validated
 msgid "Date until which the employee's timesheets have been validated"
-msgstr ""
+msgstr "Personelin zaman çizelgelerinin doğrulanma tarihi"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_form
 msgid "Describe your activity"
-msgstr ""
+msgstr "Etkinliğinizi açıklayın"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_display_name
@@ -161,7 +163,7 @@ msgstr "Zaman çizelgelerim"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
 msgid "Non Validated"
-msgstr ""
+msgstr "Doğrulanmamış"
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:68
@@ -170,18 +172,23 @@ msgid ""
 "Only a Timesheets Officer is allowed to create an entry older than the "
 "validation limit."
 msgstr ""
+"Yalnızca bir Zaman Çizelgesi Yetkilisi geçerlilik sınırından daha eski bir "
+"girdi oluşturabilir."
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:83
 #, python-format
 msgid "Only a Timesheets Officer is allowed to delete a validated entry."
 msgstr ""
+"Onaylanmış bir girişi yalnızca bir Zaman Çizelgesi Sorumlusu silebilir."
 
 #. module: timesheet_grid
 #: code:addons/timesheet_grid/models/models.py:77
 #, python-format
 msgid "Only a Timesheets Officer is allowed to modify a validated entry."
 msgstr ""
+"Doğrulanmış bir girişi yalnızca bir Zaman Çizelgesi Sorumlusu "
+"değiştirebilir."
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
@@ -192,6 +199,8 @@ msgstr "Proje"
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line_is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
 msgstr ""
+"Bu analitik satırın bir zaman çizelgesi satırını karşılayıp karşılamadığını "
+"ayarlayın."
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_grid_search
@@ -202,7 +211,7 @@ msgstr "Görevler"
 #: code:addons/timesheet_grid/models/models.py:41
 #, python-format
 msgid "There aren't any timesheet to validate"
-msgstr ""
+msgstr "Doğrulanacak zaman çizelgesi yok"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.view_timesheet_form
@@ -261,17 +270,17 @@ msgstr "Doğrula"
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
 msgid "Validate Timesheets"
-msgstr ""
+msgstr "Zaman Çizelgelerini Doğrula"
 
 #. module: timesheet_grid
 #: model:ir.ui.view,arch_db:timesheet_grid.validable_form
 msgid "Validate the timesheets of the selected employees up to"
-msgstr ""
+msgstr "Seçilen çalışanların zaman çizelgelerini tarihine kadar doğrula"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_timesheet_grid_validable_validate
 msgid "Validate this employee's timesheet up to the chosen date"
-msgstr ""
+msgstr "Bu personelin zaman çizelgesini seçilen tarihe kadar doğrulayın"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validation_validate_to
@@ -286,7 +295,7 @@ msgstr "Doğrulanmış"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line_validated
 msgid "Validated line"
-msgstr ""
+msgstr "Doğrulanmış satırlar"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheet_grid_validable_validation_id
