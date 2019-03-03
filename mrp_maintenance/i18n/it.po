@@ -3,16 +3,18 @@
 # * mrp_maintenance
 # 
 # Translators:
-# Martin Trigaux, 2017
 # Paolo Valier, 2018
+# Martin Trigaux, 2018
 # Simone Bernini <simone@aperturelabs.it>, 2018
+# Léonie Bouchat <lbo@odoo.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: Simone Bernini <simone@aperturelabs.it>, 2018\n"
+"PO-Revision-Date: 2017-09-20 11:41+0000\n"
+"Last-Translator: Léonie Bouchat <lbo@odoo.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,17 +35,17 @@ msgstr "<span class=\"o_stat_text\">Manutenzione</span>"
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_estimated_next_failure
 msgid "Computed as Latest Failure Date + MTBF"
-msgstr ""
+msgstr "Ultima data di guasto + MTBF"
 
 #. module: mrp_maintenance
 #: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture1
 msgid "Crosscut Saw: 8 ppi."
-msgstr ""
+msgstr "Saracco: 8 denti per pollice."
 
 #. module: mrp_maintenance
 #: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture3
 msgid "Drill Machine"
-msgstr ""
+msgstr "Trapano"
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_maintenance_equipment
@@ -59,58 +61,58 @@ msgstr "Attrezzature"
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_form_inherit_maintenance
 msgid "Est. Next Failure"
-msgstr ""
+msgstr "Stima prossimo guasto"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Estimated Next Failure"
-msgstr ""
+msgstr "Stima prossimo guasto"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_estimated_next_failure
 msgid "Estimated time before next failure (in days)"
-msgstr ""
+msgstr "Tempo stimato prima il prossimo guasto (in giorni)"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_expected_mtbf
 msgid "Expected MTBF"
-msgstr ""
+msgstr "MTBF previsto"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_expected_mtbf
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Expected Mean Time Between Failure"
-msgstr ""
+msgstr "Tempo medio previsto fra i guasti"
 
 #. module: mrp_maintenance
 #: model:maintenance.equipment.category,name:mrp_maintenance.equipment_furniture_tools
 msgid "Furniture Tools"
-msgstr ""
+msgstr "Attrezzi per mobili"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Latest Failure"
-msgstr ""
+msgstr "Ultimo guasto"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_latest_failure_date
 msgid "Latest Failure Date"
-msgstr ""
+msgstr "Data ultimo guasto"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_mtbf
 msgid "MTBF"
-msgstr ""
+msgstr "MTBF"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment_mttr
 msgid "MTTR"
-msgstr ""
+msgstr "MTTR"
 
 #. module: mrp_maintenance
 #: model:ir.ui.menu,name:mrp_maintenance.menu_equipment_dashboard
 msgid "Machines & Tools"
-msgstr ""
+msgstr "Macchine e attrezzi"
 
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_kanban_inherit_maintenance
@@ -155,19 +157,20 @@ msgstr "Ordine di Produzione"
 #. module: mrp_maintenance
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Mean Time Between Failure"
-msgstr ""
+msgstr "Tempo medio fra i guasti"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_mtbf
 msgid ""
 "Mean Time Between Failure, computed based on done corrective maintenances."
 msgstr ""
+"Tempo medio fra i guasti, calcolato in base alle riparazioni effettuate. "
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment_mttr
 #: model:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Mean Time To Repair"
-msgstr ""
+msgstr "Tempo medio fino alla riparazione"
 
 #. module: mrp_maintenance
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:83
@@ -189,7 +192,7 @@ msgstr "Richiesta"
 #. module: mrp_maintenance
 #: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture2
 msgid "Scrub Plane"
-msgstr ""
+msgstr "Sbozzino"
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_workcenter
@@ -218,4 +221,4 @@ msgstr "giorni"
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:50
 #, python-format
 msgid "work centers"
-msgstr ""
+msgstr "centri di lavoro"

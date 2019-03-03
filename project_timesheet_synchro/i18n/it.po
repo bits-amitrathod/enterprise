@@ -3,18 +3,20 @@
 # * project_timesheet_synchro
 # 
 # Translators:
-# Martin Trigaux, 2017
-# Paolo Valier, 2017
 # Paolo Caruccio <paolo.caruccio66@gmail.com>, 2018
 # Francesco Garganese <francesco.garganese@aeromnia.aero>, 2018
+# Martin Trigaux, 2018
 # Simone Bernini <simone@aperturelabs.it>, 2018
+# Paolo Valier, 2018
+# Léonie Bouchat <lbo@odoo.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
-"PO-Revision-Date: 2017-09-20 11:33+0000\n"
-"Last-Translator: Simone Bernini <simone@aperturelabs.it>, 2018\n"
+"PO-Revision-Date: 2017-09-20 12:11+0000\n"
+"Last-Translator: Léonie Bouchat <lbo@odoo.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +44,7 @@ msgstr "&emsp;Stop"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:442
 #, python-format
 msgid "(Last sync was unsuccessful)"
-msgstr ""
+msgstr "(Ultima sincronizzazione fallita)"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -75,7 +77,7 @@ msgstr "Sei sicuro di voler eliminare questa attività?"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:469
 #, python-format
 msgid "Are you sure that you want to reset the app?"
-msgstr ""
+msgstr "Reimpostare veramente l'app? "
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -108,6 +110,8 @@ msgid ""
 "Connect Timesheets to Odoo to synchronize your activities across all "
 "devices."
 msgstr ""
+"Collegare i fogli ore a Odoo per sincronizzare le attività su tutti i "
+"dispositivi."
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -143,7 +147,7 @@ msgstr "Annulla"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:486
 #, python-format
 msgid "Discard data"
-msgstr ""
+msgstr "Eliminare dati"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -152,7 +156,7 @@ msgstr ""
 msgid ""
 "Either you or the Odoo server is offline at the moment. Make sure you do "
 "have a connection or try again later."
-msgstr ""
+msgstr "Registrato come"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -180,7 +184,7 @@ msgstr "Google Play Store"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:487
 #, python-format
 msgid "Keep data"
-msgstr ""
+msgstr "Conservare i dati"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -194,7 +198,7 @@ msgstr "Ultima sincronizzazione :"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:433
 #, python-format
 msgid "Logged in as"
-msgstr ""
+msgstr "Registrato come"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -247,14 +251,14 @@ msgstr "Maggiori informazioni"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:268
 #, python-format
 msgid "Multiple to round up all durations"
-msgstr ""
+msgstr "Multiplo per arrotondare tutte le durate"
 
 #. module: project_timesheet_synchro
 #. openerp-web
 #: code:addons/project_timesheet_synchro/static/src/xml/timesheet_app_backend_template.xml:35
 #, python-format
 msgid "Never lose track of what you need to do."
-msgstr ""
+msgstr "Non perdere mai di vista quello che si deve fare."
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -268,7 +272,7 @@ msgstr "Successivo"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:92
 #, python-format
 msgid "No task"
-msgstr ""
+msgstr "Nessuna attività"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -292,7 +296,7 @@ msgstr "Supporto Offline"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:434
 #, python-format
 msgid "On server"
-msgstr ""
+msgstr "Sul server"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -332,7 +336,7 @@ msgstr "Pianifica la tua giornata. Concentrati sui task importanti."
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:527
 #, python-format
 msgid "Please enter a database name:"
-msgstr ""
+msgstr "Inserire nome database"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -346,7 +350,7 @@ msgstr "Prego inserire una durata valida"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:352
 #, python-format
 msgid "Please select a project first"
-msgstr ""
+msgstr "Selezionare prima un progetto"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -464,6 +468,10 @@ msgid ""
 "''Synchronization with the external timesheet application'' (available in "
 "Odoo Enterprise Edition)."
 msgstr ""
+"Il server a cui sei connesso non supporta la sincronizzazione dei fogli ore."
+" Contattare l'amministratore per installare il modulo \"Sincronizzazione con"
+" l'applicazione esterna di fogli ore\" (disponibile nella versione "
+"Enterprise di Odoo)."
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -512,7 +520,7 @@ msgstr "Oggi"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:28
 #, python-format
 msgid "Today's Plan"
-msgstr ""
+msgstr "Piano del giorno"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -529,13 +537,15 @@ msgid ""
 "Use Odoo to organize projects and tasks, forecast resources and invoice time"
 " spent on tasks"
 msgstr ""
+"Utilizzare Odoo per organizzare progetti e attività, prevedere le risorse "
+"necessarie e fatturare il tempo impiegato sulle attività"
 
 #. module: project_timesheet_synchro
 #. openerp-web
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:494
 #, python-format
 msgid "Use an Odoo.com account"
-msgstr ""
+msgstr "Utilizzare un account Odoo.com"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -558,7 +568,7 @@ msgstr "Settimana"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:392
 #, python-format
 msgid "Work Summary"
-msgstr ""
+msgstr "Riepilogo delle attività"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -602,7 +612,7 @@ msgstr "Hai effettuato l'accesso !"
 #: code:addons/project_timesheet_synchro/static/src/xml/timesheet_app_backend_template.xml:15
 #, python-format
 msgid "You can try the app in a new tab:"
-msgstr ""
+msgstr "È possibile provare l'app in una nuova scheda:"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -612,6 +622,8 @@ msgid ""
 "You should have received an email with a link to activate your account. Once"
 " it is activated, you'll be able to"
 msgstr ""
+"Dovresti aver ricevuto una email contenente un link per attivare il tuo "
+"account. Quando sarà attivato, sarà possibile "
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -625,7 +637,7 @@ msgstr "L'indirizzo del tuo server Odoo"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:566
 #, python-format
 msgid "Your database and account have been created !"
-msgstr ""
+msgstr "Il tuo database e il tuo account sono stati creati!"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -639,7 +651,7 @@ msgstr "I tuoi timesheet personali"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:548
 #, python-format
 msgid "ex: admin@example.com"
-msgstr ""
+msgstr "es.: ammin@esempio.com"
 
 #. module: project_timesheet_synchro
 #. openerp-web
@@ -669,4 +681,4 @@ msgstr "minuti"
 #: code:addons/project_timesheet_synchro/static/src/xml/project_timesheet.xml:567
 #, python-format
 msgid "sign in"
-msgstr ""
+msgstr "Accedere"
