@@ -32,6 +32,7 @@ class SaleSubscriptionWizard(models.TransientModel):
             'pricelist_id': self.subscription_id.pricelist_id.id,
             'fiscal_position_id': fpos_id,
             'subscription_management': 'upsell',
+            'payment_term_id': self.subscription_id.partner_id.property_payment_term_id and self.subscription_id.partner_id.property_payment_term_id.id or False,
         })
         for line in self.option_lines:
             for option in template_id.subscription_template_option_ids:
