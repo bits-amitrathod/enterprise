@@ -201,7 +201,7 @@ msgstr "<i class=\"fa fa-envelope-o\"/>&amp;nbsp;"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.index
 msgid "<i/> Customer Satisfaction Ration:"
-msgstr ""
+msgstr "<i/> Ügyféli elégedettség aránya:"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -279,6 +279,10 @@ msgid ""
 "* Blocked indicates something is preventing the progress of this issue\n"
 "* Ready for next stage indicates the issue is ready to be pulled to the next stage"
 msgstr ""
+"Egy kérés kanbanállapota jelzi az előrehaladását befolyásoló speciális állapotokat:\n"
+" * Normál: az alapértelmezett állapot\n"
+" * Blokkolva: azt mutatja, hogy valami megakadályozza ezen ügy előrehaladását\n"
+" * Készen áll a következő szakaszra: azt mutatja, hogy az ügy készen áll a következő szakaszba való áthúzásra"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_api
@@ -422,6 +426,10 @@ msgid ""
 "\tRandomly: randomly but everyone gets the same amount\n"
 "\tBalanced: to the person with the least amount of open tickets"
 msgstr ""
+"Az új kérések automatikus hozzárendelési módja:\n"
+"\tKézzel: kézi\n"
+"\tVéletlenszerűen: véletlenszerűen, de mindenki ugyanannyi új kérést kap\n"
+"\tKiegyensúlyozott: a legkevesebb nyitott kéréssel rendelkező személy kapja az új kérést"
 
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
@@ -580,7 +588,7 @@ msgstr "Lezárt kérések elemzése"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_is_close
 msgid "Closing Kanban Stage"
-msgstr ""
+msgstr "Záró kanban szakasz"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_color
@@ -696,7 +704,7 @@ msgstr "Vásárlói Elégedettség"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "Customer Tickets"
-msgstr ""
+msgstr "Ügyfélkérések"
 
 #. module: helpdesk
 #. openerp-web
@@ -756,7 +764,7 @@ msgstr "Leírás"
 #. module: helpdesk
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Description for customer portal"
-msgstr ""
+msgstr "Az ügyfélportálon megjelenő leírás"
 
 #. module: helpdesk
 #: code:addons/helpdesk/wizard/helpdesk_ticket_merge.py:59
@@ -2041,7 +2049,7 @@ msgstr "Küszöbön álló SLA meghiúsulás"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_upcoming_sla_fail_tickets
 msgid "Upcoming SLA Fail Tickets"
-msgstr ""
+msgstr "Közelgő, nem teljesített SLA kérések"
 
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
