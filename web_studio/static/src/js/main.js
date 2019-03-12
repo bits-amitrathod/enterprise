@@ -193,7 +193,9 @@ var Main = Widget.extend({
         var arch_def = this._getStudioViewArch(this.action.res_model, view_type, view_id);
         return arch_def.then(function (studio_view) {
             // add studio in loadViews context to retrieve groups server-side
-            var context = new Context(_.extend({}, self.action.context, {studio: true}));
+            // We load views in the base language to make sure we read/write on the source term field
+            // of ir.ui.view
+            var context = new Context(_.extend({}, self.action.context, {studio: true, lang: false}));
             var view_def = self.loadViews(self.action.res_model, context, views, options);
             return view_def.then(function (fields_views) {
                 var view_env = _.defaults({}, self.view_env, {
@@ -239,7 +241,9 @@ var Main = Widget.extend({
                 model: model,
                 view_type: view_type,
                 view_id: view_id,
-                context: session.user_context,
+                // We load views in the base language to make sure we read/write on the source term field
+                // of ir.ui.view
+                context: _.extend({}, session.user_context, {lang: false}),
             },
         });
     },

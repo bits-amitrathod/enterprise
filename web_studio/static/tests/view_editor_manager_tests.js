@@ -6,6 +6,7 @@ var concurrency = require('web.concurrency');
 var core = require('web.core');
 var dom = require('web.dom');
 var ListRenderer = require('web.ListRenderer');
+var session = require('web.session');
 var testUtils = require("web.test_utils");
 var Widget = require('web.Widget');
 
@@ -224,7 +225,12 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('list editor invisible to visible on field', function(assert) {
-        assert.expect(1);
+        assert.expect(3);
+
+        testUtils.patch(session.user_context, {
+            lang: 'fr_FR',
+            tz: 'Europe/Brussels',
+        });
 
         var archReturn = '<tree><field name="char_field" modifiers="{}" attrs="{}"/></tree>';
         var fieldsView;
@@ -237,6 +243,10 @@ QUnit.module('ViewEditorManager', {
                     "</tree>",
             mockRPC: function(route, args) {
                 if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.context.tz, 'Europe/Brussels',
+                        'The tz from user_context should have been passed');
+                    assert.strictEqual(args.context.lang, false,
+                        'The lang in context should be false explicitly');
                     assert.ok(!('column_invisible' in args.operations[0].new_attrs),
                             'we shouldn\'t send "column_invisible"');
 
@@ -262,6 +272,7 @@ QUnit.module('ViewEditorManager', {
         // disable invisible
         vem.$('.o_web_studio_sidebar').find('input#invisible').click();
 
+        testUtils.unpatch(session.user_context);
         vem.destroy();
     });
 
