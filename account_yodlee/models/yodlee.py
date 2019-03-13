@@ -433,7 +433,7 @@ class YodleeAccount(models.Model):
                         'amount': amount * -1 if tr.get('baseType') == 'DEBIT' else amount,
                         'end_amount': self.balance,
                         })
-            if len(resp_json.get('transactions', [])) <= 500:
+            if len(resp_json.get('transaction', [])) < 500:
                 break
             else:
                 offset += 500
