@@ -59,6 +59,8 @@ msgid ""
 "<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">Quality Checks</span>\n"
 "                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">Quality Checks</span>"
 msgstr ""
+"<span class=\"o_stat_text text-success\" attrs=\"{'invisible': [('quality_check_fail', '=', True)]}\">בדיקות איכות</span>\n"
+"                    <span class=\"o_stat_text text-danger\" attrs=\"{'invisible': [('quality_check_fail', '!=', True)]}\">בדיקות איכות</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -70,7 +72,7 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
 msgid "<span class=\"o_stat_text\">Quality Alert</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">התראת איכות</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
@@ -134,7 +136,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_ids
 #: model:ir.ui.menu,name:quality.menu_quality_alerts
 msgid "Alerts"
-msgstr ""
+msgstr "התראה"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_id
@@ -417,7 +419,7 @@ msgstr "שיוך דוא\"ל"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 #: selection:quality.check,measure_success:0
 msgid "Fail"
-msgstr ""
+msgstr "נכשל"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
@@ -429,7 +431,7 @@ msgstr "נכשלה"
 #: model:ir.model.fields,field_description:quality.field_quality_check_failure_message
 #: model:ir.model.fields,field_description:quality.field_quality_point_failure_message
 msgid "Failure Message"
-msgstr ""
+msgstr "הודעת כשל"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_folded
@@ -558,7 +560,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure
 msgid "Measure"
-msgstr ""
+msgstr "מדידה"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
@@ -568,7 +570,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure_success
 msgid "Measure Success"
-msgstr ""
+msgstr "מדידה הצליחה"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -719,7 +721,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 #: selection:quality.check,measure_success:0
 msgid "Pass"
-msgstr ""
+msgstr "לעבור"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
@@ -798,7 +800,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
 #, python-format
 msgid "Quality Alert"
-msgstr ""
+msgstr "התראת איכות"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_graph
@@ -809,7 +811,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_quality_alert_count
 msgid "Quality Alert Count"
-msgstr ""
+msgstr "ספירת התראות איכות"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_alert_stage
@@ -854,7 +856,7 @@ msgstr ""
 #: model:ir.model,name:quality.model_quality_check
 #, python-format
 msgid "Quality Check"
-msgstr ""
+msgstr "בקרת איכות"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_graph
@@ -865,7 +867,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_quality_check_fail
 msgid "Quality Check Fail"
-msgstr ""
+msgstr "בדיקת איכות נכשלה"
 
 #. module: quality
 #: code:addons/quality/models/quality.py:321
@@ -894,7 +896,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.stock_picking_view_form_inherit_quality
 #, python-format
 msgid "Quality Checks"
-msgstr ""
+msgstr "בדיקות איכות"
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_check_action_spc
@@ -1036,7 +1038,7 @@ msgstr "סטטוס"
 #. module: quality
 #: model:ir.model,name:quality.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "תנועת מלאי"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_tag_ids
@@ -1185,4 +1187,4 @@ msgstr ""
 #: code:addons/quality/models/stock_picking.py:63
 #, python-format
 msgid "You still need to do the quality checks!"
-msgstr ""
+msgstr "אתה עדיין נידרש לבצע בדיקות איכות!"
