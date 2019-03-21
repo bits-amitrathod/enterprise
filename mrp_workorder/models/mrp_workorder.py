@@ -425,6 +425,9 @@ class MrpProductionWorkcenterLine(models.Model):
             self._create_checks()
         return res
 
+    def _init_nextworkorder_states(self):
+        self._start_nextworkorder()
+
     @api.multi
     def _start_nextworkorder(self):
         recursion_records = self.env['mrp.workorder']
