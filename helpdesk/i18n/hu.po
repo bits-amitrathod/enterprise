@@ -465,7 +465,7 @@ msgstr "Álnév elnevezése"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_domain
 msgid "Alias domain"
-msgstr "Álnév domain"
+msgstr "Álnév tartomány"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_model_id
@@ -497,7 +497,7 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "Apply on"
-msgstr "Alkalmazza itt"
+msgstr "Alkalmazás ezen"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -838,7 +838,7 @@ msgstr "Ügyfél neve"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__access_url
 msgid "Customer Portal URL"
-msgstr "Ügyfélportál URL-je"
+msgstr "Ügyfélportál webcíme"
 
 #. module: helpdesk
 #. openerp-web
@@ -1303,6 +1303,8 @@ msgstr "Kanbanállapot"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Keep empty for everyone to see this team"
 msgstr ""
+"Hagyja üresen, ha azt szeretné, hogy mindenki számára látható legyen ez a "
+"csapat"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_digest_digest__kpi_helpdesk_tickets_closed_value
@@ -1667,15 +1669,15 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
-"Az üzenetátjáró használatának alapvető irányvonalai a dokumentumra vonatkozó üzenetek kiküldéséhez.\n"
-"- mindenki: mindenki tud üzenni\n"
-"- ügyfelek: csak a hitelesített partnerek\n"
-"- követők: csak az idevonatkozó dokumentum követői vagy a következő csatornák tagjai\n"
+"A dokumentumra küldött üzenetek irányelvei a levélátjáró használatával.\n"
+"- mindenki: mindenki üzenhet\n"
+"- partnerek: csak a hitelesített partnerek\n"
+"- követők: csak a kapcsolódó dokumentum követői vagy a következő csatornák tagjai\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__access_url
 msgid "Portal Access URL"
-msgstr "Portálelérés URL-je"
+msgstr "Portálelérés webcíme"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__priority
@@ -2013,7 +2015,7 @@ msgstr "Szakasz"
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_stage
 msgid "Stage Changed"
-msgstr "Szakasz megváltoztatva"
+msgstr "Szakasz megváltozott"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_stage_view_form
@@ -2186,9 +2188,9 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
-"a modell (Odoo rendszer Dokumentum féle), amelyhez ez az álnév tartozik. "
-"Bármely bejövő email, mely nem válaszol egy meglévő feljegyzésre egy új "
-"feljegyzést fog létrehozni ehhez a modellhez (pl. egy projekt ügyet)"
+"Az a modell (Odoo dokumentum típus), amelynek ez az álnév megfelel. Bármely "
+"bejövő e-mail, amely nem válaszol egy meglévő rekordra, egy ezen modellel "
+"rendelkező, új rekord létrehozását fogja okozni (pl. egy projekt feladatot)"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_name
@@ -2207,11 +2209,11 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
-"A feljegyzés tulajdonosa létrehozva amikor erre az álnévre e-mailek  "
-"érkeznek. Ha ez a mező nincs kialakítva akkor a rendszer megpróbálja "
-"megkeresni a jogos tulajdonost a elküldési (űrlap) címről, vagy az "
-"adminisztrátor felhasználót fogja használni ha nem talált rendszer "
-"felhasználót azzal a címmel."
+"A rekord tulajdonosa akkor kerül létrehozásra, amikor egy e-mail érkezik "
+"erre az álnévre. Ha ez a mező nem kerül beállításra, akkor a rendszer "
+"megpróbálja megtalálni a megfelelő tulajdonost a küldő e-mail címe alapján, "
+"vagy az Adminisztrátor fiókot használja, ha nem talált rendszerfelhasználót "
+"ahhoz az e-mail címhez."
 
 #. module: helpdesk
 #. openerp-web
@@ -2256,8 +2258,8 @@ msgid ""
 "This is the source of the link, e.g. Search Engine, another domain, or name "
 "of email list"
 msgstr ""
-"Ez a hivatkozás forrása, pl. keresőmotor, egy másik weboldal vagy egy e-mail"
-" lista neve"
+"Ez a hivatkozás forrása, pl. keresőmotor, egy másik tartomány vagy egy "
+"e-mail lista neve"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__use_helpdesk_timesheet
@@ -2299,7 +2301,7 @@ msgstr "Kérés értékelve"
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_stage
 msgid "Ticket Stage Changed"
-msgstr "Kérés szakasza megváltoztatva"
+msgstr "Kérés szakasza megváltozott"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_tag_action
@@ -2372,6 +2374,8 @@ msgid ""
 "Tickets in this stage are considered as done. This is used notably when "
 "computing SLAs and KPIs on tickets."
 msgstr ""
+"Az ezen szakaszban lévő kérések késznek tekinthetőek. Ez különösen az SLA-k "
+"és a KPI-k kérések alapján való kiszámításánál kerül felhasználásra."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -2538,7 +2542,7 @@ msgid ""
 "Want to <b>boost your customer satisfaction</b>?<br/><i>Click Helpdesk to "
 "start.</i>"
 msgstr ""
-"<b>Növelni akarja az ügyfelei elégedettségét</b>?<br/><i>Kattintson az "
+"<b>Növelni akarja ügyfelei elégedettségét</b>?<br/><i>Kattintson az "
 "Ügyfélszolgálatra a kezdéshez.</i>"
 
 #. module: helpdesk
@@ -2572,9 +2576,9 @@ msgid ""
 "balanced assignation, tickets are assigned to the user with the least amount"
 " of open tickets."
 msgstr ""
-"A véltlenszerű hozzárendeléssel minden felhasználó ugyanannyi kérést kap. A "
-"kiegyensúlyozott hozzárendeléssel a kérések ahhoz a felhasználóhoz kerülnek "
-"hozzárendelésre, aki a legkevesebb mennyiségű nyitott kéréssel rendelkezik."
+"A véletlenszerű hozzárendeléssel minden felhasználó ugyanannyi kérést kap. A"
+" kiegyensúlyozott hozzárendeléssel a kérések ahhoz a felhasználóhoz kerülnek"
+" hozzárendelésre, aki a legkevesebb mennyiségű nyitott kéréssel rendelkezik."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__resource_calendar_id
