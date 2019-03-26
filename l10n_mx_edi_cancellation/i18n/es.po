@@ -1,0 +1,85 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_cancellation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-24 18:02+0000\n"
+"PO-Revision-Date: 2019-06-24 18:02+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_cancellation
+#: model:ir.ui.view,arch_db:l10n_mx_edi_cancellation.view_account_payment_form_inh_l10n_mx_cancellation
+#: model:ir.ui.view,arch_db:l10n_mx_edi_cancellation.view_mx_edi_cancellation_invoice_form
+msgid "&amp;nbsp;"
+msgstr "&amp;nbsp;"
+
+#. module: l10n_mx_edi_cancellation
+#: model:ir.actions.server,name:l10n_mx_edi_cancellation.ir_cron_cancellation_invoices_cancel_signed_sat_ir_actions_server
+#: model:ir.cron,cron_name:l10n_mx_edi_cancellation.ir_cron_cancellation_invoices_cancel_signed_sat
+#: model:ir.cron,name:l10n_mx_edi_cancellation.ir_cron_cancellation_invoices_cancel_signed_sat
+msgid "Cancellation: Invoices canceled and signed in SAT"
+msgstr "Cancelación: Facturas canceladas y firmadas en el SAT"
+
+#. module: l10n_mx_edi_cancellation
+#: model:ir.actions.server,name:l10n_mx_edi_cancellation.ir_cron_cancellation_invoices_open_to_cancel_ir_actions_server
+#: model:ir.cron,cron_name:l10n_mx_edi_cancellation.ir_cron_cancellation_invoices_open_to_cancel
+#: model:ir.cron,name:l10n_mx_edi_cancellation.ir_cron_cancellation_invoices_open_to_cancel
+msgid "Cancellation: Invoices open and to-cancel"
+msgstr "Cancelación: Facturas abiertas y por cancelar"
+
+#. module: l10n_mx_edi_cancellation
+#: model:ir.model,name:l10n_mx_edi_cancellation.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_cancellation
+#: code:addons/l10n_mx_edi_cancellation/models/account_invoice.py:73
+#, python-format
+msgid "On this invoice can not be used the cancel button, because the invoice is not cancelled in the SAT system. If you want to cancel this invoice, press the option \"Request Cancellation\", and when the SAT approve the cancellation this document will be cancelled automatically."
+msgstr "En esta factura no puede ser utilizado el botón de cancelar, porque la factura no esta cancelada en el SAT. Si usted desea cancelar esta factura, presione la opción \"Solicitar Cancelación\", y cuando el SAT apruebe la cancelación este documento será cancelado automaticamente."
+
+#. module: l10n_mx_edi_cancellation
+#: model:ir.model,name:l10n_mx_edi_cancellation.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: l10n_mx_edi_cancellation
+#: model:ir.model,name:l10n_mx_edi_cancellation.model_account_register_payments
+msgid "Register payments on multiple invoices"
+msgstr "Registrar pagos en múltiples facturas"
+
+#. module: l10n_mx_edi_cancellation
+#: model:ir.ui.view,arch_db:l10n_mx_edi_cancellation.view_mx_edi_cancellation_invoice_form
+msgid "Request Cancellation"
+msgstr "Solicitar Cancelación"
+
+#. module: l10n_mx_edi_cancellation
+#: model:ir.actions.server,name:l10n_mx_edi_cancellation.l10n_mx_edi_revert_cancellation
+msgid "Revert CFDI Cancellation"
+msgstr "Revertir la cancelación de CFDI"
+
+#. module: l10n_mx_edi_cancellation
+#: code:addons/l10n_mx_edi_cancellation/models/account_invoice.py:90
+#, python-format
+msgid "The reverted move in the journal entry of this invoice was cancelled because the CFDI is signed in the SAT system."
+msgstr "El movimiento de reverso en la póliza de esta factura fue cancelado, porque el CFDI esta firmado en el SAT."
+
+#. module: l10n_mx_edi_cancellation
+#: code:addons/l10n_mx_edi_cancellation/models/account_invoice.py:93
+#, python-format
+msgid "This invoice already was cancelled in the SAT, now will try to cancel in Odoo."
+msgstr "Esta factura ya fue cancelada en el SAT, ahora se intentara cancelar en Odoo."
+
+#. module: l10n_mx_edi_cancellation
+#: code:addons/l10n_mx_edi_cancellation/models/account_invoice.py:87
+#, python-format
+msgid "This invoice was returned to open because the CFDI is signed in the SAT system."
+msgstr "Esta factura se regresó a abierto porque el CFDI esta firmado en el SAT."
