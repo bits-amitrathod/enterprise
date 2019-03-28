@@ -150,7 +150,7 @@ odoo.define('website_sign.template', function(require) {
 
             if(!options.buttons) {
                 options.buttons = [];
-                options.buttons.push({text: 'Save', classes: 'btn-primary', close: true, click: function(e) {
+                options.buttons.push({text: _t('Save'), classes: 'btn-primary', close: true, click: function(e) {
                     var resp = parseInt(this.$responsibleSelect.find('select').val());
                     var required = this.$('input[type="checkbox"]').prop('checked');
                     var name = this.$('#o_sign_name').val();
@@ -161,7 +161,7 @@ odoo.define('website_sign.template', function(require) {
                 options.buttons.push({text: _t('Remove'), classes: 'o_sign_delete_field_button btn-link', close: true, click: function(e) {
                     this.$currentTarget.trigger('itemDelete');
                 }});
-                options.buttons.push({text: 'Discard', classes: 'btn-default', close: true});
+                options.buttons.push({text: _t('Discard'), classes: 'btn-default', close: true});
             }
 
             this._super(parent, options);
@@ -292,7 +292,7 @@ odoo.define('website_sign.template', function(require) {
             this.$messageInput = this.$('.o_sign_message_textarea').first();
             this.$referenceInput = this.$('.o_sign_reference_input').first();
 
-            this.$subjectInput.val('Signature Request - ' + this.templateName);
+            this.$subjectInput.val(_t('Signature Request') + ' - ' + this.templateName);
             var defaultRef = this.templateName + this.default_reference;
             this.$referenceInput.val(defaultRef).attr('placeholder', defaultRef);
 
