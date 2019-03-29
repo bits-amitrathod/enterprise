@@ -62,7 +62,7 @@ def _set_amount_currency_and_currency_id(node, path, entry_vals, currency, curr_
     instruc_curr = node.xpath('%s/@Ccy' % path, namespaces=namespaces)
     if instruc_amount and instruc_curr and instruc_curr[0] != currency and currency in curr_cache:
         entry_vals['amount_currency'] = abs(sum(imap(float, instruc_amount)))
-        entry_vals['currency_id'] = curr_cache[currency]
+        entry_vals['currency_id'] = curr_cache[instruc_curr[0]]
 
 def _get_transaction_name(node, namespaces):
     xpaths = ('.//ns:RmtInf/ns:Ustrd/text()',
