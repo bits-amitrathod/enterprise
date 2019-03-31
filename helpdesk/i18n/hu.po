@@ -7,8 +7,8 @@
 # krnkris, 2018
 # Kovács Tibor <kovika@gmail.com>, 2018
 # Tibor Kőnig <konig.tibor@evitalit.hu>, 2018
-# gezza <geza.nagy@oregional.hu>, 2019
 # Ákos Nagy <akos.nagy@oregional.hu>, 2019
+# gezza <geza.nagy@oregional.hu>, 2019
 # 
 msgid ""
 msgstr ""
@@ -16,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-15 15:18+0000\n"
 "PO-Revision-Date: 2018-08-24 11:38+0000\n"
-"Last-Translator: Ákos Nagy <akos.nagy@oregional.hu>, 2019\n"
+"Last-Translator: gezza <geza.nagy@oregional.hu>, 2019\n"
 "Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,7 +58,7 @@ msgid ""
 msgstr ""
 "% set email_alias = object.env['helpdesk.team'].search([('alias_name','!=', False)],limit=1).alias_id.display_name\n"
 "    % if email_alias\n"
-"    <strong style=\"font-size: 16px;\">Próbálja meg a levélátjárót</strong>"
+"    <strong style=\"font-size: 16px;\">Próbálja ki a levélátjárót</strong>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -67,7 +67,7 @@ msgid ""
 " want to proceed?"
 msgstr ""
 "Egy ügyfélszolgálati csapat (in)aktiválása automatikusan (in)aktiválja a "
-"kéréseit. Folytatja?"
+"kapcsolt kéréseket. Folytatja?"
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
@@ -196,9 +196,9 @@ msgstr ""
 "<?xml version=\"1.0\"?>\n"
 "<div>\n"
 "    Kedves ${object.sudo().partner_id.name or 'Hölgyem/Uram'},<br/><br/>\n"
-"    Ez az automatikus üzenet informálja Önt arról, hogy lezártuk a következő kérését: (reference ${object.id}).\n"
+"    Ez az automatikus üzenetet azért küldtük, hogy értesítsük Önt arról, hogy lezártuk a következő kérését: (reference ${object.id}).\n"
 "    Reméljük, hogy az általunk nyújtott szolgáltatás megfelelt az elvárásainak.\n"
-"    Ha bármilyen további kérdése vagy megjegyzése van, ne habozzon válaszolni erre az e-mailre a kérése újranyitása érdekében.<br/><br/>\n"
+"    Ha bármilyen további kérdése vagy megjegyzése merült fel, kérjük ne habozzon válaszolni erre az e-mailre a kérése újranyitása érdekében.<br/><br/>\n"
 "    Köszönjük az együttműködését.<br/>\n"
 "    Szívélyes üdvözlettel,<br/><br/>\n"
 "    a(z) ${object.team_id.name or 'ügyfélszolgálati'} csapat.\n"
@@ -246,8 +246,8 @@ msgid ""
 "<b>Stars</b> mark the <b>ticket priority</b>. You can change it directly "
 "from here!"
 msgstr ""
-"<b>A csillagok</b> a <b>kérések prioritását</b> jelzik. Megváltoztathatja "
-"ezt közvetlenül innen!"
+"<b>A csillagok</b> a <b>kérések prioritását</b> jelzik, amit itt azonnal meg"
+" is tud változtatni!"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -305,7 +305,7 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.index
 msgid "<i/> Customer Satisfaction Ration:"
-msgstr "<i/> Ügyféli elégedettség aránya:"
+msgstr "<i/> Ügyfélelégedettség aránya:"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -386,10 +386,10 @@ msgid ""
 "* Blocked indicates something is preventing the progress of this issue\n"
 "* Ready for next stage indicates the issue is ready to be pulled to the next stage"
 msgstr ""
-"Egy kérés kanbanállapota jelzi az előrehaladását befolyásoló speciális állapotokat:\n"
+"Egy kérés kanban állapota jelzi az előrehaladást befolyásoló speciális állapotokat:\n"
 " * Normál: az alapértelmezett állapot\n"
-" * Blokkolva: azt mutatja, hogy valami megakadályozza ezen ügy előrehaladását\n"
-" * Készen áll a következő szakaszra: azt mutatja, hogy az ügy készen áll a következő szakaszba való áthúzásra"
+" * Blokkolva: azt mutatja, hogy valami megakadályozza ezen kérés előrehaladását\n"
+" * Készen áll a következő szakaszra: azt mutatja, hogy a kérés készen áll a következő szakaszba való áthúzásra"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_api
@@ -492,12 +492,12 @@ msgid ""
 msgstr ""
 "Tegye lehetővé az ügyfelei számára a szolgáltatásai könnyed értékelését. "
 "Ezen lehetőség aktiválása hozzáad egy alapértelmezett e-mail sablont a nem "
-"összecsukott, lezárási szakaszokhoz"
+"összecsukott lezárási szakaszokhoz"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "Apply on"
-msgstr "Alkalmazás ezen"
+msgstr "Alkalmazás itt"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -556,7 +556,7 @@ msgstr "Mellékletek száma"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__template_id
 msgid "Automated Answer Email Template"
-msgstr "Automatizált válasz e-mail sablonja"
+msgstr "Automatizált válasz e-mail sablon"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__template_id
@@ -768,7 +768,7 @@ msgstr "Új kérés létrehozása"
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_tag_action
 msgid "Create a new ticket tag"
-msgstr "Új kéréscímke létrehozása"
+msgstr "Új kérés címke létrehozása"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_team_action
@@ -778,7 +778,7 @@ msgstr "Új támogató csapat létrehozása"
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_type_action
 msgid "Create a new ticket type"
-msgstr "Új kéréstípus létrehozása"
+msgstr "Új kérés típus létrehozása"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_main
@@ -845,12 +845,12 @@ msgstr "Ügyfélportál webcíme"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:89
 #, python-format
 msgid "Customer Rating"
-msgstr "Ügyféli értékelés"
+msgstr "Ügyfél általi értékelés"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Customer Satisfaction"
-msgstr "Ügyféli elégedettség"
+msgstr "Ügyfélelégedettség"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk_ticket.py:319
@@ -864,7 +864,7 @@ msgstr "Ügyfélkérések"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:85
 #, python-format
 msgid "Customer satisfaction analysis"
-msgstr "Ügyféli elégedettség elemzése"
+msgstr "Ügyfélelégedettség elemzése"
 
 #. module: helpdesk
 #. openerp-web
@@ -1041,8 +1041,8 @@ msgid ""
 "Follow this team to automatically track the events associated to tickets of "
 "this team."
 msgstr ""
-"Kövesse ezt a csapatot annak érdekében, hogy automatikusan nyomon kövesse az"
-" ezen csapat kérésihez kapcsolódó eseményeket."
+"Kövesse ezt a csapatot annak érdekében, hogy automatikusan nyomon kövesse a "
+"csapat kéréseihez kapcsolódó eseményeket."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_follower_ids
@@ -1287,17 +1287,17 @@ msgstr "A beérkező e-mailek kéréseket hoznak létre"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_is_follower
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__message_is_follower
 msgid "Is Follower"
-msgstr "Ő egy követő"
+msgstr "Követő"
 
 #. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_incident
 msgid "Issue"
-msgstr "Ügy"
+msgstr "Kérés"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__kanban_state
 msgid "Kanban State"
-msgstr "Kanbanállapot"
+msgstr "Kanban állapot"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1309,7 +1309,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_digest_digest__kpi_helpdesk_tickets_closed_value
 msgid "Kpi Helpdesk Tickets Closed Value"
-msgstr "Kpi ügyfélszolgálati kérések lezárt érték"
+msgstr "Kpi Lezárt ügyfélszolgálati kérések"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_data
@@ -1371,7 +1371,7 @@ msgstr "Legutóbbi visszajelzések"
 #: code:addons/helpdesk/static/src/js/tour.js:23
 #, python-format
 msgid "Let's create your first ticket."
-msgstr "Hozzuk létre az első kérését."
+msgstr "Hozza létre az első kérését."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_livechat
@@ -1402,7 +1402,7 @@ msgstr "Kézzel"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__medium_id
 msgid "Medium"
-msgstr "Közepes"
+msgstr "Médium"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_has_error
@@ -1424,7 +1424,7 @@ msgstr "Üzenetek"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__priority
 msgid "Minimum Priority"
-msgstr "Legalacsonyabb prioritás"
+msgstr "Minimum prioritás"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla__stage_id
@@ -1538,7 +1538,7 @@ msgstr "Mellékletek száma"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_has_error_counter
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__message_has_error_counter
 msgid "Number of error"
-msgstr "Hiba száma"
+msgstr "Hibák száma"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__message_needaction_counter
@@ -1619,7 +1619,7 @@ msgstr "Tulajdonos"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_parent_model_id
 msgid "Parent Model"
-msgstr "Szülőmodell"
+msgstr "Szülő modell"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_parent_thread_id
@@ -1633,7 +1633,7 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
-"Az álnevet tartalmazó szülő modell. Az álnévhivatkozást tartalmazó\n"
+"Az álnevet tartalmazó szülő modell. Az álnév hivatkozást tartalmazó\n"
 "modell nem szükségszerűen az alias_model_id által megadott modell\n"
 "(például: projekt (parent_model) és feladat (model))"
 
@@ -1654,7 +1654,7 @@ msgstr "Teljesítmény elemzése"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:77
 #, python-format
 msgid "Performance Report"
-msgstr "Teljesítménykimutatás"
+msgstr "Teljesítmény kimutatás"
 
 #. module: helpdesk
 #: selection:helpdesk.ticket,activity_state:0
@@ -1669,7 +1669,7 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
-"A dokumentumra küldött üzenetek irányelvei a levélátjáró használatával.\n"
+"A dokumentumra küldött üzenetek irányelvei a levélátjáró használatával:\n"
 "- mindenki: mindenki üzenhet\n"
 "- partnerek: csak a hitelesített partnerek\n"
 "- követők: csak a kapcsolódó dokumentum követői vagy a következő csatornák tagjai\n"
@@ -1717,17 +1717,17 @@ msgstr "Értékelés"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_last_feedback
 msgid "Rating Last Feedback"
-msgstr "Legutóbbi visszajelzés értékelése"
+msgstr "Legutóbbi értékelés visszajelzés"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_last_image
 msgid "Rating Last Image"
-msgstr "Legutóbbi kép értékelése"
+msgstr "Legutóbbi értékelés kép"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_last_value
 msgid "Rating Last Value"
-msgstr "Legutóbbi érték értékelése"
+msgstr "Legutóbbi értékelés érték"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_count
@@ -1769,7 +1769,7 @@ msgstr "Az értékelés oka"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_force_thread_id
 msgid "Record Thread ID"
-msgstr "Rekord-üzenetlista azonosítója"
+msgstr "Rekord szál azonosító"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1777,7 +1777,7 @@ msgid ""
 "Record timesheets on your tickets and reinvoice time to you customer through"
 " tasks."
 msgstr ""
-"Rögzítse a kérésekkel eltöltött munkaidőt, és számlázza az ügyfeleknek "
+"Rögzítse a kérésekkel eltöltött munkaidőt és számlázza az ügyfeleknek "
 "feladatokon keresztül."
 
 #. module: helpdesk
@@ -1788,7 +1788,7 @@ msgstr "Hiv."
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_main
 msgid "Reporting"
-msgstr "Kimutatáskészítés"
+msgstr "Kimutatás készítés"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__activity_user_id
@@ -1798,7 +1798,7 @@ msgstr "Felelős felhasználó"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Restore"
-msgstr "Visszaállít"
+msgstr "Visszaállítás"
 
 #. module: helpdesk
 #. openerp-web
@@ -1822,7 +1822,7 @@ msgstr "Teljesített SLA"
 #: model:ir.ui.menu,name:helpdesk.helpdesk_sla_menu_main
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_tree
 msgid "SLA Policies"
-msgstr "SLA célkitűzések"
+msgstr "SLA szabályok"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_id
@@ -1864,14 +1864,14 @@ msgstr "Mentse ezt az oldalt, és frissítse a funkció aktiválásáért"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Save this page and refresh to activate the feature."
-msgstr "Mentse ezt az oldalt, és frissítse a funkció aktiválásáért."
+msgstr "Mentse ezt az oldalt és frissítse a funkció aktiválásáért."
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:43
 #, python-format
 msgid "Save this ticket and the modifications you've made to it."
-msgstr "Mentse ezt a kérést és az azon végzett módosításokat."
+msgstr "Mentse ezt a kérést és az elvégzett módosításokat."
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:39
@@ -1944,7 +1944,7 @@ msgstr "E-mailek küldése erre a címre"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__sequence
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type__sequence
 msgid "Sequence"
-msgstr "Sorrend"
+msgstr "Sorszám"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1977,14 +1977,14 @@ msgstr "Prezentációk és videók megosztása és tanfolyamba szervezése"
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_use_sla
 msgid "Show SLA Policies"
-msgstr "SLA célkitűzések megjelenítése"
+msgstr "SLA szabályok megjelenítése"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Show all records which has next action date is before today"
 msgstr ""
-"Az összes rekord megjelenítése, amelynek a következő akciódátuma a mai nap "
-"előtt van"
+"Az összes rekord megjelenítése, amelyeknél a következő akció dátuma a mai "
+"nap előtt van"
 
 #. module: helpdesk
 #: model:helpdesk.stage,name:helpdesk.stage_solved
@@ -2045,7 +2045,7 @@ msgid ""
 "            tickets are positioned in the process."
 msgstr ""
 "A szakaszok lehetővé teszik az operátorok számára, hogy könnyedén\n"
-"            nyomon kövessék a meghatározott kérések pozícióját a\n"
+"            nyomon kövessék a meghatározott kérések állapotát a\n"
 "            folyamatban."
 
 #. module: helpdesk
@@ -2110,7 +2110,7 @@ msgstr "Címke"
 #. module: helpdesk
 #: sql_constraint:helpdesk.tag:0
 msgid "Tag name already exists !"
-msgstr "A címkenév már létezik!"
+msgstr "Ez a címke név már létezik!"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__tag_ids
@@ -2135,7 +2135,7 @@ msgstr "Ügyféli értékelés cél"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__stage_id
 msgid "Target Stage"
-msgstr "Célszakasz"
+msgstr "Cél szakasz"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users__helpdesk_target_success
@@ -2159,7 +2159,7 @@ msgstr "Csapat"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__member_ids
 msgid "Team Members"
-msgstr "Csapattagok"
+msgstr "Csapat tagjai"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_search
@@ -2224,12 +2224,12 @@ msgid ""
 "successfully."
 msgstr ""
 "A sikerességi arány azon kéréseken alapul, amelyek sikeresen teljesítették "
-"az SLA célkitűzéseket."
+"az SLA szabályokat."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
 msgid "There are currently no Ticket for your account."
-msgstr "A felhasználói fiókjának jelenleg nincsenek kérései."
+msgstr "Jelenleg nincsenek a felhasználói fiókjához tartozó kérések."
 
 #. module: helpdesk
 #. openerp-web
@@ -2279,7 +2279,7 @@ msgstr "Három csillag, maximális eredmény"
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_dashboard_urgent
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_team_analysis_action
 msgid "Ticket Analysis"
-msgstr "Kérés elemzése"
+msgstr "Kérések elemzése"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_new
@@ -2290,7 +2290,7 @@ msgstr "Kérés létrehozva"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Ticket ID"
-msgstr "Kérés azonosítója"
+msgstr "Kérés azonosító"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_rated
@@ -2307,7 +2307,7 @@ msgstr "Kérés szakasza megváltozott"
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_tag_action
 #: model:ir.ui.menu,name:helpdesk.helpdesk_tag_menu
 msgid "Ticket Tags"
-msgstr "Kéréscímkék"
+msgstr "Kérés címkék"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_type_action
@@ -2435,17 +2435,17 @@ msgstr "A típusok lehetővé teszik a kérések rendszerezését."
 #. module: helpdesk
 #: sql_constraint:helpdesk.ticket.type:0
 msgid "Type name already exists !"
-msgstr "A típusnév már létezik!"
+msgstr "Ez a típus név már létezik!"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "URL to Submit Issue"
-msgstr "Ügy beküldésének webcíme"
+msgstr "Kérés beküldésének webcíme"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__portal_rating_url
 msgid "URL to Submit an Issue"
-msgstr "Egy ügy beküldésére szolgáló webcím"
+msgstr "Egy kérés beküldésére szolgáló webcím"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__unassigned_tickets
@@ -2496,7 +2496,7 @@ msgstr "Sürgős ("
 #: code:addons/helpdesk/static/src/js/tour.js:48
 #, python-format
 msgid "Use the breadcrumbs to go back to the Kanban view."
-msgstr "Használja a morzsákat a kanbannézethez való visszatéréshez."
+msgstr "Használja a morzsákat a kanban nézethez való visszatéréshez."
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_user
@@ -2525,7 +2525,7 @@ msgstr "Magas prioritású, nem teljesített kérések megtekintése"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "View this teams ratings on this page:<br/>"
-msgstr "Ezen csapat értékeléseinek megtekintése ezen az oldalon:<br/>"
+msgstr "A csapat értékeléseinek megtekintése ezen az oldalon:<br/>"
 
 #. module: helpdesk
 #. openerp-web
@@ -2548,19 +2548,19 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_form
 msgid "Website Form"
-msgstr "Weboldali űrlap"
+msgstr "Weboldal űrlap"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__website_message_ids
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__website_message_ids
 msgid "Website Messages"
-msgstr "Weboldali üzenetek"
+msgstr "Weboldal üzenetek"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__website_message_ids
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__website_message_ids
 msgid "Website communication history"
-msgstr "Weboldali kommunikációs előzmények"
+msgstr "Weboldal kommunikációs előzmények"
 
 #. module: helpdesk
 #. openerp-web
@@ -2578,7 +2578,7 @@ msgid ""
 msgstr ""
 "A véletlenszerű hozzárendeléssel minden felhasználó ugyanannyi kérést kap. A"
 " kiegyensúlyozott hozzárendeléssel a kérések ahhoz a felhasználóhoz kerülnek"
-" hozzárendelésre, aki a legkevesebb mennyiségű nyitott kéréssel rendelkezik."
+" hozzárendelésre, aki a legkevesebb nyitott kéréssel rendelkezik."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__resource_calendar_id
@@ -2603,7 +2603,7 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_team_dashboard_action_main
 msgid "Your teams will appear here"
-msgstr "A csapatai itt fognak megjelenni"
+msgstr "A csapatok itt fognak megjelenni"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form

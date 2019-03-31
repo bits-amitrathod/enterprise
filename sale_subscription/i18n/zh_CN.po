@@ -3,13 +3,13 @@
 # * sale_subscription
 # 
 # Translators:
-# Henry Zhou <zhouhenry@live.com>, 2018
 # 菜小蛇 <lttlsnk@gmail.com>, 2018
 # 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018
 # ChinaMaker <liuct@chinamaker.net>, 2018
 # Fisher <fisher@kdomi.com>, 2018
 # JZH-Odoo <jzh@odoo.com>, 2018
 # Emily JIA <eji@odoo.com>, 2018
+# Henry Zhou <zhouhenry@live.com>, 2018
 # zpq001 <zpq001@live.com>, 2018
 # fausthuang, 2018
 # 老窦 北京 <2662059195@qq.com>, 2018
@@ -17,13 +17,13 @@
 # e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # neter ji <jifuyi@qq.com>, 2018
 # roye w <159820@qq.com>, 2018
-# inspur qiuguodong <qiuguodong@inspur.com>, 2018
 # snow wang <147156565@qq.com>, 2018
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2018
 # Martin Trigaux, 2018
-# liAnGjiA <liangjia@qq.com>, 2018
 # rejen he <251442037@qq.com>, 2018
-# 广州救火 <7017511@qq.com>, 2018
+# keecome <7017511@qq.com>, 2018
+# inspur qiuguodong <qiuguodong@inspur.com>, 2018
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2019
+# liAnGjiA <liangjia@qq.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -31,7 +31,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-08 07:14+0000\n"
 "PO-Revision-Date: 2018-08-24 11:48+0000\n"
-"Last-Translator: 广州救火 <7017511@qq.com>, 2018\n"
+"Last-Translator: liAnGjiA <liangjia@qq.com>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -225,71 +225,47 @@ msgid ""
 msgstr ""
 "<?xml version=\"1.0\"?>\n"
 "<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
-"% set access_token = object.rating_get_access_token()\n"
-"    <table style=\"width:600px;margin:5px auto;\">\n"
-"        <tbody>\n"
-"            <tr><td>\n"
-"                <a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a>\n"
-"            </td><td style=\"text-align:right;vertical-align:middle;\">\n"
-"                    满意度调查\n"
-"            </td></tr>\n"
-"        </tbody>\n"
-"    </table>\n"
-"    <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
-"        <tbody>\n"
-"            <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
-"                <p>您好！</p>\n"
-"                <p>你对我们的服务评分，工单\"<strong>${object.name}</strong>\"\n"
-"                   分配给<strong>${object.rating_get_rated_partner_id().name}</strong>.</p>\n"
-"                <p>感谢你的参与，我们将不断改进。</p>\n"
-"            </td></tr>\n"
-"            <tr><td style=\"padding:10px 20px\">\n"
-"                <table summary=\"o_mail_notification\" style=\"width:100%;border-top:1px solid #e1e1e1;\">\n"
-"                    <tr>\n"
-"                        <td style=\"text-align:center;\">\n"
-"                            <h2 style=\"font-weight:300;font-size:18px;\">\n"
-"                                请告诉我们你对我们的服务的满意度：\n"
-"                            </h2>\n"
-"                            <div style=\"text-color: #888888\">(点击其中的一个表情)</div>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <tr>\n"
-"                        <td style=\"padding:10px 10px;\">\n"
-"                            <table style=\"width:100%;text-align:center;\">\n"
-"                                <tr>\n"
-"                                    <td>\n"
-"                                        <a href=\"/rating/${access_token}/10\">\n"
-"                                            <img alt=\"满意\" src=\"/rating/static/src/img/rating_10.png\" title=\"满意\"/>\n"
-"                                        </a>\n"
-"                                    </td>\n"
-"                                    <td>\n"
-"                                        <a href=\"/rating/${access_token}/5\">\n"
-"                                            <img alt=\"不满意\" src=\"/rating/static/src/img/rating_5.png\" title=\"不满意\"/>\n"
-"                                        </a>\n"
-"                                    </td>\n"
-"                                    <td>\n"
-"                                        <a href=\"/rating/${access_token}/1\">\n"
-"                                            <img alt=\"高满意度\" src=\"/rating/static/src/img/rating_1.png\" title=\"高满意度\"/>\n"
-"                                        </a>\n"
-"                                    </td>\n"
-"                                </tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
+"                <table style=\"width:600px;margin:5px auto;\">\n"
+"                    <tbody>\n"
+"                        <tr><td>\n"
+"                            <a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a>\n"
+"                        </td><td style=\"text-align:right;vertical-align:middle;\">\n"
+"                                发票订阅\n"
+"                        </td></tr>\n"
+"                    </tbody>\n"
 "                </table>\n"
-"            </td></tr>\n"
-"            <tr><td style=\"padding:15px 20px 10px 20px;\">${(object.user_id.signature or '') | safe}</td></tr>\n"
-"        </tbody>\n"
-"    </table>\n"
-"    <table style=\"width:600px;margin:auto;text-align:center;font-size:12px;\">\n"
-"        <tbody>\n"
-"            <tr><td style=\"padding-top:10px;color:#afafaf;\">\n"
-"                <p>该客户调查已发送，因为你的工单已经变成<b>${object.stage_id.name}阶段</b></p>\n"
-"                <p>自动发送邮件，通过<a href=\"https://www.odoo.com/page/helpdesk\" style=\"color:#875A7B;text-decoration:none;\">服务台</a> for <a href=\"${object.team_id.company_id.website}\" style=\"color:#875A7B;text-decoration:none;\">${object.team_id.company_id.name}</a></p>\n"
-"            </td></tr>\n"
-"        </tbody>\n"
-"    </table>\n"
-"</div>\n"
+"                <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
+"                    <tbody>\n"
+"                        <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
+"                            <p>尊敬的 %{object.partner_id.name}\n"
+"                                % if object.partner_id.parent_id:\n"
+"                                    (${object.partner_id.parent_id.name})\n"
+"                                % endif.\n"
+"                            </p>\n"
+"                            <p>\n"
+"                                你好，附件里, 是您的\n"
+"                                % if object.number:\n"
+"                                    发票 <strong>${object.number}</strong>\n"
+"                                % else:\n"
+"                                    发票\n"
+"                                %endif\n"
+"                                % if object.origin:\n"
+"                                    (参考: ${object.origin} )\n"
+"                                % endif\n"
+"                                金额 <strong>${format_amount(object.amount_total, object.currency_id)}</strong>\n"
+"                                来自 ${object.company_id.name}.\n"
+"                                % if object.state=='paid':\n"
+"                                    该发票已付款。\n"
+"                                % else:\n"
+"                                    请尽快付款。\n"
+"                                % endif\n"
+"                            </p>\n"
+"                            <p>如您有任何疑问敬请与我们取得联系。</p>\n"
+"                        </td></tr>\n"
+"                        <tr><td style=\"padding:15px 20px 10px 20px;\">${(object.user_id.signature or '')| safe}</td></tr>\n"
+"                    </tbody>\n"
+"                </table>\n"
+"            </div>\n"
 "        "
 
 #. module: sale_subscription
