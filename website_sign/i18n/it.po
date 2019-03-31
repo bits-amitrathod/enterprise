@@ -3,22 +3,24 @@
 # * website_sign
 # 
 # Translators:
-# Martin Trigaux, 2017
-# Paolo Valier, 2017
 # Luigi Di Naro <gigidn@gmail.com>, 2018
 # Niccolò Lubello <nlubello@gmail.com>, 2018
 # David Minneci <david@numeko.it>, 2018
+# Martin Trigaux, 2018
+# Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2018
+# Paolo Valier, 2018
+# Alessandro Forte <a.forte1010@gmail.com>, 2018
 # Francesco Garganese <francesco.garganese@aeromnia.aero>, 2018
 # Simone Bernini <simone@aperturelabs.it>, 2018
-# Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2018
-# Alessandro Forte <a.forte1010@gmail.com>, 2018
+# Sergio Zanchetta <primes2h@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
-"PO-Revision-Date: 2018-02-19 14:22+0000\n"
-"Last-Translator: Alessandro Forte <a.forte1010@gmail.com>, 2018\n"
+"PO-Revision-Date: 2017-09-20 12:13+0000\n"
+"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -324,6 +326,7 @@ msgstr "Campo personalizzato"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_date
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_date
 msgid "Date"
 msgstr "Data"
 
@@ -612,6 +615,7 @@ msgstr "Iniziali"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_initial
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_initial
 msgid "Initials"
 msgstr "Iniziali"
 
@@ -896,6 +900,13 @@ msgstr "Ruolo"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:152
+#, python-format
+msgid "Save"
+msgstr "Salva"
+
+#. module: website_sign
+#. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:103
 #, python-format
 msgid "Saved"
@@ -1028,6 +1039,7 @@ msgstr "Firma documento"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature
 #: model:signature.item.type,name:website_sign.signature_item_type_signature
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_signature
 #: selection:signature.item.type,type:0
 msgid "Signature"
 msgstr "Firma"
@@ -1064,6 +1076,7 @@ msgstr "Oggetti firma"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:294
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:58
 #: model:ir.model,name:website_sign.model_signature_request_item
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_request_id
@@ -1370,9 +1383,15 @@ msgid "You have no document to sign."
 msgstr "Non ci sono documenti da firmare."
 
 #. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_company
+msgid "Your company"
+msgstr ""
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:93
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:95
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_email
 #, python-format
 msgid "Your email"
 msgstr "La tua mail"
@@ -1388,9 +1407,15 @@ msgstr "Il messaggio è stato inviato."
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:87
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:89
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_name
 #, python-format
 msgid "Your name"
 msgstr "Il tuo nome"
+
+#. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_phone
+msgid "Your phone"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
@@ -1430,6 +1455,14 @@ msgstr "carica i nostri modelli di contratto"
 #. module: website_sign
 #: model:signature.item.type,tip:website_sign.signature_item_type_initial
 msgid "mark it"
+msgstr ""
+
+#. module: website_sign
+#. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1020
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1085
+#, python-format
+msgid "next"
 msgstr ""
 
 #. module: website_sign

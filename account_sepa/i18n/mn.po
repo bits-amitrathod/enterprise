@@ -87,7 +87,7 @@ msgstr ""
 msgid ""
 "Entity that assigns the identification (eg. KBE-BCO or Finanzamt Muenchen "
 "IV)."
-msgstr ""
+msgstr "Байгууллагын тусгай код нэр (жш. KBE-BCO or Finanzamt Muenchen IV)."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_filename
@@ -107,7 +107,7 @@ msgstr "Ерөнхий"
 #. module: account_sepa
 #: selection:res.company,sepa_pain_version:0
 msgid "German Version"
-msgstr ""
+msgstr "Герман хувилбар"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_id
@@ -118,13 +118,13 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_id
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_orgid_id
 msgid "Identification"
-msgstr ""
+msgstr "Таних тусгай код"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company_sepa_orgid_id
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings_sepa_orgid_id
 msgid "Identification assigned by an institution (eg. VAT number)."
-msgstr ""
+msgstr "Байгууллагын ялгах код нэр (жш. Татвар төлөгчийн дугаар)."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:70
@@ -143,7 +143,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_orgid_issr
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_orgid_issr
 msgid "Issuer"
-msgstr ""
+msgstr "SEPA таних код"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_journal
@@ -172,6 +172,8 @@ msgid ""
 "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
 "in length."
 msgstr ""
+"Зээлдүүлэгч талын нэр. Хэрэглэх дүрэм: 70-с хэтрэхгүй тооны тэмдэгтийн "
+"урттай байх."
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_download
@@ -181,7 +183,7 @@ msgstr "Тийм"
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
 msgid "Payment to send via SEPA"
-msgstr ""
+msgstr "SEPA-р дамжуулж илгээх төлбөр"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_payment
@@ -199,7 +201,7 @@ msgstr ""
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
 msgid "Payments to send via SEPA"
-msgstr ""
+msgstr "SEPA-р дамжуулж илгээх төлбөр"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_payment_partner_bank_account_id
@@ -215,24 +217,24 @@ msgstr "Олон нэхэмжлэл дээр төлбөр бүртгэх"
 #. module: account_sepa
 #: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
 msgid "SEPA Credit Transfer"
-msgstr ""
+msgstr "SEPA төлбөр илгээлт"
 
 #. module: account_sepa
 #: model:ir.ui.view,arch_db:account_sepa.view_sepa_credit_transfer_search
 msgid "SEPA Credit Transfer Payments To Send"
-msgstr ""
+msgstr "SEPA-р төлбөр илгээх шилжүүлгэ"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_journal_dashboard.py:23
 #, python-format
 msgid "SEPA Credit Transfers to Send"
-msgstr ""
+msgstr "SEPA-р илгээгдэх төлбөрүүд"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_pain_version
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_pain_version
 msgid "SEPA Pain Version"
-msgstr ""
+msgstr "SEPA хувилбар"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_file
@@ -247,11 +249,14 @@ msgid ""
 "recommandations made by the EPC (European Payment Councile) and thus the XML"
 " created need some tweakenings."
 msgstr ""
+"SEPA нь ерөнхий нийтлэг форматаар ажилладаг. Гэвч зарим цөөн оронд SEPA-г "
+"EPC (European Payment Councile) -д заагдсан форматаас өөр ашиглах явдаг "
+"байдаг тул эдгээр хувилбар нь тохирох XML бүтцийг агуулна."
 
 #. module: account_sepa
 #: selection:res.company,sepa_pain_version:0
 msgid "Swiss Version"
-msgstr ""
+msgstr "Швейцарь хувилбар"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_account_sepa_credit_transfer_is_generic
@@ -261,6 +266,11 @@ msgid ""
 "transfer. That is if the bank journal is not in €, a transaction is not in €"
 " or a payee is not identified by an IBAN account number and a bank BIC."
 msgstr ""
+"Шилжүүлгийн файл үүсгэх явцтай холбоотой мэдээлэл агуулах талбар. Хэрэв SEPA"
+" гүйлгээ нь европын стандарт шилжүүлгээр хийгдэхээргүй байвал энэ тухай "
+"мэдээллийг уг талбарт харуулна. Жишээ нь банкны журналын валют нь € биш "
+"байх, гүйлгээний валют € биш байх, төлбөр хүлээн авагч эсвэл төлөгч талын "
+"анкны данс IBAN төрлийн данс биш байх гэх мэт тохиолдлууд."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:343
@@ -269,6 +279,8 @@ msgid ""
 "The account %s, linked to partner '%s', is not of type IBAN.\n"
 "A valid IBAN account is required to use SEPA features."
 msgstr ""
+"Энэхүү %sбанкны данс '%s' харилцагч дээр тохируулагдсан данс нь IBAN төрлийнх биш байна.\n"
+"SEPA ашиглахын тулд тохирох IBAN төрлийн данс ашиглах шаардлагатай."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:75
@@ -277,6 +289,8 @@ msgid ""
 "The account %s, of journal '%s', is not of type IBAN.\n"
 "A valid IBAN account is required to use SEPA features."
 msgstr ""
+"Энэхүү %s банкны данс буюу '%s' журнал дээр тохируулагдсан банкны данс нь IBAN төрлийн данс биш байна.\n"
+"SEPA ашиглахын тулд тохирох IBAN төрлийн данс ашиглах шаардлагатай."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_payment.py:52
@@ -285,6 +299,9 @@ msgid ""
 "The account '%s' (journal %s) requires a Bank Identification Code (BIC) to "
 "pay via SEPA. Please configure it first."
 msgstr ""
+"SEPA-р дамжуулж төлбөр төлөхийн тулд '%s'  банкны данс (%sжурнал дээрх) нь "
+"Банкны таних код буюу (BIC) тодорхойлогдсон байхыг шаарддаг. Үүнийг зөв "
+"болгож тохируулна уу."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:305
@@ -292,6 +309,8 @@ msgstr ""
 msgid ""
 "The amount of the payment '%s' is too high. The maximum permitted is %s."
 msgstr ""
+"'%s' төлбөрийн дүн хэт өндөр байна. Хамгийн ихдээ %s хүртэл дүн "
+"зөвшөөрөгдөнө."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:123
@@ -299,6 +318,8 @@ msgstr ""
 msgid ""
 "The creditor bank account %s used in payment %s is not identified by a BIC"
 msgstr ""
+"Зарлага гаргагч банкны %s дугаартай данс (%s төлбөрийг гүйцэлдүүлж буй) нь "
+"BIC тодорхойгүй байна. (Банкны тусгай таних код)"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:125
@@ -306,6 +327,8 @@ msgstr ""
 msgid ""
 "The creditor bank account %s used in payment %s is not identified by an IBAN"
 msgstr ""
+"Зарлага гаргагч банкны %s дугаартай данс (%s төлбөрийг гүйцэлдүүлж буй) нь "
+"IBAN тодорхойгүй байна. (Олон улсын банкны дансны дугаар)"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:48
@@ -324,6 +347,8 @@ msgid ""
 "The journal '%s' requires a proper IBAN account to pay via SEPA. Please "
 "configure it first."
 msgstr ""
+"SEPA-р төлбөр төлөхийн тулд энэхүү '%s' журнал дээр зөв IBAN бүхий данс "
+"тохируулагдсан байх ёстой. Эхлээд тохиргоог зөв болгоно уу."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/account_payment.py:61
@@ -332,6 +357,8 @@ msgid ""
 "The partner account '%s' requires a Bank Identification Code (BIC) to pay "
 "via SEPA. Please configure it first."
 msgstr ""
+"SEPA-р төлбөр шилжүүлэхийн тулд харилцагчийн '%s' данс нь Банкны таних код "
+"(BIC) тодорхойлогдсон байх ёстой. Эхлээд тохиргоог зөв болгоно уу."
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:17
@@ -344,18 +371,26 @@ msgid ""
 "0 1 2 3 4 5 6 7 8 9\n"
 "/ - ? : ( ) . , ' + (space)"
 msgstr ""
+"SEPA шилжүүлгийн файлд зөвхөн дараах тэмдэгтүүдийг агуулахын зөвшөөрнө:\n"
+"\n"
+"a b c d e f g h i j k l m n o p q r s t u v w x y z\n"
+"A B C D E F G H I J K L M N O P Q R S T U V W X Y Z\n"
+"0 1 2 3 4 5 6 7 8 9\n"
+"/ - ? : ( ) . , ' + (space)"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:121
 #, python-format
 msgid "The transaction %s is instructed in another currency than EUR"
-msgstr ""
+msgstr "%s гүйлгээ нь Евро (EUR)-с өөр валютаар хөтлөгдсөн байна"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:337
 #, python-format
 msgid "There is no Bank Identifier Code recorded for bank account '%s'"
 msgstr ""
+"Энэхүү '%s' банкны дансанд ямар ч Банкны таних код (BIC) тодорхойлогдоогүй "
+"байна"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:180
@@ -364,6 +399,8 @@ msgid ""
 "There is no Bank Identifier Code recorded for bank account '%s' of journal "
 "'%s'"
 msgstr ""
+"Энэхүү '%s' банкны дансанд ('%s' журнал дээр тохируулагдсан) ямар ч Банкны "
+"таних код (BIC) тодорхойлогдоогүй байна"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:78
@@ -375,7 +412,7 @@ msgstr ""
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:178
 #, python-format
 msgid "Too many transactions for a single file."
-msgstr ""
+msgstr "Нэг файлд хэтэрхий олон гүйлгээ тусгасан байна."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_sepa_credit_transfer_warning_message
@@ -389,18 +426,19 @@ msgid ""
 "Will appear in SEPA payments as the name of the party initiating the "
 "payment. Limited to 70 characters."
 msgstr ""
+"SEPA төлбөр дээр харагдах төлбөр төлж буй талын нэр. 70-н тэмдэгтэнд багтах"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company_sepa_initiating_party_name
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings_sepa_initiating_party_name
 msgid "Your Company Name"
-msgstr ""
+msgstr "Танай компаны нэр"
 
 #. module: account_sepa
 #: code:addons/account_sepa/models/sepa_credit_transfer.py:117
 #, python-format
 msgid "Your bank account is not labelled in EUR"
-msgstr ""
+msgstr "Таны банкны дансны валют Евро (EUR) байх ёстой"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_res_config_settings

@@ -12,9 +12,9 @@
 # Ejner Sønniksen <ejner@vkdata.dk>, 2017
 # Morten Schou <ms@msteknik.dk>, 2017
 # Jesper Carstensen <jc@danodoo.dk>, 2017
-# Martin Trigaux, 2017
-# Sanne Kristensen <sanne@vkdata.dk>, 2017
+# Sanne Kristensen <sanne@vkdata.dk>, 2018
 # lhmflexerp <lhm@flexerp.dk>, 2018
+# Martin Trigaux, 2019
 # 
 msgid ""
 msgstr ""
@@ -22,7 +22,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
 "PO-Revision-Date: 2017-09-20 12:13+0000\n"
-"Last-Translator: lhmflexerp <lhm@flexerp.dk>, 2018\n"
+"Last-Translator: Martin Trigaux, 2019\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -379,6 +379,7 @@ msgstr "Tilpas Felt"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_date
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_date
 msgid "Date"
 msgstr "Dato"
 
@@ -665,6 +666,7 @@ msgstr "Initial"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_initial
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_initial
 msgid "Initials"
 msgstr "Initialer"
 
@@ -947,6 +949,13 @@ msgstr "Rolle"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:152
+#, python-format
+msgid "Save"
+msgstr "Gem"
+
+#. module: website_sign
+#. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:103
 #, python-format
 msgid "Saved"
@@ -1076,6 +1085,7 @@ msgstr "Underskriv Dokument"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature
 #: model:signature.item.type,name:website_sign.signature_item_type_signature
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_signature
 #: selection:signature.item.type,type:0
 msgid "Signature"
 msgstr "Signatur"
@@ -1112,6 +1122,7 @@ msgstr ""
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:294
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:58
 #: model:ir.model,name:website_sign.model_signature_request_item
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_request_id
@@ -1413,9 +1424,15 @@ msgid "You have no document to sign."
 msgstr "Du har intet dokument der skal underskrives."
 
 #. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_company
+msgid "Your company"
+msgstr ""
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:93
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:95
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_email
 #, python-format
 msgid "Your email"
 msgstr "Din email"
@@ -1431,9 +1448,15 @@ msgstr "Din besked er blevet sendt."
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:87
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:89
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_name
 #, python-format
 msgid "Your name"
 msgstr "Dit navn"
+
+#. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_phone
+msgid "Your phone"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
@@ -1473,6 +1496,14 @@ msgstr ""
 #. module: website_sign
 #: model:signature.item.type,tip:website_sign.signature_item_type_initial
 msgid "mark it"
+msgstr ""
+
+#. module: website_sign
+#. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1020
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1085
+#, python-format
+msgid "next"
 msgstr ""
 
 #. module: website_sign

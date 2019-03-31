@@ -8,9 +8,9 @@
 # Yaroslav Molochko <onorua@gmail.com>, 2017
 # Роман Яхненко <bsap132@gmail.com>, 2017
 # ТАрас <tratatuta@i.ua>, 2017
-# Martin Trigaux, 2017
 # Bohdan Lisnenko, 2017
-# Alina Lisnenko <alinasemeniuk1@gmail.com>, 2018
+# Martin Trigaux, 2019
+# Alina Lisnenko <alinasemeniuk1@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -18,7 +18,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
 "PO-Revision-Date: 2017-09-20 12:13+0000\n"
-"Last-Translator: Alina Lisnenko <alinasemeniuk1@gmail.com>, 2018\n"
+"Last-Translator: Alina Lisnenko <alinasemeniuk1@gmail.com>, 2019\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -381,6 +381,7 @@ msgstr "Налаштувати поле"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_date
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_date
 msgid "Date"
 msgstr "Дата"
 
@@ -669,6 +670,7 @@ msgstr "Ініціали"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_initial
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_initial
 msgid "Initials"
 msgstr "Ініціали"
 
@@ -953,6 +955,13 @@ msgstr "Роль"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:152
+#, python-format
+msgid "Save"
+msgstr "Зберегти"
+
+#. module: website_sign
+#. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:103
 #, python-format
 msgid "Saved"
@@ -1085,6 +1094,7 @@ msgstr "Підписати документ"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature
 #: model:signature.item.type,name:website_sign.signature_item_type_signature
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_signature
 #: selection:signature.item.type,type:0
 msgid "Signature"
 msgstr "Підпис"
@@ -1121,6 +1131,7 @@ msgstr "Елементи підпису"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:294
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:58
 #: model:ir.model,name:website_sign.model_signature_request_item
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_request_id
@@ -1426,9 +1437,15 @@ msgid "You have no document to sign."
 msgstr "У вас немає жодного документу на підпис. "
 
 #. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_company
+msgid "Your company"
+msgstr "Ваша компанія"
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:93
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:95
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_email
 #, python-format
 msgid "Your email"
 msgstr "Ваша електронна пошта"
@@ -1444,9 +1461,15 @@ msgstr "Ваше повідомлення було надіслано."
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:87
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:89
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_name
 #, python-format
 msgid "Your name"
 msgstr "Ваше ім'я"
+
+#. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_phone
+msgid "Your phone"
+msgstr "Ваш телефон"
 
 #. module: website_sign
 #. openerp-web
@@ -1487,6 +1510,14 @@ msgstr "завантажте наші шаблони контракту"
 #: model:signature.item.type,tip:website_sign.signature_item_type_initial
 msgid "mark it"
 msgstr "позначити"
+
+#. module: website_sign
+#. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1020
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1085
+#, python-format
+msgid "next"
+msgstr "далі"
 
 #. module: website_sign
 #. openerp-web

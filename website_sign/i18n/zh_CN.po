@@ -3,32 +3,33 @@
 # * website_sign
 # 
 # Translators:
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
-# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
-# Siyuan Gu <siyuancn@hotmail.com>, 2017
-# glovebx <ruinning@163.com>, 2017
-# v2exerer <9010446@qq.com>, 2017
-# Martin Trigaux, 2017
-# Gary Wei <Gary.wei@elico-corp.com>, 2017
-# e2f_cn c5 <jarvisn@ecinnovations.com>, 2017
-# 珠海-杜哥 <liangjia@qq.com>, 2017
-# 苏州远鼎 <tiexinliu@126.com>, 2017
 # xiaobin wu <bd5dml@gmail.com>, 2017
 # fausthuang, 2017
 # liulixia <liu.lixia@elico-corp.com>, 2017
 # 菜小蛇 <lttlsnk@gmail.com>, 2017
-# waveyeung <waveyeung@qq.com>, 2017
+# glovebx <ruinning@163.com>, 2017
+# 苏州远鼎 <tiexinliu@126.com>, 2017
+# v2exerer <9010446@qq.com>, 2017
 # Xu Lei <xulei8@qq.com>, 2017
 # Yaorong Li <55yaorong.li@gmail.com>, 2017
+# waveyeung <waveyeung@qq.com>, 2017
 # Eddie Lim <bhweelim@yahoo.com>, 2017
+# Gary Wei <Gary.wei@elico-corp.com>, 2017
+# Siyuan Gu <siyuancn@hotmail.com>, 2017
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# bf2549c5415a9287249cba2b8a5823c7, 2018
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
+# liAnGjiA <liangjia@qq.com>, 2018
+# Martin Trigaux, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
-"PO-Revision-Date: 2018-02-19 14:22+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"PO-Revision-Date: 2017-09-20 12:13+0000\n"
+"Last-Translator: Martin Trigaux, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -388,6 +389,7 @@ msgstr "自定义字段"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_date
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_date
 msgid "Date"
 msgstr "日期   "
 
@@ -674,6 +676,7 @@ msgstr "初始"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_initial
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_initial
 msgid "Initials"
 msgstr "首字母"
 
@@ -954,6 +957,13 @@ msgstr "角色"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:152
+#, python-format
+msgid "Save"
+msgstr "保存"
+
+#. module: website_sign
+#. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:103
 #, python-format
 msgid "Saved"
@@ -1085,6 +1095,7 @@ msgstr "签署文档"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature
 #: model:signature.item.type,name:website_sign.signature_item_type_signature
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_signature
 #: selection:signature.item.type,type:0
 msgid "Signature"
 msgstr "签名"
@@ -1121,6 +1132,7 @@ msgstr "签字项"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:294
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:58
 #: model:ir.model,name:website_sign.model_signature_request_item
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_request_id
@@ -1422,9 +1434,15 @@ msgid "You have no document to sign."
 msgstr "你没有文档需要签名。"
 
 #. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_company
+msgid "Your company"
+msgstr ""
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:93
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:95
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_email
 #, python-format
 msgid "Your email"
 msgstr "你的邮件"
@@ -1440,9 +1458,15 @@ msgstr "你的短信已经发送。"
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:87
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:89
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_name
 #, python-format
 msgid "Your name"
 msgstr "你的名字"
+
+#. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_phone
+msgid "Your phone"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
@@ -1483,6 +1507,14 @@ msgstr "加载我们的合同模板"
 #: model:signature.item.type,tip:website_sign.signature_item_type_initial
 msgid "mark it"
 msgstr "标记"
+
+#. module: website_sign
+#. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1020
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1085
+#, python-format
+msgid "next"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web

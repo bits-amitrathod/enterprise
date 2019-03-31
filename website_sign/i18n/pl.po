@@ -3,23 +3,24 @@
 # * website_sign
 # 
 # Translators:
+# zieloo <zieloo@gmail.com>, 2017
+# Marcin Młynarczyk <mlynarczyk@gmail.com>, 2017
+# Paweł Michoń <michon.pawel@wp.pl>, 2017
+# Judyta Kaźmierczak <judyta.kazmierczak@openglobe.pl>, 2017
+# zbik2607 <darek@krokus.com.pl>, 2017
 # Martin Trigaux, 2017
 # Grzegorz Grzelak <grzegorz.grzelak@openglobe.pl>, 2017
-# Piotr Szlązak <szlazakpiotr@gmail.com>, 2017
-# zbik2607 <darek@krokus.com.pl>, 2017
-# Judyta Kaźmierczak <judyta.kazmierczak@openglobe.pl>, 2017
-# Marcin Młynarczyk <mlynarczyk@gmail.com>, 2017
-# zieloo <zieloo@gmail.com>, 2017
-# Paweł Michoń <michon.pawel@wp.pl>, 2017
 # Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2017
 # Tomasz Leppich <t.leppich@gmail.com>, 2018
+# Piotr Szlązak <szlazakpiotr@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
-"PO-Revision-Date: 2018-02-19 14:22+0000\n"
-"Last-Translator: Tomasz Leppich <t.leppich@gmail.com>, 2018\n"
+"PO-Revision-Date: 2017-09-20 12:13+0000\n"
+"Last-Translator: Piotr Szlązak <szlazakpiotr@gmail.com>, 2019\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -382,6 +383,7 @@ msgstr "Dostosuj plik"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_date
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_date
 msgid "Date"
 msgstr "Data"
 
@@ -670,6 +672,7 @@ msgstr "Initial"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_initial
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_initial
 msgid "Initials"
 msgstr "Inicjały"
 
@@ -954,6 +957,13 @@ msgstr "Rola"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:152
+#, python-format
+msgid "Save"
+msgstr "Zapisz"
+
+#. module: website_sign
+#. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:103
 #, python-format
 msgid "Saved"
@@ -1086,6 +1096,7 @@ msgstr "Podpisz dokument"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature
 #: model:signature.item.type,name:website_sign.signature_item_type_signature
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_signature
 #: selection:signature.item.type,type:0
 msgid "Signature"
 msgstr "Podpis"
@@ -1122,6 +1133,7 @@ msgstr "Pozycje podpisu"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:294
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:58
 #: model:ir.model,name:website_sign.model_signature_request_item
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_request_id
@@ -1427,9 +1439,15 @@ msgid "You have no document to sign."
 msgstr "Nie masz żadnych dokumentów do podpisania."
 
 #. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_company
+msgid "Your company"
+msgstr ""
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:93
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:95
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_email
 #, python-format
 msgid "Your email"
 msgstr "Twój email"
@@ -1445,9 +1463,15 @@ msgstr "Twoja wiadomość została wysłana."
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:87
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:89
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_name
 #, python-format
 msgid "Your name"
 msgstr "Twoja nazwa"
+
+#. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_phone
+msgid "Your phone"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
@@ -1488,6 +1512,14 @@ msgstr "załaduj nasze szablony umowy"
 #: model:signature.item.type,tip:website_sign.signature_item_type_initial
 msgid "mark it"
 msgstr "zaznacz"
+
+#. module: website_sign
+#. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1020
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1085
+#, python-format
+msgid "next"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web

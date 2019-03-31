@@ -3,38 +3,39 @@
 # * website_sign
 # 
 # Translators:
-# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
-# Martin Trigaux, 2017
-# Alejandro Die Sanchis <marketing@domatix.com>, 2017
-# Nicolás Broggi <rnbroggi@gmail.com>, 2017
-# RGB Consulting <odoo@rgbconsulting.com>, 2017
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
-# Ana Juaristi <ajuaristio@gmail.com>, 2017
-# José Vicente <txusev@gmail.com>, 2017
 # Carlos rodriguez <carlosalbertor436@gmail.com>, 2017
 # Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2017
-# Antonio Trueba, 2017
-# Ivan Nieto <ivan.n.s@tuta.io>, 2017
 # Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2017
-# e2f_EPV Translator <e2f_EPV@outlook.com>, 2017
+# RGB Consulting <odoo@rgbconsulting.com>, 2017
+# Ivan Nieto <ivan.n.s@tuta.io>, 2017
 # David Perez <david@closemarketing.es>, 2017
 # Daniel Santibáñez Polanco <dansanti@gmail.com>, 2017
-# Gustavo Valverde, 2017
 # Gelo Joga Landoo <gj@landoo.es>, 2017
 # Sergio Flores <vitavitae1@gmail.com>, 2017
 # Daniel Blanco <daniel@blancomartin.com.ar>, 2017
+# Gustavo Valverde, 2017
+# Antonio Trueba, 2017
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
+# José Vicente <txusev@gmail.com>, 2017
 # Luis M. Triana <luis.triana@jarsa.com.mx>, 2017
+# Ana Juaristi <ajuaristio@gmail.com>, 2017
 # Jesus Zapata <jesus@vauxoo.com>, 2017
-# ES R2 <e2fds74f5ds412@outlook.com>, 2018
-# ES R1 <e2fes@hotmail.com>, 2018
+# Alejandro Die Sanchis <marketing@domatix.com>, 2017
+# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
+# ced903afe967c2a46d1036224972db9d, 2018
 # e2f <projects@e2f.com>, 2018
+# 384b9483dceff15cca881ce1cccf70f5, 2018
+# Nicolás Broggi <rnbroggi@gmail.com>, 2018
+# 966ff43e6966712895a590e7320ca288, 2018
+# Martin Trigaux, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:22+0000\n"
-"PO-Revision-Date: 2018-02-19 14:22+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"PO-Revision-Date: 2017-09-20 12:13+0000\n"
+"Last-Translator: Martin Trigaux, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -397,6 +398,7 @@ msgstr "Personalizar campo"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_date
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_date
 msgid "Date"
 msgstr "Fecha"
 
@@ -685,6 +687,7 @@ msgstr "Inicial"
 
 #. module: website_sign
 #: model:signature.item.type,name:website_sign.signature_item_type_initial
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_initial
 msgid "Initials"
 msgstr "Iniciales"
 
@@ -969,6 +972,13 @@ msgstr "Rol"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:152
+#, python-format
+msgid "Save"
+msgstr "Guardar"
+
+#. module: website_sign
+#. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:103
 #, python-format
 msgid "Saved"
@@ -1101,6 +1111,7 @@ msgstr "Firmar documento"
 #. module: website_sign
 #: model:ir.model.fields,field_description:website_sign.field_signature_request_item_signature
 #: model:signature.item.type,name:website_sign.signature_item_type_signature
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_signature
 #: selection:signature.item.type,type:0
 msgid "Signature"
 msgstr "Firma"
@@ -1137,6 +1148,7 @@ msgstr "Elementos de firma"
 
 #. module: website_sign
 #. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_backend.js:294
 #: code:addons/website_sign/static/src/xml/website_sign_backend.xml:58
 #: model:ir.model,name:website_sign.model_signature_request_item
 #: model:ir.model.fields,field_description:website_sign.field_signature_item_value_signature_request_id
@@ -1443,9 +1455,15 @@ msgid "You have no document to sign."
 msgstr "No tiene documentos para firmar."
 
 #. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_company
+msgid "Your company"
+msgstr ""
+
+#. module: website_sign
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:93
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:95
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_email
 #, python-format
 msgid "Your email"
 msgstr "Su email"
@@ -1461,9 +1479,15 @@ msgstr "Su mensaje ha sido enviado."
 #. openerp-web
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:87
 #: code:addons/website_sign/static/src/xml/website_sign_common.xml:89
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_name
 #, python-format
 msgid "Your name"
 msgstr "Su nombre"
+
+#. module: website_sign
+#: model:signature.item.type,placeholder:website_sign.signature_item_type_phone
+msgid "Your phone"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
@@ -1504,6 +1528,14 @@ msgstr "cargar nuestras plantillas de contrato"
 #: model:signature.item.type,tip:website_sign.signature_item_type_initial
 msgid "mark it"
 msgstr "marcarlo"
+
+#. module: website_sign
+#. openerp-web
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1020
+#: code:addons/website_sign/static/src/js/website_sign_common.js:1085
+#, python-format
+msgid "next"
+msgstr ""
 
 #. module: website_sign
 #. openerp-web
