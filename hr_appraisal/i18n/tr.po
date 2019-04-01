@@ -3,29 +3,30 @@
 # * hr_appraisal
 # 
 # Translators:
-# Murat Kaplan <muratk@projetgrup.com>, 2016
-# gezgin biri <gezginbiri@hotmail.com>, 2016
-# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2016
-# Martin Trigaux, 2016
-# Ediz Duman <neps1192@gmail.com>, 2016
-# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
-# Ramiz Deniz Öner <deniz@denizoner.com>, 2016
 # Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2016
-# Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2016
 # Doğan Altunbay <doganaltunbay@gmail.com>, 2016
+# gezgin biri <gezginbiri@hotmail.com>, 2016
+# Ediz Duman <neps1192@gmail.com>, 2016
 # Azar Huseynli <azerbay1984@gmail.com>, 2016
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
+# Martin Trigaux, 2016
+# Ramiz Deniz Öner <deniz@denizoner.com>, 2016
+# Murat Kaplan <muratk@projetgrup.com>, 2016
 # cagri erarslan <cagri.erarslan@mechsoft.com.tr>, 2016
+# Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2016
 # Fırat Kaya <firat.kaya@mechsoft.com.tr>, 2016
+# Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2017
 # Levent Karakaş <levent@mektup.at>, 2017
-# Umur Akın <umura@projetgrup.com>, 2018
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2018
+# Umur Akın <umura@projetgrup.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2018\n"
+"PO-Revision-Date: 2016-09-07 13:39+0000\n"
+"Last-Translator: Umur Akın <umura@projetgrup.com>, 2019\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,6 +53,21 @@ msgid ""
 "                \n"
 "            "
 msgstr ""
+"\n"
+"                \n"
+"                <div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); \">\n"
+"                    <p>Sayın ${ctx.get('employee').name},</p>\n"
+"                    % if ctx.get('employee').id == object.employee_id.id:\n"
+"                        <p>Değerlendirmenizle ilgili olan aşağıdaki anketi lütfen doldurun.</p>\n"
+"                    % else:\n"
+"                        <p>Lütfen ${object.employee_id.name} ile ilgili değerlendirme anketini doldurun.</p>\n"
+"                    % endif\n"
+"                    <p><a href=\"__URL__\">Ankete erişmek için tıklayın.</a></p>\n"
+"                    <p>Tarihine kadar değerlendirme yanıtlarınızı gönderin: ${object.date_close}</p>\n"
+"                    <p>Katılımınız için teşekkür ederiz.</p>\n"
+"                </div>\n"
+"                \n"
+"            "
 
 #. module: hr_appraisal
 #: model:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -180,7 +196,7 @@ msgstr "Değerlendirme Sıklığı"
 #: code:addons/hr_appraisal/models/hr_appraisal.py:118
 #, python-format
 msgid "Appraisal Meeting For %s"
-msgstr ""
+msgstr "%s İçin Değerlendirme Toplantısı"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.opinion_1
@@ -1354,7 +1370,7 @@ msgstr "Yıl"
 #: code:addons/hr_appraisal/models/hr_appraisal.py:205
 #, python-format
 msgid "You cannot delete appraisal which is in '%s' state"
-msgstr ""
+msgstr " '%s' durumunda olan değerlendirmeleri silemezsiniz."
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,help:hr_appraisal.open_view_hr_appraisal_tree

@@ -3,28 +3,29 @@
 # * quality
 # 
 # Translators:
-# Mustafa Rawi <mustafa@cubexco.com>, 2016
-# Martin Trigaux, 2016
-# Mohammed Ibrahim <m.ibrahim@mussder.com>, 2016
-# hoxhe Aits <hoxhe0@gmail.com>, 2016
-# Osama Ahmaro <osamaahmaro@gmail.com>, 2016
 # Osoul <baruni@osoul.ly>, 2016
-# Akram Alfusayal <akram_ma@hotmail.com>, 2016
-# Ali zuaby <ali@zuaby.net>, 2016
+# hoxhe Aits <hoxhe0@gmail.com>, 2016
 # mohammed rabea <moh.rabea@gmail.com>, 2016
 # amrnegm <amrnegm.01@gmail.com>, 2016
+# Mohammed Ibrahim <m.ibrahim@mussder.com>, 2016
+# Ali zuaby <ali@zuaby.net>, 2016
+# Osama Ahmaro <osamaahmaro@gmail.com>, 2016
+# Martin Trigaux, 2016
+# Akram Alfusayal <akram_ma@hotmail.com>, 2016
 # Abd El-Rahman Ali <abdelrahman.ali.242@gmail.com>, 2016
 # Hossam Esam <hossamesam17@gmail.com>, 2016
 # Shaima Safar <shaima.safar@open-inside.com>, 2017
 # zahi chemaly <zahi@sercotex.net>, 2017
 # Mostafa Hanafy <mostafa.s.hanafy@gmail.com>, 2018
+# Mustafa Rawi <mustafa@cubexco.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-10 09:14+0000\n"
-"PO-Revision-Date: 2016-10-10 09:14+0000\n"
-"Last-Translator: Mostafa Hanafy <mostafa.s.hanafy@gmail.com>, 2018\n"
+"PO-Revision-Date: 2016-09-07 13:41+0000\n"
+"Last-Translator: Mustafa Rawi <mustafa@cubexco.com>, 2019\n"
 "Language-Team: Arabic (https://www.transifex.com/odoo/teams/41243/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,17 +37,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alert_count
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_count
 msgid "# Quality Alerts"
-msgstr ""
+msgstr "# تنبيهات الجودة"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_check_count
 msgid "# Quality Checks"
-msgstr ""
+msgstr "# فحوصات الجودة"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "% of the operation"
-msgstr ""
+msgstr "% من العملية"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
@@ -59,11 +60,13 @@ msgid ""
 "<span attrs=\"{'invisible': [('measure_frequency_type', '=', "
 "'all')]}\">Every </span>"
 msgstr ""
+"<span attrs=\"{'invisible': [('measure_frequency_type', '=', 'all')]}\">كل "
+"</span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "<span class=\"o_stat_text\">Quality Check</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">فحص الجودة </span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
@@ -73,12 +76,12 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "<span>from </span>"
-msgstr ""
+msgstr "<span>من </span>"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "<span>to </span>"
-msgstr ""
+msgstr "<span>إلى </span>"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_defaults
@@ -86,6 +89,8 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
+"قاموس بايثون سيتم تقديره لتوفير قيم افتراضية عند إنشاء سجلات جديدة لهذا "
+"اللقب."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_form
@@ -100,12 +105,12 @@ msgstr "نشط"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage_done
 msgid "Alert Processed"
-msgstr ""
+msgstr "تمت معالجة التنبيه"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 msgid "Alert(s)"
-msgstr ""
+msgstr "التنبيهات"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_alert_ids
@@ -166,12 +171,12 @@ msgstr ""
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
 msgid "Checked By"
-msgstr ""
+msgstr "تم فحصه بواسطة"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_tree
 msgid "Checked Date"
-msgstr ""
+msgstr "تاريخ الفحص"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_check_ids
@@ -181,7 +186,7 @@ msgstr "الضوابط"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_team_view_kanban
 msgid "Checks In Progress"
-msgstr ""
+msgstr "الفحوصات الجارية"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_point_action
@@ -214,32 +219,32 @@ msgstr "الإعدادات"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_control_date
 msgid "Control Date"
-msgstr ""
+msgstr "تاريخ التحكم"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Control Frequency"
-msgstr ""
+msgstr "معدل التحكم"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 msgid "Control Person"
-msgstr ""
+msgstr "مسئول التحكم"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_point_id
 msgid "Control Point"
-msgstr ""
+msgstr "نقطة التحكم"
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_control_points
 msgid "Control Points"
-msgstr ""
+msgstr "نقاط التحكم"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Control Type"
-msgstr ""
+msgstr "نوع التحكم"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_action_corrective
@@ -249,7 +254,7 @@ msgstr "إجراء تصحيحي"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Corrective Actions"
-msgstr ""
+msgstr "إجراءات تصحيحية"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_create_uid
@@ -286,7 +291,7 @@ msgstr "لوحات المعلومات"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_date_assign
 msgid "Date Assigned"
-msgstr ""
+msgstr "تاريخ الإسناد"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_date_close
@@ -306,22 +311,22 @@ msgstr "القيم الافتراضية"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Describe the corrective actions you did..."
-msgstr ""
+msgstr "صف الإجراءات التصحيحية التي اتخذتها..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Describe the preventive actions you did..."
-msgstr ""
+msgstr "صف الإجراءات الوقائية التي اتخذتها..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Describe the quality check to do..."
-msgstr ""
+msgstr "صف اختبار الجودة المراد إجراؤه..."
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Describe why you need to perform this quality check..."
-msgstr ""
+msgstr "صف سبب رغبتك في إجراء فحص الجودة هذا..."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_description
@@ -332,7 +337,7 @@ msgstr "الوصف"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Description of the issue..."
-msgstr ""
+msgstr "وصف المشكلة..."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_display_name
@@ -360,7 +365,7 @@ msgstr "لقب البريد الإلكتروني"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 #: selection:quality.check,measure_success:0
 msgid "Fail"
-msgstr ""
+msgstr "فشل"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
@@ -388,7 +393,7 @@ msgstr "تجميع حسب"
 #. module: quality
 #: model:ir.module.category,description:quality.module_category_quality
 msgid "Helps you manage your quality alerts and quality checks."
-msgstr ""
+msgstr "يساعدك على إدارة تنبيهات وفحوصات الجودة."
 
 #. module: quality
 #: selection:quality.alert,priority:0
@@ -412,6 +417,7 @@ msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
 msgstr ""
+"مُعرف السجل الأصلي الذي يحتوي اللقب (مثال: 'المشروع' يحمل لقب إنشاء المهمة)"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
@@ -470,7 +476,7 @@ msgstr "منخفض"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 msgid "Make Alert"
-msgstr ""
+msgstr "إنشاء تنبيه"
 
 #. module: quality
 #: model:res.groups,name:quality.group_quality_manager
@@ -480,7 +486,7 @@ msgstr "المدير"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_max
 msgid "Max Tolerance"
-msgstr ""
+msgstr "الحد الأقصى المسموح به"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure
@@ -491,7 +497,7 @@ msgstr "المقياس"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check_measure_success
 msgid "Measure Success"
-msgstr ""
+msgstr "مقياس النجاح"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_unit
@@ -501,7 +507,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_tolerance_min
 msgid "Min Tolerance"
-msgstr ""
+msgstr "الحد الأدني المسموح به"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
@@ -521,7 +527,7 @@ msgstr "<i class=\"fa fa-caret-down\"/> أخرى"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "My Alerts"
-msgstr ""
+msgstr "تنبيهاتي"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_name
@@ -550,7 +556,7 @@ msgstr "جديد"
 #. module: quality
 #: selection:quality.check,measure_success:0
 msgid "No measure"
-msgstr ""
+msgstr "لا يوجد مقياس"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_alert_action_report
@@ -565,7 +571,7 @@ msgstr ""
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_norm
 msgid "Norm"
-msgstr ""
+msgstr "المعياري"
 
 #. module: quality
 #: selection:quality.alert,priority:0
@@ -598,6 +604,8 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
+"معرف اختياري لمناقشة (سجل) سيتم إرفاق كافة الرسائل الواردة به، حتى لو لم "
+"يردوا عليه. إذا تم تعيين قيمة له، سيعطل هذا إنشاء السجلات الجديدة بالكامل."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_user_id
@@ -612,7 +620,7 @@ msgstr "موديل الشريك"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_parent_thread_id
 msgid "Parent Record Thread ID"
-msgstr ""
+msgstr "معرف مناقشة السجل الأصلي"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_parent_model_id
@@ -621,13 +629,16 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
+"كائن السجل الأصلي الذي يحتوي اللقب. الكائن الذي يحتوي رقم إشارة اللقب ليس "
+"بالضرورة هو نفسه الكائن المخزن في القيمة alias_model_id (مثال: مشروع "
+"(parent_model) والمهمة (model))"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form
 #: model:ir.ui.view,arch_db:quality.quality_check_view_form_small
 #: selection:quality.check,measure_success:0
 msgid "Pass"
-msgstr ""
+msgstr "نجاح"
 
 #. module: quality
 #: selection:quality.point,test_type:0
@@ -638,12 +649,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:quality.quality_check_view_search
 #: selection:quality.check,quality_state:0
 msgid "Passed"
-msgstr ""
+msgstr "نجح"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_stock_picking_check_todo
 msgid "Pending checks"
-msgstr ""
+msgstr "الشيكات المُعلقة"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_measure_frequency_value
@@ -653,7 +664,7 @@ msgstr "النسبة"
 #. module: quality
 #: selection:quality.point,measure_frequency_type:0
 msgid "Periodically"
-msgstr ""
+msgstr "دوريًا"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_picking_type_id
@@ -681,7 +692,7 @@ msgstr "الإجراء الوقائي"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_form
 msgid "Preventive Actions"
-msgstr ""
+msgstr "إجراءات وقائية"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_priority
@@ -725,23 +736,23 @@ msgstr "تنبيه الجودة"
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_graph
 #: model:ir.ui.view,arch_db:quality.quality_alert_view_pivot
 msgid "Quality Alert Analysis"
-msgstr ""
+msgstr "تحليل تنبيه الجودة"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_alert_stage
 msgid "Quality Alert Stage"
-msgstr ""
+msgstr "مرحلة تنبيه الجودة"
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_alert_stage_action
 #: model:ir.ui.menu,name:quality.menu_quality_config_alert_stage
 msgid "Quality Alert Stages"
-msgstr ""
+msgstr "مراحل تنبيه الجودة"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_alert_team
 msgid "Quality Alert Team"
-msgstr ""
+msgstr "فريق تنبيه الجودة"
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_config_alert_team
@@ -753,7 +764,7 @@ msgstr ""
 msgid ""
 "Quality Alert stages define the different steps a quality alert should go "
 "through."
-msgstr ""
+msgstr "تحدد مراحل تنبيه الجودة الخطوات المختلفة التي سيتبعها تنبيه الجودة."
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_alert_action_check
@@ -780,7 +791,7 @@ msgstr "فحص الجودة"
 #: model:ir.ui.view,arch_db:quality.quality_check_view_graph
 #: model:ir.ui.view,arch_db:quality.quality_check_view_pivot
 msgid "Quality Check Analysis"
-msgstr ""
+msgstr "تحليل فحص الجودة"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_check_action_main
@@ -805,7 +816,7 @@ msgstr "فحوصات الجودة"
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_check_action_spc
 msgid "Quality Checks SPC"
-msgstr ""
+msgstr "فحوصات الجودة SPC"
 
 #. module: quality
 #: model:ir.ui.menu,name:quality.menu_quality_control
@@ -815,7 +826,7 @@ msgstr "hgjp;l td hgohwdm"
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_point_action
 msgid "Quality Control Points"
-msgstr ""
+msgstr "نقاط التحكم في الجودة"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_point_action
@@ -847,12 +858,12 @@ msgstr ""
 #. module: quality
 #: model:ir.model,name:quality.model_quality_tag
 msgid "Quality Tag"
-msgstr ""
+msgstr "وسم الجودة"
 
 #. module: quality
 #: model:ir.actions.act_window,name:quality.quality_alert_team_action_config
 msgid "Quality Teams"
-msgstr ""
+msgstr "فرق الجودة"
 
 #. module: quality
 #: model:ir.actions.act_window,help:quality.quality_alert_team_action
@@ -864,7 +875,7 @@ msgstr ""
 #. module: quality
 #: selection:quality.point,measure_frequency_type:0
 msgid "Randomly"
-msgstr ""
+msgstr "عشوائيًا"
 
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
@@ -874,7 +885,7 @@ msgstr "السبب"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team_alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "معرف مناقشة السجل"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_name
@@ -958,7 +969,7 @@ msgstr "المجموعات"
 #: model:ir.model.fields,field_description:quality.field_quality_check_test_type
 #: model:ir.model.fields,field_description:quality.field_quality_point_test_type
 msgid "Test Type"
-msgstr ""
+msgstr "نوع الاختبار"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_model_id
@@ -967,6 +978,9 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"الكائن (من نوع مستندات أودو) الذي يتجاوب معه هذا اللقب. أي رسالة واردة لا "
+"ترد على سجل موجود ستسبب إنشاء سجل جديد من نفس نوع هذا الكائن (مثلًا: مهمة "
+"مشروع)"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_name
@@ -974,6 +988,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"اسم لقب البريد الإلكتروني، مثلًا: 'وظائف' إذا كنت جمع الرسائل المرسلة "
+"لـ<jobs@example.odoo.com>"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team_alias_user_id
@@ -983,16 +999,20 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"مالك السجلات المنشأة عند استلام رسائل بريد إلكتروني على هذا اللقب. إذا لم "
+"يتم تعيين قيمة لهذا الحقل، سيحاول النظام معرفة المالك الصحيح حسب عنوان "
+"البريد الإلكتروني للمرسل، أو سيستخدم حساب المشرف إذا لم يجد حسابًا مرتبطًا "
+"بعنوان البريد الإلكتروني."
 
 #. module: quality
 #: model:res.groups,comment:quality.group_quality_manager
 msgid "The quality manager manages the quality process"
-msgstr ""
+msgstr "مدير الجودة يدير عملية الجودة"
 
 #. module: quality
 #: model:res.groups,comment:quality.group_quality_user
 msgid "The quality user uses the quality process"
-msgstr ""
+msgstr "مستخدم الجودة يستخدم عملية الجودة"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point_title
@@ -1007,7 +1027,7 @@ msgstr "المهام المراد تنفيذها"
 #. module: quality
 #: model:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Tolerance"
-msgstr ""
+msgstr "السماحية"
 
 #. module: quality
 #: model:ir.model,name:quality.model_stock_picking
@@ -1023,7 +1043,7 @@ msgstr "وحده القياس "
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_tag_color
 msgid "Used in the kanban view"
-msgstr ""
+msgstr "يستخدم في عرض كانبان"
 
 #. module: quality
 #: model:res.groups,name:quality.group_quality_user
