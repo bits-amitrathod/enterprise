@@ -30,7 +30,11 @@ class account_bank_reconciliation_report(models.AbstractModel):
         return {
             'id': 'line_' + str(self.line_number),
             'name': title,
-            'columns': [{'name': v} for v in [date or '', '', amount and self.format_value(amount, line_currency)]],
+            'columns': [
+                {'name': date or '', 'class': 'date'},
+                {'name': ''},
+                {'name': amount and self.format_value(amount, line_currency)},
+            ],
             'level': level,
         }
 
@@ -40,7 +44,11 @@ class account_bank_reconciliation_report(models.AbstractModel):
         return {
             'id': 'line_' + str(self.line_number),
             'name': _('Total Virtual GL Balance'),
-            'columns': [{'name': v} for v in ["", "", self.format_value(amount, line_currency)]],
+            'columns': [
+                {'name': '', 'class': 'date'},
+                {'name': ''},
+                {'name': self.format_value(amount, line_currency)},
+            ],
             'level': 1,
             'class': 'total',
         }
@@ -53,7 +61,11 @@ class account_bank_reconciliation_report(models.AbstractModel):
             'caret_options': 'account.bank.statement.line',
             'model': 'account.bank.statement.line',
             'name': len(name) >= 85 and name[0:80] + '...' or name,
-            'columns': [{'name': v} for v in [line.date, line.ref, self.format_value(amount, line_currency)]],
+            'columns': [
+                {'name': line.date, 'class': 'date'},
+                {'name': line.ref},
+                {'name': self.format_value(amount, line_currency)},
+            ],
             'class': 'o_account_reports_level3',
         }
 
