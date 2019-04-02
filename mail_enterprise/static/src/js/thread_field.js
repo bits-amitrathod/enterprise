@@ -19,9 +19,9 @@ ThreadField.include({
     _fetchAndRenderThread: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function () {
-            if (self._threadWidget.attachments.length) {
-                self.trigger_up('preview_attachment');
-            }
+            self.trigger_up('preview_attachment', {
+                attachments: self._threadWidget.attachments,
+            });
         });
     },
 });
@@ -38,12 +38,27 @@ Chatter.include({
      * @param {OdooEvent} ev
      */
     _onAttachmentPreview: function (ev) {
+        var newInterceptedAttachmentIDs = _.difference(
+            _.pluck(ev.data.attachments, 'id'),
+            _.pluck(this.attachments, 'id')
+        );
+        if (newInterceptedAttachmentIDs.length > 0) {
+            this._areAttachmentsLoaded = false;
+        }
         if (this._areAttachmentsLoaded){
             ev.data.attachments = this.attachments;
         } else {
             ev.stopPropagation();
             return this._fetchAttachments().then(this.trigger_up.bind(this, 'preview_attachment'));
         }
+    },
+    /**
+     * @override
+     * @private
+     */
+    _onReloadAttachmentBox: function () {
+        this._super.apply(this, arguments);
+        this.trigger_up('preview_attachment');
     },
 });
 });
