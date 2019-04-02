@@ -22,6 +22,9 @@
             <div t-attf-href="#" class="mb8 input-group-addon float_left js_add_cart_json hidden-xs"><i class="fa fa-plus text-muted"/></div>
         </div>
     </xpath>
+    <xpath expr="//del" position="attributes">
+        <attribute name="t-if">not line.is_reward_line</attribute>
+    </xpath>
 </template>
 <template id="sale_coupon_result" inherit_id="website_sale.coupon_form">
     <xpath expr="//form[@name='coupon_code']" position="after">
