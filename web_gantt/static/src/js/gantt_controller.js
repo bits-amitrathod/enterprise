@@ -130,7 +130,7 @@ var GanttController = AbstractController.extend({
             res_model: this.modelName,
             res_id: task_id,
             context: task,
-            on_saved: this.reload.bind(this)
+            on_saved: this.reload.bind(this, {})
         }).open();
     },
     /**
