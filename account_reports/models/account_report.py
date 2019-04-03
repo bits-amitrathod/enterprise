@@ -839,7 +839,7 @@ class AccountReport(models.AbstractModel):
             return self._get_dates_period(options, *date_utils.get_quarter(date_to), period_type='quarter')
         if period_type == 'year':
             return self._get_dates_period(options, *date_utils.get_fiscal_year(date_to), period_type='year')
-        date_from = date_to - datetime.timedelta(days=(date_to - date_from).days)
+        date_from = date_to - datetime.timedelta(days=(period_vals['date_to'] - date_from).days)
         return self._get_dates_period(options, date_from, date_to)
 
     def _get_dates_previous_year(self, options, period_vals):
