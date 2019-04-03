@@ -657,8 +657,13 @@ var Image = AbstractNewBuildingBlock.extend({
             var dialog = new weWidgets.MediaDialog(self, { onlyImages: true },
                 $image, $image[0]);
             var value;
-            dialog.on("save", self, function (event) {
-                value = event.src;
+            dialog.on("save", self, function (el) {
+                // el is a vanilla JS element
+                // Javascript Element.src returns the full url (including protocol)
+                // But we want only a relative path
+                // https://www.w3schools.com/jsref/prop_img_src.asp
+                // We indeed expect only one image at this point
+                value = el.attributes.src.value;
             });
             dialog.on('closed', self, function () {
                 if (value) {
