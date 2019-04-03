@@ -127,8 +127,6 @@ class AccountInvoice(models.Model):
                                 record.extract_state = 'waiting_extraction'
                         except AccessError:
                             record.extract_state = 'error_status'
-        for record in self:
-            record._compute_show_resend_button()
         return res
 
     def retry_ocr(self):
