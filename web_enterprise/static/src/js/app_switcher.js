@@ -25,6 +25,10 @@ var AppSwitcher = Widget.extend({
     events: {
         'input input.o_menu_search_input': function(e) {
             if(!e.target.value) {
+                // on odoo [10.0,11.0] ignore IE11 placeholder input events
+                if (this.state.is_searching !== true) {
+                    return;
+                }
                 this.state = this.get_initial_state();
                 this.state.is_searching = true;
             }
