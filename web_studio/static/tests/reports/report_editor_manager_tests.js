@@ -807,7 +807,7 @@ QUnit.module('ReportEditorManager', {
     });
 
     QUnit.test('drag & drop field block', function (assert) {
-        assert.expect(1);
+        assert.expect(2);
         var done = assert.async();
 
         this.templates.push({
@@ -821,7 +821,7 @@ QUnit.module('ReportEditorManager', {
         });
 
         var templateData = {
-            dataOeContext: '{"o": "model.test"}'
+            dataOeContext: '{"o": "model.test", "docs": "model.test"}'
         };
 
         var rem = studioTestUtils.createReportEditorManager({
@@ -864,6 +864,9 @@ QUnit.module('ReportEditorManager', {
             testUtils.dragAndDrop($field, $target, {position: 'inside'});
 
             $('.o_web_studio_field_modal .o_field_selector').trigger('focusin');
+            assert.strictEqual($('.o_web_studio_field_modal .o_field_selector_item').text().trim(), "o (Model Test)",
+                'Only "o" should be selectable, not "docs"');
+
             $('.o_web_studio_field_modal .o_field_selector_item[data-name="o"]').trigger('click');
             $('.o_web_studio_field_modal .o_field_selector_item[data-name="child"]').trigger('click');
             $('.o_web_studio_field_modal .o_field_selector_item[data-name="name"]').trigger('click');

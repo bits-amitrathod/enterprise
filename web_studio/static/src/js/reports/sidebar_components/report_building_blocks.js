@@ -464,7 +464,11 @@ var AbstractFieldBlock = AbstractNewBuildingBlock.extend({
                 target = self._filterTargets() || target;
             }
 
-            var availableKeys = _.filter(self._getContextKeys(target.node), function (field) { return !!field.relation; });
+            var availableKeys = _.filter(self._getContextKeys(target.node), function (field) {
+                // "docs" is a technical object referring to all records selected to issue the report for
+                // it shouldn't be manipulated by the user
+                return !!field.relation && field.name !== 'docs';
+            });
             var dialog = new NewFieldDialog(self, 'record_fake_model', field, availableKeys).open();
             dialog.on('field_default_values_saved', self, function (values) {
                 if (values.related.split('.').length < 2) {
