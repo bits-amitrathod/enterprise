@@ -45,7 +45,16 @@ Chatter.include({
         if (newInterceptedAttachmentIDs.length > 0) {
             this._areAttachmentsLoaded = false;
         }
-        if (this._areAttachmentsLoaded){
+        if (this._areAttachmentsLoaded) {
+            if (this.record.data.message_main_attachment_id) {
+                var mainID = this.record.data.message_main_attachment_id.res_id;
+                var mainAttachment = _.find(this.attachments, function (attachment) {
+                    return attachment.id == mainID;
+                });
+                if (mainAttachment) {
+                    mainAttachment.is_main = true;
+                }
+            }
             ev.data.attachments = this.attachments;
         } else {
             ev.stopPropagation();
