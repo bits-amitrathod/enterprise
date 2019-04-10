@@ -1078,6 +1078,7 @@ can no longer be modified. Please create a new line with eg. a negative quantity
                         );
                     } else {
                         self.chrome.ready.then(function () {
+                            $(self.chrome.$el).find('.placeholder-posVersion').text(' Ver: ' + self.version.server_version + "1807BE_FDM");
                             var current = $(self.chrome.$el).find('.placeholder-posID').text();
                             $(self.chrome.$el).find('.placeholder-posID').text(' ID: ' + self.config.blackbox_pos_production_id);
                         });
