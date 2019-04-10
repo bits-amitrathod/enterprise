@@ -607,9 +607,17 @@
             src_model="res.partner"/>
 
         <template id="fdm_source">
+SIGNATURES:
+--------------------------------------------------------------------
+            <t t-foreach="files" t-as="current_file">
+<t t-raw="current_file['name']"/>: <t t-raw="current_file['hash']"/> (size in bytes: <t t-raw="current_file['size_in_bytes']"/>)
+            </t>
+--------------------------------------------------------------------
+
+CONTENT:
             <t t-foreach="files" t-as="current_file">
 --------------------------------------------------------------------
-<t t-raw="current_file['name']"/> (size in bytes: <t t-raw="current_file['size_in_bytes']"/>)
+<t t-raw="current_file['name']"/>
 --------------------------------------------------------------------
 <t t-raw="current_file['contents']"/>
             </t>
