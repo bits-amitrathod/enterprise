@@ -385,10 +385,14 @@ class AccountReport(models.AbstractModel):
                 domain = expression.AND([domain, [('analytic_account_id', 'in', analytic_ids)]])
             if options.get('date'):
                 opt_date = options['date']
-                if opt_date.get('date_from'):
-                    domain = expression.AND([domain, [('date', '>=', opt_date['date_from'])]])
-                if opt_date.get('date_to'):
-                    domain = expression.AND([domain, [('date', '<=', opt_date['date_to'])]])
+                if self.date_range:
+                    if opt_date.get('date_from'):
+                        domain = expression.AND([domain, [('date', '>=', opt_date['date_from'])]])
+                    if opt_date.get('date_to'):
+                        domain = expression.AND([domain, [('date', '<=', opt_date['date_to'])]])
+                else:
+                    if opt_date.get('date'):
+                        domain = expression.AND([domain, [('date', '<=', opt_date['date'])]])
             # In case the line has been generated for a "group by" financial line, append the parent line's domain to the one we created
             if params.get('financial_group_line_id'):
                 parent_financial_report_line = self.env['account.financial.html.report.line'].browse(params['financial_group_line_id'])
