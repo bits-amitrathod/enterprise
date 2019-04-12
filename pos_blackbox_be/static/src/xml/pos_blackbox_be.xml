@@ -233,9 +233,6 @@
         <t t-jquery="div[font='b']" t-operation="prepend">
             <t t-esc='order.blackbox_order_name'/>
         </t>
-        <t t-jquery="receipt" t-operation="append">
-            <t t-call="XmlFDMControlData"/>
-        </t>
     </t>
 
     <t t-extend="OrderChangeReceipt">
