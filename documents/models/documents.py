@@ -212,6 +212,10 @@ class IrAttachment(models.Model):
         """Implemented by bridge modules to set their folders and tags to attachments
         @param vals: a create/write dict.
         """
+        # documents.folder attachements are linked by folder_id field
+        if vals.get('res_model') == 'documents.folder':
+            vals.setdefault('folder_id', vals.pop('res_id', None))
+            del vals['res_model']
         return vals
 
     @api.model_create_multi
