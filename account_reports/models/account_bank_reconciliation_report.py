@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
-from odoo.tools.misc import formatLang
+from odoo.tools.misc import formatLang, format_date
 from odoo.osv import expression
 
 
@@ -31,7 +31,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             'id': 'line_' + str(self.line_number),
             'name': title,
             'columns': [
-                {'name': date or '', 'class': 'date'},
+                {'name': date and format_date(self.env, date) or '', 'class': 'date'},
                 {'name': ''},
                 {'name': amount and self.format_value(amount, line_currency)},
             ],
@@ -62,7 +62,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             'model': 'account.bank.statement.line',
             'name': len(name) >= 85 and name[0:80] + '...' or name,
             'columns': [
-                {'name': line.date, 'class': 'date'},
+                {'name': format_date(self.env, line.date), 'class': 'date'},
                 {'name': line.ref},
                 {'name': self.format_value(amount, line_currency)},
             ],
@@ -193,7 +193,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
                         'id': str(line.id),
                         'name': line.name,
                         'columns': [
-                            {'name': line.date},
+                            {'name': format_date(self.env, line.date)},
                             {'name': line_description, 'title': line_title, 'style': 'display:block;'},
                             {'name': self.format_value(-line.balance, report_data['line_currency'])},
                         ],
