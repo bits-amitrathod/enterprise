@@ -93,7 +93,12 @@ class AccountFinancialReport(models.Model):
             rslt += self._boe_format_string('I')
             rslt += self._boe_format_string(' ' * 22) # Blank, constant
 
-            year_amount_sum = currency_id.round(sum(i.currency_id.compute(i.amount_total_signed, currency_id) for i in partner_invoices))
+            convert = lambda i: i.currency_id._convert(i.amount_total_signed,
+                                                       currency_id,
+                                                       current_company,
+                                                       i.date or fields.Date.today(),
+                                                       round=True)
+            year_amount_sum = currency_id.round(sum(convert(i) for i in partner_invoices))
             rslt += self._boe_format_number(year_amount_sum, length=16, decimal_places=2, signed=True, sign_pos=' ', in_currency=True)
 
             rslt += address
