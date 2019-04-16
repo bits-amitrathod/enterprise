@@ -333,7 +333,7 @@ can no longer be modified. Please create a new line with eg. a negative quantity
 
         orderline_change: function(line) {
             // don't try to rerender non-visible lines
-            if (this.pos.get_order() && line.node.parentNode) {
+            if (this.pos.get_order() && line.node && line.node.parentNode) {
                 return this._super(line);
             } else {
                 return undefined;
@@ -1324,7 +1324,38 @@ can no longer be modified. Please create a new line with eg. a negative quantity
             } else {
                 posmodel_super.delete_current_order.apply(this, arguments);
             }
-        }
+        },
+
+        transfer_order_to_different_table: function () {
+            var self = this;
+            var old_order = this.get_order();
+            var new_order = this.add_new_order();
+            // remove all lines of the previous order and create a new one
+            old_order.get_orderlines().forEach(function (current) {
+                var decrease_line = current.clone();
+                decrease_line.order = old_order;
+                decrease_line.set_quantity(-current.get_quantity());
+                old_order.add_orderline(decrease_line);
+
+                var moved_line = current.clone();
+                moved_line.order = new_order;
+                new_order.add_orderline(moved_line);
+            });
+
+            // save the order with canceled lines
+            posmodel_super.set_order.call(this, old_order);
+            this.push_order(old_order).then(function () {
+
+                posmodel_super.set_order.call(self, new_order);
+                // disable blackbox_pro_forma to avoid saving a pro forma on set_order(null) call
+                new_order.blackbox_pro_forma = false;
+
+                // show table selection screen
+                posmodel_super.transfer_order_to_different_table.apply(self, arguments);
+                new_order.blackbox_pro_forma = true;
+            });
+
+        },
     });
 
     DB.include({
