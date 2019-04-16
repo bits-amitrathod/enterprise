@@ -162,7 +162,7 @@ class SaleSubscription(models.Model):
 
     @api.multi
     def set_open(self):
-        return self.write({'state': 'open', 'date': False})
+        return self.write({'state': 'open'})
 
     @api.multi
     def set_pending(self):
