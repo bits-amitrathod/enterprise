@@ -2125,6 +2125,42 @@ QUnit.module('ReportEditorManager', {
         });
     });
 
+    QUnit.test('reattach studio editor, no error', function (assert) {
+        var done = assert.async();
+        assert.expect(1);
+
+        this.templates.push({
+            key: 'template1',
+            view_id: 55,
+            arch:
+                '<kikou>' +
+                    '<t t-name="template1">' +
+                    '</t>' +
+                '</kikou>',
+        });
+
+        var rem = studioTestUtils.createReportEditorManager({
+            env: {
+                modelName: 'kikou',
+                ids: [42, 43],
+                currentId: 42,
+            },
+            report: {
+                report_name: 'awesome_report',
+            },
+            reportHTML: studioTestUtils.getReportHTML(this.templates),
+            reportViews: studioTestUtils.getReportViews(this.templates),
+        });
+
+        rem.editorIframeDef.then(function () {
+            // detach then reattach $iframe to simulate iframe content loss
+            $('<div />').replaceAll(rem.view.$iframe).replaceWith(rem.view.$iframe);
+            rem.updateEditor();
+            assert.ok(true, "Updating report editor did not cause an error");
+            rem.destroy();
+            done();
+        });
+    });
 });
 
 });
