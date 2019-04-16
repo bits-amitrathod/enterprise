@@ -46,7 +46,7 @@ class AccountFinancialReport(models.Model):
         return rslt
 
     def _mod347_write_type2_real_estates_records(self, report_data, year, current_company):
-        line_real_estate = self.env[''].browse(report_data['line_data']['id'])
+        line_real_estate = self.env['l10n_es_reports.real.estate'].browse(report_data['line_data']['id'])
         currency_id = current_company.currency_id
 
         # Group this real estate's invoices per partner
