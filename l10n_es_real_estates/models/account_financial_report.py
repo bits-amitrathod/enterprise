@@ -17,14 +17,14 @@ class AccountFinancialReport(models.Model):
 
         return {'count': count, 'total': total}
 
-    def _boe_export_mod_347(self, options, current_company, period, year):
+    def _boe_export_mod347(self, options, current_company, period, year):
         """ Overridden from l10n_es_reports to append the real estates record at
         the end of the generated BOE file.
         """
-        rslt = super(AccountFinancialReport, self)._boe_export_mod_347(options, current_company, period, year)
+        rslt = super(AccountFinancialReport, self)._boe_export_mod347(options, current_company, period, year)
 
         boe_report_options = self._mod347_build_boe_report_options(options, year)
-        self = self.with_context(self.set_context(boe_report_options))
+        self = self.with_context(self._set_context(boe_report_options))
         boe_wizard = self._retrieve_boe_manual_wizard(options)
         manual_params = boe_wizard.get_partners_manual_parameters_map()
         negocio_required_a = self._mod347_get_required_partner_ids_for_boe('real_estates', year+'-01-01', year+'-12-31', boe_wizard, 'A', 'local_negocio')
