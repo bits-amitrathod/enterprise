@@ -1406,6 +1406,7 @@
         <field name="formulas">balance = FRCDR_CHA_EXP.balance + FRCDR16.balance + FRCDR_CHA_FIN.balance + FRCDR_CHA_EXC.balance + FRCDR24.balance + FRCDR25.balance</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="0" />
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_01_fr_cdr_char_exp" model="account.financial.html.report.line">
@@ -1415,6 +1416,7 @@
         <field name="formulas">balance = FRCDRC1.balance + FRCDRC2.balance + FRCDRC3.balance + FRCDRC4.balance + FRCDRC5.balance + FRCDRC8.balance + FRCDRC9.balance + FRCDRC10.balance + FRCDRC11.balance + FRCDRC12.balance + FRCDRC13.balance + FRCDRC14.balance + FRCDRC15.balance</field>
         <field name="sequence" eval="1"/>
         <field name="level" eval="1" />
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc1" model="account.financial.html.report.line">
@@ -1425,6 +1427,7 @@
         <field name="domain" eval="['|', ('account_id.code', '=like', '607%'), ('account_id.code', '=like', '6097%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc2" model="account.financial.html.report.line">
@@ -1435,6 +1438,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '6037%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc3" model="account.financial.html.report.line">
@@ -1445,6 +1449,7 @@
         <field name="domain" eval="['|', ('account_id.code', '=like', '601%'), '|', ('account_id.code', '=like', '6091%'), '|', ('account_id.code', '=like', '602%'), '|', ('account_id.code', '=like', '6092%'), '|', ('account_id.code', '=like', '6081%'), ('account_id.code', '=like', '6082%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc4" model="account.financial.html.report.line">
@@ -1455,6 +1460,7 @@
         <field name="domain" eval="['|', ('account_id.code', '=like', '6031%'), ('account_id.code', '=like', '6032%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc5" model="account.financial.html.report.line">
@@ -1465,6 +1471,7 @@
         <field name="domain" eval="['|', ('account_id.code', '=like', '604%'),  '|', ('account_id.code', '=like', '605%'), '|', ('account_id.code', '=like', '606%'), '|', ('account_id.code', '=like', '6094%'), '|', ('account_id.code', '=like', '6095%'), '|', ('account_id.code', '=like', '6096%'), '|', ('account_id.code', '=like', '61%'),('account_id.code', '=like', '62%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc8" model="account.financial.html.report.line">
@@ -1475,6 +1482,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '63%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc9" model="account.financial.html.report.line">
@@ -1485,6 +1493,7 @@
         <field name="domain" eval="['|', ('account_id.code', '=like', '641%'),  '|', ('account_id.code', '=like', '644%'), '&amp;', ('account_id.code', '=like', '648%'), ('account_id.tag_ids', 'in', [ref('l10n_fr.account_fr_tag_salaires')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc10" model="account.financial.html.report.line">
@@ -1495,6 +1504,7 @@
         <field name="domain" eval="['|', ('account_id.code', '=like', '645%'),  '|', ('account_id.code', '=like', '646%'), '|', ('account_id.code', '=like', '647%'), '|', ('account_id.code', '=like', '649%'), '|', '&amp;', ('account_id.code', '=like', '648%'), ('account_id.tag_ids', '=', False), '&amp;', ('account_id.code', '=like', '648%'), ('account_id.tag_ids', 'in', [ref('l10n_fr.account_fr_tag_charges_sociales')])]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc11" model="account.financial.html.report.line">
@@ -1505,6 +1515,7 @@
         <field name="domain" eval="['|', ('account_id.code', '=like', '6811%'),  ('account_id.code', '=like', '6812%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc12" model="account.financial.html.report.line">
@@ -1515,6 +1526,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '6816%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc13" model="account.financial.html.report.line">
@@ -1525,6 +1537,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '6817%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc14" model="account.financial.html.report.line">
@@ -1535,6 +1548,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '6815%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc15" model="account.financial.html.report.line">
@@ -1545,6 +1559,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '65%'), '!', ('account_id.code', '=like', '655%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_01_fr_cdr16" model="account.financial.html.report.line">
@@ -1555,6 +1570,7 @@
         <field name="formulas">balance = sum.balance</field>
         <field name="sequence" eval="2"/>
         <field name="level" eval="1" />
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_01_fr_cdr_char_fin" model="account.financial.html.report.line">
@@ -1564,6 +1580,7 @@
         <field name="formulas">balance = FRCDRC17.balance + FRCDRC18.balance + FRCDRC19.balance + FRCDRC20.balance</field>
         <field name="sequence" eval="3"/>
         <field name="level" eval="1" />
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc17" model="account.financial.html.report.line">
@@ -1574,6 +1591,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '686%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc18" model="account.financial.html.report.line">
@@ -1584,6 +1602,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '66%'), '!', ('account_id.code', '=like', '666%'), '!', ('account_id.code', '=like', '667%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc19" model="account.financial.html.report.line">
@@ -1594,6 +1613,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '666%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc20" model="account.financial.html.report.line">
@@ -1604,6 +1624,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '667%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_01_fr_cdr_char_exc" model="account.financial.html.report.line">
@@ -1613,6 +1634,7 @@
         <field name="formulas">balance = FRCDRC21.balance + FRCDRC22.balance + FRCDRC23.balance</field>
         <field name="sequence" eval="4"/>
         <field name="level" eval="1" />
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc21" model="account.financial.html.report.line">
@@ -1623,6 +1645,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '671%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc22" model="account.financial.html.report.line">
@@ -1633,6 +1656,7 @@
         <field name="domain" eval="['|', ('account_id.code', '=like', '675%'),  ('account_id.code', '=like', '678%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_fr_cdrc23" model="account.financial.html.report.line">
@@ -1643,6 +1667,7 @@
         <field name="domain" eval="[('account_id.code', '=like', '687%')]" />
         <field name="formulas">balance = sum.balance</field>
         <field name="level" eval="2"/>
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_01_fr_cdr24" model="account.financial.html.report.line">
@@ -1653,6 +1678,7 @@
         <field name="formulas">balance = sum.balance</field>
         <field name="sequence" eval="5"/>
         <field name="level" eval="1" />
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_01_fr_cdr25" model="account.financial.html.report.line">
@@ -1663,6 +1689,7 @@
         <field name="formulas">balance = sum.balance</field>
         <field name="sequence" eval="6"/>
         <field name="level" eval="1" />
+        <field name="green_on_positive" eval="0"/>
     </record>
 
     <record id="account_financial_report_line_01_fr_cdr_prod" model="account.financial.html.report.line">
