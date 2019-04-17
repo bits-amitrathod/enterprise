@@ -457,6 +457,11 @@ var AbstractFieldBlock = AbstractNewBuildingBlock.extend({
                 order: 'order',
                 type: 'related',
                 filters: { searchable: false },
+                filter: function (field) {
+                    // For single fields (i.e. NOT a table), forbid putting x2many's
+                    // Because it just doesn't make sense otherwise
+                    return ! _.contains(['one2many', 'many2many'], field.type);
+                }
             };
 
             var target = self.targets[0];

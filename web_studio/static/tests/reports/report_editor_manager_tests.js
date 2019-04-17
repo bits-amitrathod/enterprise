@@ -84,6 +84,7 @@ QUnit.module('ReportEditorManager', {
                     child: {string: "Child", type: 'many2one', relation: 'model.test.child', searchable: true},
                     child_bis: {string: "Child Bis", type: 'many2one', relation: 'model.test.child', searchable: true},
                     children: {string: "Children", type: 'many2many', relation: 'model.test.child', searchable: true},
+                    attachment_ids: {string: "Attachments", type: 'one2many', relation: 'ir.attachment', searchable: true},
                 },
                 records: [],
             },
@@ -833,7 +834,7 @@ QUnit.module('ReportEditorManager', {
     });
 
     QUnit.test('drag & drop field block', function (assert) {
-        assert.expect(2);
+        assert.expect(6);
         var done = assert.async();
 
         this.templates.push({
@@ -894,6 +895,19 @@ QUnit.module('ReportEditorManager', {
                 'Only "o" should be selectable, not "docs"');
 
             $('.o_web_studio_field_modal .o_field_selector_item[data-name="o"]').trigger('click');
+
+            var allAvailableFields = $('.o_web_studio_field_modal .o_field_selector_item').text().trim();
+
+            assert.ok(allAvailableFields.includes('Name'),
+                'Char field is present');
+            assert.ok(allAvailableFields.includes('Child'),
+                'many2one fields are present');
+
+            assert.notOk(allAvailableFields.includes('Children'),
+                'many2many fields should not be present');
+            assert.notOk(allAvailableFields.includes('Attachments'),
+                'one2many fields should not be present');
+
             $('.o_web_studio_field_modal .o_field_selector_item[data-name="child"]').trigger('click');
             $('.o_web_studio_field_modal .o_field_selector_item[data-name="name"]').trigger('click');
             $('.o_web_studio_field_modal .btn-primary').trigger('click');
