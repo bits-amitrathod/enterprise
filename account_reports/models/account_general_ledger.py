@@ -450,8 +450,8 @@ class report_account_general_ledger(models.AbstractModel):
             })
             journal_currency = self.env['account.journal'].browse(journals[0]['id']).company_id.currency_id
             for tax, values in self._get_taxes(journals[0]).items():
-                base_amount = journal_currency._convert(values['base_amount'], used_currency, company_id, options['date_to'])
-                tax_amount = journal_currency._convert(values['tax_amount'], used_currency, company_id, options['date_to'])
+                base_amount = journal_currency._convert(values['base_amount'], used_currency, company_id, options['date']['date_to'])
+                tax_amount = journal_currency._convert(values['tax_amount'], used_currency, company_id, options['date']['date_to'])
                 lines.append({
                     'id': '%s_tax' % (tax.id,),
                     'name': tax.name + ' (' + str(tax.amount) + ')',
