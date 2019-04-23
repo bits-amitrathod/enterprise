@@ -787,7 +787,11 @@ can no longer be modified. Please create a new line with eg. a negative quantity
             var insz_or_bis_number = this.pos.get_cashier().insz_or_bis_number;
 
             if (! insz_or_bis_number) {
-                throw new Error("FDM error: " + _t("INSZ or BIS number not set for current cashier."));
+                this.pos.gui.show_popup('error',{
+                    'title': _t("Fiscal Data Module error"),
+                    'body': _t("INSZ or BIS number not set for current cashier."),
+                });
+                return false;
             }
 
             packet.add_field(new FDMPacketField("ticket date", 8, order.blackbox_pos_receipt_time.format("YYYYMMDD")));
@@ -1099,6 +1103,9 @@ can no longer be modified. Please create a new line with eg. a negative quantity
             order.blackbox_base_price_in_euro_per_tax_letter = order.get_base_price_in_euro_per_tax_letter_list();
 
             var packet = this.proxy._build_fdm_hash_and_sign_request(order);
+            if (!packet) {
+                return new $.Deferred().reject();
+            }
             var def = this.proxy.request_fdm_hash_and_sign(packet).then(function (parsed_response) {
                 var def = new $.Deferred();
 
