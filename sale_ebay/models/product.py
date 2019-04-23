@@ -523,7 +523,7 @@ class ProductTemplate(models.Model):
         for item in items:
             domain = [
                 ('ebay_id', '=', item['ItemID']),
-                ('virtual_available', '>' if sync_big_stocks else '<', MAX_REVISE_CALLS),
+                ('virtual_available', '>=' if sync_big_stocks else '<', MAX_REVISE_CALLS),
                 ('ebay_use', '=', True),
             ]
             product = self.search(domain)
@@ -556,7 +556,7 @@ class ProductTemplate(models.Model):
         """
         domain = [
             ('ebay_use', '=', True),
-            ('virtual_available', '>' if sync_big_stocks else '<', MAX_REVISE_CALLS),
+            ('virtual_available', '>=' if sync_big_stocks else '<', MAX_REVISE_CALLS),
         ]
         products = self.search(domain)
         if not products:
