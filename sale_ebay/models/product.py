@@ -559,6 +559,8 @@ class ProductTemplate(models.Model):
             ('virtual_available', '>' if sync_big_stocks else '<', MAX_REVISE_CALLS),
         ]
         products = self.search(domain)
+        if not products:
+            return  # there is nothing to synchronize
         oldest = min(products.mapped('ebay_start_date'))
         upper_bound = math.ceil((datetime.today() - oldest).days / 120)
         for i in range(upper_bound):
