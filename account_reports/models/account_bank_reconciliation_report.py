@@ -122,7 +122,14 @@ class account_bank_reconciliation_report(models.AbstractModel):
             LEFT JOIN account_invoice invoice ON invoice.id = line.invoice_id
             LEFT JOIN account_bank_statement_line statement_line ON statement_line.id = line.statement_line_id
             LEFT JOIN account_payment payment ON line.payment_id = payment.id
-            WHERE payment.journal_id = %s
+            LEFT JOIN account_journal journal ON line.journal_id = journal.id
+            WHERE CASE
+                /* Handles voucher case i.e. the journal of the operation is not bank or cash */
+                /* standard case must be the journal on the line */
+                WHEN journal.type NOT IN ('cash', 'bank')
+                    THEN payment.journal_id
+                    ELSE line.journal_id
+                END = %s
             AND account_type.type = %s
             AND line.full_reconcile_id  IS NULL
             AND line.date <= %s
