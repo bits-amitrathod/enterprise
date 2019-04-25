@@ -247,7 +247,7 @@
         <record id="pos_config_view_form_inherit_blackbox_be" model="ir.ui.view">
             <field name="name">pos.config.form.inherit.blackbox.be</field>
             <field name="model">pos.config</field>
-            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="inherit_id" ref="pos_restaurant.pos_config_view_form_inherit_restaurant"/>
             <field name="arch" type="xml">
                 <xpath position="inside"
                     expr="//div[@id='posbox_reference']/div/div[hasclass('o_setting_right_pane')]/div[hasclass('content-group')]">
@@ -258,6 +258,28 @@
                         <field name="blackbox_pos_production_id"/>
                     </div>
                 </xpath>
+
+                <!-- module_pos_discount -->
+                <xpath expr="//div[hasclass('o_settings_container')][5]/div[hasclass('o_setting_box')][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- module_pos_loyalty -->
+                <xpath expr="//div[hasclass('o_settings_container')][5]/div[hasclass('o_setting_box')][4]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- restrict_price_control -->
+                <xpath expr="//div[hasclass('o_settings_container')][5]/div[hasclass('o_setting_box')][5]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('blackbox_pos_production_id', '!=', False)]}</attribute>
+                </xpath>
+                <!-- reprint -->
+                <xpath expr="//div[@id='receipt']/div[hasclass('o_setting_box')][4]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- iface_splitbill -->
+                <xpath expr="//div[@id='receipt']/div[hasclass('o_setting_box')][6]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('blackbox_pos_production_id', '!=', False), ('module_pos_restaurant', '=', False)]}</attribute>
+                </xpath>
+
             </field>
         </record>
 
