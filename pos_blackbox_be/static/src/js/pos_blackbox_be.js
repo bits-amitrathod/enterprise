@@ -1419,6 +1419,10 @@ can no longer be modified. Please create a new line with eg. a negative quantity
     });
 
     screens.NumpadWidget.include({
+        start: function(event) {
+            this._super(event);
+            this.$el.find('.mode-button[data-mode=price]').prop("disabled",true);
+        },
         clickChangeMode: function (event) {
             if (event.currentTarget.attributes['data-mode'].nodeValue === "price") {
                 this.gui.show_popup("error", {
