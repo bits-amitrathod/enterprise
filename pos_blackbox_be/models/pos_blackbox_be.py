@@ -616,8 +616,10 @@ class product_template(models.Model):
         blackbox_products = self.env['ir.model.data'].search([
             ('module', '=', 'pos_blackbox_be'), ('model', '=', 'product.template')
         ])
+        tip_products = self.env['pos.config'].search([]).mapped('tip_product_id').ids
+        to_keep = blackbox_products.mapped('res_id') + tip_products
         other_products = self.search([
-            ('id', 'not in', blackbox_products.mapped('res_id')), ('available_in_pos', '=', True)
+            ('id', 'not in', to_keep), ('available_in_pos', '=', True)
         ])
         return other_products.write({'available_in_pos': False})
 
