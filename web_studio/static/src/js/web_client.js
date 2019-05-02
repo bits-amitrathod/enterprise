@@ -285,17 +285,20 @@ WebClient.include({
      * Add conditions here to enable it
      */
     _isStudioEditable: function (action) {
-        if (action && action.action_descr.xml_id) {
-            var descr = action.action_descr;
-            if (descr.type === 'ir.actions.act_window') {
-                // we don't want to edit Settings as it is a special case of form view
-                // this is a heuristic to determine if the action is Settings
-                if (descr.res_model && descr.res_model.indexOf('settings') === -1) {
-                    return true;
-                }
-            }
+        // Hello chs, I did the forward port myself :)
+        if (!(action && action.action_descr.xml_id)) {
+            return false;
         }
-        return false;
+
+        var descr = action.action_descr;
+        return descr.type === 'ir.actions.act_window'
+               && descr.res_model
+               // we don't want to edit Settings as it is a special case of form view
+               // this is a heuristic to determine if the action is Settings
+               && descr.res_model.indexOf('settings') === -1
+               // we don't want to edit Dashboards
+               && descr.res_model !== 'board.board'
+               ? true : false;
     },
     /**
      * Performs the initial RPC for studio to get the global useful information.
