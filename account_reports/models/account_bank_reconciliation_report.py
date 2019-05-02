@@ -98,7 +98,8 @@ class account_bank_reconciliation_report(models.AbstractModel):
         rslt['odoo_balance'] = sum([line.amount_currency if rslt['use_foreign_currency'] else line.balance for line in lines_already_accounted])
 
         # Payments not reconciled with a bank statement line
-        aml_domain = [('move_id.journal_id', '=', journal_id),
+        aml_domain = ['|', '&', ('move_id.journal_id.type', 'in', ('cash', 'bank')), ('move_id.journal_id', '=', journal_id),
+                           '&', ('move_id.journal_id.type', 'not in', ('cash', 'bank')), ('payment_id.journal_id', '=', journal_id),
                      '|', ('statement_line_id', '=', False),
                      ('statement_line_id.date', '>', self.env.context['date_to']),
                      ('user_type_id.type', '=', 'liquidity'),
