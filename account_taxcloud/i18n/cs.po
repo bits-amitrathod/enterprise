@@ -73,7 +73,7 @@ msgstr "Výchozí kategorie"
 #: model:ir.model.fields,field_description:account_taxcloud.field_res_company__tic_category_id
 #: model:ir.model.fields,field_description:account_taxcloud.field_res_config_settings__tic_category_id
 msgid "Default TIC Code"
-msgstr ""
+msgstr "Výchozí kód TIC"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,help:account_taxcloud.field_res_company__tic_category_id
@@ -151,23 +151,23 @@ msgstr "Šablona výrobku"
 #. module: account_taxcloud
 #: model_terms:ir.ui.view,arch_db:account_taxcloud.account_taxcloud_tic_category_tree
 msgid "TIC Category"
-msgstr ""
+msgstr "Kategorie TIC"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_tic_category__code
 msgid "TIC Category Code"
-msgstr ""
+msgstr "Kód kategorie TIC"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_category__tic_category_id
 #: model_terms:ir.ui.view,arch_db:account_taxcloud.account_taxcloud_tic_category_search
 msgid "TIC Code"
-msgstr ""
+msgstr "TIC kód"
 
 #. module: account_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_product_tic_category__description
 msgid "TIC Description"
-msgstr ""
+msgstr "TIC popis"
 
 #. module: account_taxcloud
 #: model_terms:ir.ui.view,arch_db:account_taxcloud.product_category_view_form_inherit_account_taxcloud
@@ -209,6 +209,14 @@ msgid ""
 "automatically assigns products to this TIC as a default, so unless you've "
 "changed an item's TIC in the past, it should already be set to 00000."
 msgstr ""
+"TaxCloud používá kódy informací o zdanitelnosti (TIC), aby se ujistil, že "
+"každá položka ve vašem katalogu je zdaňována správným kurzem (nebo u položek"
+" osvobozených od daní, které nejsou zdaňovány vůbec), takže je důležité se "
+"ujistit, že každé položce je přiřazen TIC . Pokud pro danou položku ve svém "
+"katalogu nemůžete najít správnou daňovou kategorii, můžete ji přiřadit k TIC"
+" „Obecné zboží a služby“, 00000. TaxCloud automaticky přiřazuje produkty k "
+"tomuto TIC jako výchozí, takže pokud jste se nezměnili v minulosti měla být "
+"nastavena na 00000."
 
 #. module: account_taxcloud
 #: model:ir.model,name:account_taxcloud.model_account_fiscal_position_template
@@ -229,6 +237,8 @@ msgid ""
 "The source document on the refund is not valid and thus the refunded cart "
 "won't be logged on your taxcloud account"
 msgstr ""
+"Zdrojový dokument o refundaci není platný, a proto Vám vrácený nákupní košík"
+" nebude zapsán na váš taxcloud účet"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/account_invoice.py:85
@@ -253,10 +263,10 @@ msgstr "Aktualizovat daňové sazby z TaxCloud"
 #: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position__is_taxcloud
 #: model:ir.model.fields,field_description:account_taxcloud.field_account_fiscal_position_template__is_taxcloud
 msgid "Use TaxCloud API"
-msgstr ""
+msgstr "Použít API služby TaxCloud"
 
 #. module: account_taxcloud
 #: code:addons/account_taxcloud/models/product.py:28
 #, python-format
 msgid "[%s] %s"
-msgstr ""
+msgstr "[%s] %s"
