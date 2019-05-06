@@ -32,7 +32,7 @@
             <field name="uom_po_id" ref="product.product_uom_unit"/>
             <field name="taxes_id" eval="[(6, 0, [ref('zero_vat_work_in_out')])]"/>
         </record>
-        <record id="pos_restaurant.product_product_tip" model="product.product">
+        <record id="point_of_sale.product_product_tip" model="product.product">
             <field name="taxes_id" eval="[(6, 0, [ref('zero_vat_work_in_out')])]"/>
         </record>
 
