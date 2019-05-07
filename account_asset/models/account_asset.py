@@ -440,6 +440,9 @@ class AccountAssetAsset(models.Model):
 
     @api.model
     def create(self, vals):
+        if self._context.get('import_file', False) and 'category_id' in vals:
+            changed_vals = self.onchange_category_id_values(vals['category_id'])
+            vals.update(changed_vals['value'])
         asset = super(AccountAssetAsset, self.with_context(mail_create_nolog=True)).create(vals)
         asset.sudo().compute_depreciation_board()
         return asset
