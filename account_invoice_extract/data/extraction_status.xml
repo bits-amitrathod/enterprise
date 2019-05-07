@@ -58,4 +58,24 @@
         </xpath>
     </template>
 
+    <template id="qunit_suite" name="account_invoice_extract_tests" inherit_id="web.qunit_suite">
+        <xpath expr="//t[@t-set='head']" position="inside">
+            <script type="text/javascript" src="/account_invoice_extract/static/src/tests/helpers/invoice_extract_test_utils.js"></script>
+            <script type="text/javascript" src="/account_invoice_extract/static/src/tests/invoice_extract_box_tests.js"></script>
+            <script type="text/javascript" src="/account_invoice_extract/static/src/tests/invoice_extract_box_layer_tests.js"></script>
+            <script type="text/javascript" src="/account_invoice_extract/static/src/tests/invoice_extract_fields_and_box_layer_tests.js"></script>
+            <script type="text/javascript" src="/account_invoice_extract/static/src/tests/invoice_extract_field_tests.js"></script>
+            <script type="text/javascript" src="/account_invoice_extract/static/src/tests/invoice_extract_fields_tests.js"></script>
+            <script type="text/javascript" src="/account_invoice_extract/static/src/tests/invoice_extract_field_button_tests.js"></script>
+            <script type="text/javascript" src="/account_invoice_extract/static/src/tests/invoice_extract_form_view_tests.js"></script>
+
+            <!--
+                This style is used for box layers on attachment that are images.
+                For pdf, it is dynamically inserted in the header of the iframe.
+                This explains why this is CSS, and not SCSS
+            -->
+            <link rel="stylesheet" type="text/css" href="/account_invoice_extract/static/src/css/account_invoice_extract.css"/>
+        </xpath>
+    </template>
+
 </odoo>
