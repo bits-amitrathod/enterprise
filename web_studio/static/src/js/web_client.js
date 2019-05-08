@@ -234,7 +234,7 @@ WebClient.include({
                 model: action_options.action.res_model,
             }));
         }
-        return $.when(defs).then(function(chatter_allowed) {
+        return $.when.apply($, defs).then(function(chatter_allowed) {
             self.studio_chatter_allowed = chatter_allowed;
             // grep: action_web_studio_app_creator, action_web_studio_main
             return self.do_action('action_web_studio_' + mode, action_options);
