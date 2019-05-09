@@ -699,6 +699,11 @@ class AccountFinancialReportLine(models.Model):
 
             #we use query_get() to filter out unrelevant journal items to have a shadowed table as small as possible
             tables, where_clause, where_params = self.env['account.move.line']._query_get(domain=self._get_aml_domain())
+            # Remove analytic tags for the payment_table.
+            # DO NOT FORWARD-PORT!!! ONLY FOR v11! Because analytic_tag_ids was removed in v12.
+            ctx = dict(self.env.context)
+            ctx.pop('analytic_tag_ids', None)
+            tables_pay, where_clause_pay, where_params_pay = self.env['account.move.line'].with_context(ctx)._query_get()
             sql = """WITH account_move_line AS (
               SELECT """ + select_clause_1 + """
                FROM """ + tables + """
@@ -719,10 +724,10 @@ class AccountFinancialReportLine(models.Model):
                                 FROM account_move_line
                                 GROUP BY move_id, account_id) sub_aml
                             ON (aml.account_id = sub_aml.account_id AND sub_aml.move_id=aml.move_id)
-                   LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables + """
+                   LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables_pay + """
                    WHERE part.credit_move_id = "account_move_line".id
                     AND "account_move_line".user_type_id IN %s
-                    AND """ + where_clause + """
+                    AND """ + where_clause_pay + """
                  UNION ALL
                  SELECT aml.move_id, \"account_move_line\".date,
                         CASE WHEN (aml.balance = 0 OR sub_aml.total_per_account = 0)
@@ -735,10 +740,10 @@ class AccountFinancialReportLine(models.Model):
                                 FROM account_move_line
                                 GROUP BY move_id, account_id) sub_aml
                             ON (aml.account_id = sub_aml.account_id AND sub_aml.move_id=aml.move_id)
-                   LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables + """
+                   LEFT JOIN account_move am ON aml.move_id = am.id, """ + tables_pay + """
                    WHERE part.debit_move_id = "account_move_line".id
                     AND "account_move_line".user_type_id IN %s
-                    AND """ + where_clause + """
+                    AND """ + where_clause_pay + """
                )
                SELECT """ + select_clause_2 + """
                 FROM account_move_line aml
@@ -747,7 +752,7 @@ class AccountFinancialReportLine(models.Model):
                   AND aml.move_id IN (SELECT DISTINCT move_id FROM account_move_line WHERE user_type_id IN %s)
               )
             ) """
-            params = [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)]
+            params = [tuple(user_types.ids)] + where_params + [tuple(user_types.ids)] + where_params_pay + [tuple(user_types.ids)] + where_params_pay + [tuple(user_types.ids)]
         return sql, params
 
     def _compute_line(self, currency_table, financial_report, group_by=None, domain=[]):
