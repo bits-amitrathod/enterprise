@@ -313,6 +313,12 @@ class SignRequest(models.Model):
 
         return True
 
+    def _get_font(self):
+        return "Helvatica"
+
+    def _get_normal_font_size(self):
+        return 0.015
+
     @api.one
     def generate_completed_document(self):
         if len(self.template_id.sign_item_ids) <= 0:
@@ -320,8 +326,8 @@ class SignRequest(models.Model):
             return
 
         old_pdf = PdfFileReader(io.BytesIO(base64.b64decode(self.template_id.attachment_id.datas)), strict=False, overwriteWarnings=False)
-        font = "Helvetica"
-        normalFontSize = 0.015
+        font = self._get_font()
+        normalFontSize = self._get_normal_font_size()
 
         packet = io.BytesIO()
         can = canvas.Canvas(packet)
