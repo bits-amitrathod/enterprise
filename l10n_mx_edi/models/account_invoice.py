@@ -994,7 +994,12 @@ class AccountInvoice(models.Model):
                 continue
             record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-%s.xml' % (
                 record.journal_id.code, record.number, version.replace('.', '-'))).replace('/', '')
-            record._l10n_mx_edi_retry()
+            subscription = 'subscription_id' in record.invoice_line_ids._fields and record.invoice_line_ids.filtered(
+                'subscription_id')
+            ctx = {}
+            if subscription:
+                ctx = {'disable_after_commit': True}
+            record.with_context(**ctx)._l10n_mx_edi_retry()
         return result
 
     @api.multi
