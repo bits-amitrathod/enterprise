@@ -163,7 +163,7 @@ msgstr "이 별칭에 대한 새 레코드를 만들 때 기본값을 제공하�
 msgid ""
 "A set of condition and actions which will be available to all attachments "
 "matching the conditions"
-msgstr "조건과 일치하는 모든 첨부 파일에서 사용할 수 있는 조건 및 작업 셋트"
+msgstr "조건과 일치하는 모든 첨부 파일에서 사용할 수 있는 일련의 조건 및 작업"
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_hr_documents_absences
@@ -1312,7 +1312,7 @@ msgstr "링크 공유"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__type
 msgid "Share type"
-msgstr "유형 공유"
+msgstr "공유 유형"
 
 #. module: documents
 #: model:ir.ui.menu,name:documents.share_menu
@@ -1332,7 +1332,7 @@ msgstr "첨부파일 공유됨"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
 msgid "Show all records which has next action date is before today"
-msgstr "다음 행동 날짜가 오늘 이전 인 모든 기록보기"
+msgstr "오늘 이전의 모든 활동 날짜 기록 보기"
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_internal_template_sign
@@ -1342,14 +1342,14 @@ msgstr "서명"
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Signature template"
-msgstr ""
+msgstr "서명 서식"
 
 #. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/xml/documents_inspector.xml:68
 #, python-format
 msgid "Size"
-msgstr "사이즈"
+msgstr "크기"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__state
@@ -1359,7 +1359,7 @@ msgstr "상태"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__children_folder_ids
 msgid "Sub folders"
-msgstr ""
+msgstr "하위 폴더"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__activity_summary
@@ -1379,17 +1379,17 @@ msgstr "태그"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_folder__facet_ids
 msgid "Tag Categories"
-msgstr ""
+msgstr "태그 범주"
 
 #. module: documents
 #: sql_constraint:documents.tag:0
 msgid "Tag already exists for this facet"
-msgstr ""
+msgstr "이 패싯엔 태그가 이미 있습니다."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_folder__parent_folder_id
 msgid "Tag categories from parent folders will be shared to their sub folders"
-msgstr ""
+msgstr "상위 폴더의 태그 범주는 하위 폴더와 공유됩니다."
 
 #. module: documents
 #. openerp-web
@@ -1415,8 +1415,8 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
-"이 별칭이 해당하는 모델 (Odoo 문서 종류)입니다. 기존 레코드에 응답하지 않는 모든 수신 이메일은이 모델의 새 레코드 (예 : "
-"프로젝트 작업)를 생성하게됩니다."
+"이 별칭이 해당하는 모델(Odoo 문서 종류)입니다. 기존 레코드에 응답하지 않는 모든 수신 이메일은 이 모델에 새 레코드(예 : "
+"프로젝트 작업)를 생성하게 됩니다."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_name
@@ -1439,17 +1439,17 @@ msgstr ""
 #. module: documents
 #: sql_constraint:documents.share:0
 msgid "This access token already exists"
-msgstr ""
+msgstr "액세스 토큰이 이미 있습니다."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_folder__company_id
 msgid "This folder will only be available for the selected company"
-msgstr ""
+msgstr "이 폴더는 선택한 회사에서만 사용할 수 있습니다."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_folder__group_ids
 msgid "This folder will only be available for the selected user groups"
-msgstr ""
+msgstr "이 폴더는 선택된 사용자 그룹에서만 사용할 수 있습니다."
 
 #. module: documents
 #. openerp-web
@@ -1458,19 +1458,19 @@ msgstr ""
 msgid ""
 "This icons gets you to the <b>discussion board</b>, to chat with followers "
 "of this document"
-msgstr ""
+msgstr "이 아이콘을 통해 <b>토론 게시판</b>으로 가서 이 문서의 팔로어와 대화할 수 있습니다."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.not_available
 msgid "This link has expired"
-msgstr ""
+msgstr "이 링크가 만료되었습니다."
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_finance_status_tc
 #: model:documents.tag,name:documents.documents_hr_status_tc
 #: model:documents.tag,name:documents.documents_internal_status_tc
 msgid "To Review"
-msgstr "검토"
+msgstr "검토하기"
 
 #. module: documents
 #. openerp-web
@@ -1480,11 +1480,12 @@ msgid ""
 "To delete files, archive them first. </br>Archived documents can still be "
 "accessed using the Archive option in the Filters top menu."
 msgstr ""
+"파일을 삭제하려면 먼저 파일을 보관하십시오. </br>보관된 문서는 상단 필터 메뉴의 보관 옵션을 사용하여 사용할 수 있습니다."
 
 #. module: documents
 #: model:mail.activity.type,name:documents.mail_documents_activity_data_tv
 msgid "To validate"
-msgstr "승인 예정"
+msgstr "승인하기"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
@@ -1502,7 +1503,7 @@ msgstr "기능설명"
 #: code:addons/documents/static/src/js/tour.js:35
 #, python-format
 msgid "Try to <b>post a message</b>"
-msgstr ""
+msgstr "<b>메시지를 게시</b>하려고 시도하십시오."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__type
@@ -1523,7 +1524,7 @@ msgstr "URL"
 #: code:addons/documents/static/src/xml/documents_inspector.xml:162
 #, python-format
 msgid "Un-archive"
-msgstr ""
+msgstr "보관 해제"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_unread
@@ -1549,11 +1550,13 @@ msgid ""
 "Upload <span class=\"font-weight-normal\">a file or</span> drag <span class"
 "=\"font-weight-normal\">it here.</span>"
 msgstr ""
+"<span class=\"font-weight-normal\">파일</span>을 업로드하거나 <span class=\"font-"
+"weight-normal\">여기로 끕니다.</span>"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__email_drop
 msgid "Upload by Email"
-msgstr ""
+msgstr "이메일을 통해 업로드"
 
 #. module: documents
 #. openerp-web
@@ -1562,7 +1565,7 @@ msgstr ""
 msgid ""
 "Use <b>folders</b> to organize documents by departments, or group of "
 "interests"
-msgstr ""
+msgstr "<b>폴더</b>를 사용하여 부서 또는 관심 그룹별로 문서 구성"
 
 #. module: documents
 #: model:res.groups,name:documents.group_documents_user
@@ -1577,7 +1580,7 @@ msgstr "사용자"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__date_deadline
 msgid "Valid Until"
-msgstr "유효 마감일"
+msgstr "유효기간"
 
 #. module: documents
 #: model:documents.workflow.rule,name:documents.documents_Finance_validate_review
@@ -1600,7 +1603,7 @@ msgstr "공급업체 청구서"
 #. module: documents
 #: selection:documents.workflow.rule,create_model:0
 msgid "Vendor bill"
-msgstr ""
+msgstr "공급업체 청구서"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
@@ -1610,14 +1613,14 @@ msgstr "동영상"
 #. module: documents
 #: model:documents.tag,name:documents.documents_marketing_assets_Videos
 msgid "Videos"
-msgstr ""
+msgstr "동영상"
 
 #. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/js/tour.js:13
 #, python-format
 msgid "Want to become a <b>paperless company</b>? Let's discover Odoo DMS."
-msgstr ""
+msgstr "<b>종이 없는 회사</b>가 되고 싶나요? Odoo DMS를 찾아보세요."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__website_message_ids
@@ -1643,23 +1646,23 @@ msgstr "주"
 msgid ""
 "When you <b>upload documents</b>, they appear in the selected folder and "
 "tags."
-msgstr ""
+msgstr "<b>문서를 업로드</b>하면 선택한 폴더 및 태그에 문서가 나타납니다."
 
 #. module: documents
 #: model:ir.actions.act_window,name:documents.workflow_rule_action
 msgid "Workflow Actions"
-msgstr ""
+msgstr "업무 순서 작업"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_action__workflow_rule_id
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_tag_criteria__workflow_rule_id
 msgid "Workflow Rule"
-msgstr ""
+msgstr "업무 순서 규칙"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.workflow_rule_form_view
 msgid "Write a tooltip for the action here"
-msgstr ""
+msgstr "여기에 작업에 대한 툴팁을 작성합니다."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_ir_attachment__type
@@ -1673,26 +1676,26 @@ msgstr "컴퓨터에서 파일을 업로드하거나 인터넷 링크를 복사�
 #: code:addons/documents/static/src/xml/documents_inspector.xml:54
 #, python-format
 msgid "documents selected"
-msgstr ""
+msgstr "선택한 문서"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_page
 msgid "documents shared by"
-msgstr ""
+msgstr "다음에 의해 공유된 문서"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_view_form
 #: model_terms:ir.ui.view,arch_db:documents.share_view_form_popup
 #: model_terms:ir.ui.view,arch_db:documents.workflow_rule_form_view
 msgid "e.g. Discuss proposal"
-msgstr "예: 의논/토의 제안"
+msgstr "예 : 제안 논의"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_facet__tooltip
 msgid "hover text description"
-msgstr ""
+msgstr "마우스 오버 텍스트 설명"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid "shared by"
-msgstr ""
+msgstr "다음에 의해 공유됨"
