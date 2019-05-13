@@ -314,7 +314,7 @@ class SignRequest(models.Model):
         return True
 
     def _get_font(self):
-        return "Helvatica"
+        return "Helvetica"
 
     def _get_normal_font_size(self):
         return 0.015
