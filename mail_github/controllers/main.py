@@ -202,6 +202,7 @@ class GithubController(http.Controller):
             return {
                 'action': MAP_GITHUB_EVENT_ACTION.get(payload_data['action'], payload_data['action']),
                 'object_type': 'issue',
+                'object_label': _('issue'),
                 'object': self._parse_github_payload_event_issue(payload_data['issue']),
             }
         if event_type == 'pull_request':
