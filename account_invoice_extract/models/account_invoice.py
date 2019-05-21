@@ -564,21 +564,21 @@ class AccountInvoice(models.Model):
                         keys.append(taxes_found[(taxe, taxe_type)])
 
                 if tuple(keys) not in aggregated_lines:
-                    aggregated_lines[tuple(keys)] = {'total': subtotal, 'description': [description] if description is not None else []}
+                    aggregated_lines[tuple(keys)] = {'subtotal': subtotal, 'description': [description] if description is not None else []}
                 else:
-                    aggregated_lines[tuple(keys)]['total'] += subtotal
+                    aggregated_lines[tuple(keys)]['subtotal'] += subtotal
                     if description is not None:
                         aggregated_lines[tuple(keys)]['description'].append(description)
 
             # if there is only one line after aggregating the lines, use the total found by the ocr as it is less error-prone
             if len(aggregated_lines) == 1:
-                aggregated_lines[list(aggregated_lines.keys())[0]]['total'] = subtotal_ocr
+                aggregated_lines[list(aggregated_lines.keys())[0]]['subtotal'] = subtotal_ocr
 
             for taxes_ids, il in aggregated_lines.items():
                 vals = {
                     'name': " + ".join(il['description']) if len(il['description']) > 0 else "/",
                     'invoice_id': self.id,
-                    'price_unit': il['total'],
+                    'price_unit': il['subtotal'],
                     'quantity': 1.0,
                 }
                 tax_ids = []
@@ -592,7 +592,8 @@ class AccountInvoice(models.Model):
             for il in invoice_lines:
                 description = il['description']['selected_value']['content'] if 'description' in il else "/"
                 total = il['total']['selected_value']['content'] if 'total' in il else 0.0
-                unit_price = il['unit_price']['selected_value']['content'] if 'unit_price' in il else total
+                subtotal = il['subtotal']['selected_value']['content'] if 'subtotal' in il else total
+                unit_price = il['unit_price']['selected_value']['content'] if 'unit_price' in il else subtotal
                 quantity = il['quantity']['selected_value']['content'] if 'quantity' in il else 1.0
                 taxes = [value['content'] for value in il['taxes']['selected_values']] if 'taxes' in il else []
                 taxes_type_ocr = [value['amount_type'] if 'amount_type' in value else 'percent' for value in il['taxes']['selected_values']] if 'taxes' in il else []
@@ -661,8 +662,7 @@ class AccountInvoice(models.Model):
                 supplier_ocr = ocr_results['supplier']['selected_value']['content'] if 'supplier' in ocr_results else ""
                 date_ocr = ocr_results['date']['selected_value']['content'] if 'date' in ocr_results else ""
                 due_date_ocr = ocr_results['due_date']['selected_value']['content'] if 'due_date' in ocr_results else ""
-                total_ocr = ocr_results['total']['selected_value']['content'] if 'total' in ocr_results else ""
-                subtotal_ocr = ocr_results['total']['selected_value']['content'] if 'subtotal' in ocr_results else ""
+                subtotal_ocr = ocr_results['subtotal']['selected_value']['content'] if 'subtotal' in ocr_results else ""
                 invoice_id_ocr = ocr_results['invoice_id']['selected_value']['content'] if 'invoice_id' in ocr_results else ""
                 currency_ocr = ocr_results['currency']['selected_value']['content'] if 'currency' in ocr_results else ""
                 taxes_ocr = [value['content'] for value in ocr_results['global_taxes']['selected_values']] if 'global_taxes' in ocr_results else []
@@ -672,11 +672,11 @@ class AccountInvoice(models.Model):
 
                 if invoice_lines:
                     record._set_invoice_lines(invoice_lines, subtotal_ocr)
-                elif total_ocr:
+                elif subtotal_ocr:
                     vals_invoice_line = {
                         'name': "/",
                         'invoice_id': self.id,
-                        'price_unit': total_ocr,
+                        'price_unit': subtotal_ocr,
                         'quantity': 1.0,
                     }
                     for taxe, taxe_type in pycompat.izip(taxes_ocr, taxes_type_ocr):
