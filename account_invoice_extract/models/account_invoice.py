@@ -554,14 +554,15 @@ class AccountInvoice(models.Model):
                 taxes = [value['content'] for value in il['taxes']['selected_values']] if 'taxes' in il else []
                 taxes_type_ocr = [value['amount_type'] if 'amount_type' in value else 'percent' for value in il['taxes']['selected_values']] if 'taxes' in il else []
                 keys = []
-                for taxe, taxe_type in pycompat.izip(taxes, taxes_type_ocr):
-                    if (taxe, taxe_type) not in taxes_found:
-                        taxes_record = self.env['account.tax'].search([('amount', '=', taxe), ('amount_type', '=', taxe_type), ('type_tax_use', '=', 'purchase')], limit=1)
-                        if taxes_record:
-                            taxes_found[(taxe, taxe_type)] = taxes_record.id
-                            keys.append(taxes_found[(taxe, taxe_type)])
-                    else:
-                        keys.append(taxes_found[(taxe, taxe_type)])
+                for taxes, taxes_type in pycompat.izip(taxes, taxes_type_ocr):
+                    if taxes != 0.0:
+                        if (taxes, taxes_type) not in taxes_found:
+                            taxes_record = self.env['account.tax'].search([('amount', '=', taxes), ('amount_type', '=', taxes_type), ('type_tax_use', '=', 'purchase')], limit=1)
+                            if taxes_record:
+                                taxes_found[(taxes, taxes_type)] = taxes_record.id
+                                keys.append(taxes_found[(taxes, taxes_type)])
+                        else:
+                            keys.append(taxes_found[(taxes, taxes_type)])
 
                 if tuple(keys) not in aggregated_lines:
                     aggregated_lines[tuple(keys)] = {'subtotal': subtotal, 'description': [description] if description is not None else []}
@@ -604,20 +605,21 @@ class AccountInvoice(models.Model):
                     'price_unit': unit_price,
                     'quantity': quantity,
                 }
-                for (taxe, taxe_type) in pycompat.izip(taxes, taxes_type_ocr):
-                    if (taxe, taxe_type) in taxes_found:
-                        if 'invoice_line_tax_ids' not in vals:
-                            vals['invoice_line_tax_ids'] = [(4, taxes_found[(taxe, taxe_type)])]
-                        else:
-                            vals['invoice_line_tax_ids'].append((4, taxes_found[(taxe, taxe_type)]))
-                    else:
-                        taxes_record = self.env['account.tax'].search([('amount', '=', taxe), ('amount_type', '=', taxe_type), ('type_tax_use', '=', 'purchase')], limit=1)
-                        if taxes_record:
-                            taxes_found[(taxe, taxe_type)] = taxes_record.id
+                for (taxes, taxes_type) in pycompat.izip(taxes, taxes_type_ocr):
+                    if taxes != 0.0:
+                        if (taxes, taxes_type) in taxes_found:
                             if 'invoice_line_tax_ids' not in vals:
-                                vals['invoice_line_tax_ids'] = [(4, taxes_record.id)]
+                                vals['invoice_line_tax_ids'] = [(4, taxes_found[(taxes, taxes_type)])]
                             else:
-                                vals['invoice_line_tax_ids'].append((4, taxes_record.id))
+                                vals['invoice_line_tax_ids'].append((4, taxes_found[(taxes, taxes_type)]))
+                        else:
+                            taxes_record = self.env['account.tax'].search([('amount', '=', taxes), ('amount_type', '=', taxes_type), ('type_tax_use', '=', 'purchase')], limit=1)
+                            if taxes_record:
+                                taxes_found[(taxes, taxes_type)] = taxes_record.id
+                                if 'invoice_line_tax_ids' not in vals:
+                                    vals['invoice_line_tax_ids'] = [(4, taxes_record.id)]
+                                else:
+                                    vals['invoice_line_tax_ids'].append((4, taxes_record.id))
                 
                 invoice_lines_to_create.append(vals)
 
@@ -679,8 +681,8 @@ class AccountInvoice(models.Model):
                         'price_unit': subtotal_ocr,
                         'quantity': 1.0,
                     }
-                    for taxe, taxe_type in pycompat.izip(taxes_ocr, taxes_type_ocr):
-                        taxes_record = self.env['account.tax'].search([('amount', '=', taxe), ('amount_type', '=', taxe_type), ('type_tax_use', '=', 'purchase')], limit=1)
+                    for taxes, taxes_type in pycompat.izip(taxes_ocr, taxes_type_ocr):
+                        taxes_record = self.env['account.tax'].search([('amount', '=', taxes), ('amount_type', '=', taxes_type), ('type_tax_use', '=', 'purchase')], limit=1)
                         if taxes_record and subtotal_ocr:
                             if 'invoice_line_tax_ids' not in vals_invoice_line:
                                 vals_invoice_line['invoice_line_tax_ids'] = [(4, taxes_record.id)]
