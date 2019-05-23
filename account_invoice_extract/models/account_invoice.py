@@ -387,7 +387,7 @@ class AccountInvoice(models.Model):
                     currency = curr
             if currency:
                 return currency.id
-            return ""
+            return self.currency_id.id
         if word.field == "VAT_Number":
             partner_vat = self.env["res.partner"].search([("vat", "=", word.word_text)], limit=1)
             if partner_vat.exists():

@@ -421,7 +421,7 @@ var InvoiceExtractField = Class.extend(Mixins.EventDispatcherMixin, {
                 changes = { reference: fieldChangedInfo };
                 break;
             case 'currency':
-                changes = { currency_id: fieldChangedInfo };
+                changes = { currency_id: { id: fieldChangedInfo } };
                 break;
         }
         return changes;
@@ -669,13 +669,15 @@ var InvoiceExtractField = require('account_invoice_extract.Field');
 
 var Class = require('web.Class');
 var Mixins = require('web.mixins');
+var ServicesMixin = require('web.ServicesMixin');
+var session = require('web.session');
 
 /**
  * This class groups the fields that are supported by the OCR. Also, it manages
  * the 'active' status of the fields, so that there is only one active field at
  * any given time.
  */
-var InvoiceExtractFields = Class.extend(Mixins.EventDispatcherMixin, {
+var InvoiceExtractFields = Class.extend(Mixins.EventDispatcherMixin, ServicesMixin, {
     custom_events: {
         active_invoice_extract_field: '_onActiveInvoiceExtractField',
     },
@@ -684,19 +686,24 @@ var InvoiceExtractFields = Class.extend(Mixins.EventDispatcherMixin, {
      * @param {Class} parent a class with EventDispatcherMixin
      */
     init: function (parent) {
+        var self = this;
         Mixins.EventDispatcherMixin.init.call(this, arguments);
         this.setParent(parent);
 
         this._fields = [
             new InvoiceExtractField(this, { text: 'VAT', fieldName: 'VAT_Number' }),
             new InvoiceExtractField(this, { text: 'Vendor', fieldName: 'supplier' }),
-            new InvoiceExtractField(this, { text: 'Currency', fieldName: 'currency' }),
             new InvoiceExtractField(this, { text: 'Date', fieldName: 'date' }),
             new InvoiceExtractField(this, { text: 'Due Date', fieldName: 'due_date' }),
             new InvoiceExtractField(this, { text: 'Vendor Reference', fieldName: 'invoice_id' }),
         ];
 
         this._fields[0].setActive();
+        session.user_has_group('base.group_multi_currency').then(function(has_multi_currency) {
+            if (has_multi_currency) {
+                self._fields.push(new InvoiceExtractField(self, { text: 'Currency', fieldName: 'currency' }));
+            }
+        });
     },
 
     //--------------------------------------------------------------------------
@@ -704,9 +711,10 @@ var InvoiceExtractFields = Class.extend(Mixins.EventDispatcherMixin, {
     //--------------------------------------------------------------------------
 
     /**
-     * There should always be an active field at any time
+     * Get the current active field.
      *
-     * @returns {account_invoice_extract.Field}
+     * @returns {account_invoice_extract.Field|undefined} returns undefined if
+     *   there is no active field.
      */
     getActiveField: function () {
         return _.find(this._fields, function (field) {
@@ -748,6 +756,9 @@ var InvoiceExtractFields = Class.extend(Mixins.EventDispatcherMixin, {
      */
     resetActive: function () {
         var oldActiveField = this.getActiveField();
+        if (!oldActiveField) {
+            return;
+        }
         oldActiveField.setInactive();
         this._fields[0].setActive();
     },
@@ -774,6 +785,9 @@ var InvoiceExtractFields = Class.extend(Mixins.EventDispatcherMixin, {
      */
     _onActiveInvoiceExtractField: function (ev) {
         var oldActiveField = this.getActiveField();
+        if (!oldActiveField) {
+            return;
+        }
         oldActiveField.setInactive();
         var field = this.getField({ name: ev.data.fieldName });
         if (!field) {
@@ -849,6 +863,9 @@ var InvoiceExtractFormRenderer = FormRenderer.extend({
      */
     _displayInvoiceExtractBoxes: function () {
         var field = this._invoiceExtractFields.getActiveField();
+        if (!field) {
+            return;
+        }
         _.each(this._invoiceExtractBoxLayers, function (boxLayer) {
             boxLayer.displayBoxes({ fieldName: field.getName() });
         });
@@ -866,6 +883,9 @@ var InvoiceExtractFormRenderer = FormRenderer.extend({
     _handleInvoiceExtractFieldChanged: function (params) {
         var fieldChangedInfo = params.fieldChangedInfo;
         var field = this._invoiceExtractFields.getActiveField();
+        if (!field) {
+            return;
+        }
         var changes = field.handleFieldChanged({
             fieldChangedInfo: fieldChangedInfo,
             state: this.state,
@@ -1095,6 +1115,9 @@ var InvoiceExtractFormRenderer = FormRenderer.extend({
         var self = this;
         var box = ev.data.box;
         var field = this._invoiceExtractFields.getActiveField();
+        if (!field) {
+            return;
+        }
         this._rpc({
             model: 'account.invoice',
             method: 'set_user_selected_box',
@@ -1117,6 +1140,9 @@ var InvoiceExtractFormRenderer = FormRenderer.extend({
         ev.stopPropagation();
         var self = this;
         var field = this._invoiceExtractFields.getActiveField();
+        if (!field) {
+            return;
+        }
         var box = field.getSelectedBox();
         if (!box) {
             return;
