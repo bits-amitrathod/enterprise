@@ -635,6 +635,13 @@ class AccountInvoice(models.Model):
 
         self.compute_taxes()
 
+        total_ocr = self._context.get('total_ocr')  # this should be passed as an argument of the function but we can't change function signature in stable
+        if total_ocr and len(self.tax_line_ids) > 0:
+            rounding_error = self.amount_total - total_ocr
+            threshold = len(invoice_lines) * 0.01
+            if rounding_error != 0.0 and abs(rounding_error) < threshold:
+                self.tax_line_ids[0].amount -= rounding_error
+
     @api.multi
     def _set_currency(self, currency_ocr):
         self.ensure_one()
@@ -664,6 +671,7 @@ class AccountInvoice(models.Model):
                 supplier_ocr = ocr_results['supplier']['selected_value']['content'] if 'supplier' in ocr_results else ""
                 date_ocr = ocr_results['date']['selected_value']['content'] if 'date' in ocr_results else ""
                 due_date_ocr = ocr_results['due_date']['selected_value']['content'] if 'due_date' in ocr_results else ""
+                total_ocr = ocr_results['total']['selected_value']['content'] if 'total' in ocr_results else ""
                 subtotal_ocr = ocr_results['subtotal']['selected_value']['content'] if 'subtotal' in ocr_results else ""
                 invoice_id_ocr = ocr_results['invoice_id']['selected_value']['content'] if 'invoice_id' in ocr_results else ""
                 currency_ocr = ocr_results['currency']['selected_value']['content'] if 'currency' in ocr_results else ""
@@ -673,7 +681,7 @@ class AccountInvoice(models.Model):
                 invoice_lines = ocr_results['invoice_lines'] if 'invoice_lines' in ocr_results else []
 
                 if invoice_lines:
-                    record._set_invoice_lines(invoice_lines, subtotal_ocr)
+                    record.with_context(total_ocr=total_ocr)._set_invoice_lines(invoice_lines, subtotal_ocr)
                 elif subtotal_ocr:
                     vals_invoice_line = {
                         'name': "/",
