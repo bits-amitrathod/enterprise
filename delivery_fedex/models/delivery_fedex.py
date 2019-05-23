@@ -281,7 +281,8 @@ class ProviderFedex(models.Model):
                     srm._commodities(_convert_curr_iso_fdx(commodity_currency.name), commodity_amount, commodity_number_of_piece, commodity_weight_units, commodity_weight_value, commodity_description, commodity_country_of_manufacture, commodity_quantity, commodity_quantity_units, commodity_harmonized_code)
                 srm.customs_value(_convert_curr_iso_fdx(commodity_currency.name), total_commodities_amount, "NON_DOCUMENTS")
                 srm.duties_payment(picking.picking_type_id.warehouse_id.partner_id.country_id.code, superself.fedex_account_number)
-                srm.commercial_invoice('PAPER_LETTER')
+                send_etd = self.env['ir.config_parameter'].get_param("delivery_fedex.send_etd")
+                srm.commercial_invoice('PAPER_LETTER', send_etd)
 
             package_count = len(picking.package_ids) or 1
 
