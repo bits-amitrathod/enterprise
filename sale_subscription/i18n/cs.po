@@ -58,6 +58,7 @@ msgstr "${object.company_id.name} Faktura (Ref ${object.number or 'n/a'})"
 msgid ""
 "${object.company_id.name}: Please check the subscription ${object.name}"
 msgstr ""
+"${object.company_id.name}: Prosím zkontrolujte předplatné ${object.name}"
 
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.mail_template_subscription_rating
@@ -87,12 +88,12 @@ msgstr "(Špatná adresa?)"
 #. module: sale_subscription
 #: selection:sale.subscription.alert,mrr_change_period:0
 msgid "1 Month"
-msgstr ""
+msgstr "1 měsíc"
 
 #. module: sale_subscription
 #: selection:sale.subscription.alert,mrr_change_period:0
 msgid "3 Months"
-msgstr ""
+msgstr "3 měsíce"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.mail_template_subscription_alert
@@ -329,7 +330,7 @@ msgstr "<span class=\"mr-1\">Pro</span>"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
 msgid "<span>Subscriptions</span>"
-msgstr ""
+msgstr "<span>Předplatné</span>"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
@@ -644,7 +645,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__uuid
 msgid "Account UUID"
-msgstr ""
+msgstr "UUID účtu"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__journal_id
@@ -744,7 +745,7 @@ msgstr "Přidat možnosti k odběru přímo nebo prostřednictvím nabídky"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_alert_view_form
 msgid "Alert Name"
-msgstr ""
+msgstr "Název výstrahy"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_alert_action
@@ -760,6 +761,9 @@ msgid ""
 "              need their attention. It can be positive (upsell) or\n"
 "              negative (churn, invoice not paid...)."
 msgstr ""
+"Výstrahy se používají k informování prodávajícího, kde předplatné vyžaduje "
+"jejich pozornost. To může být pozitivní (další prodej) nebo negativní "
+"(ztráta odběru, faktura nezaplacena ...)."
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:44
@@ -804,7 +808,7 @@ msgstr "Automatizovaná akce"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__auto_close_limit
 msgid "Automatic closing limit"
-msgstr ""
+msgstr "Limit automatického ukončení"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_alert__website_published
@@ -856,6 +860,8 @@ msgid ""
 "Calculate the ratio between the number of the best ('great') ratings and the"
 " total number of ratings"
 msgstr ""
+"Vypočtěte poměr mezi počtem nejlepších („skvělých“) hodnocení a celkovým "
+"počtem hodnocení"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
@@ -930,7 +936,7 @@ msgstr "Zavřít"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_close_reason_wizard__close_reason_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__close_reason_id
 msgid "Close Reason"
-msgstr ""
+msgstr "Důvod ukončení"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_close_reason_action
@@ -948,7 +954,7 @@ msgstr "Ukončit předplatné"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Close your subscription"
-msgstr ""
+msgstr "Ukončit předplatné"
 
 #. module: sale_subscription
 #: code:addons/sale_subscription/controllers/portal.py:47
@@ -1002,7 +1008,7 @@ msgstr "Konfigurace"
 #: code:addons/sale_subscription/static/src/js/tour.js:18
 #, python-format
 msgid "Configure your subscription templates here"
-msgstr ""
+msgstr "Zde nakonfigurujte šablony předplatného"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1026,12 +1032,12 @@ msgstr "Stát"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.wizard_form_view
 msgid "Create & View Quotation"
-msgstr ""
+msgstr "Vytvořit a zobrazit nabídku"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Create A Renewal Quotation"
-msgstr ""
+msgstr "Vytvořit nabídku obnovy předplatného"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -1052,7 +1058,7 @@ msgstr ""
 #. module: sale_subscription
 #: model_terms:ir.actions.act_window,help:sale_subscription.sale_subscription_alert_action
 msgid "Create a new subscription alert"
-msgstr ""
+msgstr "Vytvořit nové upozornění k ppředplatnému"
 
 #. module: sale_subscription
 #: model_terms:ir.actions.act_window,help:sale_subscription.sale_subscription_stage_action
@@ -1246,12 +1252,13 @@ msgstr "Zobrazovaný název"
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__bad_health_domain
 msgid "Domain used to change subscription's Kanban state with a 'Bad' rating"
-msgstr ""
+msgstr "Doména slouží ke změně stavu Kanban s předplatným s hodnocením 'Bad'"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_template__good_health_domain
 msgid "Domain used to change subscription's Kanban state with a 'Good' rating"
 msgstr ""
+"Doména slouží ke změně stavu Kanban s předplatným s hodnocením 'Dobré'"
 
 #. module: sale_subscription
 #: model:sale.subscription.stage,name:sale_subscription.sale_subscription_stage_draft
@@ -1266,7 +1273,7 @@ msgstr "Návrh faktury"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_alert__activity_date_deadline_range
 msgid "Due Date In"
-msgstr ""
+msgstr "Datum vypršení"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_alert__activity_date_deadline_range_type
@@ -1287,7 +1294,7 @@ msgstr "Šablona e-mailu"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__recurring_rule_count
 msgid "End After"
-msgstr ""
+msgstr "Končí po"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__date
@@ -1418,7 +1425,7 @@ msgstr "Historie"
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_4
 msgid "I don't use it"
-msgstr ""
+msgstr "Nepoužívám to"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__id
@@ -1475,6 +1482,8 @@ msgid ""
 "If present, this condition must be satisfied before executing the action "
 "rule."
 msgstr ""
+"Pokud je tato podmínka přítomna, musí být splněna před provedením pravidla "
+"akce."
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_alert__filter_pre_domain
@@ -1567,12 +1576,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__invoice_count
 msgid "Invoice Count"
-msgstr ""
+msgstr "Počet faktur"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__invoice_mail_template_id
 msgid "Invoice Email Template"
-msgstr ""
+msgstr "Šablona e-mailové faktury"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_account_invoice_line
@@ -1594,7 +1603,7 @@ msgstr ""
 #. module: sale_subscription
 #: model:mail.template,subject:sale_subscription.email_payment_success
 msgid "Invoice for subscription ${ctx.get('code')}"
-msgstr ""
+msgstr "Faktura pro předplatné ${ctx.get('code')}"
 
 #. module: sale_subscription
 #: selection:sale.subscription.template,payment_mode:0
@@ -1624,7 +1633,7 @@ msgstr "Faktury"
 #: code:addons/sale_subscription/models/sale_order.py:162
 #, python-format
 msgid "Invoicing period: %s - %s"
-msgstr ""
+msgstr "Fakturační období: %s - %s"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__message_is_follower
@@ -1723,7 +1732,7 @@ msgstr "Nejnovější hodnocení: Nespokojen"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_kanban
 msgid "Latest Rating: Satisfied"
-msgstr ""
+msgstr "Nejnovější hodnocení: Spokojeni"
 
 #. module: sale_subscription
 #. openerp-web
@@ -1737,7 +1746,7 @@ msgstr ""
 #: code:addons/sale_subscription/static/src/js/tour.js:52
 #, python-format
 msgid "Let's go to the catalog to create our first subscription product"
-msgstr ""
+msgstr "Pojďme do katalogu vytvořit náš první produkt"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_alert__link_field_id
@@ -1800,7 +1809,7 @@ msgstr "Hlavní příloha"
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_manager
 msgid "Manage Subscriptions"
-msgstr ""
+msgstr "Správa předplatného"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
@@ -1934,12 +1943,12 @@ msgstr "Další typ aktivity"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Next invoice:"
-msgstr ""
+msgstr "Další faktura:"
 
 #. module: sale_subscription
 #: model_terms:ir.actions.act_window,help:sale_subscription.product_template_action_subscription
 msgid "No product found"
-msgstr ""
+msgstr "Nebyl nalezen žádný produkt"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_alert__activity_note
@@ -2011,7 +2020,7 @@ msgstr ""
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 msgid "Online Preview"
-msgstr ""
+msgstr "Online náhled"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_alert__help
@@ -2169,7 +2178,7 @@ msgstr "Množství"
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_line__quantity
 msgid "Quantity that will be invoiced."
-msgstr ""
+msgstr "Množství, které bude fakturováno."
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__rating_ids
@@ -2266,7 +2275,7 @@ msgstr ""
 #. module: sale_subscription
 #: selection:sale.order,subscription_management:0
 msgid "Renewal"
-msgstr ""
+msgstr "Obnovení"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__recurring_interval
@@ -2298,7 +2307,7 @@ msgstr "Zodpovědný uživatel"
 #. module: sale_subscription
 #: selection:sale.subscription.alert,activity_user:0
 msgid "Responsible of Contract"
-msgstr ""
+msgstr "Odpovědnost za smlouvu"
 
 #. module: sale_subscription
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_report_cohort
@@ -2341,21 +2350,21 @@ msgstr "Prodejní objednávka"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__sale_order_count
 msgid "Sale Order Count"
-msgstr ""
+msgstr "Počet prodejních objednávek"
 
 #. module: sale_subscription
 #: model:ir.actions.server,name:sale_subscription.ir_cron_sale_subscription_update_kpi_ir_actions_server
 #: model:ir.cron,cron_name:sale_subscription.ir_cron_sale_subscription_update_kpi
 #: model:ir.cron,name:sale_subscription.ir_cron_sale_subscription_update_kpi
 msgid "Sale Subscription: Update KPI"
-msgstr ""
+msgstr "Prode předplatného: Aktualizace KPI"
 
 #. module: sale_subscription
 #: model:ir.actions.server,name:sale_subscription.account_analytic_cron_for_invoice_ir_actions_server
 #: model:ir.cron,cron_name:sale_subscription.account_analytic_cron_for_invoice
 #: model:ir.cron,name:sale_subscription.account_analytic_cron_for_invoice
 msgid "Sale Subscription: generate recurring invoices and payments"
-msgstr ""
+msgstr "Prodej předplatného: generování opakovaných faktur a plateb"
 
 #. module: sale_subscription
 #: model:ir.actions.server,name:sale_subscription.account_analytic_cron_ir_actions_server
@@ -2367,7 +2376,7 @@ msgstr ""
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_list
 msgid "Sale Subscriptions"
-msgstr ""
+msgstr "Prodej předplatného"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
@@ -2421,7 +2430,7 @@ msgstr ""
 #: code:addons/sale_subscription/static/src/js/tour.js:47
 #, python-format
 msgid "Save this template and the modifications you've made to it."
-msgstr ""
+msgstr "Uložit tuto šablonu a úpravy, které jste provedli."
 
 #. module: sale_subscription
 #: model:res.groups,name:sale_subscription.group_sale_subscription_view
@@ -2436,11 +2445,13 @@ msgid ""
 "Select your newly created template. Every sale of this product will generate"
 " a new subscription!"
 msgstr ""
+"Vyberte nově vytvořenou šablonu. Každý prodej tohoto produktu vygeneruje "
+"nové předplatné!"
 
 #. module: sale_subscription
 #: selection:sale.subscription.alert,action:0
 msgid "Send an email to the customer"
-msgstr ""
+msgstr "Poslat zákazníkovi e-mail"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_alert__sequence
@@ -2462,7 +2473,7 @@ msgstr ""
 #. module: sale_subscription
 #: selection:sale.subscription.alert,action:0
 msgid "Set a stage on the subscription"
-msgstr ""
+msgstr "Nastavte fázi předplatného"
 
 #. module: sale_subscription
 #: selection:sale.subscription.alert,action:0
@@ -2504,7 +2515,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_alert__activity_user_ids
 #: selection:sale.subscription.alert,activity_user:0
 msgid "Specific Users"
-msgstr ""
+msgstr "Specifičtí uživatelé"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__stage_id
@@ -2519,7 +2530,7 @@ msgstr "Fáze"
 #. module: sale_subscription
 #: model:mail.message.subtype,name:sale_subscription.subtype_stage_change
 msgid "Stage Change"
-msgstr ""
+msgstr "Změna fáze"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_alert__stage_from_id
@@ -2552,7 +2563,7 @@ msgstr "Datum zahájení"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Start date:"
-msgstr ""
+msgstr "Počáteční datum:"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
@@ -2644,7 +2655,7 @@ msgstr "Řízení předplatného"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template__recurring_invoice
 msgid "Subscription Product"
-msgstr ""
+msgstr "Produkt předplatného"
 
 #. module: sale_subscription
 #: model:ir.actions.act_window,name:sale_subscription.product_action_subscription
@@ -2656,13 +2667,13 @@ msgstr ""
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_snapshot
 msgid "Subscription Snapshot"
-msgstr ""
+msgstr "Časový otisk předplatného"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_stage
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_stage_view_form
 msgid "Subscription Stage"
-msgstr ""
+msgstr "Fáze předplatného"
 
 #. module: sale_subscription
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_stage
@@ -2699,12 +2710,12 @@ msgstr ""
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_2
 msgid "Subscription does not meet my requirements"
-msgstr ""
+msgstr "Předplatné nesplňuje mé požadavky"
 
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_1
 msgid "Subscription is too expensive"
-msgstr ""
+msgstr "Předplatné je příliš drahé"
 
 #. module: sale_subscription
 #: model:sale.subscription.close.reason,name:sale_subscription.close_reason_3
@@ -2764,7 +2775,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_pending
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_pending
 msgid "Subscriptions to Renew"
-msgstr ""
+msgstr "Předplatné určené k prodloužení / obnově"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2890,7 +2901,7 @@ msgstr "Uživatel bude mít přístup k předplatnému pro čtení."
 #. module: sale_subscription
 #: model:res.groups,comment:sale_subscription.group_sale_subscription_manager
 msgid "The user will have write access to Subscriptions."
-msgstr ""
+msgstr "Uživatel bude mít přístup k zápisu k předplatným."
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_kanban
@@ -2902,7 +2913,7 @@ msgstr ""
 #: code:addons/sale_subscription/models/sale_subscription.py:462
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
-msgstr ""
+msgstr "Tato faktura zahrnuje následující období: %s - %s"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_subscription_stage__fold
@@ -3295,7 +3306,7 @@ msgstr "kg"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "missing payments (from"
-msgstr ""
+msgstr "chybějící platby (od"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription

@@ -31,7 +31,7 @@ msgid ""
 "${object.company_id.name or object.user_id.company_id.name or 'Helpdesk'}: "
 "Service Rating Request"
 msgstr ""
-"${object.company_id.name 또는 object.user_id.company_id.name 또는 'Helpdesk'}: "
+"${object.company_id.name or object.user_id.company_id.name or 'Helpdesk'}: "
 "서비스 등급 요청"
 
 #. module: helpdesk
@@ -124,6 +124,58 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div>\n"
+"    % set access_token = object.rating_get_access_token()\n"
+"    % set partner = object.rating_get_partner_id()\n"
+"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; margin:0;\">\n"
+"    <tbody>\n"
+"        <tr><td valign=\"top\" style=\"font-size: 14px;\">\n"
+"            ${partner.name}님 안녕하십니까?<br/>\n"
+"            잠시 시간을 내어 \"<strong>${object.name}</strong>\"와 관련된 서비스를 평가해주십시오.\n"
+"            % if object.rating_get_rated_partner_id().name:\n"
+"                assigned to <strong>${object.rating_get_rated_partner_id().name}</strong>.<br/>\n"
+"            % else:\n"
+"                .<br/>\n"
+"            % endif\n"
+"        </td></tr>\n"
+"        <tr><td style=\"text-align: center;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" summary=\"o_mail_notification\" style=\"width:100%; margin: 32px 0px 32px 0px;\">\n"
+"                <tr><td style=\"font-size: 14px;\">\n"
+"                    <strong>당사의 서비스에 대해 어떻게 생각하시는지 말씀해 주십시오.T</strong><br/>\n"
+"                    <span style=\"text-color: #888888\">(아래 중 하나를 클릭해 주십시오.)</span>\n"
+"                </td></tr>\n"
+"                <tr><td style=\"font-size: 14px;\">\n"
+"                    <table style=\"width:100%;text-align:center;\">\n"
+"                        <tr>\n"
+"                            <td>\n"
+"                                <a href=\"/rating/${access_token}/10\">\n"
+"                                    <img alt=\"Satisfied\" src=\"/rating/static/src/img/rating_10.png\" title=\"Satisfied\"/>\n"
+"                                </a>\n"
+"                            </td>\n"
+"                            <td>\n"
+"                                <a href=\"/rating/${access_token}/5\">\n"
+"                                    <img alt=\"Not satisfied\" src=\"/rating/static/src/img/rating_5.png\" title=\"Not satisfied\"/>\n"
+"                                </a>\n"
+"                            </td>\n"
+"                            <td>\n"
+"                                <a href=\"/rating/${access_token}/1\">\n"
+"                                    <img alt=\"Highly Dissatisfied\" src=\"/rating/static/src/img/rating_1.png\" title=\"Highly Dissatisfied\"/>\n"
+"                                </a>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </table>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td></tr>\n"
+"        <tr><td valign=\"top\" style=\"font-size: 14px;\">\n"
+"            의견을 보내주셔서 감사드립니다. 이것은 당사가 지속적으로 서비스를 개선하는데 도움이 됩니다.\n"
+"            <br/><span style=\"margin: 0px 0px 0px 0px; font-size: 12px; opacity: 0.5; color: #454748;\"><b>${object.stage_id.name}</b> 티켓이 옮겨졌기 때문에 고객 설문조사가 자동으로 발송되었습니다.</span>\n"
+"        </td></tr>\n"
+"    </tbody>\n"
+"    </table>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
@@ -140,6 +192,17 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div>\n"
+"    ${object.sudo().partner_id.name or 'Madam/Sir'}님<br/><br/>\n"
+"    이것은 시스템 자동 통지이며 서비스 주문 (참조 ${object.id})을 마감했습니다.\n"
+"    제공된 서비스가 귀하의 기대치를 충족 시키길 바랍니다.\n"
+"    질문이나 의견이 있으시면 주저하지 말고 이 전자 메일로 회신해 주십시오. 그러면 이 서비스가 다시 열립니다.<br/><br/>\n"
+"    협조해 주셔서 감사드립니다.<br/>\n"
+"    진심을 담아서,<br/><br/>\n"
+"    ${object.team_id.name or 'Helpdesk'} 팀.\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
@@ -159,6 +222,20 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div>\n"
+"    ${object.sudo().partner_id.name or 'Madam/Sir'}님.<br/><br/>\n"
+"    귀하의 신청서를\n"
+"    % if object.access_token:\n"
+"    <a href=\"/helpdesk/ticket/${object.id}/${object.access_token}\">${object.name}</a>\n"
+"    % endif\n"
+"    수신했으며 ${object.team_id.name or ''}팀이 검토 중입니다.\n"
+"    참조한 티켓은 ${object.id}입니다.<br/><br/>\n"
+"    추가 의견을 보내주시려면 이 이메일로 회신해주십시오.<br/>\n"
+"    감사합니다.<br/><br/>\n"
+"    ${object.team_id.name or 'Helpdesk'} 팀.\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #. openerp-web
@@ -167,32 +244,32 @@ msgstr ""
 msgid ""
 "<b>Stars</b> mark the <b>ticket priority</b>. You can change it directly "
 "from here!"
-msgstr ""
+msgstr "<b>별</b>은 <b>티켓 우선 순위</b>를 표시합니다. 여기에서 직접 변경할 수 있습니다!"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<em class=\"text-muted\"><small>No description</small></em>"
-msgstr ""
+msgstr "<em class=\"text-muted\"><small>설명 없음</small></em>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.index
 msgid "<i class=\"fa fa-arrow-circle-right \"/> See the feedbacks"
-msgstr "<i class=\"fa fa-arrow-circle-right \"/> 피드백을 확인하세요"
+msgstr "<i class=\"fa fa-arrow-circle-right \"/> 의견 보기"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> Configure domain name"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-right\"/> 도메인 네임 설정"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-arrow-right\"/> View documentation"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-right\"/> 관련 문서 보기"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "<i class=\"fa fa-comments\" role=\"img\" aria-label=\"Messages\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-comments\" role=\"img\" aria-label=\"Messages\"/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -202,7 +279,7 @@ msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.index
 msgid "<i class=\"fa fa-envelope\"/> Email :"
-msgstr "<i class=\"fa fa-envelope\"/> Email :"
+msgstr "<i class=\"fa fa-envelope\"/> 이메일 :"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -210,6 +287,8 @@ msgid ""
 "<i class=\"fa fa-envelope-o\" title=\"Domain alias\" role=\"img\" aria-"
 "label=\"Domain alias\"/>&amp;nbsp;"
 msgstr ""
+"<i class=\"fa fa-envelope-o\" title=\"Domain alias\" role=\"img\" aria-"
+"label=\"Domain alias\"/>&amp;nbsp;"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -217,21 +296,23 @@ msgid ""
 "<i class=\"fa fa-fw fa-arrow-right\" role=\"img\" aria-label=\"Rating URL\" "
 "title=\"Rating URL\"/>"
 msgstr ""
+"<i class=\"fa fa-fw fa-arrow-right\" role=\"img\" aria-label=\"Rating URL\" "
+"title=\"Rating URL\"/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.index
 msgid "<i/> Customer Satisfaction Ration:"
-msgstr ""
+msgstr "<i/> 고객 만족도 :"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i>No customer feedback yet.</i>"
-msgstr ""
+msgstr "<i>아직 고객 의견 없음.</i>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<small class=\"text-right\">Status:</small>"
-msgstr "<small class=\"text-right\">상태:</small>"
+msgstr "<small class=\"text-right\">상태 :</small>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -239,43 +320,45 @@ msgid ""
 "<span class=\"fa fa-clock-o\" title=\"Deadline\" role=\"img\" aria-"
 "label=\"Deadline\"/>"
 msgstr ""
+"<span class=\"fa fa-clock-o\" title=\"Deadline\" role=\"img\" aria-"
+"label=\"Deadline\"/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_partner_form_inherit_helpdesk
 msgid "<span class=\"o_stat_text\"> Tickets</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\"> 티켓</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-lg-2\">Assigned to</strong>"
-msgstr ""
+msgstr "<strong class=\"col-lg-2\">담당자</strong>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-lg-2\">Description</strong>"
-msgstr ""
+msgstr "<strong class=\"col-lg-2\">설명</strong>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-lg-2\">Managed by</strong>"
-msgstr ""
+msgstr "<strong class=\"col-lg-2\">관리자</strong>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-lg-2\">Reported by</strong>"
-msgstr ""
+msgstr "<strong class=\"col-lg-2\">보고자</strong>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<strong class=\"col-lg-2\">Reported on</strong>"
-msgstr ""
+msgstr "<strong class=\"col-lg-2\">보고일</strong>"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_defaults
 msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
-msgstr "이 별칭에 대한 새 레코드를 만들 때 기본값을 제공하도록 평가되는 Phyton dictionary입니다."
+msgstr "이 별칭에 대한 새 레코드를 만들 때 기본값을 제공하도록 평가되는 Python 사전."
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -285,6 +368,9 @@ msgid ""
 "            customers that specifies performance measures for support\n"
 "            by ticket priority."
 msgstr ""
+"서비스 수준 계약은 \n"
+"               티켓 우선 순위에 따른 지원을 위한 \n"
+"               성능 측정을 지정하는 귀하와 고객 간의 계약입니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__kanban_state
@@ -294,21 +380,25 @@ msgid ""
 "* Blocked indicates something is preventing the progress of this issue\n"
 "* Ready for next stage indicates the issue is ready to be pulled to the next stage"
 msgstr ""
+"티켓의 칸반 상태는 티켓에 영향을 미치는 특수한 상황을 나타냅니다.\n"
+"* 보통은 기본 상태입니다.\n"
+"* 차단됨은 무언가가 이 문제의 진행을 방해한다는 것을 나타냅니다.\n"
+"* 다음 단계 준비는 문제가 다음 단계로 넘어갈 준비가 되었음을 나타냅니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_api
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__description
 msgid "About Team"
-msgstr ""
+msgstr "팀 소개"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__access_warning
 msgid "Access warning"
-msgstr "접근 경고"
+msgstr "사용 권한 경고"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_needaction
@@ -337,7 +427,7 @@ msgstr "활동 상태"
 #: model:ir.actions.act_window,name:helpdesk.mail_activity_type_action_config_helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_menu_config_activity_type
 msgid "Activity Types"
-msgstr "활동 종류"
+msgstr "활동 유형"
 
 #. module: helpdesk
 #. openerp-web
@@ -347,6 +437,7 @@ msgid ""
 "Add columns to configure <b>stages for your tickets</b>.<br/><i>e.g. "
 "Awaiting Customer Feedback, Customer Followup, ...</i>"
 msgstr ""
+"열을 추가하여 <b>티켓의 단계</b>를 구성합니다.<br/><i> 예 : 고객 의견 대기, 고객 후속 조치 등....</i>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_id
@@ -376,14 +467,14 @@ msgstr "별칭 모델"
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
 msgid "All"
-msgstr "모두"
+msgstr "전체"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_main
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_main_tree
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_menu_main
 msgid "All Tickets"
-msgstr ""
+msgstr "전체 티켓"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -391,6 +482,7 @@ msgid ""
 "Allow your customers to easily rate your services. Activate this option will"
 " add a default email template on non folded closing stages"
 msgstr ""
+"고객이 서비스를 쉽게 평가할 수 있도록 합니다. 이 옵션을 활성화하면 접히지 않은 마감 단계에 기본 이메일 서식이 추가됩니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -408,42 +500,42 @@ msgstr "보관"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Archived"
-msgstr "아카이브됨"
+msgstr "보관"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "Assign To Me"
-msgstr ""
+msgstr "자신에게 할당"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:39
 #, python-format
 msgid "Assign the ticket to someone."
-msgstr ""
+msgstr "다른 사람에게 티켓을 할당하십시오."
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk_ticket.py:421
 #, python-format
 msgid "Assign to me"
-msgstr ""
+msgstr "자신에게 할당"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__assign_method
 msgid "Assignation Method"
-msgstr ""
+msgstr "할당 방법"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__user_id
 msgid "Assigned to"
-msgstr "지정 된"
+msgstr "담당자"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Assignee"
-msgstr ""
+msgstr "담당자"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_attachment_count
@@ -454,14 +546,14 @@ msgstr "첨부 파일 수"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__template_id
 msgid "Automated Answer Email Template"
-msgstr ""
+msgstr "자동 응답 이메일 서식"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__template_id
 msgid ""
 "Automated email sent to the ticket's customer when the ticket reaches this "
 "stage."
-msgstr ""
+msgstr "티켓이 이 단계에 도달하면 티켓 고객에게 자동 이메일이 전송됩니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__assign_method
@@ -471,6 +563,10 @@ msgid ""
 "\tRandomly: randomly but everyone gets the same amount\n"
 "\tBalanced: to the person with the least amount of open tickets"
 msgstr ""
+"새 티켓의 자동 할당 방법은 다음과 같습니다.\n"
+"수동 : 수동입니다.\n"
+"무작위 : 임의로 계산하지만 모든 사람이 동일한 양을 받습니다.\n"
+"균형 조정 : 가장 작은 수의 활성 티켓이 있는 사람에게 제공됩니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
@@ -482,14 +578,14 @@ msgstr "평균"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:104
 #, python-format
 msgid "Avg 7 days"
-msgstr ""
+msgstr "평균 7일"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:35
 #, python-format
 msgid "Avg Open Hours"
-msgstr ""
+msgstr "평균 진행 시간"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
@@ -499,7 +595,7 @@ msgstr "나쁨"
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
 msgid "Balanced"
-msgstr ""
+msgstr "균형 조정"
 
 #. module: helpdesk
 #: selection:helpdesk.ticket,kanban_state:0
@@ -514,7 +610,7 @@ msgstr "캠페인"
 #. module: helpdesk
 #: model:helpdesk.stage,name:helpdesk.stage_cancelled
 msgid "Cancelled"
-msgstr "취소 됨"
+msgstr "취소됨"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -524,21 +620,21 @@ msgstr "채널"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Choose an Email:"
-msgstr ""
+msgstr "이메일 선택 :"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:67
 #, python-format
 msgid "Click here and select \"Helpdesk Teams\" for further configuration."
-msgstr ""
+msgstr "여기를 클릭하고 추가 환경 설정을 위해 \"도움말 팀\"을 선택합니다."
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:18
 #, python-format
 msgid "Click here to view this team's tickets."
-msgstr ""
+msgstr "이 팀의 티켓을 보려면 여기를 클릭하세요."
 
 #. module: helpdesk
 #. openerp-web
@@ -547,7 +643,7 @@ msgstr ""
 msgid ""
 "Click these cards to open their form view, or <b>drag &amp; drop</b> them "
 "through the different stages of this team."
-msgstr ""
+msgstr "이 카드를 클릭하여 양식 보기를 열거나 이 팀의 여러 단계로 <b>끌어다 놓습니다.</b>"
 
 #. module: helpdesk
 #. openerp-web
@@ -559,12 +655,12 @@ msgstr ""
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:153
 #, python-format
 msgid "Click to set"
-msgstr ""
+msgstr "설정 클릭"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__close_date
 msgid "Close date"
-msgstr ""
+msgstr "마감일"
 
 #. module: helpdesk
 #. openerp-web
@@ -573,18 +669,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 #, python-format
 msgid "Closed Tickets"
-msgstr ""
+msgstr "티켓 마감됨"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_7days_analysis
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_close_analysis
 msgid "Closed Tickets Analysis"
-msgstr ""
+msgstr "마감된 티켓 분석"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__is_close
 msgid "Closing Kanban Stage"
-msgstr ""
+msgstr "칸반 단계 마감하기"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag__color
@@ -607,17 +703,17 @@ msgstr "회사"
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_menu_config
 msgid "Configuration"
-msgstr "구성"
+msgstr "환경 설정"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Configure SLA Policies"
-msgstr ""
+msgstr "SLA 정책 구성"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Connect third party application and create tickets using web services"
-msgstr ""
+msgstr "웹 서비스를 사용하여 타사 애플리케이션 연결 및 티켓 생성"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_res_partner
@@ -629,17 +725,17 @@ msgstr "연락처"
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_sla_action_main
 msgid "Create a new Service Level Agreement (SLA) policy"
-msgstr ""
+msgstr "새로운 서비스 수준 계약(SLA) 정책 만들기"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_stage_action
 msgid "Create a new stage in your helpdesk pipeline"
-msgstr ""
+msgstr "헬프데스크 업무 절차에서 새 단계 만들기"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.email_template_action_helpdesk
 msgid "Create a new template"
-msgstr ""
+msgstr "새 서식 만들기"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.action_upcoming_sla_fail_all_tickets
@@ -649,28 +745,28 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_team
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_unassigned
 msgid "Create a new ticket"
-msgstr ""
+msgstr "새 티켓 만들기"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_tag_action
 msgid "Create a new ticket tag"
-msgstr ""
+msgstr "새 티켓 태그 만들기"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_team_action
 msgid "Create a new ticket team"
-msgstr ""
+msgstr "새 티켓 팀 만들기"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_type_action
 msgid "Create a new ticket type"
-msgstr ""
+msgstr "새 티켓 유형 만들기"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_main
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_main_tree
 msgid "Create your first ticket."
-msgstr ""
+msgstr "첫번째 티켓 만들기."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__create_uid
@@ -695,7 +791,7 @@ msgstr "작성일"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "Current stage of this ticket"
-msgstr ""
+msgstr "해당 티켓의 현장 단계"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk_ticket.py:332
@@ -707,7 +803,7 @@ msgstr "고객"
 #. module: helpdesk
 #: model:helpdesk.team,name:helpdesk.helpdesk_team1
 msgid "Customer Care"
-msgstr ""
+msgstr "고객 관리"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk_ticket.py:334
@@ -736,35 +832,35 @@ msgstr "고객 평가순위"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Customer Satisfaction"
-msgstr ""
+msgstr "고객 만족"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/helpdesk_ticket.py:319
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #, python-format
 msgid "Customer Tickets"
-msgstr ""
+msgstr "고객 티켓"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:85
 #, python-format
 msgid "Customer satisfaction analysis"
-msgstr ""
+msgstr "고객 만족 분석"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:121
 #, python-format
 msgid "Daily Target"
-msgstr ""
+msgstr "오늘의 티켓"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/helpdesk_dashboard.js:224
 #, python-format
 msgid "Dashboard"
-msgstr "알림판"
+msgstr "대시보드"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__time_days
@@ -774,7 +870,7 @@ msgstr "일"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla__time_days
 msgid "Days to reach given stage based on ticket creation date"
-msgstr ""
+msgstr "티켓 생성 날짜를 기준으로 지정된 단계에 도달한 날짜"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__deadline
@@ -800,17 +896,17 @@ msgstr "내용"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Description for customer portal"
-msgstr ""
+msgstr "고객 포털에 대한 설명"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "Description of the policy..."
-msgstr ""
+msgstr "정책 설명 ..."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "Description of the ticket..."
-msgstr ""
+msgstr "티켓 설명..."
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_digest_digest
@@ -825,12 +921,12 @@ msgstr "요약"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type__display_name
 msgid "Display Name"
-msgstr "이름 표시"
+msgstr "제목"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__portal_show_rating
 msgid "Display Rating on Customer Portal"
-msgstr ""
+msgstr "고객 포털에 등급 표시"
 
 #. module: helpdesk
 #: code:addons/helpdesk/models/digest.py:16
@@ -856,24 +952,24 @@ msgstr "편집"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_alias
 msgid "Email alias"
-msgstr ""
+msgstr "이메일 별칭"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__email
 msgid "Email on Customer"
-msgstr ""
+msgstr "고객에 대한 이메일"
 
 #. module: helpdesk
 #: model_terms:digest.tip,tip_description:helpdesk.digest_tip_helpdesk_0
 msgid ""
 "Emails sent to <strong>${email_alias}</strong> generate new tickets in your "
 "Helpdesk funnel.<br>"
-msgstr ""
+msgstr "<strong>${email_alias}</strong>로 발송된 이메일은 헬프데스크 깔때기에 새 티켓을 생성합니다.<br>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_slides
 msgid "Enable eLearning"
-msgstr ""
+msgstr "온라인 학습 활성화"
 
 #. module: helpdesk
 #. openerp-web
@@ -882,34 +978,34 @@ msgstr ""
 msgid ""
 "Enter a subject or title for this ticket.<br/><i>(e.g. Problem with "
 "installation, Wrong order, Can't understand bill, etc.)</i>"
-msgstr ""
+msgstr "이 티켓의 제목 또는 주제를 입력하십시오<br/><i>(예 : 설치 문제, 잘못된 주문, 청구서 이해 불가 등).</i>"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:34
 #, python-format
 msgid "Enter the customer. Feel free to create it on the fly."
-msgstr ""
+msgstr "들어오셔서 부담없이 작성하십시오."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_fail
 msgid "Failed SLA Policy"
-msgstr ""
+msgstr "실패한 SLA 정책"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Failed SLA: {{record.sla_name.raw_value}}"
-msgstr ""
+msgstr "실패한 SLA : {{record.sla_name.raw_value}}"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__assign_date
 msgid "First assignation date"
-msgstr ""
+msgstr "첫 번째 배정 날짜"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__fold
 msgid "Folded"
-msgstr "접이식"
+msgstr "접음"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__fold
@@ -921,7 +1017,7 @@ msgstr "칸반 화면 접기"
 msgid ""
 "Follow this team to automatically track the events associated to tickets of "
 "this team."
-msgstr ""
+msgstr "이 팀의 티켓과 관련된 행사를 자동으로 추적하려면 이 팀을 팔로우하십시오."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_follower_ids
@@ -939,7 +1035,7 @@ msgstr "팔로워 (채널)"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_partner_ids
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "팔로워 (파트너)"
+msgstr "팔로워 (협력사)"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
@@ -948,6 +1044,8 @@ msgid ""
 "For example, we respond to urgent tickets related to bugs\n"
 "            in two hours and resolve them within 36 hours."
 msgstr ""
+"예를 들어, 버그와 관련된 긴급 티켓에 \n"
+"             2시간 내에 응답하고 36시간 이내에 해결합니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -957,7 +1055,7 @@ msgstr "향후 활동"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Get in touch with your website visitors"
-msgstr ""
+msgstr "웹 사이트 방문자와 연락하기"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
@@ -969,7 +1067,7 @@ msgstr "그룹별"
 #. module: helpdesk
 #: model:mail.activity.type,name:helpdesk.mail_act_helpdesk_handle
 msgid "Handle Ticket"
-msgstr ""
+msgstr "티켓 처리"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
@@ -979,7 +1077,7 @@ msgstr "좋음"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_forum
 msgid "Help Center"
-msgstr ""
+msgstr "지원 센터"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.menu_helpdesk_root
@@ -990,22 +1088,22 @@ msgstr "헬프데스크"
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_team_dashboard_action_main
 msgid "Helpdesk Overview"
-msgstr ""
+msgstr "헬프데스크 개요"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_sla
 msgid "Helpdesk SLA Policies"
-msgstr ""
+msgstr "헬프데스크 SLA 정책"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_stage
 msgid "Helpdesk Stage"
-msgstr ""
+msgstr "헬프데스크 단계"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_tag
 msgid "Helpdesk Tags"
-msgstr ""
+msgstr "헬프데스크 태그"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_team
@@ -1013,23 +1111,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__team_id
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_tree
 msgid "Helpdesk Team"
-msgstr ""
+msgstr "헬프데스크 팀"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.index
 msgid "Helpdesk Team Satisfaction"
-msgstr ""
+msgstr "헬프데스크 팀 만족도"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Helpdesk Team..."
-msgstr ""
+msgstr "헬프데스크 팀..."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_team_action
 #: model:ir.ui.menu,name:helpdesk.helpdesk_team_menu
 msgid "Helpdesk Teams"
-msgstr ""
+msgstr "헬프데스크 팀"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket
@@ -1042,37 +1140,37 @@ msgstr "헬프데스크 티켓"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_graph_analysis
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_pivot_analysis
 msgid "Helpdesk Ticket Analysis"
-msgstr ""
+msgstr "헬프데스크 티켓 분석"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket_type
 msgid "Helpdesk Ticket Type"
-msgstr ""
+msgstr "헬프데스크 티켓 유형"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_graph_main
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_pivot_main
 msgid "Helpdesk Tickets"
-msgstr ""
+msgstr "헬프데스크 티켓"
 
 #. module: helpdesk
 #: model:ir.actions.server,name:helpdesk.helpdesk_sla_cron_ir_actions_server
 #: model:ir.cron,cron_name:helpdesk.helpdesk_sla_cron
 #: model:ir.cron,name:helpdesk.helpdesk_sla_cron
 msgid "Helpdesk: compute SLAs"
-msgstr ""
+msgstr "헬프데스크 : SLA 계산"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:23
 #, python-format
 msgid "High Priority ("
-msgstr ""
+msgstr "높은 우선순위("
 
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
 msgid "High priority"
-msgstr ""
+msgstr "높은 우선순위"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__time_hours
@@ -1082,12 +1180,12 @@ msgstr "시간"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla__time_hours
 msgid "Hours to reach given stage based on ticket creation date"
-msgstr ""
+msgstr "티켓 생성 날짜를 기준으로 지정된 단계에 도달하는 데 걸린 시간"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "How to assign newly created tickets to the right person"
-msgstr ""
+msgstr "새로 만든 티켓을 적합한 사람에게 할당하는 방법"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__id
@@ -1104,20 +1202,19 @@ msgstr "ID"
 msgid ""
 "ID of the parent record holding the alias (example: project holding the task"
 " creation alias)"
-msgstr ""
-"별칭을 보유하는 상위 레코드의 ID (example: project holding the task creation alias)"
+msgstr "별칭을 포함하는 상위 레코드의 ID(예 : 작업 생성 별칭을 포함하는 프로젝트)"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__message_unread
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__message_unread
 msgid "If checked new messages require your attention."
-msgstr "만약 선택하였으면, 새 메시지에 주의를 기울여야 합니다."
+msgstr "선택하면 새로운 메시지를 주목할 필요가 있습니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__message_needaction
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "만약 선택하였으면, 새 메시지에 주의를 기울여야 합니다."
+msgstr "선택하면 새로운 메시지를 주목할 필요가 있습니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__message_has_error
@@ -1128,13 +1225,13 @@ msgstr "이 옵션을 선택하면 일부 메시지에 배달 오류가 발생�
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Important Messages"
-msgstr ""
+msgstr "중요 메시지"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "In #{kanban_getcolorname(record.color.raw_value)}"
-msgstr ""
+msgstr "In #{kanban_getcolorname(record.color.raw_value)}"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__use_website_helpdesk_livechat
@@ -1142,27 +1239,29 @@ msgid ""
 "In Channel: You can create a new ticket by typing /helpdesk [ticket title]. "
 "You can search ticket by typing /helpdesk_search [Keyword1],[Keyword2],."
 msgstr ""
+"채널에서 : /helpdesk [티켓 제목]을 입력하여 새 티켓을 만들 수 있습니다. /helpdesk_search [키워드1], "
+"[키워드2]를 입력하여 티켓을 검색할 수 있습니다."
 
 #. module: helpdesk
 #: model:helpdesk.stage,name:helpdesk.stage_in_progress
 msgid "In Progress"
-msgstr "진행중"
+msgstr "진행 중"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Incoming emails create tickets"
-msgstr ""
+msgstr "수신 메일로 티켓 만들기"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_is_follower
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__message_is_follower
 msgid "Is Follower"
-msgstr "팔로워입니다"
+msgstr "팔로워 여부"
 
 #. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_incident
 msgid "Issue"
-msgstr "이슈"
+msgstr "문제"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__kanban_state
@@ -1172,12 +1271,12 @@ msgstr "칸반 상태"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Keep empty for everyone to see this team"
-msgstr ""
+msgstr "모든 사람이 이 팀을 볼 수 있도록 비워두기"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_digest_digest__kpi_helpdesk_tickets_closed_value
 msgid "Kpi Helpdesk Tickets Closed Value"
-msgstr ""
+msgstr "Kpi 헬프데스크 티켓 마감값"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_data
@@ -1192,7 +1291,7 @@ msgstr "최근 30일"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Last 7 days"
-msgstr "최근7일"
+msgstr "최근 7일"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla____last_update
@@ -1232,24 +1331,24 @@ msgstr "지연된 활동"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Latest Feedbacks"
-msgstr "최근 피드백"
+msgstr "최신 의견"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:23
 #, python-format
 msgid "Let's create your first ticket."
-msgstr ""
+msgstr "첫 번째 티켓을 만들어 봅시다."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_livechat
 msgid "Live chat"
-msgstr ""
+msgstr "실시간 채팅"
 
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
 msgid "Low priority"
-msgstr ""
+msgstr "낮은 우선 순위"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_main_attachment_id
@@ -1281,7 +1380,7 @@ msgstr "메시지 배달 오류"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "Message and communication history"
-msgstr ""
+msgstr "메시지 및 대화 기록"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_ids
@@ -1292,12 +1391,12 @@ msgstr "메시지"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__priority
 msgid "Minimum Priority"
-msgstr ""
+msgstr "중간 우선 순위"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla__stage_id
 msgid "Minimum stage a ticket needs to reach in order to satisfy this SLA."
-msgstr ""
+msgstr "이 SLA를 충족시키기 위해 티켓이 도달해야 하는 최소 단계입니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -1309,7 +1408,7 @@ msgstr "내 활동"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:74
 #, python-format
 msgid "My Performance"
-msgstr ""
+msgstr "내 실적"
 
 #. module: helpdesk
 #. openerp-web
@@ -1319,28 +1418,28 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 #, python-format
 msgid "My Tickets"
-msgstr ""
+msgstr "내 티켓"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:21
 #, python-format
 msgid "My high priority tickets"
-msgstr ""
+msgstr "높은 우선 순위 티켓"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:15
 #, python-format
 msgid "My open tickets"
-msgstr ""
+msgstr "진행중 티켓"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:27
 #, python-format
 msgid "My urgent tickets"
-msgstr ""
+msgstr "긴급 티켓"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__name
@@ -1352,7 +1451,7 @@ msgstr "이름"
 #. module: helpdesk
 #: model:helpdesk.stage,name:helpdesk.stage_new
 msgid "New"
-msgstr "새로운"
+msgstr "신규"
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:35
@@ -1382,7 +1481,7 @@ msgstr "다음 활동 유형"
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_sla_urgent
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_urgent
 msgid "No tickets to display"
-msgstr ""
+msgstr "표시할 티켓이 없습니다"
 
 #. module: helpdesk
 #: selection:helpdesk.ticket,kanban_state:0
@@ -1421,7 +1520,7 @@ msgstr "배달 오류 메시지 수"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__partner_tickets
 msgid "Number of tickets from the same partner"
-msgstr ""
+msgstr "동일한 협력사의 티켓 수"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__message_unread_counter
@@ -1441,18 +1540,18 @@ msgstr "오직 정수 값만이 유효합니다."
 msgid ""
 "Only apply the SLA to a specific ticket type. If left empty it will apply to"
 " all types."
-msgstr ""
+msgstr "특정 티켓 유형에만 SLA를 적용하십시오. 비워 두면 모든 유형에 적용된다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Open Tickets"
-msgstr ""
+msgstr "진행중 티켓"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__close_hours
 msgid "Open Time (hours)"
-msgstr ""
+msgstr "개시 시간 (시)"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_force_thread_id
@@ -1461,13 +1560,13 @@ msgid ""
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
-"회신하지 않은 것까지 모든 받는 메시지를 첨부할 thread(레코드) ID (옵션). 설정하면, 완벽하게 새로운 레코드의 생성을 만들 수"
-" 없게 합니다."
+"메시지에 응답하지 않았더라도 모든 수신 메시지가 첨부될 스레드(레코드)의 선택적 ID. 설정되면 새로운 레코드의 생성이 완전히 불가능하게"
+" 됩니다."
 
 #. module: helpdesk
 #: selection:helpdesk.ticket,activity_state:0
 msgid "Overdue"
-msgstr "기한이 지난"
+msgstr "기한 초과"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_menu_team_dashboard
@@ -1477,7 +1576,7 @@ msgstr "개요"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_user_id
 msgid "Owner"
-msgstr "담당자(파트너)"
+msgstr "소유자"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_parent_model_id
@@ -1496,27 +1595,27 @@ msgid ""
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
-"별칭이 있는 상위 모델입니다. 별칭 참조를 포함하는 모델은 반드시 alias_model_id(예: 프로젝트(parent_model) 및 "
-"태스크(model)에서 제공하는 모델일 필요는 없습니다.)"
+"별칭이 있는 상위 모델입니다. 별칭 참조를 포함하는 모델은 반드시 alias_model_id(예 : 프로젝트(parent_model) 및"
+" 태스크(model)에서 제공하는 모델일 필요는 없습니다.)"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Performance"
-msgstr ""
+msgstr "실적"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_team_performance
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_graph_analysis
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_pivot_analysis
 msgid "Performance Analysis"
-msgstr ""
+msgstr "실적 분석"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:77
 #, python-format
 msgid "Performance Report"
-msgstr ""
+msgstr "실적 보고서"
 
 #. module: helpdesk
 #: selection:helpdesk.ticket,activity_state:0
@@ -1532,9 +1631,9 @@ msgid ""
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
 "Mailgateway를 사용하여 문서에 메시지를 게시하는 정책.\n"
-"- 모두: 모든 사용자가 게시할 수 있습니다\n"
-"- 파트너: 인증 된 파트너 만 게시할 수 있습니다\n"
-"- 팔로워: 관련 문서의 팔로워 또는 관련 채널의 참여자 만 게시할 수 있습니다\n"
+"- 모두 : 모든 사용자가 게시할 수 있습니다\n"
+"- 협력사 : 인증된 협력사만 게시할 수 있습니다\n"
+"- 팔로워 : 관련 문서의 팔로워 또는 관련 채널의 참여자만 게시할 수 있습니다\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__access_url
@@ -1544,7 +1643,7 @@ msgstr "포털 접근 URL"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__priority
 msgid "Priority"
-msgstr "우선순위"
+msgstr "우선 순위"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1554,62 +1653,62 @@ msgstr "생산성"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Publish this team's ratings on your website"
-msgstr ""
+msgstr "웹 사이트에 이 팀의 등급 게시"
 
 #. module: helpdesk
 #: model:helpdesk.ticket.type,name:helpdesk.type_question
 msgid "Question"
-msgstr "질의"
+msgstr "질문"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Question and answer section on your website"
-msgstr ""
+msgstr "웹 사이트의 질문 및 답변 섹션"
 
 #. module: helpdesk
 #: selection:helpdesk.team,assign_method:0
 msgid "Randomly"
-msgstr ""
+msgstr "무작위로"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_ids
 msgid "Rating"
-msgstr "평가"
+msgstr "등급"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_last_feedback
 msgid "Rating Last Feedback"
-msgstr "최근 피드백을 평가"
+msgstr "최근 의견 등급"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_last_image
 msgid "Rating Last Image"
-msgstr "최근 이미지 평가"
+msgstr "최근 이미지 등급"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_last_value
 msgid "Rating Last Value"
-msgstr "최근 값 평가"
+msgstr "최근 값 등급"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_count
 msgid "Rating count"
-msgstr "평가 수 "
+msgstr "등급 수 "
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_rating
 msgid "Ratings"
-msgstr "평가"
+msgstr "등급"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "Reach In"
-msgstr ""
+msgstr "도달 범위"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "Reach Stage"
-msgstr ""
+msgstr "도달 단계"
 
 #. module: helpdesk
 #: selection:helpdesk.ticket,kanban_state:0
@@ -1621,12 +1720,12 @@ msgstr "다음 단계 대기"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:170
 #, python-format
 msgid "Ready to boost your customer service?"
-msgstr ""
+msgstr "고객 서비스를 강화할 준비가 되셨습니까?"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__rating_last_feedback
 msgid "Reason of the rating"
-msgstr "평가를 하는 이유"
+msgstr "등급 사유"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_force_thread_id
@@ -1638,7 +1737,7 @@ msgstr "레코드 스레드 ID"
 msgid ""
 "Record timesheets on your tickets and reinvoice time to you customer through"
 " tasks."
-msgstr ""
+msgstr "티켓에 작업 시간을 기록하고 작업을 통해 고객에게 시간에 대해 재청구합니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -1668,12 +1767,12 @@ msgstr "복원"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 #, python-format
 msgid "SLA Failed"
-msgstr ""
+msgstr "SLA 실패"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
 msgid "SLA Not Failed"
-msgstr ""
+msgstr "SLA 실패 안함"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_sla_action
@@ -1682,33 +1781,33 @@ msgstr ""
 #: model:ir.ui.menu,name:helpdesk.helpdesk_sla_menu_main
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_tree
 msgid "SLA Policies"
-msgstr ""
+msgstr "SLA 정책"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_id
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "SLA Policy"
-msgstr ""
+msgstr "SLA 정책"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__description
 msgid "SLA Policy Description"
-msgstr ""
+msgstr "SLA 정책 설명"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__name
 msgid "SLA Policy Name"
-msgstr ""
+msgstr "SLA 정책 이름"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_name
 msgid "SLA Policy name"
-msgstr ""
+msgstr "SLA 정책 이름"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_active
 msgid "SLA active"
-msgstr ""
+msgstr "SLA 활성"
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:18
@@ -1719,30 +1818,30 @@ msgstr "영업사원"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Save this page and refresh to activate the feature"
-msgstr ""
+msgstr "이 페이지를 저장하고 새로 고침하여 기능을 활성화하십시오."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Save this page and refresh to activate the feature."
-msgstr ""
+msgstr "이 페이지를 저장하고 새로 고침하여 기능을 활성화하십시오."
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:43
 #, python-format
 msgid "Save this ticket and the modifications you've made to it."
-msgstr ""
+msgstr "이 티켓과 수정한 내용을 저장하십시오."
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:39
 #, python-format
 msgid "Search <span class=\"nolabel\"> (in Content)</span>"
-msgstr "검색 <span class=\"nolabel\"> (내용 있음)</span>"
+msgstr "<span class=\"nolabel\"> (내용 안에서)</span> 검색"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_search
 msgid "Search SLA Policies"
-msgstr ""
+msgstr "SLA 정책 검색"
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:42
@@ -1760,7 +1859,7 @@ msgstr "고객 검색"
 #: code:addons/helpdesk/controllers/portal.py:40
 #, python-format
 msgid "Search in Messages"
-msgstr "메제시에서 검색"
+msgstr "메시지에서 검색"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__access_token
@@ -1770,51 +1869,51 @@ msgstr "보안 토큰"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "See Customer Satisfaction"
-msgstr ""
+msgstr "고객 만족도 보기"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "See SLAs"
-msgstr ""
+msgstr "SLA 보기"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Self-Service"
-msgstr ""
+msgstr "셀프 서비스"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Sell &amp; Track Hours"
-msgstr ""
+msgstr "판매 &amp; 시간 추적"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:173
 #, python-format
 msgid "Send an email to"
-msgstr ""
+msgstr "다음 대상에게 이메일 보내기"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Send emails to"
-msgstr ""
+msgstr "다음 대상에게 이메일 보내기"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__sequence
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__sequence
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_type__sequence
 msgid "Sequence"
-msgstr "순차적"
+msgstr "순서"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Set the calendar used to compute SLA target"
-msgstr ""
+msgstr "SLA 대상을 계산하는 데 사용되는 캘린더 설정"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Set up your Service Level Agreements to track performance"
-msgstr ""
+msgstr "성능을 추적하기 위한 서비스 수준 계약 설정"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -1830,22 +1929,22 @@ msgstr "공유"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Share presentation and videos, and organize into courses"
-msgstr ""
+msgstr "프레젠테이션 및 비디오 공유 및 과정 구성"
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_use_sla
 msgid "Show SLA Policies"
-msgstr ""
+msgstr "SLA 정책 표시"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Show all records which has next action date is before today"
-msgstr "다음 행동 날짜가 오늘 이전 인 모든 기록보기"
+msgstr "다음 작업 날짜가 오늘 이전인 모든 기록 표시"
 
 #. module: helpdesk
 #: model:helpdesk.stage,name:helpdesk.stage_solved
 msgid "Solved"
-msgstr ""
+msgstr "해결됨"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__source_id
@@ -1869,7 +1968,7 @@ msgstr "단계"
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_stage
 msgid "Stage Changed"
-msgstr "업무 단계 변경"
+msgstr "단계 변경"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_stage_view_form
@@ -1888,7 +1987,7 @@ msgstr "단계"
 msgid ""
 "Stages the team will use. This team's tickets will only be able to be in "
 "these stages."
-msgstr ""
+msgstr "팀이 사용할 단계. 이 팀의 티켓은 이 단계에만 있을 수 있습니다."
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_stage_action
@@ -1896,6 +1995,8 @@ msgid ""
 "Stages will allow operators to easily track how a specific\n"
 "            tickets are positioned in the process."
 msgstr ""
+"단계를 통해 운영자는 특정 티켓이 업무 과정에서 \n"
+"            어떻게 배치되는지 쉽게 추적할 수 있습니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -1905,7 +2006,7 @@ msgstr "상태"
 #. module: helpdesk
 #: model:mail.message.subtype,description:helpdesk.mt_ticket_stage
 msgid "Status Changed"
-msgstr ""
+msgstr "상태 변경됨"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__activity_state
@@ -1915,10 +2016,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-"활동에 기조한 상태입니다\n"
-"기한초과: 이미 기한이 지났습니다\n"
-"오늘: 활동 날짜가 오늘입니다\n"
-"계획: 향후 활동입니다."
+"활동별 현황\n"
+"기한 초과 : 이미 기한이 지났습니다\n"
+"오늘 : 활동 날짜가 오늘입니다\n"
+"계획 : 향후 활동입니다."
 
 #. module: helpdesk
 #: code:addons/helpdesk/controllers/portal.py:36
@@ -1935,20 +2036,20 @@ msgstr "제목..."
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Submit tickets with an online form"
-msgstr ""
+msgstr "온라인 양식으로 티켓 제출"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:98
 #, python-format
 msgid "Success Rate"
-msgstr ""
+msgstr "성공률"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_7dayssuccess
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_success
 msgid "Success Rate Analysis"
-msgstr ""
+msgstr "성공률 분석"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tag_view_tree
@@ -1969,32 +2070,32 @@ msgstr "태그"
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_tag_action
 msgid "Tags allows to organize tickets."
-msgstr ""
+msgstr "태그를 사용하여 티켓을 구성할 수 있습니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "Target"
-msgstr ""
+msgstr "목표"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users__helpdesk_target_rating
 msgid "Target Customer Rating"
-msgstr ""
+msgstr "목표 고객 등급"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__stage_id
 msgid "Target Stage"
-msgstr ""
+msgstr "목표 단계"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users__helpdesk_target_success
 msgid "Target Success Rate"
-msgstr ""
+msgstr "목표 성공률"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users__helpdesk_target_closed
 msgid "Target Tickets to Close"
-msgstr ""
+msgstr "마감 대상 티켓"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__team_id
@@ -2013,22 +2114,22 @@ msgstr "팀 구성원"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_search
 msgid "Team Search"
-msgstr ""
+msgstr "팀 검색"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.index
 msgid "Teams"
-msgstr ""
+msgstr "팀"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_team_action
 msgid "Teams allows to organize tickets."
-msgstr ""
+msgstr "팀은 티켓을 구성할 수 있습니다."
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.email_template_action_helpdesk
 msgid "Templates"
-msgstr "템플릿(서식)"
+msgstr "서식"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_model_id
@@ -2037,8 +2138,8 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
-"이 별칭이 해당하는 모델 (Odoo 문서 종류)입니다. 기존 레코드에 응답하지 않는 모든 수신 이메일은이 모델의 새 레코드 (예 : "
-"프로젝트 작업)를 생성하게됩니다."
+"이 별칭이 해당하는 모델 (Odoo 문서 종류)입니다. 기존 레코드에 응답하지 않는 모든 수신 이메일은 이 모델의 새 레코드 (예 : "
+"프로젝트 작업)를 생성하게 됩니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_name
@@ -2056,7 +2157,7 @@ msgid ""
 "system user is found for that address."
 msgstr ""
 "이 별칭으로 이메일을 받을 때 생성되는 레코드의 소유자. 이 필드를 시스템에 설정하지 않으면 보낸 사람 주소를 기준으로 올바른 소유자를 "
-"찾기 위해 시도하거나 해당주소에서 시스템 사용자를 찾지 못한 경우 관리자 계정을 사용합니다."
+"찾기 위해 시도하거나 해당 주소에서 시스템 사용자를 찾지 못한 경우 관리자 계정을 사용합니다."
 
 #. module: helpdesk
 #. openerp-web
@@ -2065,31 +2166,32 @@ msgstr ""
 msgid ""
 "The success rate is based on the tickets which passed the SLA policies "
 "successfully."
-msgstr ""
+msgstr "성공률은 SLA 정책을 성공적으로 통과한 티켓을 기반으로 합니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
 msgid "There are currently no Ticket for your account."
-msgstr ""
+msgstr "현재 계정에 대한 티켓이 없습니다."
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:171
 #, python-format
 msgid "This dashboard will activate once you have created your first ticket."
-msgstr ""
+msgstr "첫 티켓을 만든 후 대시보드가 활성화됩니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__campaign_id
 msgid ""
 "This is a name that helps you keep track of your different campaign efforts,"
 " e.g. Fall_Drive, Christmas_Special"
-msgstr "이것은 다른 캠페인 활동을 추적할 때 도움을 주는 이름입니다.  예시: Fall_Drive, Christmas_Special"
+msgstr ""
+"이것은 다른 캠페인 활동을 추적할 때 도움을 주는 이름입니다.  예시 : Fall_Drive, Christmas_Special"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__medium_id
 msgid "This is the method of delivery, e.g. Postcard, Email, or Banner Ad"
-msgstr "이것은 전달 방법입니다. 예시: 엽서, 이메일 또는 배너광고"
+msgstr "이것은 전달 방법입니다. 예시 : 엽서, 이메일 또는 배너광고"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__source_id
@@ -2101,14 +2203,14 @@ msgstr "이것은 링크의 소스입니다. 예시 : 검색엔진, 다른 도�
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__use_helpdesk_timesheet
 msgid "This required to have project module installed."
-msgstr ""
+msgstr "이를 위해서는 프로젝트 모듈이 설치되어야 합니다."
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:30
 #, python-format
 msgid "Three stars, maximum score"
-msgstr ""
+msgstr "별 세 개, 최고 점수"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_dashboard
@@ -2116,35 +2218,35 @@ msgstr ""
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_action_dashboard_urgent
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_team_analysis_action
 msgid "Ticket Analysis"
-msgstr ""
+msgstr "티켓 분석"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_new
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_new
 msgid "Ticket Created"
-msgstr ""
+msgstr "티켓 작성함"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Ticket ID"
-msgstr ""
+msgstr "티켓 ID"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_rated
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_rated
 msgid "Ticket Rated"
-msgstr ""
+msgstr "티켓 등급"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_stage
 msgid "Ticket Stage Changed"
-msgstr ""
+msgstr "티켓 단계 변경됨"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_tag_action
 #: model:ir.ui.menu,name:helpdesk.helpdesk_tag_menu
 msgid "Ticket Tags"
-msgstr ""
+msgstr "티켓 태그"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_ticket_type_action
@@ -2159,12 +2261,12 @@ msgstr "티켓 유형"
 #. module: helpdesk
 #: model:mail.message.subtype,description:helpdesk.mt_ticket_new
 msgid "Ticket created"
-msgstr ""
+msgstr "티켓 작성함"
 
 #. module: helpdesk
 #: model:mail.message.subtype,description:helpdesk.mt_ticket_rated
 msgid "Ticket rated"
-msgstr ""
+msgstr "티켓 등급"
 
 #. module: helpdesk
 #. openerp-web
@@ -2196,41 +2298,41 @@ msgstr "티켓"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_digest_digest__kpi_helpdesk_tickets_closed
 msgid "Tickets Closed"
-msgstr ""
+msgstr "티켓 마감"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Tickets Search"
-msgstr ""
+msgstr "티켓 검색"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__is_close
 msgid ""
 "Tickets in this stage are considered as done. This is used notably when "
 "computing SLAs and KPIs on tickets."
-msgstr ""
+msgstr "이 단계의 티켓은 완료된 것으로 간주됩니다. 이는 티켓에서 SLA 및 KPI를 계산할 때 특히 유용합니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Tickets to Review"
-msgstr ""
+msgstr "티켓 검토"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla__priority
 msgid "Tickets under this priority will not be taken into account."
-msgstr ""
+msgstr "이 우선 순위에 따른 티켓은 고려되지 않습니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__assign_hours
 msgid "Time to first assignation (hours)"
-msgstr ""
+msgstr "첫 번째 할당 시간(시)"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_helpdesk_timesheet
 msgid "Timesheet on Ticket"
-msgstr ""
+msgstr "티켓 작업 기록"
 
 #. module: helpdesk
 #. openerp-web
@@ -2260,27 +2362,27 @@ msgstr "트위터"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:24
 #, python-format
 msgid "Two stars, with a maximum of three"
-msgstr ""
+msgstr "별 두 개, 최대 세 개입니다."
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_type_action
 msgid "Type allows to organize tickets."
-msgstr ""
+msgstr "유형을 사용하여 티켓을 구성할 수 있습니다."
 
 #. module: helpdesk
 #: sql_constraint:helpdesk.ticket.type:0
 msgid "Type name already exists !"
-msgstr ""
+msgstr "유형 이름이 이미 있습니다!"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "URL to Submit Issue"
-msgstr ""
+msgstr "문제를 제출할 URL"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__portal_rating_url
 msgid "URL to Submit an Issue"
-msgstr ""
+msgstr "문제를 제출할 URL"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__unassigned_tickets
@@ -2289,7 +2391,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Unassigned Tickets"
-msgstr ""
+msgstr "할당되지 않은 티켓"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_unread
@@ -2307,12 +2409,12 @@ msgstr "읽지 않은 메세지 수"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Upcoming SLA Fail"
-msgstr ""
+msgstr "예정된 SLA 실패"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__upcoming_sla_fail_tickets
 msgid "Upcoming SLA Fail Tickets"
-msgstr ""
+msgstr "예정된 SLA 실패 티켓"
 
 #. module: helpdesk
 #: selection:helpdesk.sla,priority:0 selection:helpdesk.ticket,priority:0
@@ -2324,14 +2426,14 @@ msgstr "긴급"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:29
 #, python-format
 msgid "Urgent ("
-msgstr ""
+msgstr "긴급 ("
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/js/tour.js:48
 #, python-format
 msgid "Use the breadcrumbs to go back to the Kanban view."
-msgstr ""
+msgstr "이동 경로를 사용해서 칸반 보기로 돌아가세요."
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_user
@@ -2348,26 +2450,26 @@ msgstr "사용자"
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:52
 #, python-format
 msgid "View failed tickets"
-msgstr ""
+msgstr "실패한 티켓 보기"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:57
 #, python-format
 msgid "View high priority failed tickets"
-msgstr ""
+msgstr "높은 우선순위의 실패 티켓 보기"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "View this teams ratings on this page:<br/>"
-msgstr ""
+msgstr "이 페이지에서 팀 등급 보기 : <br/>"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:62
 #, python-format
 msgid "View urgent failed tickets"
-msgstr ""
+msgstr "긴급한 실패 티켓 보기"
 
 #. module: helpdesk
 #. openerp-web
@@ -2376,12 +2478,12 @@ msgstr ""
 msgid ""
 "Want to <b>boost your customer satisfaction</b>?<br/><i>Click Helpdesk to "
 "start.</i>"
-msgstr ""
+msgstr "<b>고객 만족도</b>를 높이고자 합니까? <br/><i>헬프데스크를 클릭하여 시작하십시오.</i>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_form
 msgid "Website Form"
-msgstr ""
+msgstr "웹사이트 양식"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__website_message_ids
@@ -2409,11 +2511,13 @@ msgid ""
 "balanced assignation, tickets are assigned to the user with the least amount"
 " of open tickets."
 msgstr ""
+"무작위 할당을 하면 모든 사용자가 동일한 수의 티켓을 받게 됩니다. 균형 잡힌 배정을 통해 최소의 진행 티켓으로 사용자에게 티켓이 "
+"할당됩니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__resource_calendar_id
 msgid "Working Hours"
-msgstr "근무시간"
+msgstr "근무 시간"
 
 #. module: helpdesk
 #. openerp-web
@@ -2426,32 +2530,32 @@ msgstr "잘못된 값이 입력되었습니다!"
 #: code:addons/helpdesk/models/helpdesk.py:108
 #, python-format
 msgid "You must have team members assigned to change the assignation method."
-msgstr ""
+msgstr "할당 방법을 변경하려면 팀 구성원이 할당되어야 합니다."
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_team_dashboard_action_main
 msgid "Your teams will appear here"
-msgstr ""
+msgstr "팀이 여기에 표시됩니다."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "days<br/>"
-msgstr ""
+msgstr "일 <br/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "e.g. Close urgent tickets within 36 hours"
-msgstr ""
+msgstr "예 : 36시간 이내에 긴급 티켓 마감"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "eLearning"
-msgstr ""
+msgstr "온라인 학습"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "hours<br/>"
-msgstr ""
+msgstr "시 <br/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -2461,16 +2565,16 @@ msgstr "oe_kanban_text_red"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "team search"
-msgstr ""
+msgstr "팀 검색"
 
 #. module: helpdesk
 #. openerp-web
 #: code:addons/helpdesk/static/src/xml/helpdesk_team_templates.xml:173
 #, python-format
 msgid "to create a ticket."
-msgstr ""
+msgstr "티켓 작성 가능."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "to create tickets"
-msgstr ""
+msgstr "티켓 작성 가능"
