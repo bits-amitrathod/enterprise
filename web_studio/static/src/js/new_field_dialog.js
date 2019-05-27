@@ -139,6 +139,8 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             }
             values.related = this.fieldSelector.chain.join('.');
             values.ttype = selectedField.type;
+            values.readonly = true;
+            values.copy = false;
             if (_.contains(['many2one', 'many2many'], selectedField.type)) {
                 values.relation = selectedField.relation;
             } else if (selectedField.type === 'one2many') {
