@@ -40,6 +40,8 @@ msgid ""
 "<a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">Meeting</a> for <a "
 "href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s's</a> appraisal"
 msgstr ""
+"<a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">Meeting</a> für <a "
+"href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s's</a> Bewertung"
 
 #. module: hr_appraisal
 #: model:mail.template,body_html:hr_appraisal.send_appraisal_template
@@ -63,6 +65,24 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hallo ${ctx.get('employee').name}<br/><br/>\n"
+"        % if ctx.get('employee').id == object.employee_id.id:\n"
+"            Bitte füllen Sie die folgende Umfrage zu Ihrer Bewertung aus.\n"
+"        % else:\n"
+"            Bitte füllen Sie die folgende Umfrage aus zu  ${object.employee_id.name}'s Bewertung.\n"
+"        % endif\n"
+"        <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"            <a href=\"__URL__\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
+"                Umfrage starten\n"
+"            </a>\n"
+"        </div>\n"
+"       Bitte beantworten Sie die Bewertung für ${format_date(object.date_close)}.<br/>\n"
+"        Danke für Ihre Teilnahme.\n"
+"    </p>\n"
+"</div>\n"
+"            "
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
@@ -190,7 +210,7 @@ msgstr "Beurteilung Frist"
 #. module: hr_appraisal
 #: model:mail.activity.type,name:hr_appraisal.mail_act_appraisal_form
 msgid "Appraisal Form to Fill"
-msgstr ""
+msgstr "Bewertungsformular ausfüllen"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
@@ -245,7 +265,7 @@ msgstr "Bewertungsauswertungen"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__manager_appraisal
 msgid "Appraisal by Manager"
-msgstr ""
+msgstr "Beurteilung durch den Manager"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_3
@@ -256,7 +276,7 @@ msgstr "Beurteilung für Periode"
 #: code:addons/hr_appraisal/models/hr_appraisal.py:186
 #, python-format
 msgid "Appraisal form(s) have been sent"
-msgstr ""
+msgstr "Bewertungsformular (e) wurden gesendet"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.hr_appraisal_action_from_department
@@ -359,7 +379,7 @@ msgstr "Kollegen"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__colleagues_appraisal
 msgid "Colleagues Appraisal"
-msgstr ""
+msgstr "Mitarbeiterbeurteilung"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__color
@@ -411,7 +431,7 @@ msgstr "Erstellt am"
 #. module: hr_appraisal
 #: model_terms:ir.actions.act_window,help:hr_appraisal.open_view_hr_appraisal_tree
 msgid "Create a new appraisal"
-msgstr ""
+msgstr "Erstellen Sie eine neue Bewertung"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__create_uid
@@ -627,6 +647,8 @@ msgid ""
 "Fill form <a href=\"%s\">%s</a> for <a href=\"#\" data-oe-model=\"%s\" data-"
 "oe-id=\"%s\">%s's</a> appraisal"
 msgstr ""
+"Formular ausfüllen <a href=\"%s\">%s</a> für <a href=\"#\" data-oe-"
+"model=\"%s\" data-oe-id=\"%s\">%s's</a> Bewertung"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -1572,6 +1594,7 @@ msgstr "Jahr"
 #, python-format
 msgid "You cannot delete appraisal which is in %s state"
 msgstr ""
+"Sie können keine Beurteilungen löschen, %s die sich im Status befinden"
 
 #. module: hr_appraisal
 #: model_terms:ir.actions.act_window,help:hr_appraisal.open_view_hr_appraisal_tree
