@@ -148,6 +148,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
     def _get_lines(self, options, line_id=None):
         # Fetch data
         report_data = self._get_bank_rec_report_data(options, line_id)
+        self = self.with_context(line_currency=report_data['line_currency'])
 
         # Compute totals
         unrec_tot = sum([-(aml.amount_currency if report_data['use_foreign_currency'] else aml.balance) for aml in report_data.get('not_reconciled_pmts', [])])
