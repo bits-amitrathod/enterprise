@@ -1030,7 +1030,7 @@ var InvoiceExtractFormRenderer = FormRenderer.extend({
             $document.find('head').append('<link rel="stylesheet" type="text/css" href="/account_invoice_extract/static/src/css/account_invoice_extract.css"></link>');
             if (this._invoiceExtractBoxLayers.length > 0) {
                 var $textLayers = $document.find('.textLayer');
-                for (var index = 0; index < $textLayers.length; index++) {
+                for (var index = 0; index < $textLayers.length && index < this._invoiceExtractBoxLayers.length; index++) {
                     var $textLayer = $textLayers.eq(index);
                     this._invoiceExtractBoxLayers[index].insertAfter($textLayer)
                 }
