@@ -26,11 +26,8 @@ class AccountBankStatementLine(models.Model):
             return res
         payments = res.mapped('line_ids.payment_id').filtered(
             lambda x: x.l10n_mx_edi_pac_status != 'signed')
-        payment_method = self.l10n_mx_edi_payment_method_id.id or self.journal_id.l10n_mx_edi_payment_method_id.id
-        payments.write({
-            'l10n_mx_edi_payment_method_id': payment_method,
-            'invoice_ids': [(4, inv) for inv in invoice_ids]
-        })
+        payment_data = self._l10n_mx_edi_get_payment_extra_data(invoice_ids)
+        payments.write(payment_data)
         payments._l10n_mx_edi_retry()
         return res
 
@@ -44,3 +41,12 @@ class AccountBankStatementLine(models.Model):
         version = self.env['account.invoice'].l10n_mx_edi_get_pac_version()
         country = self.env.ref('base.mx')
         return version == '3.3' and self.company_id.country_id == country
+
+    def _l10n_mx_edi_get_payment_extra_data(self, invoice_ids=None):
+        self.ensure_one()
+        payment_method = self.l10n_mx_edi_payment_method_id.id or self.journal_id.l10n_mx_edi_payment_method_id.id
+        result = {
+            'l10n_mx_edi_payment_method_id': payment_method,
+            'invoice_ids': [(4, inv) for inv in invoice_ids],
+        }
+        return result
