@@ -60,7 +60,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
             'id': str(line.id),
             'caret_options': 'account.bank.statement.line',
             'model': 'account.bank.statement.line',
-            'name': len(name) >= 85 and name[0:80] + '...' or name,
+            'name': len(name) >= 75 and name[0:70] + '...' or name,
             'columns': [
                 {'name': format_date(self.env, line.date), 'class': 'date'},
                 {'name': line.ref},
@@ -189,8 +189,8 @@ class account_bank_reconciliation_report(models.AbstractModel):
             for line in report_data['not_reconciled_pmts']:
                     self.line_number += 1
                     line_description = line_title = line.ref
-                    if line_description and len(line_description) > 83 and not self.env.context.get('print_mode'):
-                        line_description = line.ref[:80] + '...'
+                    if line_description and len(line_description) > 70 and not self.env.context.get('print_mode'):
+                        line_description = line.ref[:65] + '...'
                     lines.append({
                         'id': str(line.id),
                         'name': line.name,
