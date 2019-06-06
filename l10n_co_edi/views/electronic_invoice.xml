@@ -48,8 +48,8 @@
                 <EMI_15 t-esc="company_partner.country_id.code"/>
                 <EMI_18 t-esc="company_partner.contact_address"/>
 
-                <TAC>
-                    <TAC_1 t-foreach="invoice._l10n_co_edi_get_fiscal_values()" t-as="type_code"><t t-esc="type_code.name"/></TAC_1>
+                <TAC t-foreach="invoice._l10n_co_edi_get_fiscal_values()" t-as="type_code">
+                    <TAC_1><t t-esc="type_code.name"/></TAC_1>
                 </TAC>
 
                 <ICC/>
@@ -76,8 +76,8 @@
                 <ADQ_15 t-esc="invoice_partner.country_id.code"/>
                 <ADQ_18 t-esc="invoice_partner.contact_address"/>
 
-                <TCR>
-                    <TCR_1 t-foreach="invoice._l10n_co_edi_get_fiscal_values()" t-as="type_code"><t t-esc="type_code.name"/></TCR_1>
+                <TCR t-foreach="invoice._l10n_co_edi_get_fiscal_values()" t-as="type_code">
+                    <TCR_1><t t-esc="type_code.name"/></TCR_1>
                 </TCR>
 
                 <ICR/>
