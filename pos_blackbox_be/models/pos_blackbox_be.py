@@ -34,7 +34,7 @@ class pos_config(models.Model):
 
     report_sequence_number = fields.Integer()
     blackbox_pos_production_id = fields.Char("Registered POSBox serial number",
-        help='e.g. BODO002... The POSBox must be certified by Odoo S.A. to be used with the blackbox.',
+        help='e.g. BODO001... The POSBox must be certified by Odoo S.A. to be used with the blackbox.',
         copy=False)
 
     @api.constrains('blackbox_pos_production_id')

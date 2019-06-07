@@ -1076,7 +1076,7 @@ can no longer be modified. Please create a new line with eg. a negative quantity
                 self.proxy.message('request_serial', {}, {timeout: 5000}).then(function (response) {
                     if (! response) {
                         self.proxy._show_could_not_connect_error(_t("Unreachable FDM"));
-                    } else if ("BODO002" + response.toUpperCase() != self.config.blackbox_pos_production_id.toUpperCase()) {
+                    } else if ("BODO001" + response.toUpperCase() != self.config.blackbox_pos_production_id.toUpperCase()) {
                         self.proxy._show_could_not_connect_error(
                             _t("Incorrect PosBox serial")+' '+self.config.blackbox_pos_production_id.toUpperCase()
                         );
