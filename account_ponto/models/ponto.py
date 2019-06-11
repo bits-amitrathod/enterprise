@@ -17,6 +17,12 @@ class ProviderAccount(models.Model):
     provider_type = fields.Selection(selection_add=[('ponto', 'Ponto')])
     ponto_token = fields.Char(readonly=True, help='Technical field that contains the ponto token')
 
+    @api.multi
+    def _get_available_providers(self):
+        ret = super(ProviderAccount, self)._get_available_providers()
+        ret.append('ponto')
+        return ret
+
     def _build_ponto_headers(self):
         authorization = "Bearer " + self.ponto_token
         return {
@@ -51,6 +57,17 @@ class ProviderAccount(models.Model):
             _logger.exception(e)
             self.log_ponto_message('%s for route %s' % (resp.text, url))
 
+    @api.multi
+    def get_login_form(self, site_id, provider, beta=False):
+        if provider != 'ponto':
+            return super(ProviderAccount, self).get_login_form(site_id, provider, beta)
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'ponto_online_sync_widget',
+            'name': _('Link your Ponto account'),
+            'target': 'new',
+            'context': self._context,
+        }
 
     def log_ponto_message(self, message):
         # We need a context check because upon first synchronization the account_online_provider record is created and just after
