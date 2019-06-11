@@ -406,7 +406,17 @@ can no longer be modified. Please create a new line with eg. a negative quantity
 
         // don't allow to add products without a vat letter
         add_product: function (product, options) {
-            if (product.taxes_id.length === 0) {
+            if (this.pos.pos_session.work_status === 'work_in' && product !== this.pos.work_in_product) {
+                this.pos.gui.show_popup("error", {
+                    'title': _t("POS error"),
+                    'body':  _t("Session is not initialized yet. Register a Work In event first."),
+                });
+            } else if (this.pos.pos_session.work_status === 'work_out') {
+                this.pos.gui.show_popup("error", {
+                    'title': _t("POS error"),
+                    'body':  _t("Session has been Worked Out. Open a new session to keep selling."),
+                });
+            } else if (product.taxes_id.length === 0) {
                 this.pos.gui.show_popup("error", {
                     'title': _t("POS error"),
                     'body':  _t("Product has no tax associated with it."),
@@ -1485,12 +1495,28 @@ can no longer be modified. Please create a new line with eg. a negative quantity
         button_click: function () {
             var self = this;
 
+            if (this.pos.pos_session.work_status === 'work_in') {
+                this.pos.gui.show_popup("error", {
+                    'title': _t("POS error"),
+                    'body':  _t("Session is not initialized yet. Register a Work In event first."),
+                });
+                return false;
+            }
+            if (this.pos.pos_session.work_status === 'work_out') {
+                this.pos.gui.show_popup("error", {
+                    'title': _t("POS error"),
+                    'body':  _t("Session has already been Worked Out. Open a new session to keep selling."),
+                });
+                return false;
+            }
+
             self.pos.proxy.request_fdm_identification().then(function (parsed_response) {
                 if (parsed_response) {
                     self.pos.add_new_order();
                     self.pos.get_order().add_product(self.pos.work_out_product);
                     self.pos.push_order(self.pos.get_order());
                     self.gui.show_screen('receipt');
+                    self.pos.pos_session.work_status = 'work_out';
                 }
             });
         }
@@ -1506,12 +1532,28 @@ can no longer be modified. Please create a new line with eg. a negative quantity
         button_click: function () {
             var self = this;
 
+            if (this.pos.pos_session.work_status === 'valid') {
+                this.pos.gui.show_popup("error", {
+                    'title': _t("POS error"),
+                    'body':  _t("Session has already been initialized Worked In."),
+                });
+                return false;
+            }
+            if (this.pos.pos_session.work_status === 'work_out') {
+                this.pos.gui.show_popup("error", {
+                    'title': _t("POS error"),
+                    'body':  _t("Session has been Worked Out. Open a new session to keep selling."),
+                });
+                return false;
+            }
+
             self.pos.proxy.request_fdm_identification().then(function (parsed_response) {
                 if (parsed_response) {
                     self.pos.add_new_order();
                     self.pos.get_order().add_product(self.pos.work_in_product);
                     self.pos.push_order(self.pos.get_order());
                     self.gui.show_screen('receipt');
+                    self.pos.pos_session.work_status = 'valid';
                 }
             });
         }
@@ -1583,7 +1625,7 @@ can no longer be modified. Please create a new line with eg. a negative quantity
     models.load_fields("res.users", "insz_or_bis_number");
     models.load_fields("account.tax", "identification_letter");
     models.load_fields("res.company", "street");
-    models.load_fields("pos.session", "forbidden_modules_installed");
+    models.load_fields("pos.session", ["forbidden_modules_installed", "work_status"]);
 
     return {
         'FDMPacketField': FDMPacketField,
