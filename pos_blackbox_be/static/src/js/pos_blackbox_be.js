@@ -254,7 +254,7 @@ can no longer be modified. Please create a new line with eg. a negative quantity
                         if (qty_decrease) {
                             var order = this.pos.get_order();
                             var selected_orderline = order.get_selected_orderline();
-                            qty_decrease = parseInt(qty_decrease, 10);
+                            qty_decrease = parseFloat(qty_decrease, 10);
 
                             // We have to prevent taking back more than what was on the order. The
                             // right way to do this is by "merging" all the orderlines that we can
