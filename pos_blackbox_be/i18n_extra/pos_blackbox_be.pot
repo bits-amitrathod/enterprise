@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-07 14:00+0000\n"
-"PO-Revision-Date: 2019-06-07 14:00+0000\n"
+"POT-Creation-Date: 2019-06-12 13:22+0000\n"
+"PO-Revision-Date: 2019-06-12 13:22+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1043,6 +1043,36 @@ msgid "Session"
 msgstr ""
 
 #. module: pos_blackbox_be
+#. openerp-web
+#: code:addons/pos_blackbox_be/static/src/js/pos_blackbox_be.js:1508
+#, python-format
+msgid "Session has already been Worked Out. Open a new session to keep selling."
+msgstr ""
+
+#. module: pos_blackbox_be
+#. openerp-web
+#: code:addons/pos_blackbox_be/static/src/js/pos_blackbox_be.js:1538
+#, python-format
+msgid "Session has already been initialized Worked In."
+msgstr ""
+
+#. module: pos_blackbox_be
+#. openerp-web
+#: code:addons/pos_blackbox_be/static/src/js/pos_blackbox_be.js:417
+#: code:addons/pos_blackbox_be/static/src/js/pos_blackbox_be.js:1545
+#, python-format
+msgid "Session has been Worked Out. Open a new session to keep selling."
+msgstr ""
+
+#. module: pos_blackbox_be
+#. openerp-web
+#: code:addons/pos_blackbox_be/static/src/js/pos_blackbox_be.js:412
+#: code:addons/pos_blackbox_be/static/src/js/pos_blackbox_be.js:1501
+#, python-format
+msgid "Session is not initialized yet. Register a Work In event first."
+msgstr ""
+
+#. module: pos_blackbox_be
 #: model:ir.model.fields,help:pos_blackbox_be.field_res_users_insz_or_bis_number
 msgid "Social security identification number"
 msgstr ""
@@ -1300,6 +1330,11 @@ msgid "VSC ID:"
 msgstr ""
 
 #. module: pos_blackbox_be
+#: selection:pos.session,work_status:0
+msgid "Valid"
+msgstr ""
+
+#. module: pos_blackbox_be
 #: model:ir.model.fields,field_description:pos_blackbox_be.field_pos_order_line_pro_forma_vat_letter
 #: model:ir.model.fields,field_description:pos_blackbox_be.field_pos_order_line_vat_letter
 msgid "Vat Letter"
@@ -1326,15 +1361,22 @@ msgid "Version of Odoo that created the order"
 msgstr ""
 
 #. module: pos_blackbox_be
+#: selection:pos.session,work_status:0
 #: model:product.product,name:pos_blackbox_be.product_product_work_in
 #: model:product.template,name:pos_blackbox_be.product_product_work_in_product_template
 msgid "WORK IN"
 msgstr ""
 
 #. module: pos_blackbox_be
+#: selection:pos.session,work_status:0
 #: model:product.product,name:pos_blackbox_be.product_product_work_out
 #: model:product.template,name:pos_blackbox_be.product_product_work_out_product_template
 msgid "WORK OUT"
+msgstr ""
+
+#. module: pos_blackbox_be
+#: model:ir.model.fields,field_description:pos_blackbox_be.field_pos_session_work_status
+msgid "Work Status"
 msgstr ""
 
 #. module: pos_blackbox_be
