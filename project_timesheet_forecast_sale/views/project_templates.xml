@@ -29,12 +29,14 @@
                                         <td t-att-class="'o_right_bordered' if r_val_index in [timesheet_forecast_table['attrs']['timesheet_col_index'], timesheet_forecast_table['attrs']['forecast_col_index']] else '' + ' text-center' if r_val_index != 0 else ''">
                                             <t t-if="row['meta'].get('type') == 'sale_order' and r_val_index == 0">
                                                 <a t-att-data-oe-model="row['meta']['res_model']" t-att-data-oe-id="row['meta']['res_id']" class="o_timesheet_plan_redirect">
-                                                    <t t-esc="r_val"/>
+                                                    <t t-if="isinstance(r_val, (float, int))" t-esc="r_val" t-options='{"widget": "float", "precision": 2}'/>
+                                                    <t t-else="1" t-esc="r_val"/>
                                                 </a>
                                             </t>
                                             <t t-if="row['meta'].get('type') != 'sale_order' or r_val_index != 0">
                                                 <span>
-                                                    <t t-esc="r_val"/>
+                                                    <t t-if="isinstance(r_val, (float, int))" t-esc="r_val" t-options='{"widget": "float", "precision": 2}'/>
+                                                    <t t-else="1" t-esc="r_val"/>
                                                 </span>
                                             </t>
                                         </td>
