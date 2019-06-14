@@ -15,7 +15,7 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
     filter_date = {'date_from': '', 'date_to': '', 'filter': 'this_month'}
 
     @api.model
-    def get_lines(self, options, line_id=None):
+    def get_lines(self, options, line_id=None, get_xml_data=False):
         lines = []
         context = self.env.context
         if not context.get('company_ids'):
@@ -68,7 +68,6 @@ class ReportL10nBePartnerVatIntra(models.AbstractModel):
                     # 'type': 'partner_id',
                     'caret_options': 'res.partner',
                     'name': row['partner_name'] if not get_xml_data else False,
-                    'footnotes': context_id._get_footnotes('partner_id', row['partner_id']) if not get_xml_data else False,
                     'columns': [{'name': v } for v in columns],
                     # 'level': 2,
                     'unfoldable': False,
