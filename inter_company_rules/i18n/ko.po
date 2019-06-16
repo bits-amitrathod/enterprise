@@ -28,7 +28,7 @@ msgstr ""
 #: code:addons/inter_company_rules/models/account_invoice.py:89
 #, python-format
 msgid " Invoice: "
-msgstr ""
+msgstr "송장 :"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice_auto_generated
@@ -38,12 +38,12 @@ msgstr "자동으로 생성된 문서"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_purchase_order_auto_generated
 msgid "Auto Generated Purchase Order"
-msgstr ""
+msgstr "자동으로 생성된 구매 주문서"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_sale_order_auto_generated
 msgid "Auto Generated Sales Order"
-msgstr ""
+msgstr "자동으로 생성된 판매 주문서"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_auto_validation
@@ -68,7 +68,7 @@ msgstr "회사"
 msgid ""
 "Configure correct warehouse for company(%s) from Menu: "
 "Settings/Users/Companies"
-msgstr ""
+msgstr "다음 메뉴에서 올바른 (%s) 회사의 창고 설정 : 설정/사용자/회사"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_auto_generate_invoices
@@ -94,14 +94,14 @@ msgstr ""
 msgid ""
 "Default value to set on Purchase Orders that will be created based on Sales "
 "Orders made to this company."
-msgstr ""
+msgstr "해당 회사의 판매 주문서를 기반으로 작성되는 구매 주문서에 대한 기본값입니다."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_warehouse_id
 msgid ""
 "Default value to set on Purchase(Sales) Orders that will be created based on"
 " Sale(Purchase) Orders made to this company"
-msgstr ""
+msgstr "해당 회사의 판매(구매) 주문서를 기반으로 작성되는 구매(판매) 주문서에 설정할 기본값"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_generate_invoices
@@ -141,19 +141,19 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_intercompany_user_id
 msgid "Inter Company User"
-msgstr ""
+msgstr "회사간 사용자"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:42
 #: code:addons/inter_company_rules/models/sale_order.py:46
 #, python-format
 msgid "Inter company user of company %s doesn't have enough access rights"
-msgstr ""
+msgstr "회사 간 사용자 %s에는 사용 권한이 충분하지 않습니다"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "Inter-Company Rules"
-msgstr ""
+msgstr "회사간 규칙"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_account_invoice
@@ -164,20 +164,20 @@ msgstr "송장"
 #: code:addons/inter_company_rules/models/account_invoice.py:81
 #, python-format
 msgid "Please define %s journal for this company: \"%s\" (id:%d)."
-msgstr ""
+msgstr "다음 회사에 대한 %s 분개 항목을 정의하십시오 : \"%s\" (id:%d)."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:39
 #, python-format
 msgid "Provide at least one user for inter company relation for % "
-msgstr ""
+msgstr "%에 대한 회사 간 관계를 위해 한명 이상의 사용자 필요"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/account_invoice.py:44
 #: code:addons/inter_company_rules/models/sale_order.py:43
 #, python-format
 msgid "Provide one user for intercompany relation for % "
-msgstr ""
+msgstr "%에 대한 회사 간 관계를 위해 한 명 이상의 사용자 필요"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_purchase_order
@@ -193,7 +193,7 @@ msgstr "견적"
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_intercompany_user_id
 msgid ""
 "Responsible user for creation of documents triggered by intercompany rules."
-msgstr ""
+msgstr "회사 간 규칙에 의거한 문서를 작성할 책임이 있는 사용자."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_rule_type
@@ -213,12 +213,12 @@ msgstr "회서 선"
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rules_company_id
 msgid "Select company to setup Inter company rules."
-msgstr ""
+msgstr "회사 간 규칙을 설정할 회사를 선택합니다."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_rule_type
 msgid "Select the type to setup inter company rules in selected company."
-msgstr ""
+msgstr "선택한 회사에서 회사 간 규칙을 설정할 유형을 선택합니다."
 
 #. module: inter_company_rules
 #: selection:res.config.settings,rule_type:0
@@ -233,12 +233,12 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice_auto_invoice_id
 msgid "Source Invoice"
-msgstr ""
+msgstr "원본 송장"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_sale_order_auto_purchase_order_id
 msgid "Source Purchase Order"
-msgstr ""
+msgstr "원본 구매 주문"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_purchase_order_auto_sale_order_id
@@ -253,7 +253,7 @@ msgstr "창고"
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_config_settings_warehouse_id
 msgid "Warehouse For Purchase Orders"
-msgstr ""
+msgstr "구매 주문에 대한 창고"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_config_settings_auto_validation
@@ -275,7 +275,7 @@ msgstr ""
 msgid ""
 "You cannot create SO from PO because sale price list currency is different "
 "than purchase price list currency."
-msgstr ""
+msgstr "판매 가격 목록 통화가 구매 가격 목록 통화와 다르기 때문에 PO에서 SO를 작성할 수 없습니다."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/res_company.py:32
@@ -285,6 +285,9 @@ msgid ""
 "                    simultaneously with another option ('Create Sales Orders when buying to this\n"
 "                    company' or 'Create Purchase Orders when selling to this company')!"
 msgstr ""
+"서로 다른 옵션을 사용하여 서로 다른 송장을 기반으로 송장을 생성하도록 선택할 수 없습니다\n"
+"                       ('이 회사에서 구매할 때 판매 주문 만들기' 또는 \n"
+"                         '이 회사로 판매할 때 구매 주문 만들기')!"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_res_config_settings
