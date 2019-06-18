@@ -577,7 +577,7 @@ class AccountInvoice(models.Model):
 
             for taxes_ids, il in aggregated_lines.items():
                 vals = {
-                    'name': " + ".join(il['description']) if len(il['description']) > 0 else "/",
+                    'name': "\n".join(il['description']) if len(il['description']) > 0 else "/",
                     'invoice_id': self.id,
                     'price_unit': il['subtotal'],
                     'quantity': 1.0,
