@@ -122,8 +122,9 @@ class AccountInvoice(models.Model):
                         endpoint = self.env['ir.config_parameter'].sudo().get_param(
                             'account_invoice_extract_endpoint', 'https://iap-extract.odoo.com') + '/iap/invoice_extract/parse'
                         user_infos = {
-                            'user_company_VAT': self.env.user.company_id.vat,
-                            'user_company_name': self.env.user.company_id.name,
+                            'user_company_VAT': record.company_id.vat,
+                            'user_company_name': record.company_id.name,
+                            'user_company_country_code': record.company_id.country_id.code,
                             'user_lang': self.env.user.lang,
                             'user_email': self.env.user.email,
                         }
@@ -159,8 +160,9 @@ class AccountInvoice(models.Model):
             endpoint = self.env['ir.config_parameter'].sudo().get_param(
                 'account_invoice_extract_endpoint', 'https://iap-extract.odoo.com')  + '/iap/invoice_extract/parse'
             user_infos = {
-                'user_company_VAT': self.env.user.company_id.vat,
-                'user_company_name': self.env.user.company_id.name,
+                'user_company_VAT': self.company_id.vat,
+                'user_company_name': self.company_id.name,
+                'user_company_country_code': self.company_id.country_id.code,
                 'user_lang': self.env.user.lang,
                 'user_email': self.env.user.email,
             }
