@@ -61,22 +61,17 @@ class BpostRequest():
         return False
 
     def _parse_address(self, partner):
-        streetName = None
-        number = None
-        if partner.country_id.code == 'BE':
-            # match the first or the last number of an address
-            # for Belgian "boîte/bus", they should be put in street2
-            # so that if you live "Rue du 40e régiment 12A", 12A is returned
-            # also supports "Rue du 40e régiment 12/3"
-            ex = re.compile(r'^\d+|\d+([a-zA-Z]|/\d)?$')
+        if partner.street and partner.street2:
+            street = '%s %s' % (partner.street1, partner.street2)
         else:
-            # match the first number in street because we don't know other
-            # countries rules
-            ex = re.compile(r'\d+')
-        match = ex.search(partner.street)
-        number = match.group(0) if match else '0'
-        streetName = u'%s %s' % (partner.street.replace(number, ''), partner.street2 if partner.street2 else '')
-        return (streetName, number)
+            street = partner.street or partner.street2
+        match = re.match(r'^(.*?)(\S*\d+\S*)?\s*$', street)
+        street = match.group(1)
+        street_number = match.group(2)  # None if no number found
+        if street_number and len(street_number) > 8:
+            street = match.group(0)
+            street_number = None
+        return (street, street_number)
 
     def rate(self, order, carrier):
         weight = sum([(line.product_id.weight * line.product_qty) for line in order.order_line]) or 0.0
