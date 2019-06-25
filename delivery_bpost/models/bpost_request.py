@@ -16,6 +16,15 @@ from odoo.tools import float_round
 _logger = logging.getLogger(__name__)
 
 
+COUNTRIES_WITHOUT_POSTCODES = [
+    'AO', 'AG', 'AW', 'BS', 'BZ', 'BJ', 'BW', 'BF', 'BI', 'CM', 'CF', 'KM',
+    'CG', 'CD', 'CK', 'CI', 'DJ', 'DM', 'GQ', 'ER', 'FJ', 'TF', 'GM', 'GH',
+    'GD', 'GN', 'GY', 'HK', 'IE', 'JM', 'KE', 'KI', 'MO', 'MW', 'ML', 'MR',
+    'MU', 'MS', 'NR', 'AN', 'NU', 'KP', 'PA', 'QA', 'RW', 'KN', 'LC', 'ST',
+    'SC', 'SL', 'SB', 'SO', 'ZA', 'SR', 'SY', 'TZ', 'TL', 'TK', 'TO', 'TT',
+    'TV', 'UG', 'AE', 'VU', 'YE', 'ZW'
+]
+
 def _grams(kilograms):
     return int(kilograms * 1000)
 
@@ -30,7 +39,9 @@ class BpostRequest():
             self.base_url = 'https://api-parcel.bpost.be/services/shm/'
 
     def check_required_value(self, recipient, delivery_nature, shipper, order=False, picking=False):
-        recipient_required_fields = ['city', 'zip', 'country_id']
+        recipient_required_fields = ['city', 'country_id']
+        if recipient.country_id.code not in COUNTRIES_WITHOUT_POSTCODES:
+            recipient_required_fields.append('zip')
         if not recipient.street and not recipient.street2:
             recipient_required_fields.append('street')
         shipper_required_fields = ['city', 'zip', 'country_id']
@@ -152,7 +163,12 @@ class BpostRequest():
         receiver_locality = picking.partner_id.city
         if len(receiver_postal_code) > 8:
             receiver_locality = '%s %s' % (receiver_locality, receiver_postal_code)
-            receiver_zip = '/'
+            receiver_postal_code = '/'
+
+        # Some country do not use zip code (Saudi Arabia, Congo, ...). Bpost
+        # always require at least a zip or a PO box.
+        if not receiver_postal_code:
+            receiver_postal_code = '/'
 
         values = {'accountId': carrier.sudo().bpost_account_number,
                   'reference': reference_id,
