@@ -144,6 +144,16 @@ class BpostRequest():
                 price_unit = line.move_id.sale_line_id.price_reduce_taxinc or line.product_id.list_price
                 shipping_value += price_unit * line.qty_done
             shipping_value = max(min(int(shipping_value*100), 2500000), 100) # according to bpost, 100 <= parcelValue <= 2500000
+
+        # bpsot only allow a zip with a size of 8 characters. In some country
+        # (e.g. brazil) the postalCode could be longer than 8. In this case we
+        # set the zip in the locality.
+        receiver_postal_code = picking.partner_id.zip
+        receiver_locality = picking.partner_id.city
+        if len(receiver_postal_code) > 8:
+            receiver_locality = '%s %s' % (receiver_locality, receiver_postal_code)
+            receiver_zip = '/'
+
         values = {'accountId': carrier.sudo().bpost_account_number,
                   'reference': reference_id,
                   'sender': {'_record': sender_partner_id,
@@ -154,6 +164,8 @@ class BpostRequest():
                                'company': picking.partner_id.commercial_partner_id.name if picking.partner_id.commercial_partner_id != picking.partner_id else '',
                                'streetName': rs,
                                'number': rn,
+                               'locality': receiver_locality,
+                               'postalCode': receiver_postal_code,
                                },
                   'is_domestic': carrier.bpost_delivery_nature == 'Domestic',
                   'weight': str(_grams(picking.shipping_weight)),
