@@ -4,6 +4,7 @@ import time
 
 from odoo.tests import common
 from odoo.tools.misc import formatLang
+from odoo import fields
 
 
 class TestAccountReports(common.TransactionCase):
@@ -323,8 +324,7 @@ class TestAccountReports(common.TransactionCase):
                 self.assertEqual(columns, [65.0, 65.0, 0.0])
 
     def test_05_followup_multicompany(self):
-        year = time.strftime('%Y')
-        date_sale = year + '-06-26'
+        date_sale = fields.Date.today()
 
         # Company 0
         invoice_move = self.env['account.move'].create({
