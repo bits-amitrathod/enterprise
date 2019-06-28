@@ -3,6 +3,7 @@
 import binascii
 import time
 from math import ceil
+from datetime import datetime
 from urllib2 import Request, urlopen, URLError
 import xml.etree.ElementTree as etree
 import unicodedata
@@ -15,9 +16,9 @@ class DHLProvider():
 
     def __init__(self, prod_environment):
         if not prod_environment:
-            self.url = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet'
+            self.url = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet?isUTF8Support=true'
         else:
-            self.url = 'https://xmlpi-ea.dhl.com/XMLShippingServlet'
+            self.url = 'https://xmlpi-ea.dhl.com/XMLShippingServlet?isUTF8Support=true'
 
     def _convert_weight(self, weight, weight_unit):
         if weight_unit == "LB":
@@ -31,6 +32,8 @@ class DHLProvider():
         max_weight = self._convert_weight(carrier.dhl_default_packaging_id.max_weight, carrier.dhl_package_weight_unit)
 
         res = {
+            'MessageTime': datetime.now().isoformat(),
+            'MessageReference': 'ref:' + datetime.now().isoformat(),
             'carrier': carrier,
             'shipper_partner': order.warehouse_id.partner_id,
             'Date': time.strftime('%Y-%m-%d'),
@@ -84,8 +87,8 @@ class DHLProvider():
     def _get_send_param(self, picking, carrier):
         return {
             # it's if you want to track the message numbers
-            'MessageTime': '2001-12-17T09:30:47-05:00',
-            'MessageReference': '1234567890123456789012345678901',
+            'MessageTime': datetime.now().isoformat(),
+            'MessageReference': 'ref:' + datetime.now().isoformat(),
             'carrier': carrier,
             'RegionCode': carrier.dhl_region_code,
             'lang': 'en',
@@ -117,6 +120,8 @@ class DHLProvider():
 
     def _get_send_param_final_rating(self, picking, carrier):
         return {
+            'MessageTime': datetime.now().isoformat(),
+            'MessageReference': 'ref:' + datetime.now().isoformat(),
             'carrier': carrier,
             'shipper_partner': picking.picking_type_id.warehouse_id.partner_id,
             'Date': time.strftime('%Y-%m-%d'),
@@ -202,11 +207,18 @@ class DHLProvider():
         carrier = param["carrier"].sudo()
         etree.register_namespace("req", "http://www.dhl.com")
         root = etree.Element("{http://www.dhl.com}DCTRequest")
+        root.attrib['schemaVersion'] = "2.0"
         get_quote_node = etree.SubElement(root, "GetQuote")
-        service_header_node = etree.SubElement(get_quote_node, "Request")
-        service_header_node = etree.SubElement(service_header_node, "ServiceHeader")
+        request_node = etree.SubElement(get_quote_node, "Request")
+        service_header_node = etree.SubElement(request_node, "ServiceHeader")
+        etree.SubElement(service_header_node, "MessageTime").text = param['MessageTime']
+        etree.SubElement(service_header_node, "MessageReference").text = param['MessageReference']
         etree.SubElement(service_header_node, "SiteID").text = carrier.dhl_SiteID
         etree.SubElement(service_header_node, "Password").text = carrier.dhl_password
+
+        metadata_node = etree.SubElement(request_node, "MetaData")
+        etree.SubElement(metadata_node, "SoftwareName").text = 'Odoo S.A.'
+        etree.SubElement(metadata_node, "SoftwareVersion").text = '10.0'
 
         from_node = etree.SubElement(get_quote_node, "From")
         etree.SubElement(from_node, "CountryCode").text = param["shipper_partner"].country_id.code
@@ -274,16 +286,20 @@ class DHLProvider():
         carrier = param["carrier"].sudo()
         etree.register_namespace("req", "http://www.dhl.com")
         root = etree.Element("{http://www.dhl.com}ShipmentRequest")
-        root.attrib['schemaVersion'] = "1.0"
-        root.attrib['xsi:schemaLocation'] = "http://www.dhl.com ship-val-global-req.xsd"
+        root.attrib['schemaVersion'] = "6.2"
+        root.attrib['xsi:schemaLocation'] = "http://www.dhl.com ship-val-global-req-6.2.xsd"
         root.attrib['xmlns:xsi'] = "http://www.w3.org/2001/XMLSchema-instance"
 
         request_node = etree.SubElement(root, "Request")
-        request_node = etree.SubElement(request_node, "ServiceHeader")
-        etree.SubElement(request_node, "MessageTime").text = param["MessageTime"]
-        etree.SubElement(request_node, "MessageReference").text = param["MessageReference"]
-        etree.SubElement(request_node, "SiteID").text = carrier.dhl_SiteID
-        etree.SubElement(request_node, "Password").text = carrier.dhl_password
+        service_header_node = etree.SubElement(request_node, "ServiceHeader")
+        etree.SubElement(service_header_node, "MessageTime").text = param["MessageTime"]
+        etree.SubElement(service_header_node, "MessageReference").text = param["MessageReference"]
+        etree.SubElement(service_header_node, "SiteID").text = carrier.dhl_SiteID
+        etree.SubElement(service_header_node, "Password").text = carrier.dhl_password
+
+        metadata_node = etree.SubElement(request_node, "MetaData")
+        etree.SubElement(metadata_node, "SoftwareName").text = 'Odoo S.A.'
+        etree.SubElement(metadata_node, "SoftwareVersion").text = '10.0'
 
         etree.SubElement(root, "RegionCode").text = param["RegionCode"]
         etree.SubElement(root, "RequestedPickupTime").text = "Y"
