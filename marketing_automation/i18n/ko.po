@@ -3,18 +3,19 @@
 # * marketing_automation
 # 
 # Translators:
-# Martin Trigaux, 2017
-# Link Up링크업 <linkup.way@gmail.com>, 2018
-# Linkup <link-up@naver.com>, 2018
 # Seongseok Shin <shinss61@hotmail.com>, 2018
-# 최재호 <hwangtog@gmail.com>, 2018
+# Link Up링크업 <linkup.way@gmail.com>, 2018
+# Martin Trigaux, 2018
+# Linkup <link-up@naver.com>, 2018
+# JH CHOI <hwangtog@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:50+0000\n"
-"PO-Revision-Date: 2017-10-02 11:50+0000\n"
-"Last-Translator: 최재호 <hwangtog@gmail.com>, 2018\n"
+"PO-Revision-Date: 2017-09-20 11:40+0000\n"
+"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2019\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,17 +26,17 @@ msgstr ""
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign_total_participant_count
 msgid "# of active and completed participants"
-msgstr ""
+msgstr "# 진행 중인 참가자 및 완료된 참가자 수"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign_running_participant_count
 msgid "# of active participants"
-msgstr ""
+msgstr "# 진행 중인 참가자 수"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign_completed_participant_count
 msgid "# of completed participants"
-msgstr ""
+msgstr "# 완료된 참가자 수"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
@@ -60,27 +61,27 @@ msgstr "<i class=“fa fa-check-circle”/> 회신함"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-envelope-open-o\"/> Not opened within"
-msgstr ""
+msgstr "<i class=\"fa fa-envelope-open-o\"/> 아직 안열림"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-envelope-open-o\"/> Opened after"
-msgstr ""
+msgstr "<i class=\"fa fa-envelope-open-o\"/> 다음에 열림"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-exclamation-circle\"/> Mail bounced after"
-msgstr ""
+msgstr "<i class=\"fa fa-exclamation-circle\"/> 다음 이유로 메일 반송됨"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Clicked after"
-msgstr ""
+msgstr "<i class=\"fa fa-hand-pointer-o\"/> 다음 이후에 클릭됨"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Not clicked within"
-msgstr ""
+msgstr "<i class=\"fa fa-hand-pointer-o\"/> 다음 기간이 되어야 클리할 수 있음"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -95,12 +96,12 @@ msgstr "<i class=“fa fa-plus-circle”/> 하위활동 추가"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-reply\"/> Not replied within"
-msgstr ""
+msgstr "<i class=\"fa fa-reply\"/> 다음 이유로 회신 안됨"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i class=\"fa fa-reply\"/> Replied after"
-msgstr ""
+msgstr "<i class=\"fa fa-reply\"/> 다음 이후에 회신됨"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -109,6 +110,8 @@ msgid ""
 "[('trigger_type', '=', 'begin')]}\">(save the campaign to make its "
 "activities selectable)</small>"
 msgstr ""
+"<small class=\"oe_edit_only text-muted\" attrs=\"{'invisible': "
+"[('trigger_type', '=', 'begin')]}\">(활동을 선택 가능하게 만들기 위해 캠페인 저장)</small>"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -170,7 +173,7 @@ msgstr "활동은 이메일 전송 또는 동작을 실행하는 것을 허용�
 #. module: marketing_automation
 #: model:ir.model.fields,help:marketing_automation.field_marketing_activity_domain
 msgid "Activity will only be performed if record satisfies this domain"
-msgstr ""
+msgstr "활동은 레코드가 이 도메인을 만족하는 경우에만 수행됩니다"
 
 #. module: marketing_automation
 #: model:mail.mass_mailing,name:marketing_automation.mass_mailing_after_7_days
@@ -199,7 +202,7 @@ msgstr "파일 첨부"
 msgid ""
 "Be aware that participants that had no more activities could be reintroduced"
 " into the campaign and new traces could be created for them."
-msgstr ""
+msgstr "더 이상 활동이 없었던 참가자를 캠페인에 다시 도입할 수 있고 새로운 흔적을 만들 수 있습니다."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_bounced
@@ -347,7 +350,7 @@ msgstr "전체삭제"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace_child_ids
 msgid "Direct child traces"
-msgstr ""
+msgstr "하위 추적으로 즉각 이동"
 
 #. module: marketing_automation
 #. openerp-web
@@ -511,7 +514,7 @@ msgstr "최근 갱신 날짜"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign_last_sync_date
 msgid "Last activities synchronization"
-msgstr ""
+msgstr "최근 활동 동기화"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -576,7 +579,7 @@ msgstr "메일링"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Mails sent and not bounced"
-msgstr ""
+msgstr "메일을 보냈고 반송되지 않음"
 
 #. module: marketing_automation
 #: code:addons/marketing_automation/models/marketing_participant.py:149
@@ -805,7 +808,7 @@ msgstr "파트너쉽 제안"
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Perform"
-msgstr ""
+msgstr "수행"
 
 #. module: marketing_automation
 #. openerp-web
@@ -1036,7 +1039,7 @@ msgstr "성공"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign_require_sync
 msgid "Sync of participants is required"
-msgstr ""
+msgstr "참가자들의 동기화가 필요합니다"
 
 #. module: marketing_automation
 #: model:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
