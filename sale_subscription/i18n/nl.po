@@ -47,7 +47,7 @@ msgid ""
 msgstr ""
 "\n"
 "Betaling\n"
-"Alle betalingen zijn verschuldigd bij ontvangst. Als een betaling niet is ontvangen of de betalingsmethode wordt geweigerd, verliest de koper het eigendom van de gekochte artikelen. Als er geen betaling is ontvangen, worden er geen items verzonden.\n"
+"Alle betalingen zijn verschuldigd bij ontvangst. Als een betaling niet is ontvangen of de betaaalmethode wordt geweigerd, verliest de koper het eigendom van de gekochte artikelen. Als er geen betaling is ontvangen, worden er geen items verzonden.\n"
 "\n"
 "Verzendbeleid\n"
 "Verzendkosten zullen worden betaald door de koper in het op het moment van aankoop overeengekomen bedrag. Als een item verloren gaat tijdens het transport, zullen de totale kosten van het artikel, inclusief verzendkosten, terugbetaald worden aan de koper door de verkoper. Verzendkosten kunnen verdubbelen bij internationale verzending. Als een item beschadigd is tijdens het transport, is de verkoper niet aansprakelijk.\n"
@@ -415,7 +415,7 @@ msgstr "<i class=\"fa fa-envelope\"/>Verzend e-mail"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "<i class=\"fa fa-fw fa-check\"/> In Progress"
-msgstr "<i class=\"fa fa-fw fa-check\"/>In voortgang"
+msgstr "<i class=\"fa fa-fw fa-check\"/>Actief"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
@@ -448,7 +448,7 @@ msgid ""
 "check\"/> In Progress</span>"
 msgstr ""
 "<span class=\"badge badge-pill badge-success\"><i class=\"fa fa-fw fa-"
-"check\"/> In voortgang</span>"
+"check\"/> Actief</span>"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
@@ -806,14 +806,14 @@ msgstr ""
 "                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
 "                    Hallo ${object.partner_id.name},<br/><br/>\n"
 "                    % if ctx.get('payment_token') and ctx.get('total_amount'):\n"
-"                        Onze laatste poging om een betaling voor uw abonnement te verwerken met betaalmethode\n"
+"                        Onze laatste poging om een betaling voor uw abonnement te verwerken met betalinsgmethode\n"
 "                        ${ctx['payment_token']}\n"
 "                        voor het bedrag van ${ctx['total_amount']} ${ctx.get('currency')} is mislukt.\n"
 "                        % if ctx.get('error'):\n"
 "                            Uw bank of kredietinstelling heeft de volgende details over het probleem gegeven: <pre>${ctx['error']}</pre>.\n"
 "                        %endif\n"
 "                    % else:\n"
-"                        Onze laatste poging om een betaling voor uw abonnement te verwerken, is mislukt omdat er geen betaalmethode voor u is geregistreerd.\n"
+"                        Onze laatste poging om een betaling voor uw abonnement te verwerken, is mislukt omdat er geen betalingsmethodevoor u is geregistreerd.\n"
 "                    % endif\n"
 "                    <br/><br/>\n"
 "                    Omdat u betaling had moeten zijn gedaan <strong>15 dagen gelden</strong>, wordt u abonnement beëindigd.\n"
@@ -987,14 +987,14 @@ msgstr ""
 "                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
 "                    Hallo ${object.partner_id.name},<br/><br/>\n"
 "                    % if ctx.get('payment_token') and ctx.get('total_amount'):\n"
-"                        We konden een betaling voor uw abonnement niet verwerken met  betaalmethode\n"
+"                        We konden een betaling voor uw abonnement niet verwerken met  betalinsgmethode\n"
 "                        ${ctx['payment_token']}\n"
 "                        voor het bedrag van ${ctx['total_amount']} ${ctx.get('currency')}.\n"
 "                        % if ctx.get('error'):\n"
 "                            YUw bank of kredietinstelling heeft de volgende details over het probleem gegeven: <pre>${ctx['error']}</pre>.\n"
 "                        %endif\n"
 "                    % else:\n"
-"                        We konden een betaling voor uw abonnement niet verwerken omdat er geen betaalmethode voor u is geregistreerd.\n"
+"                        We konden een betaling voor uw abonnement niet verwerken omdat er geen betalingsmethodevoor u is geregistreerd.\n"
 "                    % endif\n"
 "                    <br/><br/>\n"
 "                    Uw abonnement ${ctx.get('code')} is nog steeds geldig, maar wordt  <strong>geschorst</strong>\n"
@@ -1293,12 +1293,12 @@ msgstr "Annuleren"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Change Payment Method"
-msgstr "Verander betaalmethode"
+msgstr "Verander betalinsgmethode"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Change payment method"
-msgstr "Verander betaalmethode"
+msgstr "Verander betalinsgmethode"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
@@ -2269,7 +2269,7 @@ msgstr "Beheer abonnementen"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Manage your payment methods"
-msgstr "Beheer uw betaalmethodes"
+msgstr "Beheer uw betalingsmtehodes"
 
 #. module: sale_subscription
 #: selection:sale.subscription.template,payment_mode:0
@@ -2553,7 +2553,7 @@ msgstr "Wachtende abonnementen"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Plan details"
-msgstr "Plan details"
+msgstr "Abonnement details"
 
 #. module: sale_subscription
 #: selection:sale.subscription,activity_state:0
@@ -2730,7 +2730,7 @@ msgstr "Referentie:"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Register a payment method with"
-msgstr "Registreer een betalingsmethode met"
+msgstr "Registreer een betaaalmethode met"
 
 #. module: sale_subscription
 #: selection:sale.order,subscription_management:0
@@ -3765,7 +3765,7 @@ msgstr "Uw informatie"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "Your plan"
-msgstr "Uw plan"
+msgstr "Uw abonnement"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
