@@ -10,6 +10,7 @@ import unicodedata
 
 from odoo import _
 from odoo.exceptions import ValidationError
+from odoo.tools import float_repr
 
 
 class DHLProvider():
@@ -41,7 +42,7 @@ class DHLProvider():
             'recipient_partner': order.partner_shipping_id,
             'total_weight': total_weight,
             'currency_name': order.currency_id.name,
-            'total_value': sum([(line.price_unit * line.product_uom_qty) for line in order.order_line.filtered(lambda line: not line.is_delivery)]) or 0,
+            'total_value': str(float_repr(sum([(line.price_unit * line.product_uom_qty) for line in order.order_line.filtered(lambda line: not line.is_delivery)]), 2)),
             'is_dutiable': carrier.dhl_dutiable,
             'package_ids': False,
         }
@@ -115,7 +116,7 @@ class DHLProvider():
             'LabelTemplate': carrier.dhl_label_template,
             'is_dutiable': carrier.dhl_dutiable,
             'currency_name': picking.sale_id.currency_id.name or picking.company_id.currency_id.name,
-            'total_value': str(sum([line.product_id.lst_price * int(line.product_uom_qty) for line in picking.move_lines]))
+            'total_value': str(float_repr(sum([line.product_id.lst_price * int(line.product_uom_qty) for line in picking.move_lines]), 2))
         }
 
     def _get_send_param_final_rating(self, picking, carrier):
@@ -128,7 +129,7 @@ class DHLProvider():
             'ReadyTime': time.strftime('PT%HH%MM'),
             'recipient_partner': picking.partner_id,
             'currency_name': picking.sale_id.currency_id.name or picking.company_id.currency_id.name,
-            'total_value': str(sum([line.product_id.lst_price * int(line.product_uom_qty) for line in picking.move_lines])),
+            'total_value': str(float_repr(sum([line.product_id.lst_price * int(line.product_uom_qty) for line in picking.move_lines]), 2)),
             'is_dutiable': carrier.dhl_dutiable,
             'package_ids': picking.package_ids,
             'total_weight': self._convert_weight(picking.weight_bulk, carrier.dhl_package_weight_unit),
