@@ -90,7 +90,7 @@ class HrEmployee(models.Model):
     def run_employee_appraisal(self, automatic=False, use_new_cursor=False):  # cronjob
         current_date = datetime.date.today()
         # Set the date of the next appraisal to come if the date is passed:
-        for employee in self.search([('periodic_appraisal', '=', True), ('appraisal_date', '<=', current_date)]):
+        for employee in self.search([('periodic_appraisal', '=', True), ('appraisal_date', '<', current_date)]):
             months = employee.appraisal_frequency if employee.appraisal_frequency_unit == 'month' else employee.appraisal_frequency * 12
             employee.write({
                 'appraisal_date': fields.Date.to_string(current_date + relativedelta(months=months)),
