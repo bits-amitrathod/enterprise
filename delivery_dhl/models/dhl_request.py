@@ -303,9 +303,9 @@ class DHLProvider():
 
         consignee_node = etree.SubElement(root, "Consignee")
         if param["recipient_partner"].parent_id:
-            etree.SubElement(consignee_node, "CompanyName").text = param["recipient_partner"].parent_id.name
+            etree.SubElement(consignee_node, "CompanyName").text = (param["recipient_partner"].parent_id.name or '')[:35]
         else:
-            etree.SubElement(consignee_node, "CompanyName").text = param["recipient_partner"].name
+            etree.SubElement(consignee_node, "CompanyName").text = (param["recipient_partner"].name or '')[:35]
         etree.SubElement(consignee_node, "AddressLine").text = param["recipient_streetLines"]
         etree.SubElement(consignee_node, "City").text = param["recipient_partner"].city
 
@@ -316,7 +316,7 @@ class DHLProvider():
         etree.SubElement(consignee_node, "CountryCode").text = param["recipient_partner"].country_id.code
         etree.SubElement(consignee_node, "CountryName").text = param["recipient_partner"].country_id.name
         contact_node = etree.SubElement(consignee_node, "Contact")
-        etree.SubElement(contact_node, "PersonName").text = param["recipient_partner"].name
+        etree.SubElement(contact_node, "PersonName").text = (param["recipient_partner"].name or '')[:35]
         etree.SubElement(contact_node, "PhoneNumber").text = param["recipient_partner"].phone
         etree.SubElement(contact_node, "Email").text = param["recipient_partner"].email
         if param["is_dutiable"]:
@@ -356,7 +356,7 @@ class DHLProvider():
 
         shipper_node = etree.SubElement(root, "Shipper")
         etree.SubElement(shipper_node, "ShipperID").text = carrier.dhl_account_number
-        etree.SubElement(shipper_node, "CompanyName").text = param["shipper_company"].name
+        etree.SubElement(shipper_node, "CompanyName").text = (param["shipper_company"].name or '')[:35]
         etree.SubElement(shipper_node, "AddressLine").text = param["shipper_streetLines"]
         etree.SubElement(shipper_node, "City").text = param["shipper_partner"].city
         etree.SubElement(shipper_node, "PostalCode").text = param["shipper_partner"].zip
@@ -364,7 +364,7 @@ class DHLProvider():
         etree.SubElement(shipper_node, "CountryName").text = param["shipper_partner"].country_id.name
 
         contact_node = etree.SubElement(shipper_node, "Contact")
-        etree.SubElement(contact_node, "PersonName").text = param["shipper_partner"].name
+        etree.SubElement(contact_node, "PersonName").text = (param["shipper_partner"].name or '')[:35]
         etree.SubElement(contact_node, "PhoneNumber").text = param["shipper_partner"].phone
 
         etree.SubElement(root, "LabelImageFormat").text = param["LabelImageFormat"]
