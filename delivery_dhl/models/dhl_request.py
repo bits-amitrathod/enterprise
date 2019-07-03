@@ -328,7 +328,7 @@ class DHLProvider():
         etree.SubElement(consignee_node, "CountryName").text = param["recipient_partner"].country_id.name
         contact_node = etree.SubElement(consignee_node, "Contact")
         etree.SubElement(contact_node, "PersonName").text = self._remove_accents(param["recipient_partner"].name)
-        etree.SubElement(contact_node, "PhoneNumber").text = param["recipient_partner"].phone
+        etree.SubElement(contact_node, "PhoneNumber").text = param["recipient_partner"].phone or 'NA'
         etree.SubElement(contact_node, "Email").text = param["recipient_partner"].email
         if param["is_dutiable"]:
             dutiable_node = etree.SubElement(root, "Dutiable")
