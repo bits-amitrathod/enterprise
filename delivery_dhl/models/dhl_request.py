@@ -3,6 +3,7 @@
 import binascii
 import time
 from math import ceil
+from datetime import datetime
 from xml.etree import ElementTree as etree
 import unicodedata
 
@@ -10,6 +11,7 @@ import requests
 
 from odoo import _
 from odoo.exceptions import UserError
+from odoo.tools import float_repr
 
 
 class DHLProvider():
@@ -17,9 +19,9 @@ class DHLProvider():
     def __init__(self, prod_environment, debug_logger):
         self.debug_logger = debug_logger
         if not prod_environment:
-            self.url = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet'
+            self.url = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet?isUTF8Support=true'
         else:
-            self.url = 'https://xmlpi-ea.dhl.com/XMLShippingServlet'
+            self.url = 'https://xmlpi-ea.dhl.com/XMLShippingServlet?isUTF8Support=true'
 
     def _convert_weight(self, weight, weight_unit):
         if weight_unit == "LB":
@@ -33,6 +35,8 @@ class DHLProvider():
         max_weight = self._convert_weight(carrier.dhl_default_packaging_id.max_weight, carrier.dhl_package_weight_unit)
 
         res = {
+            'MessageTime': datetime.now().isoformat(),
+            'MessageReference': 'ref:' + datetime.now().isoformat(),
             'carrier': carrier,
             'shipper_partner': order.warehouse_id.partner_id,
             'Date': time.strftime('%Y-%m-%d'),
@@ -40,7 +44,7 @@ class DHLProvider():
             'recipient_partner': order.partner_shipping_id,
             'total_weight': total_weight,
             'currency_name': order.currency_id.name,
-            'total_value': str(sum([(line.price_unit * line.product_uom_qty) for line in order.order_line.filtered(lambda line: not line.is_delivery)])),
+            'total_value': str(float_repr(sum([(line.price_unit * line.product_uom_qty) for line in order.order_line.filtered(lambda line: not line.is_delivery)]), 2)),
             'is_dutiable': carrier.dhl_dutiable,
             'package_ids': False,
         }
@@ -91,8 +95,8 @@ class DHLProvider():
     def _get_send_param(self, picking, carrier):
         return {
             # it's if you want to track the message numbers
-            'MessageTime': '2001-12-17T09:30:47-05:00',
-            'MessageReference': '1234567890123456789012345678901',
+            'MessageTime': datetime.now().isoformat(),
+            'MessageReference': 'ref:' + datetime.now().isoformat(),
             'carrier': carrier,
             'RegionCode': carrier.dhl_region_code,
             'lang': 'en',
@@ -119,18 +123,20 @@ class DHLProvider():
             'LabelTemplate': carrier.dhl_label_template,
             'is_dutiable': carrier.dhl_dutiable,
             'currency_name': picking.sale_id.currency_id.name or picking.company_id.currency_id.name,
-            'total_value': str(sum([line.product_id.lst_price * int(line.product_uom_qty) for line in picking.move_lines]))
+            'total_value': str(float_repr(sum([line.product_id.lst_price * int(line.product_uom_qty) for line in picking.move_lines]), 2))
         }
 
     def _get_send_param_final_rating(self, picking, carrier):
         return {
+            'MessageTime': datetime.now().isoformat(),
+            'MessageReference': 'ref:' + datetime.now().isoformat(),
             'carrier': carrier,
             'shipper_partner': picking.picking_type_id.warehouse_id.partner_id,
             'Date': time.strftime('%Y-%m-%d'),
             'ReadyTime': time.strftime('PT%HH%MM'),
             'recipient_partner': picking.partner_id,
             'currency_name': picking.sale_id.currency_id.name or picking.company_id.currency_id.name,
-            'total_value': str(sum([line.product_id.lst_price * int(line.product_uom_qty) for line in picking.move_lines])),
+            'total_value': str(float_repr(sum([line.product_id.lst_price * int(line.product_uom_qty) for line in picking.move_lines]), 2)),
             'is_dutiable': carrier.dhl_dutiable,
             'package_ids': picking.package_ids,
             'total_weight': self._convert_weight(picking.weight_bulk, carrier.dhl_package_weight_unit),
@@ -210,11 +216,18 @@ class DHLProvider():
         carrier = param["carrier"].sudo()
         etree.register_namespace("req", "http://www.dhl.com")
         root = etree.Element("{http://www.dhl.com}DCTRequest")
+        root.attrib['schemaVersion'] = "2.0"
         get_quote_node = etree.SubElement(root, "GetQuote")
-        service_header_node = etree.SubElement(get_quote_node, "Request")
-        service_header_node = etree.SubElement(service_header_node, "ServiceHeader")
+        request_node = etree.SubElement(get_quote_node, "Request")
+        service_header_node = etree.SubElement(request_node, "ServiceHeader")
+        etree.SubElement(service_header_node, "MessageTime").text = param['MessageTime']
+        etree.SubElement(service_header_node, "MessageReference").text = param['MessageReference']
         etree.SubElement(service_header_node, "SiteID").text = carrier.dhl_SiteID
         etree.SubElement(service_header_node, "Password").text = carrier.dhl_password
+
+        metadata_node = etree.SubElement(request_node, "MetaData")
+        etree.SubElement(metadata_node, "SoftwareName").text = 'Odoo S.A.'
+        etree.SubElement(metadata_node, "SoftwareVersion").text = '11.0'
 
         from_node = etree.SubElement(get_quote_node, "From")
         etree.SubElement(from_node, "CountryCode").text = param["shipper_partner"].country_id.code
@@ -282,16 +295,20 @@ class DHLProvider():
         carrier = param["carrier"].sudo()
         etree.register_namespace("req", "http://www.dhl.com")
         root = etree.Element("{http://www.dhl.com}ShipmentRequest")
-        root.attrib['schemaVersion'] = "1.0"
-        root.attrib['xsi:schemaLocation'] = "http://www.dhl.com ship-val-global-req.xsd"
+        root.attrib['schemaVersion'] = "6.2"
+        root.attrib['xsi:schemaLocation'] = "http://www.dhl.com ship-val-global-req-6.2.xsd"
         root.attrib['xmlns:xsi'] = "http://www.w3.org/2001/XMLSchema-instance"
 
         request_node = etree.SubElement(root, "Request")
-        request_node = etree.SubElement(request_node, "ServiceHeader")
-        etree.SubElement(request_node, "MessageTime").text = param["MessageTime"]
-        etree.SubElement(request_node, "MessageReference").text = param["MessageReference"]
-        etree.SubElement(request_node, "SiteID").text = carrier.dhl_SiteID
-        etree.SubElement(request_node, "Password").text = carrier.dhl_password
+        service_header_node = etree.SubElement(request_node, "ServiceHeader")
+        etree.SubElement(service_header_node, "MessageTime").text = param["MessageTime"]
+        etree.SubElement(service_header_node, "MessageReference").text = param["MessageReference"]
+        etree.SubElement(service_header_node, "SiteID").text = carrier.dhl_SiteID
+        etree.SubElement(service_header_node, "Password").text = carrier.dhl_password
+
+        metadata_node = etree.SubElement(request_node, "MetaData")
+        etree.SubElement(metadata_node, "SoftwareName").text = 'Odoo S.A.'
+        etree.SubElement(metadata_node, "SoftwareVersion").text = '11.0'
 
         etree.SubElement(root, "RegionCode").text = param["RegionCode"]
         etree.SubElement(root, "RequestedPickupTime").text = "Y"
@@ -322,7 +339,7 @@ class DHLProvider():
         etree.SubElement(consignee_node, "CountryName").text = self._remove_accents(param["recipient_partner"].country_id.name)
         contact_node = etree.SubElement(consignee_node, "Contact")
         etree.SubElement(contact_node, "PersonName").text = self._remove_accents(param["recipient_partner"].name)
-        etree.SubElement(contact_node, "PhoneNumber").text = param["recipient_partner"].phone
+        etree.SubElement(contact_node, "PhoneNumber").text = param["recipient_partner"].phone or 'NA'
         etree.SubElement(contact_node, "Email").text = param["recipient_partner"].email
         if param["is_dutiable"]:
             dutiable_node = etree.SubElement(root, "Dutiable")
