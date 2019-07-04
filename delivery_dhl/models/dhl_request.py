@@ -10,6 +10,7 @@ import unicodedata
 import requests
 
 from odoo import _
+from odoo import release
 from odoo.exceptions import UserError
 from odoo.tools import float_repr
 
@@ -226,8 +227,8 @@ class DHLProvider():
         etree.SubElement(service_header_node, "Password").text = carrier.dhl_password
 
         metadata_node = etree.SubElement(request_node, "MetaData")
-        etree.SubElement(metadata_node, "SoftwareName").text = 'Odoo S.A.'
-        etree.SubElement(metadata_node, "SoftwareVersion").text = '11.0'
+        etree.SubElement(metadata_node, "SoftwareName").text = release.product_name
+        etree.SubElement(metadata_node, "SoftwareVersion").text = release.series
 
         from_node = etree.SubElement(get_quote_node, "From")
         etree.SubElement(from_node, "CountryCode").text = param["shipper_partner"].country_id.code
@@ -307,8 +308,8 @@ class DHLProvider():
         etree.SubElement(service_header_node, "Password").text = carrier.dhl_password
 
         metadata_node = etree.SubElement(request_node, "MetaData")
-        etree.SubElement(metadata_node, "SoftwareName").text = 'Odoo S.A.'
-        etree.SubElement(metadata_node, "SoftwareVersion").text = '11.0'
+        etree.SubElement(metadata_node, "SoftwareName").text = release.product_name
+        etree.SubElement(metadata_node, "SoftwareVersion").text = release.series
 
         etree.SubElement(root, "RegionCode").text = param["RegionCode"]
         etree.SubElement(root, "RequestedPickupTime").text = "Y"
