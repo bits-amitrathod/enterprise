@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Martin Trigaux, 2018
-# trendspotter <j.podhorecky@volny.cz>, 2019
+# Jiří Podhorecký <j.podhorecky@volny.cz>, 2019
 # 
 msgid ""
 msgstr ""
@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-21 14:06+0000\n"
 "PO-Revision-Date: 2018-08-24 11:37+0000\n"
-"Last-Translator: trendspotter <j.podhorecky@volny.cz>, 2019\n"
+"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>, 2019\n"
 "Language-Team: Czech (https://www.transifex.com/odoo/teams/41243/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,7 +51,7 @@ msgstr "Na základě pravidel"
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_account_number
 msgid "Bpost Account Number"
-msgstr ""
+msgstr "účet uživatele Bpost "
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_delivery_nature
@@ -61,19 +61,19 @@ msgstr ""
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_domestic_deliver_type
 msgid "Bpost Domestic Deliver Type"
-msgstr ""
+msgstr "Bpost Domestic Deliver Type"
 
 #. module: delivery_bpost
 #: model:delivery.carrier,name:delivery_bpost.delivery_carrier_bpost_domestic
 #: model:product.product,name:delivery_bpost.product_product_delivery_bpost_domestic
 #: model:product.template,name:delivery_bpost.product_product_delivery_bpost_domestic_product_template
 msgid "Bpost Domestic bpack 24h Pro"
-msgstr ""
+msgstr "Bpost Domestic bpack 24h Pro"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_international_deliver_type
 msgid "Bpost International Deliver Type"
-msgstr ""
+msgstr "Bpost International Deliver Type"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_label_format
@@ -88,7 +88,7 @@ msgstr ""
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_parcel_return_instructions
 msgid "Bpost Parcel Return Instructions"
-msgstr ""
+msgstr "Bpost Parcel instrukce k vrácení"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_shipment_type
@@ -100,7 +100,7 @@ msgstr ""
 #: model:product.product,name:delivery_bpost.product_product_delivery_bpost_world
 #: model:product.template,name:delivery_bpost.product_product_delivery_bpost_world_product_template
 msgid "Bpost World Express Pro"
-msgstr ""
+msgstr "Bpost World Express Pro"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_product_packaging__package_carrier_type
@@ -194,7 +194,7 @@ msgstr "PNG"
 #: code:addons/delivery_bpost/models/bpost_request.py:134
 #, python-format
 msgid "Packages over 30 Kg are not accepted by bpost."
-msgstr ""
+msgstr "Balíky nad 30 kg nejsou přijímány službou bpost."
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_developer_password
@@ -245,6 +245,8 @@ msgid ""
 "The address of your company/warehouse is incomplete or wrong (Missing field(s):  \n"
 " %s)"
 msgstr ""
+"Adresa vaší společnosti / skladu je neúplná nebo nesprávná (Chybí pole (více"
+" polí): %s)"
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/bpost_request.py:60
@@ -271,6 +273,7 @@ msgid ""
 "The recipient address is incomplete or wrong (Missing field(s):  \n"
 " %s)"
 msgstr ""
+"Adresa příjemce je neúplná nebo nesprávná (Chybí pole (více polí): %s)"
 
 #. module: delivery_bpost
 #: selection:delivery.carrier,delivery_type:0
@@ -310,36 +313,38 @@ msgstr ""
 #, python-format
 msgid "Your company/warehouse address must be in Belgium to ship with bpost"
 msgstr ""
+"Adresa společnosti / skladu musí být v Belgii, aby mohla být doručena s "
+"bpost"
 
 #. module: delivery_bpost
 #: selection:delivery.carrier,bpost_domestic_deliver_type:0
 msgid "bpack 24h Pro"
-msgstr ""
+msgstr "bpack 24h Pro"
 
 #. module: delivery_bpost
 #: selection:delivery.carrier,bpost_domestic_deliver_type:0
 msgid "bpack 24h business"
-msgstr ""
+msgstr "bpack 24h business"
 
 #. module: delivery_bpost
 #: selection:delivery.carrier,bpost_domestic_deliver_type:0
 msgid "bpack Bus"
-msgstr ""
+msgstr "bpack Bus"
 
 #. module: delivery_bpost
 #: selection:delivery.carrier,bpost_international_deliver_type:0
 msgid "bpack Europe Business"
-msgstr ""
+msgstr "bpack Europe Business"
 
 #. module: delivery_bpost
 #: selection:delivery.carrier,bpost_international_deliver_type:0
 msgid "bpack World Business"
-msgstr ""
+msgstr "bpack World Business"
 
 #. module: delivery_bpost
 #: selection:delivery.carrier,bpost_international_deliver_type:0
 msgid "bpack World Express Pro"
-msgstr ""
+msgstr "bpack World Express Pro"
 
 #. module: delivery_bpost
 #: selection:delivery.carrier,delivery_type:0
@@ -350,18 +355,18 @@ msgstr "bpost"
 #. module: delivery_bpost
 #: model_terms:ir.ui.view,arch_db:delivery_bpost.view_delivery_carrier_form_with_provider_bpost
 msgid "bpost Configuration"
-msgstr ""
+msgstr "konfigurace bpost"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__bpost_default_packaging_id
 msgid "bpost Default Packaging Type"
-msgstr ""
+msgstr "bpost Default Packaging Type"
 
 #. module: delivery_bpost
 #: model_terms:ir.ui.view,arch_db:delivery_bpost.res_config_settings_view_form_sale
 #: model_terms:ir.ui.view,arch_db:delivery_bpost.res_config_settings_view_form_stock
 msgid "bpost Delivery Methods"
-msgstr ""
+msgstr "Doručovací metody bpost"
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/bpost_request.py:46
@@ -370,6 +375,8 @@ msgid ""
 "bpost Domestic is used only to ship inside Belgium. Please change the "
 "delivery method into bpost International."
 msgstr ""
+"bpost Domestic se používá pouze k přepravě uvnitř Belgie. Změňte způsob "
+"doručení do bpost International."
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/bpost_request.py:44
@@ -378,12 +385,14 @@ msgid ""
 "bpost International is used only to ship outside Belgium. Please change the "
 "delivery method into bpost Domestic."
 msgstr ""
+"bpost International se používá pouze k přepravě mimo Belgii. Změňte způsob "
+"doručení do bpost Domestic."
 
 #. module: delivery_bpost
 #: code:addons/delivery_bpost/models/bpost_request.py:112
 #, python-format
 msgid "bpost did not return prices for this destination country."
-msgstr ""
+msgstr "bpost nemá ceník pro tuto cílovou zemi."
 
 #. module: delivery_bpost
 #: model:product.product,weight_uom_name:delivery_bpost.product_product_delivery_bpost_domestic
