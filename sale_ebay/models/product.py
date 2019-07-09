@@ -5,6 +5,7 @@ import base64
 import io
 import re
 import math
+import logging
 
 from datetime import datetime, timedelta
 from ebaysdk.exception import ConnectionError
@@ -14,9 +15,23 @@ from xml.sax.saxutils import escape
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, RedirectWarning
 
+_logger = logging.getLogger(__name__)
+
+_30days = timedelta(days=30)
 # eBay api limits ItemRevise calls to 150 per day
 MAX_REVISE_CALLS = 150
 
+def _log_logging(env, message, function_name, path):
+    env['ir.logging'].sudo().create({
+        'name': 'eBay',
+        'type': 'server',
+        'level': 'DEBUG',
+        'dbname': env.cr.dbname,
+        'message': message,
+        'func': function_name,
+        'path': path,
+        'line': '0',
+    })
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
@@ -610,6 +625,133 @@ class ProductTemplate(models.Model):
                 raise e
             # not configured, ignore
             return
+
+    @api.model
+    def process_queue(self):
+        queue_str = self.env['ir.config_parameter'].sudo().get_param('ebay_queue') or ""
+        queue = [int(s) for s in queue_str.split(',')] if queue_str else []
+        process_next_time = []
+        Product = self.env['product.template']
+        for template_id in queue:
+            template = Product.browse(template_id).exists()
+            if template:
+                try:
+                    template.sync_available_qty()
+                except Exception as e:
+                    _log_logging(self.env, str(e), "process_queue", template_id)
+                    process_next_time.append(template_id)
+        new_queue = ','.join([str(n) for n in process_next_time])
+        self.env['ir.config_parameter'].sudo().set_param('ebay_queue', new_queue)
+
+    @api.model
+    def _put_in_queue(self, value):
+        queue_str = self.env['ir.config_parameter'].sudo().get_param('ebay_queue')
+        queue = queue_str.split(',') if queue_str else []
+        if str(value) not in queue:
+            queue.append(str(value))
+        new_queue_str = ",".join(queue)
+        self.env['ir.config_parameter'].sudo().set_param('ebay_queue', new_queue_str)
+
+    @api.model
+    def synchronize_orders_from_last_sync(self):
+        """
+        Get all eBay orders since the parameter 'ebay_last_sync'.
+        Note that all datetimes are considered in UTC.
+        """
+        now = datetime.now()
+        last_sync_str = self.env['ir.config_parameter'].sudo().get_param('ebay_last_sync')
+        if not last_sync_str:
+            raise UserError(_(
+                'There is no last synchronization date in your System Parameters. '
+                'Create a System Parameter record with the key "ebay_last_sync" '
+                'and the value set to the date of the oldest order you wish to synchronize '
+                'in the format "YYYY-MM-DD".'))
+        last_sync = fields.Datetime.from_string(last_sync_str)
+        success = self.synchronize_orders(last_sync)
+        if success:
+            # https://ebaydts.com/eBayKBDetails?KBid=1788
+            # Set time to the current time minus 2 minutes, in case there is a gap in server response
+            new_sync = fields.Datetime.to_string(now - timedelta(minutes=2))
+            self.env['ir.config_parameter'].sudo().set_param('ebay_last_sync', new_sync)
+        self.process_queue()
+
+    @api.model
+    def _ebay_ranges(self, date_from, date_to):
+        """
+        ebay does not allow to synchronize ranges of more than 30 days.
+        If we need to synchronize something for a greater range, we need to split it.
+        :param date_from: date(time)
+        :param date_to: date(time)
+        :return: [(date_from, date_to)*] where each couple is less than 30 days apart
+        """
+        if date_to - date_from <= timedelta(days=30):
+            return [(date_from, date_to)]
+        else:
+            step = date_from + timedelta(days=30)
+            return [(date_from, step)] + self._ebay_ranges(step, date_to)
+
+    @api.model
+    def synchronize_orders_recovery(self, date_from_str, date_to_str):
+        """
+            Dates should be in format YYYY-MM-DD, and in UTC.
+            The context key 'no_confirm' is added so that recovered orders stay as quotation.
+        """
+        self = self.with_context(no_confirm=True)
+        date_from = fields.Datetime.from_string(date_from_str)
+        date_to = fields.Datetime.from_string(date_to_str)
+        return self.synchronize_orders(date_from, date_to)
+
+    @api.model
+    def synchronize_orders(self, date_from, date_to=False):
+        """
+        :param date_from: date(time) object
+        :param date_to: date(time) object
+        :return: boolean: did sync succeed?
+        """
+        if not date_to:
+            date_to = datetime.now()
+        ranges = self._ebay_ranges(date_from, date_to)
+        successes = [
+            self._synchronize_orders_ranged(dt_from, dt_to)
+            for (dt_from, dt_to) in ranges
+        ]
+        return all(successes)
+
+    @api.model
+    def _synchronize_orders_ranged(self, date_from, date_to, page=1):
+        """
+        ebay does not allow to synchronize ranges of more than 30 days.
+        It will crash if given dates that aren't good, use _ebay_ranges.
+        :param date_from:
+        :param date_to:
+        :return: bool (did synchronisation succeed)
+        """
+        assert(date_to - date_from <= _30days)
+        call_data = {
+            'ModTimeFrom': str(date_from),
+            'ModTimeTo': str(date_to),
+            'Pagination': {'EntriesPerPage': 100,  # max allowed by ebay
+                           'PageNumber': page,
+                           }
+        }
+        try:
+            response = self.ebay_execute('GetOrders', call_data)
+            order_dict = response.dict()
+            if int(order_dict['ReturnedOrderCountActual']) > 0:  # order_dict.get('OrderArray'):
+                for order in order_dict['OrderArray']['Order']:
+                    # https://ebaydts.com/eBayKBDetails?KBid=1788: If Checkout is not Complete,
+                    # then the transaction is not completely ready for post sales processing
+                    if order['CheckoutStatus']['Status'] == 'Complete':
+                        self.env['sale.order']._process_order(order)
+            if int(order_dict['PaginationResult']['TotalNumberOfPages']) > page:
+                self._synchronize_orders_ranged(date_from, date_to, page=page+1)
+        except Exception as e:
+            message = "Ebay synchronization exception:\n%s" % str(e)
+            path = ", ".join(str(param) for param in [date_from, date_to, page])
+            _log_logging(self.env, message, "_synchronize_orders_ranged", path)
+            _logger.exception(message)
+            return False
+        return True
 
     @api.one
     def create_sale_order(self, transaction):

@@ -41,5 +41,32 @@
       <field name="doall" eval="False"/>
     </record>
 
+    <!--Alternative synchronisation based on orders-->
+    <record id="ir_cron_sale_ebay_orders_sync" model="ir.cron">
+      <field name="name">Ebay: get new orders</field>
+      <field name="model_id" ref="product.model_product_template"/>
+      <field name="state">code</field>
+      <field name="code">model.synchronize_orders_from_last_sync()  # before activating this synchronisation, deactivate any 'Ebay: update product status' action</field>
+      <field name="active" eval="False"/>
+      <field name="user_id" ref="base.user_root" />
+      <field name="interval_number">15</field>
+      <field name="interval_type">minutes</field>
+      <field name="numbercall">-1</field>
+      <field name="doall" eval="False"/>
+    </record>
+
+    <record id="icp_mail_catchall_alias" model="ir.config_parameter">
+            <field name="key">ebay_last_sync</field>
+            <field name="value" eval="DateTime.now().strftime('%Y-%m-%d')"/>
+    </record>
+
+    <record id="ir_cron_sale_ebay_orders_recovery" model="ir.actions.server">
+      <field name="name">Ebay: orders recovery</field>
+      <field name="model_id" ref="product.model_product_template"/>
+      <field name="state">code</field>
+      <field name="type">ir.actions.server</field>
+      <field name="code">model.synchronize_orders_recovery('2019-01-01', '2019-03-01')  # set the correct date to recover the orders from a given time range. The recovered orders are not automatically confirmed.</field>
+    </record>
+
   </data>
 </odoo>
