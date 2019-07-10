@@ -46,9 +46,6 @@ html {
                 left: 0;
                 height: 100%;
                 direction: ltr;
-                @include media-breakpoint-up(md) {
-                    -webkit-transform: translateZ(0); // force repaint ; don't forward-port this rule (12.0 only)
-                }
                 &.o_field_widget {
                     @include media-breakpoint-down(sm) {
                         position: static;  // reset the height 100% distribution on flex item
