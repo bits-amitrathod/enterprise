@@ -415,6 +415,14 @@ msgid "Discount percentage should be between 1-100"
 msgstr ""
 
 #. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_order.py:131
+#: code:addons/sale_coupon/models/sale_order.py:151
+#: code:addons/sale_coupon/models/sale_order.py:184
+#, python-format
+msgid "Discount: "
+msgstr ""
+
+#. module: sale_coupon
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_apply_code_display_name
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_display_name
 #: model:ir.model.fields,field_description:sale_coupon.field_sale_coupon_generate_display_name
@@ -619,6 +627,12 @@ msgid "Minimum purchased amount should be greater than 0"
 msgstr ""
 
 #. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_coupon_rules.py:42
+#, python-format
+msgid "Minimum quantity should be greater than 0"
+msgstr ""
+
+#. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_rule_minimum_amount
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_rule_rule_minimum_amount
 msgid "Minimum required amount to get the reward"
@@ -689,6 +703,18 @@ msgstr ""
 #. module: sale_coupon
 #: selection:sale.coupon.reward,discount_apply_on:0
 msgid "On Specific Product"
+msgstr ""
+
+#. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_order.py:179
+#, python-format
+msgid "On product with following tax: "
+msgstr ""
+
+#. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_order.py:181
+#, python-format
+msgid "On product with following taxes: "
 msgstr ""
 
 #. module: sale_coupon
@@ -1020,6 +1046,13 @@ msgid "The coupon program for %s is in draft or closed state"
 msgstr ""
 
 #. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_coupon.py:74
+#: code:addons/sale_coupon/models/sale_coupon_program.py:173
+#, python-format
+msgid "The customer doesn't have access to this reward."
+msgstr ""
+
+#. module: sale_coupon
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_program_discount_fixed_amount
 #: model:ir.model.fields,help:sale_coupon.field_sale_coupon_reward_discount_fixed_amount
 msgid "The discount in fixed amount"
@@ -1090,6 +1123,11 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: sale_coupon
+#: model:ir.ui.view,arch_db:sale_coupon.sale_order_view_form
+msgid "Update Promotions"
+msgstr ""
+
+#. module: sale_coupon
 #: selection:sale.coupon.program,promo_code_usage:0
 msgid "Use a code"
 msgstr ""
@@ -1129,6 +1167,24 @@ msgstr ""
 #: code:addons/sale_coupon/models/sale_coupon_program.py:99
 #, python-format
 msgid "You can not delete a program in active state"
+msgstr ""
+
+#. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_coupon.py:77
+#, python-format
+msgid "You don't have the required product quantities on your sales order. All the products should be recorded on the sales order. (Example: You need to have 3 T-shirts on your sales order if the promotion is 'Buy 2, Get 1 Free'."
+msgstr ""
+
+#. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_coupon_program.py:175
+#, python-format
+msgid "You don't have the required product quantities on your sales order. If the reward is same product quantity, please make sure that all the products are recorded on the sales order (Example: You need to have 3 T-shirts on your sales order if the promotion is 'Buy 2, Get 1 Free'."
+msgstr ""
+
+#. module: sale_coupon
+#: code:addons/sale_coupon/models/sale_order.py:202
+#, python-format
+msgid "limited to "
 msgstr ""
 
 #. module: sale_coupon
