@@ -679,7 +679,7 @@ class AccountInvoice(models.Model):
                 currency_ocr = ocr_results['currency']['selected_value']['content'] if 'currency' in ocr_results else ""
                 taxes_ocr = [value['content'] for value in ocr_results['global_taxes']['selected_values']] if 'global_taxes' in ocr_results else []
                 taxes_type_ocr = [value['amount_type'] if 'amount_type' in value else 'percent' for value in ocr_results['global_taxes']['selected_values']] if 'global_taxes' in ocr_results else []
-                vat_number_ocr = ocr_results['recipient']['VAT_Number']['selected_value']['content'] if 'recipient' in ocr_results and 'VAT_Number' in ocr_results['recipient'] else ""
+                vat_number_ocr = ocr_results['VAT_Number']['selected_value']['content'] if 'VAT_Number' in ocr_results else ""
                 invoice_lines = ocr_results['invoice_lines'] if 'invoice_lines' in ocr_results else []
 
                 if invoice_lines:
