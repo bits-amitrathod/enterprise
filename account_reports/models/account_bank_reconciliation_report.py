@@ -145,13 +145,27 @@ class account_bank_reconciliation_report(models.AbstractModel):
         return rslt
 
     @api.model
+    def _get_amount(self, line, report_data):
+        if report_data['use_foreign_currency']:
+            if line.currency_id == report_data['line_currency']:
+                return line.amount_currency
+            else:
+                # This statement is added only for caution, we don't expect to arrive to this
+                # condition if we use the payments or the statements. This can only arise if we
+                # manually add a journal entry to the bank with a currency that is neither the one
+                # of the company or the one of the journal.
+                return line.currency_id._convert(line.amount_currency, report_data['line_currency'], self.env.user.company_id, line.date)
+        else:
+            return line.balance
+
+    @api.model
     def _get_lines(self, options, line_id=None):
         # Fetch data
         report_data = self._get_bank_rec_report_data(options, line_id)
         self = self.with_context(line_currency=report_data['line_currency'])
 
         # Compute totals
-        unrec_tot = sum([-(aml.amount_currency if report_data['use_foreign_currency'] else aml.balance) for aml in report_data.get('not_reconciled_pmts', [])])
+        unrec_tot = sum([-(self._get_amount(aml, report_data)) for aml in report_data.get('not_reconciled_pmts', [])])
         outstanding_plus_tot = sum([st_line.amount for st_line in report_data.get('not_reconciled_st_positive', [])])
         outstanding_minus_tot = sum([st_line.amount for st_line in report_data.get('not_reconciled_st_negative', [])])
         computed_stmt_balance = report_data['odoo_balance'] + outstanding_plus_tot + outstanding_minus_tot + unrec_tot
@@ -197,7 +211,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
                         'columns': [
                             {'name': format_date(self.env, line.date)},
                             {'name': line_description, 'title': line_title, 'style': 'display:block;'},
-                            {'name': self.format_value(-line.balance, report_data['line_currency'])},
+                            {'name': self.format_value(-self._get_amount(line, report_data), report_data['line_currency'])},
                         ],
                         'class': 'o_account_reports_level3',
                         'caret_options': 'account.payment',
