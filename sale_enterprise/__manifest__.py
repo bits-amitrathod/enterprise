@@ -18,4 +18,5 @@ Contains advanced features for sale management
     'installable': True,
     'application': False,
     'auto_install': True,
+    'license': 'OEEL-1',
 }

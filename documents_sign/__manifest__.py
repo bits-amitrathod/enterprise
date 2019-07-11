@@ -20,4 +20,5 @@ The first element of the selection (in DRM) will be used as the signature attach
 
     'installable': True,
     'auto_install': True,
+    'license': 'OEEL-1',
 }

@@ -28,4 +28,5 @@
     'demo': [
         'data/hr_contract_salary_demo.xml',
     ],
+    'license': 'OEEL-1',
 }

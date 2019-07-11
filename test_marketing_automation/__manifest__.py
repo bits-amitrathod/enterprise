@@ -11,4 +11,5 @@
     'demo': [
     ],
     'application': False,
+    'license': 'OEEL-1',
 }

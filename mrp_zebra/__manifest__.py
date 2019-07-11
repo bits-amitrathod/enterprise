@@ -31,6 +31,7 @@
     ],
     'demo': [
         'data/quality_demo.xml'
-    ]
+    ],
+    'license': 'OEEL-1',
 
 }
