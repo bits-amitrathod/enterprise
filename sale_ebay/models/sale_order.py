@@ -5,6 +5,7 @@ import logging
 from datetime import datetime
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from odoo.osv import expression
 from . import product
 
 _logger = logging.getLogger(__name__)
@@ -20,7 +21,7 @@ class SaleOrder(models.Model):
         try:
             if not so:
                 so = self._process_order_new(order)
-            self._process_order_update(order, so)
+            so._process_order_update(order)
         except Exception as e:
             message = _("Ebay could not synchronize order:\n%s") % str(e)
             path = str(order)
@@ -30,7 +31,7 @@ class SaleOrder(models.Model):
     @api.model
     def _process_order_new(self, order):
         (partner, shipping_partner) = self._process_order_new_find_partners(order)
-        fp_id = self.env['account.fiscal.position'].get_fiscal_position(partner.id)
+        fp_id = self.env['account.fiscal.position'].get_fiscal_position(partner.id, delivery_id=shipping_partner.id)
         if fp_id:
             partner.property_account_position_id = fp_id
         create_values = {
@@ -40,29 +41,22 @@ class SaleOrder(models.Model):
             'client_order_ref': order['OrderID'],
             'origin': 'eBay' + order['OrderID'],
             'fiscal_position_id': fp_id if fp_id else False,
+            'date_order': order['PaidTime'],
         }
         if self.env['ir.config_parameter'].sudo().get_param('ebay_sales_team'):
             create_values['team_id'] = int(
                 self.env['ir.config_parameter'].sudo().get_param('ebay_sales_team'))
-        currency = self.env['res.currency'].search(
-            [('name', '=', order['AmountPaid']['_currencyID'])], limit=1)
-        create_values['currency_id'] = currency.id
 
         sale_order = self.env['sale.order'].create(create_values)
 
         for transaction in order['TransactionArray']['Transaction']:
-            self._process_order_new_transaction(sale_order, transaction)
+            sale_order._process_order_new_transaction(transaction)
 
-        self._process_order_shipping(order, sale_order)
+        sale_order._process_order_shipping(order)
 
         return sale_order
 
-    @api.model
     def _process_order_new_find_partners(self, order):
-        def _find_country():
-            country = self.env['res.country'].search(
-                [('code', '=', infos['Country'])], limit=1)
-            return country
         def _find_state():
             state = self.env['res.country.state'].search([
                 ('code', '=', infos.get('StateOrProvince')),
@@ -74,11 +68,6 @@ class SaleOrder(models.Model):
                     ('country_id', '=', shipping_data['country_id'])
                 ], limit=1)
             return state
-        def _set_email(partner_data):
-            # After 15 days eBay doesn't send the email anymore but 'Invalid Request'.
-            email = order['TransactionArray']['Transaction'][0]['Buyer']['Email']
-            if email != 'Invalid Request':
-                partner_data['email'] = email
 
         buyer_ebay_id = order['BuyerUserID']
         infos = order['ShippingAddress']
@@ -91,7 +80,10 @@ class SaleOrder(models.Model):
             'ebay_id': buyer_ebay_id,
             'ref': 'eBay',
         }
-        _set_email(partner_data)
+        email = order['TransactionArray']['Transaction'][0]['Buyer']['Email']
+        # After 15 days eBay doesn't send the email anymore but 'Invalid Request'.
+        if email != 'Invalid Request':
+            partner_data['email'] = email
         # if we reuse an existing partner, addresses might already been set on it
         # so we hold the address data in a temporary dictionary to see if we need to create it or not
         shipping_data = {}
@@ -100,7 +92,8 @@ class SaleOrder(models.Model):
                            ('zip', 'PostalCode'), ('phone', 'Phone')]
         for (odoo_name, ebay_name) in info_to_extract:
             shipping_data[odoo_name] = infos.get(ebay_name, '')
-        shipping_data['country_id'] = _find_country().id
+        shipping_data['country_id'] = self.env['res.country'].search(
+                [('code', '=', infos['Country'])], limit=1).id
         shipping_data['state_id'] = _find_state().id
         shipping_partner = partner._find_existing_address(shipping_data)
         if not shipping_partner:
@@ -121,7 +114,7 @@ class SaleOrder(models.Model):
         company = self.env.user.company_id
         tax = False
         if amount > 0 and rate > 0:
-            tax = self.env['account.tax'].sudo().search([
+            tax = self.env['account.tax'].with_context(active_test=False).sudo().search([
                 ('amount', '=', rate),
                 ('amount_type', '=', 'percent'),
                 ('company_id', '=', company.id),
@@ -134,20 +127,18 @@ class SaleOrder(models.Model):
                     'type_tax_use': 'sale',
                     'description': 'Sales Tax (eBay)',
                     'company_id': company.id,
+                    'active': False,
                 })
         return tax
 
-    @api.model
-    def _find_currency(self, name=''):
-        domain = [('name', '=', name)]
-        return self.env['res.currency'].search(domain, limit=1)
+    def _process_order_shipping(self, order):
+        self.ensure_one()
 
-    @api.model
-    def _process_order_shipping(self, order, sale_order):
         if 'ShippingServiceSelected' in order:
             shipping_cost_dict = order['ShippingServiceSelected']['ShippingServiceCost']
             shipping_amount = float(shipping_cost_dict['value'])
-            shipping_currency = self._find_currency(shipping_cost_dict['_currencyID'])
+            shipping_currency = self.env['res.currency'].with_context(active_test=False).search(
+                [('name', '=', shipping_cost_dict['_currencyID'])], limit=1)
             shipping_name = order['ShippingServiceSelected']['ShippingService']
             shipping_product = self.env['product.template'].search(
                 [('name', '=', shipping_name)], limit=1)
@@ -163,10 +154,10 @@ class SaleOrder(models.Model):
             tax_id = self._handle_taxes(tax_amount, tax_rate)
 
             price_unit = shipping_currency._convert(shipping_amount - tax_amount,
-                sale_order.currency_id, self.env.user.company_id, datetime.now())
+                self.currency_id, self.company_id, self.date_order or datetime.now())
 
             so_line = self.env['sale.order.line'].create({
-                'order_id': sale_order.id,
+                'order_id': self.id,
                 'name': shipping_name,
                 'product_id': shipping_product.product_variant_ids[0].id,
                 'product_uom_qty': 1,
@@ -175,7 +166,6 @@ class SaleOrder(models.Model):
                 'is_delivery': True,
             })
 
-    @api.model
     def _process_transaction_product(self, transaction):
         Template = self.env['product.template']
         ebay_id = transaction['Item']['ItemID']
@@ -211,8 +201,8 @@ class SaleOrder(models.Model):
                     attr = product.env['product.attribute.value'].search(
                         [('name', '=', spec['Value'])])
                     attrs.append(('attribute_value_ids', '=', attr.id))
-                variant = product.env['product.product'].search(attrs).filtered(
-                    lambda l: l.product_tmpl_id.id == product.id)
+                domain = expression.AND(attrs, [('product_tmpl_id', '=', product.id)])
+                variant = product.env['product.product'].search(domain)
         else:
             variant = product.product_variant_ids[0]
         variant.ebay_quantity_sold = variant.ebay_quantity_sold + int(transaction['QuantityPurchased'])
@@ -220,8 +210,7 @@ class SaleOrder(models.Model):
             variant.ebay_quantity = variant.ebay_quantity - int(transaction['QuantityPurchased'])
             variant_qty = 0
             if len(product.product_variant_ids.filtered('ebay_use')) > 1:
-                for variant in product.product_variant_ids:
-                    variant_qty += variant.ebay_quantity
+                variant_qty = sum(product.product_variant_ids.mapped('ebay_quantity'))
             else:
                 variant_qty = variant.ebay_quantity
             if variant_qty <= 0:
@@ -231,22 +220,23 @@ class SaleOrder(models.Model):
                     product.ebay_listing_status = 'Ended'
         return product, variant
 
-    @api.model
-    def _process_order_new_transaction(self, sale_order, transaction):
+    def _process_order_new_transaction(self, transaction):
+        self.ensure_one()
+
         product, variant = self._process_transaction_product(transaction)
 
-        transaction_currency = self._find_currency(
-            transaction['TransactionPrice']['_currencyID'])
+        transaction_currency = self.env['res.currency'].with_context(active_test=False).search(
+            [('name', '=', transaction['TransactionPrice']['_currencyID'])], limit=1)
         price_unit = float(transaction['TransactionPrice']['value'])
         tax_amount = float(transaction['Taxes']['TotalTaxAmount']['value'])
         tax_rate = tax_amount / price_unit if price_unit > 0 else 0
         tax_id = self._handle_taxes(tax_amount, tax_rate)
         price_unit = transaction_currency._convert(price_unit,
-            sale_order.currency_id, self.env.user.company_id, datetime.now())
+            self.currency_id, self.company_id, self.date_order or datetime.now())
 
         sol = self.env['sale.order.line'].create({
             'product_id': variant.id,
-            'order_id': sale_order.id,
+            'order_id': self.id,
             'name': variant.name,
             'product_uom_qty': float(transaction['QuantityPurchased']),
             'product_uom': variant.uom_id.id,
@@ -255,15 +245,14 @@ class SaleOrder(models.Model):
         })
 
         if 'BuyerCheckoutMessage' in transaction:
-            sale_order.message_post(body=_('The Buyer Posted :\n') + transaction['BuyerCheckoutMessage'])
+            self.message_post(body=_('The Buyer Posted :\n') + transaction['BuyerCheckoutMessage'])
 
         self.env['product.template']._put_in_queue(product.id)
 
-    @api.model
-    def _process_order_update(self, order, sale_order):
-        sale_order.ensure_one()
+    def _process_order_update(self, order):
+        self.ensure_one()
 
-        product_lines = sale_order.order_line.filtered(lambda l: not l._is_delivery())
+        product_lines = self.order_line.filtered(lambda l: not l._is_delivery())
         are_all_products_listed = all(product_lines.mapped('product_id.ebay_url'))
         can_be_invoiced = ('order' in product_lines.mapped('product_id.invoice_policy') and
                            'to invoice' in product_lines.mapped('invoice_status'))
@@ -271,14 +260,14 @@ class SaleOrder(models.Model):
         no_confirm = (self.env.context.get('ebay_no_confirm', False) or
                       not are_all_products_listed)
         try:
-            if (not no_confirm and sale_order.state in ['draft', 'sent']):
-                sale_order.action_confirm()
+            if (not no_confirm and self.state in ['draft', 'sent']):
+                self.action_confirm()
             if not no_confirm and can_be_invoiced:
-                sale_order.action_invoice_create()
+                self.action_invoice_create()
             shipping_name = order['ShippingServiceSelected']['ShippingService']
-            if sale_order.picking_ids and shipping_name:
-                sale_order.picking_ids.message_post(
+            if self.picking_ids and shipping_name:
+                self.picking_ids.message_post(
                     body=_('The Buyer Chose The Following Delivery Method :\n') + shipping_name)
         except UserError as e:
-            sale_order.message_post(body=
+            self.message_post(body=
                 _('Ebay Synchronisation could not confirm because of the following error:\n%s') % str(e))

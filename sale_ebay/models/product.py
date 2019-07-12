@@ -13,11 +13,11 @@ from odoo.addons.sale_ebay.tools.ebaysdk import Trading
 from xml.sax.saxutils import escape
 
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, RedirectWarning
+from odoo.exceptions import UserError, RedirectWarning, ValidationError
 
 _logger = logging.getLogger(__name__)
 
-_30days = timedelta(days=30)
+_30DAYS = timedelta(days=30)
 # eBay api limits ItemRevise calls to 150 per day
 MAX_REVISE_CALLS = 150
 
@@ -628,7 +628,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def process_queue(self):
-        queue_str = self.env['ir.config_parameter'].sudo().get_param('ebay_queue') or ""
+        queue_str = self.env['ir.config_parameter'].sudo().get_param('ebay_queue')
         queue = [int(s) for s in queue_str.split(',')] if queue_str else []
         process_next_time = []
         Product = self.env['product.template']
@@ -643,17 +643,14 @@ class ProductTemplate(models.Model):
         new_queue = ','.join([str(n) for n in process_next_time])
         self.env['ir.config_parameter'].sudo().set_param('ebay_queue', new_queue)
 
-    @api.model
     def _put_in_queue(self, value):
         queue_str = self.env['ir.config_parameter'].sudo().get_param('ebay_queue')
-        queue = queue_str.split(',') if queue_str else []
-        if str(value) not in queue:
-            queue.append(str(value))
-        new_queue_str = ",".join(queue)
+        queue = set(queue_str.split(',')) if queue_str else set()
+        queue.add(str(value))
+        new_queue_str = ','.join(queue)
         self.env['ir.config_parameter'].sudo().set_param('ebay_queue', new_queue_str)
 
-    @api.model
-    def synchronize_orders_from_last_sync(self):
+    def synchronize_orders_from_last_sync(self, test_mode=False):
         """
         Get all eBay orders since the parameter 'ebay_last_sync'.
         Note that all datetimes are considered in UTC.
@@ -673,9 +670,9 @@ class ProductTemplate(models.Model):
             # Set time to the current time minus 2 minutes, in case there is a gap in server response
             new_sync = fields.Datetime.to_string(now - timedelta(minutes=2))
             self.env['ir.config_parameter'].sudo().set_param('ebay_last_sync', new_sync)
-        self.process_queue()
+        if not test_mode:
+            self.process_queue()
 
-    @api.model
     def _ebay_ranges(self, date_from, date_to):
         """
         ebay does not allow to synchronize ranges of more than 30 days.
@@ -684,10 +681,10 @@ class ProductTemplate(models.Model):
         :param date_to: date(time)
         :return: [(date_from, date_to)*] where each couple is less than 30 days apart
         """
-        if date_to - date_from <= timedelta(days=30):
+        if date_to - date_from <= _30DAYS:
             return [(date_from, date_to)]
         else:
-            step = date_from + timedelta(days=30)
+            step = date_from + _30DAYS
             return [(date_from, step)] + self._ebay_ranges(step, date_to)
 
     @api.model
@@ -717,16 +714,18 @@ class ProductTemplate(models.Model):
         ]
         return all(successes)
 
-    @api.model
     def _synchronize_orders_ranged(self, date_from, date_to, page=1):
         """
         ebay does not allow to synchronize ranges of more than 30 days.
         It will crash if given dates that aren't good, use _ebay_ranges.
-        :param date_from:
-        :param date_to:
+        :param date_from: datetime
+        :param date_to: datetime
         :return: bool (did synchronisation succeed)
         """
-        assert(date_to - date_from <= _30days)
+        if not date_to - date_from <= _30DAYS:
+            raise ValidationError("This function should not be called with a range of more than 30 days, "
+                                  "as eBay does not handle longer timespans. "
+                                  "Instead use synchronize_orders which split in as many calls as needed.")
         call_data = {
             'ModTimeFrom': str(date_from),
             'ModTimeTo': str(date_to),
