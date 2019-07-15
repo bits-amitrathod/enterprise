@@ -237,7 +237,9 @@ var accountReportsWidget = AbstractAction.extend(ControlPanelMixin, {
             }
         });
         // analytic filter
-        this.$searchview_buttons.find('.js_account_reports_analytic_auto_complete').select2();
+        var option_cnt = this.$searchview_buttons.find('.js_account_reports_analytic_auto_complete').children().length;
+        var minInpLen = Math.floor(Math.log(option_cnt) / Math.log(100)); // 0-99: O, 100-9999: 1, ...
+        this.$searchview_buttons.find('.js_account_reports_analytic_auto_complete').select2({minimumInputLength: minInpLen});
         if (self.report_options.analytic) {
             self.$searchview_buttons.find('[data-filter="analytic_accounts"]').select2("val", self.report_options.analytic_accounts);
             self.$searchview_buttons.find('[data-filter="analytic_tags"]').select2("val", self.report_options.analytic_tags);
