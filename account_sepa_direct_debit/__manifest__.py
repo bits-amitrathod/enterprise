@@ -58,4 +58,5 @@
         'views/sdd_mandate_views.xml',
         'wizard/sdd_xml_wizards.xml',
     ],
+    'license': 'OEEL-1',
 }

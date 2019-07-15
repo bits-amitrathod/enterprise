@@ -20,4 +20,5 @@ Categorize the lines per subscription template when an online quote contains sub
     'demo': [
         'demo/demo.xml',
     ],
+    'license': 'OEEL-1',
 }

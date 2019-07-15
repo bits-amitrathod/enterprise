@@ -13,4 +13,5 @@
     'data': [
         'views/helpdesk_views.xml',
     ],
+    'license': 'OEEL-1',
 }

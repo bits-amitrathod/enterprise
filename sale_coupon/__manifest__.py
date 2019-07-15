@@ -20,4 +20,5 @@
     'demo': [
         'data/sale_coupon_demo.xml',
     ],
+    'license': 'OEEL-1',
 }
