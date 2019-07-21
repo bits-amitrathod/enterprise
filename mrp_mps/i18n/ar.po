@@ -7,7 +7,6 @@
 # Martin Trigaux, 2018
 # hoxhe Aits <hoxhe0@gmail.com>, 2018
 # Osoul <baruni@osoul.ly>, 2018
-# Mohammed Ibrahim <m.ibrahim@mussder.com>, 2018
 # Ghaith Gammar <g.gammar@saharaifs.net>, 2018
 # Osama Ahmaro <osamaahmaro@gmail.com>, 2018
 # Shaima Safar <shaima.safar@open-inside.com>, 2018
@@ -31,17 +30,17 @@ msgstr ""
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "&lt;&amp;hellip;&lt;"
-msgstr ""
+msgstr "&lt;&amp;hellip;&lt;"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"fa fa-fw\">-</span> Demand Forecast"
-msgstr ""
+msgstr "<span class=\"fa fa-fw\">-</span> توقعات الطلب"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"fa fa-fw\">-</span> Indirect Demand"
-msgstr ""
+msgstr "<span class=\"fa fa-fw\">-</span> طلب غير مباشر"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
@@ -49,6 +48,8 @@ msgid ""
 "<span class=\"fa fa-fw\">=</span> \n"
 "                                    Forecasted Inventory"
 msgstr ""
+"<span class=\"fa fa-fw\">=</span> \n"
+"                                    المخزون المتوقع"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
@@ -56,21 +57,23 @@ msgid ""
 "<span class=\"fa fa-map-marker text-muted fa-fw\" role=\"img\" aria-"
 "label=\"Forecasted\" title=\"Forecasted\"/>"
 msgstr ""
+"<span class=\"fa fa-map-marker text-muted fa-fw\" role=\"img\" aria-"
+"label=\"المتوقع\" title=\"المتوقع\"/>"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"text-muted\"> by</span>"
-msgstr ""
+msgstr "<span class=\"text-muted\"> من خلال</span>"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_active
 msgid "Active in MPS"
-msgstr ""
+msgstr "نشط في جدول الإنتاج الرئيسي"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_report_view_form
 msgid "Add Product"
-msgstr ""
+msgstr "إضافة منتج"
 
 #. module: mrp_mps
 #. openerp-web
@@ -78,7 +81,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 #, python-format
 msgid "Add a Product"
-msgstr ""
+msgstr "إضافة منتج"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
@@ -88,12 +91,12 @@ msgstr "تطبيق"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__apply_active
 msgid "Apply Active"
-msgstr ""
+msgstr "تطبيق نشط"
 
 #. module: mrp_mps
 #: selection:sale.forecast,mode:0
 msgid "Automatic"
-msgstr "آلي"
+msgstr "تلقائي"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_report_view_form
@@ -149,14 +152,14 @@ msgstr "التاريخ"
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_sale_forecast__product_uom_id
 msgid "Default unit of measure used for all stock operations."
-msgstr ""
+msgstr "وحده القياس الافتراضية المستخدمة لجميع عمليات المخزون."
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_res_company__manufacturing_period
 #: model:ir.model.fields,help:mrp_mps.field_res_config_settings__manufacturing_period
 msgid ""
 "Default value for the time ranges in Master Production Schedule report."
-msgstr ""
+msgstr "القيمة الافتراضية للنطاق الزمني في تقرير جدول الإنتاج الرئيسي."
 
 #. module: mrp_mps
 #. openerp-web
@@ -164,19 +167,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__forecast_qty
 #, python-format
 msgid "Demand Forecast"
-msgstr ""
+msgstr "توقعات الطلب"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__display_name
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__display_name
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__display_name
 msgid "Display Name"
-msgstr "اسم العرض"
+msgstr "الاسم المعروض"
 
 #. module: mrp_mps
 #: selection:sale.forecast,state:0
 msgid "Done"
-msgstr "تم"
+msgstr "المنتهية"
 
 #. module: mrp_mps
 #: selection:sale.forecast,state:0
@@ -188,7 +191,7 @@ msgstr "التوقعات"
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:50
 #, python-format
 msgid "Forecast Inventory"
-msgstr ""
+msgstr "توقع المخزون"
 
 #. module: mrp_mps
 #. openerp-web
@@ -196,12 +199,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mrp_mps.product_product_view_form_mps
 #, python-format
 msgid "Forecast Product"
-msgstr ""
+msgstr "توقع المنتج"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_forecasted
 msgid "Forecasted Target"
-msgstr ""
+msgstr "الهدف المتوقع"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__id
@@ -213,24 +216,24 @@ msgstr "المعرف"
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_sale_forecast__to_supply
 msgid "If mode is Manual, this is the forced value"
-msgstr ""
+msgstr "إذا كان الوضع يدوي، فهذه القيمة إلزامية"
 
 #. module: mrp_mps
 #. openerp-web
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:40
 #, python-format
 msgid "Indirect Demand"
-msgstr ""
+msgstr "طلب غير مباشر"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__quantity
 msgid "Indirect Quantity"
-msgstr ""
+msgstr "كمية غير مباشرة"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_sale_forecast_indirect
 msgid "Indirect Sales Forecast"
-msgstr ""
+msgstr "توقعات المبيعات غير المباشرة"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report____last_update
@@ -256,34 +259,34 @@ msgstr "آخر تحديث في"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_apply
 msgid "Latest Apply"
-msgstr ""
+msgstr "التطبيق الأحدث"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "Launch Procurement"
-msgstr ""
+msgstr "إطلاق التوريدات"
 
 #. module: mrp_mps
 #. openerp-web
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:6
 #, python-format
 msgid "Launch green cells"
-msgstr ""
+msgstr "إطلاق الخلايا الخضراء"
 
 #. module: mrp_mps
 #: model:ir.ui.menu,name:mrp_mps.mrp_mps_menu_planning
 msgid "MPS"
-msgstr ""
+msgstr "جدول الإنتاج الرئيسي"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_mps_report
 msgid "MPS Report"
-msgstr ""
+msgstr "تقرير جدول الإنتاج الرئيسي"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "MPS in Main Warehouse"
-msgstr ""
+msgstr "جدول الإنتاج الرئيسي في المخزن الرئيسي"
 
 #. module: mrp_mps
 #: selection:sale.forecast,mode:0
@@ -294,23 +297,23 @@ msgstr "يدوى"
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__manufacturing_period
 #: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings__manufacturing_period
 msgid "Manufacturing Period"
-msgstr ""
+msgstr "فترة التصنيع"
 
 #. module: mrp_mps
 #: model:ir.actions.client,name:mrp_mps.mrp_mps_report_action_client
 #: model:ir.ui.menu,name:mrp_mps.mrp_mps_report_menu
 msgid "Master Production Schedule"
-msgstr ""
+msgstr "جدول الإنتاج الرئيسي"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_max_supply
 msgid "Maximum to Supply"
-msgstr ""
+msgstr "الحد الأقصى للتزويد"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_min_supply
 msgid "Minimum to Supply"
-msgstr ""
+msgstr "الحد الأدنى للتزويد"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__mode
@@ -330,7 +333,7 @@ msgstr "شهريًا"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__product_origin_id
 msgid "Origin Product"
-msgstr ""
+msgstr "المنتج المصدر"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__period
@@ -347,7 +350,7 @@ msgstr "الفترة:"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__group_id
 msgid "Procurement Group"
-msgstr "مجموعه التوريدات "
+msgstr "مجموعة التوريدات"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_product_product
@@ -361,25 +364,25 @@ msgstr "المنتج"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__product_uom_id
 msgid "Product UoM"
-msgstr "وحدة القياس للمنتج"
+msgstr "وحدة قياس المنتج"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__warehouse_id
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__warehouse_id
 msgid "Production Location"
-msgstr "موقع الانتاج"
+msgstr "موقع الإنتاج"
 
 #. module: mrp_mps
 #. openerp-web
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:24
 #, python-format
 msgid "Rows"
-msgstr ""
+msgstr "الصفوف"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_sale_forecast
 msgid "Sales Forecast"
-msgstr ""
+msgstr "توقعات المبيعات"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.product_product_view_form_mps
@@ -392,7 +395,7 @@ msgstr "حفظ"
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 #, python-format
 msgid "Starting Inventory"
-msgstr ""
+msgstr "بدء المخزون"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__state
@@ -414,24 +417,24 @@ msgstr "النطاق الزمني"
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:45
 #, python-format
 msgid "To Produce"
-msgstr ""
+msgstr "لإنتاج"
 
 #. module: mrp_mps
 #: code:addons/mrp_mps/models/mrp_mps_report.py:129
 #, python-format
 msgid "To Receive / To Supply / Produce"
-msgstr ""
+msgstr "لاستقبال/لتزويد/لإنتاج"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__to_supply
 msgid "To Supply"
-msgstr ""
+msgstr "لتزويد"
 
 #. module: mrp_mps
 #: code:addons/mrp_mps/models/mrp_mps_report.py:156
 #, python-format
 msgid "Week %s"
-msgstr ""
+msgstr "الأسبوع %s"
 
 #. module: mrp_mps
 #. openerp-web
@@ -454,14 +457,14 @@ msgstr "أدخلت قيمة خاطئة!"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "double click in order to empty"
-msgstr ""
+msgstr "انقر مرتين للتفريغ"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "set min-max"
-msgstr ""
+msgstr "تحديد الحدين الأدنى والأقصى"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "set target"
-msgstr ""
+msgstr "تحديد الهدف"
