@@ -50,6 +50,8 @@ FormController.include({
             // the product is tracked by lot -> open the split lot wizard
             // save the record for the server to be aware of the operation
             return this.saveRecord(this.handle, {stayInEdit: true, reload: false}).then(function () {
+                // update record in case res_id has been set
+                record = self.model.get(record.id)
                 return self._rpc({
                     model: 'stock.picking',
                     method: 'get_po_to_split_from_barcode',

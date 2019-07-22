@@ -13,4 +13,5 @@
         'static/src/xml/web_clearbit.xml'
     ],
     'auto_install': True,
+    'license': 'OEEL-1',
 }

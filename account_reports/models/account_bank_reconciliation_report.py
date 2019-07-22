@@ -92,8 +92,8 @@ class account_bank_reconciliation_report(models.AbstractModel):
         account_ids = (journal.default_debit_account_id + journal.default_credit_account_id).ids
         if account_ids:
             self._cr.execute('''
-                SELECT SUM(line.''' + ('amount_currency' if use_foreign_currency else 'balance') + ''') FROM account_move_line line
-                WHERE line.account_id IN %s AND line.date <= %s AND line.company_id IN %s 
+                SELECT COALESCE(SUM(line.''' + ('amount_currency' if use_foreign_currency else 'balance') + '''), 0) FROM account_move_line line
+                WHERE line.account_id IN %s AND line.date <= %s AND line.company_id IN %s
             ''', [
                 tuple(account_ids),
                 self.env.context['date_to'],

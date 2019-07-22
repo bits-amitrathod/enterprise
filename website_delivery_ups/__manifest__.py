@@ -14,4 +14,5 @@ This module will give an option of bill my account on ups delivery methods
         'views/res_config_settings_views.xml',
     ],
     'auto_install': True,
+    'license': 'OEEL-1',
 }
