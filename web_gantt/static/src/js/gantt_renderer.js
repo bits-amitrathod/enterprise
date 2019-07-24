@@ -73,7 +73,8 @@ return AbstractRenderer.extend({
             name: "text",
             label: _lt("Gantt View"),
             tree: true,
-            width: '*'
+            width: '*',
+            resize: true,
         }];
         gantt.templates.grid_folder = function () {
             return "";
