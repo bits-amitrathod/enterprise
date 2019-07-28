@@ -26,17 +26,17 @@ msgstr ""
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "&lt;&amp;hellip;&lt;"
-msgstr ""
+msgstr "&lt;&amp;hellip;&lt;"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"fa fa-fw\">-</span> Demand Forecast"
-msgstr ""
+msgstr "<span class=\"fa fa-fw\">-</span> 수요 예측"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"fa fa-fw\">-</span> Indirect Demand"
-msgstr ""
+msgstr "<span class=\"fa fa-fw\">-</span> 간접 수요"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
@@ -44,6 +44,8 @@ msgid ""
 "<span class=\"fa fa-fw\">=</span> \n"
 "                                    Forecasted Inventory"
 msgstr ""
+"<span class=\"fa fa-fw\">=</span> \n"
+"                                    예상 재고"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
@@ -51,21 +53,23 @@ msgid ""
 "<span class=\"fa fa-map-marker text-muted fa-fw\" role=\"img\" aria-"
 "label=\"Forecasted\" title=\"Forecasted\"/>"
 msgstr ""
+"<span class=\"fa fa-map-marker text-muted fa-fw\" role=\"img\" aria-"
+"label=\"Forecasted\" title=\"Forecasted\"/>"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "<span class=\"text-muted\"> by</span>"
-msgstr ""
+msgstr "<span class=\"text-muted\"> by</span>"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_active
 msgid "Active in MPS"
-msgstr ""
+msgstr "MPS 활성"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_report_view_form
 msgid "Add Product"
-msgstr ""
+msgstr "상품 추가"
 
 #. module: mrp_mps
 #. openerp-web
@@ -73,7 +77,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 #, python-format
 msgid "Add a Product"
-msgstr ""
+msgstr "상품 추가"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
@@ -83,12 +87,12 @@ msgstr "적용"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__apply_active
 msgid "Apply Active"
-msgstr ""
+msgstr "활성 적용"
 
 #. module: mrp_mps
 #: selection:sale.forecast,mode:0
 msgid "Automatic"
-msgstr "오토"
+msgstr "자동"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_report_view_form
@@ -99,7 +103,7 @@ msgstr "취소"
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_res_company
 msgid "Companies"
-msgstr "회사들"
+msgstr "회사"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__company_id
@@ -144,14 +148,14 @@ msgstr "날짜"
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_sale_forecast__product_uom_id
 msgid "Default unit of measure used for all stock operations."
-msgstr ""
+msgstr "모든 재고 운용에 사용되는 기본 측정 단위."
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_res_company__manufacturing_period
 #: model:ir.model.fields,help:mrp_mps.field_res_config_settings__manufacturing_period
 msgid ""
 "Default value for the time ranges in Master Production Schedule report."
-msgstr ""
+msgstr "주요 생산 계획 보고서의 시간 범위 기본값."
 
 #. module: mrp_mps
 #. openerp-web
@@ -159,7 +163,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__forecast_qty
 #, python-format
 msgid "Demand Forecast"
-msgstr ""
+msgstr "수요 예측"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__display_name
@@ -176,14 +180,14 @@ msgstr "완료"
 #. module: mrp_mps
 #: selection:sale.forecast,state:0
 msgid "Forecast"
-msgstr "Forcast"
+msgstr "예측"
 
 #. module: mrp_mps
 #. openerp-web
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:50
 #, python-format
 msgid "Forecast Inventory"
-msgstr ""
+msgstr "예상 재고"
 
 #. module: mrp_mps
 #. openerp-web
@@ -191,12 +195,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mrp_mps.product_product_view_form_mps
 #, python-format
 msgid "Forecast Product"
-msgstr ""
+msgstr "예측 제품"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_forecasted
 msgid "Forecasted Target"
-msgstr ""
+msgstr "예상 대상"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__id
@@ -208,31 +212,31 @@ msgstr "ID"
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_sale_forecast__to_supply
 msgid "If mode is Manual, this is the forced value"
-msgstr ""
+msgstr "모드가 수동이면 이것은 강제 값입니다."
 
 #. module: mrp_mps
 #. openerp-web
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:40
 #, python-format
 msgid "Indirect Demand"
-msgstr ""
+msgstr "간접 수요"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__quantity
 msgid "Indirect Quantity"
-msgstr ""
+msgstr "간접 수량"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_sale_forecast_indirect
 msgid "Indirect Sales Forecast"
-msgstr ""
+msgstr "간접 판매 예측"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report____last_update
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast____last_update
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect____last_update
 msgid "Last Modified on"
-msgstr "최근 수정"
+msgstr "최근 수정일"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__write_uid
@@ -246,39 +250,39 @@ msgstr "최근 갱신한 사람"
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__write_date
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__write_date
 msgid "Last Updated on"
-msgstr "최근 갱신 날짜"
+msgstr "최근 갱신일"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_apply
 msgid "Latest Apply"
-msgstr ""
+msgstr "최근 적용"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "Launch Procurement"
-msgstr ""
+msgstr "조달 시작"
 
 #. module: mrp_mps
 #. openerp-web
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:6
 #, python-format
 msgid "Launch green cells"
-msgstr ""
+msgstr "녹색셀 시작"
 
 #. module: mrp_mps
 #: model:ir.ui.menu,name:mrp_mps.mrp_mps_menu_planning
 msgid "MPS"
-msgstr ""
+msgstr "MPS"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_mps_report
 msgid "MPS Report"
-msgstr ""
+msgstr "MPS 보고서"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "MPS in Main Warehouse"
-msgstr ""
+msgstr "주 창고에서의 MPS"
 
 #. module: mrp_mps
 #: selection:sale.forecast,mode:0
@@ -289,28 +293,28 @@ msgstr "수동"
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__manufacturing_period
 #: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings__manufacturing_period
 msgid "Manufacturing Period"
-msgstr ""
+msgstr "제조 기간"
 
 #. module: mrp_mps
 #: model:ir.actions.client,name:mrp_mps.mrp_mps_report_action_client
 #: model:ir.ui.menu,name:mrp_mps.mrp_mps_report_menu
 msgid "Master Production Schedule"
-msgstr "주 생산 일정"
+msgstr "주 생산 계획"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_max_supply
 msgid "Maximum to Supply"
-msgstr ""
+msgstr "최대 공급량"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__mps_min_supply
 msgid "Minimum to Supply"
-msgstr ""
+msgstr "최소 공급량"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__mode
 msgid "Mode"
-msgstr "방법"
+msgstr "모드"
 
 #. module: mrp_mps
 #. openerp-web
@@ -325,7 +329,7 @@ msgstr "월간"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__product_origin_id
 msgid "Origin Product"
-msgstr ""
+msgstr "원 상품"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_report__period
@@ -356,25 +360,25 @@ msgstr "상품"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__product_uom_id
 msgid "Product UoM"
-msgstr ""
+msgstr "상품 단위"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__warehouse_id
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast_indirect__warehouse_id
 msgid "Production Location"
-msgstr "생산용 공간(위치)"
+msgstr "생산 위치"
 
 #. module: mrp_mps
 #. openerp-web
 #: code:addons/mrp_mps/static/src/xml/mps_backend.xml:24
 #, python-format
 msgid "Rows"
-msgstr ""
+msgstr "행"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_sale_forecast
 msgid "Sales Forecast"
-msgstr ""
+msgstr "판매 예측"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.product_product_view_form_mps
@@ -387,7 +391,7 @@ msgstr "저장"
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 #, python-format
 msgid "Starting Inventory"
-msgstr ""
+msgstr "재고 조사 시작"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__state
@@ -402,7 +406,7 @@ msgstr "재고 규칙"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.res_config_settings_view_form
 msgid "Time Range"
-msgstr ""
+msgstr "시간 간격"
 
 #. module: mrp_mps
 #. openerp-web
@@ -415,18 +419,18 @@ msgstr "생산중"
 #: code:addons/mrp_mps/models/mrp_mps_report.py:129
 #, python-format
 msgid "To Receive / To Supply / Produce"
-msgstr ""
+msgstr "수령하기 / 공급하기 / 생산하기"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_sale_forecast__to_supply
 msgid "To Supply"
-msgstr ""
+msgstr "공급하기"
 
 #. module: mrp_mps
 #: code:addons/mrp_mps/models/mrp_mps_report.py:156
 #, python-format
 msgid "Week %s"
-msgstr ""
+msgstr "%s 주"
 
 #. module: mrp_mps
 #. openerp-web
@@ -449,14 +453,14 @@ msgstr "잘못된 값이 입력되었습니다!"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "double click in order to empty"
-msgstr ""
+msgstr "비우려면 두 번 클릭하십시오."
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "set min-max"
-msgstr ""
+msgstr "최소-최대 설정"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.report_inventory
 msgid "set target"
-msgstr ""
+msgstr "대상 설정"
