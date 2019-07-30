@@ -37,7 +37,7 @@ class ResCompany(models.Model):
         for company in self:
             address_data = company.partner_id.sudo().address_get(adr_pref=['contact'])
             if address_data['contact']:
-                partner = company.partner_id.browse(address_data['contact'])
+                partner = company.partner_id.sudo().browse(address_data['contact'])
                 company.l10n_mx_edi_colony = partner.l10n_mx_edi_colony
                 company.l10n_mx_edi_locality = partner.l10n_mx_edi_locality
 
