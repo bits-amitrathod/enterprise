@@ -63,6 +63,12 @@ QUnit.module('ViewEditorManager', {
                     m2o: {string: "M2O", type: "many2one", relation: 'partner', searchable: true},
                     partner_ids: {string: "Partners", type: "one2many", relation: "partner", searchable: true},
                     coucou_id: {string: "coucou", type: "many2one", relation: "coucou"},
+                    toughness: {
+                        manual: true,
+                        string: "toughness",
+                        type: 'selection',
+                        selection: [['0', "Hard"], ['1', "Harder"]],
+                    },
                 },
                 records: [{
                     id: 37,
@@ -163,6 +169,52 @@ QUnit.module('ViewEditorManager', {
         var nbFields = _.size(this.data.coucou.fields) - 1; // - display_name
         assert.strictEqual(vem.$('.o_web_studio_sidebar').find('.o_web_studio_existing_fields').children().length, nbFields,
             "fields that are not already in the view should be available");
+
+        vem.destroy();
+    });
+
+    QUnit.test('editing selection field of list of form view', function(assert) {
+        assert.expect(3);
+
+        var vem = studioTestUtils.createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: '<form>' +
+                      '<group>' +
+                          '<field name="product_ids"><tree>' +
+                              '<field name="toughness"/>' +
+                          '</tree></field>' +
+                      '</group>' +
+                  '</form>',
+            mockRPC: function(route, args) {
+                if (route === '/web_studio/edit_field') {
+                    assert.strictEqual(args.model_name, "product");
+                    assert.strictEqual(args.field_name, "toughness");
+                    assert.deepEqual(args.values, {
+                        selection: '[["0","Hard"],["1","Harder"],["Hardest","Hardest"]]',
+                    });
+                    return $.when({});
+                }
+                if (route === '/web_studio/edit_view') {
+                    return $.when({});
+                }
+                if (route === '/web_studio/get_default_value') {
+                    return $.when({});
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        // open list view
+        vem.$('.o_field_one2many').click();
+        vem.$('.o_web_studio_editX2Many').click();
+
+        // add value to "toughness" selection field
+        vem.$('th[data-node-id]').click();
+        vem.$('.o_web_studio_edit_selection_values').click();
+        $('.modal .o_web_studio_selection_new_value input').val('Hardest');
+        $('.modal .o_web_studio_selection_new_value button').click();
+        $('.modal.o_web_studio_field_modal .btn-primary').click();
 
         vem.destroy();
     });
