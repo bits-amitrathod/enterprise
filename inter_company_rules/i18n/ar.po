@@ -3,18 +3,19 @@
 # * inter_company_rules
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Mustafa Rawi <mustafa@cubexco.com>, 2016
+# Martin Trigaux, 2016
 # Sadig Adam <sadig41@gmail.com>, 2016
-# SaFi J. <safi2266@gmail.com>, 2016
+# Mustafa J. Kadhem <safi2266@gmail.com>, 2016
 # Shaima Safar <shaima.safar@open-inside.com>, 2017
+# Mustafa Rawi <mustafa@cubexco.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 09:57+0000\n"
-"PO-Revision-Date: 2016-09-07 09:57+0000\n"
-"Last-Translator: Shaima Safar <shaima.safar@open-inside.com>, 2017\n"
+"PO-Revision-Date: 2016-09-07 13:39+0000\n"
+"Last-Translator: Mustafa Rawi <mustafa@cubexco.com>, 2019\n"
 "Language-Team: Arabic (https://www.transifex.com/odoo/teams/41243/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,6 +57,7 @@ msgid ""
 "Configure correct warehouse for company(%s) from Menu: "
 "Settings/Users/Companies"
 msgstr ""
+"اختيار المخزن الصحيح للمؤسسة (%s) من القائمة: إعدادات/المستخدمين/المؤسسات"
 
 #. module: inter_company_rules
 #: selection:base.config.settings,rule_type:0
@@ -93,6 +95,8 @@ msgid ""
 "Default value to set on Purchase(Sales) Orders that will be created based on"
 " Sale(Purchase) Orders made to this company"
 msgstr ""
+"القيمة الافتراضية التي يتم تعيينها على أوامر الشراء أو البيع الناتجة من "
+"أوامر بيع أو شراء صادرة من هذه المؤسسة"
 
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_auto_generate_invoices
@@ -132,19 +136,19 @@ msgstr ""
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_res_company_intercompany_user_id
 msgid "Inter Company User"
-msgstr ""
+msgstr "المستخدم متعدد المؤسسات"
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:43
 #: code:addons/inter_company_rules/models/sale_order.py:46
 #, python-format
 msgid "Inter company user of company %s doesn't have enough access rights"
-msgstr ""
+msgstr "لا يملك المستخدم متعدد المؤسسات من المؤسسة %s صلاحيات وصول كافية"
 
 #. module: inter_company_rules
 #: model:ir.ui.view,arch_db:inter_company_rules.view_company_inter_change_inherit_form
 msgid "Inter-Company Rules"
-msgstr ""
+msgstr "قواعد تعدد المؤسسات"
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_account_invoice
@@ -155,20 +159,20 @@ msgstr "الفاتورة"
 #: code:addons/inter_company_rules/models/account_invoice.py:75
 #, python-format
 msgid "Please define %s journal for this company: \"%s\" (id:%d)."
-msgstr ""
+msgstr "برجاء تعيين دفتر يومية %s لهذه المؤسسة: \"%s\" (id:%d)."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/purchase_order.py:40
 #, python-format
 msgid "Provide at least one user for inter company relation for % "
-msgstr ""
+msgstr "قم باختيار مستخدم واحد على الأقل لعلاقة تعدد المؤسسات لـ% "
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/account_invoice.py:40
 #: code:addons/inter_company_rules/models/sale_order.py:43
 #, python-format
 msgid "Provide one user for intercompany relation for % "
-msgstr ""
+msgstr "قم باختيار مستخدم واحد لعلاقة تعدد المؤسسات لـ% "
 
 #. module: inter_company_rules
 #: model:ir.model,name:inter_company_rules.model_purchase_order
@@ -179,7 +183,7 @@ msgstr "أمر الشراء"
 #: model:ir.model.fields,help:inter_company_rules.field_res_company_intercompany_user_id
 msgid ""
 "Responsible user for creation of documents triggered by intercompany rules."
-msgstr ""
+msgstr "المستخدم المسئول عن إنشاء مستندات تُفعل من خلال قواعد تعدد المؤسسات."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_base_config_settings_rule_type
@@ -205,7 +209,7 @@ msgstr "أمر البيع"
 #. module: inter_company_rules
 #: model:ir.model.fields,help:inter_company_rules.field_base_config_settings_rule_type
 msgid "Select the type to setup inter company rules in selected company."
-msgstr ""
+msgstr "اختر النوع لإعداد قواعد تعدد المؤسسات في المؤسسة المختارة."
 
 #. module: inter_company_rules
 #: model:ir.model.fields,field_description:inter_company_rules.field_account_invoice_auto_invoice_id
@@ -253,6 +257,8 @@ msgid ""
 "You cannot create SO from PO because sale price list currency is different "
 "than purchase price list currency."
 msgstr ""
+"لا يمكنك إنشاء أمر بيع من أمر شراء لأن عملة قائمة أسعار البيع مختلفة عن عملة"
+" قائمة أسعار الشراء."
 
 #. module: inter_company_rules
 #: code:addons/inter_company_rules/models/res_company.py:32

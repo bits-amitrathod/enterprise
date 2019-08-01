@@ -379,12 +379,12 @@ msgstr " & أوقات"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "(Not in"
-msgstr ""
+msgstr "(ليس في"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "(Wrong address?)"
-msgstr ""
+msgstr "(عنوان خاطئ؟)"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -408,7 +408,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
 msgid "<i class=\"fa fa-check\"/> Closable by customer"
-msgstr ""
+msgstr "<i class=\"fa fa-check\"/> يمكن للعميل إغلاقه"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_kanban
@@ -495,7 +495,7 @@ msgstr "يرتبط عقد بهذه تسعيرة:"
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_uuid
 msgid "Account UUID"
-msgstr ""
+msgstr "معرف الحساب الفريد عالميًا"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -608,7 +608,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_user_closable
 msgid "Closable by customer"
-msgstr ""
+msgstr "يمكن للعميل إغلاقه"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.template_panel
@@ -793,7 +793,7 @@ msgstr "الوصف"
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_wizard_date_from
 msgid "Discount Date"
-msgstr ""
+msgstr "تاريخ الخصم"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_option_display_name
@@ -835,12 +835,13 @@ msgstr "المعرف"
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_template_user_closable
 msgid ""
 "If checked, the user will be able to close his account from the frontend"
-msgstr ""
+msgstr "إذا كان محددًا، سيتمكن المستخدم من إغلاق حسابه من الواجهة الأمامية"
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_subscription_payment_token_id
 msgid "If not set, the default payment token of the partner will be used."
 msgstr ""
+"في حال عدم تعيينه، سيستخدم رمز المدفوعات السري الافتراضي الخاص بالشريك."
 
 #. module: website_contract
 #: model:ir.model.fields,help:website_contract.field_sale_order_contract_template
@@ -881,7 +882,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "If you wish to reopen it, the"
-msgstr ""
+msgstr "إذا أردت إعادة فتحه، يمكنك"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -889,6 +890,7 @@ msgid ""
 "If you wish to reopen it, you can pay your invoice for the current invoicing"
 " period."
 msgstr ""
+"إذا أردت إعادة فتحه، يمكنك سداد قيمة فاتورة فترة تحرير الفواتير الحالية."
 
 #. module: website_contract
 #: code:addons/website_contract/controllers/main.py:47
@@ -906,13 +908,13 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website_contract.wizard_form_view
 msgid ""
 "Insert the options directly, they will be invoiced on the next invoice date."
-msgstr ""
+msgstr "أدرج هذه الخيارات مباشرةً، سيتم فوترتهم في تاريخ الفوترة القادم."
 
 #. module: website_contract
 #: selection:sale.subscription.template.option,portal_access:0
 #: selection:sale.subscription.wizard.option,portal_access:0
 msgid "Invisible"
-msgstr ""
+msgstr "مخفي"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_payment_transaction_invoice_id
@@ -922,12 +924,12 @@ msgstr "الفاتورة"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_success
 msgid "Invoice for subscription ${ctx.get('code')}"
-msgstr ""
+msgstr "فاتورة الاشتراك ${ctx.get('code')}"
 
 #. module: website_contract
 #: model:mail.template,report_name:website_contract.email_payment_success
 msgid "Invoice_${ctx.get('code')}_${ctx.get('previous_date')}"
-msgstr ""
+msgstr "Invoice_${ctx.get('code')}_${ctx.get('previous_date')}"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_option_is_authorized
@@ -1011,7 +1013,7 @@ msgstr "الأحدث"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Next invoice:"
-msgstr ""
+msgstr "الفاتورة التالية:"
 
 #. module: website_contract
 #: model:product.product,name:website_contract.odoo_saas
@@ -1077,7 +1079,7 @@ msgstr "ادفع الآن"
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_payment_token_id
 msgid "Payment Token"
-msgstr ""
+msgstr "رمز السداد السري"
 
 #. module: website_contract
 #: model:ir.model,name:website_contract.model_payment_transaction
@@ -1087,7 +1089,7 @@ msgstr "معاملة السداد"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_reminder
 msgid "Payment reminder for subscription ${object.code}"
-msgstr ""
+msgstr "تذكير بسداد قيمة الاشتراك ${object.code}"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.sale_subscription_template_view_form_inherit_sale_contract
@@ -1325,7 +1327,7 @@ msgstr "نموذج"
 #. module: website_contract
 #: model:mail.template,subject:website_contract.email_payment_close
 msgid "Termination of subscription ${object.code}"
-msgstr ""
+msgstr "انتهاء الاشتراك ${object.code}"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1404,7 +1406,7 @@ msgstr "المجموع مع الضرائب"
 msgid ""
 "UUIDs (Universally Unique IDentifier) for Sale Subscriptions should be "
 "unique!"
-msgstr ""
+msgstr "يجب أن تكون معرفات اشتراكات البيع الفريدة عالميًا فريدة!"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1474,7 +1476,7 @@ msgstr ""
 msgid ""
 "We always listen to our customer. Could you specify the reason for "
 "cancelling your subscription?"
-msgstr ""
+msgstr "نحن نستمع لعميلنا دائمًا. هل يمكنك تحديد سبب إلغاء اشتراكك؟"
 
 #. module: website_contract
 #: model:ir.model.fields,field_description:website_contract.field_sale_subscription_template_website_url
@@ -1551,7 +1553,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "Your subscription is closed."
-msgstr ""
+msgstr "اشتراكك مغلق."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1573,7 +1575,7 @@ msgstr "يوم(s)"
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "missing payments (from"
-msgstr ""
+msgstr "المدفوعات المفقودة (من"
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
@@ -1595,7 +1597,7 @@ msgstr ""
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract
 msgid "to this day) will be automatically processed."
-msgstr ""
+msgstr "حتى هذا اليوم) سيتم معالجتها تلقائيًا."
 
 #. module: website_contract
 #: model:ir.ui.view,arch_db:website_contract.contract

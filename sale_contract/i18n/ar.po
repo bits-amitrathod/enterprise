@@ -128,7 +128,7 @@ msgstr "أنقر هنا لإضافة منتج جديد."
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_wizard_close_reason_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_close_reason_id
 msgid "Close Reason"
-msgstr ""
+msgstr "سبب الإغلاق"
 
 #. module: sale_contract
 #: model:ir.actions.act_window,name:sale_contract.sale_subscription_close_reason_action
@@ -136,7 +136,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_close_reason_view_form
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_close_reason_view_tree
 msgid "Close Reasons"
-msgstr ""
+msgstr "أسباب الإغلاق"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
@@ -250,6 +250,9 @@ msgid ""
 "Upselling: The Sales Order added lines to the subscription\n"
 "Renewal: The Sales Order replaced the subscription's content with its own"
 msgstr ""
+"الإنشاء: أمر المبيعات أنشئ الاشتراك\n"
+"إعادة البيع: أمر المبيعات أضاف بنودًا للاشتراك\n"
+"التجديد: أمر المبيعات استبدل محتوى الاشتراك بمحتواه"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_credit
@@ -357,7 +360,7 @@ msgstr "تجميع حسب"
 #. module: sale_contract
 #: model:ir.module.category,description:sale_contract.module_category_contract_management
 msgid "Helps you handle subscriptions and recurring invoicing."
-msgstr ""
+msgstr "يساعدك على التعامل مع الاشتراكات والفواتير المتكررة."
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_id_9158
@@ -376,12 +379,14 @@ msgid ""
 "If set in advance, the subscription will be set to pending 1 month before "
 "the date and will be closed on the date set in this field."
 msgstr ""
+"إذا تم تعيين هذا الحقل مسبقًا، سيتم اعتبار الاشتراك معلقًا قبل شهر واحد من "
+"التاريخ وسيتم إغلاقه في التاريخ المحدد في هذا الحقل."
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_product_template_recurring_invoice
 msgid ""
 "If set, confirming a sale order with this product will create a subscription"
-msgstr ""
+msgstr "إذا كان معينًا، سيتم إنشاء اشتراك عند تأكيد أمر بيع لهذا المنتج"
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_template_journal_id
@@ -389,6 +394,8 @@ msgid ""
 "If set, subscriptions with this template will invoice in this journal; "
 "otherwise the sales journal with the lowest sequence is used."
 msgstr ""
+"إذا كان معينًا، ستصدر فواتير الاشتراكات التي تستعمل هذا القالب في دفتر "
+"اليومية هذا؛ وإلا سيستخدم دفتر يومية المبيعات الأقل في التسلسل."
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_active
@@ -459,7 +466,7 @@ msgstr "آخر تحديث في"
 #. module: sale_contract
 #: model:res.groups,name:sale_contract.group_sale_contract_manager
 msgid "Manage Subscriptions"
-msgstr ""
+msgstr "إدارة الاشتراكات"
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_line_quantity
@@ -595,7 +602,7 @@ msgstr "إعادة العملة"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_recurring_total
 msgid "Recurring Price"
-msgstr ""
+msgstr "السعر المتكرر"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_recurring_price
@@ -642,7 +649,7 @@ msgstr ""
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_list
 msgid "Sale Subscriptions"
-msgstr ""
+msgstr "اشتراكات البيع"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_order
@@ -658,7 +665,7 @@ msgstr ""
 #. module: sale_contract
 #: model:res.groups,name:sale_contract.group_sale_contract_view
 msgid "See Subscriptions"
-msgstr ""
+msgstr "عرض الاشتراكات"
 
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_close_reason_sequence
@@ -729,7 +736,7 @@ msgstr "الإشتراك"
 #: model:ir.ui.view,arch_db:sale_contract.view_subcription_report_graph
 #: model:ir.ui.view,arch_db:sale_contract.view_subcription_report_pivot
 msgid "Subscription Analysis"
-msgstr ""
+msgstr "تحليل الاشتراك"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_template_view_form
@@ -745,13 +752,13 @@ msgstr "إدارة الاشتراك"
 #. module: sale_contract
 #: model:ir.model.fields,field_description:sale_contract.field_product_template_recurring_invoice
 msgid "Subscription Product"
-msgstr ""
+msgstr "منتج الاشتراك"
 
 #. module: sale_contract
 #: model:ir.actions.act_window,name:sale_contract.product_action_subscription
 #: model:ir.ui.menu,name:sale_contract.menu_sale_subscription_product
 msgid "Subscription Products"
-msgstr ""
+msgstr "منتجات الاشتراك"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_report
@@ -762,7 +769,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_report_template_id
 #: model:ir.model.fields,field_description:sale_contract.field_sale_subscription_template_id
 msgid "Subscription Template"
-msgstr ""
+msgstr "قالب الاشتراك"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_template_line
@@ -780,7 +787,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_template_view_list
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_template_view_search
 msgid "Subscription Templates"
-msgstr ""
+msgstr "قوالب الاشتراك"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.product_template_search_view_inherit_sale_contract
@@ -815,7 +822,7 @@ msgstr "الاشتراكات"
 #: model:ir.actions.act_window,name:sale_contract.sale_subscription_action_pending
 #: model:ir.ui.menu,name:sale_contract.menu_sale_subscription_pending
 msgid "Subscriptions to Renew"
-msgstr ""
+msgstr "الاشتراكات المراد تجديدها"
 
 #. module: sale_contract
 #: model:ir.model,name:sale_contract.model_sale_subscription_close_reason
@@ -858,13 +865,16 @@ msgid ""
 "                can be selected by the salespeople to quickly configure the\n"
 "                terms and conditions of the subscription."
 msgstr ""
+"تستخدم القوالب لإعداد اشتراكات إعدادًا مسبقًا\n"
+"                بحيث يمكن لموظف المبيعات اختيارهم\n"
+"                ليستطيع تهيئة شروط وأحكام الاشتراك سريعًا."
 
 #. module: sale_contract
 #: model:ir.model.fields,help:sale_contract.field_sale_subscription_recurring_next_date
 msgid ""
 "The next invoice will be created on this date then the period will be "
 "extended."
-msgstr ""
+msgstr "سيتم إنشاء الفاتورة القادمة في هذا التاريخ ثم سيتم مد الفترة."
 
 #. module: sale_contract
 #: model:ir.actions.act_window,help:sale_contract.product_action_subscription
@@ -882,14 +892,14 @@ msgstr ""
 #. module: sale_contract
 #: model:res.groups,comment:sale_contract.group_sale_contract_manager
 msgid "The user will have write access to Subscriptions."
-msgstr ""
+msgstr "سيملك المستخدم صلاحية الكتابة بالاشتراكات."
 
 #. module: sale_contract
 #: code:addons/sale_contract/models/sale_order.py:83
 #: code:addons/sale_contract/models/sale_subscription.py:189
 #, python-format
 msgid "This invoice covers the following period: %s - %s"
-msgstr ""
+msgstr "هذه الفاتورة تشمل الفترة التالية: %s - %s"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_order_view_form_subscription
@@ -974,7 +984,7 @@ msgstr ""
 #: code:addons/sale_contract/models/sale_subscription.py:167
 #, python-format
 msgid "You must first select a Customer for Subscription %s!"
-msgstr ""
+msgstr "يجب تحديد عميل للاشتراك %s أولًا!"
 
 #. module: sale_contract
 #: model:ir.actions.act_window,help:sale_contract.sale_subscription_action_pending
@@ -992,7 +1002,7 @@ msgstr ""
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
 msgid "⇒ Generate Invoice"
-msgstr ""
+msgstr "إنشاء فاتورة"
 
 #. module: sale_contract
 #: model:ir.ui.view,arch_db:sale_contract.sale_subscription_view_form
