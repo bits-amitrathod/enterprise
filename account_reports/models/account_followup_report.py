@@ -360,7 +360,7 @@ class account_report_context_followup(models.TransientModel):
             body_html = self.with_context(public=True, mode='print').get_html()
             msg = self._get_email_sent_log()
             msg += '<br>' + ustr(body_html)
-            msg_id = self.partner_id.message_post(body=msg, subtype='account_reports.followup_logged_action')
+            msg_id = self.partner_id.message_post(body=msg, subtype='account_reports.followup_logged_action', message_type='email')
             email = self.env['mail.mail'].create({
                 'mail_message_id': msg_id.id,
                 'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + self.partner_id.name,
