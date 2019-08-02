@@ -294,7 +294,7 @@ class SaleOrder(models.Model):
                 self.action_invoice_create()
             shipping_name = order['ShippingServiceSelected']['ShippingService']
             if self.picking_ids and shipping_name:
-                self.picking_ids.message_post(
+                self.picking_ids[-1].message_post(
                     body=_('The Buyer Chose The Following Delivery Method :\n') + shipping_name)
         except UserError as e:
             self.message_post(body=
