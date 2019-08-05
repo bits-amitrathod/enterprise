@@ -211,7 +211,7 @@ class report_account_followup_report(models.AbstractModel):
                 
             msg = self.get_post_message(options)
             msg += '<br>' + body_html.decode('utf-8')
-            msg_id = partner.message_post(body=msg, subtype='account_reports.followup_logged_action')
+            msg_id = partner.message_post(body=msg, subtype='account_reports.followup_logged_action', message_type='email')
 
             email = self.env['mail.mail'].create({
                 'mail_message_id': msg_id.id,
