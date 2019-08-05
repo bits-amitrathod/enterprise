@@ -255,7 +255,7 @@ class AccountFollowupReport(models.AbstractModel):
                 body_html = body_html[:start_index] + replaced_msg + body_html[end_index:]
             msg = _('Follow-up email sent to %s') % email
             msg += '<br>' + body_html.decode('utf-8')
-            msg_id = partner.message_post(body=msg)
+            msg_id = partner.message_post(body=msg, message_type='email')
             email = self.env['mail.mail'].create({
                 'mail_message_id': msg_id.id,
                 'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + partner.name,

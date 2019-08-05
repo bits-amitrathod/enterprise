@@ -258,6 +258,10 @@ var NewFieldDialog = Dialog.extend(StandaloneFieldManagerMixin, {
             } else if (selectedField.type === 'selection') {
                 values.selection = selectedField.selection;
             }
+
+            if (_.contains(['one2many', 'many2many'], selectedField.type)) {
+                values.store = false;
+            }
         }
         this.trigger('field_default_values_saved', values);
     },
