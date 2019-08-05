@@ -99,6 +99,7 @@ QUnit.module('ViewEditorManager', {
                     m2o: {string: "M2O", type: "many2one", relation: 'partner', searchable: true},
                     partner_ids: {string: "Partners", type: "one2many", relation: "partner", searchable: true},
                     coucou_id: {string: "coucou", type: "many2one", relation: "coucou"},
+                    m2m: {string: "M2M", type: "many2many", relation: "product", searchable: true},
                 },
                 records: [{
                     id: 37,
@@ -1531,7 +1532,7 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('add a related field', function(assert) {
-        assert.expect(19);
+        assert.expect(24);
 
 
         this.data.coucou.fields.related_field = {
@@ -1569,10 +1570,19 @@ QUnit.module('ViewEditorManager', {
                             'm2o.partner_ids', "related arg should be correct");
                         assert.strictEqual(args.operations[2].node.field_description.relational_model,
                             'product', "relational model arg should be correct for o2m");
+                        assert.strictEqual(args.operations[2].node.field_description.store,
+                            false, "store arg should be correct");
                         assert.strictEqual(args.operations[0].node.field_description.copy,
                             false, "copy arg should be correct");
                         assert.strictEqual(args.operations[0].node.field_description.readonly,
                             true, "readonly arg should be correct");
+                    } else if (nbEdit === 3) {
+                        assert.strictEqual(args.operations[3].node.field_description.related,
+                            'm2o.m2m', "related arg should be correct");
+                        assert.strictEqual(args.operations[3].node.field_description.relation,
+                            'product', "relational model arg should be correct for m2m");
+                        assert.strictEqual(args.operations[3].node.field_description.store,
+                            false, "store arg should be correct");
                     }
                     nbEdit++;
                     return $.when({
@@ -1623,7 +1633,16 @@ QUnit.module('ViewEditorManager', {
         $('.modal .o_field_selector .o_field_selector_close').click(); // close the selector popover
         $('.modal-footer .btn-primary:first').click(); // confirm
 
-        assert.strictEqual(nbEdit, 3, "should have edited the view");
+        // create a new many2many related field
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_related'), $('.o_web_studio_hook'));
+        assert.strictEqual($('.modal').length, 1, "a modal should be displayed");
+        $('.modal .o_field_selector').focusin(); // open the selector popover
+        $('.o_field_selector_popover li[data-name=m2o]').click();
+        $('.o_field_selector_popover li[data-name=m2m]').click();
+        $('.modal .o_field_selector .o_field_selector_close').click(); // close the selector popover
+        $('.modal-footer .btn-primary:first').click(); // confirm
+
+        assert.strictEqual(nbEdit, 4, "should have edited the view");
         assert.verifySteps(['warning'], "should have triggered only one warning");
 
         vem.destroy();
