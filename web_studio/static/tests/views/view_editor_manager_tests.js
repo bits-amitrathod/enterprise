@@ -617,13 +617,13 @@ QUnit.module('ViewEditorManager', {
                     assert.step('image');
                     return $.when();
                 } else if (route === '/web_studio/edit_view') {
-                    assert.strictEqual(args.operations[0].new_attrs.options, "{\"size\":[270,270],\"preview_image\":\"coucou\"}",
+                    assert.strictEqual(args.operations[0].new_attrs.options, "{\"size\":[0,270],\"preview_image\":\"coucou\"}",
                         "appropriate options for 'image' widget should be passed");
                     // the server sends the arch in string but it's post-processed
                     // by the ViewEditorManager
                     fieldsView.arch = "<form>" +
                         "<sheet>" +
-                            "<field name='image' widget='image' options='{\"size\": [270, 270]}'/>" +
+                            "<field name='image' widget='image' options='{\"size\": [0, 270]}'/>" +
                         "</sheet>" +
                     "</form>";
                     return $.when({
@@ -679,7 +679,7 @@ QUnit.module('ViewEditorManager', {
             res_id: 4,
             mockRPC: function (route, args) {
                 if (route === '/web_studio/edit_view') {
-                    assert.strictEqual(args.operations[0].new_attrs.options, '{"size":[90,90]}',
+                    assert.strictEqual(args.operations[0].new_attrs.options, '{"size":[0,90]}',
                         "appropriate default options for 'image' widget should be passed");
                     // the server sends the arch in string but it's post-processed
                     // by the ViewEditorManager

@@ -448,7 +448,7 @@
         </div>
         <div t-if="widget.view_type === 'form' and widget.state.attrs.widget === 'image'" class="o_web_studio_sidebar_text">
             <label for="img_size">Image Size</label>
-            <t t-set="img_size_value" t-value="widget.state.attrs.options.size ? widget.state.attrs.options.size[0] : 90"/>
+            <t t-set="img_size_value" t-value="widget.state.attrs.options.size ? widget.state.attrs.options.size[1] : 90"/>
             <select id="img_size" name="img_size">
                 <option t-att-selected="img_size_value === 90 ? 'selected' : undefined" value="90">Small</option>
                 <option t-att-selected="img_size_value === 180 ? 'selected' : undefined" value="180">Medium</option>

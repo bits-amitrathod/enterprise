@@ -472,7 +472,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
             } else if (attribute === 'img_size') {
                 var newOptions = _.extend({}, this.state.attrs.options);
                 var size = parseInt($input.val());
-                newOptions.size = [size, size];
+                newOptions.size = [0, size];
                 new_attrs.options = JSON.stringify(newOptions);
             } else if (attribute === 'widget') {
                 // reset widget options
@@ -483,7 +483,7 @@ return Widget.extend(StandaloneFieldManagerMixin, {
                 };
                 if (widget === 'image') {
                     // add small as a default size for image widget
-                    new_attrs.options = JSON.stringify({size: [90, 90]});
+                    new_attrs.options = JSON.stringify({size: [0, 90]});
                 }
             } else if ($input.attr('type') === 'checkbox') {
                 if (!_.contains(this.MODIFIERS_IN_NODE_AND_ATTRS, attribute)) {
