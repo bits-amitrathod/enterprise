@@ -259,7 +259,7 @@ class AccountFollowupReport(models.AbstractModel):
                 .replace('o_account_reports_summary', '')\
                 .replace('o_account_reports_edit_summary_pencil', '')\
                 .replace('fa-pencil', '')
-            msg_id = partner.message_post(body=msg)
+            msg_id = partner.message_post(body=msg, message_type='email')
             email = self.env['mail.mail'].create({
                 'mail_message_id': msg_id.id,
                 'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + partner.name,
