@@ -1019,10 +1019,14 @@ class AccountInvoice(models.Model):
                 continue
             record.l10n_mx_edi_cfdi_name = ('%s-%s-MX-Invoice-%s.xml' % (
                 record.journal_id.code, record.number, version.replace('.', '-'))).replace('/', '')
-            subscription = 'subscription_id' in record.invoice_line_ids._fields and record.invoice_line_ids.filtered(
+            line_fields = record.invoice_line_ids._fields
+            subscription = 'subscription_id' in line_fields and record.invoice_line_ids.filtered(
                 'subscription_id')
+            payment_tx = 'sale_line_ids' in line_fields and 'payment_tx_id' in self.env[
+                'sale.order']._fields and record.invoice_line_ids.mapped(
+                    'sale_line_ids.order_id.payment_tx_id') if not subscription else False
             ctx = {}
-            if subscription:
+            if subscription or payment_tx:
                 ctx = {'disable_after_commit': True}
             record.with_context(**ctx)._l10n_mx_edi_retry()
         return result
