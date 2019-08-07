@@ -375,7 +375,7 @@ class SaleSubscription(models.Model):
             ('date', '<=', date)], order='date desc', limit=1)
         if snapshot:
             delta = self.recurring_monthly - snapshot.recurring_monthly
-            percentage = delta / snapshot.recurring_monthly
+            percentage = delta / snapshot.recurring_monthly if snapshot.recurring_monthly != 0 else 100
         return {'delta': delta, 'percentage': percentage}
 
     def _get_subscription_health(self):
