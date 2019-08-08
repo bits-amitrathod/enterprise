@@ -40,20 +40,23 @@ class ResPartner(models.Model):
     def get_partners_in_need_of_action(self, overdue_only=False):
         result = []
         today = fields.Date.context_today(self)
-        partners = self.search([('payment_next_action_date', '>', today)])
-        domain = partners.with_context(exclude_given_ids=True).get_followup_lines_domain(today, overdue_only=overdue_only, only_unblocked=True)
+        if overdue_only:
+            domain = self.get_followup_lines_domain(today, overdue_only=overdue_only, only_unblocked=True)
+        else:
+            partners = self.search([('payment_next_action_date', '>', today)])
+            domain = partners.with_context(exclude_given_ids=True).get_followup_lines_domain(today, overdue_only=overdue_only, only_unblocked=True)
         query = self.env['account.move.line']._where_calc(domain)
         tables, where_clause, where_params = query.get_sql()
-        sql = """SELECT "account_move_line".partner_id
+        sql = """SELECT SUM("account_move_line".amount_residual), "account_move_line".partner_id
                  FROM %s
                  WHERE %s GROUP BY "account_move_line".partner_id"""
         query = sql % (tables, where_clause)
         self.env.cr.execute(query, where_params)
         results = self.env.cr.fetchall()
-        for res in results:
-            if res[0]:
-                result.append(res[0])
-        return self.browse(result).filtered(lambda r: r.total_due > 0)
+        for amount, partner in results:
+            if amount > 0 and partner:
+                result.append(partner)
+        return self.browse(result)
 
     def get_followup_lines_domain(self, date, overdue_only=False, only_unblocked=False):
         domain = super(ResPartner, self).get_followup_lines_domain(date, overdue_only=overdue_only, only_unblocked=only_unblocked)
