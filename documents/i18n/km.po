@@ -1400,7 +1400,7 @@ msgstr "ស្លាកមានរួចហើយសម្រាប់លក្
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_folder__parent_folder_id
 msgid "Tag categories from parent folders will be shared to their sub folders"
-msgstr ""
+msgstr "ប្រភេទស្លាកពីឯកសារឥឡូវនឹងត្រូវបានចែករំលែកទៅឯកសារផ្សេទៀតរបស់ពួកគេ។"
 
 #. module: documents
 #. openerp-web
@@ -1426,6 +1426,9 @@ msgid ""
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
 msgstr ""
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
+" email that does not reply to an existing record will cause the creation of "
+"a new record of this model (e.g. a Project Task)"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_name
@@ -1433,6 +1436,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
+"The name of the email alias, e.g. 'jobs' if you want to catch emails for "
+"<jobs@example.odoo.com>"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_share__alias_user_id
@@ -1442,21 +1447,25 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"The owner of records created upon receiving emails on this alias. If this "
+"field is not set the system will attempt to find the right owner based on "
+"the sender (From) address, or will use the Administrator account if no "
+"system user is found for that address."
 
 #. module: documents
 #: sql_constraint:documents.share:0
 msgid "This access token already exists"
-msgstr ""
+msgstr "និមិត្តសញ្ញាចូលប្រើនេះមានរួចហើយ"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_folder__company_id
 msgid "This folder will only be available for the selected company"
-msgstr ""
+msgstr "នឹងមានសម្រាប់តែក្រុមហ៊ុនដែលបានជ្រើសរើសប៉ុណ្ណោះ។"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_folder__group_ids
 msgid "This folder will only be available for the selected user groups"
-msgstr ""
+msgstr "ឯកសារនឹងមានសម្រាប់តែក្រុមអ្នកប្រើប្រាស់ដែលបានជ្រើសរើសប៉ុណ្ណោះ។"
 
 #. module: documents
 #. openerp-web
@@ -1466,11 +1475,13 @@ msgid ""
 "This icons gets you to the <b>discussion board</b>, to chat with followers "
 "of this document"
 msgstr ""
+"រូបតំណាងនេះនាំអ្នកទៅកាន់បញ្ជីឈ្មោះឯកសារ "
+"<b>ក្រុមប្រឹក្សាពិភាក្សា</b>,ដើម្បីជជែកជាមួយអ្នកតាមដានឯកសារនេះ"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.not_available
 msgid "This link has expired"
-msgstr ""
+msgstr "ការផុតកំណត់នៃការភ្ជាប់"
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_finance_status_tc
@@ -1487,11 +1498,13 @@ msgid ""
 "To delete files, archive them first. </br>Archived documents can still be "
 "accessed using the Archive option in the Filters top menu."
 msgstr ""
+"ការលុបឯកសារ រក្សាឯកសារដំបូង "
+"</br>ឯកសារដែលទុកក្នុងប័ណ្ណសារនៅតែអាចចូលដំណើរការបានដោយប្រើជម្រើសប័ណ្ណសារនៅក្នុងម៉ឺនុយ។"
 
 #. module: documents
 #: model:mail.activity.type,name:documents.mail_documents_activity_data_tv
 msgid "To validate"
-msgstr ""
+msgstr "ទៅជាផ្លូវការ"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_search_inherit
@@ -1502,14 +1515,14 @@ msgstr "សកម្មភាពថ្ងៃនេះ"
 #: model:ir.model.fields,field_description:documents.field_documents_facet__tooltip
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_rule__note
 msgid "Tooltip"
-msgstr ""
+msgstr "ពត៌មានជំនួយ"
 
 #. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/js/tour.js:35
 #, python-format
 msgid "Try to <b>post a message</b>"
-msgstr ""
+msgstr "ព្យាយាម <b>ផ្ញើរសារ</b>"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_ir_attachment__type
@@ -1530,7 +1543,7 @@ msgstr "URL"
 #: code:addons/documents/static/src/xml/documents_inspector.xml:162
 #, python-format
 msgid "Un-archive"
-msgstr ""
+msgstr "មិនបានរក្សាទុកជាឯកសារ"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__message_unread
@@ -1556,11 +1569,13 @@ msgid ""
 "Upload <span class=\"font-weight-normal\">a file or</span> drag <span class"
 "=\"font-weight-normal\">it here.</span>"
 msgstr ""
+"ការផ្ទុក <span class=\"font-weight-normal\">ឯកសារមួយឬ</span> អូស <span class"
+"=\"font-weight-normal\">វានៅទីនោះ</span>"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__email_drop
 msgid "Upload by Email"
-msgstr ""
+msgstr "ការផ្ទុកដោយ Email"
 
 #. module: documents
 #. openerp-web
@@ -1569,7 +1584,7 @@ msgstr ""
 msgid ""
 "Use <b>folders</b> to organize documents by departments, or group of "
 "interests"
-msgstr ""
+msgstr "ការប្រើប្រាស់ <b>ឯកសារ</b> រៀបចំឯកសារដោយនាយកដ្ឋានឬក្រុមនៃការប្រាក់"
 
 #. module: documents
 #: model:res.groups,name:documents.group_documents_user
@@ -1584,13 +1599,13 @@ msgstr "អ្នកប្រើ"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__date_deadline
 msgid "Valid Until"
-msgstr ""
+msgstr "សុពលភាពចំនួន"
 
 #. module: documents
 #: model:documents.workflow.rule,name:documents.documents_Finance_validate_review
 #: model:documents.workflow.rule,name:documents.documents_Internal_validate_review
 msgid "Validate Document(s)"
-msgstr ""
+msgstr "Validate Document(s)"
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_finance_status_validated
@@ -1624,7 +1639,7 @@ msgstr "វីដេអូ"
 #: code:addons/documents/static/src/js/tour.js:13
 #, python-format
 msgid "Want to become a <b>paperless company</b>? Let's discover Odoo DMS."
-msgstr ""
+msgstr "ចង់ក្លាយជា <b>មិនមានឯកសារក្រុមហ៊ុន</b>? Let's discover Odoo DMS."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_share__website_message_ids
@@ -1651,22 +1666,23 @@ msgid ""
 "When you <b>upload documents</b>, they appear in the selected folder and "
 "tags."
 msgstr ""
+"នៅពេលដែលអ្នក<b> ផ្ទុកឯកសារ</b>, ពួកគេបានបង្ហាញឯកសារនិងស្លាកដែលបានជ្រើសរើស។"
 
 #. module: documents
 #: model:ir.actions.act_window,name:documents.workflow_rule_action
 msgid "Workflow Actions"
-msgstr ""
+msgstr "សកម្មភាពការងារ"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_action__workflow_rule_id
 #: model:ir.model.fields,field_description:documents.field_documents_workflow_tag_criteria__workflow_rule_id
 msgid "Workflow Rule"
-msgstr ""
+msgstr "វិធានលំហូរការងារ។"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.workflow_rule_form_view
 msgid "Write a tooltip for the action here"
-msgstr ""
+msgstr "សរសេរព័ត៌មានជំនួយសម្រាប់សកម្មភាពនៅទីនេះ។"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_ir_attachment__type
@@ -1674,32 +1690,34 @@ msgid ""
 "You can either upload a file from your computer or copy/paste an internet "
 "link to your file."
 msgstr ""
+"អ្នកអាចបញ្ចូលឯកសារពីកុំព្យូទ័ររបស់អ្នកឬចម្លង / "
+"បិទភ្ជាប់អ៊ីនធឺណិតទៅឯកសាររបស់អ្នក។"
 
 #. module: documents
 #. openerp-web
 #: code:addons/documents/static/src/xml/documents_inspector.xml:54
 #, python-format
 msgid "documents selected"
-msgstr ""
+msgstr "ការជ្រើសរើសឯកសារ"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_page
 msgid "documents shared by"
-msgstr ""
+msgstr "ការចែករំលែកឯកសារដោយ"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_view_form
 #: model_terms:ir.ui.view,arch_db:documents.share_view_form_popup
 #: model_terms:ir.ui.view,arch_db:documents.workflow_rule_form_view
 msgid "e.g. Discuss proposal"
-msgstr ""
+msgstr "e.g. ការស្នើអោយមានការពិភាក្សា"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_facet__tooltip
 msgid "hover text description"
-msgstr ""
+msgstr "ពិព័ណ៌នាពីឯកសារដែលធ្វើអោយមានតុល្យភាព"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
 msgid "shared by"
-msgstr ""
+msgstr "ការចែករំលែកដោយ"

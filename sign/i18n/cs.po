@@ -39,7 +39,7 @@ msgstr ""
 #: code:addons/sign/controllers/main.py:200
 #, python-format
 msgid "%s couldn't sign the document due to an insufficient credit error."
-msgstr ""
+msgstr "%s Dokument nelze podepsat kvůli nedostatečné kreditní chybě."
 
 #. module: sign
 #: code:addons/sign/models/sign_request.py:290
@@ -52,7 +52,7 @@ msgstr "%s byl podepsán"
 #: code:addons/sign/controllers/main.py:207
 #, python-format
 msgid "%s validated the signature by SMS with the phone number %s."
-msgstr ""
+msgstr "%s ověřen podpis pomocí SMS s telefonním číslem %s."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_follower
@@ -67,7 +67,7 @@ msgstr ") požádal o podpis na dokumentu"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign._doc_sign
 msgid "- <em>Waiting Signature</em>"
-msgstr ""
+msgstr "- <em>Čekání na podpis</em>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign._doc_sign
@@ -90,12 +90,12 @@ msgstr "<span class=\"o_stat_text\">Podepsáno</span>"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_partner_view_form
 msgid "<span class=\"o_stat_text\">Signature Requests</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Žádosti o podpis</span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
 msgid "<span class=\"o_stat_text\">View</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Zobrazení</span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_share_view_form
@@ -109,7 +109,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_type_view_form
 msgid "<span>(1.0 = full page size)</span>"
-msgstr ""
+msgstr "<span>(1.0 = celá strana)</span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_completed
@@ -118,6 +118,8 @@ msgid ""
 "<strong>Warning</strong> do not forward this email to other people!<br/>\n"
 "            They will be able to access this document and sign it as yourself."
 msgstr ""
+"<strong>Upozornění</strong> nepřeposílejte tento e-mail ostatním lidem!<br/>\n"
+"Budou mít přístup k tomuto dokumentu a mohou jej podepsat jako vy."
 
 #. module: sign
 #. openerp-web
@@ -127,6 +129,8 @@ msgid ""
 "A SMS will be sent to the following phone number. Please update it if it's "
 "not relevant."
 msgstr ""
+"Na následující telefonní číslo bude odeslána zpráva SMS. Aktualizujte jej, "
+"pokud není relevantní."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_needaction
@@ -396,7 +400,7 @@ msgstr "Výchozí výška"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item_type__default_width
 msgid "Default Width"
-msgstr ""
+msgstr "Výchozí šířka"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_kanban
@@ -422,7 +426,7 @@ msgstr "Digitální podpisy"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_users__sign_initials
 msgid "Digitial Initials"
-msgstr ""
+msgstr "Iniciály"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_send_copy_view_form
@@ -467,7 +471,7 @@ msgstr "Stránka dokumentu"
 #: code:addons/sign/static/src/xml/sign_common.xml:115
 #, python-format
 msgid "Document Sign"
-msgstr ""
+msgstr "Podepsat dokument"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item__template_id
@@ -487,7 +491,7 @@ msgstr "Stáhnout dokument"
 #: code:addons/sign/static/src/js/sign_common.js:79
 #, python-format
 msgid "Download original document"
-msgstr ""
+msgstr "Stáhnout originální dokument"
 
 #. module: sign
 #: selection:sign.request.item,state:0
@@ -499,14 +503,14 @@ msgstr "Návrh"
 #: code:addons/sign/static/src/xml/sign_backend.xml:66
 #, python-format
 msgid "Drag & Drop a field in the PDF"
-msgstr ""
+msgstr "Pole pro přetáhnutí v PDF"
 
 #. module: sign
 #. openerp-web
 #: code:addons/sign/static/src/xml/sign_common.xml:37
 #, python-format
 msgid "Draw"
-msgstr ""
+msgstr "Kreslit"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_kanban
@@ -526,7 +530,7 @@ msgstr "Duplikovat"
 #: code:addons/sign/static/src/js/sign_backend.js:835
 #, python-format
 msgid "Duplicated Template"
-msgstr ""
+msgstr "Duplikovaná šablona"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_kanban
@@ -536,12 +540,12 @@ msgstr "Upravit"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_kanban
 msgid "Edit Fields"
-msgstr ""
+msgstr "Upravit Pole"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Edit fields"
-msgstr ""
+msgstr "Upravit pole"
 
 #. module: sign
 #. openerp-web
@@ -576,7 +580,7 @@ msgstr "Chyba"
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__extension
 #: model:ir.model.fields,field_description:sign.field_sign_template__extension
 msgid "Extension"
-msgstr ""
+msgstr "Rozšíření"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__favorited_ids
@@ -596,12 +600,12 @@ msgstr "Pole Název"
 #. module: sign
 #: model:ir.ui.menu,name:sign.sign_item_type_menu
 msgid "Field Types"
-msgstr ""
+msgstr "Typy polí"
 
 #. module: sign
 #: model:ir.model,name:sign.model_sign_item
 msgid "Fields to be sign on Document"
-msgstr ""
+msgstr "Pole, která mají být podepsána v dokumentu"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__datas
@@ -652,7 +656,7 @@ msgstr "Celé jméno"
 #. module: sign
 #: selection:sign.request,state:0
 msgid "Fully Signed"
-msgstr ""
+msgstr "Plně podepsáno"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_search
@@ -744,7 +748,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__last_action_date
 msgid "Last Action Date"
-msgstr ""
+msgstr "Datum poslední akce"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item____last_update
@@ -807,7 +811,7 @@ msgstr "Zeměpisná šířka"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template_share__url
 msgid "Link to Share"
-msgstr ""
+msgstr "Odkaz na sdílení"
 
 #. module: sign
 #. openerp-web
@@ -848,7 +852,7 @@ msgstr "Manažer"
 #: code:addons/sign/static/src/xml/sign_backend.xml:21
 #, python-format
 msgid "Mandatory field"
-msgstr ""
+msgstr "Povinné pole"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__message
