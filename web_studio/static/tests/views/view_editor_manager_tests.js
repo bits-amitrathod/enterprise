@@ -2279,7 +2279,7 @@ QUnit.module('ViewEditorManager', {
     });
 
     QUnit.test('add a related field', function(assert) {
-        assert.expect(24);
+        assert.expect(25);
 
 
         this.data.coucou.fields.related_field = {
@@ -2359,6 +2359,10 @@ QUnit.module('ViewEditorManager', {
         assert.strictEqual($('.modal').length, 1, "the modal should still be displayed");
 
         $('.modal .o_field_selector').focusin(); // open the selector popover
+
+        assert.containsOnce($, '.o_field_selector_popover li',
+            "there should only be one available field (the many2one)");
+
         $('.o_field_selector_popover li[data-name=m2o]').click();
         $('.o_field_selector_popover li[data-name=display_name]').click();
         $('.modal-footer .btn-primary:first').click(); // confirm

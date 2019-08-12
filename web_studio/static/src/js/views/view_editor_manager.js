@@ -295,7 +295,7 @@ var ViewEditorManager = AbstractEditorManager.extend({
             } else if (_.contains(['selection', 'one2many', 'many2one', 'many2many', 'related'], field_description.type)) {
                 // open dialog to precise the required fields for this field
                 def_field_values = $.Deferred();
-                dialog = new NewFieldDialog(this, modelName, field_description, this.fields).open();
+                dialog = new NewFieldDialog(this, modelName, field_description, _.filter(this.fields, {type: 'many2one'})).open();
                 dialog.on('field_default_values_saved', this, function (values) {
                     if (values.related && values.type === 'monetary') {
                         if (this._hasCurrencyField()) {
