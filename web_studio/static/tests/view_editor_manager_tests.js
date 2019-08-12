@@ -85,7 +85,7 @@ QUnit.module('ViewEditorManager', {
                         type: "many2one",
                         relation: 'product',
                     },
-                    product_ids: {string: "Products", type: "one2many", relation: "product", searchable: true},
+                    product_ids: {string: "Products", type: "one2many", relation: "product"},
                     priority: {
                         string: "Priority",
                         type: "selection",
@@ -95,11 +95,11 @@ QUnit.module('ViewEditorManager', {
             },
             product: {
                 fields: {
-                    display_name: {string: "Display Name", type: "char", searchable: true},
-                    m2o: {string: "M2O", type: "many2one", relation: 'partner', searchable: true},
-                    partner_ids: {string: "Partners", type: "one2many", relation: "partner", searchable: true},
+                    display_name: {string: "Display Name", type: "char"},
+                    m2o: {string: "M2O", type: "many2one", relation: 'partner'},
+                    partner_ids: {string: "Partners", type: "one2many", relation: "partner"},
                     coucou_id: {string: "coucou", type: "many2one", relation: "coucou"},
-                    m2m: {string: "M2M", type: "many2many", relation: "product", searchable: true},
+                    m2m: {string: "M2M", type: "many2many", relation: "product"},
                 },
                 records: [{
                     id: 37,
@@ -1427,7 +1427,6 @@ QUnit.module('ViewEditorManager', {
         this.data.product.fields.monetary_field = {
             string: 'Monetary',
             type: 'monetary',
-            searchable: true,
         };
         var vem = createViewEditorManager({
             data: this.data,
@@ -1475,7 +1474,6 @@ QUnit.module('ViewEditorManager', {
         this.data.product.fields.monetary_field = {
             string: 'Monetary',
             type: 'monetary',
-            searchable: true,
         };
 
         this.data.coucou.fields.x_currency_id = {
