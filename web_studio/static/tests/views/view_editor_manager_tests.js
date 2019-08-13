@@ -715,6 +715,36 @@ QUnit.module('ViewEditorManager', {
         vem.destroy();
     });
 
+    QUnit.test('integer field should come with 0 as default value', function(assert) {
+        assert.expect(1);
+
+        var fieldsView;
+        var arch = "<tree><field name='display_name'/></tree>";
+        var vem = studioTestUtils.createViewEditorManager({
+            data: this.data,
+            model: 'coucou',
+            arch: arch,
+            mockRPC: function (route, args) {
+                if (route === '/web_studio/edit_view') {
+                    assert.strictEqual(args.operations[0].node.field_description.default_value,
+                        '0', "related arg should be correct");
+                    fieldsView.arch = arch;
+                    return $.when({
+                        fields: fieldsView.fields,
+                        fields_views: {
+                            list: fieldsView,
+                        },
+                    });
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        fieldsView = $.extend(true, {}, vem.fields_view);
+        testUtils.dragAndDrop(vem.$('.o_web_studio_new_fields .o_web_studio_field_integer'), $('.o_web_studio_hook'));
+        vem.destroy();
+    });
+
     QUnit.test('invisible form editor', function(assert) {
         assert.expect(6);
 

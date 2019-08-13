@@ -327,6 +327,8 @@ var ViewEditorManager = AbstractEditorManager.extend({
                         def_field_values.reject();
                     });
                 }
+            } else if (field_description.type === 'integer') {
+                field_description.default_value = '0'
             }
         }
         // When the field values is selected, close the dialog and update the view
