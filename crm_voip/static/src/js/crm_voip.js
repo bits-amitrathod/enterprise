@@ -169,7 +169,8 @@ var PhonecallWidget = Widget.extend({
             new Model("ir.model.data")
             .call("xmlid_to_res_model_res_id",["crm.crm_case_form_view_oppor"])
             .then(function(data){
-                web_client.action_manager.do_action({
+                // DO NOT FORWARD-PORT!!! ONLY FOR v10
+                web_client.do_action({
                     type: 'ir.actions.act_window',
                     res_model: "crm.lead",
                     res_id: self.opportunity_id,
@@ -183,13 +184,15 @@ var PhonecallWidget = Widget.extend({
             var phonecall_model = new Model("crm.phonecall");
             phonecall_model.call("action_button_to_opportunity", [[this.id]]).then(function(result){
                 result.flags= {initial_mode: "edit",};
-                web_client.action_manager.do_action(result);
+                // DO NOT FORWARD-PORT!!! ONLY FOR v10
+                web_client.do_action(result);
             });
         }
     },
 
     to_client: function(){
-        web_client.action_manager.do_action({
+        // DO NOT FORWARD-PORT!!! ONLY FOR v10
+        web_client.do_action({
             type: 'ir.actions.act_window',
             res_model: "res.partner",
             res_id: this.partner_id,
