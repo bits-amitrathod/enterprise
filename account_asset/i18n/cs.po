@@ -328,6 +328,9 @@ msgid ""
 "  * Linear: Calculated on basis of: Gross Value / Number of Depreciations\n"
 "  * Degressive: Calculated on basis of: Residual Value * Degressive Factor"
 msgstr ""
+"Vyberte metodu, kterou chcete použít pro výpočet množství odpisových řádků.\n"
+"* Lineární: Vypočteno na základě: Hrubá hodnota / počet odpisů\n"
+"* Degresivní: Vypočítáno na základě: Zbytková hodnota * Degresivní faktor"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset_asset__method_time
@@ -337,6 +340,9 @@ msgid ""
 "  * Number of Entries: Fix the number of entries and the time between 2 depreciations.\n"
 "  * Ending Date: Choose the time between 2 depreciations and the date the depreciations won't go beyond."
 msgstr ""
+"Vyberte metodu, která se použije pro výpočet dat a počtu záznamů.\n"
+"* Počet záznamů: Stanovte počet záznamů a čas mezi 2 odpisy.\n"
+"* Datum ukončení: Vyberte čas mezi 2 odpisy a datem, kdy odpisy nejdou dále."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_depreciation_confirmation_wizard__date
@@ -396,7 +402,7 @@ msgstr "Vytvořit pohyby majetku"
 #: code:addons/account_asset/wizard/asset_depreciation_confirmation_wizard.py:20
 #, python-format
 msgid "Created Revenue Moves"
-msgstr ""
+msgstr "Vytvořené pohyby výnosů"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_asset__create_uid
@@ -448,7 +454,7 @@ msgstr "Datum"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_asset_form
 msgid "Date of asset"
-msgstr ""
+msgstr "Datum aktiv"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_asset_asset_report_search
@@ -519,12 +525,12 @@ msgstr "Odpisové termíny"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_category__account_depreciation_id
 msgid "Depreciation Entries: Asset Account"
-msgstr ""
+msgstr "Odpisy: Účet aktiv"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_category__account_depreciation_expense_id
 msgid "Depreciation Entries: Expense Account"
-msgstr ""
+msgstr "Odpisy: Účet nákladů"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_depreciation_line__move_id
@@ -561,13 +567,13 @@ msgstr "Jméno odpisu"
 #: code:addons/account_asset/wizard/asset_modify.py:85
 #, python-format
 msgid "Depreciation board modified"
-msgstr ""
+msgstr "Odpisy byly upraveny"
 
 #. module: account_asset
 #: code:addons/account_asset/models/account_asset.py:642
 #, python-format
 msgid "Depreciation line posted."
-msgstr ""
+msgstr "Odpisová řádka zveřejněna."
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_asset__display_name
@@ -595,7 +601,7 @@ msgstr ""
 #: code:addons/account_asset/models/account_asset.py:621
 #, python-format
 msgid "Document closed."
-msgstr ""
+msgstr "Dokument uzavřen."
 
 #. module: account_asset
 #: selection:account.asset.asset,state:0 selection:asset.asset.report,state:0
@@ -624,7 +630,7 @@ msgstr "Rozšířené filtry…"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_asset__first_depreciation_manual_date
 msgid "First Depreciation Date"
-msgstr ""
+msgstr "První odpisové datum"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_asset__message_follower_ids
@@ -647,6 +653,8 @@ msgid ""
 "From this report, you can have an overview on all depreciations. The\n"
 "            search bar can also be used to personalize your assets depreciation reporting."
 msgstr ""
+"Z této zprávy můžete získat přehled o všech odpisech.\n"
+"vyhledávací panel lze také použít k personalizaci hlášení o odpisech aktiv."
 
 #. module: account_asset
 #: model:ir.ui.menu,name:account_asset.menu_asset_depreciation_confirmation_wizard
@@ -1075,7 +1083,7 @@ msgstr "Hledat kategorii majetku"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_asset_form
 msgid "Sell or Dispose"
-msgstr ""
+msgstr "Prodej nebo Likvidace"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_depreciation_line__sequence
@@ -1129,6 +1137,9 @@ msgid ""
 "  * Based on last day of purchase period: The depreciation dates will be based on the last day of the purchase month or the purchase year (depending on the periodicity of the depreciations).\n"
 "  * Based on purchase date: The depreciation dates will be based on the purchase date."
 msgstr ""
+"Způsob výpočtu data prvního odpisu.\n"
+"* Na základě posledního dne nákupního období: Datum odpisování bude založen na posledním dni nákupního měsíce nebo nákupního roku (v závislosti na periodicitě odpisů).\n"
+"* Na základě data nákupu: Datum odpisování bude založen na datu nákupu."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset_asset__date_first_depreciation
@@ -1137,6 +1148,9 @@ msgid ""
 "  * Based on last day of purchase period: The depreciation dates will be based on the last day of the purchase month or the purchase year (depending on the periodicity of the depreciations).\n"
 "  * Based on purchase date: The depreciation dates will be based on the purchase date.\n"
 msgstr ""
+"Způsob výpočtu data prvního odpisu.\n"
+"* Na základě posledního dne nákupního období: Datum odpisování bude založen na posledním dni nákupního měsíce nebo nákupního roku (v závislosti na periodicitě odpisů).\n"
+"* Na základě data nákupu: Datum odpisování bude založen na datu nákupu.\n"
 
 #. module: account_asset
 #: code:addons/account_asset/models/account_asset.py:506
@@ -1145,6 +1159,8 @@ msgid ""
 "This depreciation is already linked to a journal entry. Please post or "
 "delete it."
 msgstr ""
+"Toto odpisování je již spojeno se zápisem do deníku. Zašlete příspěvek nebo "
+"jej smažte."
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_asset_depreciation_confirmation_wizard
@@ -1152,6 +1168,8 @@ msgid ""
 "This wizard will post installment/depreciation lines for the selected month.<br/>\n"
 "                        This will generate journal entries for all related installment lines on this period of asset/revenue recognition as well."
 msgstr ""
+"Tento průvodce zaúčtuje splátky / odpisy za vybraný měsíc.<br/>\n"
+"Tím se vytvoří i zápisy do deníku pro všechny související splátky v tomto období uznání aktiv / výnosů."
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_asset__method_time
@@ -1237,7 +1255,7 @@ msgstr "Nemůžete odstranit dokument, který obsahuje zveřejněné položky."
 #: code:addons/account_asset/models/account_asset.py:133
 #, python-format
 msgid "You cannot delete a document that is in %s state."
-msgstr ""
+msgstr "Nelze odstranit dokument, který je ve stavu %s."
 
 #. module: account_asset
 #: code:addons/account_asset/models/account_asset.py:650

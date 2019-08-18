@@ -32,6 +32,9 @@ msgid ""
 " be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
 msgstr ""
+"Účetní deník související s bankovním výpisem, který importujete. Pro formáty"
+" příkazů, které neumožňují automatickou detekci deníku (například QIF), musí"
+" být vybráno ručně."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_bank_statement_import__qif_date_format
@@ -40,6 +43,9 @@ msgid ""
 "financial institutions use the local format.Therefore, it is frequent "
 "outside the US to have QIF date formated day-first (dd/mm/yy)."
 msgstr ""
+"Ačkoli historický formát datumu QIF má první měsíc (mm/dd/rr), mnoho "
+"finančních institucí používá místní formát. Proto je často mimo USA, že "
+"datum QIF je formováno s dnem jako první (dd/mm/rr)."
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:59
@@ -76,7 +82,7 @@ msgstr "Quicken Interchange Format (.QIF)"
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_bank_statement_import__show_qif_date_format
 msgid "Show Qif Date Format"
-msgstr ""
+msgstr "Zobrazit formát datumu Qif"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_bank_statement_import__show_qif_date_format
@@ -84,6 +90,8 @@ msgid ""
 "Technical field used to ask the user for the date format used in the QIF "
 "file, as this format is ambiguous."
 msgstr ""
+"Technické pole použité k vyžádání uživatele pro formát datumu použitý v "
+"souboru QIF, protože tento formát je nejednoznačný."
 
 #. module: account_bank_statement_import_qif
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view_inherited
@@ -91,6 +99,8 @@ msgid ""
 "The QIF format is ambiguous about dates: please check with your financial "
 "institution whether they format it with month or day first.<br/>"
 msgstr ""
+"Formát QIF je nejednoznačný, pokud jde o datum: ověřte si u své finanční "
+"instituce, zda jej formátují s prvním měsícem nebo dnem. <br/>"
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizard/account_bank_statement_import_qif.py:105
@@ -106,9 +116,9 @@ msgstr "_Import"
 #. module: account_bank_statement_import_qif
 #: selection:account.bank.statement.import,qif_date_format:0
 msgid "dd/mm/yy"
-msgstr "dd/mm/yy"
+msgstr "dd/mm/rr"
 
 #. module: account_bank_statement_import_qif
 #: selection:account.bank.statement.import,qif_date_format:0
 msgid "mm/dd/yy"
-msgstr "mm/dd/yy"
+msgstr "mm/dd/rr"
