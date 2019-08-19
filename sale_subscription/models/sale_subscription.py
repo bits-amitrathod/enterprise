@@ -174,12 +174,10 @@ class SaleSubscription(models.Model):
         else:
             date = datetime.date.today()
         periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
-        if fields.Date.from_string(self.recurring_next_date) == date:
-            return 0
         invoicing_period = relativedelta(**{periods[self.recurring_rule_type]: self.recurring_interval})
         recurring_next_invoice = fields.Date.from_string(self.recurring_next_date)
         recurring_last_invoice = recurring_next_invoice - invoicing_period
-        time_to_invoice = recurring_next_invoice - date - datetime.timedelta(days=1)
+        time_to_invoice = recurring_next_invoice - date
         ratio = float(time_to_invoice.days) / float((recurring_next_invoice - recurring_last_invoice).days)
         return ratio
 
