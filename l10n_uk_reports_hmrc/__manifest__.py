@@ -5,6 +5,7 @@
     'name': 'UK - Accounting Reports to HMRC',
     'version': '1.1',
     'category': 'Accounting',
+    'website': 'https://www.odoo.com/page/accounting',
     'description': """
         Accounting reports send to HMRC
     """,
