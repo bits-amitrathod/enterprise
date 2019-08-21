@@ -654,15 +654,15 @@ class AccountInvoice(models.Model):
 
     @api.model
     def check_all_status(self):
-        self.search([('extract_state', 'in', ['waiting_extraction', 'extract_not_ready'])]).check_status()
+        self.search([('state', '=', 'draft'), ('extract_state', 'in', ['waiting_extraction', 'extract_not_ready'])]).check_status()
 
     @api.multi
     def check_status(self):
         """contact iap to get the actual status of the ocr requests"""
-        records_to_update = self.filtered(lambda inv: inv.extract_state in ['waiting_extraction', 'extract_not_ready'])
+        records_to_update = self.filtered(lambda inv: inv.extract_state in ['waiting_extraction', 'extract_not_ready'] and inv.state == 'draft')
         limit = max(0, 20 - len(records_to_update))
         if limit > 0:
-            records_to_update |= self.search([('extract_state', 'in', ['waiting_extraction', 'extract_not_ready']), ('id', 'not in', records_to_update.ids)], limit=limit)
+            records_to_update |= self.search([('extract_state', 'in', ['waiting_extraction', 'extract_not_ready']), ('id', 'not in', records_to_update.ids),('state', '=', 'draft')], limit=limit)
         for record in records_to_update:
             endpoint = self.env['ir.config_parameter'].sudo().get_param(
                 'account_invoice_extract_endpoint', 'https://iap-extract.odoo.com')  + '/iap/invoice_extract/get_result'
