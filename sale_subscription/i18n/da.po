@@ -11,15 +11,15 @@
 # Martin Trigaux, 2018
 # Per Rasmussen <perhgrasmussen@gmail.com>, 2018
 # Pernille Kristensen <pernillekristensen1994@gmail.com>, 2018
+# lhmflexerp <lhm@flexerp.dk>, 2018
 # Sanne Kristensen <sanne@vkdata.dk>, 2018
-# lhmflexerp <lhm@flexerp.dk>, 2019
 # Ejner Sønniksen <ejner@vkdata.dk>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-08 07:14+0000\n"
+"POT-Creation-Date: 2019-01-15 15:18+0000\n"
 "PO-Revision-Date: 2018-08-24 11:48+0000\n"
 "Last-Translator: Ejner Sønniksen <ejner@vkdata.dk>, 2019\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
@@ -28,6 +28,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_subscription
+#: code:addons/sale_subscription/models/sale_subscription.py:744
+#, python-format
+msgid " E-mail sent to customer."
+msgstr ""
 
 #. module: sale_subscription
 #: model:sale.subscription.template,description:sale_subscription.cleaning_monthly
@@ -143,10 +149,10 @@ msgid ""
 "                <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
 "                    <tbody>\n"
 "                        <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
-"                            <p>Dear %{object.partner_id.name}\n"
+"                            <p>Dear ${object.partner_id.name}\n"
 "                                % if object.partner_id.parent_id:\n"
 "                                    (${object.partner_id.parent_id.name})\n"
-"                                % endif.\n"
+"                                % endif\n"
 "                            </p>\n"
 "                            <p>\n"
 "                                Here is, in attachment, your\n"
@@ -174,50 +180,6 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
-"                <table style=\"width:600px;margin:5px auto;\">\n"
-"                    <tbody>\n"
-"                        <tr><td>\n"
-"                            <a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a>\n"
-"                        </td><td style=\"text-align:right;vertical-align:middle;\">\n"
-"                                Abonnementsfaktura\n"
-"                        </td></tr>\n"
-"                    </tbody>\n"
-"                </table>\n"
-"                <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
-"                    <tbody>\n"
-"                        <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
-"                            <p>Kære %{object.partner_id.name}\n"
-"                                % if object.partner_id.parent_id:\n"
-"                                    (${object.partner_id.parent_id.name})\n"
-"                                % endif.\n"
-"                            </p>\n"
-"                            <p>\n"
-"                                Vedhæftet finder du din\n"
-"                                % if object.number:\n"
-"                                    faktura <strong>${object.number}</strong>\n"
-"                                % else:\n"
-"                                    faktura\n"
-"                                %endif\n"
-"                                % if object.origin:\n"
-"                                    (med referencen: ${object.origin} )\n"
-"                                % endif\n"
-"                                på beløbet <strong>${format_amount(object.amount_total, object.currency_id)}</strong>\n"
-"                                fra ${object.company_id.name}.\n"
-"                                % if object.state=='paid':\n"
-"                                    Denne faktura er allerede betalt.\n"
-"                                % else:\n"
-"                                    Foretag venligst betalingen hurtigst muligt.\n"
-"                                % endif\n"
-"                            </p>\n"
-"                            <p>Tøv ikke med at kontakte os hvis du har spørgsmål.</p>\n"
-"                        </td></tr>\n"
-"                        <tr><td style=\"padding:15px 20px 10px 20px;\">${(object.user_id.signature or '')| safe}</td></tr>\n"
-"                    </tbody>\n"
-"                </table>\n"
-"            </div>\n"
-"        "
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.mail_template_subscription_rating
@@ -305,6 +267,11 @@ msgid "<i class=\"fa fa-check\"/> Closable by customer"
 msgstr ""
 
 #. module: sale_subscription
+#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
+msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
+msgstr ""
+
+#. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "<i class=\"fa fa-envelope\"/> Send email"
 msgstr ""
@@ -351,14 +318,6 @@ msgid ""
 msgstr ""
 
 #. module: sale_subscription
-#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
-msgid ""
-"<span class=\"badge badge-warning border-0\" attrs=\"{'invisible': [('to_renew', '=', False)]}\">\n"
-"                                To Renew\n"
-"                            </span>"
-msgstr ""
-
-#. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "<span class=\"ml-1\">days</span>"
 msgstr ""
@@ -371,6 +330,11 @@ msgstr ""
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "<span class=\"mr-1\">For</span>"
+msgstr ""
+
+#. module: sale_subscription
+#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
+msgid "<span class=\"mr-1\">period(s)</span>"
 msgstr ""
 
 #. module: sale_subscription
@@ -852,6 +816,29 @@ msgstr "Automatiseret handling"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_template__auto_close_limit
 msgid "Automatic closing limit"
+msgstr ""
+
+#. module: sale_subscription
+#: code:addons/sale_subscription/models/sale_subscription.py:734
+#, python-format
+msgid ""
+"Automatic payment failed after multiple attempts. Subscription closed "
+"automatically."
+msgstr ""
+
+#. module: sale_subscription
+#: code:addons/sale_subscription/models/sale_subscription.py:739
+#, python-format
+msgid "Automatic payment failed. Subscription set to \"To Renew\"."
+msgstr ""
+
+#. module: sale_subscription
+#: code:addons/sale_subscription/models/sale_subscription.py:699
+#, python-format
+msgid ""
+"Automatic payment succeeded. Payment reference: <a href=# data-oe-"
+"model=payment.transaction data-oe-id=%d>%s</a>; Amount: %s. Invoice <a "
+"href=# data-oe-model=account.invoice data-oe-id=%d>View Invoice</a>."
 msgstr ""
 
 #. module: sale_subscription
@@ -1546,6 +1533,7 @@ msgstr ""
 "lukkes den dato, der er angivet i dette felt."
 
 #. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_product_product__recurring_invoice
 #: model:ir.model.fields,help:sale_subscription.field_product_template__recurring_invoice
 msgid ""
 "If set, confirming a sale order with this product will create a subscription"
@@ -1655,6 +1643,11 @@ msgstr "Faktura for abonnement ${ctx.get('code')}"
 #. module: sale_subscription
 #: selection:sale.subscription.template,payment_mode:0
 msgid "Invoice only on successful payment"
+msgstr ""
+
+#. module: sale_subscription
+#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
+msgid "Invoice period"
 msgstr ""
 
 #. module: sale_subscription
@@ -2184,6 +2177,7 @@ msgid "Product Template"
 msgstr "Produktskabelon"
 
 #. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_product_product__subscription_template_id
 #: model:ir.model.fields,help:sale_subscription.field_product_template__subscription_template_id
 msgid "Product will be included in a selected template"
 msgstr "Produkt vil blive inkluderet i en valgt skabelon"
@@ -2685,6 +2679,7 @@ msgid "Subscription Management"
 msgstr "Administrer abonnementer"
 
 #. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_product_product__recurring_invoice
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template__recurring_invoice
 msgid "Subscription Product"
 msgstr "Abonnement produkt"
@@ -2714,6 +2709,7 @@ msgstr ""
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_template
+#: model:ir.model.fields,field_description:sale_subscription.field_product_product__subscription_template_id
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template__subscription_template_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__template_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__template_id
@@ -2765,6 +2761,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_res_partner
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account__subscription_ids
 #: model:ir.model.fields,field_description:sale_subscription.field_res_partner__subscription_count
+#: model:ir.model.fields,field_description:sale_subscription.field_res_users__subscription_count
 #: model:ir.module.category,name:sale_subscription.module_category_subscription_management
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_action
@@ -2973,6 +2970,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__to_renew
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__to_renew
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_report_search
+#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_kanban
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 #, python-format

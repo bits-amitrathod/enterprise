@@ -22,22 +22,28 @@
 # rejen he <251442037@qq.com>, 2018
 # keecome <7017511@qq.com>, 2018
 # inspur qiuguodong <qiuguodong@inspur.com>, 2018
+# Jeffery CHEN <jeffery9@gmail.com>, 2019
 # liAnGjiA <liangjia@qq.com>, 2019
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-08 07:14+0000\n"
+"POT-Creation-Date: 2019-01-15 15:18+0000\n"
 "PO-Revision-Date: 2018-08-24 11:48+0000\n"
-"Last-Translator: Jeffery CHEN Fan <jeffery9@gmail.com>, 2019\n"
+"Last-Translator: liAnGjiA <liangjia@qq.com>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: sale_subscription
+#: code:addons/sale_subscription/models/sale_subscription.py:744
+#, python-format
+msgid " E-mail sent to customer."
+msgstr ""
 
 #. module: sale_subscription
 #: model:sale.subscription.template,description:sale_subscription.cleaning_monthly
@@ -192,10 +198,10 @@ msgid ""
 "                <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
 "                    <tbody>\n"
 "                        <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
-"                            <p>Dear %{object.partner_id.name}\n"
+"                            <p>Dear ${object.partner_id.name}\n"
 "                                % if object.partner_id.parent_id:\n"
 "                                    (${object.partner_id.parent_id.name})\n"
-"                                % endif.\n"
+"                                % endif\n"
 "                            </p>\n"
 "                            <p>\n"
 "                                Here is, in attachment, your\n"
@@ -223,50 +229,6 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
-"                <table style=\"width:600px;margin:5px auto;\">\n"
-"                    <tbody>\n"
-"                        <tr><td>\n"
-"                            <a href=\"/\"><img src=\"/web/binary/company_logo\" style=\"vertical-align:baseline;max-width:100px;\"/></a>\n"
-"                        </td><td style=\"text-align:right;vertical-align:middle;\">\n"
-"                                发票订阅\n"
-"                        </td></tr>\n"
-"                    </tbody>\n"
-"                </table>\n"
-"                <table style=\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
-"                    <tbody>\n"
-"                        <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
-"                            <p>尊敬的 %{object.partner_id.name}\n"
-"                                % if object.partner_id.parent_id:\n"
-"                                    (${object.partner_id.parent_id.name})\n"
-"                                % endif.\n"
-"                            </p>\n"
-"                            <p>\n"
-"                                你好，附件里, 是您的\n"
-"                                % if object.number:\n"
-"                                    发票 <strong>${object.number}</strong>\n"
-"                                % else:\n"
-"                                    发票\n"
-"                                %endif\n"
-"                                % if object.origin:\n"
-"                                    (参考: ${object.origin} )\n"
-"                                % endif\n"
-"                                金额 <strong>${format_amount(object.amount_total, object.currency_id)}</strong>\n"
-"                                来自 ${object.company_id.name}.\n"
-"                                % if object.state=='paid':\n"
-"                                    该发票已付款。\n"
-"                                % else:\n"
-"                                    请尽快付款。\n"
-"                                % endif\n"
-"                            </p>\n"
-"                            <p>如您有任何疑问敬请与我们取得联系。</p>\n"
-"                        </td></tr>\n"
-"                        <tr><td style=\"padding:15px 20px 10px 20px;\">${(object.user_id.signature or '')| safe}</td></tr>\n"
-"                    </tbody>\n"
-"                </table>\n"
-"            </div>\n"
-"        "
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.mail_template_subscription_rating
@@ -424,6 +386,11 @@ msgid "<i class=\"fa fa-check\"/> Closable by customer"
 msgstr "允许客户关闭"
 
 #. module: sale_subscription
+#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
+msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
+msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
+
+#. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription
 msgid "<i class=\"fa fa-envelope\"/> Send email"
 msgstr "<i class=\"fa fa-envelope\"/> 发送邮件"
@@ -476,17 +443,6 @@ msgstr ""
 "refresh\"/> 续签</span>"
 
 #. module: sale_subscription
-#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
-msgid ""
-"<span class=\"badge badge-warning border-0\" attrs=\"{'invisible': [('to_renew', '=', False)]}\">\n"
-"                                To Renew\n"
-"                            </span>"
-msgstr ""
-"<span class=\"badge badge-warning border-0\" attrs=\"{'invisible': [('to_renew', '=', False)]}\">\n"
-"                                更新\n"
-"                            </span>"
-
-#. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "<span class=\"ml-1\">days</span>"
 msgstr "<span class=\"ml-1\">天</span>"
@@ -500,6 +456,11 @@ msgstr "<span class=\"mr-1\">每</span>"
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
 msgid "<span class=\"mr-1\">For</span>"
 msgstr "<span class=\"mr-1\">为</span>"
+
+#. module: sale_subscription
+#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
+msgid "<span class=\"mr-1\">period(s)</span>"
+msgstr ""
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_kanban
@@ -1225,6 +1186,29 @@ msgid "Automatic closing limit"
 msgstr "自动关闭极限"
 
 #. module: sale_subscription
+#: code:addons/sale_subscription/models/sale_subscription.py:734
+#, python-format
+msgid ""
+"Automatic payment failed after multiple attempts. Subscription closed "
+"automatically."
+msgstr ""
+
+#. module: sale_subscription
+#: code:addons/sale_subscription/models/sale_subscription.py:739
+#, python-format
+msgid "Automatic payment failed. Subscription set to \"To Renew\"."
+msgstr ""
+
+#. module: sale_subscription
+#: code:addons/sale_subscription/models/sale_subscription.py:699
+#, python-format
+msgid ""
+"Automatic payment succeeded. Payment reference: <a href=# data-oe-"
+"model=payment.transaction data-oe-id=%d>%s</a>; Amount: %s. Invoice <a "
+"href=# data-oe-model=account.invoice data-oe-id=%d>View Invoice</a>."
+msgstr ""
+
+#. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_alert__website_published
 msgid "Available on the Website"
 msgstr "可用于网站"
@@ -1918,6 +1902,7 @@ msgid ""
 msgstr "如果预先设定，订阅将被设置为在日期之前的1个月，并将在该字段中设置的日期关闭。"
 
 #. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_product_product__recurring_invoice
 #: model:ir.model.fields,help:sale_subscription.field_product_template__recurring_invoice
 msgid ""
 "If set, confirming a sale order with this product will create a subscription"
@@ -2024,6 +2009,11 @@ msgstr "订阅的发票${ctx.get('code')}"
 #: selection:sale.subscription.template,payment_mode:0
 msgid "Invoice only on successful payment"
 msgstr "仅在成功付款时发票"
+
+#. module: sale_subscription
+#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_template_view_form
+msgid "Invoice period"
+msgstr ""
 
 #. module: sale_subscription
 #: model:mail.template,report_name:sale_subscription.mail_template_subscription_invoice
@@ -2558,6 +2548,7 @@ msgid "Product Template"
 msgstr "产品模板"
 
 #. module: sale_subscription
+#: model:ir.model.fields,help:sale_subscription.field_product_product__subscription_template_id
 #: model:ir.model.fields,help:sale_subscription.field_product_template__subscription_template_id
 msgid "Product will be included in a selected template"
 msgstr "产品将包含在选定的模板中。"
@@ -3059,6 +3050,7 @@ msgid "Subscription Management"
 msgstr "订阅管理"
 
 #. module: sale_subscription
+#: model:ir.model.fields,field_description:sale_subscription.field_product_product__recurring_invoice
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template__recurring_invoice
 msgid "Subscription Product"
 msgstr "订阅产品"
@@ -3088,6 +3080,7 @@ msgstr "订阅阶段"
 
 #. module: sale_subscription
 #: model:ir.model,name:sale_subscription.model_sale_subscription_template
+#: model:ir.model.fields,field_description:sale_subscription.field_product_product__subscription_template_id
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template__subscription_template_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__template_id
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__template_id
@@ -3139,6 +3132,7 @@ msgstr "订阅阶段发生了变化"
 #: model:ir.actions.act_window,name:sale_subscription.sale_subscription_action_res_partner
 #: model:ir.model.fields,field_description:sale_subscription.field_account_analytic_account__subscription_ids
 #: model:ir.model.fields,field_description:sale_subscription.field_res_partner__subscription_count
+#: model:ir.model.fields,field_description:sale_subscription.field_res_users__subscription_count
 #: model:ir.module.category,name:sale_subscription.module_category_subscription_management
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription
 #: model:ir.ui.menu,name:sale_subscription.menu_sale_subscription_action
@@ -3347,6 +3341,7 @@ msgstr "定时条件"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription__to_renew
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__to_renew
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_report_search
+#: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_form
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_kanban
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
 #, python-format
