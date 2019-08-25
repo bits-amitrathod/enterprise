@@ -9,6 +9,7 @@
 # Duy BQ <duybq86@gmail.com>, 2018
 # Hieu Tran <hieu@kiuglobal.com>, 2018
 # Dung Nguyen Thi <dungnt@trobz.com>, 2019
+# Dao Nguyen <trucdao.uel@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -16,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 11:33+0000\n"
 "PO-Revision-Date: 2017-09-20 11:39+0000\n"
-"Last-Translator: Dung Nguyen Thi <dungnt@trobz.com>, 2019\n"
+"Last-Translator: Dao Nguyen <trucdao.uel@gmail.com>, 2019\n"
 "Language-Team: Vietnamese (https://www.transifex.com/odoo/teams/41243/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,12 +28,12 @@ msgstr ""
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_intl_non_delivery_option:0
 msgid "Abandon"
-msgstr ""
+msgstr "Bỏ"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_account_validated
 msgid "Account Validated"
-msgstr ""
+msgstr "Đã xác thực tài khoản"
 
 #. module: delivery_usps
 #: model:ir.model,name:delivery_usps.model_delivery_carrier
@@ -42,23 +43,25 @@ msgstr "Nhà vận chuyển"
 #. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier_usps_account_validated
 msgid "Check this box if your account is validated by USPS"
-msgstr ""
+msgstr "Đánh dấu ô này nếu tài khoản của bạn được xác thực bởi USPS"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:64
 #, python-format
 msgid "Company phone number is invalid. Please insert a US phone number."
 msgstr ""
+"Số điện thoại của công ty không hợp lệ. Vui lòng nhập một số điện thoại Hoa "
+"Kỳ."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_content_type
 msgid "Content Type"
-msgstr ""
+msgstr "Loại nội dung"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_delivery_nature
 msgid "Delivery Nature"
-msgstr ""
+msgstr "Giao hàng"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_content_type:0
@@ -68,7 +71,7 @@ msgstr "Tài liệu"
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_delivery_nature:0
 msgid "Domestic"
-msgstr ""
+msgstr "Nội địa"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/delivery_usps.py:102
@@ -77,39 +80,41 @@ msgid ""
 "Error:\n"
 "%s"
 msgstr ""
+"Lỗi:\n"
+"%s"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
 msgid "Express"
-msgstr ""
+msgstr "Express"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
 msgid "First Class"
-msgstr ""
+msgstr "Hạng nhất"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
 msgid "Flat"
-msgstr ""
+msgstr "Giá"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_mail_type:0
 msgid "Flat Rate"
-msgstr ""
+msgstr "Gía thấp nhất"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_domestic_regular_container:0
 #: selection:delivery.carrier,usps_international_regular_container:0
 #: selection:delivery.carrier,usps_mail_type:0
 msgid "Flat Rate Box"
-msgstr ""
+msgstr "Hộp giá mặt bằng"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_domestic_regular_container:0
 #: selection:delivery.carrier,usps_international_regular_container:0
 msgid "Flat Rate Envelope"
-msgstr ""
+msgstr "Gói giá chung"
 
 #. module: delivery_usps
 #: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
@@ -124,7 +129,7 @@ msgstr "Quà tặng"
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_delivery_nature:0
 msgid "International"
-msgstr ""
+msgstr "Quốc tế"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_size_container:0
@@ -134,18 +139,18 @@ msgstr "Lớn"
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_mail_type:0
 msgid "Large Envelope"
-msgstr ""
+msgstr "Gói lớn"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_domestic_regular_container:0
 msgid "Large Flat Rate Box"
-msgstr ""
+msgstr "Khung giá cho thùng hàng lớn"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_domestic_regular_container:0
 #: selection:delivery.carrier,usps_international_regular_container:0
 msgid "Legal Flat Rate Envelope"
-msgstr ""
+msgstr "Khung giá hợp pháp cho gói hàng"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
@@ -156,27 +161,27 @@ msgstr "Thư"
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_machinable
 msgid "Machinable"
-msgstr ""
+msgstr "Gia công"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_domestic_regular_container:0
 msgid "Medium Flat Rate Box"
-msgstr ""
+msgstr "Khung giá cho thùng hàng trung bình"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_content_type:0
 msgid "Merchandise"
-msgstr ""
+msgstr "Hàng hoá"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_intl_non_delivery_option
 msgid "Non delivery option"
-msgstr ""
+msgstr "Tuỳ chọn không giao hàng"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_container:0
 msgid "Non-rectangular"
-msgstr ""
+msgstr "Không thể so sánh"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_label_file_type:0
@@ -191,44 +196,46 @@ msgstr "Gói"
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
 msgid "Package Service"
-msgstr ""
+msgstr "Dịch vụ trọn gói"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_girth
 msgid "Package girth (in inches)"
-msgstr ""
+msgstr "Chu vi bưu kiện (tính bằng inch)"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_height
 msgid "Package height (in inches)"
-msgstr ""
+msgstr "Chiều cao bưu kiện (tính bằng inch)"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_length
 msgid "Package length (in inches)"
-msgstr ""
+msgstr "Chiều dài bưu kiện (tính bằng inch)"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_custom_container_width
 msgid "Package width (in inches)"
-msgstr ""
+msgstr "Chiều rộng bưu kiện (tính bằng inch)"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_domestic_regular_container:0
 #: selection:delivery.carrier,usps_international_regular_container:0
 msgid "Padded Flat Rate Envelope"
-msgstr ""
+msgstr "Khung giá cho gói hàng có đệm"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
 msgid "Parcel"
-msgstr ""
+msgstr "Từng bưu kiện"
 
 #. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier_usps_machinable
 msgid ""
 "Please check on USPS website to ensure that your package is machinable."
 msgstr ""
+"Vui lòng kiểm tra trên trang web USPS để đảm bảo rằng gói bưu kiện của bạn "
+"có thể gia công được."
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:81
@@ -236,18 +243,20 @@ msgstr ""
 msgid ""
 "Please choose another service (maximum weight of this service is 4 pounds)"
 msgstr ""
+"Vui lòng chọn một dịch vụ khác (trọng lượng tối đa của dịch vụ này là 4 "
+"pounds)"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:69
 #, python-format
 msgid "Please enter a valid ZIP code in recipient address"
-msgstr ""
+msgstr "Vui lòng nhập mã ZIP hợp lệ trong phần địa chỉ người nhận"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:62
 #, python-format
 msgid "Please enter a valid ZIP code in your Company address"
-msgstr ""
+msgstr "Vui lòng nhập mã ZIP hợp lệ trong phần địa chỉ công ty của bạn"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:76
@@ -262,11 +271,13 @@ msgid ""
 "Please set country U.S.A in your company address, Service is only available "
 "for U.S.A"
 msgstr ""
+"Vui lòng đặt quốc gia Hoa Kỳ trong địa chỉ công ty của bạn. Dịch vụ chỉ khả "
+"dụng cho Hoa Kỳ"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_first_class_mail_type:0
 msgid "Postcard"
-msgstr ""
+msgstr "Bưu thiếp"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_service:0
@@ -278,21 +289,23 @@ msgstr "Mức độ ưu tiên"
 #, python-format
 msgid "Recipient address cannot be found. Please check the address exists."
 msgstr ""
+"Địa chỉ người nhận không thể tìm thấy. Vui lòng kiểm tra "
+"lại."
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_container:0
 msgid "Rectangular"
-msgstr ""
+msgstr "Hình chữ nhật"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_intl_non_delivery_option:0
 msgid "Redirect"
-msgstr ""
+msgstr "Chuyển hướng"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_redirect_partner_id
 msgid "Redirect Partner"
-msgstr ""
+msgstr "Chuyển hướng đối tác"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_size_container:0
@@ -302,7 +315,7 @@ msgstr "Thông thường"
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_container:0
 msgid "Regular < 12 inch"
-msgstr ""
+msgstr "Thông thường < 12 inch"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_content_type:0
@@ -313,34 +326,34 @@ msgstr "Trả hàng"
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_content_type:0
 msgid "Sample"
-msgstr ""
+msgstr "Hàng mẫu"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/delivery_usps.py:163
 #, python-format
 msgid "Shipment N° %s has been cancelled"
-msgstr ""
+msgstr "Lô hàng N° %s đã bị huỷ"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/delivery_usps.py:143
 #, python-format
 msgid "Shipment created into USPS <br/> <b>Tracking Number : </b>%s"
-msgstr ""
+msgstr "Lô hàng đã được tạo trong USPS <br/> <b> Số theo dõi: </b>%s"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_domestic_regular_container:0
 msgid "Small Flat Rate Box"
-msgstr ""
+msgstr "Khung giá cho thùng hàng nhỏ"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_domestic_regular_container:0
 msgid "Small Flat Rate Envelope"
-msgstr ""
+msgstr "Khung giá cho gói hàng nhỏ"
 
 #. module: delivery_usps
 #: selection:delivery.carrier,usps_label_file_type:0
 msgid "TIF"
-msgstr ""
+msgstr "TIF"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:58
@@ -349,6 +362,8 @@ msgid ""
 "The address of your company is missing or wrong (Missing field(s) :  \n"
 " %s)"
 msgstr ""
+"Địa chỉ công ty của bạn bị thiếu hoặc sai (Thiếu trường): \n"
+"%s"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:79
@@ -366,12 +381,15 @@ msgid ""
 "The recipient address is missing or wrong (Missing field(s) :  \n"
 " %s)"
 msgstr ""
+"Địa chỉ người nhận bị thiếu hoặc sai (Trường thiếu (field): \n"
+"%s) "
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:164
 #, python-format
 msgid "The selected USPS service (%s) cannot be used to deliver this package."
 msgstr ""
+"Dịch vụ USPS đã chọn (%s) không thể sử dụng để phân phối gói bưu kiện này."
 
 #. module: delivery_usps
 #: model:ir.ui.view,arch_db:delivery_usps.usps_shipping_request
@@ -381,22 +399,22 @@ msgstr ""
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_international_regular_container
 msgid "Type of USPS International regular container"
-msgstr ""
+msgstr "Loại container USPS International thông thường"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_domestic_regular_container
 msgid "Type of USPS domestic regular container"
-msgstr ""
+msgstr "Loại container USPS nội địa thông thường"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_container
 msgid "Type of container"
-msgstr ""
+msgstr "Loại container"
 
 #. module: delivery_usps
 #: model:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "USPS Configuration"
-msgstr ""
+msgstr "Cấu hình USPS"
 
 #. module: delivery_usps
 #: model:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
@@ -408,7 +426,7 @@ msgstr "Phương thức giao hàng USPS"
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_domestic
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_domestic_product_template
 msgid "USPS Domestic Flat Rate Envelope"
-msgstr ""
+msgstr "Khung giá cho gói hàng nội địa USPS"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:73
@@ -417,17 +435,19 @@ msgid ""
 "USPS Domestic is used only to ship inside of the U.S.A. Please change the "
 "delivery method into USPS International."
 msgstr ""
+"USPS nội địa chỉ được sử dụng để vận chuyển tại Hoa Kỳ. Vui lòng thay đổi "
+"phương thức giao hàng thành USPS quốc tế."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_first_class_mail_type
 msgid "USPS First Class Mail Type"
-msgstr ""
+msgstr "Loại thư hạng nhất USPS"
 
 #. module: delivery_usps
 #: model:product.product,name:delivery_usps.product_product_delivery_usps_international
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_international_product_template
 msgid "USPS International Flat Rate Box"
-msgstr ""
+msgstr "Khung giá cho thùng hàng USPS quốc tế"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:71
@@ -436,34 +456,36 @@ msgid ""
 "USPS International is used only to ship outside of the U.S.A. Please change "
 "the delivery method into USPS Domestic."
 msgstr ""
+"USPS quốc tế chỉ được sử dụng để vận chuyển bên ngoài Hoa Kỳ. Vui lòng thay "
+"đổi phương thức giao hàng thành USPS nội địa."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_label_file_type
 msgid "USPS Label File Type"
-msgstr ""
+msgstr "Loại file nhãn USPS"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_mail_type
 msgid "USPS Mail Type"
-msgstr ""
+msgstr "Loại mail USPS"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_service
 msgid "USPS Service"
-msgstr ""
+msgstr "Dịch vụ USPS"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_username
 msgid "USPS User ID"
-msgstr ""
+msgstr "USPS User ID"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier_usps_size_container
 msgid "Usps Size Container"
-msgstr ""
+msgstr "Kích thước container USPS"
 
 #. module: delivery_usps
 #: code:addons/delivery_usps/models/usps_request.py:373
 #, python-format
 msgid "Your company or recipient ZIP code is incorrect."
-msgstr ""
+msgstr "Mã ZIP công ty hoặc người nhận của bạn không chính xác."
