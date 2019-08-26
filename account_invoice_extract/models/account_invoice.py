@@ -260,7 +260,7 @@ class AccountInvoice(models.Model):
         res = super(AccountInvoice, self).invoice_validate()
         for record in self:
             if record.type in ["out_invoice", "out_refund"]:
-                return
+                return res
             if record.extract_state == 'waiting_validation':
                 endpoint = self.env['ir.config_parameter'].sudo().get_param(
                     'account_invoice_extract_endpoint', 'https://iap-extract.odoo.com') + '/iap/invoice_extract/validate'
