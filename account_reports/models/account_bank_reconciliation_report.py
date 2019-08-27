@@ -99,7 +99,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
                 self.env.context['date_to'],
                 tuple(self.env.context['company_ids']),
             ])
-            start_amount = self._cr.fetchone()[0]
+            start_amount = self._cr.fetchone()[0] or 0
         else:
             start_amount = 0
         lines.append(self.add_title_line(options, _("Current Balance in GL"), start_amount))
