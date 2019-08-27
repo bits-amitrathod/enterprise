@@ -89,7 +89,7 @@ class account_bank_reconciliation_report(models.AbstractModel):
         rslt['use_foreign_currency'] = \
                 journal.currency_id != journal.company_id.currency_id \
                 if journal.currency_id else False
-        rslt['account_ids'] = list(set([journal.default_debit_account_id.id, journal.default_credit_account_id.id]))
+        rslt['account_ids'] = list(set([journal.default_debit_account_id.id, journal.default_credit_account_id.id]) - {False})
         rslt['line_currency'] = journal.currency_id if rslt['use_foreign_currency'] else False
         self = self.with_context(line_currency=rslt['line_currency'])
         lines_already_accounted = self.env['account.move.line'].search([('account_id', 'in', rslt['account_ids']),
