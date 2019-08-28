@@ -422,7 +422,6 @@ odoo.define('sign.document_signing', function(require) {
     var PDFIframe = require('sign.PDFIframe');
     var rpc = require('web.rpc');
     var session = require('web.session');
-    var Tour = require('web_tour.tour');
 
     var _t = core._t;
 
