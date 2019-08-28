@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.fields import Datetime
+from odoo.osv.expression import NEGATIVE_TERM_OPERATORS
 
 
 class MarketingParticipant(models.Model):
@@ -29,6 +30,15 @@ class MarketingParticipant(models.Model):
         models = self.env['ir.model'].search([('is_mail_thread', '=', True)])
         return [(model.model, model.name) for model in models]
 
+    def _search_resource_ref(self, operator, value):
+        ir_models = set([model['model_name'] for model in self.env['marketing.campaign'].search([]).read(['model_name'])])
+        ir_model_ids = []
+        for model in ir_models:
+            if model in self.env:
+                ir_model_ids += self.env['marketing.participant'].search(['&', ('model_name', '=', model), ('res_id', 'in', [name[0] for name in self.env[model].name_search(name=value)])]).ids
+        operator = 'not in' if operator in NEGATIVE_TERM_OPERATORS else 'in'
+        return [('id', operator, ir_model_ids)]
+
     campaign_id = fields.Many2one('marketing.campaign', string='Campaign', ondelete='cascade', required=True)
     model_id = fields.Many2one(
         'ir.model', string='Object', related='campaign_id.model_id',
@@ -39,7 +49,7 @@ class MarketingParticipant(models.Model):
     res_id = fields.Integer(string='Record ID', index=True)
     resource_ref = fields.Reference(
         string='Record', selection='_selection_target_model',
-        compute='_compute_resource_ref', inverse='_set_resource_ref')
+        compute='_compute_resource_ref', inverse='_set_resource_ref', search='_search_resource_ref')
     trace_ids = fields.One2many('marketing.trace', 'participant_id', string='Actions')
     state = fields.Selection([
         ('running', 'Running'),
