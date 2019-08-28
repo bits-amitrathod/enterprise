@@ -169,9 +169,9 @@ class OnlineAccount(models.Model):
         # however if we try to refresh both one after another or at the same time, an error is received
         # An error is also received if we call their synchronization route too quickly. Therefore we 
         # only call this route if it has not been called in the last 5 minutes.
-        last_sync_date = fields.Datetime.now() - self.account_online_provider_id.last_refresh
+        last_sync_age = fields.Datetime.now() - self.account_online_provider_id.last_refresh
         # We can refresh if last refresh was greater than 5min in the past
-        if last_sync_date.days == 0 and (last_sync_date.seconds // 60) % 60 <= 5:
+        if last_sync_age <= datetime.timedelta(minutes=5):
             _logger.info('Skip refresh of ponto transaction as last refresh was less than 5min ago')
             return
         data = {
