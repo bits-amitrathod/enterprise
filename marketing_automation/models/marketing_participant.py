@@ -20,7 +20,7 @@ class MarketingParticipant(models.Model):
             model_name = defaults.get('model_name')
             if not model_name and defaults.get('campaign_id'):
                 model_name = self.env['marketing.campaign'].browse(defaults['campaign_id']).model_name
-            if model_name:
+            if model_name and model_name in self.env:
                 resource = self.env[model_name].search([], limit=1)
                 defaults['res_id'] = resource.id
         return defaults
@@ -61,7 +61,7 @@ class MarketingParticipant(models.Model):
     @api.depends('model_name', 'res_id')
     def _compute_resource_ref(self):
         for participant in self:
-            if participant.model_name:
+            if participant.model_name and participant.model_name in self.env:
                 participant.resource_ref = '%s,%s' % (participant.model_name, participant.res_id or 0)
 
     def _set_resource_ref(self):
