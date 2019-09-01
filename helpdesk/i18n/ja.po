@@ -4,23 +4,24 @@
 # 
 # Translators:
 # Manami Hashi <manami@roomsfor.hk>, 2016
-# Yoshi Tashiro <tashiro@roomsfor.hk>, 2016
-# Martin Trigaux, 2016
 # NOKA Shigekazu <shigekazu.noka@gmail.com>, 2016
-# 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2016
 # Takahiro MURAKAMI <murakami@date-yakkyoku.com>, 2016
 # SHIMIZU Taku <shimizu.taku@gmail.com>, 2016
+# 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2016
+# Martin Trigaux, 2016
 # Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2016
 # Tim Siu Lai <tl@roomsfor.hk>, 2018
 # 前園義博 <yoshihiro.maezono@pro-spire.co.jp>, 2018
-# 城谷 龍弥 <tatsuya.shirotani@pro-spire.co.jp>, 2018
+# Yoshi Tashiro <tashiro@roomsfor.hk>, 2018
+# 城谷 龍弥 <tatsuya.shirotani@pro-spire.co.jp>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-03 13:22+0000\n"
-"PO-Revision-Date: 2016-11-03 13:22+0000\n"
-"Last-Translator: 城谷 龍弥 <tatsuya.shirotani@pro-spire.co.jp>, 2018\n"
+"PO-Revision-Date: 2016-09-19 13:41+0000\n"
+"Last-Translator: 城谷 龍弥 <tatsuya.shirotani@pro-spire.co.jp>, 2019\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -216,6 +217,10 @@ msgid ""
 "* Blocked indicates something is preventing the progress of this issue\n"
 "* Ready for next stage indicates the issue is ready to be pulled to the next stage"
 msgstr ""
+"チケットのかんばん状態は、チケットに影響を及ぼす特別な状況を示します。\n"
+"*デフォルトはノーマルです\n"
+"*ブロックされていることは、この問題の進行を妨げるものがあることを示します\n"
+"*次の段階へ進む準備ができていることは、問題が次の段階に引き込まれる準備ができていることを示します"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team_use_api
@@ -332,7 +337,7 @@ msgstr "自動回答Eメールテンプレート"
 msgid ""
 "Automated email sent to the ticket's customer when the ticket reaches this "
 "stage."
-msgstr ""
+msgstr "チケットがこの段階に達すると、チケットの顧客に送信される自動電子メール。"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team_assign_method
@@ -342,6 +347,10 @@ msgid ""
 "\tRandomly: randomly but everyone gets the same amount\n"
 "\tBalanced: to the person with the least amount of open tickets"
 msgstr ""
+"新しいチケットの自動割り当て方法：\n"
+"\t手動：手動\n"
+"\tランダム：ランダムに、しかし誰もが同じ量を得る\n"
+"\tバランス：オープンチケットが最も少ない人"
 
 #. module: helpdesk
 #. openerp-web
@@ -1461,7 +1470,7 @@ msgstr "ターゲットの成功率"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_res_users_helpdesk_target_closed
 msgid "Target Tickets to Close"
-msgstr ""
+msgstr "チケットを閉じる"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_team_id
@@ -1647,7 +1656,7 @@ msgstr "入場券"
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Tickets Search"
-msgstr ""
+msgstr "チケット検索"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage_is_close
