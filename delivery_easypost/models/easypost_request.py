@@ -60,9 +60,9 @@ class EasypostRequest():
         return True or an error if a value is missing.
         """
         # check carrier credentials
-        if carrier.prod_environment and not carrier.easypost_production_api_key:
+        if carrier.prod_environment and not carrier.sudo().easypost_production_api_key:
             raise UserError(_("The %s carrier is missing (Missing field(s) :\n Production API Key)") % carrier.name)
-        elif not carrier.easypost_test_api_key:
+        elif not carrier.sudo().easypost_test_api_key:
             raise UserError(_("The %s carrier is missing (Missing field(s) :\n Test API Key)") % carrier.name)
 
         if not carrier.easypost_delivery_type:
