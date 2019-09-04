@@ -82,7 +82,13 @@ class AccountReport(models.AbstractModel):
         filter_list = [attr for attr in dir(self) if attr.startswith('filter_') and len(attr) > 7 and not callable(getattr(self, attr))]
         for element in filter_list:
             filter_name = element[7:]
-            options[filter_name] = getattr(self, element)
+            value = getattr(self, element)
+            # Changing options must not change class-level members, so shallow-copy lists and dicts
+            if isinstance(value, dict):
+                value = dict(value)
+            elif isinstance(value, list):
+                value = list(value)
+            options[filter_name] = value
 
         if options.get('multi_company'):
             company_ids = get_user_companies(self._cr, self.env.user.id)
