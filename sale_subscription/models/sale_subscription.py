@@ -614,6 +614,7 @@ class SaleSubscription(models.Model):
     def _do_payment(self, payment_token, invoice, two_steps_sec=True):
         tx_obj = self.env['payment.transaction']
         reference = "SUB%s-%s" % (self.id, datetime.datetime.now().strftime('%y%m%d_%H%M%S'))
+        off_session = self.env.context.get('off_session', True)
         values = {
             'amount': invoice.amount_total,
             'acquirer_id': payment_token.acquirer_id.id,
@@ -626,7 +627,8 @@ class SaleSubscription(models.Model):
             'invoice_ids': [(6, 0, [invoice.id])],
             'callback_model_id': self.env['ir.model'].sudo().search([('model', '=', self._name)], limit=1).id,
             'callback_res_id': self.id,
-            'callback_method': 'reconcile_pending_transaction',
+            'callback_method': 'reconcile_pending_transaction' if off_session else '_reconcile_and_send_mail',
+            'return_url': '/my/subscription/%s/%s' % (self.id, self.uuid),
         }
 
         tx = tx_obj.create(values)
@@ -637,7 +639,7 @@ class SaleSubscription(models.Model):
                           'decline_url': baseurl + '/my/subscription/%s/payment/%s/decline/' % (self.uuid, tx.id),
                           'exception_url': baseurl + '/my/subscription/%s/payment/%s/exception/' % (self.uuid, tx.id),
                           }
-        tx.s2s_do_transaction(**payment_secure)
+        tx.with_context(off_session=off_session).s2s_do_transaction(**payment_secure)
         return tx
 
     @api.multi
@@ -652,6 +654,16 @@ class SaleSubscription(models.Model):
         else:
             invoice.action_cancel()
             invoice.unlink()
+
+    @api.multi
+    def _reconcile_and_send_mail(self, tx, invoice=False):
+        if not invoice:
+            invoice = tx.invoice_ids and tx.invoice_ids[0]
+        self.reconcile_pending_transaction(tx, invoice=invoice)
+        self.send_success_mail(tx, invoice)
+        msg_body = 'Manual payment succeeded. Payment reference: <a href=# data-oe-model=payment.transaction data-oe-id=%d>%s</a>; Amount: %s. Invoice <a href=# data-oe-model=account.invoice data-oe-id=%d>View Invoice</a>.' % (tx.id, tx.reference, tx.amount, invoice.id)
+        self.message_post(body=msg_body)
+        return True
 
     @api.multi
     def _recurring_create_invoice(self, automatic=False):

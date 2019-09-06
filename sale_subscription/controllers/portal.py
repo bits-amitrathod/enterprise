@@ -7,6 +7,7 @@ from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
 
+from odoo.addons.payment.controllers.portal import PaymentProcessing
 from odoo.addons.portal.controllers.portal import get_records_pager, pager as portal_pager, CustomerPortal
 
 
@@ -174,18 +175,22 @@ class sale_subscription(http.Controller):
             invoice_values = account.sudo()._prepare_invoice()
             new_invoice = invoice_res.sudo().create(invoice_values)
             new_invoice.compute_taxes()
-            tx = account.sudo()._do_payment(payment_token, new_invoice)[0]
+            # the customer is in front of their computer, we are not 'off_session' for payments
+            tx = account.sudo().with_context(off_session=False)._do_payment(payment_token, new_invoice)[0]
+            PaymentProcessing.add_payment_transaction(tx)
             if tx.html_3ds:
                 return tx.html_3ds
-            get_param = self.payment_succes_msg if tx.state in ['done', 'authorized'] else self.payment_fail_msg
             if tx.state in ['done', 'authorized']:
                 account.send_success_mail(tx, new_invoice)
                 msg_body = 'Manual payment succeeded. Payment reference: <a href=# data-oe-model=payment.transaction data-oe-id=%d>%s</a>; Amount: %s. Invoice <a href=# data-oe-model=account.invoice data-oe-id=%d>View Invoice</a>.' % (tx.id, tx.reference, tx.amount, new_invoice.id)
                 account.message_post(body=msg_body)
-            else:
+            elif tx.state != 'pending':
+                # a pending status might indicate that the customer has to authenticate, keep the invoice for post-processing
+                # NOTE: this might cause a lot of draft invoices to stay alive; i'm afraid this can't be helped
+                #       since the payment flow is divided in 2 in that case and the draft invoice must survive after the request
                 new_invoice.unlink()
 
-        return request.redirect('/my/subscription/%s/%s?%s' % (account.id, account.uuid, get_param))
+        return request.redirect('/payment/process')
 
     # 3DS controllers
     # transaction began as s2s but we receive a form reply
@@ -239,12 +244,8 @@ class sale_subscription(http.Controller):
 
         if kw.get('pm_id'):
             new_token = request.env['payment.token'].browse(int(kw.get('pm_id')))
-
-            if new_token.verified:
-                account.payment_token_id = new_token
-                get_param = 'message=Your payment method has been changed for this subscription.&message_class=alert-success'
-            else:
-                get_param = 'message=Your payment method must be verified to use it on a subscription.&message_class=alert-danger'
+            account.payment_token_id = new_token
+            get_param = 'message=Your payment method has been changed for this subscription.&message_class=alert-success'
         else:
             get_param = 'message=Impossible to change your payment method for this subscription.&message_class=alert-danger'
 
