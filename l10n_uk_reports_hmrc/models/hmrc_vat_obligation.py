@@ -123,6 +123,8 @@ class HmrcVatObligation(models.Model):
                                          'date_received': new_obligation.get('received_date')})
 
     def _fetch_values_from_report(self, lines):
+        report = self.env.ref('l10n_uk_reports.financial_report_l10n_uk')
+        index_column_total = 2 if report.debit_credit else 0
         translation_table = {
             'netVatDue': 'financial_report_line_uk_01',
             'vatDueSales': 'financial_report_line_uk_0101',
@@ -143,11 +145,11 @@ class HmrcVatObligation(models.Model):
                 # Do a get for the no_format_name as for the totals you have twice the line, without and with amount
                 # We cannot pass a negative netVatDue to the API and the amounts of sales/purchases/goodssupplied/ ... must be rounded
                 if reverse_table[line['id']] == 'netVatDue':
-                    values[reverse_table[line['id']]] = abs(round(line['columns'][0].get('no_format_name', 0.0), 2))
+                    values[reverse_table[line['id']]] = abs(round(line['columns'][index_column_total].get('no_format_name', 0.0), 2))
                 elif reverse_table[line['id']] in ('totalValueSalesExVAT', 'totalValuePurchasesExVAT', 'totalValueGoodsSuppliedExVAT', 'totalAcquisitionsExVAT'):
-                    values[reverse_table[line['id']]] = round(line['columns'][0].get('no_format_name', 0.0))
+                    values[reverse_table[line['id']]] = round(line['columns'][index_column_total].get('no_format_name', 0.0))
                 else:
-                    values[reverse_table[line['id']]] = round(line['columns'][0].get('no_format_name', 0.0), 2)
+                    values[reverse_table[line['id']]] = round(line['columns'][index_column_total].get('no_format_name', 0.0), 2)
         values['totalVatDue'] = abs(round(values['vatDueSales'] + values['vatDueAcquisitions'], 2))
         return values
 
