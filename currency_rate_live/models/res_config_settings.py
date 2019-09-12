@@ -262,7 +262,8 @@ class ResCompany(models.Model):
         Source: http://www.banxico.org.mx/portal-mercado-cambiario/
         """
         try:
-            client = suds.client.Client('http://www.banxico.org.mx/DgieWSWeb/DgieWS?WSDL', cache=None)
+            client = suds.client.Client('https://www.banxico.org.mx/DgieWSWeb/DgieWS?WSDL', cache=None)
+            client.options.location = 'https://www.banxico.org.mx/DgieWSWeb/DgieWS'
             xml_str = client.service.tiposDeCambioBanxico().encode('utf-8')
         except:
             return False
