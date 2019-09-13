@@ -350,6 +350,7 @@ class DHLProvider():
                 piece_node = etree.SubElement(pieces_node, "Piece")
                 etree.SubElement(piece_node, "PieceID").text = str(package.name)   # need to be removed
                 packaging = package.packaging_id or carrier.dhl_default_packaging_id
+                etree.SubElement(piece_node, "Weight").text = str(package.shipping_weight)
                 etree.SubElement(piece_node, "Width").text = str(packaging.width)
                 etree.SubElement(piece_node, "Height").text = str(packaging.height)
                 etree.SubElement(piece_node, "Depth").text = str(packaging.length)
