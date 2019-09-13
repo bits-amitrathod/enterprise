@@ -2,6 +2,7 @@ odoo.define('web_studio.ReportEditorManager_tests', function (require) {
 "use strict";
 
 var ace = require('web_editor.ace');
+var concurrency = require('web.concurrency');
 var config = require('web.config');
 var NotificationService = require('web.NotificationService');
 var testUtils = require('web.test_utils');
@@ -2410,6 +2411,71 @@ QUnit.module('ReportEditorManager', {
             assert.ok(true, "Updating report editor did not cause an error");
             rem.destroy();
             done();
+        });
+    });
+
+    QUnit.test('t-field are editable in non-debug mode', function (assert) {
+        var done = assert.async();
+        assert.expect(4);
+
+        var initialDebugMode = config.debug;
+        config.debug = false;
+
+        this.templates.push({
+            key: 'template1',
+            view_id: 55,
+            arch:
+                '<kikou>' +
+                    '<t t-name="template1">' +
+                        '<p>' +
+                            '<span t-field="name">awesome_field</span>' +
+                        '</p>' +
+                    '</t>' +
+                '</kikou>'
+        });
+
+        var rem = studioTestUtils.createReportEditorManager({
+            data: this.data,
+            models: this.models,
+            env: {
+                modelName: 'model.test',
+                ids: [42, 43],
+                currentId: 42,
+            },
+            report: {
+                report_name: 'awesome_report',
+            },
+            reportHTML: studioTestUtils.getReportHTML(this.templates),
+            reportViews: studioTestUtils.getReportViews(this.templates),
+            reportMainViewID: 42,
+        });
+
+        rem.editorIframeDef.then(function () {
+            var tFieldName = rem.$('iframe').contents().find('span[t-field="name"]');
+            assert.ok(tFieldName, "should have t-field 'name' in the report editor");
+
+            testUtils.dom.click(tFieldName);
+            concurrency.delay(0).then(function () {
+                assert.containsOnce(
+                    $,
+                    '.o_web_studio_report_sidebar',
+                    "should display report editor sidebar on clicking on tfield");
+                assert.containsOnce(
+                    $('.o_web_studio_report_sidebar'),
+                    '.card.o_web_studio_active',
+                    "report editor sidebar should have an active card");
+                assert.strictEqual(
+                    $('.o_web_studio_report_sidebar ' +
+                      '.card.o_web_studio_active ' +
+                      '.card-header ' +
+                      '.o_text').text().replace(/\s/g, ''),
+                    "span[name]",
+                    "active card in sidebar should be on t-field 'name' (which is a span)");
+
+                config.debug = initialDebugMode;
+                rem.destroy();
+                done();
+            });
         });
     });
 });
