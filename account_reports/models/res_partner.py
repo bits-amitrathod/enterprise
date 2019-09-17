@@ -44,18 +44,46 @@ class ResPartner(models.Model):
         Compute the fields 'total_due', 'total_overdue' and 'followup_status'
         """
         partners_in_need_of_action = self._get_partners_in_need_of_action().ids
+        today = fields.Date.today()
+        field_names = ['amount_residual:sum']
+        groupby = ['partner_id']
+
+        domain_due = [
+            ('partner_id', 'in', self.ids),
+            ('reconciled', '=', False),
+            ('account_id.deprecated', '=', False),
+            ('account_id.internal_type', '=', 'receivable'),
+        ]
+        total_due_all = self.env['account.move.line'].read_group(
+            domain_due,
+            field_names,
+            groupby,
+        )
+        total_due_all = dict(
+            (res['partner_id'][0], res['amount_residual'])
+            for res in total_due_all
+        )
+        domain_overdue = domain_due + [
+            ('blocked', '=', False),
+            '|', '&', ('date_maturity', '!=', False),
+                      ('date_maturity', '<', today),
+                 '&', ('date', '=', False),
+                      ('date', '<', today),
+        ]
+        total_overdue_all = self.env['account.move.line'].read_group(
+            domain_overdue,
+            field_names,
+            groupby,
+        )
+        total_overdue_all = dict(
+            (res['partner_id'][0], res['amount_residual'])
+            for res in total_overdue_all
+        )
+
         for record in self:
-            total_due = 0
-            total_overdue = 0
+            total_due = total_due_all.get(record.id, 0)
+            total_overdue = total_overdue_all.get(record.id, 0)
             followup_status = "no_action_needed"
-            today = fields.Date.today()
-            for aml in record.unreconciled_aml_ids:
-                if aml.company_id == self.env.user.company_id:
-                    amount = aml.amount_residual
-                    total_due += amount
-                    is_overdue = today > aml.date_maturity if aml.date_maturity else today > aml.date
-                    if is_overdue:
-                        total_overdue += not aml.blocked and amount or 0
             if total_overdue > 0:
                 followup_status = "in_need_of_action" if record.id in partners_in_need_of_action else "with_overdue_invoices"
             else:
