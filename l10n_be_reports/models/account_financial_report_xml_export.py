@@ -4,6 +4,7 @@ from odoo import api, models, fields, _
 from odoo.exceptions import UserError
 import calendar
 import json
+import re
 
 class AccountFinancialReportXMLReportExport(models.TransientModel):
     _name = "account.financial.html.report.export"
@@ -145,7 +146,7 @@ class AccountFinancialReportXMLExport(models.AbstractModel):
                 continue
             if line['columns'][0].get('name', False) and not currency_id.is_zero(line['columns'][0].get('name')):
                 for tag in list_of_tags:
-                    if line['name'].startswith(tag + ' -'): # With ' -', we ensure that we don't take into account the children of the line (for example, we don't want to consider 46L and 46T, only the aggregate line 46)
+                    if re.search(tag + ' -',line['name']): # With ' -', we ensure that we don't take into account the children of the line (for example, we don't want to consider 46L and 46T, only the aggregate line 46)
                         tags_list = [x[0] for x in cases_list]
                         if tag in tags_list:
                             cases_list[tags_list.index(tag)] = (tag, cases_list[tags_list.index(tag)][1] + line['columns'][0].get('name'))
