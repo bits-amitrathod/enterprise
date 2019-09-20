@@ -87,7 +87,7 @@ class QualityAlertTeam(models.Model):
     _order = "sequence, id"
 
     name = fields.Char('Name', required=True)
-    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.user.company_id)
+    company_id = fields.Many2one('res.company', string='Company')
     sequence = fields.Integer('Sequence')
     check_count = fields.Integer('# Quality Checks', compute='_compute_check_count')
     alert_count = fields.Integer('# Quality Alerts', compute='_compute_alert_count')
