@@ -26,12 +26,12 @@ msgstr ""
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid ") Answers"
-msgstr ""
+msgstr "ការវាយតម្លៃលើដំណើរការ។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid ") Sent Appraisal"
-msgstr ""
+msgstr ") បានផ្ញើការវាយតំលៃ។"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:127
@@ -40,6 +40,8 @@ msgid ""
 "<a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">Meeting</a> for <a "
 "href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s's</a> appraisal"
 msgstr ""
+"<a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">ប្រជុំ</a>សម្រាប់<a "
+"href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s</a>កាវាយតម្លៃ"
 
 #. module: hr_appraisal
 #: model:mail.template,body_html:hr_appraisal.send_appraisal_template
@@ -63,11 +65,24 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
+"សួស្តី $ {ctx.get ('បុគ្គលិក') ។ ឈ្មោះ}\n"
+"        % ប្រសិនបើ ctx.get ('និយោជិក') ។ id == object.employee_id.id:\n"
+"            សូមបំពេញការស្ទង់មតិខាងក្រោមដែលទាក់ទងនឹងការវាយតម្លៃរបស់អ្នក។\n"
+"        % ផ្សេងទៀត៖\n"
+"            សូមបំពេញការស្ទង់មតិខាងក្រោមដែលទាក់ទងនឹងការវាយតម្លៃរបស់ $ {object.employee_id.name} ។\n"
+"        % endif ។\n"
+"        \n"
+"            \n"
+"                ចាប់ផ្តើមការស្ទង់មតិ។\n"
+"            \n"
+"        \n"
+"        សូមឆ្លើយការវាយតំលៃសម្រាប់ $ {format_date (object.date_close)} ។\n"
+"        សូមអរគុណចំពោះការចូលរួមរបស់អ្នក។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "<strong><span>Final Interview: </span></strong>"
-msgstr ""
+msgstr "<strong><span>ការសំភាស៌បញ្ជាប់</span></strong>"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_1
@@ -92,7 +107,7 @@ msgstr "តម្រូវការសកម្មភាព"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__action_plan
 msgid "Action Plan"
-msgstr ""
+msgstr "ការវាយតម្លៃតាមកាលកំណត់ត្រូវបានបង្កើតឡើង។"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_6_1
@@ -148,7 +163,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__survey_completed_ids
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Answers"
-msgstr ""
+msgstr "ចម្លើយ"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.open_view_hr_appraisal_tree
@@ -173,44 +188,44 @@ msgstr "វិភាគវាយតម្លៃ"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_collaborators_ids
 msgid "Appraisal Collaborators"
-msgstr ""
+msgstr "អ្នកសហការវាយតម្លៃ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_colleagues_ids
 msgid "Appraisal Colleagues"
-msgstr ""
+msgstr "មិត្តរួមការងារវាយតម្លៃ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__date_close
 msgid "Appraisal Deadline"
-msgstr ""
+msgstr "ថ្ងៃផុតកំណត់វាយតម្លៃ។"
 
 #. module: hr_appraisal
 #: model:mail.activity.type,name:hr_appraisal.mail_act_appraisal_form
 msgid "Appraisal Form to Fill"
-msgstr ""
+msgstr "ទម្រង់វាយតម្លៃដើម្បីបំពេញ។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Appraisal Form..."
-msgstr ""
+msgstr "ទម្រង់វាយតម្លៃ ..."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_frequency_unit
 msgid "Appraisal Frequency"
-msgstr ""
+msgstr "ភាពញឹកញាប់នៃការវាយតម្លៃ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_manager_ids
 msgid "Appraisal Manager"
-msgstr ""
+msgstr "ប្រធានផ្នែកវាយតម្លៃ។"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:118
 #, python-format
 msgid "Appraisal Meeting For %s"
-msgstr ""
+msgstr "ការប្រជុំវាយតំលៃសំរាប់។%s"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.opinion_1
@@ -225,7 +240,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_frequency
 msgid "Appraisal Repeat Every"
-msgstr ""
+msgstr "ការវាយតម្លៃឡើងវិញរាល់។"
 
 #. module: hr_appraisal
 #: code:addons/hr_appraisal/models/hr_appraisal.py:239
@@ -233,17 +248,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #, python-format
 msgid "Appraisal Sent"
-msgstr ""
+msgstr "ការវាយតម្លៃត្រូវបានបញ្ជូន។"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_appraisal_report
 msgid "Appraisal Statistics"
-msgstr ""
+msgstr "ស្ថិតិវាយតម្លៃ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__manager_appraisal
 msgid "Appraisal by Manager"
-msgstr ""
+msgstr "ការវាយតម្លៃដោយអ្នកគ្រប់គ្រង។"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_3
@@ -254,24 +269,24 @@ msgstr ""
 #: code:addons/hr_appraisal/models/hr_appraisal.py:186
 #, python-format
 msgid "Appraisal form(s) have been sent"
-msgstr ""
+msgstr "សំណុំបែបបទវាយតម្លៃត្រូវបានផ្ញើ។"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.hr_appraisal_action_from_department
 msgid "Appraisal to start"
-msgstr ""
+msgstr "ការចាប់ផ្តើមការវាយតម្លៃ"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_department_view_kanban
 msgid "Appraisal(s)"
-msgstr ""
+msgstr "ការវាយតំលៃ"
 
 #. module: hr_appraisal
 #: model:ir.actions.server,name:hr_appraisal.ir_cron_scheduler_appraisal_ir_actions_server
 #: model:ir.cron,cron_name:hr_appraisal.ir_cron_scheduler_appraisal
 #: model:ir.cron,name:hr_appraisal.ir_cron_scheduler_appraisal
 msgid "Appraisal: run employee appraisal"
-msgstr ""
+msgstr "ការវាយតំលៃ: គ្រប់គ្រងការវាយតំលៃរបស់និយោជិក។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_count
@@ -282,7 +297,7 @@ msgstr "ការវាយតម្លៃ"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_department__appraisals_to_process_count
 msgid "Appraisals to Process"
-msgstr ""
+msgstr "ការវាយតម្លៃលើដំណើរការ។"
 
 #. module: hr_appraisal
 #: model:survey.question,question:hr_appraisal.appraisal_1_5
@@ -329,12 +344,12 @@ msgstr "បានលុបចោល"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__collaborators_appraisal
 msgid "Collaborator"
-msgstr ""
+msgstr "អ្នកសហការ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__collaborators_survey_id
 msgid "Collaborator's Appraisal"
-msgstr ""
+msgstr "ការវាយតម្លៃរបស់អ្នកសហការ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__collaborators_ids
@@ -345,19 +360,19 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__colleagues_survey_id
 msgid "Colleague's Appraisal"
-msgstr ""
+msgstr "ការវាយតម្លៃរបស់សហសេវិក។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__colleagues_ids
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_by_colleagues
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Colleagues"
-msgstr ""
+msgstr "មិត្តរួមការងារ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__colleagues_appraisal
 msgid "Colleagues Appraisal"
-msgstr ""
+msgstr "សហការីវាយតំលៃ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__color
@@ -459,7 +474,7 @@ msgstr "ពេលកំណត់"
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "Deadline:"
-msgstr ""
+msgstr "ថ្ងៃបញ្ជប់"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_7
@@ -526,7 +541,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__mail_template_id
 msgid "Email Template for Appraisal"
-msgstr ""
+msgstr "គំរូអ៊ីមែលសម្រាប់វាយតម្លៃ។"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_employee
@@ -543,7 +558,7 @@ msgstr "បុគ្គលិក"
 #: model:ir.model,name:hr_appraisal.model_hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__employee_appraisal
 msgid "Employee Appraisal"
-msgstr ""
+msgstr "ការវាយតម្លៃបុគ្គលិក"
 
 #. module: hr_appraisal
 #: model:survey.page,title:hr_appraisal.appraisal_1
@@ -559,7 +574,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_employee
 msgid "Employee Name"
-msgstr ""
+msgstr "មោះ​បុគ្គលិក"
 
 #. module: hr_appraisal
 #: model:survey.survey,title:hr_appraisal.opinion_form
@@ -574,7 +589,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_colleagues_survey_id
 msgid "Employee's Appraisal"
-msgstr ""
+msgstr "ការវាយតម្លៃរបស់និយោជិក។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -623,17 +638,17 @@ msgstr ""
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Final Evaluation"
-msgstr ""
+msgstr "ការវាយតំលៃចុងក្រោយ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__date_final_interview
 msgid "Final Interview"
-msgstr ""
+msgstr "បទសម្ភាសន៍ចុងក្រោយ។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "Final Interview Date"
-msgstr ""
+msgstr "កាលបរិច្ឆេទសម្ភាសន៍ចុងក្រោយ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_follower_ids
@@ -805,16 +820,17 @@ msgid ""
 "If the evaluation does not meet the expectations, you can propose an action "
 "plan"
 msgstr ""
+"ប្រសិនបើការវាយតម្លៃមិនបំពេញតាមការរំពឹងទុកអ្នកអាចស្នើសុំផែនការសកម្មភាព។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "In #{kanban_getcolorname(record.color.raw_value)}"
-msgstr ""
+msgstr "In #{kanban_getcolorname(record.color.raw_value)}"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 msgid "In progress Evaluations"
-msgstr ""
+msgstr "កំពុងវាយតម្លៃវាយតម្លៃ។"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.arow_3_1_5
@@ -908,7 +924,7 @@ msgstr "អ្នកគ្រប់គ្រង"
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__manager_survey_id
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_manager_survey_id
 msgid "Manager's Appraisal"
-msgstr ""
+msgstr "ការវាយតម្លៃរបស់អ្នកគ្រប់គ្រង។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_by_manager
@@ -999,7 +1015,7 @@ msgstr "ប្រភេទសកម្មភាពបន្ទាប់"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_date
 msgid "Next Appraisal Date"
-msgstr ""
+msgstr "កាលបរិច្ឆេទវាយតម្លៃបន្ទាប់។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_needaction_counter
@@ -1009,12 +1025,12 @@ msgstr "ចំនួនសកម្មភាព"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__count_completed_survey
 msgid "Number of Answers"
-msgstr ""
+msgstr "ចំនួនចម្លើយ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__count_sent_survey
 msgid "Number of Sent Forms"
-msgstr ""
+msgstr "ចំនួនទម្រង់ផ្ញើ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_has_error_counter
@@ -1078,12 +1094,12 @@ msgstr "ហួសកំណត់"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__periodic_appraisal
 msgid "Periodic Appraisal"
-msgstr ""
+msgstr "ការបញ្ចូលអ្នកប្រើស្ទង់មតិ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__periodic_appraisal_created
 msgid "Periodic Appraisal has been created"
-msgstr ""
+msgstr "ការវាយតម្លៃតាមកាលកំណត់ត្រូវបានបង្កើតឡើង។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
@@ -1098,7 +1114,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Plan"
-msgstr ""
+msgstr "ផែនការ។"
 
 #. module: hr_appraisal
 #: selection:hr.appraisal,activity_state:0
@@ -1133,7 +1149,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__related_partner_id
 msgid "Related Partner"
-msgstr ""
+msgstr "ដៃគូពាក់ព័ន្ធ។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
@@ -1165,34 +1181,34 @@ msgstr ""
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "Schedule The Final Interview"
-msgstr ""
+msgstr "កំណត់ពេលសម្ភាសន៍ចុងក្រោយ។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
 msgid "Search Appraisal"
-msgstr ""
+msgstr "ស្វែងរកការវាយតម្លៃ។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Select Appraisal Reviewer..."
-msgstr ""
+msgstr "ជ្រើសរើសអ្នកត្រួតពិនិត្យវាយតំលៃ ..."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__employee_survey_id
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_self_survey_id
 msgid "Self Appraisal"
-msgstr ""
+msgstr "ការវាយតម្លៃដោយខ្លួនឯង។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_employee_view_form
 msgid "Send Appraisal Form To"
-msgstr ""
+msgstr "ផ្ញើទម្រង់វាយតំលៃទៅ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__survey_sent_ids
 msgid "Sent Forms"
-msgstr ""
+msgstr "ទម្រង់ផ្ញើ។"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -1216,6 +1232,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Start Appraisal and Send Forms"
 msgstr ""
+"ចាប់ផ្តើមវាយតម្លៃនិងផ្ញើទម្រង់។\n"
+" "
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__state
@@ -1250,7 +1268,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_survey_user_input
 msgid "Survey User Input"
-msgstr ""
+msgstr "ការបញ្ចូលអ្នកប្រើស្ទង់មតិ។"
 
 #. module: hr_appraisal
 #: model:survey.label,value:hr_appraisal.oprow_2_1_4
@@ -1315,7 +1333,7 @@ msgstr ""
 #: code:addons/hr_appraisal/models/hr_employee.py:76
 #, python-format
 msgid "The date of the next appraisal cannot be in the past"
-msgstr ""
+msgstr "កាលបរិច្ឆេទនៃការវាយតម្លៃបន្ទាប់មិនអាចជាអតីតកាលទេ។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_employee__appraisal_date
@@ -1323,6 +1341,8 @@ msgid ""
 "The date of the next appraisal is computed by the appraisal plan's dates "
 "(first appraisal + periodicity)."
 msgstr ""
+"កាលបរិច្ឆេទនៃការវាយតម្លៃបន្ទាប់ត្រូវបានគណនាដោយកាលបរិច្ឆេទនៃផែនការវាយតំលៃ "
+"(ការវាយតម្លៃដំបូង + តាមកាលកំណត់) ។"
 
 #. module: hr_appraisal
 #: model_terms:survey.page,description:hr_appraisal.appraisal_1
@@ -1363,27 +1383,27 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__color
 msgid "This color will be used in the kanban view."
-msgstr ""
+msgstr "ពណ៌នេះនឹងត្រូវបានប្រើនៅក្នុងទិដ្ឋភាពកាន។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__collaborators_appraisal
 msgid "This employee will be appraised by his collaborators"
-msgstr ""
+msgstr "បុគ្គលិករបស់គាត់នឹងត្រូវបានវាយតម្លៃដោយអ្នកសហការរបស់គាត់។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__colleagues_appraisal
 msgid "This employee will be appraised by his colleagues"
-msgstr ""
+msgstr "និយោជិកនេះនឹងត្រូវបានវាយតម្លៃដោយសហសេវិករបស់គាត់។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__manager_appraisal
 msgid "This employee will be appraised by his managers"
-msgstr ""
+msgstr "និយោជិកនេះនឹងត្រូវបានវាយតម្លៃដោយអ្នកគ្រប់គ្រងរបស់គាត់។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__employee_appraisal
 msgid "This employee will do a self-appraisal"
-msgstr ""
+msgstr "និយោជិកនេះនឹងធ្វើការវាយតំលៃដោយខ្លួនឯង។"
 
 #. module: hr_appraisal
 #: model:survey.question,constr_error_msg:hr_appraisal.appraisal_1_1
@@ -1423,7 +1443,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_appraisal_report_search
 #, python-format
 msgid "To Start"
-msgstr ""
+msgstr "ចាប់ផ្ដើម"
 
 #. module: hr_appraisal
 #: model_terms:survey.page,description:hr_appraisal.appraisal_1
@@ -1495,7 +1515,7 @@ msgstr "ឆ្នំា"
 #: code:addons/hr_appraisal/models/hr_appraisal.py:232
 #, python-format
 msgid "You cannot delete appraisal which is in %s state"
-msgstr ""
+msgstr "អ៊ូមិនអាចលុបចោលការវាយតំលៃដែលមាននៅក្%sនុងរដ្ឋបានទេ។"
 
 #. module: hr_appraisal
 #: model_terms:ir.actions.act_window,help:hr_appraisal.open_view_hr_appraisal_tree
@@ -1504,6 +1524,10 @@ msgid ""
 "            to whom and the evaluation deadline. Once you have defined it,\n"
 "            change the stage to send it and view the results."
 msgstr ""
+"អ្នកនឹងអាចជ្រើសរើសបែបបទណាមួយដែលនឹងត្រូវបញ្ជូន "
+"(និយោជិកអ្នកគ្រប់គ្រងសហការីឬមិត្តរួមការងារ)             "
+"ចំពោះអ្នកណានិងថ្ងៃផុតកំណត់វាយតម្លៃ។ នៅពេលអ្នកបានកំណត់វារួចហើយ             "
+"ផ្លាស់ប្តូរដំណាក់កាលដើម្បីផ្ញើវានិងមើលលទ្ធផល។"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__appraisal_collaborators_survey_id
@@ -1513,4 +1537,4 @@ msgstr ""
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 msgid "oe_kanban_text_red"
-msgstr ""
+msgstr "oe_kanban_text_red"
