@@ -980,7 +980,6 @@ class ProductTemplate(models.Model):
 
     @api.one
     def unlink_listing_product_ebay(self):
-        self._sync_product_status()
         self.write({
             'ebay_use': False,
             'ebay_id': False,
