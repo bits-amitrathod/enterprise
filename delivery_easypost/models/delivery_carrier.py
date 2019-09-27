@@ -86,7 +86,7 @@ class DeliverCarrier(models.Model):
                 raise UserError(_(result['error_message']))
             rate = result.get('rate')
             if rate['currency'] == picking.company_id.currency_id.name:
-                price = rate['rate']
+                price = float(rate['rate'])
             else:
                 quote_currency = self.env['res.currency'].search([('name', '=', rate['currency'])], limit=1)
                 price = quote_currency._convert(float(rate['rate']), picking.company_id.currency_id, self.env['res.users']._get_company(), fields.Date.today())
