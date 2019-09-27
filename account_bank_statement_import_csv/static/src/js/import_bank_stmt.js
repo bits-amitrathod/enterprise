@@ -47,6 +47,7 @@ var DataImportStmt = BaseImport.DataImport.extend({
     call_import: function(kwargs) {
         var self = this;
         return self._super.apply(this, arguments).done(function (message) {
+            message = message.messages;
             if(message.length && message[0].type === 'bank_statement'){
                 self.statement_id = message[0].statement_id;
             }
