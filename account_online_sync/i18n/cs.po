@@ -32,12 +32,12 @@ msgstr "\" byly načteny bankovní účty."
 #. module: account_online_sync
 #: model_terms:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "<strong>Ooops</strong> It would seems that the process to"
-msgstr ""
+msgstr "<strong>Jejda</strong> Zdá se, že tento proces"
 
 #. module: account_online_sync
 #: model_terms:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
 msgid "<strong>Ooops</strong> We could not"
-msgstr ""
+msgstr "<strong>Jejda</strong>, nemohli jsme"
 
 #. module: account_online_sync
 #: model_terms:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -82,7 +82,7 @@ msgstr "Poskytovatel online účtu"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__account_online_wizard_id
 msgid "Account Online Wizard"
-msgstr ""
+msgstr "Průvodce online účtem"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_link_wizard__name
@@ -109,7 +109,7 @@ msgstr "Vyžaduje akci"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__action_required
 msgid "Action Required"
-msgstr ""
+msgstr "Je vyžadována akce"
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:360
@@ -137,7 +137,7 @@ msgstr "Počet příloh"
 #: code:addons/account_online_sync/models/online_sync.py:317
 #, python-format
 msgid "Automated Bank Synchronization"
-msgstr ""
+msgstr "Automatizovaná synchronizace banky"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__balance
@@ -235,6 +235,8 @@ msgid ""
 "                                               will be created when fetching new transactions\n"
 "                                               from your bank account."
 msgstr ""
+"Definuje, kdy bude při načítání nových transakcí z vašeho bankovního účtu "
+"vytvořen nový bankovní výpis."
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__display_name
@@ -247,7 +249,7 @@ msgstr "Zobrazovaný název"
 #. module: account_online_sync
 #: selection:account.online.link.wizard,action:0
 msgid "Do not link"
-msgstr ""
+msgstr "Nedávejte odkaz"
 
 #. module: account_online_sync
 #: model_terms:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -298,11 +300,13 @@ msgid ""
 "ID of the banking institution in third party server used for debugging "
 "purpose"
 msgstr ""
+"ID bankovní instituce na serveru třetí strany používané pro účely ladění"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider__provider_account_identifier
 msgid "ID used to identify provider account in third party server"
 msgstr ""
+"ID používané k identifikaci účtu poskytovatele na serveru třetí strany"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_provider__message_unread
@@ -395,7 +399,7 @@ msgstr "Propojit synchronizovaný účet s deníkem"
 #. module: account_online_sync
 #: selection:account.online.link.wizard,action:0
 msgid "Link to existing journal"
-msgstr ""
+msgstr "Odkaz na existující deník"
 
 #. module: account_online_sync
 #: model_terms:ir.actions.act_window,help:account_online_sync.action_online_provider_account
@@ -436,7 +440,7 @@ msgstr "Metoda"
 #. module: account_online_sync
 #: model_terms:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
 msgid "Next sync:"
-msgstr ""
+msgstr "Další synchronizace:"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal__next_synchronization
@@ -500,7 +504,7 @@ msgstr "Online účet"
 #: model:ir.model.fields,field_description:account_online_sync.field_account_bank_statement_line__online_identifier
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_journal__online_identifier
 msgid "Online Identifier"
-msgstr ""
+msgstr "Online identifikátor"
 
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_online_provider_account
@@ -540,7 +544,7 @@ msgstr "Úvodní příkaz: první synchronizace"
 #. module: account_online_sync
 #: selection:account.online.provider,provider_type:0
 msgid "Plaid"
-msgstr ""
+msgstr "Kryté"
 
 #. module: account_online_sync
 #: code:addons/account_online_sync/models/online_sync.py:82
@@ -555,6 +559,7 @@ msgid ""
 "Please link your accounts to a journal or select \"do not link\" as action "
 "to do"
 msgstr ""
+"Propojte prosím své účty s deníkem, anebo jako akci proveďte „Nepropojit“"
 
 #. module: account_online_sync
 #: model_terms:ir.ui.view,arch_db:account_online_sync.account_journal_dashboard_inherit_online_sync
@@ -601,7 +606,7 @@ msgstr "Stav"
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_online_provider__status_code
 msgid "Status Code"
-msgstr ""
+msgstr "Stavový kód"
 
 #. module: account_online_sync
 #: selection:account.online.wizard,status:0
@@ -611,7 +616,7 @@ msgstr "Úspěch"
 #. module: account_online_sync
 #: model:ir.actions.act_window,name:account_online_sync.action_account_online_wizard_form
 msgid "Synchronization result"
-msgstr ""
+msgstr "Výsledek synchronizace"
 
 #. module: account_online_sync
 #: model:ir.model.fields,field_description:account_online_sync.field_account_journal__synchronization_status
@@ -639,7 +644,7 @@ msgstr ""
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_online_wizard__hide_table
 msgid "Technical field to hide table in view"
-msgstr ""
+msgstr "Technické pole pro skrytí tabulky v zobrazení"
 
 #. module: account_online_sync
 #: model:ir.model.fields,help:account_online_sync.field_account_bank_statement_line__online_partner_bank_account
@@ -816,7 +821,7 @@ msgstr "transakce načteny"
 msgid ""
 "your account because of the following\n"
 "                    error during the process:"
-msgstr ""
+msgstr "váš účet kvůli následující chybě během procesu:"
 
 #. module: account_online_sync
 #: model_terms:ir.ui.view,arch_db:account_online_sync.view_account_online_wizard_form
@@ -825,3 +830,6 @@ msgid ""
 "                    thoroughly completed. You can try to manually update your account by clicking the refresh button on the dashboard\n"
 "                    or in the online synchronization menu."
 msgstr ""
+"váš účet nebyl úplně dokončen. Můžete se pokusit ručně aktualizovat svůj "
+"účet kliknutím na tlačítko Obnovit na hlavním panelu, nebo v nabídce online "
+"synchronizace."
