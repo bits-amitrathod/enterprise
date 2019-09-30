@@ -171,7 +171,7 @@ var PickingClientAction = ClientAction.extend({
                         self.trigger_up('exit');
                     };
                     var exitCallback = function (infos) {
-                        if (infos !== 'special' && this.dialog.$modal.is(':visible')) {
+                        if (infos !== 'special' && (!this.dialog || this.dialog.$modal.is(':visible'))) {
                             successCallback();
                         }
                         core.bus.on('barcode_scanned', self, self._onBarcodeScannedHandler);
