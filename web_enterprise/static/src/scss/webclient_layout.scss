@@ -66,6 +66,11 @@ html {
         }
     }
 
+    body.modal-open {
+        // Allow vertical scrolling in modals on iOS
+        -webkit-overflow-scrolling: touch;
+    }
+
     .o_loading {
         position: fixed;
         bottom: 0;
